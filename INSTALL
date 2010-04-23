@@ -1,26 +1,24 @@
 * Prerequisites
 
-To compile Minitunes you need Qt4 installed.
+To compile Minitunes you need:
+- Qt4: http://qt.nokia.com
+- TagLib: http://developer.kde.org/~wheeler/taglib.html
 
 On a Debian or Ubuntu system just type:
-sudo apt-get install build-essential qt4-dev-tools
-
-On Windows and Mac get Qt4 from:
-http://trolltech.com/developer/downloads/qt/
+sudo apt-get install build-essential qt4-dev-tools libtag1-dev
 
 * Compiling
-Compilig on Linux is fairly easy. Just run:
-$ qmake
-and then
-$ make
+Building is fairly easy. Just run:
+    $ qmake
+and then:
+    $ make
 
 * Running
 ./build/target/minitunes
 
+* Legal Stuff
 
-Legal Stuff
-
-Copyright (C) 2009  Flavio Tordini
+Copyright (C) 2010 Flavio Tordini
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
