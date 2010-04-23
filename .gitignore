@@ -1,0 +1,9 @@
+build/
+Makefile*
+minitunes.pro.user
+.settings/
+.DS_Store
+.cproject
+.project
+stuff
+*.sh

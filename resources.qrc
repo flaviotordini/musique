@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/app.png</file>
+        <file>images/media-playback-pause.png</file>
+        <file>images/media-playback-start.png</file>
+        <file>images/media-playback-stop.png</file>
+        <file>images/media-skip-forward.png</file>
+        <file>images/media-playlist-repeat.png</file>
+        <file>images/media-playlist-shuffle.png</file>
+        <file>images/edit-clear.png</file>
+        <file>images/go-home.png</file>
+        <file>images/go-previous.png</file>
+        <file>images/help-about.png</file>
+    </qresource>
+</RCC>

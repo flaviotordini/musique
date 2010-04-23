@@ -1,0 +1,13 @@
+
+[Desktop Entry]
+Name=Minitunes
+Name[en_US]=minitunes.desktop
+Comment=Enemy of the music business
+GenericName=Music player
+GenericName[en_US]=Music player
+Exec=minitunes
+Terminal=false
+Type=Application
+Icon=minitunes
+Categories=Qt;AudioVideo;Video
+StartupNotify=true

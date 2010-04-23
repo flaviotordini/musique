@@ -1,0 +1,14 @@
+- Playlist delegate
+- Filesystem model
+- Search
+- Finder navigation: back button
+- Lyrics
+- Shuffle and wraparound
+
+## Minor stuff
+- Stop when finished
+- Restart playback
+- Artist hover: show number of album, songs & total duration on the status bar
+
+# Bugs
+- Infinite loop in scanner with "Barabba" => "I Barabba" (Last.fm issue)
