@@ -62,7 +62,13 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
         case  Playlist::ArtistColumn:
             return track->getArtist() ? track->getArtist()->getName() : nullVariant;
             // case  Playlist::YearColumn: return track->getYear() ? track->getYear() : nullVariant;
-        case  Playlist::LengthColumn: return track->getLength() ? track->getLength() : nullVariant;
+        case  Playlist::LengthColumn:
+            if (track->getLength() > 3600)
+                return QTime().addSecs(track->getLength()).toString("h:mm:ss");
+            else if (track->getLength() > 0)
+                return QTime().addSecs(track->getLength()).toString("m:ss");
+            else
+                return nullVariant;
         }
     case Qt::TextAlignmentRole:
         if (index.column() == 0) return Qt::AlignCenter;
@@ -120,6 +126,7 @@ Track* PlaylistModel::activeTrack() const {
 }
 
 void PlaylistModel::addTrack(Track* track) {
+    // no duplicates
     if (!tracks.contains(track)) {
         beginInsertRows(QModelIndex(), tracks.size(), tracks.size());
         tracks << track;
@@ -130,10 +137,16 @@ void PlaylistModel::addTrack(Track* track) {
 
 void PlaylistModel::addTracks(QList<Track*> tracks) {
     if (!tracks.empty()) {
-        beginInsertRows(QModelIndex(), this->tracks.size(), this->tracks.size() + tracks.size() - 1);
-        this->tracks.append(tracks);
-        endInsertRows();
-        The::globalActions()->value("clearPlaylist")->setEnabled(true);
+        // remove duplicates
+        foreach(Track* track, this->tracks) {
+            tracks.removeAll(track);
+        }
+        if (!tracks.empty()) {
+            beginInsertRows(QModelIndex(), this->tracks.size(), this->tracks.size() + tracks.size() - 1);
+            this->tracks.append(tracks);
+            endInsertRows();
+            The::globalActions()->value("clearPlaylist")->setEnabled(true);
+        }
     }
 }
 

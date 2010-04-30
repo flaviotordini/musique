@@ -18,6 +18,7 @@ public:
     QString album;
     int track;
     int year;
+    int length;
 
 };
 

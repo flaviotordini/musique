@@ -62,6 +62,7 @@ void CollectionScanner::run() {
         tags->album = QString::fromStdString(fileref.tag()->album().to8Bit(true));
         tags->track = fileref.tag()->track();
         tags->year = fileref.tag()->year();
+        tags->length = fileref.audioProperties()->length();
         file->setTags(tags);
 
         // get data from the internet
@@ -377,7 +378,7 @@ void CollectionScanner::processTrack(FileInfo *file) {
     QString titleTag = file->getTags()->title;
     // qDebug() << "we have a fresh track:" << titleTag;
     if (titleTag.isEmpty()) {
-        titleTag = "[FILENAME] " + file->getFileInfo().baseName();
+        titleTag = file->getFileInfo().baseName();
         // TODO clean filename:
         // strip constant part of the filenames
         // strip track number
@@ -405,6 +406,7 @@ void CollectionScanner::processTrack(FileInfo *file) {
     int year = album->getYear();
     if (year < 1) year = file->getTags()->year;
     track->setYear(year);
+    track->setLength(file->getTags()->length);
 
     // if (artist && artist->getId() > 0) {
     // artist = album->getArtist();

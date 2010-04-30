@@ -41,7 +41,10 @@ Track* Track::forId(int trackId) {
         track->setId(trackId);
         track->setPath(query.value(0).toString());
         track->setTitle(query.value(1).toString());
-        // TODO other fields
+
+        // TODO start & end
+
+        track->setLength(query.value(4).toInt());
         track->setNumber(query.value(5).toInt());
 
         // relations
@@ -112,7 +115,7 @@ void Track::insert() {
     // qDebug() << "Track::insert";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("insert into tracks (path, title, track, year, album, artist, tstamp) values (?,?,?,?,?,?,?)");
+    query.prepare("insert into tracks (path, title, track, year, album, artist, tstamp, duration) values (?,?,?,?,?,?,?,?)");
     query.bindValue(0, path);
     query.bindValue(1, title);
     query.bindValue(2, number);
@@ -122,6 +125,7 @@ void Track::insert() {
     int artistId = artist ? artist->getId() : 0;
     query.bindValue(5, artistId);
     query.bindValue(6, QDateTime::currentDateTime().toTime_t());
+    query.bindValue(7, length);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 
@@ -148,7 +152,7 @@ void Track::update() {
     // qDebug() << "Track::update";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("update tracks set title=?, track=?, year=?, album=?, artist=?, tstamp=? where path=?");
+    query.prepare("update tracks set title=?, track=?, year=?, album=?, artist=?, tstamp=?, duration=? where path=?");
 
     query.bindValue(0, title);
     query.bindValue(1, number);
@@ -158,7 +162,8 @@ void Track::update() {
     int artistId = artist ? artist->getId() : 0;
     query.bindValue(4, artistId);
     query.bindValue(5, QDateTime().toTime_t());
-    query.bindValue(6, path);
+    query.bindValue(6, length);
+    query.bindValue(7, path);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 }
