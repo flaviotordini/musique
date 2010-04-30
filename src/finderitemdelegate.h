@@ -13,21 +13,23 @@ class FinderItemDelegate : public QStyledItemDelegate {
 
 public:
     FinderItemDelegate( QObject* parent = 0 );
-    ~FinderItemDelegate();
-
     QSize sizeHint( const QStyleOptionViewItem&, const QModelIndex&) const;
     void paint( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
 
 private:
-    QPixmap createPlayIcon(bool hovered);
-    void createMissingItemBackground();
-    void createMissingItemPixmap();
+    QPixmap createPlayIcon(bool hovered) const;
+    QPixmap createMissingItemBackground() const;
+    QPixmap createMissingItemPixmap() const;
+    QPixmap getPlayIcon(bool hovered) const;
+    QPixmap getMissingItemBackground() const;
+    QPixmap getMissingItemPixmap() const;
     void paintArtist( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintAlbum( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintFolder( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
+    // void paintTrack( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintPlayIcon(QPainter *painter, const QRect& rect, double animation = 0., bool hoverAnimation = false) const;
     void drawName(QPainter *painter, QString time, const QRect&, bool selected) const;
-    void drawYear(QPainter *painter, QString year, const QRect&) const;
+    void drawBadge(QPainter *painter, QString text, const QRect&) const;
     QPixmap getArtistPixmap(Artist*) const;
     QPixmap getAlbumPixmap(Album*) const;
     QPixmap getFolderPixmap(Folder*) const;
@@ -36,16 +38,6 @@ private:
     static const int ITEM_HEIGHT;
     static const int PADDING;
 
-    QFont boldFont;
-    QFont smallerFont;
-    QFont smallerBoldFont;
-
-    QPixmap playIcon;
-    QPixmap hoveredPlayIcon;
-
-    QPixmap missingItemBackground;
-    QPixmap missingItemPixmap;
-    QPixmap noImage;
 };
 
 #endif // ITEMDELEGATE_H
