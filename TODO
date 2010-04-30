@@ -1,14 +1,20 @@
+# Minitunes TODO list
+
+## Major features
+- CUE file support
 - Playlist delegate
 - Filesystem model
 - Search
 - Finder navigation: back button
 - Lyrics
 - Shuffle and wraparound
+- Invalidate caches on db update
+- QFileSystemWatcher
 
 ## Minor stuff
+- error messages in status bar
 - Stop when finished
-- Restart playback
 - Artist hover: show number of album, songs & total duration on the status bar
 
-# Bugs
+## Bugs
 - Infinite loop in scanner with "Barabba" => "I Barabba" (Last.fm issue)
