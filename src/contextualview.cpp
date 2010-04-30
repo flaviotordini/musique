@@ -48,4 +48,8 @@ void ContextualView::setTrack(Track *track) {
 
 void ContextualView::disappear() {
     albumInfo->clear();
+
+    // this fixes the vertical scrollbar
+    albumInfo->adjustSize();
+    adjustSize();
 }
