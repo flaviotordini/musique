@@ -122,7 +122,8 @@ void PlaylistView::dataChanged(const QModelIndex &, const QModelIndex &) {
     qDebug() << rowCount;
     bool isPlaylistEmpty = rowCount < 1;
     The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
-    qDebug() << "Playlist length" << playlistModel->getTotalLength();
+    // qDebug() << "Playlist length" << playlistModel->getTotalLength();
+    setStatusTip(tr("Playlist length is"));
 }
 
 void PlaylistView::moveUpSelected() {

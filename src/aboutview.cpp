@@ -26,7 +26,7 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
                    .arg(QString("<a href=\"mailto:%1\">%1</a>").arg(Constants::EMAIL)) + "</p>"
 
                    "<p>" +  tr("%1 is Free Software but its development takes precious time.").arg(Constants::APP_NAME) + "<br/>"
-                   + tr("Please <a href='%1'>donate via PayPal</a> to support the continued development of %2.")
+                   + tr("Please <a href='%1'>donate</a> to support the continued development of %2.")
                    .arg(QString(Constants::WEBSITE).append("#donate"), Constants::APP_NAME) + "</p>"
 
                    /*
@@ -40,7 +40,7 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
                    "<p>" + tr("Released under the <a href='%1'>GNU General Public License</a>")
                    .arg("http://www.gnu.org/licenses/gpl.html") + "</p>"
 
-                   "<p>&copy; 2009 " + Constants::ORG_NAME + "</p>";
+                   "<p>&copy; 2010 " + Constants::ORG_NAME + "</p>";
     QLabel *infoLabel = new QLabel(info, this);
     infoLabel->setOpenExternalLinks(true);
     infoLabel->setWordWrap(true);

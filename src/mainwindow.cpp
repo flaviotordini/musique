@@ -190,7 +190,7 @@ void MainWindow::createActions() {
     actions->insert("site", siteAct);
     connect(siteAct, SIGNAL(triggered()), this, SLOT(visitSite()));
 
-    donateAct = new QAction(tr("&Donate via PayPal"), this);
+    donateAct = new QAction(tr("Make a &donation"), this);
     donateAct->setStatusTip(tr("Please support the continued development of %1").arg(Constants::APP_NAME));
     actions->insert("donate", donateAct);
     connect(donateAct, SIGNAL(triggered()), this, SLOT(donate()));
@@ -410,7 +410,7 @@ void MainWindow::goBack() {
 
 void MainWindow::showWidget(QWidget* widget) {
 
-    // setUpdatesEnabled(false);
+    setUpdatesEnabled(false);
 
     // call disappear() method on the old view
     View* oldView = dynamic_cast<View *> (views->currentWidget());
@@ -430,10 +430,10 @@ void MainWindow::showWidget(QWidget* widget) {
         statusBar()->showMessage((metadata.value("description").toString()));
     }
 
-    // backAct->setEnabled(history->size() > 1);
     settingsAct->setEnabled(widget != settingsView);
     fullscreenAct->setEnabled(widget == mediaView);
     aboutAct->setEnabled(widget != aboutView);
+    chooseFolderAct->setEnabled(widget != chooseFolderView);
 
     // toolbar only for the mediaView
     mainToolBar->setVisible(widget == mediaView || widget == contextualView);
@@ -449,7 +449,7 @@ void MainWindow::showWidget(QWidget* widget) {
 
     history->push(widget);
 
-    // setUpdatesEnabled(true);
+    setUpdatesEnabled(true);
 
 }
 

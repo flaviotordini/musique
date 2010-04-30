@@ -42,6 +42,8 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     trackListView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     trackListModel = new TrackSqlModel(this);
     trackListView->setModel(trackListModel);
+    // no user interaction
+    trackListView->setEnabled(false);
     layout->addWidget(trackListView);
 
 }

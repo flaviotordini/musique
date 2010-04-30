@@ -19,11 +19,14 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
     switch (role) {
 
     case Finder::ItemTypeRole:
-        return Finder::ItemTypeFolder;
+        if (isDir(index))
+            return Finder::ItemTypeFolder;
+        else
+            return Finder::ItemTypeTrack;
 
     case Finder::DataObjectRole:
         path = QFileSystemModel::data(index, QFileSystemModel::FilePathRole).toString();
-        qDebug() << "model path" << path << path.isEmpty();
+        // qDebug() << "model path" << path << path.isEmpty();
         if (isDir(index)) {
             folder = Folder::forPath(path);
             return QVariant::fromValue(QPointer<Folder>(folder));

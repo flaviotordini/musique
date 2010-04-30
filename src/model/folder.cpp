@@ -18,7 +18,7 @@ Folder::Folder(QString path, QObject *parent)
 
 Folder* Folder::forPath(QString path) {
 
-    qDebug() << "Folder::forPath" << path;
+    // qDebug() << "Folder::forPath" << path;
 
     /*
     if (path.startsWith("/")) {

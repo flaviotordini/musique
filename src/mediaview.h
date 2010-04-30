@@ -20,8 +20,8 @@ public:
     void disappear() {}
     QMap<QString, QVariant> metadata() {
         QMap<QString, QVariant> metadata;
-        metadata.insert("title", tr("TODO"));
-        metadata.insert("description", tr(""));
+        metadata.insert("title", "");
+        metadata.insert("description", "");
         return metadata;
     }
     void saveSplitterState();

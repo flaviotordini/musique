@@ -18,7 +18,6 @@ public:
     static Folder* forPath(QString path);
     QImage getPhoto();
 
-
     // item
     QList<Track*> getTracks();
 
