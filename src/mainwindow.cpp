@@ -436,7 +436,7 @@ void MainWindow::showWidget(QWidget* widget) {
 
     // toolbar only for the mediaView
     mainToolBar->setVisible(widget == mediaView || widget == contextualView);
-    statusToolBar->setVisible(widget == mediaView);
+    statusToolBar->setVisible(widget == mediaView || widget == contextualView);
 
 #ifdef Q_WS_MAC
     // crossfade only on OSX
