@@ -125,6 +125,7 @@ void MainWindow::createActions() {
             tr("P&revious"), this);
     skipBackwardAct->setStatusTip(tr("Go back to the previous track"));
     skipBackwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Left));
+    skipBackwardAct->setPriority(QAction::LowPriority);
     actions->insert("previous", skipBackwardAct);
 
     skipForwardAct = new QAction(
@@ -132,6 +133,7 @@ void MainWindow::createActions() {
             tr("&Next"), this);
     skipForwardAct->setStatusTip(tr("Skip to the next track"));
     skipForwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Right));
+    skipForwardAct->setPriority(QAction::LowPriority);
     actions->insert("skip", skipForwardAct);
 
     playAct = new QAction(
@@ -315,19 +317,16 @@ void MainWindow::createToolBars() {
 
     setUnifiedTitleAndToolBarOnMac(true);
     mainToolBar = new QToolBar(this);
-    mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
-    // mainToolBar->setStyleSheet("QToolBar > QToolButton {min-width: 3em}");
 
     QFont smallerFont;
     smallerFont.setPointSize(smallerFont.pointSize()*.85);
     mainToolBar->setFont(smallerFont);
 
-    mainToolBar->setIconSize(QSize(32, 32));
-    mainToolBar->addAction(skipBackwardAct);
     mainToolBar->addAction(playAct);
-    // mainToolBar->addAction(stopAct);
+    mainToolBar->addAction(skipBackwardAct);
     mainToolBar->addAction(skipForwardAct);
     mainToolBar->addAction(contextualAct);
 
