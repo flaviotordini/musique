@@ -49,10 +49,14 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
     Track *track = tracks.at(row);
 
     switch (role) {
+
     case Playlist::DataObjectRole:
         return QVariant::fromValue(QPointer<Track>(track));
+
     case Playlist::ActiveItemRole:
         return track == m_activeTrack;
+
+        /*
     case Qt::DisplayRole:
         switch(index.column()) {
         case  Playlist::TrackColumn: return track->getNumber() ? track->getNumber() : nullVariant;
@@ -70,28 +74,29 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
             else
                 return nullVariant;
         }
+
     case Qt::TextAlignmentRole:
         if (index.column() == 0) return Qt::AlignCenter;
         else return nullVariant;
+        */
     }
 
     return nullVariant;
 }
 
 void PlaylistModel::setActiveRow( int row) {
-    if ( rowExists( row ) ) {
+    if (rowExists(row)) {
+
+        int oldactiverow = m_activeRow;
 
         m_activeRow = row;
         m_activeTrack = trackAt(row);
 
-        // setStateOfRow( row, Item::Played );
+        if (rowExists(oldactiverow))
+            emit dataChanged(createIndex(oldactiverow, 0), createIndex(oldactiverow, 0));
 
-        int oldactiverow = m_activeRow;
+        emit dataChanged(createIndex(m_activeRow, 0), createIndex(m_activeRow, 0));
 
-        if ( rowExists( oldactiverow ) )
-            emit dataChanged( createIndex( oldactiverow, 0 ), createIndex( oldactiverow, columnCount() - 1 ) );
-
-        emit dataChanged( createIndex( m_activeRow, 0 ), createIndex( m_activeRow, columnCount() - 1 ) );
         emit activeRowChanged(row);
 
     } else {
