@@ -1,6 +1,8 @@
 #include "basefinderview.h"
 #include "finderitemdelegate.h"
 #include "basesqlmodel.h"
+#include "model/item.h"
+#include "finderwidget.h"
 
 BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
@@ -66,18 +68,21 @@ void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
         unsetCursor();
     }
 
+    const QModelIndex index = indexAt(event->pos());
+
+    Item *item = index.data(Finder::DataObjectRole).value<ItemPointer>();
+    if (item)
+        qDebug() << item->getName();
+
 }
 
 void BaseFinderView::mousePressEvent(QMouseEvent *event) {
-    QListView::mousePressEvent(event);
-
-    if (event->button() == Qt::LeftButton) {
-        if (isHoveringPlayIcon(event)) {
-            emit play(indexAt(event->pos()));
-            return;
-        }
+    if (event->button() == Qt::LeftButton
+        && isHoveringPlayIcon(event)) {
+        emit play(indexAt(event->pos()));
+    } else {
+        QListView::mousePressEvent(event);
     }
-
 }
 
 bool BaseFinderView::isHoveringPlayIcon(QMouseEvent *event) {
