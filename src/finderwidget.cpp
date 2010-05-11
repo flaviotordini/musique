@@ -2,6 +2,11 @@
 
 #include "thlibrary/thblackbar.h"
 
+#include "breadcrumbwidget.h"
+
+#include "playlistmodel.h"
+#include "playlistview.h"
+
 #include "model/artist.h"
 #include "model/album.h"
 
@@ -46,7 +51,28 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->setMargin(0);
     layout->setSpacing(0);
 
-    // Finder Bar
+    setupBar();
+    layout->addWidget(finderBar);
+
+    breadcrumb = new BreadcrumbWidget(this);
+    breadcrumb->hide();
+    layout->addWidget(breadcrumb);
+
+    stackedWidget = new QStackedWidget(this);
+
+    layout->addWidget(stackedWidget);
+    setLayout(layout);
+
+    // Restore saved view
+    QSettings settings;
+    QString currentViewName = settings.value(FINDER_VIEW_KEY).toString();
+    if (currentViewName == "folders") showFolders();
+    else if (currentViewName == "albums") showAlbums();
+    else showArtists();
+
+}
+
+void FinderWidget::setupBar() {
     finderBar = new THBlackBar(this);
 
     artistsAction = new QAction(tr("Artists"), this);
@@ -77,24 +103,6 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     finderBar->addAction(foldersAction);
 
     finderBar->setCheckedAction(0);
-    layout->addWidget(finderBar);
-
-    breadcrumb = new BreadcrumbWidget(this);
-    breadcrumb->hide();
-    layout->addWidget(breadcrumb);
-
-    stackedWidget = new QStackedWidget(this);
-
-    layout->addWidget(stackedWidget);
-    setLayout(layout);
-
-    // Restore saved view
-    QSettings settings;
-    QString currentViewName = settings.value(FINDER_VIEW_KEY).toString();
-    if (currentViewName == "folders") showFolders();
-    else if (currentViewName == "albums") showAlbums();
-    else showArtists();
-
 }
 
 void FinderWidget::setupArtists() {
@@ -220,6 +228,7 @@ void FinderWidget::artistPlayed ( const QModelIndex & index ) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
     playlistModel->setActiveRow(playlistModel->rowForTrack(tracks.first()));
+    playlistView->scrollTo(playlistModel->indexForTrack(tracks.first()), QAbstractItemView::PositionAtCenter);
 }
 
 void FinderWidget::albumEntered ( const QModelIndex & index ) {
@@ -251,6 +260,7 @@ void FinderWidget::albumPlayed ( const QModelIndex & index ) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
     playlistModel->setActiveRow(playlistModel->rowForTrack(tracks.first()));
+    playlistView->scrollTo(playlistModel->indexForTrack(tracks.first()), QAbstractItemView::PositionAtCenter);
 }
 
 void FinderWidget::trackEntered ( const QModelIndex & index ) {
@@ -285,4 +295,5 @@ void FinderWidget::folderPlayed(const QModelIndex & index) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
     playlistModel->setActiveRow(playlistModel->rowForTrack(tracks.first()));
+    playlistView->scrollTo(playlistModel->indexForTrack(tracks.first()), QAbstractItemView::PositionAtCenter);
 }

@@ -2,14 +2,15 @@
 #define FINDERWIDGET_H
 
 #include <QtGui>
-#include "playlistmodel.h"
-#include "breadcrumbwidget.h"
 
+class BreadcrumbWidget;
+class PlaylistModel;
+class PlaylistView;
+class THBlackBar;
 class ArtistSqlModel;
 class AlbumSqlModel;
 class TrackSqlModel;
 class FileSystemModel;
-class THBlackBar;
 
 namespace Finder {
 
@@ -41,6 +42,9 @@ public:
     void setPlaylistModel(PlaylistModel *playlistModel) {
         this->playlistModel = playlistModel;
     }
+    void setPlaylistView(PlaylistView *playlistView) {
+        this->playlistView = playlistView;
+    }
     void appear();
 
 private slots:
@@ -64,6 +68,7 @@ private slots:
     void folderPlayed(const QModelIndex &index);
 
 private:
+    void setupBar();
     void setupArtists();
     void setupAlbums();
     void setupFolders();
@@ -80,6 +85,7 @@ private:
     BreadcrumbWidget *breadcrumb;
 
     PlaylistModel *playlistModel;
+    PlaylistView *playlistView;
 
     QListView *folderListView;
     FileSystemModel *folderListModel;
