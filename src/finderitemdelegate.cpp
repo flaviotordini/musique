@@ -143,7 +143,6 @@ void FinderItemDelegate::paintArtist(QPainter* painter,
     painter->translate(option.rect.topLeft());
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
-    // const bool isActive = index.data( ActiveItemRole ).toBool();
     const bool isHovered = index.data(Finder::HoveredItemRole ).toBool();
     const bool isSelected = option.state & QStyle::State_Selected;
 
@@ -167,7 +166,7 @@ void FinderItemDelegate::paintArtist(QPainter* painter,
     drawName(painter, artist->getName(), line, isSelected);
 
     // if (artist->getTrackCount() > 0) {
-    drawBadge(painter, QString::number(artist->getTrackCount()), line);
+    // drawBadge(painter, QString::number(artist->getTrackCount()), line);
     // }
 
     painter->restore();
@@ -230,7 +229,7 @@ void FinderItemDelegate::paintFolder(QPainter* painter,
     painter->drawPixmap(0, 0, getMissingItemBackground());
     QIcon fileIcon = index.data(QFileSystemModel::FileIconRole).value<QIcon>();
     if (!fileIcon.isNull())
-        painter->drawPixmap(ITEM_WIDTH/2-32, ITEM_HEIGHT/3-32, fileIcon.pixmap(QSize(64,64)));
+        painter->drawPixmap(ITEM_WIDTH/2-32, ITEM_HEIGHT/3-32, fileIcon.pixmap(QSize(64, 64)));
 
     // play icon overlayed on the thumb
     if (isHovered) {
