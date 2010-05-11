@@ -207,6 +207,7 @@ void MainWindow::createActions() {
     QAction *action;
 
     action = new QAction(QtIconLoader::icon("edit-clear", QIcon(":/images/edit-clear.png")), tr("&Clear"), this);
+    action->setShortcut(QKeySequence::New);
     action->setStatusTip(tr("Remove all tracks from the playlist"));
     action->setEnabled(false);
     actions->insert("clearPlaylist", action);
@@ -261,10 +262,17 @@ void MainWindow::createActions() {
         // never autorepeat.
         // unexperienced users tend to keep keys pressed for a "long" time
         action->setAutoRepeat(false);
-        action->setToolTip(action->statusTip());
+
+        // not needed since we disabled tooltips altogether
+        // action->setToolTip(action->statusTip());
 
         // make the actions work when in fullscreen
         action->setShortcutContext(Qt::ApplicationShortcut);
+
+        // show keyboard shortcuts in the status bar
+        if (!action->shortcut().isEmpty())
+            action->setStatusTip(action->statusTip() +
+                                 " (" + action->shortcut().toString(QKeySequence::NativeText) + ")");
 
         // no icons in menus
         action->setIconVisibleInMenu(false);
@@ -530,12 +538,32 @@ void MainWindow::toggleContextualView() {
     }
     if (views->currentWidget() == contextualView) {
         goBack();
+        contextualAct->setChecked(false);
+
+        QList<QKeySequence> shortcuts;
+        shortcuts << QKeySequence(Qt::CTRL + Qt::Key_Space);
+        contextualAct->setShortcuts(shortcuts);
+        stopAct->setShortcut(QKeySequence(Qt::Key_Escape));
+
     } else {
         Track *track = mediaView->getPlaylistModel()->activeTrack();
         if (track) {
             contextualView->setTrack(track);
             showWidget(contextualView);
+            contextualAct->setChecked(true);
+
+            stopAct->setShortcut(QString(""));
+            QList<QKeySequence> shortcuts;
+            // for some reason it is important that ESC comes first
+            shortcuts << QKeySequence(Qt::Key_Escape) << contextualAct->shortcuts();
+            contextualAct->setShortcuts(shortcuts);
         }
+    }
+}
+
+void MainWindow::updateContextualView(Track *track) {
+    if (views->currentWidget() == contextualView) {
+        contextualView->setTrack(track);
     }
 }
 

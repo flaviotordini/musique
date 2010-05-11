@@ -28,6 +28,9 @@ public:
     void setMediaObject(Phonon::MediaObject *mediaObject);
     PlaylistModel* getPlaylistModel() { return playlistModel; }
 
+protected:
+    void mouseMoveEvent (QMouseEvent *event);
+
 private slots:
     void activeRowChanged(int);
     void stateChanged(Phonon::State newState, Phonon::State oldState);
@@ -41,6 +44,7 @@ private:
     PlaylistModel *playlistModel;
     PlaylistWidget *playlistWidget;
     QTimer *errorTimer;
+    QTimer *mouseTimer;
 
 };
 

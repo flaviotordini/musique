@@ -30,6 +30,8 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     playlistView->setPlaylistModel(playlistModel);
     splitter->addWidget(playlistView);
 
+    finderWidget->setPlaylistView(playlistView);
+
     // restore splitter state
     QSettings settings;
     splitter->restoreState(settings.value("splitter").toByteArray());
@@ -114,7 +116,6 @@ void MediaView::activeRowChanged(int row) {
     mediaObject->play();
 
     // ensure active item is visible
-    // QModelIndex index = playlistModel->index(row, 0, QModelIndex());
     QModelIndex index = playlistModel->indexForTrack(track);
     playlistView->scrollTo(index, QAbstractItemView::EnsureVisible);
 
@@ -127,6 +128,9 @@ void MediaView::activeRowChanged(int row) {
             windowTitle += " - " + artist->getName();
         }
         mainWindow->setWindowTitle(windowTitle);
+
+        // update info view
+        mainWindow->updateContextualView(track);
     }
 
 }
