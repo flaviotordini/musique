@@ -66,11 +66,10 @@ Database::~Database() {
 void Database::createDatabase() {
 
     qDebug() << "Creating the database";
+
     // TODO create indexes
 
     const QSqlDatabase db = getConnection();
-
-    // QSqlQuery("create table genres (id integer primary key autoincrement, name varchar(200))", db);
 
     QSqlQuery("create table artists ("
               "id integer primary key autoincrement,"
@@ -81,12 +80,6 @@ void Database::createDatabase() {
               "lifeEnd integer,"
               "albumCount integer,"
               "trackCount integer)", db);
-
-    /*
-    QSqlQuery("create table aliases ("
-              "hash varchar(32) primary key,"
-              "artist integer)", db);
-              */
 
     QSqlQuery("create table albums ("
               "id integer primary key autoincrement,"
@@ -102,7 +95,6 @@ void Database::createDatabase() {
             "create table tracks ("
             "id integer primary key autoincrement,"
             "path varchar(255)," // path is NOT unique: .cue files
-            "hash varchar(32)," // hash of path-title-album-artist-start
             "title varchar(255),"
             "start integer, end integer," // cue files
             "duration integer,"
@@ -110,15 +102,8 @@ void Database::createDatabase() {
             "year integer,"
             "artist integer,"
             "album integer,"
-            "genre integer,"
             "tstamp integer)"
             , db);
-
-    /*
-    QSqlQuery("create table track_tags ("
-              "track integer),"
-              "tag varchar(32))", db);
-              */
 
     QSqlQuery("create table attributes (name varchar(255), value)", db);
     QSqlQuery("insert into attributes (name, value) values ('version', " + QString::number(Constants::DATABASE_VERSION) + ")", db);
