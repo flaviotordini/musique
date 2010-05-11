@@ -5,7 +5,7 @@
 #include "model/track.h"
 #include "playlistmodel.h"
 
-class PlaylistView : public QTableView {
+class PlaylistView : public QListView {
 
     Q_OBJECT
 

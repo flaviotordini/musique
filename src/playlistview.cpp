@@ -7,27 +7,34 @@ namespace The {
 }
 
 PlaylistView::PlaylistView(QWidget *parent) :
-        QTableView(parent),
+        QListView(parent),
         playlistModel(0) {
 
     // delegate
-    // setItemDelegate(new PlaylistItemDelegate(this));
+    setItemDelegate(new PlaylistItemDelegate(this));
 
     // cosmetics
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
-    setShowGrid(false);
-    // setAlternatingRowColors(true);
-    verticalHeader()->hide();
-    // setStyleSheet("::item {border-left:1px solid palette(Window); padding: 10px}");
-    setWordWrap(true);
 
+    /* Table stuff
+    setShowGrid(false);
+    verticalHeader()->hide();
+    */
+
+    // setWordWrap(true);
+
+    // setAlternatingRowColors(true);
+    // setStyleSheet("::item {border-left:1px solid palette(Window); padding: 10px}");
 
     // behaviour
     setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+    /* Table stuff
     setSelectionBehavior(QAbstractItemView::SelectRows);
     setSortingEnabled(true);
+    */
 
     // dragndrop
     setDragEnabled(true);
@@ -49,11 +56,12 @@ PlaylistView::PlaylistView(QWidget *parent) :
 void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
 
     this->playlistModel = playlistModel;
+    setModel(playlistModel);
 
     // this enables sorting
+    /* Table stuff
     QSortFilterProxyModel *proxyPlaylistModel = new QSortFilterProxyModel(this);
     proxyPlaylistModel->setSourceModel(playlistModel);
-
     QTableView::setModel(proxyPlaylistModel);
 
     // headers
@@ -61,15 +69,18 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
     this->horizontalHeader()->setResizeMode(Playlist::TitleColumn, QHeaderView::Stretch);
     this->horizontalHeader()->setResizeMode(Playlist::AlbumColumn, QHeaderView::Stretch);
     this->horizontalHeader()->setResizeMode(Playlist::ArtistColumn, QHeaderView::Stretch);
+    */
 
     // needed to restore the selection after dragndrop
     connect(playlistModel, SIGNAL(needSelectionFor(QList<Track*>)), SLOT(selectTracks(QList<Track*>)));
     connect(this->selectionModel(),
             SIGNAL(selectionChanged ( const QItemSelection & , const QItemSelection & )),
             SLOT(selectionChanged ( const QItemSelection & , const QItemSelection & )));
+
     connect(playlistModel,
             SIGNAL(dataChanged (const QModelIndex &, const QModelIndex &)),
             SLOT(dataChanged(const QModelIndex &, const QModelIndex &)));
+
     connect(playlistModel, SIGNAL(modelReset()), SLOT(modelReset()));
     connect(The::globalActions()->value("clearPlaylist"), SIGNAL(triggered()), playlistModel, SLOT(clear()));
 }
@@ -119,11 +130,17 @@ void PlaylistView::modelReset() {
 
 void PlaylistView::dataChanged(const QModelIndex &, const QModelIndex &) {
     const int rowCount = playlistModel->rowCount(QModelIndex());
-    qDebug() << rowCount;
+    // qDebug() << rowCount;
     bool isPlaylistEmpty = rowCount < 1;
     The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
-    // qDebug() << "Playlist length" << playlistModel->getTotalLength();
-    setStatusTip(tr("Playlist length is"));
+
+    const int totalLength = playlistModel->getTotalLength();
+    QString albumLength;
+    if (totalLength > 3600)
+        albumLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
+    else
+        albumLength = QTime().addSecs(totalLength).toString("m:ss");
+    setStatusTip(tr("Playlist total length is %1").arg(albumLength));
 }
 
 void PlaylistView::moveUpSelected() {
