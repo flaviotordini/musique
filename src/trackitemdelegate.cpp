@@ -1,5 +1,6 @@
 #include "trackitemdelegate.h"
 #include "finderwidget.h"
+#include "model/track.h"
 
 const int TrackItemDelegate::PADDING = 10;
 
