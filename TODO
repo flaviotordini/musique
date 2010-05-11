@@ -1,20 +1,43 @@
 # Minitunes TODO list
 
-## Major features
-- CUE file support
-- Playlist delegate
-- Filesystem model
-- Search
-- Finder navigation: back button
-- Lyrics
-- Shuffle and wraparound
-- Invalidate caches on db update
-- QFileSystemWatcher
+## Blocking release
 
-## Minor stuff
+### scanner
+- CUE file support
+- QFileSystemWatcher
+- Invalidate caches on db update
+- Infinite loop in scanner with "Barabba" => "I Barabba" (Last.fm issue)
+- Investigate album first tracks disappearing, especially "titletracks"
+
+### Playlist
+- Playlist: Shuffle
+- Playlist: Repeat
+- Reordering crash
+- Old active track does not get repainted
+
+### Finder
+- Finder navigation: back button
+- Filesystem model
+- Filesystem: hide empty dirs
+- Filesystem: hide non-track files
+- Search
+
+### Info
+- Year on album
+- style track number
+- "read more" links
+- Lyrics
+- Scrollbar issue
+
+### Social
+- Tell Last.fm about this application and get a valid API key
+- Album years on AudioScrobbler are mostly wrong, report it
+
+## After the first release
+- Finder: A bit of sorting & filtering on Albums and Artist views
+- Autoinfo switching
+- Search suggestions
 - error messages in status bar
 - Stop when finished
 - Artist hover: show number of album, songs & total duration on the status bar
-
-## Bugs
-- Infinite loop in scanner with "Barabba" => "I Barabba" (Last.fm issue)
+- Playlist editing undo
