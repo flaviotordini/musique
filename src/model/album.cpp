@@ -71,7 +71,7 @@ void Album::insert() {
     const QString hash = DataUtils::md5(DataUtils::normalizeTag(name));
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("insert into albums (hash,title,year,artist) values (?,?,?,?)");
+    query.prepare("insert into albums (hash,title,year,artist,trackCount) values (?,?,?,?,0)");
     query.bindValue(0, hash);
     query.bindValue(1, name);
     query.bindValue(2, year);
@@ -110,7 +110,7 @@ void Album::fetchInfo() {
     // also workaround last.fm bug with selftitled albums
 
     if (artist && artist->getName() != name) {
-            fetchLastFmSearch();
+        fetchLastFmSearch();
     } else
         fetchLastFmInfo();
 }
@@ -368,8 +368,14 @@ void Album::setPhoto(QByteArray bytes) {
 QList<Track*> Album::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select id from tracks where album=? order by track, title");
+    if (artist) {
+        query.prepare("select id from tracks where album=? and artist=? order by track, title");
+    } else {
+        query.prepare("select id from tracks where album=? order by track, title");
+    }
     query.bindValue(0, id);
+    if (artist)
+        query.bindValue(1, artist->getId());
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
     QList<Track*> tracks;
