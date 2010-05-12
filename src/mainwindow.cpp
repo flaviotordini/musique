@@ -125,7 +125,9 @@ void MainWindow::createActions() {
             tr("P&revious"), this);
     skipBackwardAct->setStatusTip(tr("Go back to the previous track"));
     skipBackwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Left));
+#if QT_VERSION >= 0x040600
     skipBackwardAct->setPriority(QAction::LowPriority);
+#endif
     actions->insert("previous", skipBackwardAct);
 
     skipForwardAct = new QAction(
@@ -133,7 +135,9 @@ void MainWindow::createActions() {
             tr("&Next"), this);
     skipForwardAct->setStatusTip(tr("Skip to the next track"));
     skipForwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Right));
+#if QT_VERSION >= 0x040600
     skipForwardAct->setPriority(QAction::LowPriority);
+#endif
     actions->insert("skip", skipForwardAct);
 
     playAct = new QAction(
@@ -325,7 +329,11 @@ void MainWindow::createToolBars() {
 
     setUnifiedTitleAndToolBarOnMac(true);
     mainToolBar = new QToolBar(this);
+#if QT_VERSION < 0x040600 || defined(Q_WS_MAC)
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+#else
     mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+#endif
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
 
@@ -440,7 +448,7 @@ void MainWindow::showWidget(QWidget* widget) {
     settingsAct->setEnabled(widget != settingsView);
     fullscreenAct->setEnabled(widget == mediaView);
     aboutAct->setEnabled(widget != aboutView);
-    chooseFolderAct->setEnabled(widget != chooseFolderView);
+    chooseFolderAct->setEnabled(widget != chooseFolderView && widget != collectionScannerView);
 
     // toolbar only for the mediaView
     mainToolBar->setVisible(widget == mediaView || widget == contextualView);
