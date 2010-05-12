@@ -6,16 +6,6 @@
 
 namespace Playlist {
 
-    // to change column positions
-    // change the order of this enum
-    enum PlaylistColumns {
-        TrackColumn = 0,
-        TitleColumn,
-        LengthColumn,
-        AlbumColumn,
-        ArtistColumn
-    };
-
     enum PlaylistDataRoles {
         DataObjectRole = Qt::UserRole,
         ActiveItemRole,
@@ -24,7 +14,7 @@ namespace Playlist {
 
 }
 
-class PlaylistModel : public QAbstractTableModel {
+class PlaylistModel : public QAbstractListModel {
 
     Q_OBJECT
 
@@ -35,12 +25,8 @@ public:
 
     // inherited from QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    // int rowCount( const QModelIndex& parent = QModelIndex() ) const { Q_UNUSED( parent ); return tracks.size(); }
-    int columnCount( const QModelIndex& parent = QModelIndex() ) const { Q_UNUSED( parent ); return 5; }
     QVariant data(const QModelIndex &index, int role) const;
     bool removeRows(int position, int rows, const QModelIndex &parent);
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
-    void sort(int column, Qt::SortOrder order = Qt::AscendingOrder);
 
     // drag and drop
     Qt::ItemFlags flags(const QModelIndex &index) const;
@@ -78,7 +64,6 @@ signals:
 
 private:
     QList<Track*> tracks;
-    int skip;
 
     // the row being played
     int m_activeRow;

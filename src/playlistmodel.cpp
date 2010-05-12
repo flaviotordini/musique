@@ -7,7 +7,7 @@ namespace The {
     QMap<QString, QAction*>* globalActions();
 }
 
-PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractTableModel(parent) {
+PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
     m_activeTrack = 0;
     m_activeRow = -1;
 }
@@ -16,35 +16,15 @@ PlaylistModel::~PlaylistModel() {
 
 }
 
-QVariant PlaylistModel::headerData(int section, Qt::Orientation orientation, int role) const {
-
-    if (role != Qt::DisplayRole || orientation != Qt::Horizontal)
-        return QVariant();
-
-    switch(section) {
-    case Playlist::TrackColumn: return tr("Track");
-    case Playlist::TitleColumn: return tr("Title");
-    case Playlist::AlbumColumn: return tr("Album");
-    case Playlist::ArtistColumn: return tr("Artist");
-        // case 4: return tr("Year");
-    case Playlist::LengthColumn: return tr("Length");
-    default: return "";
-    }
-
-}
-
-int PlaylistModel::rowCount(const QModelIndex &parent) const {
-    if (parent.isValid()) return 0;
+int PlaylistModel::rowCount(const QModelIndex & /* parent */) const {
     return tracks.size();
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
 
-    QVariant nullVariant;
-
     const int row = index.row();
     if (row < 0 || row >= tracks.size())
-        return nullVariant;
+        return QVariant();
 
     Track *track = tracks.at(row);
 
@@ -54,55 +34,30 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
         return QVariant::fromValue(QPointer<Track>(track));
 
     case Playlist::ActiveItemRole:
+        // qDebug() << track->getTitle() << (track == m_activeTrack);
         return track == m_activeTrack;
 
-        /*
-    case Qt::DisplayRole:
-        switch(index.column()) {
-        case  Playlist::TrackColumn: return track->getNumber() ? track->getNumber() : nullVariant;
-        case  Playlist::TitleColumn: return track->getTitle();
-        case  Playlist::AlbumColumn:
-            return track->getAlbum() ? track->getAlbum()->getTitle() : nullVariant;
-        case  Playlist::ArtistColumn:
-            return track->getArtist() ? track->getArtist()->getName() : nullVariant;
-            // case  Playlist::YearColumn: return track->getYear() ? track->getYear() : nullVariant;
-        case  Playlist::LengthColumn:
-            if (track->getLength() > 3600)
-                return QTime().addSecs(track->getLength()).toString("h:mm:ss");
-            else if (track->getLength() > 0)
-                return QTime().addSecs(track->getLength()).toString("m:ss");
-            else
-                return nullVariant;
-        }
-
-    case Qt::TextAlignmentRole:
-        if (index.column() == 0) return Qt::AlignCenter;
-        else return nullVariant;
-        */
     }
 
-    return nullVariant;
+    return QVariant();
 }
 
-void PlaylistModel::setActiveRow( int row) {
-    if (rowExists(row)) {
+void PlaylistModel::setActiveRow(int row) {
+    if (!rowExists(row)) return;
 
-        int oldactiverow = m_activeRow;
+    const int oldActiveRow = m_activeRow;
+    m_activeRow = row;
+    m_activeTrack = trackAt(m_activeRow);
 
-        m_activeRow = row;
-        m_activeTrack = trackAt(row);
-
-        if (rowExists(oldactiverow))
-            emit dataChanged(createIndex(oldactiverow, 0), createIndex(oldactiverow, 0));
-
-        emit dataChanged(createIndex(m_activeRow, 0), createIndex(m_activeRow, 0));
-
-        emit activeRowChanged(row);
-
-    } else {
-        m_activeRow = -1;
-        m_activeTrack = 0;
+    if (rowExists(oldActiveRow)) {
+        QModelIndex oldIndex = index(oldActiveRow, 0, QModelIndex());
+        emit dataChanged(oldIndex, oldIndex);
     }
+
+    QModelIndex newIndex = index(m_activeRow, 0, QModelIndex());
+    emit dataChanged(newIndex, newIndex);
+
+    emit activeRowChanged(row);
 
 }
 
@@ -193,7 +148,7 @@ Qt::DropActions PlaylistModel::supportedDropActions() const {
 }
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const {
-    Qt::ItemFlags defaultFlags = QAbstractTableModel::flags(index);
+    Qt::ItemFlags defaultFlags = QAbstractListModel::flags(index);
     if (index.isValid()) {
         return ( defaultFlags | Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled );
     } else
@@ -222,6 +177,8 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
                                  Qt::DropAction action, int row, int column,
                                  const QModelIndex &parent) {
 
+    QAbstractListModel::dropMimeData(data, action, row, column, parent);
+
     if (action == Qt::IgnoreAction)
         return true;
 
@@ -244,11 +201,15 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
 
     int counter = 0;
     QList<Track*> droppedTracks = trackMimeData->tracks();
+
+    qDebug() << "Dropped" << droppedTracks << "at" << beginRow;
+
     foreach(Track *track, droppedTracks) {
 
         // remove track
         const int trackRow = tracks.indexOf(track);
-        removeRows(trackRow, 1, QModelIndex());
+        if (trackRow != -1)
+            removeRows(trackRow, 1, QModelIndex());
 
         // and then add it at the new position
         const int targetRow = beginRow + counter;
@@ -263,6 +224,8 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
     m_activeRow = tracks.indexOf(m_activeTrack);
 
     The::globalActions()->value("clearPlaylist")->setEnabled(true);
+
+    emit needSelectionFor(droppedTracks);
 
     return true;
 
@@ -305,9 +268,5 @@ void PlaylistModel::move(QModelIndexList &indexes, bool up) {
     }
 
     emit needSelectionFor(movedTracks);
-
-}
-
-void PlaylistModel::sort(int column, Qt::SortOrder order) {
 
 }
