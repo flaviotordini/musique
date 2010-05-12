@@ -11,5 +11,6 @@ ArtistListView::ArtistListView(QWidget *parent) : BaseFinderView(parent) {
 void ArtistListView::appear() {
     ArtistSqlModel *artistListModel = static_cast<ArtistSqlModel*>(model());
     if (artistListModel)
-        artistListModel->setQuery("select id from artists order by trackCount desc", Database::instance().getConnection());
+        artistListModel->setQuery("select id from artists where trackCount > 1 order by trackCount desc",
+                                  Database::instance().getConnection());
 }
