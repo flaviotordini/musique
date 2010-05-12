@@ -1,4 +1,6 @@
 #include "playlistview.h"
+#include "model/track.h"
+#include "playlistmodel.h"
 #include "playlistitemdelegate.h"
 
 namespace The {
@@ -17,29 +19,15 @@ PlaylistView::PlaylistView(QWidget *parent) :
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
-
-    /* Table stuff
-    setShowGrid(false);
-    verticalHeader()->hide();
-    */
-
-    // setWordWrap(true);
-
     // setAlternatingRowColors(true);
-    // setStyleSheet("::item {border-left:1px solid palette(Window); padding: 10px}");
 
     // behaviour
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
-    /* Table stuff
-    setSelectionBehavior(QAbstractItemView::SelectRows);
-    setSortingEnabled(true);
-    */
-
     // dragndrop
     setDragEnabled(true);
     setAcceptDrops(true);
-    // setDropIndicatorShown(true);
+    setDropIndicatorShown(false);
     setDragDropMode(QAbstractItemView::DragDrop);
 
     // actions
@@ -58,22 +46,10 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
     this->playlistModel = playlistModel;
     setModel(playlistModel);
 
-    // this enables sorting
-    /* Table stuff
-    QSortFilterProxyModel *proxyPlaylistModel = new QSortFilterProxyModel(this);
-    proxyPlaylistModel->setSourceModel(playlistModel);
-    QTableView::setModel(proxyPlaylistModel);
-
-    // headers
-    this->horizontalHeader()->setResizeMode(QHeaderView::ResizeToContents);
-    this->horizontalHeader()->setResizeMode(Playlist::TitleColumn, QHeaderView::Stretch);
-    this->horizontalHeader()->setResizeMode(Playlist::AlbumColumn, QHeaderView::Stretch);
-    this->horizontalHeader()->setResizeMode(Playlist::ArtistColumn, QHeaderView::Stretch);
-    */
-
     // needed to restore the selection after dragndrop
     connect(playlistModel, SIGNAL(needSelectionFor(QList<Track*>)), SLOT(selectTracks(QList<Track*>)));
-    connect(this->selectionModel(),
+
+    connect(selectionModel(),
             SIGNAL(selectionChanged ( const QItemSelection & , const QItemSelection & )),
             SLOT(selectionChanged ( const QItemSelection & , const QItemSelection & )));
 
@@ -111,13 +87,15 @@ void PlaylistView::removeSelected() {
 void PlaylistView::selectTracks(QList<Track*> tracks) {
     foreach (Track *track, tracks) {
         QModelIndex index = playlistModel->indexForTrack(track);
-        // this->selectionModel()->select(index, QItemSelectionModel::Select);
-        this->selectionModel()->selectedRows(playlistModel->rowForTrack(track));
-        this->scrollTo(index, QAbstractItemView::EnsureVisible);
+        // FIXME this causes dropped tracks to disappear!
+        // selectionModel()->select(index, QItemSelectionModel::Select);
+        scrollTo(index, QAbstractItemView::EnsureVisible);
     }
 }
 
-void PlaylistView::selectionChanged(const QItemSelection & /*selected*/, const QItemSelection & /*deselected*/) {
+void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
+    QListView::selectionChanged(selected, deselected);
+
     const bool gotSelection = this->selectionModel()->hasSelection();
     The::globalActions()->value("remove")->setEnabled(gotSelection);
     The::globalActions()->value("moveUp")->setEnabled(gotSelection);
@@ -128,19 +106,21 @@ void PlaylistView::modelReset() {
     The::globalActions()->value("clearPlaylist")->setEnabled(false);
 }
 
-void PlaylistView::dataChanged(const QModelIndex &, const QModelIndex &) {
+void PlaylistView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight) {
+    QListView::dataChanged(topLeft, bottomRight);
+
     const int rowCount = playlistModel->rowCount(QModelIndex());
-    // qDebug() << rowCount;
+    // qDebug() << "Data changed" << rowCount;
     bool isPlaylistEmpty = rowCount < 1;
     The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
 
     const int totalLength = playlistModel->getTotalLength();
-    QString albumLength;
+    QString playlistLength;
     if (totalLength > 3600)
-        albumLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
+        playlistLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
     else
-        albumLength = QTime().addSecs(totalLength).toString("m:ss");
-    setStatusTip(tr("Playlist total length is %1").arg(albumLength));
+        playlistLength = QTime().addSecs(totalLength).toString("m:ss");
+    setStatusTip(tr("Playlist total length is %1").arg(playlistLength));
 }
 
 void PlaylistView::moveUpSelected() {

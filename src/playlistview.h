@@ -2,8 +2,9 @@
 #define PLAYLISTVIEW_H
 
 #include <QtGui>
-#include "model/track.h"
-#include "playlistmodel.h"
+
+class PlaylistModel;
+class Track;
 
 class PlaylistView : public QListView {
 
@@ -21,9 +22,9 @@ public slots:
     void moveDownSelected();
     void itemActivated(const QModelIndex &index);
     void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
-    void modelReset();
     void dataChanged(const QModelIndex &, const QModelIndex &);
     void selectTracks(QList<Track*> tracks);
+    void modelReset();
 
 private:
     PlaylistModel *playlistModel;
