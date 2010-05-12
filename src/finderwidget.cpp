@@ -241,7 +241,7 @@ void FinderWidget::albumActivated ( const QModelIndex & index ) {
     const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
     Album *album = albumPointer.data();
 
-    QString qry("select id from tracks where album=%1 order by track, title");
+    QString qry("select id from tracks where album=%1 order by track, path");
     qry = qry.arg(album->getId());
     qDebug() << qry;
     trackListModel->setQuery(qry, Database::instance().getConnection());
