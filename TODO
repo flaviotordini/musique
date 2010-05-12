@@ -12,10 +12,10 @@
 ### Playlist
 - Playlist: Shuffle
 - Playlist: Repeat
-- Reordering crash
-- Old active track does not get repainted
 
 ### Finder
+- Models: return QVariant as QObject, not as ArtistPointer:
+http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-stored-into-a-qvariant-inherits-the-qobject-class.html
 - Finder navigation: back button
 - Filesystem model
 - Filesystem: hide empty dirs
@@ -34,10 +34,22 @@
 - Album years on AudioScrobbler are mostly wrong, report it
 
 ## After the first release
-- Finder: A bit of sorting & filtering on Albums and Artist views
+- Playlist: Restore selection after dragndrop
+- Select all relevant tracks when clicking the playlist album header
+- Next/Previous album playback actions
+- Fix long names in finder
+- "Drag things here" as empty playlist background
+- Restore the playlist accross sessions
+- Finder: Highlight currently playing items (Artists, Albums, Folders)
+- Year-based album ordering in Artist.getTracks()
+- Scanner: hanging HTTP requests
 - Autoinfo switching
 - Search suggestions
 - error messages in status bar
 - Stop when finished
 - Artist hover: show number of album, songs & total duration on the status bar
 - Playlist editing undo
+
+## Funny stuff geeks may ask for
+- Load/Save playlists as /Playlists/[playlistname].pls. Show "Playlists" tab if there's at least one.
+- Finder: A bit of sorting & filtering on Albums and Artist views
