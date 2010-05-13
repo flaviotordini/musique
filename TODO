@@ -10,6 +10,7 @@
 - Investigate album first tracks disappearing, especially "titletracks"
 
 ### Playlist
+- Drop area
 - Playlist: Shuffle
 - Playlist: Repeat
 
@@ -26,7 +27,7 @@ http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-store
 - Year on album
 - style track number
 - "read more" links
-- Lyrics
+- Cache lyrics to disk
 - Scrollbar issue
 
 ### Social
