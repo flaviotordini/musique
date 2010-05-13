@@ -53,3 +53,13 @@ void ContextualView::disappear() {
     albumInfo->adjustSize();
     adjustSize();
 }
+
+void ContextualView::paintEvent(QPaintEvent *event) {
+    /*
+    QPainter painter(this);
+    QLinearGradient linearGrad(0, 0, 0, height());
+    linearGrad.setColorAt(0, QColor(0x34, 0x34, 0x34));
+    linearGrad.setColorAt(1, QColor(0x00, 0x00, 0x00));
+    painter.fillRect(0, 0, width(), height(), QBrush(linearGrad));
+    */
+}

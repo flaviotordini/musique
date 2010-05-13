@@ -43,7 +43,7 @@ void ArtistInfo::setArtist(Artist *artist) {
 
     QString bio = artist->getBio();
     int bioSplit = bio.indexOf('\n');
-    qDebug() << bio;
+    // qDebug() << bio;
     artistBio->setText(
             "<html><style>a { color: white }</style><body>"
             + bio.left(bioSplit) + QString(" <a href='#readmore'>%1</a>").arg(tr("Read more"))

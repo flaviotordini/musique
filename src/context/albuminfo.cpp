@@ -62,7 +62,7 @@ void AlbumInfo::setAlbum(Album *album) {
         wikiMoreLabel->clear();
     } else {
         int wikiSplit = wiki.indexOf('\n');
-        qDebug() << wiki;
+        // qDebug() << wiki;
         wikiLabel->setText(
                 "<html><style>a { color: white }</style><body>"
                 + wiki.left(wikiSplit) + QString(" <a href='#readmore'>%1</a>").arg(tr("Read more"))

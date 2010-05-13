@@ -35,7 +35,7 @@ public:
     void setYear(int year) { this->year = year; }
     QString getHash();
     QString getAbsolutePath();
-    QString getLyrics();
+    void getLyrics();
 
     // relations
     Album* getAlbum() { return album; }
@@ -62,10 +62,13 @@ public:
 
 signals:
     void gotInfo();
+    void gotLyrics(QString lyrics);
 
 private slots:
     void fetchMusicBrainzTrack();
     void parseMusicBrainzTrack(QByteArray bytes);
+    void parseLyricsSearchResults(QByteArray bytes);
+    void scrapeLyrics(QByteArray bytes);
 
 private:
     static QString getHash(QString);

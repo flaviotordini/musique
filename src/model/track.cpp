@@ -10,6 +10,10 @@
 #include <QtNetwork>
 #include "../mbnetworkaccess.h"
 
+namespace The {
+    NetworkAccess* http();
+}
+
 Track::Track() {
     album = 0;
     artist = 0;
@@ -170,12 +174,27 @@ void Track::update() {
 
 void Track::remove(QString path) {
     // qDebug() << "Track::remove";
+
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("delete from tracks where path=?");
     query.bindValue(0, path);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
+
+    query.prepare("select album, artist from tracks where path=?");
+    query.bindValue(0, path);
+    success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+    if (query.next()) {
+        int albumId = query.value(0).toInt();
+        int artistId = query.value(1).toInt();
+        query.prepare("update albums set trackCount=trackCount-1 where id=?");
+        query.bindValue(0, albumId);
+        success = query.exec();
+        if (!success) qDebug() << query.lastError().text();
+    }
+
 }
 
 QString Track::getHash() {
@@ -226,8 +245,74 @@ QString Track::getAbsolutePath() {
     return absolutePath;
 }
 
-QString Track::getLyrics() {
-    return QString();
+void Track::getLyrics() {
+
+    // http://lyrics.wikia.com/LyricWiki:REST
+    QUrl url = QString(
+            "http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
+            .arg(artist->getName())
+            .arg(title);
+
+    QObject *reply = The::http()->get(url);
+    connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLyricsSearchResults(QByteArray)));
+    // connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotLyrics()));
+}
+
+void Track::parseLyricsSearchResults(QByteArray bytes) {
+    QString lyricsUrl = DataUtils::getXMLElementText(bytes, "url");
+    if (lyricsUrl.contains("action=edit")) {
+        // Lyrics not found
+    } else {
+        // Lyrics found, get them
+        QObject *reply = The::http()->get(lyricsUrl);
+        connect(reply, SIGNAL(data(QByteArray)), SLOT(scrapeLyrics(QByteArray)));
+        // connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotLyrics()));
+    }
+}
+
+void Track::scrapeLyrics(QByteArray bytes) {
+    QString lyrics = QString::fromUtf8(bytes);
+
+
+    /*
+      qDebug() << lyrics;
+    QRegExp re = QRegExp("<div class=.lyricbox\"[^>]*>(.+)</div>");
+    bool match = re.exactMatch(lyrics);
+
+    // handle regexp failure
+    if (!match || re.numCaptures() < 1) {
+        qDebug("Cannot scrape lyrics");
+        return;
+    }
+
+    lyrics = re.cap(1);
+    */
+
+    int pos = lyrics.indexOf( "'lyricbox'" );
+    int startPos = lyrics.indexOf( ">", pos ) + 1;
+    int endPos = lyrics.indexOf( "</div>", startPos );
+    int otherDivPos = lyrics.indexOf( "<div", startPos );
+    while ( otherDivPos != -1 && otherDivPos < endPos ) {
+        endPos = lyrics.indexOf( "</div>", endPos + 1 );
+        otherDivPos = lyrics.indexOf( "<div", otherDivPos + 1 );
+    }
+    lyrics = lyrics.mid(startPos, endPos-startPos);
+
+    // take care of a few special cases
+    // relevant = relevant.replace(/<br\s*\/?>/g, "\n") + "\n\n"; // convert <br> to \n
+    // relevant = relevant.replace( /&mdash;/g, "—" ); // not supported by QDomDocument
+
+    // strip adverts
+    pos = lyrics.indexOf( "rtMatcher" );
+    while( pos != -1 ) {
+        startPos = lyrics.lastIndexOf( "<div", pos);
+        endPos = lyrics.indexOf( "</div>", pos);
+        qDebug() << "rtMatcher:" << startPos << endPos << lyrics;
+        lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 6);
+        pos = lyrics.indexOf( "rtMatcher" );
+    }
+
+    emit gotLyrics(lyrics);
 }
 
 int Track::getTotalLength(QList<Track *>tracks) {

@@ -19,6 +19,7 @@ TrackInfo::TrackInfo(QWidget *parent) :
     layout->addWidget(trackNumberLabel);
 
     lyricsLabel = new QLabel(this);
+    lyricsLabel->setTextFormat(Qt::RichText);
     lyricsLabel->setAlignment(Qt::AlignTop);
     lyricsLabel->setOpenExternalLinks(true);
     lyricsLabel->setWordWrap(true);
@@ -37,9 +38,14 @@ void TrackInfo::setTrack(Track *track) {
 
     trackNumberLabel->setText(QString::number(track->getNumber()));
 
-    QString lyrics = track->getLyrics();
-    lyricsLabel->setText(lyrics);
+    lyricsLabel->clear();
+    connect(track, SIGNAL(gotLyrics(QString)), this, SLOT(showLyrics(QString)));
+    track->getLyrics();
 
+}
+
+void TrackInfo::showLyrics(QString lyrics) {
+    lyricsLabel->setText(lyrics);
 }
 
 void TrackInfo::clear() {

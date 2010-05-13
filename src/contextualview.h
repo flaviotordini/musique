@@ -26,6 +26,9 @@ public:
     }
     void setTrack(Track* track);
 
+protected:
+    void paintEvent(QPaintEvent *event);
+
 private:
     ArtistInfo *artistInfo;
     AlbumInfo *albumInfo;
