@@ -2,17 +2,16 @@
 #define PLAYLISTWIDGET_H
 
 #include <QtGui>
-#include "playlistview.h"
+
+class PlaylistView;
+class DropArea;
 
 class PlaylistWidget : public QWidget {
 
     Q_OBJECT;
 
 public:
-    PlaylistWidget(PlaylistView *parent);
-
-private:
-    PlaylistView *playlistView;
+    PlaylistWidget(PlaylistView *playlistView, DropArea *dropArea, QWidget *parent);
 
 };
 

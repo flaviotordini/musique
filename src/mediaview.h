@@ -10,6 +10,8 @@
 #include "playlistmodel.h"
 #include "playlistwidget.h"
 
+class DropArea;
+
 class MediaView : public QWidget, public View {
 
     Q_OBJECT;
@@ -41,7 +43,7 @@ private:
     PlaylistModel *playlistModel;
     PlaylistWidget *playlistWidget;
     QTimer *errorTimer;
-    QTimer *mouseTimer;
+    DropArea *dropArea;
 
 };
 

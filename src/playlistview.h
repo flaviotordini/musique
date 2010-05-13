@@ -26,6 +26,9 @@ public slots:
     void selectTracks(QList<Track*> tracks);
     void modelReset();
 
+protected:
+    void dragEnterEvent(QDragEnterEvent *event);
+
 private:
     PlaylistModel *playlistModel;
 

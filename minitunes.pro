@@ -11,7 +11,8 @@ TARGET = minitunes
 mac { 
     TARGET = Minitunes
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.4
-    LIBS += -framework TagLib
+    LIBS += -framework \
+        TagLib
     LIBS += /Library/Frameworks/TagLib.framework/TagLib.dylib
     INCLUDEPATH += /Library/Frameworks/TagLib.framework/Headers
 }
@@ -73,7 +74,8 @@ HEADERS += src/mainwindow.h \
     src/tracksqlmodel.h \
     src/tracklistview.h \
     src/trackitemdelegate.h \
-    src/playlistitemdelegate.h
+    src/playlistitemdelegate.h \
+    src/droparea.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/settingsview.cpp \
@@ -122,7 +124,8 @@ SOURCES += src/main.cpp \
     src/tracksqlmodel.cpp \
     src/tracklistview.cpp \
     src/trackitemdelegate.cpp \
-    src/playlistitemdelegate.cpp
+    src/playlistitemdelegate.cpp \
+    src/droparea.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
@@ -149,7 +152,7 @@ unix {
     INSTALLS += target
     target.path = $$BINDIR
     DATADIR = $$PREFIX/share
-    PKGDATADIR = $$DATADIR/minitube
+    PKGDATADIR = $$DATADIR/minitunes
     DEFINES += DATADIR=\\\"$$DATADIR\\\" \
         PKGDATADIR=\\\"$$PKGDATADIR\\\"
     INSTALLS += translations \
@@ -164,13 +167,13 @@ unix {
     desktop.files += minitunes.desktop
     
     # iconxpm.path = $$DATADIR/pixmaps
-    # iconxpm.files += data/minitube.xpm
+    # iconxpm.files += data/minitunes.xpm
     iconsvg.path = $$DATADIR/icons/hicolor/scalable/apps
-    iconsvg.files += data/minitube.svg
+    iconsvg.files += data/minitunes.svg
     icon16.path = $$DATADIR/icons/hicolor/16x16/apps
-    icon16.files += data/16x16/minitube.png
+    icon16.files += data/16x16/minitunes.png
     icon32.path = $$DATADIR/icons/hicolor/32x32/apps
-    icon32.files += data/32x32/minitube.png
+    icon32.files += data/32x32/minitunes.png
     icon128.path = $$DATADIR/icons/hicolor/128x128/apps
-    icon128.files += data/128x128/minitube.png
+    icon128.files += data/128x128/minitunes.png
 }

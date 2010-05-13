@@ -135,3 +135,11 @@ void PlaylistView::moveDownSelected() {
     QModelIndexList indexes = this->selectionModel()->selectedIndexes();
     playlistModel->move(indexes, false);
 }
+
+void PlaylistView::dragEnterEvent(QDragEnterEvent *event) {
+    QListView::dragEnterEvent(event);
+    qDebug() << "dragEnter";
+    if (verticalScrollBar()->isVisible()) {
+        qDebug() << "need drop area";
+    }
+}

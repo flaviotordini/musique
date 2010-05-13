@@ -2,6 +2,7 @@
 #include "model/track.h"
 #include "model/artist.h"
 #include "../mainwindow.h"
+#include "droparea.h"
 
 namespace The {
     QMap<QString, QAction*>* globalActions();
@@ -28,7 +29,13 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     // playlist view
     playlistView = new PlaylistView(this);
     playlistView->setPlaylistModel(playlistModel);
-    splitter->addWidget(playlistView);
+
+    // drop area
+    dropArea = new DropArea(this);
+
+    // playlist widget, handles the playlist/droparea layout
+    PlaylistWidget *playlistWidget = new PlaylistWidget(playlistView, dropArea, this);
+    splitter->addWidget(playlistWidget);
 
     finderWidget->setPlaylistView(playlistView);
 
@@ -136,8 +143,7 @@ void MediaView::activeRowChanged(int row) {
 }
 
 void MediaView::handleError(QString message) {
-    // TODO videoAreaWidget->showError(message);
-    // recover from errors by skipping to the next video
+    // recover from errors by skipping to the next track
     errorTimer->start();
 }
 
