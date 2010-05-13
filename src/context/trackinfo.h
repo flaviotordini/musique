@@ -14,6 +14,9 @@ public:
     void setTrack(Track *track);
     void clear();
 
+private slots:
+    void showLyrics(QString lyrics);
+
 private:
     QLabel *titleLabel;
     QLabel *trackNumberLabel;
