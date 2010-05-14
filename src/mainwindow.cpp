@@ -43,11 +43,13 @@ MainWindow::MainWindow() {
     this->setContextMenuPolicy(Qt::NoContextMenu);
 
     // big views need a scroll area
+    /*
     scrollArea = new QScrollArea(this);
     scrollArea->setFrameShape(QFrame::NoFrame);
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(views);
-    setCentralWidget(scrollArea);
+    */
+    setCentralWidget(views);
 
     // show the initial view
     Database &db = Database::instance();
@@ -187,6 +189,7 @@ void MainWindow::createActions() {
 
     chooseFolderAct = new QAction(tr("&Change collection folder..."), this);
     chooseFolderAct->setStatusTip(tr("Choose a different music collection folder"));
+    chooseFolderAct->setMenuRole(QAction::ApplicationSpecificRole);
     actions->insert("chooseFolder", chooseFolderAct);
     connect(chooseFolderAct, SIGNAL(triggered()), this, SLOT(showChooseFolderView()));
 
@@ -452,7 +455,8 @@ void MainWindow::showWidget(QWidget* widget) {
 
     // toolbar only for the mediaView
     mainToolBar->setVisible(widget == mediaView || widget == contextualView);
-    statusToolBar->setVisible(widget == mediaView || widget == contextualView);
+    // statusToolBar->setVisible(widget == mediaView || widget == contextualView);
+    statusBar()->setVisible(widget == mediaView || widget == contextualView);
 
 #ifdef Q_WS_MAC
     // crossfade only on OSX

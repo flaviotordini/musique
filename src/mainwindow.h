@@ -78,7 +78,7 @@ private:
     // view mechanism
     QStackedWidget *views;
     QStack<QWidget*> *history;
-    QScrollArea *scrollArea;
+    // QScrollArea *scrollArea;
 
     // view widgets
     QWidget *chooseFolderView;

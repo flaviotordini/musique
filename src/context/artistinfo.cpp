@@ -22,7 +22,7 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
     artistBio->setAlignment(Qt::AlignTop);
     artistBio->setOpenExternalLinks(true);
     artistBio->setWordWrap(true);
-    artistBio->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    artistBio->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
     layout->addWidget(artistBio);
 
@@ -30,7 +30,7 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
     artistBioMore->setAlignment(Qt::AlignTop);
     artistBioMore->setOpenExternalLinks(true);
     artistBioMore->setWordWrap(true);
-    artistBioMore->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    artistBioMore->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     artistBioMore->hide();
     layout->addWidget(artistBioMore);
 

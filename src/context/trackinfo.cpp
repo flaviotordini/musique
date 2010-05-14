@@ -15,15 +15,17 @@ TrackInfo::TrackInfo(QWidget *parent) :
     titleLabel->setFont(FontUtils::bigBold());
     layout->addWidget(titleLabel);
 
+    /*
     trackNumberLabel = new QLabel(this);
     layout->addWidget(trackNumberLabel);
+    */
 
     lyricsLabel = new QLabel(this);
     lyricsLabel->setTextFormat(Qt::RichText);
     lyricsLabel->setAlignment(Qt::AlignTop);
     lyricsLabel->setOpenExternalLinks(true);
     lyricsLabel->setWordWrap(true);
-    lyricsLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    lyricsLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(lyricsLabel);
 
 }
@@ -36,7 +38,7 @@ void TrackInfo::setTrack(Track *track) {
 
     titleLabel->setText(track->getTitle());
 
-    trackNumberLabel->setText(QString::number(track->getNumber()));
+    // trackNumberLabel->setText(QString::number(track->getNumber()));
 
     lyricsLabel->clear();
     connect(track, SIGNAL(gotLyrics(QString)), this, SLOT(showLyrics(QString)));

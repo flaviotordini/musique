@@ -6,8 +6,7 @@
 #include "../database.h"
 
 AlbumInfo::AlbumInfo(QWidget *parent) :
-        QWidget(parent)
-{
+        QWidget(parent) {
 
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -37,14 +36,18 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     wikiMoreLabel->hide();
     layout->addWidget(wikiMoreLabel);
 
+    /*
     trackListView = new TrackListView(this);
-    trackListView->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+    trackListView->setStyleSheet("background: transparent");
+    trackListView->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     trackListView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     trackListModel = new TrackSqlModel(this);
     trackListView->setModel(trackListModel);
     // no user interaction
-    trackListView->setEnabled(false);
+    // trackListView->setEnabled(false);
+    trackListView->setDragEnabled(false);
     layout->addWidget(trackListView);
+    */
 
 }
 
@@ -72,6 +75,7 @@ void AlbumInfo::setAlbum(Album *album) {
     }
     photoLabel->setPixmap(QPixmap::fromImage(album->getPhoto()));
 
+    /*
     QString qry("SELECT id FROM tracks where album=%1 order by track, title");
     qry = qry.arg(album->getId());
     qDebug() << qry;
@@ -79,6 +83,7 @@ void AlbumInfo::setAlbum(Album *album) {
     if (trackListModel->lastError().isValid())
         qDebug() << trackListModel->lastError();
     trackListView->setMinimumHeight(trackListView->maximumViewportSize().height());
+    */
 
 }
 
@@ -87,5 +92,5 @@ void AlbumInfo::clear() {
     photoLabel->clear();
     wikiLabel->clear();
     wikiMoreLabel->clear();
-    trackListModel->clear();
+    // trackListModel->clear();
 }

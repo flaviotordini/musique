@@ -5,16 +5,40 @@
 #include "model/track.h"
 
 ContextualView::ContextualView(QWidget *parent) :
+        QScrollArea(parent) {
+    scrollingContextualView = new ScrollingContextualView(this);
+    setFrameShape(QFrame::NoFrame);
+    setWidgetResizable(true);
+    setWidget(scrollingContextualView);
+}
+
+void ContextualView::setTrack(Track *track) {
+    scrollingContextualView->artistInfo->setArtist(track->getArtist());
+    scrollingContextualView->albumInfo->setAlbum(track->getAlbum());
+    scrollingContextualView->trackInfo->setTrack(track);
+    scrollingContextualView->adjustSize();
+    ensureVisible(0, 0, 1, 1);
+}
+
+void ContextualView::disappear() {
+    scrollingContextualView->albumInfo->clear();
+
+    // this fixes the vertical scrollbar
+    scrollingContextualView->albumInfo->adjustSize();
+    adjustSize();
+}
+
+ScrollingContextualView::ScrollingContextualView(QWidget *parent) :
         QWidget(parent) {
 
-
-    setAutoFillBackground(true);
+    // setAutoFillBackground(true);
 
     // colors
     QPalette p = palette();
-    p.setBrush(QPalette::Window, Qt::black);
-    p.setBrush(QPalette::Foreground, Qt::white);
-    p.setBrush(QPalette::Base, Qt::black);
+    p.setBrush(QPalette::Window, QColor(0x40, 0x40, 0x40));
+    // p.setBrush(QPalette::Foreground, Qt::white);
+    p.setBrush(QPalette::Foreground, QColor(0xdc, 0xdc, 0xdc));
+    p.setBrush(QPalette::Base, Qt::red);
     p.setBrush(QPalette::Text, Qt::white);
     p.setColor(QPalette::Link, Qt::white);
     p.setBrush(QPalette::LinkVisited, Qt::white);
@@ -40,26 +64,11 @@ ContextualView::ContextualView(QWidget *parent) :
     
 }
 
-void ContextualView::setTrack(Track *track) {
-    artistInfo->setArtist(track->getArtist());
-    albumInfo->setAlbum(track->getAlbum());
-    trackInfo->setTrack(track);
-}
-
-void ContextualView::disappear() {
-    albumInfo->clear();
-
-    // this fixes the vertical scrollbar
-    albumInfo->adjustSize();
-    adjustSize();
-}
-
-void ContextualView::paintEvent(QPaintEvent *event) {
-    /*
+void ScrollingContextualView::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    QLinearGradient linearGrad(0, 0, 0, height());
-    linearGrad.setColorAt(0, QColor(0x34, 0x34, 0x34));
-    linearGrad.setColorAt(1, QColor(0x00, 0x00, 0x00));
-    painter.fillRect(0, 0, width(), height(), QBrush(linearGrad));
-    */
+    const int gradientHeight = parentWidget()->height();
+    QLinearGradient linearGrad(0, 0, 0, gradientHeight);
+    linearGrad.setColorAt(0, QColor(0x13, 0x13, 0x13));
+    linearGrad.setColorAt(1, QColor(0x40, 0x40, 0x40));
+    painter.fillRect(0, 0, width(), gradientHeight, QBrush(linearGrad));
 }

@@ -9,7 +9,24 @@ class ArtistInfo;
 class AlbumInfo;
 class TrackInfo;
 
-class ContextualView : public QWidget, public View {
+class ScrollingContextualView : public QWidget {
+
+    Q_OBJECT
+
+public:
+    ScrollingContextualView(QWidget *parent);
+
+    ArtistInfo *artistInfo;
+    AlbumInfo *albumInfo;
+    TrackInfo *trackInfo;
+
+protected:
+    void paintEvent(QPaintEvent *event);
+
+};
+
+
+class ContextualView : public QScrollArea, public View {
 
     Q_OBJECT
 
@@ -26,13 +43,8 @@ public:
     }
     void setTrack(Track* track);
 
-protected:
-    void paintEvent(QPaintEvent *event);
-
 private:
-    ArtistInfo *artistInfo;
-    AlbumInfo *albumInfo;
-    TrackInfo *trackInfo;
+    ScrollingContextualView *scrollingContextualView;
 
 };
 
