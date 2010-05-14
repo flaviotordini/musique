@@ -259,12 +259,19 @@ void Track::getLyrics() {
 }
 
 void Track::parseLyricsSearchResults(QByteArray bytes) {
+    QString lyricsText = DataUtils::getXMLElementText(bytes, "lyrics");
+    if (lyricsText == "Instrumental") {
+        emit gotLyrics(lyricsText);
+        return;
+    }
+
     QString lyricsUrl = DataUtils::getXMLElementText(bytes, "url");
     if (lyricsUrl.contains("action=edit")) {
         // Lyrics not found
     } else {
         // Lyrics found, get them
-        QObject *reply = The::http()->get(lyricsUrl);
+        QUrl url = QUrl::fromEncoded(lyricsUrl.toUtf8());
+        QObject *reply = The::http()->get(url);
         connect(reply, SIGNAL(data(QByteArray)), SLOT(scrapeLyrics(QByteArray)));
         // connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotLyrics()));
     }
@@ -303,13 +310,15 @@ void Track::scrapeLyrics(QByteArray bytes) {
     // relevant = relevant.replace( /&mdash;/g, "—" ); // not supported by QDomDocument
 
     // strip adverts
-    pos = lyrics.indexOf( "rtMatcher" );
+    // pos = lyrics.indexOf( "rtMatcher" );
+    pos = lyrics.indexOf("<div");
     while( pos != -1 ) {
         startPos = lyrics.lastIndexOf( "<div", pos);
         endPos = lyrics.indexOf( "</div>", pos);
-        qDebug() << "rtMatcher:" << startPos << endPos << lyrics;
+        // qDebug() << "rtMatcher:" << startPos << endPos << lyrics;
         lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 6);
-        pos = lyrics.indexOf( "rtMatcher" );
+        // pos = lyrics.indexOf( "rtMatcher" );
+        pos = lyrics.indexOf("<div");
     }
 
     emit gotLyrics(lyrics);
