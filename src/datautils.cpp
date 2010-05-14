@@ -11,11 +11,8 @@ static const QRegExp nonWordExpression("\\W+");
   * This function is intended to increase legibility
   */
 QString DataUtils::cleanTag(QString s) {
-    // s.replace("&", "and");
+
     s.replace("_", " ");
-
-    s = s.replace(nonWordExpression, " ");
-
     s = s.simplified();
 
     // Fix all uppercase strings
