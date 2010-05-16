@@ -247,6 +247,9 @@ QString Track::getAbsolutePath() {
 
 void Track::getLyrics() {
 
+    QString artistName;
+    if (artist) artistName = artist->getName();
+
     // http://lyrics.wikia.com/LyricWiki:REST
     QUrl url = QString(
             "http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
@@ -268,6 +271,7 @@ void Track::parseLyricsSearchResults(QByteArray bytes) {
     QString lyricsUrl = DataUtils::getXMLElementText(bytes, "url");
     if (lyricsUrl.contains("action=edit")) {
         // Lyrics not found
+        qDebug() << "Lyrics not available for " << title;
     } else {
         // Lyrics found, get them
         QUrl url = QUrl::fromEncoded(lyricsUrl.toUtf8());
@@ -281,20 +285,6 @@ void Track::scrapeLyrics(QByteArray bytes) {
     QString lyrics = QString::fromUtf8(bytes);
 
 
-    /*
-      qDebug() << lyrics;
-    QRegExp re = QRegExp("<div class=.lyricbox\"[^>]*>(.+)</div>");
-    bool match = re.exactMatch(lyrics);
-
-    // handle regexp failure
-    if (!match || re.numCaptures() < 1) {
-        qDebug("Cannot scrape lyrics");
-        return;
-    }
-
-    lyrics = re.cap(1);
-    */
-
     int pos = lyrics.indexOf( "'lyricbox'" );
     int startPos = lyrics.indexOf( ">", pos ) + 1;
     int endPos = lyrics.indexOf( "</div>", startPos );
@@ -305,19 +295,13 @@ void Track::scrapeLyrics(QByteArray bytes) {
     }
     lyrics = lyrics.mid(startPos, endPos-startPos);
 
-    // take care of a few special cases
-    // relevant = relevant.replace(/<br\s*\/?>/g, "\n") + "\n\n"; // convert <br> to \n
-    // relevant = relevant.replace( /&mdash;/g, "—" ); // not supported by QDomDocument
-
     // strip adverts
-    // pos = lyrics.indexOf( "rtMatcher" );
     pos = lyrics.indexOf("<div");
     while( pos != -1 ) {
         startPos = lyrics.lastIndexOf( "<div", pos);
         endPos = lyrics.indexOf( "</div>", pos);
         // qDebug() << "rtMatcher:" << startPos << endPos << lyrics;
         lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 6);
-        // pos = lyrics.indexOf( "rtMatcher" );
         pos = lyrics.indexOf("<div");
     }
 
