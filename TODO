@@ -24,11 +24,6 @@ http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-store
 - Search
 
 ### Info
-- Year on album
-- style track number
-- "read more" links
-- Cache lyrics to disk
-- Scrollbar issue
 
 ### Social
 - Tell Last.fm about this application and get a valid API key
@@ -50,7 +45,10 @@ http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-store
 - Stop when finished
 - Artist hover: show number of album, songs & total duration on the status bar
 - Playlist editing undo
+- Silently prefetch lyrics in background, 1 per minute
+- Scanner: Fetch album and artist images in a separate thread, outside of the scanner thread
+- Finder: Option to hide items with missing image
+- Finder: A bit of sorting & filtering on Albums and Artist views
 
 ## Funny stuff geeks may ask for
 - Load/Save playlists as /Playlists/[playlistname].pls. Show "Playlists" tab if there's at least one.
-- Finder: A bit of sorting & filtering on Albums and Artist views
