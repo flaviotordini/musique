@@ -187,12 +187,19 @@ void Track::remove(QString path) {
     success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     if (query.next()) {
+
         int albumId = query.value(0).toInt();
-        int artistId = query.value(1).toInt();
         query.prepare("update albums set trackCount=trackCount-1 where id=?");
         query.bindValue(0, albumId);
         success = query.exec();
         if (!success) qDebug() << query.lastError().text();
+
+        int artistId = query.value(1).toInt();
+        query.prepare("update artists set trackCount=trackCount-1 where id=?");
+        query.bindValue(0, artistId);
+        success = query.exec();
+        if (!success) qDebug() << query.lastError().text();
+
     }
 
 }
@@ -250,6 +257,23 @@ void Track::getLyrics() {
     QString artistName;
     if (artist) artistName = artist->getName();
 
+    // read from cache
+    const QString storageLocation =
+            QDesktopServices::storageLocation(QDesktopServices::DataLocation)
+            + "/lyrics";
+    QString filePath = storageLocation;
+    if (artist) filePath += "/" + artist->getHash();
+    filePath += "/" + getHash();
+    QFile file(filePath);
+    if (file.exists()) {
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            qDebug() << "Cannot open file" << file.fileName();
+        } else {
+            QByteArray bytes = file.readAll();
+            emit gotLyrics(QString::fromUtf8(bytes.data()));
+        }
+    }
+
     // http://lyrics.wikia.com/LyricWiki:REST
     QUrl url = QString(
             "http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
@@ -300,9 +324,43 @@ void Track::scrapeLyrics(QByteArray bytes) {
     while( pos != -1 ) {
         startPos = lyrics.lastIndexOf( "<div", pos);
         endPos = lyrics.indexOf( "</div>", pos);
-        // qDebug() << "rtMatcher:" << startPos << endPos << lyrics;
+        // qDebug() << "<div" << startPos << endPos << lyrics;
         lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 6);
         pos = lyrics.indexOf("<div");
+    }
+
+    // strip comments
+    pos = lyrics.indexOf("<!--");
+    while( pos != -1 ) {
+        startPos = lyrics.lastIndexOf( "<!--", pos);
+        endPos = lyrics.indexOf( "-->", pos);
+        // qDebug() << "<!--:" << startPos << endPos << lyrics;
+        lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 3);
+        pos = lyrics.indexOf("<!--");
+    }
+
+    // drop partial lyrics
+    if (lyrics.indexOf("Special:Random") != -1) {
+        qDebug() << "Discarding incomplete lyrics for" << title;
+        return;
+    }
+
+    lyrics = lyrics.simplified();
+
+    // cache lyrics
+    QString filePath =
+            QDesktopServices::storageLocation(QDesktopServices::DataLocation)
+            + "/lyrics";
+    if (artist) filePath += "/" + artist->getHash();
+    QDir dir;
+    dir.mkpath(filePath);
+    filePath += "/" + getHash();
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qDebug() << "Error opening file for writing" << file.fileName();
+    } else {
+        QTextStream stream(&file);
+        stream << lyrics;
     }
 
     emit gotLyrics(lyrics);
