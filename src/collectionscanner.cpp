@@ -38,6 +38,7 @@ void CollectionScanner::run() {
 
         // parse metadata with TagLib
         TagLib::FileRef fileref(fileInfo.absoluteFilePath().toUtf8());
+        // or maybe QFile::encodeName(p_FilePath).data()
 
         // if taglib cannot parse the file, drop it
         if (fileref.isNull()) {
@@ -58,6 +59,7 @@ void CollectionScanner::run() {
         // TagLib::FileRef keeps files open and we would quickly reach the max open files limit
         Tags *tags = new Tags();
         tags->title = QString::fromStdString(fileref.tag()->title().to8Bit(true));
+        // qDebug() << "TITLE" << fileref.tag()->title().toCString(true) << tags->title;
         tags->artist = QString::fromStdString(fileref.tag()->artist().to8Bit(true));
         tags->album = QString::fromStdString(fileref.tag()->album().to8Bit(true));
         tags->track = fileref.tag()->track();
@@ -448,8 +450,7 @@ void CollectionScanner::gotTrackInfo() {
     qDebug() << "tracks:" << fileQueue.size()
             << "albums:" << filesWaitingForAlbums.size()
             << "artists:" << filesWaitingForArtists.size();
-            */
-
+*/
 
     int percent = (maxQueueSize - fileQueue.size()) * 100 / maxQueueSize;
     // qDebug() << percent << "%";
@@ -462,10 +463,19 @@ void CollectionScanner::gotTrackInfo() {
 
     /*
     else if (fileQueue.size() < 60) {
-        foreach (FileInfo *file, fileQueue) {
-            qDebug() << file->getFileInfo().filePath() << file->getTags()->title << file->getAlbum() << file->getArtist();
+        qDebug() << "Queue";
+        foreach (QFileInfo file, fileQueue) {
+            qDebug() << file.filePath();
         }
-    } */
+        qDebug() << "Tracks waiting for albums";
+        foreach (QString hash, filesWaitingForAlbums.keys()) {
+            qDebug() << hash;
+        }
+        qDebug() << "Tracks waiting for artists";
+        foreach (QString hash, filesWaitingForArtists.keys()) {
+            qDebug() << hash;
+        }
+    }*/
 
 }
 

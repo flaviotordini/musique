@@ -202,7 +202,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
     int counter = 0;
     QList<Track*> droppedTracks = trackMimeData->tracks();
 
-    qDebug() << "Dropped" << droppedTracks << "at" << beginRow;
+    // qDebug() << "Dropped" << droppedTracks << "at" << beginRow;
 
     foreach(Track *track, droppedTracks) {
 

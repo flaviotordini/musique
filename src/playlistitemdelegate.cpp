@@ -263,7 +263,6 @@ void PlaylistItemDelegate::paintActiveOverlay(
     QLinearGradient linearGradient(0, 0, 0, line.height());
     linearGradient.setColorAt(0.0, color1);
     linearGradient.setColorAt(1.0, color2);
-    painter->setBrush(linearGradient);
-    painter->drawRect(line);
+    painter->fillRect(line, linearGradient);
     painter->restore();
 }
