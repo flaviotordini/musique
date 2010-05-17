@@ -104,3 +104,20 @@ QString DataUtils::getXMLAttributeText(QByteArray bytes, QString element, QStrin
     }
     return QString();
 }
+
+QString DataUtils::getSystemLanguageCode() {
+    static QString locale;
+    if (locale.isNull()) {
+        locale = QLocale::system().name();
+        // case for system locales such as "C"
+        if (locale.length() < 2) {
+            locale = "en";
+        } else {
+            int underscoreIndex = locale.indexOf('_');
+            if (underscoreIndex != -1) {
+                locale = locale.left(underscoreIndex);
+            }
+        }
+    }
+    return locale;
+}
