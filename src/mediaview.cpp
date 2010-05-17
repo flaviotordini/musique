@@ -3,6 +3,7 @@
 #include "model/artist.h"
 #include "../mainwindow.h"
 #include "droparea.h"
+#include "minisplitter.h"
 
 namespace The {
     QMap<QString, QAction*>* globalActions();
@@ -32,6 +33,7 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     // drop area
     dropArea = new DropArea(this);
+    dropArea->hide();
 
     // playlist widget, handles the playlist/droparea layout
     PlaylistWidget *playlistWidget = new PlaylistWidget(playlistView, dropArea, this);
@@ -61,7 +63,6 @@ void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
             SLOT(stateChanged(Phonon::State, Phonon::State)));
     //connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)),
     // this, SLOT(currentSourceChanged(Phonon::MediaSource)));
-    // connect(mediaObject, SIGNAL(bufferStatus(int)), loadingWidget, SLOT(bufferStatus(int)));
 }
 
 void MediaView::saveSplitterState() {
@@ -145,6 +146,9 @@ void MediaView::activeRowChanged(int row) {
 void MediaView::handleError(QString message) {
     // recover from errors by skipping to the next track
     errorTimer->start();
+
+    MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
+    if (mainWindow) mainWindow->statusBar()->showMessage(message);
 }
 
 void MediaView::appear() {
