@@ -16,9 +16,19 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     titleLabel = new QLabel(this);
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::bigBold());
+    titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(titleLabel);
 
     photoLabel = new QLabel(this);
+    /*
+    QGraphicsDropShadowEffect * effect = new QGraphicsDropShadowEffect();
+    effect->setXOffset(0);
+    effect->setYOffset(0);
+    effect->setColor(QColor(64, 64, 64, 128));
+    effect->setBlurRadius(20.0);
+    photoLabel->setGraphicsEffect(effect);
+    */
+    photoLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     layout->addWidget(photoLabel);
 
     wikiLabel = new QLabel(this);
@@ -27,14 +37,6 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     wikiLabel->setWordWrap(true);
     wikiLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
     layout->addWidget(wikiLabel);
-
-    wikiMoreLabel = new QLabel(this);
-    wikiMoreLabel->setAlignment(Qt::AlignTop);
-    wikiMoreLabel->setOpenExternalLinks(true);
-    wikiMoreLabel->setWordWrap(true);
-    wikiMoreLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    wikiMoreLabel->hide();
-    layout->addWidget(wikiMoreLabel);
 
     /*
     trackListView = new TrackListView(this);
@@ -62,18 +64,30 @@ void AlbumInfo::setAlbum(Album *album) {
     QString wiki = album->getWiki();
     if (wiki.isEmpty()) {
         wikiLabel->clear();
-        wikiMoreLabel->clear();
     } else {
-        int wikiSplit = wiki.indexOf('\n');
-        // qDebug() << wiki;
-        wikiLabel->setText(
-                "<html><style>a { color: white }</style><body>"
-                + wiki.left(wikiSplit) + QString(" <a href='#readmore'>%1</a>").arg(tr("Read more"))
-                + "</body></html>"
-                );
-        wikiMoreLabel->setText(wiki.right(wikiSplit));
+        int split = wiki.indexOf('\n', 512);
+        if (split == -1) {
+            split = wiki.indexOf(". ", 512);
+        }
+
+        QString html = "<html><style>a { color: white }</style><body>" + wiki.left(split);
+        if (split != -1) {
+            Artist *artist = album->getArtist();
+            QString url = "http://www.last.fm/music/" + (artist ? artist->getName() : "_") + "/" + album->getTitle() + "/+wiki";
+            html += QString(" <a href='%1'>%2</a>").arg(url, tr("Read more"));
+        }
+        html += "</body></html>";
+        wikiLabel->setText(html);
     }
-    photoLabel->setPixmap(QPixmap::fromImage(album->getPhoto()));
+
+    QImage photo = album->getPhoto();
+    if (photo.isNull()) {
+        photoLabel->clear();
+        photoLabel->hide();
+    } else {
+        photoLabel->setPixmap(QPixmap::fromImage(photo));
+        photoLabel->show();
+    }
 
     /*
     QString qry("SELECT id FROM tracks where album=%1 order by track, title");
@@ -90,7 +104,7 @@ void AlbumInfo::setAlbum(Album *album) {
 void AlbumInfo::clear() {
     titleLabel->clear();
     photoLabel->clear();
+    photoLabel->hide();
     wikiLabel->clear();
-    wikiMoreLabel->clear();
     // trackListModel->clear();
 }
