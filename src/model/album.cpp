@@ -32,7 +32,7 @@ Album* Album::forId(int albumId) {
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select title, year from albums where id=?");
+    query.prepare("select title, year, artist from albums where id=?");
     query.bindValue(0, albumId);
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
@@ -41,7 +41,11 @@ Album* Album::forId(int albumId) {
         album->setId(albumId);
         album->setTitle(query.value(0).toString());
         album->setYear(query.value(1).toInt());
-        // TODO other fields
+
+        // relations
+        int artistId = query.value(2).toInt();
+        album->setArtist(Artist::forId(artistId));
+
         // put into cache
         albumCache.insert(albumId, album);
         return album;
@@ -393,6 +397,8 @@ QString Album::getWiki() {
             QDesktopServices::storageLocation(QDesktopServices::DataLocation)
             + "/albums/wikis/";
     QFile file(storageLocation + getHash());
+
+    if (!file.exists()) return QString();
 
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Cannot open file" << file.fileName();
