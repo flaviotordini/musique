@@ -2,20 +2,16 @@
 #define MAINWINDOW_H
 
 #include <QtGui>
-#include "faderwidget/faderwidget.h"
-#include "searchlineedit.h"
 #include <phonon/audiooutput.h>
 #include <phonon/volumeslider.h>
 #include <phonon/mediaobject.h>
 #include <phonon/seekslider.h>
-#include "view.h"
-#include "mediaview.h"
-#include "settingsview.h"
-#include "aboutview.h"
-#include "choosefolderview.h"
-#include "collectionscannerview.h"
 
+class MediaView;
+class CollectionScannerView;
 class ContextualView;
+class SearchLineEdit;
+class Track;
 
 class MainWindow : public QMainWindow {
 
@@ -38,7 +34,6 @@ protected:
 private slots:
     void fadeInWidget(QWidget *oldWidget, QWidget *newWidget);
     void goBack();
-    void showSettings();
     void visitSite();
     void donate();
     void about();
@@ -78,14 +73,12 @@ private:
     // view mechanism
     QStackedWidget *views;
     QStack<QWidget*> *history;
-    // QScrollArea *scrollArea;
 
     // view widgets
     QWidget *chooseFolderView;
     CollectionScannerView *collectionScannerView;
     MediaView *mediaView;
     ContextualView *contextualView;
-    QWidget *settingsView;
     QWidget *aboutView;
 
     // actions

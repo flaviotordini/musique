@@ -4,8 +4,15 @@
 #include "iconloader/qticonloader.h"
 #include "global.h"
 #include "database.h"
-#include "contextualview.h"
 #include <QtSql>
+#include "contextualview.h"
+#include "faderwidget/faderwidget.h"
+#include "searchlineedit.h"
+#include "view.h"
+#include "mediaview.h"
+#include "aboutview.h"
+#include "choosefolderview.h"
+#include "collectionscannerview.h"
 
 MainWindow::MainWindow() {
     m_fullscreen = false;
@@ -14,7 +21,6 @@ MainWindow::MainWindow() {
     collectionScannerView = 0;
     chooseFolderView = 0;
     aboutView = 0;
-    settingsView = 0;
     contextualView = 0;
 
     toolbarSearch = new SearchLineEdit(this);
@@ -42,13 +48,6 @@ MainWindow::MainWindow() {
     // remove that useless menu/toolbar context menu
     this->setContextMenuPolicy(Qt::NoContextMenu);
 
-    // big views need a scroll area
-    /*
-    scrollArea = new QScrollArea(this);
-    scrollArea->setFrameShape(QFrame::NoFrame);
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setWidget(views);
-    */
     setCentralWidget(views);
 
     // show the initial view
@@ -81,15 +80,24 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::ToolTip) {
         // kill tooltips
         return true;
-    } else {
-        // standard event processing
-        return QObject::eventFilter(obj, event);
+    } else if (event->type() == QEvent::KeyPress) {
+        QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+        // qDebug() << keyEvent;
+        if (keyEvent->key() == Qt::Key_MediaStop) {
+            qDebug() << "Stop!";
+            return false;
+        }
     }
+    // standard event processing
+    return QObject::eventFilter(obj, event);
+
 }
 
 void MainWindow::createActions() {
 
     QMap<QString, QAction*> *actions = The::globalActions();
+
+    QList<QKeySequence> shortcuts;
 
     settingsAct = new QAction(tr("&Preferences..."), this);
     settingsAct->setStatusTip(tr(QString("Configure ").append(Constants::APP_NAME).toUtf8()));
@@ -146,7 +154,8 @@ void MainWindow::createActions() {
             QtIconLoader::icon("media-playback-start", QIcon(":/images/media-playback-start.png")),
             tr("&Play"), this);
     playAct->setStatusTip(tr("Start playback"));
-    playAct->setShortcut(QKeySequence(Qt::Key_Space));
+    shortcuts << QKeySequence(Qt::Key_Space) << QKeySequence(Qt::Key_MediaPlay);
+    playAct->setShortcuts(shortcuts);
     playAct->setEnabled(true);
     actions->insert("play", playAct);
     connect(playAct, SIGNAL(triggered()), this, SLOT(playPause()));
@@ -162,7 +171,6 @@ void MainWindow::createActions() {
 
     removeAct = new QAction(tr("&Remove"), this);
     removeAct->setStatusTip(tr("Remove the selected tracks from the playlist"));
-    QList<QKeySequence> shortcuts;
     shortcuts << QKeySequence("Del") << QKeySequence("Backspace");
     removeAct->setShortcuts(shortcuts);
     removeAct->setEnabled(false);
@@ -342,7 +350,7 @@ void MainWindow::createToolBars() {
 
     QFont smallerFont;
     smallerFont.setPointSize(smallerFont.pointSize()*.85);
-    mainToolBar->setFont(smallerFont);
+    // mainToolBar->setFont(smallerFont);
 
     mainToolBar->addAction(playAct);
     mainToolBar->addAction(skipBackwardAct);
@@ -403,6 +411,7 @@ void MainWindow::createStatusBar() {
 void MainWindow::readSettings() {
     QSettings settings;
     restoreGeometry(settings.value("geometry").toByteArray());
+    m_maximized = isMaximized();
     audioOutput->setVolume(settings.value("volume", 1).toDouble());
     audioOutput->setMuted(settings.value("volumeMute").toBool());
 }
@@ -448,7 +457,6 @@ void MainWindow::showWidget(QWidget* widget) {
         statusBar()->showMessage((metadata.value("description").toString()));
     }
 
-    settingsAct->setEnabled(widget != settingsView);
     fullscreenAct->setEnabled(widget == mediaView);
     aboutAct->setEnabled(widget != aboutView);
     chooseFolderAct->setEnabled(widget != chooseFolderView && widget != collectionScannerView);
@@ -520,14 +528,6 @@ void MainWindow::quit() {
 void MainWindow::closeEvent(QCloseEvent *event) {
     quit();
     QWidget::closeEvent(event);
-}
-
-void MainWindow::showSettings() {
-    if (!settingsView) {
-        settingsView = new SettingsView(this);
-        views->addWidget(settingsView);
-    }
-    showWidget(settingsView);
 }
 
 void MainWindow::showChooseFolderView() {
@@ -724,7 +724,7 @@ void MainWindow::searchFocus() {
 void MainWindow::initPhonon() {
     // Phonon initialization
     mediaObject = new Phonon::MediaObject(this);
-    mediaObject->setTickInterval(100);
+    mediaObject->setTickInterval(250);
     connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
             this, SLOT(stateChanged(Phonon::State, Phonon::State)));
     connect(mediaObject, SIGNAL(tick(qint64)), this, SLOT(tick(qint64)));
