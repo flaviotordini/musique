@@ -9,7 +9,7 @@ class TrackSqlModel;
 
 class AlbumInfo : public QWidget {
 
-Q_OBJECT
+    Q_OBJECT
 
 public:
     AlbumInfo(QWidget *parent = 0);
@@ -20,10 +20,11 @@ private:
     QLabel *titleLabel;
     QLabel *photoLabel;
     QLabel *wikiLabel;
-    QLabel *wikiMoreLabel;
 
+    /*
     TrackListView *trackListView;
     TrackSqlModel *trackListModel;
+    */
 
 };
 

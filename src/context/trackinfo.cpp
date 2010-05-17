@@ -13,6 +13,7 @@ TrackInfo::TrackInfo(QWidget *parent) :
     titleLabel = new QLabel(this);
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::bigBold());
+    titleLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     layout->addWidget(titleLabel);
 
     /*
@@ -23,9 +24,8 @@ TrackInfo::TrackInfo(QWidget *parent) :
     lyricsLabel = new QLabel(this);
     lyricsLabel->setTextFormat(Qt::RichText);
     lyricsLabel->setAlignment(Qt::AlignTop);
-    lyricsLabel->setOpenExternalLinks(true);
     lyricsLabel->setWordWrap(true);
-    lyricsLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    lyricsLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     layout->addWidget(lyricsLabel);
 
 }
@@ -52,6 +52,6 @@ void TrackInfo::showLyrics(QString lyrics) {
 
 void TrackInfo::clear() {
     titleLabel->clear();
-    trackNumberLabel->clear();
+    // trackNumberLabel->clear();
     lyricsLabel->clear();
 }

@@ -12,12 +12,12 @@ class ArtistInfo : public QWidget {
 public:
     ArtistInfo(QWidget *parent = 0);
     void setArtist(Artist *artist);
+    void clear();
 
 private:
-    QLabel *artistLabel;
-    QLabel *artistPhoto;
-    QLabel *artistBio;
-    QLabel *artistBioMore;
+    QLabel *titleLabel;
+    QLabel *photoLabel;
+    QLabel *bioLabel;
 
 };
 

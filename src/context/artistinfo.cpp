@@ -10,46 +10,63 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
     layout->setSpacing(20);
     layout->setMargin(20);
 
-    artistLabel = new QLabel(this);
-    artistLabel->setWordWrap(true);
-    artistLabel->setFont(FontUtils::bigBold());
-    layout->addWidget(artistLabel);
+    titleLabel = new QLabel(this);
+    titleLabel->setWordWrap(true);
+    titleLabel->setFont(FontUtils::bigBold());
+    titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    layout->addWidget(titleLabel);
 
-    artistPhoto = new QLabel(this);
-    layout->addWidget(artistPhoto);
+    photoLabel = new QLabel(this);
+    /*
+    QGraphicsDropShadowEffect * effect = new QGraphicsDropShadowEffect();
+    effect->setXOffset(0);
+    effect->setYOffset(0);
+    effect->setColor(QColor(64, 64, 64, 128));
+    effect->setBlurRadius(20.0);
+    photoLabel->setGraphicsEffect(effect);
+    */
+    photoLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    layout->addWidget(photoLabel);
 
-    artistBio = new QLabel(this);
-    artistBio->setAlignment(Qt::AlignTop);
-    artistBio->setOpenExternalLinks(true);
-    artistBio->setWordWrap(true);
-    artistBio->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    bioLabel = new QLabel(this);
+    bioLabel->setTextFormat(Qt::RichText);
+    bioLabel->setAlignment(Qt::AlignTop);
+    bioLabel->setOpenExternalLinks(true);
+    bioLabel->setWordWrap(true);
+    bioLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
 
-    layout->addWidget(artistBio);
-
-    artistBioMore = new QLabel(this);
-    artistBioMore->setAlignment(Qt::AlignTop);
-    artistBioMore->setOpenExternalLinks(true);
-    artistBioMore->setWordWrap(true);
-    artistBioMore->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    artistBioMore->hide();
-    layout->addWidget(artistBioMore);
+    layout->addWidget(bioLabel);
 
 }
 
 void ArtistInfo::setArtist(Artist *artist) {
-    if (!artist) return;
+    if (!artist) {
+        clear();
+        return;
+    }
 
-    artistLabel->setText(artist->getName());
+    titleLabel->setText(artist->getName());
 
     QString bio = artist->getBio();
-    int bioSplit = bio.indexOf('\n');
-    // qDebug() << bio;
-    artistBio->setText(
-            "<html><style>a { color: white }</style><body>"
-            + bio.left(bioSplit) + QString(" <a href='#readmore'>%1</a>").arg(tr("Read more"))
-            + "</body></html>"
-            );
-    artistBioMore->setText(bio.right(bioSplit));
-    artistPhoto->setPixmap(QPixmap::fromImage(artist->getPhoto()));
+    int split = bio.indexOf('\n', 512);
+    if (split == -1) {
+        split = bio.indexOf(". ", 512);
+    }
 
+    QString htmlBio = "<html><style>a { color: white }</style><body>" + bio.left(split);
+    if (split != -1) {
+        QString bioUrl = "http://www.last.fm/music/" + artist->getName() + "/+wiki";
+        htmlBio += QString(" <a href='%1'>%2</a>").arg(bioUrl, tr("Read more"));
+    }
+    htmlBio += "</body></html>";
+    bioLabel->setText(htmlBio);
+
+    photoLabel->setPixmap(QPixmap::fromImage(artist->getPhoto()));
+
+}
+
+void ArtistInfo::clear() {
+    titleLabel->clear();
+    photoLabel->clear();
+    bioLabel->clear();
 }

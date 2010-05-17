@@ -19,7 +19,7 @@ private slots:
 
 private:
     QLabel *titleLabel;
-    QLabel *trackNumberLabel;
+    // QLabel *trackNumberLabel;
     QLabel *lyricsLabel;
 
 };
