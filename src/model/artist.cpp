@@ -313,6 +313,8 @@ QString Artist::getBio() {
             + "/artists/biographies/";
     QFile file(storageLocation + getHash());
 
+    if (!file.exists()) return QString();
+
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Cannot open file" << file.fileName();
         return QString();
