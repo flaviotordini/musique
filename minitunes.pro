@@ -13,7 +13,8 @@ mac {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.4
     LIBS += -framework \
         TagLib
-    LIBS += /Library/Frameworks/TagLib.framework/TagLib.dylib
+    
+    # LIBS += /Library/Frameworks/TagLib.framework/TagLib.dylib
     INCLUDEPATH += /Library/Frameworks/TagLib.framework/Headers
 }
 else:LIBS += -ltag
@@ -24,7 +25,6 @@ QT += network \
 include(src/qtsingleapplication/qtsingleapplication.pri)
 include(src/thlibrary/thlibrary.pri)
 HEADERS += src/mainwindow.h \
-    src/settingsview.h \
     src/aboutview.h \
     src/view.h \
     src/searchlineedit.h \
@@ -75,10 +75,10 @@ HEADERS += src/mainwindow.h \
     src/tracklistview.h \
     src/trackitemdelegate.h \
     src/playlistitemdelegate.h \
-    src/droparea.h
+    src/droparea.h \
+    src/minisplitter.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
-    src/settingsview.cpp \
     src/aboutview.cpp \
     src/searchlineedit.cpp \
     src/urllineedit.cpp \
@@ -125,7 +125,8 @@ SOURCES += src/main.cpp \
     src/tracklistview.cpp \
     src/trackitemdelegate.cpp \
     src/playlistitemdelegate.cpp \
-    src/droparea.cpp
+    src/droparea.cpp \
+    src/minisplitter.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
@@ -141,8 +142,7 @@ include(locale/locale.pri)
 DISTFILES += CHANGES \
     LICENSE
 mac { 
-    CONFIG += x86 \
-        ppc
+    CONFIG += x86
     QMAKE_INFO_PLIST = Info.plist
     ICON = minitunes.icns
 }
@@ -165,9 +165,6 @@ unix {
     translations.files += $$DESTDIR/locale
     desktop.path = $$DATADIR/applications
     desktop.files += minitunes.desktop
-    
-    # iconxpm.path = $$DATADIR/pixmaps
-    # iconxpm.files += data/minitunes.xpm
     iconsvg.path = $$DATADIR/icons/hicolor/scalable/apps
     iconsvg.files += data/minitunes.svg
     icon16.path = $$DATADIR/icons/hicolor/16x16/apps
