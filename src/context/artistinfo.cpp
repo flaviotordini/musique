@@ -33,7 +33,7 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
     bioLabel->setAlignment(Qt::AlignTop);
     bioLabel->setOpenExternalLinks(true);
     bioLabel->setWordWrap(true);
-    bioLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    bioLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
 
     layout->addWidget(bioLabel);
 

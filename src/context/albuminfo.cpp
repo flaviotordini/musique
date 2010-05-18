@@ -35,7 +35,7 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     wikiLabel->setAlignment(Qt::AlignTop);
     wikiLabel->setOpenExternalLinks(true);
     wikiLabel->setWordWrap(true);
-    wikiLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+    wikiLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
     layout->addWidget(wikiLabel);
 
     /*
