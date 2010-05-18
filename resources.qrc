@@ -12,5 +12,6 @@
         <file>images/go-previous.png</file>
         <file>images/help-about.png</file>
         <file>images/media-skip-backward.png</file>
+        <file>images/missing.png</file>
     </qresource>
 </RCC>
