@@ -70,9 +70,9 @@ QPixmap FinderItemDelegate::createMissingItemPixmap() const {
     QPixmap missingItemPixmap = QPixmap(getMissingItemBackground());
     QPainter painter(&missingItemPixmap);
 
-    QPixmap missingIcon = QPixmap::fromImage(QImage(":/images/app.png"));
-    painter.setOpacity(.25);
-    painter.drawPixmap(0, 0, missingIcon);
+    QPixmap missingIcon = QPixmap::fromImage(QImage(":/images/missing.png"));
+    painter.setOpacity(.1);
+    painter.drawPixmap((ITEM_WIDTH - missingIcon.width()) / 2, (ITEM_HEIGHT - missingIcon.height()) / 3, missingIcon);
 
     return missingItemPixmap;
 
