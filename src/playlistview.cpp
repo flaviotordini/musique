@@ -31,8 +31,6 @@ PlaylistView::PlaylistView(QWidget *parent) :
     setDragDropMode(QAbstractItemView::DragDrop);
 
     // actions
-    connect(The::globalActions()->value("skip"), SIGNAL(triggered()), SLOT(skipForward()));
-    connect(The::globalActions()->value("previous"), SIGNAL(triggered()), SLOT(skipBackward()));
     connect(The::globalActions()->value("remove"), SIGNAL(triggered()), SLOT(removeSelected()));
     connect(The::globalActions()->value("moveUp"), SIGNAL(triggered()), SLOT(moveUpSelected()));
     connect(The::globalActions()->value("moveDown"), SIGNAL(triggered()), SLOT(moveDownSelected()));
@@ -52,30 +50,18 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
     connect(selectionModel(),
             SIGNAL(selectionChanged ( const QItemSelection & , const QItemSelection & )),
             SLOT(selectionChanged ( const QItemSelection & , const QItemSelection & )));
-
-    connect(playlistModel,
-            SIGNAL(dataChanged (const QModelIndex &, const QModelIndex &)),
-            SLOT(dataChanged(const QModelIndex &, const QModelIndex &)));
-
-    connect(playlistModel, SIGNAL(modelReset()), SLOT(modelReset()));
+    connect(playlistModel, SIGNAL(layoutChanged()), this, SLOT(updatePlaylistActions()));
+    connect(playlistModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
+    connect(playlistModel, SIGNAL(rowRemoved(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
+    connect(playlistModel, SIGNAL(modelReset()), SLOT(updatePlaylistActions()));
     connect(The::globalActions()->value("clearPlaylist"), SIGNAL(triggered()), playlistModel, SLOT(clear()));
+    connect(The::globalActions()->value("skip"), SIGNAL(triggered()), playlistModel, SLOT(skipForward()));
+    connect(The::globalActions()->value("previous"), SIGNAL(triggered()), playlistModel, SLOT(skipBackward()));
 }
 
 void PlaylistView::itemActivated(const QModelIndex &index) {
     if (playlistModel->rowExists(index.row()))
         playlistModel->setActiveRow(index.row());
-}
-
-void PlaylistView::skipBackward() {
-    int previousRow = playlistModel->previousRow();
-    if (previousRow == -1) return;
-    playlistModel->setActiveRow(previousRow);
-}
-
-void PlaylistView::skipForward() {
-    int nextRow = playlistModel->nextRow();
-    if (nextRow == -1) return;
-    playlistModel->setActiveRow(nextRow);
 }
 
 void PlaylistView::removeSelected() {
@@ -85,12 +71,14 @@ void PlaylistView::removeSelected() {
 }
 
 void PlaylistView::selectTracks(QList<Track*> tracks) {
+    /*
     foreach (Track *track, tracks) {
         QModelIndex index = playlistModel->indexForTrack(track);
         // FIXME this causes dropped tracks to disappear!
         // selectionModel()->select(index, QItemSelectionModel::Select);
         scrollTo(index, QAbstractItemView::EnsureVisible);
     }
+    */
 }
 
 void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
@@ -102,17 +90,15 @@ void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemS
     The::globalActions()->value("moveDown")->setEnabled(gotSelection);
 }
 
-void PlaylistView::modelReset() {
-    The::globalActions()->value("clearPlaylist")->setEnabled(false);
-}
-
-void PlaylistView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bottomRight) {
-    QListView::dataChanged(topLeft, bottomRight);
+void PlaylistView::updatePlaylistActions() {
 
     const int rowCount = playlistModel->rowCount(QModelIndex());
-    // qDebug() << "Data changed" << rowCount;
+    qDebug() << "Layout changed" << rowCount;
     bool isPlaylistEmpty = rowCount < 1;
     The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
+    The::globalActions()->value("play")->setEnabled(!isPlaylistEmpty);
+    The::globalActions()->value("skip")->setEnabled(!isPlaylistEmpty);
+    The::globalActions()->value("previous")->setEnabled(!isPlaylistEmpty);
 
     const int totalLength = playlistModel->getTotalLength();
     QString playlistLength;
@@ -120,7 +106,8 @@ void PlaylistView::dataChanged(const QModelIndex &topLeft, const QModelIndex &bo
         playlistLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
     else
         playlistLength = QTime().addSecs(totalLength).toString("m:ss");
-    setStatusTip(tr("Playlist total length is %1").arg(playlistLength));
+    setStatusTip(tr("%1 tracks - Total length is %2")
+                 .arg(QString::number(rowCount), playlistLength));
 }
 
 void PlaylistView::moveUpSelected() {

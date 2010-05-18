@@ -21,7 +21,6 @@ class PlaylistModel : public QAbstractListModel {
 public:
 
     PlaylistModel(QWidget *parent);
-    ~PlaylistModel();
 
     // inherited from QAbstractListModel
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
@@ -40,22 +39,21 @@ public:
     // custom methods
     void setActiveRow( int row );
     bool rowExists( int row ) const { return (( row >= 0 ) && ( row < tracks.size() ) ); }
-    int activeRow() const { return m_activeRow; } // returns -1 if there is no active row
-    int previousRow() const;
-    int nextRow() const;
     void removeIndexes(QModelIndexList &indexes);
     int rowForTrack(Track* track);
     QModelIndex indexForTrack(Track* track);
     void move(QModelIndexList &indexes, bool up);
 
     Track* trackAt( int row ) const;
-    Track* activeTrack() const;
+    Track* getActiveTrack() const;
     int getTotalLength() { return Track::getTotalLength(tracks); }
 
 public slots:
     void addTrack(Track* track);
     void addTracks(QList<Track*> tracks);
     void clear();
+    void skipBackward();
+    void skipForward();
 
 signals:
     void activeRowChanged(int);
@@ -63,11 +61,13 @@ signals:
     void itemChanged(int total);
 
 private:
-    QList<Track*> tracks;
+    void addShuffledTrack(Track *track);
 
-    // the row being played
-    int m_activeRow;
-    Track *m_activeTrack;
+    QList<Track*> tracks;
+    QList<Track*> playedTracks;
+
+    int activeRow;
+    Track *activeTrack;
 
     QString errorMessage;
 };

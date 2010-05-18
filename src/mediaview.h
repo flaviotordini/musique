@@ -30,6 +30,9 @@ public:
     void setMediaObject(Phonon::MediaObject *mediaObject);
     PlaylistModel* getPlaylistModel() { return playlistModel; }
 
+public slots:
+    void playPause();
+
 private slots:
     void activeRowChanged(int);
     void stateChanged(Phonon::State newState, Phonon::State oldState);

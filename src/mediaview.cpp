@@ -51,14 +51,14 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     errorTimer = new QTimer(this);
     errorTimer->setSingleShot(true);
     errorTimer->setInterval(3000);
-    connect(errorTimer, SIGNAL(timeout()), playlistView, SLOT(skipForward()));
+    connect(errorTimer, SIGNAL(timeout()), playlistModel, SLOT(skipForward()));
 
 }
 
 void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
     this->mediaObject = mediaObject;
     // connect(mediaObject, SIGNAL(aboutToFinish()), this, SLOT(aboutToFinish()));
-    connect(mediaObject, SIGNAL(finished()), playlistView, SLOT(skipForward()));
+    connect(mediaObject, SIGNAL(finished()), playlistModel, SLOT(skipForward()));
     connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
             SLOT(stateChanged(Phonon::State, Phonon::State)));
     //connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)),
@@ -153,4 +153,20 @@ void MediaView::handleError(QString message) {
 
 void MediaView::appear() {
     finderWidget->appear();
+}
+
+void MediaView::playPause() {
+    qDebug() << "playPause";
+    // qDebug() << "pause() called" << mediaObject->state();
+    switch( mediaObject->state() ) {
+    case Phonon::StoppedState:
+        qDebug() << "try";
+        playlistModel->skipForward();
+    case Phonon::PlayingState:
+        mediaObject->pause();
+        break;
+    default:
+        mediaObject->play();
+        break;
+    }
 }

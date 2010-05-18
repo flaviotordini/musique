@@ -43,6 +43,7 @@ MainWindow::MainWindow() {
     // views
     mediaView = new MediaView(this);
     mediaView->setMediaObject(mediaObject);
+    connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
     views->addWidget(mediaView);
 
     // remove that useless menu/toolbar context menu
@@ -57,7 +58,7 @@ MainWindow::MainWindow() {
         showWidget(mediaView);
 
         // update the collection when idle
-        QTimer::singleShot(1000, this, SLOT(startIncrementalScan()));
+        QTimer::singleShot(0, this, SLOT(startIncrementalScan()));
 
     } else {
         // no db, do the first scan dance
@@ -99,13 +100,6 @@ void MainWindow::createActions() {
 
     QList<QKeySequence> shortcuts;
 
-    settingsAct = new QAction(tr("&Preferences..."), this);
-    settingsAct->setStatusTip(tr(QString("Configure ").append(Constants::APP_NAME).toUtf8()));
-    // Mac integration
-    settingsAct->setMenuRole(QAction::PreferencesRole);
-    actions->insert("settings", settingsAct);
-    connect(settingsAct, SIGNAL(triggered()), this, SLOT(showSettings()));
-
     backAct = new QAction(tr("&Back"), this);
     backAct->setEnabled(false);
     backAct->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
@@ -138,6 +132,7 @@ void MainWindow::createActions() {
 #if QT_VERSION >= 0x040600
     skipBackwardAct->setPriority(QAction::LowPriority);
 #endif
+    skipBackwardAct->setEnabled(false);
     actions->insert("previous", skipBackwardAct);
 
     skipForwardAct = new QAction(
@@ -148,6 +143,7 @@ void MainWindow::createActions() {
 #if QT_VERSION >= 0x040600
     skipForwardAct->setPriority(QAction::LowPriority);
 #endif
+    skipForwardAct->setEnabled(false);
     actions->insert("skip", skipForwardAct);
 
     playAct = new QAction(
@@ -156,9 +152,8 @@ void MainWindow::createActions() {
     playAct->setStatusTip(tr("Start playback"));
     shortcuts << QKeySequence(Qt::Key_Space) << QKeySequence(Qt::Key_MediaPlay);
     playAct->setShortcuts(shortcuts);
-    playAct->setEnabled(true);
+    playAct->setEnabled(false);
     actions->insert("play", playAct);
-    connect(playAct, SIGNAL(triggered()), this, SLOT(playPause()));
 
     fullscreenAct = new QAction(
             QtIconLoader::icon("view-fullscreen", QIcon(":/images/view-fullscreen.png")),
@@ -232,6 +227,7 @@ void MainWindow::createActions() {
             tr("&Shuffle"), this);
     action->setStatusTip(tr("Random playlist mode"));
     action->setCheckable(true);
+    connect(action, SIGNAL(toggled(bool)), SLOT(setShuffle(bool)));
     actions->insert("shufflePlaylist", action);
 
     action = new QAction(
@@ -239,6 +235,7 @@ void MainWindow::createActions() {
             tr("&Repeat"), this);
     action->setStatusTip(tr("Play first song again after all songs are played"));
     action->setCheckable(true);
+    connect(action, SIGNAL(toggled(bool)), SLOT(setRepeat(bool)));
     actions->insert("repeatPlaylist", action);
 
     // Invisible actions
@@ -414,6 +411,8 @@ void MainWindow::readSettings() {
     m_maximized = isMaximized();
     audioOutput->setVolume(settings.value("volume", 1).toDouble());
     audioOutput->setMuted(settings.value("volumeMute").toBool());
+    The::globalActions()->value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
+    The::globalActions()->value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
 }
 
 void MainWindow::writeSettings() {
@@ -558,7 +557,7 @@ void MainWindow::toggleContextualView() {
         stopAct->setShortcut(QKeySequence(Qt::Key_Escape));
 
     } else {
-        Track *track = mediaView->getPlaylistModel()->activeTrack();
+        Track *track = mediaView->getPlaylistModel()->getActiveTrack();
         if (track) {
             contextualView->setTrack(track);
             showWidget(contextualView);
@@ -661,18 +660,6 @@ void MainWindow::stop() {
     mediaObject->stop();
     currentTime->clear();
     // totalTime->clear();
-}
-
-void MainWindow::playPause() {
-    // qDebug() << "pause() called" << mediaObject->state();
-    switch( mediaObject->state() ) {
-    case Phonon::PlayingState:
-        mediaObject->pause();
-        break;
-    default:
-        mediaObject->play();
-        break;
-    }
 }
 
 void MainWindow::fullscreen() {
@@ -803,3 +790,12 @@ void MainWindow::volumeMutedChanged(bool muted) {
         statusBar()->showMessage(tr("Volume is unmuted"));
 }
 
+void MainWindow::setShuffle(bool enabled) {
+    QSettings settings;
+    settings.setValue("shuffle", QVariant::fromValue(enabled));
+}
+
+void MainWindow::setRepeat(bool enabled) {
+    QSettings settings;
+    settings.setValue("repeat", QVariant::fromValue(enabled));
+}

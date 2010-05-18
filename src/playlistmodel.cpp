@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "playlistmodel.h"
 #include "trackmimedata.h"
 #include "model/album.h"
@@ -8,12 +9,8 @@ namespace The {
 }
 
 PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
-    m_activeTrack = 0;
-    m_activeRow = -1;
-}
-
-PlaylistModel::~PlaylistModel() {
-
+    activeTrack = 0;
+    activeRow = -1;
 }
 
 int PlaylistModel::rowCount(const QModelIndex & /* parent */) const {
@@ -35,7 +32,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
 
     case Playlist::ActiveItemRole:
         // qDebug() << track->getTitle() << (track == m_activeTrack);
-        return track == m_activeTrack;
+        return track == activeTrack;
 
     }
 
@@ -45,34 +42,143 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
 void PlaylistModel::setActiveRow(int row) {
     if (!rowExists(row)) return;
 
-    const int oldActiveRow = m_activeRow;
-    m_activeRow = row;
-    m_activeTrack = trackAt(m_activeRow);
+    const int oldActiveRow = activeRow;
+    activeRow = row;
+    activeTrack = trackAt(activeRow);
+    activeTrack->setPlayed(true);
+    playedTracks << activeTrack;
 
     if (rowExists(oldActiveRow)) {
         QModelIndex oldIndex = index(oldActiveRow, 0, QModelIndex());
         emit dataChanged(oldIndex, oldIndex);
     }
 
-    QModelIndex newIndex = index(m_activeRow, 0, QModelIndex());
+    QModelIndex newIndex = index(activeRow, 0, QModelIndex());
     emit dataChanged(newIndex, newIndex);
 
     emit activeRowChanged(row);
 
 }
 
-int PlaylistModel::previousRow() const {
-    int nextRow = m_activeRow - 1;
-    if (rowExists(nextRow))
-        return nextRow;
-    return -1;
+/*
+Track* PlaylistModel::nextTrack() {
+    QSettings settings;
+    const bool shuffle = settings.value("shuffle").toBool();
+    const bool repeat = settings.value("repeat").toBool();
+
+    if (shuffle) {
+
+        // lazily initialize the shuffled list
+        if (playedTracks.isEmpty()) {
+            QList<Track*> playedTracks;
+            QList<Track*> unplayedTracks;
+            playedTracks = tracks;
+            foreach (Track *track, tracks) {
+                if (track == activeTrack) {
+                    continue;
+                } else if (track->isPlayed()) {
+                    playedTracks << track;
+                } else {
+                    unplayedTracks << track;
+                }
+
+            }
+            std::random_shuffle(playedTracks.begin(), playedTracks.end());
+            std::random_shuffle(unplayedTracks.begin(), unplayedTracks.end());
+            playedTracks << playedTracks << activeTrack << unplayedTracks;
+        }
+
+        // int nextRow = (int) ((float) qrand() / (float) RAND_MAX * shuffledTracks.size());
+        int nextRow = playedTracks.indexOf(activeTrack) + 1;
+        qDebug() << nextRow << playedTracks.size();
+        if (rowExists(nextRow))
+            return playedTracks.at(nextRow);
+    } else {
+        int nextRow = activeRow + 1;
+        if (rowExists(nextRow))
+            return tracks.at(nextRow);
+        else if (repeat && !tracks.empty())
+            return tracks.first();
+    }
+
+    return 0;
+}
+*/
+
+void PlaylistModel::skipBackward() {
+    QSettings settings;
+    const bool shuffle = settings.value("shuffle").toBool();
+
+    Track *previousTrack = 0;
+
+    if (shuffle) {
+
+        if (playedTracks.size() > 1)
+            previousTrack = playedTracks.at(playedTracks.size() - 2);
+
+    } else {
+
+        int prevRow = activeRow - 1;
+        if (rowExists(prevRow)) {
+            previousTrack = tracks.at(prevRow);
+        }
+
+    }
+
+    int prevRow = tracks.indexOf(previousTrack);
+    setActiveRow(prevRow);
 }
 
-int PlaylistModel::nextRow() const {
-    int nextRow = m_activeRow + 1;
-    if (rowExists(nextRow))
-        return nextRow;
-    return -1;
+void PlaylistModel::skipForward() {
+    QSettings settings;
+    const bool shuffle = settings.value("shuffle").toBool();
+    const bool repeat = settings.value("repeat").toBool();
+
+    Track *nextTrack = 0;
+
+    if (shuffle) {
+
+        // get a random non-played non-active track
+        if (playedTracks.size() < tracks.size()) {
+            while (nextTrack == 0) {
+                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
+                Track *candidateTrack = tracks.at(nextRow);
+                if (!candidateTrack->isPlayed() && candidateTrack != activeTrack) {
+                    nextTrack = candidateTrack;
+                }
+            }
+        }
+
+        // repeat
+        if (repeat && nextTrack == 0 && !tracks.empty()) {
+            playedTracks.clear();
+            foreach (Track *track, tracks) {
+                track->setPlayed(false);
+            }
+            // get a random non-active track
+            while (nextTrack == 0) {
+                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
+                Track *candidateTrack = tracks.at(nextRow);
+                if (candidateTrack != activeTrack) {
+                    nextTrack = candidateTrack;
+                }
+            }
+        }
+
+    } else {
+
+        // normal non-shuffle mode
+        int nextRow = activeRow + 1;
+        if (rowExists(nextRow)) {
+            nextTrack = tracks.at(nextRow);
+        } else if (repeat && !tracks.empty()) {
+            nextTrack = tracks.first();
+        }
+
+    }
+
+    int nextRow = tracks.indexOf(nextTrack);
+    setActiveRow(nextRow);
 }
 
 Track* PlaylistModel::trackAt( int row ) const {
@@ -81,18 +187,30 @@ Track* PlaylistModel::trackAt( int row ) const {
     return 0;
 }
 
-Track* PlaylistModel::activeTrack() const {
-    return m_activeTrack;
+Track* PlaylistModel::getActiveTrack() const {
+    return activeTrack;
+}
+
+void PlaylistModel::addShuffledTrack(Track* track) {
+    int activeTrackIndex = playedTracks.indexOf(activeTrack);
+    if (activeTrackIndex == -1) activeTrackIndex = 0;
+    int randomRange = playedTracks.size() - activeTrackIndex;
+    int randomRow = activeTrackIndex + (int) ((float) qrand() / (float) RAND_MAX * randomRange);
+    playedTracks.insert(randomRow, track);
 }
 
 void PlaylistModel::addTrack(Track* track) {
     // no duplicates
     if (!tracks.contains(track)) {
+        track->setPlayed(false);
         beginInsertRows(QModelIndex(), tracks.size(), tracks.size());
         tracks << track;
         endInsertRows();
+
+        // addShuffledTrack(track);
+
+        The::globalActions()->value("clearPlaylist")->setEnabled(true);
     }
-    The::globalActions()->value("clearPlaylist")->setEnabled(true);
 }
 
 void PlaylistModel::addTracks(QList<Track*> tracks) {
@@ -105,13 +223,23 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
             beginInsertRows(QModelIndex(), this->tracks.size(), this->tracks.size() + tracks.size() - 1);
             this->tracks.append(tracks);
             endInsertRows();
+
+            foreach (Track *track, tracks) {
+                track->setPlayed(false);
+                // addShuffledTrack(track);
+            }
+
             The::globalActions()->value("clearPlaylist")->setEnabled(true);
         }
     }
 }
 
 void PlaylistModel::clear() {
+    playedTracks.clear();
     tracks.clear();
+    activeTrack = 0;
+    activeRow = -1;
+    emit layoutChanged();
     emit reset();
 }
 
@@ -120,7 +248,9 @@ void PlaylistModel::clear() {
 bool PlaylistModel::removeRows(int position, int rows, const QModelIndex & /*parent*/) {
     beginRemoveRows(QModelIndex(), position, position+rows-1);
     for (int row = 0; row < rows; ++row) {
-        tracks.removeAt(position);
+        Track *track = tracks.takeAt(position);
+        if (track)
+            playedTracks.removeAll(track);
     }
     endRemoveRows();
     return true;
@@ -137,6 +267,7 @@ void PlaylistModel::removeIndexes(QModelIndexList &indexes) {
             delitems.append(track);
             tracks.removeAll(track);
             endRemoveRows();
+            playedTracks.removeAll(track);
         }
     }
 }
@@ -220,8 +351,8 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
 
     }
 
-    // fix m_activeRow after all this
-    m_activeRow = tracks.indexOf(m_activeTrack);
+    // fix activeRow after all this
+    activeRow = tracks.indexOf(activeTrack);
 
     The::globalActions()->value("clearPlaylist")->setEnabled(true);
 

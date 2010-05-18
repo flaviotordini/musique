@@ -39,10 +39,11 @@ private slots:
     void about();
     void quit();
     void fullscreen();
+    void setShuffle(bool enabled);
+    void setRepeat(bool enabled);
 
     // Phonon related logic
     void stop();
-    void playPause();
     void stateChanged(Phonon::State newState, Phonon::State oldState);
     void searchFocus();
     void tick(qint64 time);
@@ -82,7 +83,6 @@ private:
     QWidget *aboutView;
 
     // actions
-    QAction *settingsAct;
     QAction *contextualAct;
     QAction *backAct;
     QAction *quitAct;

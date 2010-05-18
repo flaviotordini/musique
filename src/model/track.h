@@ -35,7 +35,8 @@ public:
     void setYear(int year) { this->year = year; }
     QString getHash();
     QString getAbsolutePath();
-    void getLyrics();
+    int isPlayed() { return played; }
+    void setPlayed(int played) { this->played = played; }
 
     // relations
     Album* getAlbum() { return album; }
@@ -53,9 +54,9 @@ public:
     void insert();
     void update();
 
-
     // internet
     void fetchInfo();
+    void getLyrics();
 
     // utils
     static int getTotalLength(QList<Track*> tracks);
@@ -91,6 +92,9 @@ private:
     // relations
     Album *album;
     Artist *artist;
+
+    // playlist
+    bool played;
 
 };
 

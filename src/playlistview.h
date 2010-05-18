@@ -15,16 +15,13 @@ public:
     void setPlaylistModel(PlaylistModel *model);
 
 public slots:
-    void skipBackward();
-    void skipForward();
     void removeSelected();
     void moveUpSelected();
     void moveDownSelected();
     void itemActivated(const QModelIndex &index);
     void selectionChanged (const QItemSelection & selected, const QItemSelection & deselected);
-    void dataChanged(const QModelIndex &, const QModelIndex &);
+    void updatePlaylistActions();
     void selectTracks(QList<Track*> tracks);
-    void modelReset();
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
