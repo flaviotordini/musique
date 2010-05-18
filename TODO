@@ -2,7 +2,11 @@
 
 ## Blocking release
 
-### scanner
+# Build
+- Mac deploy: How to add the TagLib framework in the app bundle?
+- Windows, test VLC backend
+
+### Scanner
 - CUE file support
 - QFileSystemWatcher
 - Invalidate caches on db update
@@ -11,8 +15,6 @@
 
 ### Playlist
 - Drop area
-- Playlist: Shuffle
-- Playlist: Repeat
 
 ### Finder
 - Models: return QVariant as QObject, not as ArtistPointer:
@@ -24,10 +26,13 @@ http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-store
 - Search
 
 ### Info
+- Fix lyrics for titles containing "&"
 
 ### Social
-- Tell Last.fm about this application and get a valid API key
-- Album years on AudioScrobbler are mostly wrong, report it
+- Tell Last.fm about this application
+- Get a valid Last.fm API key
+- Album years on AudioScrobbler are mostly wrong, report it:
+DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 
 ## After the first release
 - Playlist: Restore selection after dragndrop
