@@ -4,6 +4,7 @@
 #include "../mainwindow.h"
 #include "droparea.h"
 #include "minisplitter.h"
+#include "constants.h"
 
 namespace The {
     QMap<QString, QAction*>* globalActions();
@@ -11,6 +12,8 @@ namespace The {
 }
 
 MediaView::MediaView(QWidget *parent) : QWidget(parent) {
+
+    activeTrack = 0;
 
     QBoxLayout *layout = new QHBoxLayout();
     layout->setMargin(0);
@@ -91,6 +94,10 @@ void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/)
         // play() has already been called when setting the source
         // but Phonon on Linux needs a little more help to start playback
         // mediaObject->play();
+
+        // reset window title
+        window()->setWindowTitle(Constants::APP_NAME);
+
         break;
 
     case Phonon::PausedState:
@@ -115,6 +122,8 @@ void MediaView::activeRowChanged(int row) {
     Track *track = playlistModel->trackAt(row);
     if (!track) return;
 
+    activeTrack = track;
+
     // go!
     QString path = track->getAbsolutePath();
     // path = "file:/" + QUrl(path).toEncoded();
@@ -125,21 +134,21 @@ void MediaView::activeRowChanged(int row) {
 
     // ensure active item is visible
     QModelIndex index = playlistModel->indexForTrack(track);
-    playlistView->scrollTo(index, QAbstractItemView::EnsureVisible);
+    playlistView->scrollTo(index, QAbstractItemView::PositionAtCenter);
 
     // track title as window title
     MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
     if (mainWindow) {
-        Artist *artist = track->getArtist();
-        QString windowTitle = track->getTitle();
-        if (artist) {
-            windowTitle += " - " + artist->getName();
-        }
-        mainWindow->setWindowTitle(windowTitle);
-
         // update info view
         mainWindow->updateContextualView(track);
     }
+
+    Artist *artist = track->getArtist();
+    QString windowTitle = track->getTitle();
+    if (artist) {
+        windowTitle += " - " + artist->getName();
+    }
+    window()->setWindowTitle(windowTitle);
 
 }
 
@@ -156,11 +165,11 @@ void MediaView::appear() {
 }
 
 void MediaView::playPause() {
-    qDebug() << "playPause";
-    // qDebug() << "pause() called" << mediaObject->state();
+    qDebug() << "playPause() state" << mediaObject->state();
     switch( mediaObject->state() ) {
+    case Phonon::LoadingState:
     case Phonon::StoppedState:
-        qDebug() << "try";
+        // we're currently not playing, let's rock
         playlistModel->skipForward();
     case Phonon::PlayingState:
         mediaObject->pause();

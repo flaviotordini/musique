@@ -47,6 +47,7 @@ private:
     PlaylistWidget *playlistWidget;
     QTimer *errorTimer;
     DropArea *dropArea;
+    Track *activeTrack;
 
 };
 
