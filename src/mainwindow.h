@@ -32,7 +32,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
-    void fadeInWidget(QWidget *oldWidget, QWidget *newWidget);
+    void crossfadeViews(QWidget *oldWidget, QWidget *newWidget);
     void goBack();
     void visitSite();
     void donate();
@@ -61,7 +61,7 @@ private slots:
     void startIncrementalScan();
 
 private:
-    void showWidget(QWidget*);
+    void showView(QWidget*);
     void createActions();
     void createMenus();
     void createToolBars();

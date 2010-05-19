@@ -55,7 +55,7 @@ MainWindow::MainWindow() {
     Database &db = Database::instance();
     if (db.status() == ScanComplete) {
 
-        showWidget(mediaView);
+        showView(mediaView);
 
         // update the collection when idle
         QTimer::singleShot(0, this, SLOT(startIncrementalScan()));
@@ -97,8 +97,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
 void MainWindow::createActions() {
 
     QMap<QString, QAction*> *actions = The::globalActions();
-
-    QList<QKeySequence> shortcuts;
 
     backAct = new QAction(tr("&Back"), this);
     backAct->setEnabled(false);
@@ -150,8 +148,7 @@ void MainWindow::createActions() {
             QtIconLoader::icon("media-playback-start", QIcon(":/images/media-playback-start.png")),
             tr("&Play"), this);
     playAct->setStatusTip(tr("Start playback"));
-    shortcuts << QKeySequence(Qt::Key_Space) << QKeySequence(Qt::Key_MediaPlay);
-    playAct->setShortcuts(shortcuts);
+    playAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::Key_Space) << QKeySequence(Qt::Key_MediaPlay));
     playAct->setEnabled(false);
     actions->insert("play", playAct);
 
@@ -166,8 +163,7 @@ void MainWindow::createActions() {
 
     removeAct = new QAction(tr("&Remove"), this);
     removeAct->setStatusTip(tr("Remove the selected tracks from the playlist"));
-    shortcuts << QKeySequence("Del") << QKeySequence("Backspace");
-    removeAct->setShortcuts(shortcuts);
+    removeAct->setShortcuts(QList<QKeySequence>() << QKeySequence("Del") << QKeySequence("Backspace"));
     removeAct->setEnabled(false);
     actions->insert("remove", removeAct);
 
@@ -226,6 +222,7 @@ void MainWindow::createActions() {
             QtIconLoader::icon("media-playlist-shuffle", QIcon(":/images/media-playlist-shuffle.png")),
             tr("&Shuffle"), this);
     action->setStatusTip(tr("Random playlist mode"));
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), SLOT(setShuffle(bool)));
     actions->insert("shufflePlaylist", action);
@@ -234,6 +231,7 @@ void MainWindow::createActions() {
             QtIconLoader::icon("media-playlist-repeat", QIcon(":/images/media-playlist-repeat.png")),
             tr("&Repeat"), this);
     action->setStatusTip(tr("Play first song again after all songs are played"));
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), SLOT(setRepeat(bool)));
     actions->insert("repeatPlaylist", action);
@@ -430,11 +428,11 @@ void MainWindow::goBack() {
     if ( history->size() > 1 ) {
         history->pop();
         QWidget *widget = history->pop();
-        showWidget(widget);
+        showView(widget);
     }
 }
 
-void MainWindow::showWidget(QWidget* widget) {
+void MainWindow::showView(QWidget* widget) {
 
     setUpdatesEnabled(false);
 
@@ -448,11 +446,14 @@ void MainWindow::showWidget(QWidget* widget) {
     View* newView = dynamic_cast<View *> (widget);
     if (newView) {
         newView->appear();
+
         QMap<QString,QVariant> metadata = newView->metadata();
+        /*
         QString windowTitle = metadata.value("title").toString();
         if (windowTitle.length())
             windowTitle += " - ";
         setWindowTitle(windowTitle + Constants::APP_NAME);
+        */
         statusBar()->showMessage((metadata.value("description").toString()));
     }
 
@@ -468,21 +469,21 @@ void MainWindow::showWidget(QWidget* widget) {
 #ifdef Q_WS_MAC
     // crossfade only on OSX
     // where we can be sure of video performance
-    fadeInWidget(views->currentWidget(), widget);
+    crossfadeViews(views->currentWidget(), widget);
 #endif
 
     views->setCurrentWidget(widget);
 
-    history->push(widget);
-
     setUpdatesEnabled(true);
+
+    history->push(widget);
 
 }
 
-void MainWindow::fadeInWidget(QWidget *oldWidget, QWidget *newWidget) {
+void MainWindow::crossfadeViews(QWidget *oldWidget, QWidget *newWidget) {
     /*
-    qDebug() << "MainWindow::fadeInWidget";
-    qDebug() << "widgets" << oldWidget << newWidget;
+    qDebug() << "MainWindow::crossfadeViews";
+    qDebug() << "views" << oldWidget << newWidget;
     if (!oldWidget || !newWidget) {
         qDebug() << "no widgets";
         return;
@@ -504,7 +505,7 @@ void MainWindow::about() {
         aboutView = new AboutView(this);
         views->addWidget(aboutView);
     }
-    showWidget(aboutView);
+    showView(aboutView);
 }
 
 void MainWindow::visitSite() {
@@ -535,11 +536,11 @@ void MainWindow::showChooseFolderView() {
         connect(chooseFolderView, SIGNAL(locationChanged(QString)), SLOT(startFullScan(QString)));
         views->addWidget(chooseFolderView);
     }
-    showWidget(chooseFolderView);
+    showView(chooseFolderView);
 }
 
 void MainWindow::showMediaView() {
-    showWidget(mediaView);
+    showView(mediaView);
 }
 
 void MainWindow::toggleContextualView() {
@@ -560,7 +561,7 @@ void MainWindow::toggleContextualView() {
         Track *track = mediaView->getPlaylistModel()->getActiveTrack();
         if (track) {
             contextualView->setTrack(track);
-            showWidget(contextualView);
+            showView(contextualView);
             contextualAct->setChecked(true);
 
             stopAct->setShortcut(QString(""));
@@ -588,7 +589,7 @@ void MainWindow::startFullScan(QString dir) {
         collectionScannerView = new CollectionScannerView(this);
         views->addWidget(collectionScannerView);
     }
-    showWidget(collectionScannerView);
+    showView(collectionScannerView);
     collectionScannerView->startScan(dir);
 }
 
