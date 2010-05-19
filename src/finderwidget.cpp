@@ -225,10 +225,7 @@ void FinderWidget::artistPlayed ( const QModelIndex & index ) {
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
     Artist *artist = artistPointer.data();
     QList<Track*> tracks = artist->getTracks();
-    if (tracks.isEmpty()) return;
-    playlistModel->addTracks(tracks);
-    playlistModel->setActiveRow(playlistModel->rowForTrack(tracks.first()));
-    playlistView->scrollTo(playlistModel->indexForTrack(tracks.first()), QAbstractItemView::PositionAtCenter);
+    addTracksAndPlay(tracks);
 }
 
 void FinderWidget::albumEntered ( const QModelIndex & index ) {
@@ -257,10 +254,7 @@ void FinderWidget::albumPlayed ( const QModelIndex & index ) {
     const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
     Album *album = albumPointer.data();
     QList<Track*> tracks = album->getTracks();
-    if (tracks.isEmpty()) return;
-    playlistModel->addTracks(tracks);
-    playlistModel->setActiveRow(playlistModel->rowForTrack(tracks.first()));
-    playlistView->scrollTo(playlistModel->indexForTrack(tracks.first()), QAbstractItemView::PositionAtCenter);
+    addTracksAndPlay(tracks);
 }
 
 void FinderWidget::trackEntered ( const QModelIndex & index ) {
@@ -292,8 +286,23 @@ void FinderWidget::folderPlayed(const QModelIndex & index) {
     const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
     Folder *folder = folderPointer.data();
     QList<Track*> tracks = folder->getTracks();
+    addTracksAndPlay(tracks);
+}
+
+void FinderWidget::addTracksAndPlay(QList<Track *>tracks) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
-    playlistModel->setActiveRow(playlistModel->rowForTrack(tracks.first()));
-    playlistView->scrollTo(playlistModel->indexForTrack(tracks.first()), QAbstractItemView::PositionAtCenter);
+
+    Track* trackToPlay = 0;
+
+    QSettings settings;
+    const bool shuffle = settings.value("shuffle").toBool();
+    if (shuffle) {
+        int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
+        trackToPlay = tracks.at(nextRow);
+    } else {
+        trackToPlay = tracks.first();
+    }
+    playlistModel->setActiveRow(playlistModel->rowForTrack(trackToPlay));
+    playlistView->scrollTo(playlistModel->indexForTrack(trackToPlay), QAbstractItemView::PositionAtCenter);
 }

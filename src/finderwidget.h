@@ -11,6 +11,7 @@ class ArtistSqlModel;
 class AlbumSqlModel;
 class TrackSqlModel;
 class FileSystemModel;
+class Track;
 
 namespace Finder {
 
@@ -74,12 +75,12 @@ private:
     void setupFolders();
     void setupTracks();
     void showWidget(QWidget *widget, bool isRoot);
+    void addTracksAndPlay(QList<Track*> tracks);
 
     THBlackBar *finderBar;
     QAction *artistsAction;
     QAction *albumsAction;
     QAction *foldersAction;
-    QAction *mostViewedAction;
 
     QStackedWidget *stackedWidget;
     BreadcrumbWidget *breadcrumb;
