@@ -61,7 +61,7 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
 
 void PlaylistView::itemActivated(const QModelIndex &index) {
     if (playlistModel->rowExists(index.row()))
-        playlistModel->setActiveRow(index.row());
+        playlistModel->setActiveRow(index.row(), true);
 }
 
 void PlaylistView::removeSelected() {

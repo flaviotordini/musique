@@ -23,7 +23,7 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     // playlist model
     playlistModel = new PlaylistModel(this);
-    connect(playlistModel, SIGNAL(activeRowChanged(int)), SLOT(activeRowChanged(int)));
+    connect(playlistModel, SIGNAL(activeRowChanged(int, bool)), SLOT(activeRowChanged(int, bool)));
 
     // finder
     finderWidget = new FinderWidget(this);
@@ -115,7 +115,7 @@ void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/)
     }
 }
 
-void MediaView::activeRowChanged(int row) {
+void MediaView::activeRowChanged(int row, bool manual) {
 
     errorTimer->stop();
 
@@ -134,15 +134,18 @@ void MediaView::activeRowChanged(int row) {
 
     // ensure active item is visible
     QModelIndex index = playlistModel->indexForTrack(track);
-    playlistView->scrollTo(index, QAbstractItemView::PositionAtCenter);
+    if (manual)
+        playlistView->scrollTo(index, QAbstractItemView::EnsureVisible);
+    else
+        playlistView->scrollTo(index, QAbstractItemView::PositionAtCenter);
 
-    // track title as window title
+    // update info view
     MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
     if (mainWindow) {
-        // update info view
         mainWindow->updateContextualView(track);
     }
 
+    // track title as window title
     Artist *artist = track->getArtist();
     QString windowTitle = track->getTitle();
     if (artist) {

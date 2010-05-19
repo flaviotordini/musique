@@ -38,7 +38,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-void PlaylistModel::setActiveRow(int row) {
+void PlaylistModel::setActiveRow(int row, bool manual) {
     if (!rowExists(row)) return;
 
     const int oldActiveRow = activeRow;
@@ -55,7 +55,7 @@ void PlaylistModel::setActiveRow(int row) {
     QModelIndex newIndex = index(activeRow, 0, QModelIndex());
     emit dataChanged(newIndex, newIndex);
 
-    emit activeRowChanged(row);
+    emit activeRowChanged(row, manual);
 
 }
 

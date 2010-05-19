@@ -34,7 +34,7 @@ public slots:
     void playPause();
 
 private slots:
-    void activeRowChanged(int);
+    void activeRowChanged(int row, bool manual);
     void stateChanged(Phonon::State newState, Phonon::State oldState);
     void handleError(QString message);
 

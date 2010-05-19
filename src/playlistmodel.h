@@ -37,7 +37,7 @@ public:
                       const QModelIndex &parent);
 
     // custom methods
-    void setActiveRow( int row );
+    void setActiveRow(int row, bool manual = false);
     bool rowExists( int row ) const { return (( row >= 0 ) && ( row < tracks.size() ) ); }
     void removeIndexes(QModelIndexList &indexes);
     int rowForTrack(Track* track);
@@ -56,7 +56,7 @@ public slots:
     void skipForward();
 
 signals:
-    void activeRowChanged(int);
+    void activeRowChanged(int, bool);
     void needSelectionFor(QList<Track*>);
     void itemChanged(int total);
 
