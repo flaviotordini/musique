@@ -2,9 +2,12 @@
 
 ## Blocking release
 
-# Build
+## Build
 - Mac deploy: How to add the TagLib framework in the app bundle?
 - Windows, test VLC backend
+
+## General
+- Fix view crossfades
 
 ### Scanner
 - CUE file support
@@ -23,10 +26,8 @@ http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-store
 - Filesystem model
 - Filesystem: hide empty dirs
 - Filesystem: hide non-track files
-- Search
 
 ### Info
-- Fix lyrics for titles containing "&"
 
 ### Social
 - Tell Last.fm about this application
@@ -35,6 +36,12 @@ http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-store
 DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 
 ## After the first release
+
+- Search (it really hurts to left this out for the first release)
+- Fix appear()/disappear() view mechanism
+- Gapless playback
+- Better default finder and playlist size
+- CLI
 - Playlist: Restore selection after dragndrop
 - Select all relevant tracks when clicking the playlist album header
 - Next/Previous album playback actions
@@ -56,4 +63,6 @@ DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 - Finder: A bit of sorting & filtering on Albums and Artist views
 
 ## Funny stuff geeks may ask for
+
 - Load/Save playlists as /Playlists/[playlistname].pls. Show "Playlists" tab if there's at least one.
+- Last.fm scrobbling
