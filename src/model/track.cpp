@@ -278,8 +278,8 @@ void Track::getLyrics() {
     // http://lyrics.wikia.com/LyricWiki:REST
     QUrl url = QString(
             "http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
-            .arg(artist->getName())
-            .arg(title);
+            .arg(QString::fromUtf8(QUrl::toPercentEncoding(artist->getName())))
+            .arg(QString::fromUtf8(QUrl::toPercentEncoding(title)));
 
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLyricsSearchResults(QByteArray)));
@@ -296,7 +296,7 @@ void Track::parseLyricsSearchResults(QByteArray bytes) {
     QString lyricsUrl = DataUtils::getXMLElementText(bytes, "url");
     if (lyricsUrl.contains("action=edit")) {
         // Lyrics not found
-        qDebug() << "Lyrics not available for " << title;
+        qDebug() << "Lyrics not available for" << title;
     } else {
         // Lyrics found, get them
         QUrl url = QUrl::fromEncoded(lyricsUrl.toUtf8());
