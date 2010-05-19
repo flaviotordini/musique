@@ -30,8 +30,6 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
     // dragndrop
     this->setDragEnabled(true);
-    // this->setAcceptDrops(true);
-    // this->setDropIndicatorShown(true);
     this->setDragDropMode(QAbstractItemView::DragOnly);
 
     // cosmetics

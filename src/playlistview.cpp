@@ -93,8 +93,7 @@ void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemS
 void PlaylistView::updatePlaylistActions() {
 
     const int rowCount = playlistModel->rowCount(QModelIndex());
-    qDebug() << "Layout changed" << rowCount;
-    bool isPlaylistEmpty = rowCount < 1;
+    const bool isPlaylistEmpty = rowCount < 1;
     The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
     The::globalActions()->value("play")->setEnabled(!isPlaylistEmpty);
     The::globalActions()->value("skip")->setEnabled(!isPlaylistEmpty);

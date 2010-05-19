@@ -70,12 +70,12 @@ QNetworkReply* NetworkAccess::simpleGet(QUrl url, int operation) {
     switch (operation) {
 
     case QNetworkAccessManager::GetOperation:
-        qDebug() << "GET" << url.toString();
+        qDebug() << "GET" << url.toEncoded();
         networkReply = manager->get(request);
         break;
 
     case QNetworkAccessManager::HeadOperation:
-        qDebug() << "HEAD" << url.toString();
+        qDebug() << "HEAD" << url.toEncoded();
         networkReply = manager->head(request);
         break;
 

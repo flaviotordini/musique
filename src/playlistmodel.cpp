@@ -31,7 +31,6 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
         return QVariant::fromValue(QPointer<Track>(track));
 
     case Playlist::ActiveItemRole:
-        // qDebug() << track->getTitle() << (track == m_activeTrack);
         return track == activeTrack;
 
     }
@@ -385,7 +384,7 @@ void PlaylistModel::move(QModelIndexList &indexes, bool up) {
     foreach (Track *track, movedTracks) {
 
         int row = rowForTrack(track);
-        qDebug() << "track row" << row;
+        // qDebug() << "track row" << row;
         removeRows(row, 1, QModelIndex());
 
         if (up) row--;

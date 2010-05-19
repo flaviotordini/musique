@@ -25,8 +25,6 @@ private:
     static const int PADDING;
     static int ITEM_HEIGHT;
 
-
-
 };
 
 #endif // PLAYLISTITEMDELEGATE_H
