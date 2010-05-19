@@ -65,5 +65,8 @@ int main(int argc, char **argv) {
     // This is required in order to use QNetworkReply::NetworkError in QueuedConnetions
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
 
+    // Seed random number generator
+    qsrand(QDateTime::currentDateTime().toTime_t());
+
     return app.exec();
 }
