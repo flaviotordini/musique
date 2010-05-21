@@ -18,6 +18,7 @@ MainWindow::MainWindow() {
     m_fullscreen = false;
 
     // lazily initialized views
+    mediaView = 0;
     collectionScannerView = 0;
     chooseFolderView = 0;
     aboutView = 0;
@@ -27,8 +28,6 @@ MainWindow::MainWindow() {
     toolbarSearch->setFont(qApp->font());
     toolbarSearch->setMinimumWidth(toolbarSearch->fontInfo().pixelSize()*15);
     // TODO connect(toolbarSearch, SIGNAL(search(const QString&)), searchView, SLOT(watch(const QString&)));
-
-    initPhonon();
 
     // build ui
     createActions();
@@ -40,12 +39,6 @@ MainWindow::MainWindow() {
     history = new QStack<QWidget*>();
     views = new QStackedWidget(this);
 
-    // views
-    mediaView = new MediaView(this);
-    mediaView->setMediaObject(mediaObject);
-    connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
-    views->addWidget(mediaView);
-
     // remove that useless menu/toolbar context menu
     this->setContextMenuPolicy(Qt::NoContextMenu);
 
@@ -55,7 +48,7 @@ MainWindow::MainWindow() {
     Database &db = Database::instance();
     if (db.status() == ScanComplete) {
 
-        showView(mediaView);
+        showMediaView();
 
         // update the collection when idle
         QTimer::singleShot(0, this, SLOT(startIncrementalScan()));
@@ -359,7 +352,6 @@ void MainWindow::createToolBars() {
     mainToolBar->addWidget(currentTime);
 
     seekSlider = new Phonon::SeekSlider(this);
-    seekSlider->setMediaObject(mediaObject);
     seekSlider->setIconVisible(false);
     Spacer *seekSliderSpacer = new Spacer(mainToolBar, seekSlider);
     seekSliderSpacer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -372,7 +364,6 @@ void MainWindow::createToolBars() {
     mainToolBar->addWidget(new Spacer(mainToolBar, new QWidget(this)));
 
     volumeSlider = new Phonon::VolumeSlider(this);
-    volumeSlider->setAudioOutput(audioOutput);
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     mainToolBar->addWidget(new Spacer(mainToolBar, volumeSlider));
@@ -407,8 +398,6 @@ void MainWindow::readSettings() {
     QSettings settings;
     restoreGeometry(settings.value("geometry").toByteArray());
     m_maximized = isMaximized();
-    audioOutput->setVolume(settings.value("volume", 1).toDouble());
-    audioOutput->setMuted(settings.value("volumeMute").toBool());
     The::globalActions()->value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
     The::globalActions()->value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
 }
@@ -540,6 +529,13 @@ void MainWindow::showChooseFolderView() {
 }
 
 void MainWindow::showMediaView() {
+    if(!mediaView) {
+        initPhonon();
+        mediaView = new MediaView(this);
+        mediaView->setMediaObject(mediaObject);
+        connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
+        views->addWidget(mediaView);
+    }
     showView(mediaView);
 }
 
@@ -558,7 +554,7 @@ void MainWindow::toggleContextualView() {
         stopAct->setShortcut(QKeySequence(Qt::Key_Escape));
 
     } else {
-        Track *track = mediaView->getPlaylistModel()->getActiveTrack();
+        Track *track = mediaView->getActiveTrack();
         if (track) {
             contextualView->setTrack(track);
             showView(contextualView);
@@ -580,7 +576,7 @@ void MainWindow::updateContextualView(Track *track) {
 }
 
 void MainWindow::startFullScan(QString dir) {
-    // qDebug() << "startFullScan" << dir;
+    qDebug() << "startFullScan" << dir;
 
     QSettings settings;
     settings.setValue("collectionRoot", dir);
@@ -598,9 +594,6 @@ void MainWindow::startIncrementalScan() {
     QString dir = settings.value("collectionRoot").toString();
 
     CollectionScannerThread &scanner = CollectionScannerThread::instance();
-    // connect(scanner, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)), Qt::QueuedConnection);
-    // connect(scanner, SIGNAL(finished()), window(), SLOT(showMediaView()));
-    // connect(scanner, SIGNAL(finished()), SLOT(scanFinished()));
     scanner.setDirectory(QDir(dir));
     scanner.setIncremental(true);
     scanner.start();
@@ -638,6 +631,7 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
 
          case Phonon::StoppedState:
         stopAct->setEnabled(false);
+        contextualAct->setEnabled(false);
         break;
 
          case Phonon::PausedState:
@@ -710,17 +704,23 @@ void MainWindow::searchFocus() {
 }
 
 void MainWindow::initPhonon() {
-    // Phonon initialization
     mediaObject = new Phonon::MediaObject(this);
     mediaObject->setTickInterval(250);
     connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
             this, SLOT(stateChanged(Phonon::State, Phonon::State)));
     connect(mediaObject, SIGNAL(tick(qint64)), this, SLOT(tick(qint64)));
     connect(mediaObject, SIGNAL(totalTimeChanged(qint64)), this, SLOT(totalTimeChanged(qint64)));
+
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     connect(audioOutput, SIGNAL(volumeChanged(qreal)), this, SLOT(volumeChanged(qreal)));
     connect(audioOutput, SIGNAL(mutedChanged(bool)), this, SLOT(volumeMutedChanged(bool)));
     Phonon::createPath(mediaObject, audioOutput);
+    QSettings settings;
+    audioOutput->setVolume(settings.value("volume", 1).toDouble());
+    audioOutput->setMuted(settings.value("volumeMute").toBool());
+
+    seekSlider->setMediaObject(mediaObject);
+    volumeSlider->setAudioOutput(audioOutput);
 }
 
 void MainWindow::tick(qint64 time) {
