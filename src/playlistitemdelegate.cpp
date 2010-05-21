@@ -3,6 +3,7 @@
 #include "model/album.h"
 #include "model/artist.h"
 #include "playlistmodel.h"
+#include "iconloader/qticonloader.h"
 
 const int PlaylistItemDelegate::PADDING = 10;
 int PlaylistItemDelegate::ITEM_HEIGHT = 0;
@@ -37,12 +38,24 @@ QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     return QSize(ITEM_HEIGHT, ITEM_HEIGHT);
 }
 
-void PlaylistItemDelegate::paint( QPainter* painter,
-                                  const QStyleOptionViewItem& option,
-                                  const QModelIndex& index ) const {
-
+void PlaylistItemDelegate::paint(
+        QPainter* painter,
+        const QStyleOptionViewItem& option,
+        const QModelIndex& index) const {
     paintTrack(painter, option, index);
+}
 
+QPixmap PlaylistItemDelegate::createPlayIcon() const {
+    QIcon icon = QtIconLoader::icon("media-playback-start", QIcon(":/images/media-playback-start.png"));
+    return icon.pixmap(16, 16);
+}
+
+QPixmap PlaylistItemDelegate::getPlayIcon() const {
+    static QPixmap playIcon;
+    if (playIcon.isNull()) {
+        playIcon = createPlayIcon();
+    }
+    return playIcon;
 }
 
 void PlaylistItemDelegate::paintTrack(QPainter *painter,
@@ -83,9 +96,12 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
         QFont boldFont = painter->font();
         boldFont.setBold(true);
         painter->setFont(boldFont);
+        // play icon
+        painter->drawPixmap(PADDING*2, (ITEM_HEIGHT - 16) / 2, 16, 16, getPlayIcon());
+    } else {
+        paintTrackNumber(painter, option, line, track);
     }
 
-    paintTrackNumber(painter, option, line, track);
     paintTrackTitle(painter, option, line, track);
     paintTrackLength(painter, option, line, track);
 
