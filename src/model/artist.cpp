@@ -14,17 +14,17 @@ namespace The {
 }
 
 Artist::Artist(QObject *parent) : Item(parent) {
-    photoLoaded = false;
+
 }
 
-static QHash<int, Artist*> artistCache;
+QHash<int, Artist*> Artist::cache;
 
 Artist* Artist::forId(int artistId) {
 
-    if (artistCache.contains(artistId)) {
+    if (cache.contains(artistId)) {
         // get from cache
         // qDebug() << "Artist was cached" << artistId;
-        return artistCache.value(artistId);
+        return cache.value(artistId);
     }
 
     QSqlDatabase db = Database::instance().getConnection();
@@ -43,10 +43,10 @@ Artist* Artist::forId(int artistId) {
         // Add other fields here...
 
         // put into cache
-        artistCache.insert(artistId, artist);
+        cache.insert(artistId, artist);
         return artist;
     }
-    artistCache.insert(artistId, 0);
+    cache.insert(artistId, 0);
     return 0;
 }
 
@@ -122,10 +122,19 @@ void Artist::parseMusicBrainzArtist(QByteArray bytes) {
 // *** Last.fm ***
 
 void Artist::fetchLastFmSearch() {
-    QUrl url = QString(
-            "http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=%1&limit=1&api_key=%2")
-            .arg(name)
-            .arg(Constants::LASTFM_API_KEY);
+
+    // Avoid rare infinite loops with redirected artists
+    if (lastFmSearches.contains(name)) {
+        emit gotInfo();
+        return;
+    }
+
+    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    url.addQueryItem("method", "artist.search");
+    url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
+    url.addQueryItem("artist", name);
+
+    lastFmSearches << name;
 
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
@@ -144,7 +153,7 @@ void Artist::parseLastFmSearch(QByteArray bytes) {
         if (!urlString.isEmpty() && urlString.contains(redirectToken)) {
             if (!urlString.startsWith("http://")) urlString.prepend("http://");
             urlString.remove(redirectToken);
-            QUrl url(urlString);
+            QUrl url = QUrl::fromEncoded(urlString.toUtf8());
 
             // get it and parse the Location header
             qDebug() << "Redirected artist" << name << urlString << url;
@@ -168,8 +177,9 @@ void Artist::parseLastFmRedirectedName(QNetworkReply *reply) {
     if (!location.isEmpty()) {
         int slashIndex = location.lastIndexOf('/');
         if (slashIndex > 0 && slashIndex < location.length()) {
-            name = location.mid(slashIndex + 1);
-            qDebug() << "*** Redirected name is" << name;
+            QString redirectedName = location.mid(slashIndex + 1);
+            qDebug() << name << "redirected to" << redirectedName;
+            name = redirectedName;
             fetchLastFmSearch();
             return;
         }
@@ -181,10 +191,16 @@ void Artist::fetchLastFmInfo() {
 
     // if (QFile::exists(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash())) return;
 
-    QUrl url = QString(
-            "http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=%1&api_key=%2")
-            .arg(mbid)
-            .arg(Constants::LASTFM_API_KEY);
+    if (mbid.isEmpty()) {
+        qDebug() << "Missing mbid for" << name;
+        emit gotInfo();
+        return;
+    }
+
+    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    url.addQueryItem("method", "artist.getinfo");
+    url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
+    url.addQueryItem("mbid", mbid);
 
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmInfo(QByteArray)));
@@ -220,7 +236,7 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
                 QString imageUrl = xml.readElementText();
                 // qDebug() << name << " photo:" << imageUrl;
                 if (!imageUrl.isEmpty()) {
-                    QUrl url(imageUrl);
+                    QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
                     QObject *reply = The::http()->get(url);
                     connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
                 }
@@ -262,13 +278,7 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
 }
 
 QImage Artist::getPhoto() {
-    if (!photoLoaded) {
-        photoLoaded = true;
-        // load from disk
-        // qDebug() << "loading photo for" << name;
-        photo = QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash());
-    }
-    return photo;
+    return QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash());
 }
 
 void Artist::setPhoto(QByteArray bytes) {

@@ -25,14 +25,14 @@ Track::Track() {
     played = false;
 }
 
-static QHash<int, Track*> trackCache;
+QHash<int, Track*> Track::cache;
 
 Track* Track::forId(int trackId) {
 
-    if (trackCache.contains(trackId)) {
+    if (cache.contains(trackId)) {
         // get from cache
         // qDebug() << "Track was cached" << trackId;
-        return trackCache.value(trackId);
+        return cache.value(trackId);
     }
 
     QSqlDatabase db = Database::instance().getConnection();
@@ -59,13 +59,13 @@ Track* Track::forId(int trackId) {
         track->setAlbum(Album::forId(albumId));
 
         // put into cache
-        trackCache.insert(trackId, track);
+        cache.insert(trackId, track);
 
         return track;
     }
 
     // id not found
-    trackCache.insert(trackId, 0);
+    cache.insert(trackId, 0);
     return 0;
 }
 
@@ -272,6 +272,7 @@ void Track::getLyrics() {
         } else {
             QByteArray bytes = file.readAll();
             emit gotLyrics(QString::fromUtf8(bytes.data()));
+            return;
         }
     }
 

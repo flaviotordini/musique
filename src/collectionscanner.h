@@ -68,6 +68,7 @@ signals:
     void error(QString message);
 
 private slots:
+    void popFromQueue();
     void giveThisFileAnArtist(FileInfo *file);
     void processArtist(FileInfo *file);
     void gotArtistInfo();

@@ -7,8 +7,6 @@ static const int PADDING = 30;
 
 CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent) {
 
-    scanner = 0;
-
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(PADDING);
@@ -39,14 +37,16 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
 }
 
 void CollectionScannerView::startScan(QString dir) {
+    /*
     if (scanner) {
         qDebug("Hey CollectionScannerThread was not deleted...");
         delete scanner;
     }
+    */
 
-    // drop the previous, if any
-    Database &db = Database::instance();
-    db.drop();
+    qDebug() << "CollectionScannerView::startScan" << dir;
+
+    progressBar->setMaximum(0);
 
     CollectionScannerThread &scanner = CollectionScannerThread::instance();
     connect(&scanner, SIGNAL(progress(int)), this, SLOT(progress(int)));
@@ -54,8 +54,17 @@ void CollectionScannerView::startScan(QString dir) {
     connect(&scanner, SIGNAL(finished()), window(), SLOT(showMediaView()));
     connect(&scanner, SIGNAL(finished()), SLOT(scanFinished()));
     scanner.setDirectory(QDir(dir));
-    scanner.setIncremental(false);
+
+    Database &db = Database::instance();
+    if (db.status() == ScanComplete) {
+        scanner.setIncremental(false);
+    } else {
+        scanner.setIncremental(true);
+    }
+
+    qDebug() << "CollectionScannerView:: scanner.start()";
     scanner.start();
+    qDebug() << "CollectionScannerView::scanner.start() ended";
 }
 
 void CollectionScannerView::scanFinished() {

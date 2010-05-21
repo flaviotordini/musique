@@ -9,13 +9,19 @@ CollectionScannerThread::CollectionScannerThread() {
 }
 
 CollectionScannerThread& CollectionScannerThread::instance() {
+    /*
     static QMutex mutex;
     QMutexLocker locker(&mutex);
     if (!threadInstance) threadInstance = new CollectionScannerThread();
     return *threadInstance;
+    */
+    CollectionScannerThread *cst = new CollectionScannerThread();
+    return *cst;
 }
 
 void CollectionScannerThread::run() {
+
+    qDebug() << "CollectionScannerThread::run()";
 
     CollectionScanner *scanner = new CollectionScanner();
     scanner->setDirectory(rootDirectory);
@@ -28,6 +34,10 @@ void CollectionScannerThread::run() {
     // Start thread event loop
     // This makes signals and slots work
     exec();
+
+    delete scanner;
+
+    qDebug() << "CollectionScannerThread::run() exited";
 
 }
 

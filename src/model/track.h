@@ -45,6 +45,10 @@ public:
     void setArtist(Artist *artist) { this->artist = artist; }
 
     // data access
+    static void clearCache() {
+        qDeleteAll(cache);
+        cache.clear();
+    }
     static Track* forId(int trackId);
     static Track* forPath(QString path);
     static int idForPath(QString path);
@@ -73,9 +77,9 @@ private slots:
 
 private:
     static QString getHash(QString);
-    /**
-      * Clear all data
-      */
+
+    static QHash<int, Track*> cache;
+
     void reset();
 
     // properties

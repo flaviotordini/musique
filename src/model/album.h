@@ -30,6 +30,10 @@ public:
     void setArtist(Artist *artist) { this->artist = artist; }
 
     // data access
+    static void clearCache() {
+        qDeleteAll(cache);
+        cache.clear();
+    }
     static Album* forId(int albumId);
     static int idForName(QString name);
     void insert();
@@ -64,10 +68,11 @@ private slots:
 private:
     static QString getHash(QString);
 
+    static QHash<int, Album*> cache;
+
     QString name;
     int year;
     Artist* artist;
-    QImage photo;
     QString mbid;
 
 };

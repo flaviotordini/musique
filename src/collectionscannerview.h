@@ -31,7 +31,6 @@ private slots:
 
 private:
     QProgressBar *progressBar;
-    CollectionScannerThread *scanner;
 
 };
 

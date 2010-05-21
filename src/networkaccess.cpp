@@ -9,16 +9,22 @@ namespace The {
 NetworkReply::NetworkReply(QNetworkReply *networkReply) : QObject(networkReply) {
     this->networkReply = networkReply;
     followRedirects = true;
+
+    timer = new QTimer(this);
+    timer->setInterval(60000);
+    timer->setSingleShot(true);
+    connect(timer, SIGNAL(timeout()), SLOT(abort()));
+    timer->start();
 }
 
 void NetworkReply::finished() {
+    timer->stop();
 
-    /*
     if (networkReply->error() != QNetworkReply::NoError) {
-        qDebug() << networkReply->url() << "has error" << networkReply->error();
+        qDebug() << networkReply->url() << "finished with error" << networkReply->error();
         networkReply->deleteLater();
         return;
-    }*/
+    }
 
     if (followRedirects) {
         QUrl redirection = networkReply->attribute(QNetworkRequest::RedirectionTargetAttribute).toUrl();
@@ -51,6 +57,12 @@ void NetworkReply::finished() {
 }
 
 void NetworkReply::requestError(QNetworkReply::NetworkError code) {
+    timer->stop();
+    emit error(networkReply);
+}
+
+void NetworkReply::abort() {
+    qDebug() << "TIMEOUT" << networkReply->url();
     emit error(networkReply);
 }
 
@@ -60,7 +72,7 @@ NetworkAccess::NetworkAccess(QObject* parent) : QObject( parent ) {}
 
 QNetworkReply* NetworkAccess::simpleGet(QUrl url, int operation) {
 
-    QNetworkAccessManager *manager = The::networkAccessManager();
+    QNetworkAccessManager *manager = new QNetworkAccessManager(this);
 
     QNetworkRequest request(url);
     request.setRawHeader("User-Agent", Constants::USER_AGENT.toUtf8());
@@ -188,12 +200,10 @@ void NetworkAccess::error(QNetworkReply::NetworkError code) {
     }
 
     // Ignore HEADs
+    /*
     if (networkReply->operation() == QNetworkAccessManager::HeadOperation)
         return;
-
-    // report the error in the status bar
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(qApp->topLevelWidgets().first());
-    if (mainWindow) mainWindow->statusBar()->showMessage(networkReply->errorString());
+        */
 
     qDebug() << networkReply->errorString() << code;
 

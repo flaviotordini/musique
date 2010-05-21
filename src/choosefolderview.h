@@ -10,7 +10,7 @@ class ChooseFolderView : public QWidget, public View {
 
 public:
     ChooseFolderView(QWidget *parent);
-    void appear() {}
+    void appear();
     void disappear() {}
     QMap<QString, QVariant> metadata() {
         QMap<QString, QVariant> metadata;
@@ -32,6 +32,9 @@ private slots:
     void iTunesDirChosen();
 
 private:
+    QBoxLayout *welcomeLayout;
+    QLabel *tipLabel;
+    QPushButton *cancelButton;
 
 };
 #endif

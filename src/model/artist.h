@@ -29,6 +29,10 @@ public:
     // QList<Album*> getAlbums();
 
     // data access
+    static void clearCache() {
+        qDeleteAll(cache);
+        cache.clear();
+    }
     static Artist* forId(int artistId);
     static int idForName(QString name);
     void insert();
@@ -71,8 +75,7 @@ private slots:
 private:
     static QString getHash(QString);
 
-    bool photoLoaded;
-    QImage photo;
+    static QHash<int, Artist*> cache;
 
     int trackCount;
 
@@ -81,6 +84,8 @@ private:
     QString mbid;
     int lifeBegin;
     int lifeEnd;
+
+    QStringList lastFmSearches;
 
 };
 

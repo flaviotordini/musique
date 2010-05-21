@@ -22,7 +22,16 @@ void CollectionScanner::run() {
     }
     working = true;
 
-    lastUpdate = Database::instance().lastUpdate();
+    // invalidate caches
+    Artist::clearCache();
+    Album::clearCache();
+    Track::clearCache();
+
+    if (incremental)
+        lastUpdate = Database::instance().lastUpdate();
+    else
+        // drop the previous, if any
+        Database::instance().drop();
 
     // now scan the files
     scanDirectory(rootDirectory);
@@ -31,57 +40,56 @@ void CollectionScanner::run() {
 
     // Start transaction
     // http://web.utk.edu/~jplyon/sqlite/SQLite_optimization_FAQ.html#transactions
-    // Database::instance().getConnection().transaction();
+    Database::instance().getConnection().transaction();
 
-    foreach(QFileInfo fileInfo, fileQueue) {
-        // qDebug() << "Processing " << fileInfo.absoluteFilePath();
+    popFromQueue();
 
-        // parse metadata with TagLib
-        TagLib::FileRef fileref(fileInfo.absoluteFilePath().toUtf8());
-        // or maybe QFile::encodeName(p_FilePath).data()
+}
 
-        // if taglib cannot parse the file, drop it
-        if (fileref.isNull()) {
-            fileQueue.removeAll(fileInfo);
-            continue;
-        }
+void CollectionScanner::popFromQueue() {
+    // qDebug() << "Processing " << fileInfo.absoluteFilePath();
 
-        // Ok this is an interesting file
-        // This is not perfect as it will try to parse invalid files over and over
-        // TODO Add a table for invalid files with a hash from mdate and size
-
-        // This object will experience an incredible adventure,
-        // facing countless perils and hopefully reaching to its final destination
-        FileInfo *file = new FileInfo();
-        file->setFileInfo(fileInfo);
-
-        // Copy TagLib::FileRef in our Tags class.
-        // TagLib::FileRef keeps files open and we would quickly reach the max open files limit
-        Tags *tags = new Tags();
-        tags->title = QString::fromStdString(fileref.tag()->title().to8Bit(true));
-        // qDebug() << "TITLE" << fileref.tag()->title().toCString(true) << tags->title;
-        tags->artist = QString::fromStdString(fileref.tag()->artist().to8Bit(true));
-        tags->album = QString::fromStdString(fileref.tag()->album().to8Bit(true));
-        tags->track = fileref.tag()->track();
-        tags->year = fileref.tag()->year();
-        tags->length = fileref.audioProperties()->length();
-        file->setTags(tags);
-
-        // get data from the internet
-        giveThisFileAnArtist(file);
-    }
-
-    if (incremental) {
-        // clean db from stale data: non-existing files
-        cleanStaleTracks();
-    }
-
-    // if there are no files, we need to call complete() anyway
-    if (maxQueueSize == 0) {
+    if (fileQueue.isEmpty()) {
         complete();
         return;
     }
 
+    QFileInfo fileInfo = fileQueue.first();
+
+    // parse metadata with TagLib
+    TagLib::FileRef fileref(fileInfo.absoluteFilePath().toUtf8());
+    // or maybe QFile::encodeName(p_FilePath).data()
+
+    // if taglib cannot parse the file, drop it
+    if (fileref.isNull()) {
+        fileQueue.removeAll(fileInfo);
+        popFromQueue();
+        return;
+    }
+
+    // Ok this is an interesting file
+    // This is not perfect as it will try to parse invalid files over and over
+    // TODO Add a table for invalid files with a hash from mdate and size
+
+    // This object will experience an incredible adventure,
+    // facing countless perils and hopefully reaching to its final destination
+    FileInfo *file = new FileInfo();
+    file->setFileInfo(fileInfo);
+
+    // Copy TagLib::FileRef in our Tags class.
+    // TagLib::FileRef keeps files open and we would quickly reach the max open files limit
+    Tags *tags = new Tags();
+    tags->title = QString::fromStdString(fileref.tag()->title().to8Bit(true));
+    // qDebug() << "TITLE" << fileref.tag()->title().toCString(true) << tags->title;
+    tags->artist = QString::fromStdString(fileref.tag()->artist().to8Bit(true));
+    tags->album = QString::fromStdString(fileref.tag()->album().to8Bit(true));
+    tags->track = fileref.tag()->track();
+    tags->year = fileref.tag()->year();
+    tags->length = fileref.audioProperties()->length();
+    file->setTags(tags);
+
+    // get data from the internet
+    giveThisFileAnArtist(file);
 }
 
 void CollectionScanner::stop() {
@@ -91,10 +99,21 @@ void CollectionScanner::stop() {
 
 void CollectionScanner::complete() {
     qDebug() << "Scan complete";
-    // Database::instance().getConnection().commit();
+
+    if (incremental) {
+        // clean db from stale data: non-existing files
+        cleanStaleTracks();
+    }
+
     Database::instance().setStatus(ScanComplete);
     Database::instance().setLastUpdate(QDateTime::currentDateTime().toTime_t());
+    Database::instance().getConnection().commit();
     Database::instance().toDisk();
+
+    // invalidate caches
+    Artist::clearCache();
+    Album::clearCache();
+    Track::clearCache();
 
     // cleanup
     /*
@@ -106,6 +125,8 @@ void CollectionScanner::complete() {
     working = false;
 
     emit finished();
+
+    exit();
 }
 
 void CollectionScanner::setDirectory(QDir directory) {
@@ -228,7 +249,7 @@ void CollectionScanner::processArtist(FileInfo *file) {
     connect(artist, SIGNAL(gotInfo()), SLOT(gotArtistInfo()));
     artist->fetchInfo();
 
-    qApp->processEvents();
+    // qApp->processEvents();
 }
 
 void CollectionScanner::gotArtistInfo() {
@@ -334,7 +355,7 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     connect(album, SIGNAL(gotInfo()), SLOT(gotAlbumInfo()));
     album->fetchInfo();
 
-    qApp->processEvents();
+    // qApp->processEvents();
 }
 
 void CollectionScanner::gotAlbumInfo() {
@@ -423,7 +444,7 @@ void CollectionScanner::processTrack(FileInfo *file) {
     connect(track, SIGNAL(gotInfo()), SLOT(gotTrackInfo()));
     track->fetchInfo();
 
-    qApp->processEvents();
+    // qApp->processEvents();
     // http://musicbrainz.org/ws/1/release/579278d5-75dc-4d2f-a5f3-6cc86f6c510e?type=xml&inc=tracks
 
 }
@@ -450,19 +471,16 @@ void CollectionScanner::gotTrackInfo() {
     qDebug() << "tracks:" << fileQueue.size()
             << "albums:" << filesWaitingForAlbums.size()
             << "artists:" << filesWaitingForArtists.size();
-*/
+            */
 
     int percent = (maxQueueSize - fileQueue.size()) * 100 / maxQueueSize;
-    // qDebug() << percent << "%";
     emit progress(percent);
 
-    if (fileQueue.isEmpty()) {
-        complete();
-        exit();
-    }
+    // next!
+    popFromQueue();
 
     /*
-    else if (fileQueue.size() < 60) {
+    else if (fileQueue.size() < 30) {
         qDebug() << "Queue";
         foreach (QFileInfo file, fileQueue) {
             qDebug() << file.filePath();

@@ -1,6 +1,7 @@
 #include "choosefolderview.h"
 #include "constants.h"
 #include "fontutils.h"
+#include "database.h"
 
 static const int PADDING = 30;
 
@@ -11,15 +12,15 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     layout->setSpacing(PADDING);
     layout->setMargin(0);
 
-    QBoxLayout *hLayout = new QHBoxLayout();
-    hLayout->setAlignment(Qt::AlignLeft);
-    hLayout->setSpacing(0);
-    hLayout->setMargin(0);
-    layout->addLayout(hLayout);
+    welcomeLayout = new QHBoxLayout();
+    welcomeLayout->setAlignment(Qt::AlignLeft);
+    welcomeLayout->setSpacing(0);
+    welcomeLayout->setMargin(0);
+    layout->addLayout(welcomeLayout);
 
     QLabel *logo = new QLabel(this);
     logo->setPixmap(QPixmap(":/images/app.png"));
-    hLayout->addWidget(logo, 0, Qt::AlignTop);
+    welcomeLayout->addWidget(logo, 0, Qt::AlignTop);
 
     // hLayout->addSpacing(PADDING);
 
@@ -30,11 +31,11 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
                        .arg(Constants::WEBSITE, Constants::APP_NAME)
                        + "</h1>", this);
     welcomeLabel->setOpenExternalLinks(true);
-    hLayout->addWidget(welcomeLabel);
+    welcomeLayout->addWidget(welcomeLabel);
 
     // layout->addSpacing(PADDING);
 
-    QLabel *tipLabel = new QLabel(
+    tipLabel = new QLabel(
             tr("%1 needs to scan your music collection.").arg(Constants::APP_NAME)
             , this);
     tipLabel->setFont(FontUtils::big());
@@ -67,6 +68,10 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     connect(chooseDirButton, SIGNAL(clicked()), SLOT(chooseFolder()));
     buttonLayout->addWidget(chooseDirButton);
 
+    cancelButton = new QPushButton(tr("Cancel"));
+    connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
+    buttonLayout->addWidget(cancelButton);
+
 }
 
 void ChooseFolderView::chooseFolder() {
@@ -88,4 +93,23 @@ void ChooseFolderView::systemDirChosen() {
 void ChooseFolderView::iTunesDirChosen() {
     QString musicLocation = QDesktopServices::storageLocation(QDesktopServices::MusicLocation) + "/iTunes/iTunes Music";
     emit locationChanged(musicLocation);
+}
+
+void ChooseFolderView::appear() {
+    Database &db = Database::instance();
+    if (db.status() == ScanComplete) {
+        tipLabel->setText(tr("Select the location of your music collection."));
+        cancelButton->show();
+        for (int i = 0; i < welcomeLayout->count(); ++i) {
+            QWidget *widget = welcomeLayout->itemAt(i)->widget();
+            if (widget) widget->hide();
+        }
+    } else {
+        tipLabel->setText(tr("%1 needs to scan your music collection.").arg(Constants::APP_NAME));
+        cancelButton->hide();
+        for (int i = 0; i < welcomeLayout->count(); ++i) {
+            QWidget *widget = welcomeLayout->itemAt(i)->widget();
+            if (widget) widget->show();
+        }
+    }
 }

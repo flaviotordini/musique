@@ -20,14 +20,14 @@ Album::Album() : artist(0), year(0) {
 
 }
 
-static QHash<int, Album*> albumCache;
+QHash<int, Album*> Album::cache;
 
 Album* Album::forId(int albumId) {
 
-    if (albumCache.contains(albumId)) {
+    if (cache.contains(albumId)) {
         // get from cache
         // qDebug() << "Album was cached" << albumId;
-        return albumCache.value(albumId);
+        return cache.value(albumId);
     }
 
     QSqlDatabase db = Database::instance().getConnection();
@@ -47,10 +47,10 @@ Album* Album::forId(int albumId) {
         album->setArtist(Artist::forId(artistId));
 
         // put into cache
-        albumCache.insert(albumId, album);
+        cache.insert(albumId, album);
         return album;
     }
-    albumCache.insert(albumId, 0);
+    cache.insert(albumId, 0);
     return 0;
 }
 
@@ -178,21 +178,16 @@ void Album::parseMusicBrainzReleaseDetails(QByteArray bytes) {
 // *** Last.fm Photo ***
 
 QImage Album::getPhoto() {
-    if (photo.isNull()) {
-        // load from disk
-        photo = QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash());
-    }
-
-    return photo;
+    return QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash());;
 }
 
 void Album::fetchLastFmSearch() {
 
-    QUrl url = QString(
-            "http://ws.audioscrobbler.com/2.0/?method=album.search&album=%1&artist=%2limit=1&api_key=%3")
-            .arg(name)
-            .arg(artist->getName())
-            .arg(Constants::LASTFM_API_KEY);
+    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    url.addQueryItem("method", "album.search");
+    url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
+    url.addQueryItem("artist", artist->getName());
+    url.addQueryItem("album", name);
 
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
@@ -256,11 +251,12 @@ void Album::parseLastFmRedirectedName(QNetworkReply *reply) {
 
 void Album::fetchLastFmInfo() {
 
+    /*
     if (QFile::exists(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash())) {
         qDebug() << "Album" << name << "has a photo";
         emit gotInfo();
         return;
-    }
+    } */
 
     if (!artist) {
         qDebug() << "Album" << name << "has no artist";
@@ -268,24 +264,19 @@ void Album::fetchLastFmInfo() {
         return;
     }
 
-    QString  urlString;
+    QUrl url("http://ws.audioscrobbler.com/2.0/");
+    url.addQueryItem("method", "album.getinfo");
+    url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
     if (mbid.isEmpty()) {
-        urlString = QString("http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=%1&artist=%2&album=%3")
-                    .arg(Constants::LASTFM_API_KEY)
-                    .arg(artist->getName())
-                    .arg(name);
+        url.addQueryItem("artist", artist->getName());
+        url.addQueryItem("album", name);
     } else {
-        urlString = QString("http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=%1&mbid=%2")
-                    .arg(Constants::LASTFM_API_KEY)
-                    .arg(mbid);
+        url.addQueryItem("mbid", mbid);
     }
-
-    const QUrl url(urlString);
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmInfo(QByteArray)));
-    // connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
 
-    qApp->processEvents();
 }
 
 void Album::parseLastFmInfo(QByteArray bytes) {
@@ -299,7 +290,7 @@ void Album::parseLastFmInfo(QByteArray bytes) {
                 QString imageUrl = xml.readElementText();
                 // qDebug() << title << " photo:" << imageUrl;
                 if (!imageUrl.isEmpty()) {
-                    QUrl url(imageUrl);
+                    QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
                     QObject *reply = The::http()->get(url);
                     connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
                     qApp->processEvents();

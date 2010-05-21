@@ -24,8 +24,12 @@ signals:
     void error(QNetworkReply*);
     void finished(QNetworkReply*);
 
+private slots:
+    void abort();
+
 private:
     QNetworkReply *networkReply;
+    QTimer *timer;
 
 };
 
