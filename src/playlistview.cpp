@@ -2,6 +2,7 @@
 #include "model/track.h"
 #include "playlistmodel.h"
 #include "playlistitemdelegate.h"
+#include "droparea.h"
 
 namespace The {
     QMap<QString, QAction*>* globalActions();
@@ -52,7 +53,7 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
             SLOT(selectionChanged ( const QItemSelection & , const QItemSelection & )));
     connect(playlistModel, SIGNAL(layoutChanged()), this, SLOT(updatePlaylistActions()));
     connect(playlistModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
-    connect(playlistModel, SIGNAL(rowRemoved(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
+    connect(playlistModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
     connect(playlistModel, SIGNAL(modelReset()), SLOT(updatePlaylistActions()));
     connect(The::globalActions()->value("clearPlaylist"), SIGNAL(triggered()), playlistModel, SLOT(clear()));
     connect(The::globalActions()->value("skip"), SIGNAL(triggered()), playlistModel, SLOT(skipForward()));
@@ -99,14 +100,18 @@ void PlaylistView::updatePlaylistActions() {
     The::globalActions()->value("skip")->setEnabled(!isPlaylistEmpty);
     The::globalActions()->value("previous")->setEnabled(!isPlaylistEmpty);
 
-    const int totalLength = playlistModel->getTotalLength();
-    QString playlistLength;
-    if (totalLength > 3600)
-        playlistLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
-    else
-        playlistLength = QTime().addSecs(totalLength).toString("m:ss");
-    setStatusTip(tr("%1 tracks - Total length is %2")
-                 .arg(QString::number(rowCount), playlistLength));
+    if (isPlaylistEmpty) {
+        setStatusTip(tr("Playlist is empty"));
+    } else {
+        const int totalLength = playlistModel->getTotalLength();
+        QString playlistLength;
+        if (totalLength > 3600)
+            playlistLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
+        else
+            playlistLength = QTime().addSecs(totalLength).toString("m:ss");
+        setStatusTip(tr("%1 tracks - Total length is %2")
+                     .arg(QString::number(rowCount), playlistLength));
+    }
 }
 
 void PlaylistView::moveUpSelected() {
@@ -127,5 +132,16 @@ void PlaylistView::dragEnterEvent(QDragEnterEvent *event) {
     qDebug() << "dragEnter";
     if (verticalScrollBar()->isVisible()) {
         qDebug() << "need drop area";
+        // emit needDropArea();
+        dropArea->show();
+        willHideDropArea = false;
     }
+}
+
+void PlaylistView::dragLeaveEvent(QDragLeaveEvent *event) {
+    QListView::dragLeaveEvent(event);
+    qDebug() << "dragLeave";
+    // emit DropArea();
+    willHideDropArea = true;
+    QTimer::singleShot(1000, dropArea, SLOT(hide()));
 }

@@ -1,17 +1,17 @@
 #ifndef DROPAREA_H
 #define DROPAREA_H
 
-#include <QLabel>
-
-QT_BEGIN_NAMESPACE
-class QMimeData;
-QT_END_NAMESPACE
+#include <QtGui>
+class PlaylistModel;
 
 class DropArea : public QLabel {
     Q_OBJECT
 
 public:
     DropArea(QWidget *parent = 0);
+    void setPlaylistModel(PlaylistModel *playlistModel) {
+        this->playlistModel = playlistModel;
+    }
 
 public slots:
     void clear();
@@ -24,6 +24,9 @@ protected:
     void dragMoveEvent(QDragMoveEvent *event);
     void dragLeaveEvent(QDragLeaveEvent *event);
     void dropEvent(QDropEvent *event);
+
+private:
+    PlaylistModel *playlistModel;
 
 };
 

@@ -5,6 +5,7 @@
 
 class PlaylistModel;
 class Track;
+class DropArea;
 
 class PlaylistView : public QListView {
 
@@ -13,6 +14,12 @@ class PlaylistView : public QListView {
 public:
     PlaylistView(QWidget *parent);
     void setPlaylistModel(PlaylistModel *model);
+    void setDropArea(DropArea *dropArea) {
+        this->dropArea = dropArea;
+    }
+
+signals:
+    void needDropArea();
 
 public slots:
     void removeSelected();
@@ -25,9 +32,12 @@ public slots:
 
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
+    void dragLeaveEvent(QDragLeaveEvent *event);
 
 private:
     PlaylistModel *playlistModel;
+    DropArea *dropArea;
+    bool willHideDropArea;
 
 };
 

@@ -30,13 +30,16 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     finderWidget->setPlaylistModel(playlistModel);
     splitter->addWidget(finderWidget);
 
-    // playlist view
-    playlistView = new PlaylistView(this);
-    playlistView->setPlaylistModel(playlistModel);
-
     // drop area
     dropArea = new DropArea(this);
+    dropArea->setPlaylistModel(playlistModel);
     dropArea->hide();
+
+    // playlist view
+    playlistView = new PlaylistView(this);
+    playlistView->setDropArea(dropArea);
+    playlistView->setPlaylistModel(playlistModel);
+    connect(playlistView, SIGNAL(needDropArea()), SLOT(showDropArea()));
 
     // playlist widget, handles the playlist/droparea layout
     PlaylistWidget *playlistWidget = new PlaylistWidget(playlistView, dropArea, this);

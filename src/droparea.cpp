@@ -1,6 +1,9 @@
 #include <QtGui>
 #include "droparea.h"
 #include "iconloader/qticonloader.h"
+#include "trackmimedata.h"
+#include "model/track.h"
+#include "playlistmodel.h"
 
 DropArea::DropArea(QWidget *parent) : QLabel(parent) {
     setMargin(15);
@@ -24,10 +27,12 @@ void DropArea::dragMoveEvent(QDragMoveEvent *event) {
 
 void DropArea::dropEvent(QDropEvent *event) {
     const QMimeData *mimeData = event->mimeData();
-
-    // TODO
-
-    event->acceptProposedAction();
+    const TrackMimeData* trackMimeData = dynamic_cast<const TrackMimeData*>(mimeData);
+    if (trackMimeData) {
+        QList<Track*> tracks = trackMimeData->tracks();
+        playlistModel->addTracks(tracks);
+        event->acceptProposedAction();
+    }
 }
 
 void DropArea::dragLeaveEvent(QDragLeaveEvent *event) {
