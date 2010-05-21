@@ -28,7 +28,7 @@ public:
     }
     void saveSplitterState();
     void setMediaObject(Phonon::MediaObject *mediaObject);
-    PlaylistModel* getPlaylistModel() { return playlistModel; }
+    Track* getActiveTrack() { return activeTrack; }
 
 public slots:
     void playPause();
