@@ -59,51 +59,6 @@ void PlaylistModel::setActiveRow(int row, bool manual) {
 
 }
 
-/*
-Track* PlaylistModel::nextTrack() {
-    QSettings settings;
-    const bool shuffle = settings.value("shuffle").toBool();
-    const bool repeat = settings.value("repeat").toBool();
-
-    if (shuffle) {
-
-        // lazily initialize the shuffled list
-        if (playedTracks.isEmpty()) {
-            QList<Track*> playedTracks;
-            QList<Track*> unplayedTracks;
-            playedTracks = tracks;
-            foreach (Track *track, tracks) {
-                if (track == activeTrack) {
-                    continue;
-                } else if (track->isPlayed()) {
-                    playedTracks << track;
-                } else {
-                    unplayedTracks << track;
-                }
-
-            }
-            std::random_shuffle(playedTracks.begin(), playedTracks.end());
-            std::random_shuffle(unplayedTracks.begin(), unplayedTracks.end());
-            playedTracks << playedTracks << activeTrack << unplayedTracks;
-        }
-
-        // int nextRow = (int) ((float) qrand() / (float) RAND_MAX * shuffledTracks.size());
-        int nextRow = playedTracks.indexOf(activeTrack) + 1;
-        qDebug() << nextRow << playedTracks.size();
-        if (rowExists(nextRow))
-            return playedTracks.at(nextRow);
-    } else {
-        int nextRow = activeRow + 1;
-        if (rowExists(nextRow))
-            return tracks.at(nextRow);
-        else if (repeat && !tracks.empty())
-            return tracks.first();
-    }
-
-    return 0;
-}
-*/
-
 void PlaylistModel::skipBackward() {
     QSettings settings;
     const bool shuffle = settings.value("shuffle").toBool();
@@ -124,8 +79,14 @@ void PlaylistModel::skipBackward() {
 
     }
 
-    int prevRow = tracks.indexOf(previousTrack);
-    setActiveRow(prevRow);
+    if (previousTrack) {
+        playedTracks.removeAll(previousTrack);
+        previousTrack->setPlayed(false);
+        playedTracks.removeAll(activeTrack);
+        activeTrack->setPlayed(false);
+        int prevRow = tracks.indexOf(previousTrack);
+        setActiveRow(prevRow);
+    }
 }
 
 void PlaylistModel::skipForward() {
@@ -353,7 +314,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
     // fix activeRow after all this
     activeRow = tracks.indexOf(activeTrack);
 
-    The::globalActions()->value("clearPlaylist")->setEnabled(true);
+    // The::globalActions()->value("clearPlaylist")->setEnabled(true);
 
     emit needSelectionFor(droppedTracks);
 
