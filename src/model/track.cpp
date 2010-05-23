@@ -53,6 +53,7 @@ Track* Track::forId(int trackId) {
         track->setNumber(query.value(5).toInt());
 
         // relations
+        // TODO this could be made lazy
         int artistId = query.value(6).toInt();
         track->setArtist(Artist::forId(artistId));
         int albumId = query.value(7).toInt();

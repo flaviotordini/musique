@@ -28,7 +28,6 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
             .arg(Constants::APP_NAME, "http://last.fm", "Last.fm")
             + " " +
             tr("This will take time depending on your collection size and network speed.")
-
             , this);
     tipLabel->setOpenExternalLinks(true);
     tipLabel->setWordWrap(true);
@@ -37,14 +36,6 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
 }
 
 void CollectionScannerView::startScan(QString dir) {
-    /*
-    if (scanner) {
-        qDebug("Hey CollectionScannerThread was not deleted...");
-        delete scanner;
-    }
-    */
-
-    qDebug() << "CollectionScannerView::startScan" << dir;
 
     progressBar->setMaximum(0);
 
@@ -56,19 +47,12 @@ void CollectionScannerView::startScan(QString dir) {
     scanner.setDirectory(QDir(dir));
 
     Database &db = Database::instance();
-    if (db.status() == ScanComplete) {
-        scanner.setIncremental(false);
-    } else {
-        scanner.setIncremental(true);
-    }
+    scanner.setIncremental(db.status() != ScanComplete);
 
-    qDebug() << "CollectionScannerView:: scanner.start()";
     scanner.start();
-    qDebug() << "CollectionScannerView::scanner.start() ended";
 }
 
 void CollectionScannerView::scanFinished() {
-    // if (scanner) delete scanner;
     window()->activateWindow();
 }
 

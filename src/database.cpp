@@ -156,9 +156,9 @@ void Database::setLastUpdate(uint date) {
 QVariant Database::getAttribute(QString name) {
     QSqlQuery query("select value from attributes where name=?", getConnection());
     query.bindValue(0, name);
-    qDebug() << query.lastQuery() << query.boundValues().values();
+
     bool success = query.exec();
-    if (!success) qDebug() << query.lastError().text();
+    if (!success) qDebug() << query.lastQuery() << query.boundValues().values() << query.lastError().text();
     if (query.next())
         return query.value(0);
     return QVariant();

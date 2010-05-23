@@ -52,6 +52,7 @@ namespace The {
         if (g_http.contains(QThread::currentThread())) {
             return g_http.value(QThread::currentThread());
         } else {
+            // qDebug() << "NetworkAccess for thread" << QThread::currentThread();
             NetworkAccess *http = new NetworkAccess();
             g_http.insert(QThread::currentThread(), http);
             return http;

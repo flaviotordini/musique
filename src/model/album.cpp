@@ -44,6 +44,7 @@ Album* Album::forId(int albumId) {
 
         // relations
         int artistId = query.value(2).toInt();
+        // TODO this could be made lazy
         album->setArtist(Artist::forId(artistId));
 
         // put into cache

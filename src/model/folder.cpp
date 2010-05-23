@@ -104,7 +104,7 @@ QList<Track*> Folder::getTracks() {
     QString relativePath = path.replace(collectionRoot, "");
     query.bindValue(0, relativePath + "/%");
     bool success = query.exec();
-    //if (!success)
+    if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
     QList<Track*> tracks;
     while (query.next()) {
