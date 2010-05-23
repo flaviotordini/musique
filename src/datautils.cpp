@@ -15,12 +15,6 @@ QString DataUtils::cleanTag(QString s) {
     s.replace("_", " ");
     s = s.simplified();
 
-    // Fix all uppercase strings
-    if (s == s.toUpper()) {
-        s = s.toLower();
-        s[0] = s[0].toUpper();
-    }
-
     return s;
 }
 

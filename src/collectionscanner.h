@@ -20,6 +20,13 @@ public:
     int year;
     int length;
 
+    static QString toQString(TagLib::String tstring) {
+        if (!tstring.isEmpty()) {
+            // return QString::fromStdString(tstring.to8Bit(true));
+            return QString::fromUtf8(tstring.toCString(true));
+        } else return QString();
+    }
+
 };
 
 class FileInfo {

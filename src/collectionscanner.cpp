@@ -14,7 +14,7 @@ CollectionScanner::CollectionScanner() :
 
 void CollectionScanner::run() {
 
-    qDebug() << "CollectionScanner::run()" << rootDirectory;
+    qDebug() << "CollectionScanner::run()" << rootDirectory << incremental;
 
     if (working) {
         emit error("A scanning task is already running");
@@ -79,10 +79,9 @@ void CollectionScanner::popFromQueue() {
     // Copy TagLib::FileRef in our Tags class.
     // TagLib::FileRef keeps files open and we would quickly reach the max open files limit
     Tags *tags = new Tags();
-    tags->title = QString::fromStdString(fileref.tag()->title().to8Bit(true));
-    // qDebug() << "TITLE" << fileref.tag()->title().toCString(true) << tags->title;
-    tags->artist = QString::fromStdString(fileref.tag()->artist().to8Bit(true));
-    tags->album = QString::fromStdString(fileref.tag()->album().to8Bit(true));
+    tags->title = Tags::toQString(fileref.tag()->title());
+    tags->artist = Tags::toQString(fileref.tag()->artist());
+    tags->album = Tags::toQString(fileref.tag()->album());
     tags->track = fileref.tag()->track();
     tags->year = fileref.tag()->year();
     tags->length = fileref.audioProperties()->length();
@@ -355,7 +354,6 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     connect(album, SIGNAL(gotInfo()), SLOT(gotAlbumInfo()));
     album->fetchInfo();
 
-    // qApp->processEvents();
 }
 
 void CollectionScanner::gotAlbumInfo() {
@@ -412,10 +410,12 @@ void CollectionScanner::processTrack(FileInfo *file) {
     // else qDebug() << "track"<< track->getTitle() << "has no artist";
 
     Album *album = file->getAlbum();
-    if (album && album->getId() > 0) track->setAlbum(album);
-    // else qDebug() << "track"<< track->getTitle() << "has no album";
-    if  (!album->getArtist()) {
-        album->setArtist(artist);
+    if (album) {
+        if (album->getId() > 0) track->setAlbum(album);
+        // else qDebug() << "track"<< track->getTitle() << "has no album";
+        if  (!album->getArtist()) {
+            album->setArtist(artist);
+        }
     }
 
     track->setTitle(DataUtils::cleanTag(titleTag));
@@ -426,8 +426,11 @@ void CollectionScanner::processTrack(FileInfo *file) {
     track->setPath(path);
 
     track->setNumber(file->getTags()->track);
-    int year = album->getYear();
+    int year = 0;
+    if (album)
+        year = album->getYear();
     if (year < 1) year = file->getTags()->year;
+    if (year < 0) year = 0;
     track->setYear(year);
     track->setLength(file->getTags()->length);
 
@@ -444,7 +447,6 @@ void CollectionScanner::processTrack(FileInfo *file) {
     connect(track, SIGNAL(gotInfo()), SLOT(gotTrackInfo()));
     track->fetchInfo();
 
-    // qApp->processEvents();
     // http://musicbrainz.org/ws/1/release/579278d5-75dc-4d2f-a5f3-6cc86f6c510e?type=xml&inc=tracks
 
 }
