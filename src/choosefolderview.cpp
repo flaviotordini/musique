@@ -44,6 +44,10 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     QBoxLayout *buttonLayout = new QHBoxLayout();
     layout->addLayout(buttonLayout);
 
+    cancelButton = new QPushButton(tr("Cancel"));
+    connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
+    buttonLayout->addWidget(cancelButton);
+
 #ifdef Q_WS_MAC
     QPushButton *useiTunesDirButton = new QPushButton(tr("Use iTunes collection"));
     connect(useiTunesDirButton, SIGNAL(clicked()), SLOT(iTunesDirChosen()));
@@ -67,10 +71,6 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     QPushButton *chooseDirButton = new QPushButton(tr("Choose a folder..."));
     connect(chooseDirButton, SIGNAL(clicked()), SLOT(chooseFolder()));
     buttonLayout->addWidget(chooseDirButton);
-
-    cancelButton = new QPushButton(tr("Cancel"));
-    connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
-    buttonLayout->addWidget(cancelButton);
 
 }
 
