@@ -403,14 +403,19 @@ void MainWindow::readSettings() {
 }
 
 void MainWindow::writeSettings() {
-    // do not save geometry when in full screen
-    if (m_fullscreen) return;
 
     QSettings settings;
-    settings.setValue("geometry", saveGeometry());
-    settings.setValue("volume", audioOutput->volume());
-    settings.setValue("volumeMute", audioOutput->isMuted());
-    mediaView->saveSplitterState();
+
+    // do not save geometry when in full screen
+    if (!m_fullscreen)
+        settings.setValue("geometry", saveGeometry());
+
+    if (mediaView) {
+        settings.setValue("volume", audioOutput->volume());
+        settings.setValue("volumeMute", audioOutput->isMuted());
+        mediaView->saveSplitterState();
+    }
+
 }
 
 void MainWindow::goBack() {
