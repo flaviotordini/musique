@@ -97,8 +97,10 @@ void PlaylistView::updatePlaylistActions() {
     const bool isPlaylistEmpty = rowCount < 1;
     The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
     The::globalActions()->value("play")->setEnabled(!isPlaylistEmpty);
-    The::globalActions()->value("skip")->setEnabled(!isPlaylistEmpty);
-    The::globalActions()->value("previous")->setEnabled(!isPlaylistEmpty);
+
+    // TODO also check if we're on first/last track
+    The::globalActions()->value("skip")->setEnabled(rowCount > 1);
+    The::globalActions()->value("previous")->setEnabled(rowCount > 1);
 
     if (isPlaylistEmpty) {
         setStatusTip(tr("Playlist is empty"));
