@@ -101,7 +101,7 @@ void PlaylistModel::skipForward() {
         // get a random non-played non-active track
         if (playedTracks.size() < tracks.size()) {
             while (nextTrack == 0) {
-                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
+                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * (tracks.size() - 1));
                 Track *candidateTrack = tracks.at(nextRow);
                 if (!candidateTrack->isPlayed() && candidateTrack != activeTrack) {
                     nextTrack = candidateTrack;
@@ -117,7 +117,7 @@ void PlaylistModel::skipForward() {
             }
             // get a random non-active track
             while (nextTrack == 0) {
-                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
+                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * (tracks.size() - 1));
                 Track *candidateTrack = tracks.at(nextRow);
                 if (candidateTrack != activeTrack) {
                     nextTrack = candidateTrack;
