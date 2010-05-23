@@ -18,7 +18,7 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     
     QString info =
             "<h1>" + QString(Constants::APP_NAME) + "</h1>"
-            "<p>" + tr("Enemy of the music business") + "</p>"
+            "<p>" + tr("It plays music") + "</p>"
             "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>"
             + QString("<p><a href=\"%1/\">%1</a></p>").arg(Constants::WEBSITE) +
             
