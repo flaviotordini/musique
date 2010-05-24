@@ -45,7 +45,7 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     setPalette(p);
     setAutoFillBackground(true);
 
-    setMinimumWidth(150);
+    setMinimumWidth(150 * 3 + 8 + style()->pixelMetric(QStyle::PM_ScrollBarExtent));
 
     QBoxLayout *layout = new QVBoxLayout();
     layout->setMargin(0);
@@ -159,7 +159,7 @@ void FinderWidget::showArtists() {
 
 void FinderWidget::showAlbums() {
     if (!albumListView) setupAlbums();
-    QString qry("select id from albums order by artist, year desc, trackCount desc");
+    QString qry("select id from albums where trackCount>0 order by artist, year desc, trackCount desc");
     albumListModel->setQuery(qry, Database::instance().getConnection());
     if (albumListModel->lastError().isValid())
         qDebug() << albumListModel->lastError();
@@ -209,7 +209,7 @@ void FinderWidget::artistActivated ( const QModelIndex & index ) {
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
     Artist *artist = artistPointer.data();
 
-    QString qry("select id from albums where artist=%1 order by year desc, trackCount desc");
+    QString qry("select id from albums where artist=%1 and trackCount>0 order by year desc, trackCount desc");
     qry = qry.arg(artist->getId());
     qDebug() << qry;
     albumListModel->setQuery(qry, Database::instance().getConnection());
