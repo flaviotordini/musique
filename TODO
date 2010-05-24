@@ -2,18 +2,18 @@
 
 ## Blocking release
 
-## Build
+### Build
 - Mac deploy: How to add the TagLib framework in the app bundle?
 - Windows, test VLC backend
 
-## General
+### General
 - Fix view crossfades
 
 ### Scanner
-- CUE file support
 - QFileSystemWatcher
 - Invalidate caches on db update: PlaylistModel, MediaView.activeTrack
-- TagLib c string terminator issue in empty titles
+- Partially invalidate caches on incremental scan
+- Add table for non music files in the collection, in order to avoid scanning them again and again
 
 ### Playlist
 
@@ -29,7 +29,6 @@ http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-store
 
 ### Social
 - Tell Last.fm about this application
-- Get a valid Last.fm API key
 - Album years on AudioScrobbler are mostly wrong, report it:
 DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 
@@ -43,6 +42,7 @@ DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 - Artist.getTracks() albums not correctly sorted. Year-based album ordering
 
 ### Sorely missing features
+- CUE file support
 - Search (it really hurts to left this out for the first release)
 - Drop area when playlist has a vertical scrollbar
 - Select all relevant tracks when clicking the playlist album header
@@ -51,6 +51,8 @@ DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 - CLI
 
 ### Features
+- Browse by Last.fm album tags (new finder tab)
+- Queue tracks
 - Better default finder and playlist size
 - Playlist: Restore selection after dragndrop
 - Next/Previous album playback actions
