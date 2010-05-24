@@ -13,8 +13,7 @@ namespace Constants {
     static const char *WEBSITE = "http://flavio.tordini.org/minitunes";
     static const char *EMAIL = "flavio.tordini@gmail.com";
     static const QString USER_AGENT = QString(APP_NAME) + " " + VERSION + " (" + WEBSITE + ")";
-    // Beware! Proprietary web service ahead!
-    static const char* LASTFM_API_KEY = "b25b959554ed76058ac220b7b2e0a026";
+    static const char* LASTFM_API_KEY = "e1db9fda381dea473df994bc26dfa1f1";
 }
 
 #endif
