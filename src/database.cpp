@@ -86,7 +86,7 @@ void Database::createDatabase() {
               "hash varchar(32),"
               "title varchar(255),"
               "year integer,"
-              "language varchar(5),"
+              // "language varchar(5),"
               "artist integer,"
               "trackCount integer)"
               , db);
