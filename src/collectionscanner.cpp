@@ -9,8 +9,8 @@
 CollectionScanner::CollectionScanner() :
         working(false),
         incremental(false),
-        maxQueueSize(0),
-        lastUpdate(0) { }
+        lastUpdate(0),
+        maxQueueSize(0) { }
 
 void CollectionScanner::run() {
 
@@ -22,16 +22,16 @@ void CollectionScanner::run() {
     }
     working = true;
 
-    // invalidate caches
-    Artist::clearCache();
-    Album::clearCache();
-    Track::clearCache();
-
     if (incremental)
         lastUpdate = Database::instance().lastUpdate();
-    else
+    else {
         // drop the previous, if any
         Database::instance().drop();
+        // invalidate caches
+        Artist::clearCache();
+        Album::clearCache();
+        Track::clearCache();
+    }
 
     // now scan the files
     scanDirectory(rootDirectory);
@@ -102,17 +102,17 @@ void CollectionScanner::complete() {
     if (incremental) {
         // clean db from stale data: non-existing files
         cleanStaleTracks();
+    } else {
+        // invalidate caches
+        Artist::clearCache();
+        Album::clearCache();
+        Track::clearCache();
     }
 
     Database::instance().setStatus(ScanComplete);
     Database::instance().setLastUpdate(QDateTime::currentDateTime().toTime_t());
     Database::instance().getConnection().commit();
     Database::instance().toDisk();
-
-    // invalidate caches
-    Artist::clearCache();
-    Album::clearCache();
-    Track::clearCache();
 
     // cleanup
     /*
@@ -166,17 +166,26 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
     // TODO check for .cue file
 
     if (incremental) {
-        // incremental scan: check for modified track
 
         // path relative to the root of the collection
         QString path = fileInfo.absoluteFilePath();
         path.remove(this->rootDirectory.absolutePath() + "/");
 
-        QDateTime lastModified = fileInfo.lastModified();
-        // qDebug() << lastModified.toTime_t() << lastUpdate;
-        if (lastModified.toTime_t() > lastUpdate && Track::isModified(path, lastModified)) {
-            // Track has been modified
+        // does this track exist in our db?
+        if (!Track::exists(path)) {
+            // New track
+            qDebug() << "New file" << fileInfo.absoluteFilePath();
             fileQueue << fileInfo;
+        } else {
+
+            // check for modified track
+            QDateTime lastModified = fileInfo.lastModified();
+            // qDebug() << lastModified.toTime_t() << lastUpdate;
+            if (lastModified.toTime_t() > lastUpdate && Track::isModified(path, lastModified)) {
+                // Track has been modified
+                fileQueue << fileInfo;
+            }
+
         }
 
     } else {
@@ -190,8 +199,6 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
 /*** Artist ***/
 
 void CollectionScanner::giveThisFileAnArtist(FileInfo *file) {
-
-    // qApp->processEvents();
 
     const QString artistTag = file->getTags()->artist;
 
@@ -248,7 +255,6 @@ void CollectionScanner::processArtist(FileInfo *file) {
     connect(artist, SIGNAL(gotInfo()), SLOT(gotArtistInfo()));
     artist->fetchInfo();
 
-    // qApp->processEvents();
 }
 
 void CollectionScanner::gotArtistInfo() {

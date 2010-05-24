@@ -179,30 +179,35 @@ void Track::remove(QString path) {
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("delete from tracks where path=?");
-    query.bindValue(0, path);
-    bool success = query.exec();
-    if (!success) qDebug() << query.lastError().text();
+
+    // first update trackCount on artist and album
 
     query.prepare("select album, artist from tracks where path=?");
     query.bindValue(0, path);
-    success = query.exec();
+    bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     if (query.next()) {
 
         int albumId = query.value(0).toInt();
+        int artistId = query.value(1).toInt();
+
         query.prepare("update albums set trackCount=trackCount-1 where id=?");
         query.bindValue(0, albumId);
         success = query.exec();
         if (!success) qDebug() << query.lastError().text();
 
-        int artistId = query.value(1).toInt();
         query.prepare("update artists set trackCount=trackCount-1 where id=?");
         query.bindValue(0, artistId);
         success = query.exec();
         if (!success) qDebug() << query.lastError().text();
 
     }
+
+    // and then actually delete the track
+    query.prepare("delete from tracks where path=?");
+    query.bindValue(0, path);
+    success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
 
 }
 
