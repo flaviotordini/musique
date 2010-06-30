@@ -59,7 +59,7 @@ ScrollingContextualView::ScrollingContextualView(QWidget *parent) :
     
 }
 
-void ScrollingContextualView::paintEvent(QPaintEvent *event) {
+void ScrollingContextualView::paintEvent(QPaintEvent * /*event*/) {
     QPainter painter(this);
     const int gradientHeight = parentWidget()->height();
     QLinearGradient linearGrad(0, 0, 0, gradientHeight);

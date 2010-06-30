@@ -31,6 +31,14 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     photoLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     layout->addWidget(photoLabel);
 
+    buyOnAmazonButton = new QPushButton(this);
+    buyOnAmazonButton->hide();
+    buyOnAmazonButton->setFont(FontUtils::small());
+    buyOnAmazonButton->setText(tr("Buy on %1").arg("Amazon"));
+    buyOnAmazonButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    connect(buyOnAmazonButton, SIGNAL(clicked()), SLOT(amazonClicked()));
+    layout->addWidget(buyOnAmazonButton);
+
     wikiLabel = new QLabel(this);
     wikiLabel->setAlignment(Qt::AlignTop);
     wikiLabel->setOpenExternalLinks(true);
@@ -89,6 +97,13 @@ void AlbumInfo::setAlbum(Album *album) {
         photoLabel->show();
     }
 
+    QString query;
+    if (album->getArtist())
+        query = album->getArtist()->getName() + " - ";
+    query += album->getTitle();
+    buyOnAmazonButton->setProperty("query", query);
+    buyOnAmazonButton->show();
+
     /*
     QString qry("SELECT id FROM tracks where album=%1 order by track, title");
     qry = qry.arg(album->getId());
@@ -106,5 +121,22 @@ void AlbumInfo::clear() {
     photoLabel->clear();
     photoLabel->hide();
     wikiLabel->clear();
+    buyOnAmazonButton->hide();
+    buyOnAmazonButton->setProperty("query", QVariant());
     // trackListModel->clear();
+}
+
+void AlbumInfo::amazonClicked() {
+    QString query = buyOnAmazonButton->property("query").toString();
+
+    // http://www.amazon.com/gp/search?ie=UTF8&keywords=Metallica+-+Master-of-puppets&tag=flavtord-20&index=music&linkCode=ur2&camp=1789&creative=9325
+    QUrl url("http://www.amazon.com/gp/search");
+    url.addQueryItem("ie", "UTF8");
+    url.addQueryItem("keywords", query);
+    url.addQueryItem("tag", "flavtord-20");
+    url.addQueryItem("index", "music");
+    url.addQueryItem("linkCode", "ur2");
+    url.addQueryItem("camp", "1789");
+    url.addQueryItem("creative", "9325");
+    QDesktopServices::openUrl(url);
 }

@@ -21,8 +21,10 @@ public:
     void setStatus(int status);
     uint lastUpdate();
     void setLastUpdate(uint date);
-    void toDisk();
+    QString collectionRoot();
+    void setCollectionRoot(QString dir);
     void drop();
+    void closeConnections();
 
 private:
     Database();
@@ -31,8 +33,7 @@ private:
     void setAttribute(QString name, QVariant value);
 
     QMutex lock;
-    QString dbDiskLocation;
-    QString dbMemoryLocation;
+    QString dbLocation;
     QHash<QThread*, QSqlDatabase> connections;
 
 };

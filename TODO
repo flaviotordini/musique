@@ -1,59 +1,32 @@
 # Minitunes TODO list
 
-## Blocking release
+## Known issues
+- Album years on AudioScrobbler are mostly wrong:
+    http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 
-### Build
-- Mac deploy: How to add the TagLib framework in the app bundle?
+## Deploy
 - Windows, test VLC backend
 
-### General
-- Fix view crossfades
-
-### Scanner
-- QFileSystemWatcher
-- Invalidate caches on db update: PlaylistModel, MediaView.activeTrack
-- Partially invalidate caches on incremental scan
-- Add table for non music files in the collection, in order to avoid scanning them again and again
-
-### Playlist
-
-### Finder
-- Models: return QVariant as QObject, not as ArtistPointer:
-http://www.mentby.com/girish-ramakrishnan/how-to-discover-if-a-custom-type-stored-into-a-qvariant-inherits-the-qobject-class.html
-- Finder navigation: back button
-- Filesystem model
-- Filesystem: hide empty dirs
-- Filesystem: hide non-track files
-
-### Info
-
-### Social
-- Tell Last.fm about this application
-- Album years on AudioScrobbler are mostly wrong, report it:
-DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
-
-## After the first release
-
-### Bugs
-- Investigate album first tracks disappearing, especially "title tracks"
-- Fix appear()/disappear() view mechanism
+## Bugs
 - Fix long names in finder
 - Fix long titles in playlist
 - Artist.getTracks() albums not correctly sorted. Year-based album ordering
+- Make play action checkable
 
-### Sorely missing features
+## Sorely missing features
+- Search
+- QFileSystemWatcher on scanner
 - CUE file support
-- Search (it really hurts to left this out for the first release)
 - Drop area when playlist has a vertical scrollbar
 - Select all relevant tracks when clicking the playlist album header
 - Restore the playlist accross sessions
 - Gapless playback
 - CLI
 
-### Features
-- Browse by Last.fm album tags (new finder tab)
+## Features
+- View crossfades
+- Browse by Last.fm album tags (new Genres finder tab)
 - Queue tracks
-- Better default finder and playlist size
 - Playlist: Restore selection after dragndrop
 - Next/Previous album playback actions
 - "Drag things here" as empty playlist background
@@ -69,6 +42,5 @@ DONE: http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 - Finder: A bit of sorting & filtering on Albums and Artist views
 
 ## Funny stuff geeks may ask for
-
 - Load/Save playlists as /Playlists/[playlistname].pls. Show "Playlists" tab if there's at least one.
 - Last.fm scrobbling

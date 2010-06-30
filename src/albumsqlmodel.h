@@ -17,8 +17,6 @@ public:
         return dynamic_cast<Item*>(itemPointer.data());
     }
 
-private:
-
 };
 
 #endif // ALBUMSQLMODEL_H

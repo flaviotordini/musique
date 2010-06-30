@@ -36,6 +36,7 @@ public:
     static Artist* forId(int artistId);
     static int idForName(QString name);
     void insert();
+    void update();
 
     // internet
 

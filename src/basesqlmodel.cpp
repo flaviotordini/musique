@@ -1,5 +1,6 @@
 #include "basesqlmodel.h"
 #include "trackmimedata.h"
+#include "database.h"
 
 BaseSqlModel::BaseSqlModel(QObject *parent) : QSqlQueryModel(parent) {
     hoveredRow = -1;

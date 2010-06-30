@@ -21,8 +21,7 @@
 
 #include "filesystemfinderview.h"
 #include "filesystemmodel.h"
-
-#include "finderhomewidget.h"
+#include "filteringfilesystemmodel.h"
 
 #include "database.h"
 #include <QtSql>
@@ -31,10 +30,17 @@ static const char* FINDER_VIEW_KEY = "finderView";
 
 FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
-    folderListView = 0;
+    history = new QStack<QWidget*>();
+
+    fileSystemView = 0;
     artistListView = 0;
     albumListView = 0;
     trackListView = 0;
+
+    fileSystemModel = 0;
+    artistListModel = 0;
+    albumListModel = 0;
+    trackListModel = 0;
 
     // colors
     QPalette p = palette();
@@ -45,8 +51,6 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     setPalette(p);
     setAutoFillBackground(true);
 
-    setMinimumWidth(150 * 3 + 8 + style()->pixelMetric(QStyle::PM_ScrollBarExtent));
-
     QBoxLayout *layout = new QVBoxLayout();
     layout->setMargin(0);
     layout->setSpacing(0);
@@ -56,19 +60,28 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
     breadcrumb = new BreadcrumbWidget(this);
     breadcrumb->hide();
+    connect(breadcrumb, SIGNAL(goneBack()), SLOT(goBack()));
     layout->addWidget(breadcrumb);
+
+    folderBreadcrumb = new BreadcrumbWidget(this);
+    folderBreadcrumb->hide();
+    connect(folderBreadcrumb, SIGNAL(goneBack()), SLOT(folderGoBack()));
+    layout->addWidget(folderBreadcrumb);
 
     stackedWidget = new QStackedWidget(this);
 
     layout->addWidget(stackedWidget);
     setLayout(layout);
 
+    setMinimumWidth(150 * 3 + 8 + style()->pixelMetric(QStyle::PM_ScrollBarExtent));
+    setMinimumHeight(150 + finderBar->minimumHeight());
+
     // Restore saved view
     QSettings settings;
     QString currentViewName = settings.value(FINDER_VIEW_KEY).toString();
-    if (currentViewName == "folders") showFolders();
-    else if (currentViewName == "albums") showAlbums();
-    else showArtists();
+    if (currentViewName == "folders") QTimer::singleShot(0, this, SLOT(showFolders()));
+    else if (currentViewName == "albums") QTimer::singleShot(0, this, SLOT(showAlbums()));
+    else QTimer::singleShot(0, this, SLOT(showArtists()));
 
 }
 
@@ -108,6 +121,7 @@ void FinderWidget::setupBar() {
 void FinderWidget::setupArtists() {
     artistListModel = new ArtistSqlModel(this);
     artistListView = new ArtistListView(this);
+    artistListView->setEnabled(false);
     connect(artistListView, SIGNAL(activated(const QModelIndex &)), SLOT(artistActivated(const QModelIndex &)));
     connect(artistListView, SIGNAL(play(const QModelIndex &)), SLOT(artistPlayed(const QModelIndex &)));
     connect(artistListView, SIGNAL(entered(const QModelIndex &)), SLOT(artistEntered(const QModelIndex &)));
@@ -119,6 +133,7 @@ void FinderWidget::setupArtists() {
 void FinderWidget::setupAlbums() {
     albumListModel = new AlbumSqlModel(this);
     albumListView = new AlbumListView(this);
+    albumListView->setEnabled(false);
     connect(albumListView, SIGNAL(activated(const QModelIndex &)), SLOT(albumActivated(const QModelIndex &)));
     connect(albumListView, SIGNAL(play(const QModelIndex &)), SLOT(albumPlayed(const QModelIndex &)));
     connect(albumListView, SIGNAL(entered(const QModelIndex &)), SLOT(albumEntered(const QModelIndex &)));
@@ -139,18 +154,30 @@ void FinderWidget::setupTracks() {
 }
 
 void FinderWidget::setupFolders() {
-    folderListModel = new FileSystemModel(this);
-    folderListView = new FileSystemFinderView(this);
-    connect(folderListView, SIGNAL(activated(const QModelIndex &)), SLOT(folderActivated(const QModelIndex &)));
-    connect(folderListView, SIGNAL(play(const QModelIndex &)), SLOT(folderPlayed(const QModelIndex &)));
-    connect(folderListView, SIGNAL(entered(const QModelIndex &)), SLOT(folderEntered(const QModelIndex &)));
-    connect(folderListView, SIGNAL(viewportEntered()), folderListModel, SLOT(clearHover()));
-    folderListView->setModel(folderListModel);
-    stackedWidget->addWidget(folderListView);
+    fileSystemModel = new FileSystemModel(this);
+    fileSystemModel->setResolveSymlinks(true);
+    fileSystemModel->setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+    FilteringFileSystemModel *proxyModel = new FilteringFileSystemModel(this);
+    proxyModel->setSourceModel(fileSystemModel);
+
+    fileSystemView = new FileSystemFinderView(this);
+    connect(fileSystemView, SIGNAL(activated(const QModelIndex &)), SLOT(folderActivated(const QModelIndex &)));
+    connect(fileSystemView, SIGNAL(play(const QModelIndex &)), SLOT(folderPlayed(const QModelIndex &)));
+    connect(fileSystemView, SIGNAL(entered(const QModelIndex &)), SLOT(folderEntered(const QModelIndex &)));
+    connect(fileSystemView, SIGNAL(viewportEntered()), fileSystemModel, SLOT(clearHover()));
+    fileSystemView->setModel(proxyModel);
+    fileSystemView->setFileSystemModel(fileSystemModel);
+    stackedWidget->addWidget(fileSystemView);
 }
 
 void FinderWidget::showArtists() {
     if (!artistListView) setupArtists();
+
+    artistListModel->setQuery("select id from artists where trackCount>1 order by trackCount desc",
+                              Database::instance().getConnection());
+    if (artistListModel->lastError().isValid())
+        qDebug() << artistListModel->lastError();
+
     showWidget(artistListView, true);
     finderBar->setCheckedAction(artistsAction);
     QSettings settings;
@@ -159,10 +186,13 @@ void FinderWidget::showArtists() {
 
 void FinderWidget::showAlbums() {
     if (!albumListView) setupAlbums();
-    QString qry("select id from albums where trackCount>0 order by artist, year desc, trackCount desc");
-    albumListModel->setQuery(qry, Database::instance().getConnection());
+
+    albumListModel->setQuery(
+            "select id from albums where trackCount>1 order by artist, year desc, trackCount desc",
+            Database::instance().getConnection());
     if (albumListModel->lastError().isValid())
         qDebug() << albumListModel->lastError();
+
     showWidget(albumListView, true);
     finderBar->setCheckedAction(albumsAction);
     QSettings settings;
@@ -170,9 +200,14 @@ void FinderWidget::showAlbums() {
 }
 
 void FinderWidget::showFolders() {
-    if (!folderListView) setupFolders();
+    if (!fileSystemView) setupFolders();
 
-    showWidget(folderListView, true);
+    const QString path = Database::instance().collectionRoot();
+    fileSystemModel->setRootPath(path);
+    QSortFilterProxyModel *proxyModel = static_cast<QSortFilterProxyModel*>(fileSystemView->model());
+    fileSystemView->setRootIndex(proxyModel->mapFromSource(fileSystemModel->index(path)));
+
+    showWidget(fileSystemView, true);
     finderBar->setCheckedAction(foldersAction);
     QSettings settings;
     settings.setValue(FINDER_VIEW_KEY, "folders");
@@ -181,21 +216,68 @@ void FinderWidget::showFolders() {
 void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
     // breadcrumb behaviour
     if (isRoot) {
+        history->clear();
         breadcrumb->clear();
+        folderBreadcrumb->clear();
+        folderBreadcrumb->hide();
     } else {
-        breadcrumb->addWidget(widget);
+        breadcrumb->addItem(widget->windowTitle());
     }
     breadcrumb->setVisible(!isRoot);
 
+    // call disappear() on previous widget
+    QWidget* currentWidget = stackedWidget->currentWidget();
+    if (currentWidget) {
+        bool ret = QMetaObject::invokeMethod(currentWidget, "disappear", Qt::DirectConnection);
+        if (!ret) qDebug() << "FinderWidget::showWidget invokeMethod failed for" << currentWidget;
+    }
 
+    // call appear() on new widget
     bool ret = QMetaObject::invokeMethod(widget, "appear", Qt::DirectConnection);
     if (!ret) qDebug() << "FinderWidget::showWidget invokeMethod failed for" << widget;
+
     stackedWidget->setCurrentWidget(widget);
+    history->push(widget);
+}
+
+void FinderWidget::goBack() {
+    if (history->size() > 1) {
+        breadcrumb->goBack();
+        breadcrumb->goBack();
+        history->pop();
+        QWidget *widget = history->pop();
+        bool isRoot = history->isEmpty();
+        showWidget(widget, isRoot);
+    }
+}
+
+void FinderWidget::folderGoBack() {
+    folderBreadcrumb->goBack();
+    QModelIndex index = fileSystemView->rootIndex();
+    QSortFilterProxyModel *proxyModel = static_cast<QSortFilterProxyModel*>(fileSystemView->model());
+    if (proxyModel) {
+        index = proxyModel->mapToSource(index);
+        QString path = fileSystemModel->filePath(index);
+        QDir dir(path);
+        dir.cdUp();
+        // qDebug() << d << folderListModel->rootPath();
+        if (dir.absolutePath() == fileSystemModel->rootDirectory().absolutePath()) {
+            folderBreadcrumb->clear();
+            folderBreadcrumb->hide();
+        }
+        index = fileSystemModel->index(dir.absolutePath(), 0);
+        qDebug() << dir.absolutePath() << index.isValid();
+        index = proxyModel->mapFromSource(index);
+        fileSystemView->setRootIndex(index);
+    }
 }
 
 void FinderWidget::appear() {
-    bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "appear", Qt::DirectConnection);
-    if (!success) qDebug() << "Error invoking appear() on" << stackedWidget->currentWidget();
+    QWidget *currentWidget = stackedWidget->currentWidget();
+    if (currentWidget) {
+        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "appear", Qt::DirectConnection);
+        if (!success) qDebug() << "Error invoking appear() on" << stackedWidget->currentWidget();
+    }
 }
 
 void FinderWidget::artistEntered ( const QModelIndex & index ) {
@@ -269,24 +351,38 @@ void FinderWidget::trackActivated ( const QModelIndex & index ) {
 }
 
 void FinderWidget::folderEntered ( const QModelIndex & index ) {
-    folderListModel->setHoveredRow(index.row());
+    fileSystemModel->setHoveredRow(index.row());
 }
 
 void FinderWidget::folderActivated(const QModelIndex & index) {
-    // QFileSystemModel *fileSystemModel = static_cast<QFileSystemModel*>(folderListView->model());
-    // if (!fileSystemModel) return;
-    // const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
-    // Folder *folder = folderPointer.data();
-    // QString path = folder->getAbsolutePath();
-    // qDebug() << "Changing to" << path;
-    folderListView->setRootIndex(index);
+    const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
+    Track *track = trackPointer.data();
+    if (track) {
+        addTracksAndPlay(track->getTracks());
+    } else {
+        fileSystemView->setRootIndex(index);
+        const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
+        Folder *folder = folderPointer.data();
+        if (folder) {
+            folderBreadcrumb->addItem(folder->getName());
+            folderBreadcrumb->setVisible(true);
+        }
+    }
 }
 
 void FinderWidget::folderPlayed(const QModelIndex & index) {
     const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
     Folder *folder = folderPointer.data();
-    QList<Track*> tracks = folder->getTracks();
-    addTracksAndPlay(tracks);
+    if (folder) {
+        QList<Track*> tracks = folder->getTracks();
+        addTracksAndPlay(tracks);
+    } else {
+        const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
+        Track *track = trackPointer.data();
+        if (track) {
+            addTracksAndPlay(track->getTracks());
+        }
+    }
 }
 
 void FinderWidget::addTracksAndPlay(QList<Track *>tracks) {

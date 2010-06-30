@@ -2,6 +2,7 @@
 #define BASESQLMODEL_H
 
 #include <QSqlQueryModel>
+#include <QSqlQuery>
 #include "model/item.h"
 
 class BaseSqlModel : public QSqlQueryModel {

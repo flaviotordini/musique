@@ -25,23 +25,21 @@ public:
     QString getName()  { return dir.dirName(); }
     QString getPath() { return path; }
     QString getAbsolutePath() { return dir.absolutePath(); }
+    int getTrackCount();
+    int getTotalLength();
     
 private:
     Album* getAlbum();
     Artist* getArtist();
 
     QDir dir;
-
-    /**
-      * This path is relative to the collection root
-      */
     QString path;
-    bool photoLoaded;
-    QImage photo;
+    int trackCount;
+    int totalLength;
 
 };
 
-// This is required in order to use QPointer<Artist> as a QVariant
+// This is required in order to use QPointer<Folder> as a QVariant
 typedef QPointer<Folder> FolderPointer;
 Q_DECLARE_METATYPE(FolderPointer);
 

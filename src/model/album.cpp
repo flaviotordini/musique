@@ -16,7 +16,7 @@ namespace The {
 
 static QHash<QString, QByteArray> artistAlbums;
 
-Album::Album() : artist(0), year(0) {
+Album::Album() : year(0), artist(0) {
 
 }
 
@@ -56,13 +56,11 @@ Album* Album::forId(int albumId) {
 }
 
 int Album::idForName(QString name) {
-
-    const QString hash = DataUtils::md5(DataUtils::normalizeTag(name));
     int id = -1;
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select id from albums where hash=?");
-    query.bindValue(0, hash);
+    query.bindValue(0, Album::getHash(name));
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     if (query.next()) {
@@ -73,11 +71,10 @@ int Album::idForName(QString name) {
 }
 
 void Album::insert() {
-    const QString hash = DataUtils::md5(DataUtils::normalizeTag(name));
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("insert into albums (hash,title,year,artist,trackCount) values (?,?,?,?,0)");
-    query.bindValue(0, hash);
+    query.bindValue(0, getHash());
     query.bindValue(1, name);
     query.bindValue(2, year);
     int artistId = artist ? artist->getId() : 0;
@@ -96,6 +93,20 @@ void Album::insert() {
 
 }
 
+void Album::update() {
+    // qDebug() << "Album::update";
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(db);
+    query.prepare("update albums set title=?, year=?, artist=? where hash=?");
+    query.bindValue(0, name);
+    query.bindValue(1, year);
+    int artistId = artist ? artist->getId() : 0;
+    query.bindValue(2, artistId);
+    query.bindValue(3, getHash());
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+}
+
 QString Album::getHash() {
     return Album::getHash(name);
 }
@@ -106,14 +117,8 @@ QString Album::getHash(QString name) {
 }
 
 void Album::fetchInfo() {
-    // fetchLastFmInfo();
-    // fetchMusicBrainzRelease();
-    // emit gotInfo();
-
     // an artist name is needed in order to fix the album title
-
     // also workaround last.fm bug with selftitled albums
-
     if (artist && artist->getName() != name) {
         fetchLastFmSearch();
     } else
@@ -179,7 +184,7 @@ void Album::parseMusicBrainzReleaseDetails(QByteArray bytes) {
 // *** Last.fm Photo ***
 
 QImage Album::getPhoto() {
-    return QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash());;
+    return QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash());
 }
 
 void Album::fetchLastFmSearch() {
@@ -242,7 +247,7 @@ void Album::parseLastFmRedirectedName(QNetworkReply *reply) {
         int slashIndex = location.lastIndexOf('/');
         if (slashIndex > 0) {
             name = location.mid(slashIndex);
-            qDebug() << "*** Redirected name is" << name;
+            // qDebug() << "*** Redirected name is" << name;
             fetchLastFmSearch();
             return;
         }
@@ -294,7 +299,6 @@ void Album::parseLastFmInfo(QByteArray bytes) {
                     QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
                     QObject *reply = The::http()->get(url);
                     connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
-                    qApp->processEvents();
                 }
             }
 
@@ -345,9 +349,7 @@ void Album::parseLastFmInfo(QByteArray bytes) {
 }
 
 void Album::setPhoto(QByteArray bytes) {
-    // photo = QImage::fromData(bytes);
-
-    // qDebug() << "Storing photo for" << title;
+    qDebug() << "Storing photo for" << name;
 
     // store photo
     QString storageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/";
@@ -365,9 +367,9 @@ QList<Track*> Album::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     if (artist) {
-        query.prepare("select id from tracks where album=? and artist=? order by track, title");
+        query.prepare("select id from tracks where album=? and artist=? order by track, path");
     } else {
-        query.prepare("select id from tracks where album=? order by track, title");
+        query.prepare("select id from tracks where album=? order by track, path");
     }
     query.bindValue(0, id);
     if (artist)

@@ -54,11 +54,13 @@ public slots:
     void clear();
     void skipBackward();
     void skipForward();
+    void trackRemoved();
 
 signals:
     void activeRowChanged(int, bool);
     void needSelectionFor(QList<Track*>);
     void itemChanged(int total);
+    void playlistFinished();
 
 private:
     void addShuffledTrack(Track *track);

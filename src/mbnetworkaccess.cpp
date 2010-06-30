@@ -13,7 +13,7 @@ MBNetworkAccess::MBNetworkAccess() {
 
 QObject* MBNetworkAccess::get(const QUrl url) {
     rateTimer->setProperty("url", url);
-    get();
+    return get();
 }
 
 QObject* MBNetworkAccess::get() {

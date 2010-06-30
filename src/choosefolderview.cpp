@@ -10,7 +10,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(PADDING);
-    layout->setMargin(0);
+    layout->setMargin(PADDING);
 
     welcomeLayout = new QHBoxLayout();
     welcomeLayout->setAlignment(Qt::AlignLeft);
@@ -48,7 +48,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
     buttonLayout->addWidget(cancelButton);
 
-#ifdef Q_WS_MAC
+#ifdef APP_MAC_NO
     QPushButton *useiTunesDirButton = new QPushButton(tr("Use iTunes collection"));
     connect(useiTunesDirButton, SIGNAL(clicked()), SLOT(iTunesDirChosen()));
     useiTunesDirButton->setDefault(true);
@@ -61,7 +61,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     if (QFile::exists(musicLocation) && musicLocation != homeLocation + "/") {
         QPushButton *useSystemDirButton = new QPushButton(tr("Use %1").arg(musicLocation));
         connect(useSystemDirButton, SIGNAL(clicked()), SLOT(systemDirChosen()));
-#ifndef Q_WS_MAC
+#ifndef APP_MAC_NO
         useSystemDirButton->setDefault(true);
         useSystemDirButton->setFocus(Qt::NoFocusReason);
 #endif
@@ -71,6 +71,19 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     QPushButton *chooseDirButton = new QPushButton(tr("Choose a folder..."));
     connect(chooseDirButton, SIGNAL(clicked()), SLOT(chooseFolder()));
     buttonLayout->addWidget(chooseDirButton);
+
+#if !defined(APP_MAC) && !defined(Q_WS_WIN)
+    QLabel *privacyLabel =
+            new QLabel(
+                    tr("%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.")
+                    .arg(Constants::APP_NAME) + " " +
+                    tr("If you have privacy concerns about this you can quit now.")
+                    , this);
+    privacyLabel->setFont(FontUtils::small());
+    privacyLabel->setOpenExternalLinks(true);
+    privacyLabel->setWordWrap(true);
+    layout->addWidget(privacyLabel);
+#endif
 
 }
 

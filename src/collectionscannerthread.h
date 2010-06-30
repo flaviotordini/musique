@@ -2,26 +2,28 @@
 #define COLLECTIONSCANNERTHREAD_H
 
 #include <QtCore>
+class CollectionScanner;
 
 class CollectionScannerThread : public QThread {
 
     Q_OBJECT
 
 public:
-    static CollectionScannerThread& instance();
-    void setDirectory(QDir directory);
-    void setIncremental(bool incremental);
+    CollectionScannerThread(QObject *parent = 0);
+    void setDirectory(QString directory);
     void run();
 
 signals:
     void progress(int);
-    void finished();
     void error(QString message);
 
+private slots:
+    void finish();
+    void cleanup();
+
 private:
-    CollectionScannerThread();
-    QDir rootDirectory;
-    bool incremental;
+    QString rootDirectory;
+    CollectionScanner* scanner;
 
 };
 

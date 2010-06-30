@@ -29,7 +29,7 @@ Artist* Artist::forId(int artistId) {
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select name, trackCount, lifeBegin, lifeEnd from artists where id=?");
+    query.prepare("select name, trackCount from artists where id=?");
     query.bindValue(0, artistId);
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
@@ -38,8 +38,8 @@ Artist* Artist::forId(int artistId) {
         artist->setId(artistId);
         artist->setName(query.value(0).toString());
         artist->trackCount = query.value(1).toInt();
-        artist->lifeBegin = query.value(2).toInt();
-        artist->lifeEnd = query.value(3).toInt();
+        // artist->lifeBegin = query.value(2).toInt();
+        // artist->lifeEnd = query.value(3).toInt();
         // Add other fields here...
 
         // put into cache
@@ -82,6 +82,17 @@ void Artist::insert() {
     if (!success) qDebug() << query.lastError().text();
 }
 
+void Artist::update() {
+    // qDebug() << "Artist::update";
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(db);
+    query.prepare("update artists set name=? where hash=?");
+    query.bindValue(0, name);
+    query.bindValue(1, getHash());
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+}
+
 QString Artist::getHash() {
     return Artist::getHash(name);
 }
@@ -92,9 +103,7 @@ QString Artist::getHash(QString name) {
 }
 
 void Artist::fetchInfo() {
-    // fetchMusicBrainzArtist();
     fetchLastFmSearch();
-    // emit gotInfo();
 }
 
 // *** MusicBrainz ***

@@ -10,6 +10,10 @@ class BaseFinderView : public QListView {
 public:
     BaseFinderView(QWidget *parent);
 
+public slots:
+    void appear();
+    void disappear();
+
 signals:
     void play(const QModelIndex &index);
 

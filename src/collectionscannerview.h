@@ -12,7 +12,7 @@ class CollectionScannerView : public QWidget, public View {
 public:
     CollectionScannerView(QWidget *parent);
 
-    void appear() {}
+    void appear() { progressBar->setMaximum(0); }
     void disappear() {}
     QMap<QString, QVariant> metadata() {
         QMap<QString, QVariant> metadata;
@@ -22,7 +22,7 @@ public:
     }
 
 public slots:
-    void startScan(QString dir);
+    void setCollectionScannerThread(CollectionScannerThread *scannerThread);
 
 private slots:
     void progress(int value);

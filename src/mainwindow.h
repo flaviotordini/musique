@@ -12,6 +12,7 @@ class CollectionScannerView;
 class ContextualView;
 class SearchLineEdit;
 class Track;
+class UpdateChecker;
 
 class MainWindow : public QMainWindow {
 
@@ -38,9 +39,13 @@ private slots:
     void donate();
     void about();
     void quit();
-    void fullscreen();
+    void toggleFullscreen();
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
+    void gotNewVersion(QString version);
+    void enableUnifiedToolbar() {
+        setUnifiedTitleAndToolBarOnMac(true);
+    }
 
     // Phonon related logic
     void stop();
@@ -59,6 +64,8 @@ private slots:
     // app logic
     void startFullScan(QString dir);
     void startIncrementalScan();
+    void incrementalScanProgress(int percent);
+    void incrementalScanFinished();
 
 private:
     void showView(QWidget*);
@@ -69,6 +76,7 @@ private:
     void readSettings();
     void writeSettings();
     void initPhonon();
+    void checkForUpdate();
     static QString formatTime(qint64 time);
 
     // view mechanism
@@ -96,7 +104,7 @@ private:
     QAction *skipBackwardAct;
     QAction *skipForwardAct;
     QAction *playAct;
-    QAction *stopAct;
+    // QAction *stopAct;
     QAction *fullscreenAct;
     QAction *volumeUpAct;
     QAction *volumeDownAct;
@@ -129,6 +137,9 @@ private:
     // fullscreen
     bool m_fullscreen;
     bool m_maximized;
+
+    // update checker
+    UpdateChecker *updateChecker;
 
 };
 

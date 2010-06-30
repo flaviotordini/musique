@@ -1,27 +1,21 @@
 CONFIG += release
 TEMPLATE = app
-
-# On some distro, Phonon headers cannot be found
+VERSION = 0.1
+DEFINES += APP_VERSION="$$VERSION"
 INCLUDEPATH += /usr/include/phonon
 INCLUDEPATH += /usr/include/taglib
 
 # Saner string behaviour
 # DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_STRICT_ITERATORS
 TARGET = minitunes
-mac { 
-    TARGET = Minitunes
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.4
-    LIBS += -framework \
-        TagLib
-    
-    # LIBS += /Library/Frameworks/TagLib.framework/TagLib.dylib
-    INCLUDEPATH += /Library/Frameworks/TagLib.framework/Headers
-}
-else:LIBS += -ltag
+LIBS += -ltag
 QT += network \
     xml \
     phonon \
     sql
+unix {
+    QT += dbus
+}
 include(src/qtsingleapplication/qtsingleapplication.pri)
 include(src/thlibrary/thlibrary.pri)
 HEADERS += src/mainwindow.h \
@@ -60,7 +54,6 @@ HEADERS += src/mainwindow.h \
     src/basefinderview.h \
     src/playlistwidget.h \
     src/breadcrumbwidget.h \
-    src/finderhomewidget.h \
     src/fontutils.h \
     src/choosefolderview.h \
     src/filesystemfinderview.h \
@@ -76,7 +69,11 @@ HEADERS += src/mainwindow.h \
     src/trackitemdelegate.h \
     src/playlistitemdelegate.h \
     src/droparea.h \
-    src/minisplitter.h
+    src/minisplitter.h \
+    src/filteringfilesystemmodel.h \
+    src/gnomeglobalshortcutbackend.h \
+    src/globalshortcuts.h \
+    src/globalshortcutbackend.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -110,7 +107,6 @@ SOURCES += src/main.cpp \
     src/basefinderview.cpp \
     src/playlistwidget.cpp \
     src/breadcrumbwidget.cpp \
-    src/finderhomewidget.cpp \
     src/fontutils.cpp \
     src/choosefolderview.cpp \
     src/filesystemfinderview.cpp \
@@ -126,7 +122,12 @@ SOURCES += src/main.cpp \
     src/trackitemdelegate.cpp \
     src/playlistitemdelegate.cpp \
     src/droparea.cpp \
-    src/minisplitter.cpp
+    src/minisplitter.cpp \
+    src/filteringfilesystemmodel.cpp \
+    src/constants.cpp \
+    src/gnomeglobalshortcutbackend.cpp \
+    src/globalshortcuts.cpp \
+    src/globalshortcutbackend.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
@@ -141,11 +142,6 @@ include(locale/locale.pri)
 # deploy
 DISTFILES += CHANGES \
     LICENSE
-mac { 
-    CONFIG += x86
-    QMAKE_INFO_PLIST = Info.plist
-    ICON = minitunes.icns
-}
 unix { 
     isEmpty(PREFIX):PREFIX = /usr/local
     BINDIR = $$PREFIX/bin
@@ -159,8 +155,13 @@ unix {
         desktop \
         iconsvg \
         icon16 \
+        icon22 \
         icon32 \
-        icon128
+        icon48 \
+        icon64 \
+        icon128 \
+        icon256 \
+        icon512
     translations.path = $$PKGDATADIR
     translations.files += $$DESTDIR/locale
     desktop.path = $$DATADIR/applications
@@ -168,9 +169,20 @@ unix {
     iconsvg.path = $$DATADIR/icons/hicolor/scalable/apps
     iconsvg.files += data/minitunes.svg
     icon16.path = $$DATADIR/icons/hicolor/16x16/apps
-    icon16.files += data/16x16/minitunes.png
+    icon16.files += data/22x22/minitunes.png
+    icon22.path = $$DATADIR/icons/hicolor/22x22/apps
+    icon22.files += data/22x22/minitunes.png
     icon32.path = $$DATADIR/icons/hicolor/32x32/apps
     icon32.files += data/32x32/minitunes.png
+    icon48.path = $$DATADIR/icons/hicolor/48x48/apps
+    icon48.files += data/48x48/minitunes.png
+    icon64.path = $$DATADIR/icons/hicolor/64x64/apps
+    icon64.files += data/64x64/minitunes.png
     icon128.path = $$DATADIR/icons/hicolor/128x128/apps
     icon128.files += data/128x128/minitunes.png
+    icon256.path = $$DATADIR/icons/hicolor/256x256/apps
+    icon256.files += data/256x256/minitunes.png
+    icon512.path = $$DATADIR/icons/hicolor/512x512/apps
+    icon512.files += data/512x512/minitunes.png
 }
+mac|win32:include(local/local.pri)

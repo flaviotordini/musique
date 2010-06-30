@@ -3,6 +3,7 @@
 #include "basesqlmodel.h"
 #include "model/item.h"
 #include "finderwidget.h"
+#include "database.h"
 
 BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
@@ -10,7 +11,6 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
     this->setItemDelegate(new FinderItemDelegate(this));
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
-    this->setMouseTracking(true);
 
     // layout
     this->setGridSize(QSize(151, 151));
@@ -42,35 +42,51 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
 }
 
-void BaseFinderView::leaveEvent(QEvent *event) {
-    BaseSqlModel *baseModel = static_cast<BaseSqlModel *>(model());
-    if (baseModel)
+void BaseFinderView::appear() {
+    setEnabled(true);
+    setMouseTracking(true);
+    BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
+    if (baseSqlModel) {
+        QSqlQuery query = baseSqlModel->query();
+        baseSqlModel->setQuery(QSqlQuery(query.lastQuery(), Database::instance().getConnection()));
+        while (baseSqlModel->canFetchMore())
+            baseSqlModel->fetchMore();
+    }
+}
+
+void BaseFinderView::disappear() {
+    setEnabled(false);
+    setMouseTracking(false);
+    // BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
+    // if (baseSqlModel) baseSqlModel->clear();
+}
+
+void BaseFinderView::leaveEvent(QEvent * /* event */) {
+    BaseSqlModel *baseModel = dynamic_cast<BaseSqlModel *>(model());
+    if (baseModel) {
         baseModel->clearHover();
+    }
 }
 
 void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
     QListView::mouseMoveEvent(event);
 
-    // BaseSqlModel *baseModel = dynamic_cast<BaseSqlModel *>(model());
-    // if (!baseModel) return;
-
     // qDebug() << "BaseFinderView::mouseMoveEvent" << event->pos();
 
     if (isHoveringPlayIcon(event)) {
         QMetaObject::invokeMethod(model(), "enterPlayIconHover", Qt::DirectConnection);
-        // baseModel->enterPlayIconHover();
         setCursor(Qt::PointingHandCursor);
     } else {
         QMetaObject::invokeMethod(model(), "exitPlayIconHover", Qt::DirectConnection);
-        // baseModel->exitPlayIconHover();
         unsetCursor();
     }
 
+    /*
     const QModelIndex index = indexAt(event->pos());
-
     Item *item = index.data(Finder::DataObjectRole).value<ItemPointer>();
     if (item)
         qDebug() << item->getName();
+        */
 
 }
 

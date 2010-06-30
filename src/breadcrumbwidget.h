@@ -9,18 +9,15 @@ class BreadcrumbWidget : public QToolBar {
 
 public:
     BreadcrumbWidget(QWidget *parent);
-    void addWidget(QWidget *widget);
-    void removeWidget(QWidget *widget);
+    void addItem(QString title);
     void clear();
-
-signals:
     void goBack();
 
-protected:
-    // void paintEvent(QPaintEvent *event);
+signals:
+    void goneBack();
 
 private:
-    QHash<QWidget*, QLabel*> widgetLabels;
+    QAction *backAction;
 
 };
 

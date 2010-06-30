@@ -42,7 +42,7 @@ void DropArea::dragLeaveEvent(QDragLeaveEvent *event) {
 
 void DropArea::clear() {
     setText("<b>" + tr("Drop here to append to the playlist") + "</b>");
-    setPixmap(QtIconLoader::icon("list-add", QIcon(":/images/list-add.png")).pixmap(24, 24));
+    setPixmap(QtIconLoader::icon("list-add").pixmap(24, 24));
     setBackgroundRole(QPalette::Base);
     setForegroundRole(QPalette::Text);
 

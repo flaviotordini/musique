@@ -16,10 +16,14 @@ public:
     void setAlbum(Album *album);
     void clear();
 
+private slots:
+    void amazonClicked();
+
 private:
     QLabel *titleLabel;
     QLabel *photoLabel;
     QLabel *wikiLabel;
+    QPushButton *buyOnAmazonButton;
 
     /*
     TrackListView *trackListView;

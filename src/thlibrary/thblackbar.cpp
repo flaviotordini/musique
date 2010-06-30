@@ -68,8 +68,8 @@ void THBlackBar::setCheckedAction(QAction *action) {
 }
 
 QSize THBlackBar::minimumSizeHint (void) const {
-    int itemsWidth = calculateButtonWidth() * d->actionList.size();
-    return(QSize(100 + itemsWidth, 32));
+    int itemsWidth = calculateButtonWidth() * d->actionList.size() * 1.2;
+    return(QSize(itemsWidth, QFontMetrics(font()).height() * 1.9));
 }
 
 /* ============================================================================
@@ -83,14 +83,27 @@ void THBlackBar::paintEvent (QPaintEvent *event) {
 
     // Calculate Buttons Size & Location
     int buttonWidth = width / d->actionList.size();
-    int buttonsX = 0;
 
     // Draw Buttons
-    QRect rect(buttonsX, 0, buttonWidth, height);
+    QRect rect(0, 0, buttonWidth, height);
+    int actionCount = d->actionList.size();
+    for (int i = 0; i < actionCount; i++) {
+        QAction *action = d->actionList.at(i);
+
+        if (i + 1 == actionCount) {
+            rect.setWidth(width - buttonWidth * (actionCount-1));
+            drawButton(&p, rect, action);
+        } else {
+            drawButton(&p, rect, action);
+            rect.moveLeft(rect.x() + rect.width());
+        }
+
+    }
+    /*
     foreach (QAction *action, d->actionList) {
         drawButton(&p, rect, action);
         rect.moveLeft(rect.x() + rect.width());
-    }
+    }*/
 
 }
 
@@ -109,7 +122,7 @@ void THBlackBar::mouseMoveEvent (QMouseEvent *event) {
         update();
 
         // status tip
-        QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
+        QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
         if (mainWindow) mainWindow->statusBar()->showMessage(action->statusTip());
     }
 }
@@ -121,7 +134,7 @@ void THBlackBar::mousePressEvent (QMouseEvent *event) {
 
         if (d->checkedAction != NULL) {
             // already checked
-            if (d->checkedAction == d->hoveredAction) return;
+            // if (d->checkedAction == d->hoveredAction) return;
             d->checkedAction->setChecked(false);
         }
 
@@ -134,7 +147,7 @@ void THBlackBar::mousePressEvent (QMouseEvent *event) {
     }
 }
 
-void THBlackBar::leaveEvent(QEvent *event) {
+void THBlackBar::leaveEvent(QEvent * /* event */) {
     // status tip
     QMainWindow* mainWindow = static_cast<QMainWindow*>(window());
     if (mainWindow) mainWindow->statusBar()->clearMessage();
@@ -216,16 +229,24 @@ void THBlackBar::drawButton (	QPainter *painter,
     int mh = (height / 2);
 
     painter->translate(rect.x(), rect.y());
-    painter->setPen(QColor(0x28, 0x28, 0x28));
+    painter->setPen(Qt::black);
 
     painter->fillRect(0, 0, width, mh, QBrush(gradient));
     painter->fillRect(0, mh, width, mh, color);
-    painter->drawRect(0, 0, width, height);
-
+#ifdef APP_MAC
+    painter->drawRect(-1, -1, width+1, height);
+#else
+    painter->drawRect(0, 0, width, height-1);
+#endif
     QFont smallerBoldFont = FontUtils::smallBold();
     painter->setFont(smallerBoldFont);
+
+    // text shadow
+    painter->setPen(QColor(0, 0, 0, 128));
+    painter->drawText(0, -1, width, height, Qt::AlignCenter, action->text());
+
     painter->setPen(QPen(QColor(0xff, 0xff, 0xff), 1));
-    painter->drawText(0, 1, width, height, Qt::AlignCenter, action->text());
+    painter->drawText(0, 0, width, height, Qt::AlignCenter, action->text());
 
     painter->restore();
 }

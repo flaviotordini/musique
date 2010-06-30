@@ -3,6 +3,7 @@
 #include "playlistmodel.h"
 #include "playlistitemdelegate.h"
 #include "droparea.h"
+#include "globalshortcuts.h"
 
 namespace The {
     QMap<QString, QAction*>* globalActions();
@@ -17,6 +18,7 @@ PlaylistView::PlaylistView(QWidget *parent) :
     setItemDelegate(new PlaylistItemDelegate(this));
 
     // cosmetics
+    setMinimumWidth(fontInfo().pixelSize()*25);
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
@@ -58,6 +60,10 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
     connect(The::globalActions()->value("clearPlaylist"), SIGNAL(triggered()), playlistModel, SLOT(clear()));
     connect(The::globalActions()->value("skip"), SIGNAL(triggered()), playlistModel, SLOT(skipForward()));
     connect(The::globalActions()->value("previous"), SIGNAL(triggered()), playlistModel, SLOT(skipBackward()));
+
+    GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
+    connect(&shortcuts, SIGNAL(Next()), The::globalActions()->value("skip"), SLOT(trigger()));
+    connect(&shortcuts, SIGNAL(Previous()), The::globalActions()->value("previous"), SLOT(trigger()));
 }
 
 void PlaylistView::itemActivated(const QModelIndex &index) {
@@ -96,7 +102,8 @@ void PlaylistView::updatePlaylistActions() {
     const int rowCount = playlistModel->rowCount(QModelIndex());
     const bool isPlaylistEmpty = rowCount < 1;
     The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
-    The::globalActions()->value("play")->setEnabled(!isPlaylistEmpty);
+    if (!isPlaylistEmpty)
+        The::globalActions()->value("play")->setEnabled(true);
 
     // TODO also check if we're on first/last track
     The::globalActions()->value("skip")->setEnabled(rowCount > 1);
@@ -131,6 +138,8 @@ void PlaylistView::moveDownSelected() {
 
 void PlaylistView::dragEnterEvent(QDragEnterEvent *event) {
     QListView::dragEnterEvent(event);
+
+    /*
     qDebug() << "dragEnter";
     if (verticalScrollBar()->isVisible()) {
         qDebug() << "need drop area";
@@ -138,12 +147,16 @@ void PlaylistView::dragEnterEvent(QDragEnterEvent *event) {
         dropArea->show();
         willHideDropArea = false;
     }
+    */
 }
 
 void PlaylistView::dragLeaveEvent(QDragLeaveEvent *event) {
     QListView::dragLeaveEvent(event);
+
+    /*
     qDebug() << "dragLeave";
     // emit DropArea();
     willHideDropArea = true;
     QTimer::singleShot(1000, dropArea, SLOT(hide()));
+    */
 }

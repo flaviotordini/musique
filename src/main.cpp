@@ -3,8 +3,15 @@
 #include <qtsingleapplication.h>
 #include "constants.h"
 #include "mainwindow.h"
+#ifdef APP_MAC_NO
+#include "local/mac/mac_startup.h"
+#endif
 
 int main(int argc, char **argv) {
+
+#ifdef APP_MAC_NO
+    mac::MacMain();
+#endif
 
     QtSingleApplication app(argc, argv);
     if (app.sendMessage("Wake up!"))
@@ -14,6 +21,7 @@ int main(int argc, char **argv) {
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
     app.setWheelScrollLines(1);
+    app.setQuitOnLastWindowClosed(false);
 
     const QString locale = QLocale::system().name();
 
@@ -39,11 +47,11 @@ int main(int argc, char **argv) {
     MainWindow mainWin;
     mainWin.setWindowTitle(Constants::APP_NAME);
 
-#ifndef Q_WS_MAC
+#ifndef APP_MAC
     if (!QFile::exists(dataDir)) {
         dataDir = qApp->applicationDirPath() + "/data";
     }
-    const int iconSizes [] = { 16, 22, 24, 32, 48, 64, 128, 256 };
+    const int iconSizes [] = { 16, 22, 32, 48, 64, 128, 256, 512 };
     QIcon appIcon;
     for (int i = 0; i < 8; i++) {
         QString size = QString::number(iconSizes[i]);

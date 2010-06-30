@@ -11,6 +11,7 @@ class ArtistSqlModel;
 class AlbumSqlModel;
 class TrackSqlModel;
 class FileSystemModel;
+class FileSystemFinderView;
 class Track;
 
 namespace Finder {
@@ -49,6 +50,8 @@ public:
     void appear();
 
 private slots:
+    void goBack();
+    void folderGoBack();
     void showArtists();
     void showAlbums();
     void showFolders();
@@ -82,14 +85,16 @@ private:
     QAction *albumsAction;
     QAction *foldersAction;
 
+    QStack<QWidget*> *history;
     QStackedWidget *stackedWidget;
     BreadcrumbWidget *breadcrumb;
+    BreadcrumbWidget *folderBreadcrumb;
 
     PlaylistModel *playlistModel;
     PlaylistView *playlistView;
 
-    QListView *folderListView;
-    FileSystemModel *folderListModel;
+    FileSystemFinderView *fileSystemView;
+    FileSystemModel *fileSystemModel;
 
     QListView *artistListView;
     ArtistSqlModel *artistListModel;

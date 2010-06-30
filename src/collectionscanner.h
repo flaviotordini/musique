@@ -55,16 +55,13 @@ private:
 
 };
 
-class CollectionScanner : public QThread {
+class CollectionScanner : public QObject {
 
     Q_OBJECT
 
 public:
-    CollectionScanner();
-    void setDirectory(QDir directory);
-    void setIncremental(bool incremental) {
-        this->incremental = incremental;
-    }
+    CollectionScanner(QObject *parent);
+    void setDirectory(QString directory);
     void run();
     void stop();
     void complete();
@@ -84,13 +81,23 @@ private slots:
     void gotAlbumInfo();
     void processTrack(FileInfo *file);
     void gotTrackInfo();
+    void emitFinished();
 
 private:
+    void reset();
     void scanDirectory(QDir directory);
     void processFile(QFileInfo fileInfo);
     void cleanStaleTracks();
+    static bool isNonTrack(QString path);
+    static bool isModifiedNonTrack(QString path, uint lastModified);
+    static bool insertOrUpdateNonTrack(QString path, uint lastModified);
+    QString directoryHash(QDir directory);
+    QString treeFingerprint(QDir directory, QString hash);
+    QStringList getTrackPaths();
+    QStringList getNonTrackPaths();
 
     bool working;
+    bool stopped;
     bool incremental;
     QDir rootDirectory;
     uint lastUpdate;
@@ -101,6 +108,8 @@ private:
     QHash<QString, QList<FileInfo *> > filesWaitingForArtists;
     QHash<QString, Album*> loadedAlbums;
     QHash<QString, QList<FileInfo *> > filesWaitingForAlbums;
+    QStringList trackPaths;
+    QStringList nontrackPaths;
 
 };
 

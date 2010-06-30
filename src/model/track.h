@@ -44,16 +44,22 @@ public:
     Artist* getArtist() { return artist; }
     void setArtist(Artist *artist) { this->artist = artist; }
 
-    // data access
+    // cache
     static void clearCache() {
+        foreach (Track* track, cache.values())
+            track->emitRemovedSignal();
         qDeleteAll(cache);
         cache.clear();
+        pathCache.clear();
     }
+    void emitRemovedSignal();
+
+    // data access    
     static Track* forId(int trackId);
     static Track* forPath(QString path);
     static int idForPath(QString path);
     static bool exists(QString path);
-    static bool isModified(QString path, QDateTime lastModified);
+    static bool isModified(QString path, uint lastModified);
     static void remove(QString path);
     void insert();
     void update();
@@ -68,6 +74,7 @@ public:
 signals:
     void gotInfo();
     void gotLyrics(QString lyrics);
+    void removed();
 
 private slots:
     void fetchMusicBrainzTrack();
@@ -79,6 +86,7 @@ private:
     static QString getHash(QString);
 
     static QHash<int, Track*> cache;
+    static QHash<QString, Track*> pathCache;
 
     void reset();
 

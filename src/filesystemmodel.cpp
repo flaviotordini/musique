@@ -1,5 +1,6 @@
 #include "filesystemmodel.h"
 #include "trackmimedata.h"
+#include "database.h"
 
 FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent) {
     hoveredRow = -1;
@@ -8,6 +9,7 @@ FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent) {
     timeLine = new QTimeLine(250, this);
     timeLine->setFrameRange(1000, 0);
     connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
+
 }
 
 QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
@@ -31,6 +33,7 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
             folder = Folder::forPath(path);
             return QVariant::fromValue(QPointer<Folder>(folder));
         } else {
+            path.remove(Database::instance().collectionRoot() + "/");
             track = Track::forPath(path);
             return QVariant::fromValue(QPointer<Track>(track));
         }

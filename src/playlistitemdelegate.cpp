@@ -46,7 +46,7 @@ void PlaylistItemDelegate::paint(
 }
 
 QPixmap PlaylistItemDelegate::createPlayIcon() const {
-    QIcon icon = QtIconLoader::icon("media-playback-start", QIcon(":/images/media-playback-start.png"));
+    QIcon icon = QtIconLoader::icon("media-playback-start");
     return icon.pixmap(16, 16);
 }
 
@@ -79,6 +79,12 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
 
     painter->translate(option.rect.topLeft());
     QRect line(0, 0, option.rect.width(), option.rect.height());
+
+    // text color
+    if (isSelected)
+        painter->setPen(QPen(option.palette.brush(QPalette::HighlightedText), 0));
+    else
+        painter->setPen(QPen(option.palette.brush(QPalette::Text), 0));
 
     if (line.height() > ITEM_HEIGHT) {
         // qDebug() << "header at index" << index.row();
@@ -140,13 +146,18 @@ void PlaylistItemDelegate::paintAlbumHeader(
     }*/
 
     QLinearGradient linearGrad(0, 0, 0, line.height());
+#ifdef APP_MAC
+    linearGrad.setColorAt(0, QColor(0x99, 0x99, 0x99, 0xFF));
+    linearGrad.setColorAt(1, QColor(0xCC, 0xCC, 0xCC, 0xFF));
+#else
     linearGrad.setColorAt(0, option.palette.color(QPalette::Mid));
-    linearGrad.setColorAt(1, option.palette.midlight().color());
+    linearGrad.setColorAt(1, option.palette.color(QPalette::Midlight));
+#endif
     painter->fillRect(line, QBrush(linearGrad));
 
     // borders
-    painter->setPen(option.palette.color(QPalette::Light));
-    painter->drawLine(0, 0, line.width(), 0);
+    // painter->setPen(option.palette.color(QPalette::Light));
+    // painter->drawLine(0, 0, line.width(), 0);
     painter->setPen(option.palette.color(QPalette::Mid));
     painter->drawLine(0, line.height()-1, line.width(), line.height()-1);
 
@@ -161,12 +172,10 @@ void PlaylistItemDelegate::paintAlbumHeader(
     QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
 
     // text shadow
-    painter->setOpacity(.5);
-    painter->setPen(Qt::black);
+    painter->setPen(QColor(0, 0, 0, 64));
     painter->drawText(trackTextBox.translated(0, -1), Qt::AlignLeft | Qt::AlignVCenter, headerTitle);
 
     // text
-    painter->setOpacity(1);
     painter->setPen(option.palette.color(QPalette::Light));
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, headerTitle);
     

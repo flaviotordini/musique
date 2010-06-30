@@ -1,17 +1,13 @@
 #include "filesystemfinderview.h"
+#include "database.h"
+#include "filesystemmodel.h"
 
 FileSystemFinderView::FileSystemFinderView(QWidget *parent) :
-        BaseFinderView(parent) {
-    setWindowTitle(tr("Folders"));
-}
+        BaseFinderView(parent) { }
 
 void FileSystemFinderView::appear() {
-    QFileSystemModel *fileSystemModel = static_cast<QFileSystemModel*>(model());
+    BaseFinderView::appear();
     if (fileSystemModel) {
-        QSettings settings;
-        const QString path = settings.value("collectionRoot").toString();
-        fileSystemModel->setRootPath(path);
-        fileSystemModel->setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
-        setRootIndex(fileSystemModel->index(path));
+        fileSystemModel->setRootPath(fileSystemModel->rootPath());
     }
 }

@@ -56,13 +56,14 @@ void NetworkReply::finished() {
     networkReply->deleteLater();
 }
 
-void NetworkReply::requestError(QNetworkReply::NetworkError code) {
+void NetworkReply::requestError(QNetworkReply::NetworkError /*code*/) {
     timer->stop();
     emit error(networkReply);
 }
 
 void NetworkReply::abort() {
-    qDebug() << "TIMEOUT" << networkReply->url();
+    qDebug() << "HTTP timeout" << networkReply->url();
+    networkReply->abort();
     emit error(networkReply);
 }
 
@@ -75,7 +76,7 @@ QNetworkReply* NetworkAccess::simpleGet(QUrl url, int operation) {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
 
     QNetworkRequest request(url);
-    request.setRawHeader("User-Agent", Constants::USER_AGENT.toUtf8());
+    request.setRawHeader("User-Agent", USER_AGENT.toUtf8());
     request.setRawHeader("Connection", "Keep-Alive");
 
     QNetworkReply *networkReply;
@@ -198,12 +199,6 @@ void NetworkAccess::error(QNetworkReply::NetworkError code) {
         qDebug() << "Cannot get sender";
         return;
     }
-
-    // Ignore HEADs
-    /*
-    if (networkReply->operation() == QNetworkAccessManager::HeadOperation)
-        return;
-        */
 
     qDebug() << networkReply->errorString() << code;
 

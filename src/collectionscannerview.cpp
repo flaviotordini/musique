@@ -10,7 +10,7 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(PADDING);
-    layout->setMargin(0);
+    layout->setMargin(PADDING);
 
     QLabel *tipLabel = new QLabel(
             tr("%1 is scanning your music collection.").arg(Constants::APP_NAME)
@@ -19,15 +19,15 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
     layout->addWidget(tipLabel);
 
     progressBar = new QProgressBar(this);
-    progressBar->setMaximum(0);
     progressBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     layout->addWidget(progressBar);
 
-    tipLabel = new QLabel(
+    tipLabel = new QLabel("<html><style>a { color: palette(text); }</style><body>" +
             tr("%1 is using <a href='%2'>%3</a> to catalog your music.")
             .arg(Constants::APP_NAME, "http://last.fm", "Last.fm")
             + " " +
             tr("This will take time depending on your collection size and network speed.")
+            + "</body></html>"
             , this);
     tipLabel->setOpenExternalLinks(true);
     tipLabel->setWordWrap(true);
@@ -35,21 +35,17 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
 
 }
 
-void CollectionScannerView::startScan(QString dir) {
+void CollectionScannerView::setCollectionScannerThread(CollectionScannerThread *scannerThread) {
+
+    // qDebug() << "CollectionScannerView::startScan" << directory;
 
     progressBar->setMaximum(0);
 
-    CollectionScannerThread &scanner = CollectionScannerThread::instance();
-    connect(&scanner, SIGNAL(progress(int)), this, SLOT(progress(int)));
-    connect(&scanner, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)));
-    connect(&scanner, SIGNAL(finished()), window(), SLOT(showMediaView()));
-    connect(&scanner, SIGNAL(finished()), SLOT(scanFinished()));
-    scanner.setDirectory(QDir(dir));
+    connect(scannerThread, SIGNAL(progress(int)), SLOT(progress(int)), Qt::QueuedConnection);
+    connect(scannerThread, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)), Qt::QueuedConnection);
+    connect(scannerThread, SIGNAL(finished()), window(), SLOT(showMediaView()), Qt::QueuedConnection);
+    connect(scannerThread, SIGNAL(finished()), SLOT(scanFinished()), Qt::QueuedConnection);
 
-    Database &db = Database::instance();
-    scanner.setIncremental(db.status() != ScanComplete);
-
-    scanner.start();
 }
 
 void CollectionScannerView::scanFinished() {

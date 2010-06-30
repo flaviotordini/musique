@@ -26,6 +26,7 @@ Track::Track() {
 }
 
 QHash<int, Track*> Track::cache;
+QHash<QString, Track*> Track::pathCache;
 
 Track* Track::forId(int trackId) {
 
@@ -37,7 +38,7 @@ Track* Track::forId(int trackId) {
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select path, title, start, end, duration, track, artist, album from tracks where id=?");
+    query.prepare("select path, title, duration, track, artist, album from tracks where id=?");
     query.bindValue(0, trackId);
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
@@ -49,18 +50,20 @@ Track* Track::forId(int trackId) {
 
         // TODO start & end
 
-        track->setLength(query.value(4).toInt());
-        track->setNumber(query.value(5).toInt());
+        track->setLength(query.value(2).toInt());
+        track->setNumber(query.value(3).toInt());
 
         // relations
         // TODO this could be made lazy
-        int artistId = query.value(6).toInt();
+        int artistId = query.value(4).toInt();
         track->setArtist(Artist::forId(artistId));
-        int albumId = query.value(7).toInt();
+        int albumId = query.value(5).toInt();
         track->setAlbum(Album::forId(albumId));
 
         // put into cache
         cache.insert(trackId, track);
+        if (!pathCache.contains(track->getPath()))
+            pathCache.insert(track->getPath(), track);
 
         return track;
     }
@@ -71,9 +74,14 @@ Track* Track::forId(int trackId) {
 }
 
 Track* Track::forPath(QString path) {
+    // qDebug() << "Track::forPath" << path;
     Track *track = 0;
-    int id = Track::idForPath(path);
-    if (id != -1) track = Track::forId(id);
+    if (pathCache.contains(path)) {
+        track = pathCache.value(path);
+    } else {
+        int id = Track::idForPath(path);
+        if (id != -1) track = Track::forId(id);
+    }
     return track;
 }
 
@@ -95,26 +103,27 @@ bool Track::exists(QString path) {
     // qDebug() << "Track::exists";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select id from tracks where path=?");
+    query.prepare("select count(*) from tracks where path=?");
     query.bindValue(0, path);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
-    return query.next();
+    if (query.next()) {
+        return query.value(0).toBool();
+    }
+    return false;
 }
 
-bool Track::isModified(QString path, QDateTime lastModified) {
+bool Track::isModified(QString path, uint lastModified) {
     // qDebug() << "Track::isModified";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select id from tracks where path=? and tstamp>?");
+    query.prepare("select id from tracks where path=? and tstamp<?");
     query.bindValue(0, path);
-    query.bindValue(1, lastModified.toTime_t());
-    qDebug() << query.lastQuery() << query.boundValues().values();
+    query.bindValue(1, lastModified);
+    // qDebug() << query.lastQuery() << query.boundValues().values();
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
-    // if we have no record then track has changed
-    // (or it has never been put in the db)
-    return !query.next();
+    return query.next();
 }
 
 void Track::insert() {
@@ -155,9 +164,50 @@ void Track::insert() {
 }
 
 void Track::update() {
-    // qDebug() << "Track::update";
+
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
+
+    query.prepare("select album, artist from tracks where path=?");
+    query.bindValue(0, path);
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+    if (query.next()) {
+        int albumId = query.value(0).toInt();
+        int artistId = query.value(1).toInt();
+
+        if (!album || album->getId() != albumId) {
+            // decrement previous album track count
+            query.prepare("update albums set trackCount=trackCount-1 where id=?");
+            query.bindValue(0, albumId);
+            success = query.exec();
+            if (!success) qDebug() << query.lastError().text();
+            // and increment the new album track count
+            if (album) {
+                query.prepare("update albums set trackCount=trackCount+1 where id=?");
+                query.bindValue(0, album->getId());
+                bool success = query.exec();
+                if (!success) qDebug() << query.lastError().text();
+            }
+        }
+
+        if (!artist || artist->getId() != artistId) {
+            query.prepare("update artists set trackCount=trackCount-1 where id=?");
+            query.bindValue(0, artistId);
+            success = query.exec();
+            if (!success) qDebug() << query.lastError().text();
+            if (artist) {
+                query.prepare("update artists set trackCount=trackCount+1 where id=?");
+                query.bindValue(0, artist->getId());
+                bool success = query.exec();
+                if (!success) qDebug() << query.lastError().text();
+            }
+        }
+
+    }
+
+    // qDebug() << "Track::update";
+
     query.prepare("update tracks set title=?, track=?, year=?, album=?, artist=?, tstamp=?, duration=? where path=?");
 
     query.bindValue(0, title);
@@ -170,7 +220,7 @@ void Track::update() {
     query.bindValue(5, QDateTime().toTime_t());
     query.bindValue(6, length);
     query.bindValue(7, path);
-    bool success = query.exec();
+    success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 }
 
@@ -209,6 +259,22 @@ void Track::remove(QString path) {
     success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 
+    // update cache and notify everybody using this track
+    // that it is gone forever
+    int trackId = Track::idForPath(path);
+    if (trackId != -1) {
+        if (cache.contains(trackId)) {
+            Track* track = cache.value(trackId);
+            track->emitRemovedSignal();
+            cache.remove(trackId);
+            track->deleteLater();
+        }
+    }
+
+}
+
+void Track::emitRemovedSignal() {
+    emit removed();
 }
 
 QString Track::getHash() {
@@ -253,8 +319,7 @@ void Track::parseMusicBrainzTrack(QByteArray bytes) {
 }
 
 QString Track::getAbsolutePath() {
-    QSettings settings;
-    QString collectionRoot = settings.value("collectionRoot").toString();
+    QString collectionRoot = Database::instance().collectionRoot();
     QString absolutePath = collectionRoot + "/" + path;
     return absolutePath;
 }
@@ -285,7 +350,7 @@ void Track::getLyrics() {
     // http://lyrics.wikia.com/LyricWiki:REST
     QUrl url = QString(
             "http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
-            .arg(QString::fromUtf8(QUrl::toPercentEncoding(artist->getName())))
+            .arg(QString::fromUtf8(QUrl::toPercentEncoding(artistName)))
             .arg(QString::fromUtf8(QUrl::toPercentEncoding(title)));
 
     QObject *reply = The::http()->get(url);

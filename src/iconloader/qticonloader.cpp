@@ -99,28 +99,25 @@ Q_GLOBAL_STATIC(QtIconLoaderImplementation, iconLoaderInstance)
     crossplatform code.
 
 */
-        QIcon QtIconLoader::icon(const QString &name, const QIcon &fallback)
+        QIcon QtIconLoader::icon(const QString &name)
 {
     QIcon icon;
 
-#if QT_VERSION < 0x040600
-
 #ifdef Q_WS_X11
+#if QT_VERSION < 0x040600
     QString pngExtension(QLatin1String(".png"));
     QList<int> iconSizes;
     iconSizes << 16 << 24 << 32 << 48 << 64;
     Q_FOREACH (int size, iconSizes) {
         icon.addPixmap(iconLoaderInstance()->findIcon(size, name));
     }
-#endif
-
 #else
-    icon = QIcon::fromTheme(name, fallback);
+    icon = QIcon::fromTheme(name);
+#endif
+#else
+        icon = QIcon(QString(":/images/%1.png").arg(name));
 #endif
 
-    if (icon.isNull())
-        icon = fallback;
-    Q_UNUSED(name);
     return icon;
 }
 

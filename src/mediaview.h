@@ -18,7 +18,6 @@ class MediaView : public QWidget, public View {
 
 public:
     MediaView(QWidget *parent);
-    void appear();
     void disappear() {}
     QMap<QString, QVariant> metadata() {
         QMap<QString, QVariant> metadata;
@@ -29,14 +28,18 @@ public:
     void saveSplitterState();
     void setMediaObject(Phonon::MediaObject *mediaObject);
     Track* getActiveTrack() { return activeTrack; }
+    PlaylistModel* getPlaylistModel() { return playlistModel; }
 
 public slots:
+    void appear();
     void playPause();
+    void trackRemoved();
 
 private slots:
     void activeRowChanged(int row, bool manual);
     void stateChanged(Phonon::State newState, Phonon::State oldState);
     void handleError(QString message);
+    void playlistFinished();
 
 private:
     QSplitter *splitter;
@@ -48,6 +51,11 @@ private:
     QTimer *errorTimer;
     DropArea *dropArea;
     Track *activeTrack;
+
+#ifdef APP_DEMO
+    void demoExpired();
+    int tracksPlayed;
+#endif
 
 };
 

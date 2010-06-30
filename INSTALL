@@ -1,21 +1,15 @@
-# Minitunes build instructions
+# Build instructions
 
 ## Prerequisites
 To compile Minitunes you need:
 - Qt4: http://qt.nokia.com. The following Qt modules are needed: network, xml, phonon, sql
 - TagLib: http://developer.kde.org/~wheeler/taglib.html
 
-On a Debian or Ubuntu system just type:
+On a Debian or Ubuntu system type:
 sudo apt-get install build-essential qt4-dev-tools libphonon-dev libtag1-dev libqt4-sql-sqlite
 
-## A word on Phonon on Linux
-To be able to actually listen to music you need a working Phonon setup.
-As of 2010, Linux distributions are not doing a great job of automatically setting up Phonon.
-For example Ubuntu is automatically installing the Xine backend, while obviously Gstreamer
-would be a much better choice for a GNOME desktop.
-
 ## Compiling
-Building is fairly easy. Just run:
+Run:
     $ qmake
 and then:
     $ make
@@ -23,10 +17,14 @@ and then:
 ## Running
 ./build/target/minitunes
 
+## A word about Phonon on Linux
+To be able to actually listen to music you need a working Phonon setup.
+Please don't contact me about this, ask for help on your distribution support channels.
+
 ## Installing on Linux
-You could run
+Run:
     $ sudo make install
-But installing stuff this way is not recommended.
+This is for packagers. End users should not install applications in this way.
 
 ## Legal Stuff
 Copyright (C) 2010 Flavio Tordini
@@ -43,3 +41,4 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+

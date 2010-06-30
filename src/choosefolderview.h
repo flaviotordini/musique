@@ -15,11 +15,7 @@ public:
     QMap<QString, QVariant> metadata() {
         QMap<QString, QVariant> metadata;
         metadata.insert("title", tr("Locate your collection"));
-#ifdef Q_WS_MAC
-        metadata.insert("description", tr("%1 wants you to ignore the filesystem, it's time to grow up").arg("Apple"));
-#else
-        metadata.insert("description", tr("I bet it is ~/Music"));
-#endif
+        metadata.insert("description", "");
         return metadata;
     }
 

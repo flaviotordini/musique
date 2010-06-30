@@ -37,6 +37,7 @@ public:
     static Album* forId(int albumId);
     static int idForName(QString name);
     void insert();
+    void update();
 
 
     // internet

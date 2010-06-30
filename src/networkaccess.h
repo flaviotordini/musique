@@ -2,6 +2,11 @@
 #define NETWORKACCESS_H
 
 #include <QtNetwork>
+#include "constants.h"
+
+static const QString USER_AGENT = QString(Constants::APP_NAME)
+                                  + " " + Constants::VERSION
+                                  + " (" + Constants::WEBSITE + ")";
 
 namespace The {
     QNetworkAccessManager* networkAccessManager();

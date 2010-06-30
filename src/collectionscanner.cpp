@@ -3,30 +3,64 @@
 #include "model/track.h"
 #include "datautils.h"
 
-// #include "freedesktopmime/freedesktopmime.h"
-// #include "phonon/backendcapabilities.h"
-
-CollectionScanner::CollectionScanner() :
+CollectionScanner::CollectionScanner(QObject *parent) :
+        QObject(parent),
         working(false),
+        stopped(false),
         incremental(false),
         lastUpdate(0),
         maxQueueSize(0) { }
 
+void CollectionScanner::reset() {
+    stopped = false;
+    fileQueue.clear();
+    maxQueueSize = 0;
+    loadedArtists.clear();
+    filesWaitingForArtists.clear();
+    loadedAlbums.clear();
+    filesWaitingForAlbums.clear();
+}
+
 void CollectionScanner::run() {
 
-    qDebug() << "CollectionScanner::run()" << rootDirectory << incremental;
+    // qDebug() << "CollectionScanner::run()" << rootDirectory << incremental;
 
     if (working) {
-        emit error("A scanning task is already running");
+        emit error(tr("A scanning task is already running"));
+        qDebug() << "A scanning task is already running";
         return;
     }
     working = true;
+    stopped = false;
+    reset();
 
-    if (incremental)
+    if (incremental) {
+
+        // quickly check if anythingchanged since the last time
+        // by building a hash from filenames and mtimes
+        QString hash = directoryHash(rootDirectory);
+        QSettings settings;
+        QString previousHash = settings.value("collectionHash").toString();
+        // qDebug() << hash << previousHash;
+        if (hash == previousHash) {
+            // qDebug() << "Nothing changed since the last time";
+            stopped = false;
+            working = false;
+            QTimer::singleShot(0, this, SLOT(emitFinished()));
+            return;
+        }
+
+        // get the timestamp of the last db update
+        // we'll use it to determine if files have changed since the last time
         lastUpdate = Database::instance().lastUpdate();
-    else {
+        trackPaths = getTrackPaths();
+        nontrackPaths = getNonTrackPaths();
+
+    } else {
+
         // drop the previous, if any
         Database::instance().drop();
+
         // invalidate caches
         Artist::clearCache();
         Album::clearCache();
@@ -37,16 +71,26 @@ void CollectionScanner::run() {
     scanDirectory(rootDirectory);
 
     maxQueueSize = fileQueue.size();
+    qDebug() << "Going to scan" << maxQueueSize << "files";
 
-    // Start transaction
-    // http://web.utk.edu/~jplyon/sqlite/SQLite_optimization_FAQ.html#transactions
-    Database::instance().getConnection().transaction();
+    if (stopped) return;
+
+    if (!incremental) {
+        Database::instance().closeConnections();
+        // Start transaction
+        // http://web.utk.edu/~jplyon/sqlite/SQLite_optimization_FAQ.html#transactions
+        Database::instance().getConnection().transaction();
+    }
 
     popFromQueue();
+
+    // qDebug() << "CollectionScanner::run() exited";
 
 }
 
 void CollectionScanner::popFromQueue() {
+    if (stopped) return;
+
     // qDebug() << "Processing " << fileInfo.absoluteFilePath();
 
     if (fileQueue.isEmpty()) {
@@ -63,16 +107,20 @@ void CollectionScanner::popFromQueue() {
     // if taglib cannot parse the file, drop it
     if (fileref.isNull()) {
         fileQueue.removeAll(fileInfo);
+
+        // add to nontracks table
+        QString path = fileInfo.absoluteFilePath();
+        path.remove(this->rootDirectory.absolutePath() + "/");
+        insertOrUpdateNonTrack(path, QDateTime::currentDateTime().toTime_t());
+
         popFromQueue();
         return;
     }
 
     // Ok this is an interesting file
-    // This is not perfect as it will try to parse invalid files over and over
-    // TODO Add a table for invalid files with a hash from mdate and size
 
     // This object will experience an incredible adventure,
-    // facing countless perils and hopefully reaching to its final destination
+    // facing countless perils and finally reaching its final destination
     FileInfo *file = new FileInfo();
     file->setFileInfo(fileInfo);
 
@@ -92,48 +140,92 @@ void CollectionScanner::popFromQueue() {
 }
 
 void CollectionScanner::stop() {
-    qDebug() << "Scan stopped";
-    working = false;
+    if (working) {
+        qDebug() << "Scan stopped";
+        Database::instance().getConnection().rollback();
+        stopped = true;
+        working = false;
+        qDebug() << "stop thread" << thread();
+        thread()->exit();
+    }
 }
 
 void CollectionScanner::complete() {
-    qDebug() << "Scan complete";
 
     if (incremental) {
         // clean db from stale data: non-existing files
         cleanStaleTracks();
-    } else {
-        // invalidate caches
-        Artist::clearCache();
-        Album::clearCache();
-        Track::clearCache();
     }
 
+    Database::instance().setCollectionRoot(rootDirectory.absolutePath());
     Database::instance().setStatus(ScanComplete);
     Database::instance().setLastUpdate(QDateTime::currentDateTime().toTime_t());
-    Database::instance().getConnection().commit();
-    Database::instance().toDisk();
 
-    // cleanup
-    /*
-    QList<Artist*> artists = loadedArtists.values();
-    while (!artists.isEmpty())
-        delete artists.takeFirst();
-    */
+    if (!incremental) {
+        if (!Database::instance().getConnection().commit()) {
+            qDebug() << "Commit failed!";
+        }
+    }
 
+    if (incremental) {
+        QString hash = directoryHash(rootDirectory);
+        QSettings settings;
+        settings.setValue("collectionHash", hash);
+        qDebug() << "Setting collection hash to" << hash;
+        trackPaths.clear();
+    }
+
+    stopped = false;
     working = false;
 
-    emit finished();
 
-    exit();
+    qDebug() << "Scan complete";
+
+    QTimer::singleShot(0, this, SLOT(emitFinished()));
 }
 
-void CollectionScanner::setDirectory(QDir directory) {
+void CollectionScanner::emitFinished() {
+    // qDebug() << "emitFinished()";
+    emit finished();
+}
+
+void CollectionScanner::setDirectory(QString directory) {
     if (working) {
         emit error("A scanning task is already running");
         return;
     }
-    this->rootDirectory = directory;
+    if (directory.isEmpty()) {
+        incremental = true;
+        rootDirectory = Database::instance().collectionRoot();
+    } else {
+        incremental = false;
+        rootDirectory = directory;
+    }
+}
+
+QString CollectionScanner::directoryHash(QDir directory) {
+    QString fingerPrint = treeFingerprint(directory, QString());
+    return DataUtils::md5(fingerPrint);
+}
+
+QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
+    // qDebug() << "Hashing" << directory.absolutePath();
+    directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+    QFileInfoList list = directory.entryInfoList();
+    for (int i = 0; i < list.size(); ++i) {
+        QFileInfo fileInfo = list.at(i);
+        if (fileInfo.isDir()) {
+            // this is a directory, recurse
+            hash += DataUtils::md5(treeFingerprint(QDir(fileInfo.absoluteFilePath()), hash));
+        } else {
+            // this is a file, add to hash
+            const uint lastModified = fileInfo.lastModified().toTime_t();
+            hash += QString::number(lastModified);
+            hash += fileInfo.absoluteFilePath();
+        }
+    }
+    // qDebug() << hash;
+    return hash;
 }
 
 void CollectionScanner::scanDirectory(QDir directory) {
@@ -141,6 +233,7 @@ void CollectionScanner::scanDirectory(QDir directory) {
     directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     QFileInfoList list = directory.entryInfoList();
     for (int i = 0; working && i < list.size(); ++i) {
+        if (stopped) return;
         QFileInfo fileInfo = list.at(i);
         if (fileInfo.isDir()) {
             // this is a directory, recurse
@@ -167,30 +260,46 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
 
     if (incremental) {
 
+        // give a break to our poor CPU
+        // thread()->msleep(1);
+
+        if (stopped) return;
+
+        const uint lastModified = fileInfo.lastModified().toTime_t();
+        if (lastModified > lastUpdate) {
+            // qDebug() << "lastModified > lastUpdate" << path;
+            qDebug() << "Modified file" << fileInfo.absoluteFilePath();
+            fileQueue << fileInfo;
+            return;
+        }
+
+
+        /*
+        if (Track::isModified(path, lastModified)) {
+            // qDebug() << "Track::isModified" << path;
+            fileQueue << fileInfo;
+
+        } else {
+        */
+
+        if (stopped) return;
+
         // path relative to the root of the collection
         QString path = fileInfo.absoluteFilePath();
         path.remove(this->rootDirectory.absolutePath() + "/");
 
-        // does this track exist in our db?
-        if (!Track::exists(path)) {
-            // New track
-            qDebug() << "New file" << fileInfo.absoluteFilePath();
+        // qDebug() << "Trying !isNonTrack && !isTrack" << path;
+        // !isNonTrack(path) &&
+        // if (!Track::exists(path)) {
+        if (!trackPaths.contains(path) && !nontrackPaths.contains(path)) {
+            qDebug() << "New file" << path;
             fileQueue << fileInfo;
-        } else {
-
-            // check for modified track
-            QDateTime lastModified = fileInfo.lastModified();
-            // qDebug() << lastModified.toTime_t() << lastUpdate;
-            if (lastModified.toTime_t() > lastUpdate && Track::isModified(path, lastModified)) {
-                // Track has been modified
-                fileQueue << fileInfo;
-            }
-
         }
 
+        // }
+
     } else {
-        // non-incremental scan, i.e. first scan:
-        // process every file
+        // non-incremental scan, i.e. first scan: scan every file
         fileQueue << fileInfo;
     }
 
@@ -273,6 +382,9 @@ void CollectionScanner::gotArtistInfo() {
         artist->insert();
         // TODO last insert id
         artistId = Artist::idForName(artist->getName());
+    } else {
+        qDebug() << "Updating artist" << artist->getName();
+        artist->update();
     }
     artist->setId(artistId);
 
@@ -386,6 +498,9 @@ void CollectionScanner::gotAlbumInfo() {
         album->insert();
         // TODO last insert id
         albumId = Album::idForName(album->getTitle());
+    } else {
+        qDebug() << "Updating album" << album->getTitle();
+        album->update();
     }
     album->setId(albumId);
 
@@ -432,12 +547,14 @@ void CollectionScanner::processTrack(FileInfo *file) {
     track->setPath(path);
 
     track->setNumber(file->getTags()->track);
-    int year = 0;
-    if (album)
+
+    // prefer embedded year tag, since Last.fm release dates are often wrong
+    int year = file->getTags()->year;
+    if (album && year < 1)
         year = album->getYear();
-    if (year < 1) year = file->getTags()->year;
     if (year < 0) year = 0;
     track->setYear(year);
+
     track->setLength(file->getTags()->length);
 
     // if (artist && artist->getId() > 0) {
@@ -469,6 +586,8 @@ void CollectionScanner::gotTrackInfo() {
 
     if (incremental && Track::exists(track->getPath())) {
         qDebug() << "Updating track:" << track->getTitle();
+        // qDebug() << "with album" << track->getAlbum() << track->getAlbum()->getId();
+        // qDebug() << "with artist" << track->getArtist() << track->getArtist()->getId();
         track->update();
     } else {
         // qDebug() << "We have a new cool track:" << track->getTitle();
@@ -506,8 +625,7 @@ void CollectionScanner::gotTrackInfo() {
 }
 
 void CollectionScanner::cleanStaleTracks() {
-    QSettings settings;
-    QString collectionRoot = settings.value("collectionRoot").toString()  + "/";
+    QString collectionRoot = rootDirectory.absolutePath() + "/";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select path from tracks");
@@ -520,4 +638,67 @@ void CollectionScanner::cleanStaleTracks() {
             Track::remove(path);
         }
     }
+}
+
+bool CollectionScanner::isNonTrack(QString path) {
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(db);
+    query.prepare("select count(*) from nontracks where path=?");
+    query.bindValue(0, path);
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+    uint tstamp = 0;
+    if (query.next())
+        return query.value(0).toBool();
+    return tstamp;
+}
+
+bool CollectionScanner::isModifiedNonTrack(QString path, uint lastModified) {
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(db);
+    query.prepare("select tstamp from nontracks where path=? and tstamp<?");
+    query.bindValue(0, path);
+    query.bindValue(1, lastModified);
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+    bool ret = query.next();
+    qDebug() << path << lastModified << ret;
+    return query.next();
+}
+
+bool CollectionScanner::insertOrUpdateNonTrack(QString path, uint lastModified) {
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(db);
+    query.prepare("insert or replace into nontracks (path, tstamp) values (?, ?)");
+    query.bindValue(0, path);
+    query.bindValue(1, lastModified);
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+    return !query.next();
+}
+
+QStringList CollectionScanner::getTrackPaths() {
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(db);
+    query.prepare("select path from tracks");
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+    QStringList paths;
+    while (query.next()) {
+        paths << query.value(0).toString();
+    }
+    return paths;
+}
+
+QStringList CollectionScanner::getNonTrackPaths() {
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(db);
+    query.prepare("select path from nontracks");
+    bool success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
+    QStringList paths;
+    while (query.next()) {
+        paths << query.value(0).toString();
+    }
+    return paths;
 }

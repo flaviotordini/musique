@@ -15,15 +15,21 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     activeTrack = 0;
 
-    QBoxLayout *layout = new QHBoxLayout();
-    layout->setMargin(0);
+#ifdef APP_DEMO
+    tracksPlayed = 0;
+#endif
 
-    splitter = new QSplitter(this);
+    QBoxLayout *layout = new QHBoxLayout(this);
+    layout->setMargin(0);
+    layout->setSpacing(0);
+
+    splitter = new MiniSplitter(this);
     splitter->setChildrenCollapsible(false);
 
     // playlist model
     playlistModel = new PlaylistModel(this);
     connect(playlistModel, SIGNAL(activeRowChanged(int, bool)), SLOT(activeRowChanged(int, bool)));
+    connect(playlistModel, SIGNAL(playlistFinished()), SLOT(playlistFinished()));
 
     // finder
     finderWidget = new FinderWidget(this);
@@ -39,7 +45,7 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     playlistView = new PlaylistView(this);
     playlistView->setDropArea(dropArea);
     playlistView->setPlaylistModel(playlistModel);
-    connect(playlistView, SIGNAL(needDropArea()), SLOT(showDropArea()));
+    // connect(playlistView, SIGNAL(needDropArea()), SLOT(showDropArea()));
 
     // playlist widget, handles the playlist/droparea layout
     PlaylistWidget *playlistWidget = new PlaylistWidget(playlistView, dropArea, this);
@@ -47,12 +53,17 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     finderWidget->setPlaylistView(playlistView);
 
+    splitter->setStretchFactor(0, 3);
+    splitter->setStretchFactor(1, 2);
+
     // restore splitter state
     QSettings settings;
     splitter->restoreState(settings.value("splitter").toByteArray());
 
     layout->addWidget(splitter);
     setLayout(layout);
+
+    splitter->setHandleWidth(1);
 
     errorTimer = new QTimer(this);
     errorTimer->setSingleShot(true);
@@ -89,18 +100,11 @@ void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/)
 
     case Phonon::PlayingState:
         //qDebug("playing");
-        // videoAreaWidget->showVideo();
         break;
 
     case Phonon::StoppedState:
-        //qDebug("stopped");
-        // play() has already been called when setting the source
-        // but Phonon on Linux needs a little more help to start playback
-        // mediaObject->play();
-
         // reset window title
         window()->setWindowTitle(Constants::APP_NAME);
-
         break;
 
     case Phonon::PausedState:
@@ -125,13 +129,12 @@ void MediaView::activeRowChanged(int row, bool manual) {
     Track *track = playlistModel->trackAt(row);
     if (!track) return;
 
+    connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
     activeTrack = track;
 
     // go!
     QString path = track->getAbsolutePath();
-    // path = "file:/" + QUrl(path).toEncoded();
-    qDebug() << "Playing" << path;
-    // Phonon::MediaSource source(path);
+    // qDebug() << "Playing" << path;
     mediaObject->setCurrentSource(path);
     mediaObject->play();
 
@@ -156,6 +159,11 @@ void MediaView::activeRowChanged(int row, bool manual) {
     }
     window()->setWindowTitle(windowTitle);
 
+#ifdef APP_DEMO
+    if (tracksPlayed > 15) demoExpired();
+    else tracksPlayed++;
+#endif
+
 }
 
 void MediaView::handleError(QString message) {
@@ -171,17 +179,59 @@ void MediaView::appear() {
 }
 
 void MediaView::playPause() {
-    qDebug() << "playPause() state" << mediaObject->state();
-    switch( mediaObject->state() ) {
-    case Phonon::LoadingState:
-    case Phonon::StoppedState:
-        // we're currently not playing, let's rock
-        playlistModel->skipForward();
-    case Phonon::PlayingState:
+    // qDebug() << "playPause() state" << mediaObject->state();
+
+    int state = mediaObject->state();
+    if (state == Phonon::PlayingState) {
+        // qDebug() << "Playing, let's pause";
         mediaObject->pause();
-        break;
-    default:
+    } else if (state == Phonon::PausedState) {
+        // qDebug() << "Paused, let's play";
         mediaObject->play();
-        break;
+    } else {
+        // we're currently not playing, let's rock
+        // qDebug() << "Not playing";
+        playlistModel->skipForward();
     }
+
 }
+
+void MediaView::trackRemoved() {
+    // get the Track that sent the signal
+    Track *track = static_cast<Track*>(sender());
+    if (!track) {
+        qDebug() << "MediaView::trackRemoved()" << "Cannot get sender track";
+        return;
+    }
+    if (track == activeTrack)
+        activeTrack = 0;
+}
+
+void MediaView::playlistFinished() {
+    MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
+    if (mainWindow) mainWindow->statusBar()->showMessage(tr("Playlist finished"));
+}
+
+#ifdef APP_DEMO
+void MediaView::demoExpired() {
+        mediaObject->pause();
+
+    QMessageBox msgBox;
+    msgBox.setIconPixmap(QPixmap(":/images/missing.png"));
+    msgBox.setText(tr("This is just the demo version of %1.").arg(Constants::APP_NAME) + " " +
+            tr("It allows you to play a few tracks so you can test the application and see if it works for you.")
+            );
+    msgBox.setModal(true);
+
+    QPushButton *quitButton = msgBox.addButton(tr("Quit"), QMessageBox::RejectRole);
+    QPushButton *buyButton = msgBox.addButton(tr("Get the full version"), QMessageBox::ActionRole);
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == buyButton) {
+        QDesktopServices::openUrl(QString(Constants::WEBSITE) + "#download");
+    }
+
+    qApp->quit();
+}
+#endif

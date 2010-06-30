@@ -28,16 +28,25 @@ void TrackItemDelegate::paintTrack(QPainter* painter,
                                    const QStyleOptionViewItem& option,
                                    const QModelIndex& index) const {
 
+    // get the data object
+    const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
+    Track *track = trackPointer.data();
+    if (!track) return;
+
+    const bool isSelected = option.state & QStyle::State_Selected;
+
     painter->save();
+
+    // text color
+    if (isSelected)
+        painter->setPen(QPen(option.palette.brush(QPalette::HighlightedText), 0));
+    else
+        painter->setPen(QPen(option.palette.brush(QPalette::Text), 0));
 
     painter->translate(option.rect.topLeft());
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
-    // get the data object
-    const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
-    Track *track = trackPointer.data();
-
-    QPointF textLoc(PADDING, 0);
+    QPointF textLoc(PADDING * 2, 0);
 
     // track number
     if (track->getNumber() > 0) {
@@ -67,7 +76,7 @@ void TrackItemDelegate::paintTrack(QPainter* painter,
     QString titleString = track->getTitle();
     QSizeF titleStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, titleString));
     QSizeF trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, "00"));
-    textLoc.setX(textLoc.x() + trackStringSize.width() + PADDING);
+    textLoc.setX(textLoc.x() + trackStringSize.width() + PADDING * 2);
     QRect titleTextBox(textLoc.x(), textLoc.y(), titleStringSize.width(), line.height());
     painter->drawText(titleTextBox, Qt::AlignVCenter | Qt::AlignLeft, track->getTitle());
 

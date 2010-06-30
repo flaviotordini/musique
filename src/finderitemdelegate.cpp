@@ -126,8 +126,8 @@ void FinderItemDelegate::paint( QPainter* painter,
         paintAlbum(painter, option, index);
     } else if (itemType == Finder::ItemTypeFolder) {
         paintFolder(painter, option, index);
-        // } else if (itemType == Finder::ItemTypeTrack) {
-        // paintTrack(painter, option, index);
+    } else if (itemType == Finder::ItemTypeTrack) {
+        paintTrack(painter, option, index);
     } else {
         QStyledItemDelegate::paint(painter, option, index);
     }
@@ -138,6 +138,11 @@ void FinderItemDelegate::paintArtist(QPainter* painter,
                                      const QStyleOptionViewItem& option,
                                      const QModelIndex& index) const {
 
+    // get the data object
+    const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
+    Artist *artist = artistPointer.data();
+    if (!artist) return;
+
     painter->save();
 
     painter->translate(option.rect.topLeft());
@@ -145,10 +150,6 @@ void FinderItemDelegate::paintArtist(QPainter* painter,
 
     const bool isHovered = index.data(Finder::HoveredItemRole ).toBool();
     const bool isSelected = option.state & QStyle::State_Selected;
-
-    // get the data object
-    const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
-    Artist *artist = artistPointer.data();
 
     // thumb
     QPixmap pixmap = getArtistPixmap(artist);
@@ -163,7 +164,7 @@ void FinderItemDelegate::paintArtist(QPainter* painter,
     }
 
     // name
-    drawName(painter, artist->getName(), line, isSelected);
+    drawName(painter, option, artist->getName(), line, isSelected);
 
     // if (artist->getTrackCount() > 0) {
     // drawBadge(painter, QString::number(artist->getTrackCount()), line);
@@ -177,6 +178,11 @@ void FinderItemDelegate::paintAlbum(QPainter* painter,
                                     const QStyleOptionViewItem& option,
                                     const QModelIndex& index) const {
 
+    // get the data object
+    const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
+    Album *album = albumPointer.data();
+    if (!album) return;
+
     painter->save();
 
     painter->translate(option.rect.topLeft());
@@ -185,10 +191,6 @@ void FinderItemDelegate::paintAlbum(QPainter* painter,
     // const bool isActive = index.data( ActiveItemRole ).toBool();
     const bool isHovered = index.data(Finder::HoveredItemRole ).toBool();
     const bool isSelected = option.state & QStyle::State_Selected;
-
-    // get the data object
-    const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
-    Album *album = albumPointer.data();
 
     // thumb
     QPixmap pixmap = getAlbumPixmap(album);
@@ -203,7 +205,7 @@ void FinderItemDelegate::paintAlbum(QPainter* painter,
     }
 
     // name
-    drawName(painter, album->getTitle(), line, isSelected);
+    drawName(painter, option, album->getTitle(), line, isSelected);
     if (album->getYear() > 0) {
         drawBadge(painter, QString::number(album->getYear()), line);
     }
@@ -216,14 +218,19 @@ void FinderItemDelegate::paintFolder(QPainter* painter,
                                      const QStyleOptionViewItem& option,
                                      const QModelIndex& index) const {
 
-    painter->save();
-
-    painter->translate(option.rect.topLeft());
-    const QRect line(0, 0, option.rect.width(), option.rect.height());
+    // get the data object
+    const QVariant dataObject = index.data(Finder::DataObjectRole);
+    const FolderPointer folderPointer = dataObject.value<FolderPointer>();
+    Folder *folder = folderPointer.data();
+    if (!folder) return;
 
     // const bool isActive = index.data( ActiveItemRole ).toBool();
     const bool isHovered = index.data(Finder::HoveredItemRole ).toBool();
     const bool isSelected = option.state & QStyle::State_Selected;
+
+    painter->save();
+    painter->translate(option.rect.topLeft());
+    const QRect line(0, 0, option.rect.width(), option.rect.height());
 
     // thumb
     painter->drawPixmap(0, 0, getMissingItemBackground());
@@ -238,26 +245,62 @@ void FinderItemDelegate::paintFolder(QPainter* painter,
         paintPlayIcon(painter, line, animation, playIconHovered);
     }
 
+    QString trackLength;
+    int totalLength = folder->getTotalLength();
+    if (totalLength > 3600)
+        trackLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
+    else if (totalLength > 0)
+        trackLength = QTime().addSecs(totalLength).toString("m:ss");
+    drawBadge(painter, trackLength, line);
+    drawCentralLabel(painter, QString::number(folder->getTrackCount()), line);
+
+    drawName(painter, option, folder->getName(), line, isSelected);
+
+    painter->restore();
+
+}
+
+void FinderItemDelegate::paintTrack(QPainter* painter,
+                                    const QStyleOptionViewItem& option,
+                                    const QModelIndex& index) const {
+
     // get the data object
     const QVariant dataObject = index.data(Finder::DataObjectRole);
-    const FolderPointer folderPointer = dataObject.value<FolderPointer>();
-    Folder *folder = folderPointer.data();
-    Track *track = 0;
-    QString name;
-    if (!folder) {
-        const TrackPointer trackPointer = dataObject.value<TrackPointer>();
-        track = trackPointer.data();
-        if (!track) {
-            painter->restore();
-            return;
-        }
-        name = track->getTitle();
-    } else {
-        name = folder->getName();
+    const TrackPointer trackPointer = dataObject.value<TrackPointer>();
+    Track *track = trackPointer.data();
+    if (!track) {
+        QStyledItemDelegate::paint(painter, option, index);
+        return;
     }
 
-    // name
-    drawName(painter, name, line, isSelected);
+    // const bool isActive = index.data( ActiveItemRole ).toBool();
+    const bool isHovered = index.data(Finder::HoveredItemRole ).toBool();
+    const bool isSelected = option.state & QStyle::State_Selected;
+
+    painter->save();
+    painter->translate(option.rect.topLeft());
+    const QRect line(0, 0, option.rect.width(), option.rect.height());
+
+    // thumb
+    painter->drawPixmap(0, 0, getMissingItemBackground());
+
+    // play icon overlayed on the thumb
+    if (isHovered) {
+        double animation = index.data(Finder::PlayIconAnimationItemRole).toDouble();
+        bool playIconHovered = index.data(Finder::PlayIconHoveredRole).toBool();
+        paintPlayIcon(painter, line, animation, playIconHovered);
+    }
+
+    QString trackLength;
+    if (track->getLength() > 3600)
+        trackLength =  QTime().addSecs(track->getLength()).toString("h:mm:ss");
+    else if (track->getLength() > 0)
+        trackLength = QTime().addSecs(track->getLength()).toString("m:ss");
+    drawBadge(painter, trackLength, line);
+    int trackNumber = track->getNumber();
+    if (trackNumber > 0)
+        drawCentralLabel(painter, QString::number(trackNumber), line);
+    drawName(painter, option, track->getTitle(), line, isSelected);
 
     painter->restore();
 
@@ -287,9 +330,8 @@ void FinderItemDelegate::paintPlayIcon(QPainter *painter, const QRect& rect, dou
     painter->restore();
 }
 
-void FinderItemDelegate::drawName(QPainter *painter, QString name, const QRect& rect, bool isSelected) const {
+void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem &option, QString name, const QRect& rect, bool isSelected) const {
 
-    const QPalette palette;
     QRect textBox = rect;
     // add padding
     textBox.adjust(0, 0, 0, -ITEM_HEIGHT*2/3);
@@ -300,11 +342,9 @@ void FinderItemDelegate::drawName(QPainter *painter, QString name, const QRect& 
     painter->setPen(Qt::NoPen);
     if (isSelected) {
         painter->setOpacity(.9);
-        painter->setBrush(palette.highlight());
+        painter->setBrush(option.palette.highlight());
     } else {
-        QColor translucentBlack(Qt::black);
-        translucentBlack.setAlphaF(.5);
-        painter->setBrush(translucentBlack);
+        painter->setBrush(QColor(0, 0, 0, 128));
     }
 
     painter->drawRect(textBox);
@@ -312,7 +352,7 @@ void FinderItemDelegate::drawName(QPainter *painter, QString name, const QRect& 
 
     painter->save();
     if (isSelected)
-        painter->setPen(QPen(palette.highlightedText(), 0));
+        painter->setPen(QPen(option.palette.highlightedText(), 0));
 
     painter->drawText(textBox, Qt::AlignCenter | Qt::TextWordWrap, name);
     painter->restore();
@@ -327,14 +367,32 @@ void FinderItemDelegate::drawBadge(QPainter *painter, QString text,  const QRect
     textBox.adjust(0, 0, PADDING, 0);
 
     painter->setPen(Qt::NoPen);
-    painter->setBrush(Qt::black);
-    painter->setOpacity(.5);
+    painter->setBrush(QColor(0, 0, 0, 128));
     painter->drawRect(textBox);
 
-    painter->setOpacity(1);
     painter->setPen(Qt::white);
     painter->drawText(textBox, Qt::AlignCenter, text);
     painter->restore();
+}
+
+void FinderItemDelegate::drawCentralLabel(QPainter *painter, QString text,  const QRect& rect) const {
+    static const int PADDING = 10;
+
+    painter->save();
+    painter->setFont(FontUtils::smallBold());
+    QSizeF textSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, text));
+    QRect textBox((rect.width() - textSize.width()) / 2 , (rect.height() - textSize.height()) / 3 + 4, textSize.width(), textSize.height());
+
+    QRect roundedRect = textBox;
+    roundedRect.adjust(-PADDING/2, -PADDING/3, PADDING/2, PADDING/3);
+
+    painter->setRenderHints(QPainter::Antialiasing, true);
+    painter->setBrush(QColor(0, 0, 0, 96));
+    painter->setPen(QColor(255, 255, 255, 224));
+    painter->drawRoundedRect(roundedRect, PADDING/2, PADDING/2, Qt::AbsoluteSize);
+    painter->drawText(textBox, Qt::AlignCenter, text);
+    painter->restore();
+
 }
 
 QPixmap FinderItemDelegate::getArtistPixmap(Artist *artist) const {

@@ -24,6 +24,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
         return QVariant();
 
     Track *track = tracks.at(row);
+    if (!track) return QVariant();
 
     switch (role) {
 
@@ -101,7 +102,7 @@ void PlaylistModel::skipForward() {
         // get a random non-played non-active track
         if (playedTracks.size() < tracks.size()) {
             while (nextTrack == 0) {
-                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * (tracks.size() - 1));
+                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
                 Track *candidateTrack = tracks.at(nextRow);
                 if (!candidateTrack->isPlayed() && candidateTrack != activeTrack) {
                     nextTrack = candidateTrack;
@@ -137,8 +138,17 @@ void PlaylistModel::skipForward() {
 
     }
 
-    int nextRow = tracks.indexOf(nextTrack);
-    setActiveRow(nextRow);
+    if (nextTrack) {
+        int nextRow = tracks.indexOf(nextTrack);
+        setActiveRow(nextRow);
+    } else {
+        activeRow = -1;
+        activeTrack = 0;
+        foreach(Track *track, playedTracks)
+            track->setPlayed(false);
+        playedTracks.clear();
+        emit playlistFinished();
+    }
 }
 
 Track* PlaylistModel::trackAt( int row ) const {
@@ -163,13 +173,10 @@ void PlaylistModel::addTrack(Track* track) {
     // no duplicates
     if (!tracks.contains(track)) {
         track->setPlayed(false);
+        connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
         beginInsertRows(QModelIndex(), tracks.size(), tracks.size());
         tracks << track;
         endInsertRows();
-
-        // addShuffledTrack(track);
-
-        The::globalActions()->value("clearPlaylist")->setEnabled(true);
     }
 }
 
@@ -186,10 +193,9 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
 
             foreach (Track *track, tracks) {
                 track->setPlayed(false);
-                // addShuffledTrack(track);
+                connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
             }
 
-            The::globalActions()->value("clearPlaylist")->setEnabled(true);
         }
     }
 }
@@ -209,8 +215,10 @@ bool PlaylistModel::removeRows(int position, int rows, const QModelIndex & /*par
     beginRemoveRows(QModelIndex(), position, position+rows-1);
     for (int row = 0; row < rows; ++row) {
         Track *track = tracks.takeAt(position);
-        if (track)
+        if (track) {
+            track->setPlayed(false);
             playedTracks.removeAll(track);
+        }
     }
     endRemoveRows();
     return true;
@@ -228,6 +236,7 @@ void PlaylistModel::removeIndexes(QModelIndexList &indexes) {
             tracks.removeAll(track);
             endRemoveRows();
             playedTracks.removeAll(track);
+            track->setPlayed(false);
         }
     }
 }
@@ -359,5 +368,22 @@ void PlaylistModel::move(QModelIndexList &indexes, bool up) {
     }
 
     emit needSelectionFor(movedTracks);
+
+}
+
+void PlaylistModel::trackRemoved() {
+
+    // get the Track that sent the signal
+    Track *track = static_cast<Track*>(sender());
+    if (!track) {
+        qDebug() << "Cannot get sender track";
+        return;
+    }
+
+    int trackRow = rowForTrack(track);
+    if (trackRow != -1) {
+        qDebug() << "removing track from playlist model" << track;
+        removeRows(trackRow, 1, QModelIndex());
+    }
 
 }

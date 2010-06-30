@@ -41,7 +41,7 @@ bool UpdateCheckerStreamReader::read(QByteArray data) {
                     readNext();
                     if (isStartElement() && name() == "version") {
                         QString remoteVersion = readElementText();
-                        qDebug() << remoteVersion << QString(Constants::VERSION);
+                        // qDebug() << remoteVersion << QString(Constants::VERSION);
                         m_needUpdate = remoteVersion != QString(Constants::VERSION);
                         m_remoteVersion = remoteVersion;
                         break;
