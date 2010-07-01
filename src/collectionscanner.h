@@ -12,7 +12,7 @@
 class Tags {
 
 public:
-    Tags() : track(0), year(0) { };
+    Tags() : track(0), year(0), length(0) { };
     QString title;
     QString artist;
     QString album;

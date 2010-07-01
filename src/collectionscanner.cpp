@@ -132,7 +132,9 @@ void CollectionScanner::popFromQueue() {
     tags->album = Tags::toQString(fileref.tag()->album());
     tags->track = fileref.tag()->track();
     tags->year = fileref.tag()->year();
-    tags->length = fileref.audioProperties()->length();
+    TagLib::AudioProperties *audioProperties = fileref.audioProperties();
+    if (audioProperties)
+        tags->length = audioProperties->length();
     file->setTags(tags);
 
     // get data from the internet
