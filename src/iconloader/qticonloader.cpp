@@ -107,7 +107,7 @@ Q_GLOBAL_STATIC(QtIconLoaderImplementation, iconLoaderInstance)
 #if QT_VERSION < 0x040600
     QString pngExtension(QLatin1String(".png"));
     QList<int> iconSizes;
-    iconSizes << 16 << 24 << 32 << 48 << 64;
+    iconSizes << 16 << 22 << 24 << 32 << 48;
     Q_FOREACH (int size, iconSizes) {
         icon.addPixmap(iconLoaderInstance()->findIcon(size, name));
     }
