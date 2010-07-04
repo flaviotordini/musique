@@ -82,8 +82,8 @@ void PlaylistView::selectTracks(QList<Track*> tracks) {
     foreach (Track *track, tracks) {
         QModelIndex index = playlistModel->indexForTrack(track);
         // FIXME this causes dropped tracks to disappear!
-        // selectionModel()->select(index, QItemSelectionModel::Select);
-        scrollTo(index, QAbstractItemView::EnsureVisible);
+        selectionModel()->select(index, QItemSelectionModel::Select);
+        // scrollTo(index, QAbstractItemView::EnsureVisible);
     }
     */
 }
@@ -136,10 +136,10 @@ void PlaylistView::moveDownSelected() {
     playlistModel->move(indexes, false);
 }
 
+/*
 void PlaylistView::dragEnterEvent(QDragEnterEvent *event) {
     QListView::dragEnterEvent(event);
 
-    /*
     qDebug() << "dragEnter";
     if (verticalScrollBar()->isVisible()) {
         qDebug() << "need drop area";
@@ -147,16 +147,15 @@ void PlaylistView::dragEnterEvent(QDragEnterEvent *event) {
         dropArea->show();
         willHideDropArea = false;
     }
-    */
 }
+
 
 void PlaylistView::dragLeaveEvent(QDragLeaveEvent *event) {
     QListView::dragLeaveEvent(event);
 
-    /*
     qDebug() << "dragLeave";
     // emit DropArea();
     willHideDropArea = true;
     QTimer::singleShot(1000, dropArea, SLOT(hide()));
-    */
 }
+*/

@@ -151,9 +151,9 @@ void PlaylistModel::skipForward() {
     }
 }
 
-Track* PlaylistModel::trackAt( int row ) const {
-    if ( rowExists( row ) )
-        return tracks.at( row );
+Track* PlaylistModel::trackAt(int row) const {
+    if (rowExists(row))
+        return tracks.at(row);
     return 0;
 }
 
@@ -212,7 +212,7 @@ void PlaylistModel::clear() {
 // --- item removal
 
 bool PlaylistModel::removeRows(int position, int rows, const QModelIndex & /*parent*/) {
-    beginRemoveRows(QModelIndex(), position, position+rows-1);
+    beginRemoveRows(QModelIndex(), position, position + rows - 1);
     for (int row = 0; row < rows; ++row) {
         Track *track = tracks.takeAt(position);
         if (track) {
@@ -323,8 +323,6 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
     // fix activeRow after all this
     activeRow = tracks.indexOf(activeTrack);
 
-    // The::globalActions()->value("clearPlaylist")->setEnabled(true);
-
     emit needSelectionFor(droppedTracks);
 
     return true;
@@ -345,9 +343,10 @@ void PlaylistModel::move(QModelIndexList &indexes, bool up) {
 
     foreach (QModelIndex index, indexes) {
         int row = index.row();
-        qDebug() << "index row" << row;
+        // qDebug() << "index row" << row;
         Track *track = trackAt(row);
-        movedTracks << track;
+        if (track)
+            movedTracks << track;
     }
 
     int counter = 1;

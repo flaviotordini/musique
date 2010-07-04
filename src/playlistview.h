@@ -30,9 +30,11 @@ public slots:
     void updatePlaylistActions();
     void selectTracks(QList<Track*> tracks);
 
+    /*
 protected:
     void dragEnterEvent(QDragEnterEvent *event);
     void dragLeaveEvent(QDragLeaveEvent *event);
+    */
 
 private:
     PlaylistModel *playlistModel;
