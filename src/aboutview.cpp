@@ -19,7 +19,6 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
 
     QString info = "<html><style>a { color: palette(text); }</style><body><h1>" +
                    QString(Constants::APP_NAME) + "</h1>"
-                   "<p>" + tr("It plays music") + "</p>"
                    "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>"
                    + QString("<p><a href=\"%1/\">%1</a></p>").arg(Constants::WEBSITE) +
 
