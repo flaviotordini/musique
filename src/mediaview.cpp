@@ -160,7 +160,7 @@ void MediaView::activeRowChanged(int row, bool manual) {
     window()->setWindowTitle(windowTitle);
 
 #ifdef APP_DEMO
-    if (tracksPlayed > 15) demoExpired();
+    if (tracksPlayed > 10) demoExpired();
     else tracksPlayed++;
 #endif
 
@@ -214,16 +214,16 @@ void MediaView::playlistFinished() {
 
 #ifdef APP_DEMO
 void MediaView::demoExpired() {
-        mediaObject->pause();
+    mediaObject->pause();
 
     QMessageBox msgBox;
-    msgBox.setIconPixmap(QPixmap(":/images/missing.png"));
+    msgBox.setIconPixmap(QPixmap(":/images/app.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     msgBox.setText(tr("This is just the demo version of %1.").arg(Constants::APP_NAME) + " " +
-            tr("It allows you to play a few tracks so you can test the application and see if it works for you.")
-            );
+                   tr("It allows you to play a few tracks so you can test the application and see if it works for you.")
+                   );
     msgBox.setModal(true);
 
-    QPushButton *quitButton = msgBox.addButton(tr("Quit"), QMessageBox::RejectRole);
+    QPushButton *quitButton = msgBox.addButton(tr("Continue"), QMessageBox::RejectRole);
     QPushButton *buyButton = msgBox.addButton(tr("Get the full version"), QMessageBox::ActionRole);
 
     msgBox.exec();
@@ -232,6 +232,6 @@ void MediaView::demoExpired() {
         QDesktopServices::openUrl(QString(Constants::WEBSITE) + "#download");
     }
 
-    qApp->quit();
+    tracksPlayed = 5;
 }
 #endif
