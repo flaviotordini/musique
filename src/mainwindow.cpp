@@ -20,7 +20,7 @@
 #ifdef Q_WS_X11
 #include "gnomeglobalshortcutbackend.h"
 #endif
-#ifdef APP_MAC_NO
+#ifdef APP_MAC
 #include "local/mac/mac_startup.h"
 #endif
 
@@ -79,7 +79,7 @@ MainWindow::MainWindow() {
         showMediaView();
 
         // update the collection when idle
-        QTimer::singleShot(0, this, SLOT(startIncrementalScan()));
+        QTimer::singleShot(1000, this, SLOT(startIncrementalScan()));
 
         updateChecker = 0;
         checkForUpdate();
@@ -101,7 +101,7 @@ MainWindow::MainWindow() {
     if (GnomeGlobalShortcutBackend::IsGsdAvailable())
         shortcuts.setBackend(new GnomeGlobalShortcutBackend(&shortcuts));
 #endif
-#ifdef APP_MAC_NO
+#ifdef APP_MAC
     mac::MacSetup();
 #endif
     connect(&shortcuts, SIGNAL(PlayPause()), playAct, SLOT(trigger()));
@@ -140,7 +140,13 @@ void MainWindow::createActions() {
     actions->insert("back", backAct);
     connect(backAct, SIGNAL(triggered()), SLOT(goBack()));
 
-    contextualAct = new QAction(QtIconLoader::icon("help-about"), tr("&Info"), this);
+    QIcon icon = QtIconLoader::icon("gtk-info");
+#ifdef Q_WS_X11
+    if (icon.isNull()) {
+        icon = QtIconLoader::icon("help-about");
+    }
+#endif
+    contextualAct = new QAction(icon, tr("&Info"), this);
     contextualAct->setStatusTip(tr("Show information about the current track"));
     contextualAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Return));
     contextualAct->setEnabled(false);
@@ -308,6 +314,7 @@ void MainWindow::createActions() {
     addAction(volumeDownAct);
 
     volumeMuteAct = new QAction(this);
+    volumeMuteAct->setIcon(QtIconLoader::icon("audio-volume-high"));
     volumeMuteAct->setStatusTip(tr("Mute volume"));
     volumeMuteAct->setShortcuts(QList<QKeySequence>()
                                 << QKeySequence(tr("Ctrl+M"))
@@ -331,7 +338,7 @@ void MainWindow::createActions() {
         // action->setToolTip(action->statusTip());
 
         // make the actions work when in fullscreen
-        action->setShortcutContext(Qt::ApplicationShortcut);
+        // action->setShortcutContext(Qt::ApplicationShortcut);
 
         // show keyboard shortcuts in the status bar
         if (!action->shortcut().isEmpty())
@@ -398,7 +405,7 @@ void MainWindow::createToolBars() {
 
     setUnifiedTitleAndToolBarOnMac(true);
     mainToolBar = new QToolBar(this);
-#if QT_VERSION < 0x040600 || defined(APP_MAC)
+#if QT_VERSION < 0x040600
     mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 #else
     mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
@@ -439,7 +446,10 @@ void MainWindow::createToolBars() {
 
     mainToolBar->addWidget(new Spacer());
 
+    mainToolBar->addAction(volumeMuteAct);
+
     volumeSlider = new Phonon::VolumeSlider(this);
+    volumeSlider->setMuteVisible(false);
 
     // qDebug() << volumeSlider->children();
     // status tip for the volume slider
@@ -448,11 +458,6 @@ void MainWindow::createToolBars() {
         volumeQSlider->setStatusTip(tr("Press %1 to raise the volume, %2 to lower it").arg(
                 volumeUpAct->shortcut().toString(QKeySequence::NativeText),
                 volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
-    // status tip for the mute button
-    QToolButton* muteToolButton = volumeSlider->findChild<QToolButton*>();
-    if (muteToolButton) {
-        muteToolButton->setStatusTip(volumeMuteAct->statusTip());
-    }
 
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
@@ -649,6 +654,7 @@ void MainWindow::showMediaView() {
         connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
         views->addWidget(mediaView);
     }
+    mediaView->setFocus();
     showView(mediaView);
 }
 
@@ -913,8 +919,9 @@ void MainWindow::volumeDown() {
 }
 
 void MainWindow::volumeMute() {
-    if (volumeSlider->audioOutput())
+    if (volumeSlider->audioOutput()) {
         volumeSlider->audioOutput()->setMuted(!volumeSlider->audioOutput()->isMuted());
+    }
 }
 
 void MainWindow::volumeChanged(qreal newVolume) {
@@ -926,10 +933,13 @@ void MainWindow::volumeChanged(qreal newVolume) {
 }
 
 void MainWindow::volumeMutedChanged(bool muted) {
-    if (muted)
+    if (muted) {
+        volumeMuteAct->setIcon(QtIconLoader::icon("audio-volume-muted"));
         statusBar()->showMessage(tr("Volume is muted"));
-    else
+    } else {
+        volumeMuteAct->setIcon(QtIconLoader::icon("audio-volume-high"));
         statusBar()->showMessage(tr("Volume is unmuted"));
+    }
 }
 
 void MainWindow::setShuffle(bool enabled) {

@@ -3,13 +3,13 @@
 #include <qtsingleapplication.h>
 #include "constants.h"
 #include "mainwindow.h"
-#ifdef APP_MAC_NO
+#ifdef APP_MAC
 #include "local/mac/mac_startup.h"
 #endif
 
 int main(int argc, char **argv) {
 
-#ifdef APP_MAC_NO
+#ifdef APP_MAC
     mac::MacMain();
 #endif
 
