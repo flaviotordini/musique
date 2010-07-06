@@ -77,6 +77,7 @@ MainWindow::MainWindow() {
     if (db.status() == ScanComplete) {
 
         showMediaView();
+        loadPlaylist();
 
         // update the collection when idle
         QTimer::singleShot(1000, this, SLOT(startIncrementalScan()));
@@ -621,6 +622,7 @@ void MainWindow::donate() {
 }
 
 void MainWindow::quit() {
+    savePlaylist();
     writeSettings();
     /*
     CollectionScanner *scanner = CollectionScanner::instance();
@@ -987,4 +989,42 @@ void MainWindow::gotNewVersion(QString version) {
     message->setOpenExternalLinks(true);
     if (updateChecker) delete updateChecker;
     statusBar()->addWidget(message);
+}
+
+void MainWindow::savePlaylist()
+{
+    const PlaylistModel* playlistModel = mediaView->getPlaylistModel();
+    if (playlistModel == 0)
+        return;
+
+    QSettings settings;
+
+    const QString storageLocation =
+            QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    // We need to use a default name, so why not the application one? (minitunes.pls sounds fine)
+    QString defaultPls = QString("%1/%2.pls").arg(storageLocation).arg(qApp->applicationName());
+    QString plsPath = settings.value("loadedPlaylist", defaultPls).toString();
+
+    QFile plsFile(plsPath);
+    QTextStream plsStream(&plsFile);
+    if ( plsFile.open(QFile::WriteOnly | QFile::Truncate) && playlistModel->saveTo(plsStream) )
+        settings.setValue("loadedPlaylist", plsPath);
+}
+
+void MainWindow::loadPlaylist()
+{
+    QSettings settings;
+    QString plsPath = settings.value("loadedPlaylist").toString();
+    qDebug() << "loading playlist: " << plsPath;
+    if (!QFile::exists(plsPath))
+        return;
+    PlaylistModel* playlistModel = mediaView->getPlaylistModel();
+    if (playlistModel == 0)
+        return;
+    QFile plsFile(plsPath);
+    QTextStream plsStream(&plsFile);
+    if ( plsFile.open(QFile::ReadOnly) )
+        playlistModel->loadFrom(plsStream);
+    else
+        qDebug() << "Fail to open: " << plsPath;
 }
