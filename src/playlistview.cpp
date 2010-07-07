@@ -12,7 +12,7 @@ namespace The {
 
 PlaylistView::PlaylistView(QWidget *parent) :
         QListView(parent),
-        playlistModel(0) {
+        playlistModel(0), overlayLabel(0) {
 
     // delegate
     setItemDelegate(new PlaylistItemDelegate(this));
@@ -159,3 +159,32 @@ void PlaylistView::dragLeaveEvent(QDragLeaveEvent *event) {
     QTimer::singleShot(1000, dropArea, SLOT(hide()));
 }
 */
+
+void PlaylistView::paintEvent(QPaintEvent *event) {    
+    QListView::paintEvent(event);
+
+    if ( playlistModel->rowCount() == 0
+         && !emptyMessage.isEmpty()) {
+
+        event->accept();
+
+        QPainter painter(this->viewport());
+        QPen textPen(Qt::DashLine);
+        textPen.setWidth(2);
+        painter.setPen(textPen);
+
+        QFont biggerFont = qApp->font();
+        biggerFont.setPointSize(24);
+        painter.setFont(biggerFont);
+
+        QSize textSize(this->size().width()-5, 100);
+        QPoint centerPoint((this->width()-textSize.width())/2,
+                           (this->height()/3));
+        QRect centerRect(centerPoint, textSize);
+        QRect boundRect;
+        painter.drawText(centerRect, Qt::AlignCenter, emptyMessage, &boundRect);
+        boundRect.adjust(-7, -7, 7, 7);
+        painter.drawRect(boundRect);
+    }
+}
+

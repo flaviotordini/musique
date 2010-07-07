@@ -17,6 +17,9 @@ public:
     void setDropArea(DropArea *dropArea) {
         this->dropArea = dropArea;
     }
+    void setEmptyPlaylistMessage(QString emptyMessage) {
+        this->emptyMessage = emptyMessage;
+    }
 
 signals:
     void needDropArea();
@@ -30,8 +33,10 @@ public slots:
     void updatePlaylistActions();
     void selectTracks(QList<Track*> tracks);
 
-    /*
+
 protected:
+    void paintEvent(QPaintEvent *event);
+    /*
     void dragEnterEvent(QDragEnterEvent *event);
     void dragLeaveEvent(QDragLeaveEvent *event);
     */
@@ -40,6 +45,8 @@ private:
     PlaylistModel *playlistModel;
     DropArea *dropArea;
     bool willHideDropArea;
+    QString emptyMessage;
+    QLabel* overlayLabel;
 
 };
 
