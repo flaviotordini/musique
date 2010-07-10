@@ -1,6 +1,6 @@
 CONFIG += release
 TEMPLATE = app
-VERSION = 0.1
+VERSION = 0.1.1
 DEFINES += APP_VERSION="$$VERSION"
 INCLUDEPATH += /usr/include/phonon
 INCLUDEPATH += /usr/include/taglib
