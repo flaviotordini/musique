@@ -9,7 +9,13 @@ CollectionScanner::CollectionScanner(QObject *parent) :
         stopped(false),
         incremental(false),
         lastUpdate(0),
-        maxQueueSize(0) { }
+        maxQueueSize(0) {
+
+#ifdef APP_MAC
+    QString iTunesAlbumArtwork = QDesktopServices::storageLocation(QDesktopServices::MusicLocation) + "/iTunes/Album Artwork";
+    directoryBlacklist.append(iTunesAlbumArtwork);
+#endif
+}
 
 void CollectionScanner::reset() {
     stopped = false;
@@ -113,7 +119,7 @@ void CollectionScanner::popFromQueue() {
         path.remove(this->rootDirectory.absolutePath() + "/");
         insertOrUpdateNonTrack(path, QDateTime::currentDateTime().toTime_t());
 
-        popFromQueue();
+        QTimer::singleShot(0, this, SLOT(popFromQueue()));
         return;
     }
 
@@ -231,20 +237,35 @@ QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
 }
 
 void CollectionScanner::scanDirectory(QDir directory) {
-    // qDebug() << directory.absolutePath();
-    directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
-    QFileInfoList list = directory.entryInfoList();
-    for (int i = 0; working && i < list.size(); ++i) {
-        if (stopped) return;
-        QFileInfo fileInfo = list.at(i);
-        if (fileInfo.isDir()) {
-            // this is a directory, recurse
-            scanDirectory(QDir(fileInfo.absoluteFilePath()));
-        } else {
-            // this is a file, let's scan it
-            processFile(fileInfo);
+
+    QStack<QDir> stack;
+    stack.push(directory);
+    while(!stack.empty()) {
+
+        const QDir dir = stack.pop();
+        const QFileInfoList flist = dir.entryInfoList(
+                QDir::NoDotAndDotDot |
+                QDir::Dirs | QDir::Files
+                );
+
+        QFileInfo fileInfo;
+        Q_FOREACH(fileInfo, flist) {
+            if(fileInfo.isFile() ) {
+                processFile(fileInfo);
+            } else if (fileInfo.isDir()) {
+                QString subDirPath = fileInfo.absoluteFilePath();
+#ifdef APP_MAC
+                if (directoryBlacklist.contains(subDirPath)) {
+                    qDebug() << "Skipping directory" << subDirPath;
+                    continue;
+                }
+#endif
+                QDir subDir(subDirPath);
+                stack.push(subDir);
+            }
         }
     }
+
 }
 
 void CollectionScanner::processFile(QFileInfo fileInfo) {
@@ -606,7 +627,7 @@ void CollectionScanner::gotTrackInfo() {
     emit progress(percent);
 
     // next!
-    popFromQueue();
+    QTimer::singleShot(0, this, SLOT(popFromQueue()));
 
     /*
     else if (fileQueue.size() < 30) {

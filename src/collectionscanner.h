@@ -72,6 +72,7 @@ signals:
     void error(QString message);
 
 private slots:
+    void scanDirectory(QDir directory);
     void popFromQueue();
     void giveThisFileAnArtist(FileInfo *file);
     void processArtist(FileInfo *file);
@@ -85,7 +86,6 @@ private slots:
 
 private:
     void reset();
-    void scanDirectory(QDir directory);
     void processFile(QFileInfo fileInfo);
     void cleanStaleTracks();
     static bool isNonTrack(QString path);
@@ -110,6 +110,8 @@ private:
     QHash<QString, QList<FileInfo *> > filesWaitingForAlbums;
     QStringList trackPaths;
     QStringList nontrackPaths;
+
+    QStringList directoryBlacklist;
 
 };
 
