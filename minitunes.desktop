@@ -1,13 +1,10 @@
-
 [Desktop Entry]
 Name=Minitunes
-Name[en_US]=minitunes.desktop
-Comment=Enemy of the music business
-GenericName=Music player
-GenericName[en_US]=Music player
+Comment=Play your music collection
+GenericName=Music Player
 Exec=minitunes
 Terminal=false
 Type=Application
 Icon=minitunes
-Categories=Qt;AudioVideo;Video
+Categories=Qt;Audio;Music;Player;AudioVideo;
 StartupNotify=true
