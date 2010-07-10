@@ -293,13 +293,29 @@ void Album::parseLastFmInfo(QByteArray bytes) {
         if(token == QXmlStreamReader::StartElement) {
 
             if(xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
-                QString imageUrl = xml.readElementText();
+
                 // qDebug() << title << " photo:" << imageUrl;
-                if (!imageUrl.isEmpty()) {
-                    QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
-                    QObject *reply = The::http()->get(url);
-                    connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
+
+                bool imageAlreadyPresent = false;
+                QString imageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash();
+                if (QFile::exists(imageLocation)) {
+                    QFileInfo imageFileInfo(imageLocation);
+                    const uint imagelastModified = imageFileInfo.lastModified().toTime_t();
+                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*30) {
+                        imageAlreadyPresent = true;
+                    }
                 }
+
+                if (!imageAlreadyPresent) {
+                    QString imageUrl = xml.readElementText();
+                    // qDebug() << name << " photo:" << imageUrl;
+                    if (!imageUrl.isEmpty()) {
+                        QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
+                        QObject *reply = The::http()->get(url);
+                        connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
+                    }
+                }
+
             }
 
             else if(xml.name() == "releasedate") {

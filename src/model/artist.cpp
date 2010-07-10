@@ -198,8 +198,6 @@ void Artist::parseLastFmRedirectedName(QNetworkReply *reply) {
 
 void Artist::fetchLastFmInfo() {
 
-    // if (QFile::exists(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash())) return;
-
     if (mbid.isEmpty()) {
         qDebug() << "Missing mbid for" << name;
         emit gotInfo();
@@ -242,12 +240,25 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
             // image
             if(!gotImage && xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
                 gotImage = true;
-                QString imageUrl = xml.readElementText();
-                // qDebug() << name << " photo:" << imageUrl;
-                if (!imageUrl.isEmpty()) {
-                    QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
-                    QObject *reply = The::http()->get(url);
-                    connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
+
+                bool imageAlreadyPresent = false;
+                QString imageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash();
+                if (QFile::exists(imageLocation)) {
+                    QFileInfo imageFileInfo(imageLocation);
+                    const uint imagelastModified = imageFileInfo.lastModified().toTime_t();
+                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*30) {
+                        imageAlreadyPresent = true;
+                    }
+                }
+
+                if (!imageAlreadyPresent) {
+                    QString imageUrl = xml.readElementText();
+                    // qDebug() << name << " photo:" << imageUrl;
+                    if (!imageUrl.isEmpty()) {
+                        QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
+                        QObject *reply = The::http()->get(url);
+                        connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
+                    }
                 }
             }
 
