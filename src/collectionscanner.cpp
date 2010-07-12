@@ -97,14 +97,13 @@ void CollectionScanner::run() {
 void CollectionScanner::popFromQueue() {
     if (stopped) return;
 
-    // qDebug() << "Processing " << fileInfo.absoluteFilePath();
-
     if (fileQueue.isEmpty()) {
         complete();
         return;
     }
 
     QFileInfo fileInfo = fileQueue.first();
+    qDebug() << "Processing " << fileInfo.absoluteFilePath();
 
     // parse metadata with TagLib
     TagLib::FileRef fileref(fileInfo.absoluteFilePath().toUtf8());
@@ -112,6 +111,7 @@ void CollectionScanner::popFromQueue() {
 
     // if taglib cannot parse the file, drop it
     if (fileref.isNull()) {
+        qDebug() << "taglib failed parsing" << fileInfo.absoluteFilePath();
         fileQueue.removeAll(fileInfo);
 
         // add to nontracks table
@@ -224,7 +224,14 @@ QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
         QFileInfo fileInfo = list.at(i);
         if (fileInfo.isDir()) {
             // this is a directory, recurse
-            hash += DataUtils::md5(treeFingerprint(QDir(fileInfo.absoluteFilePath()), hash));
+            QString subDirPath = fileInfo.absoluteFilePath();
+#ifdef APP_MAC
+                if (directoryBlacklist.contains(subDirPath)) {
+                    // qDebug() << "Skipping directory" << subDirPath;
+                    continue;
+                }
+#endif
+            hash += DataUtils::md5(treeFingerprint(QDir(subDirPath), hash));
         } else {
             // this is a file, add to hash
             const uint lastModified = fileInfo.lastModified().toTime_t();
