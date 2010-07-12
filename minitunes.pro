@@ -13,7 +13,7 @@ QT += network \
     xml \
     phonon \
     sql
-unix {
+unix:!mac {
     QT += dbus
 }
 include(src/qtsingleapplication/qtsingleapplication.pri)
