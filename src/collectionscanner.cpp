@@ -111,7 +111,7 @@ void CollectionScanner::popFromQueue() {
 
     // if taglib cannot parse the file, drop it
     if (fileref.isNull()) {
-        qDebug() << "taglib failed parsing" << fileInfo.absoluteFilePath();
+        // qDebug() << "Taglib cannot parse" << fileInfo.absoluteFilePath();
         fileQueue.removeAll(fileInfo);
 
         // add to nontracks table
