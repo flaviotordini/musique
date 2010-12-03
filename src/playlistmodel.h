@@ -48,6 +48,10 @@ public:
     Track* getActiveTrack() const;
     int getTotalLength() { return Track::getTotalLength(tracks); }
 
+    // IO methods
+    bool saveTo(QTextStream& stream) const;
+    bool loadFrom(QTextStream& stream);
+
 public slots:
     void addTrack(Track* track);
     void addTracks(QList<Track*> tracks);

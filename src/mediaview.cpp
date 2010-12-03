@@ -43,6 +43,7 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     // playlist view
     playlistView = new PlaylistView(this);
+    playlistView->setEmptyPlaylistMessage(tr("Drop items here"));
     playlistView->setDropArea(dropArea);
     playlistView->setPlaylistModel(playlistModel);
     // connect(playlistView, SIGNAL(needDropArea()), SLOT(showDropArea()));

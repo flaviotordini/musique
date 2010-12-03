@@ -384,5 +384,56 @@ void PlaylistModel::trackRemoved() {
         qDebug() << "removing track from playlist model" << track;
         removeRows(trackRow, 1, QModelIndex());
     }
+}
 
+bool PlaylistModel::saveTo(QTextStream & stream) const
+{
+    // stream not opened or not writable
+    if ( !stream.device()->isOpen() || !stream.device()->isWritable() )
+        return false;
+
+    stream.setCodec("UTF-8");
+    stream << "[playlist]" << endl;
+    int idx = 1;
+    foreach(Track* tr, tracks)
+    {
+        stream << "File" << idx << "=" << tr->getPath() << endl;
+        stream << "Title" << idx << "=" << tr->getTitle() << endl;
+        stream << "Length" << idx++ << "=" << tr->getLength() << endl;
+    }
+    stream << "NumberOfEntries=" << tracks.count() << endl;
+    stream << "Version=2" << endl;
+
+    return true;
+}
+
+bool PlaylistModel::loadFrom(QTextStream & stream)
+{
+    // stream not opened or not writable
+    if ( !stream.device()->isOpen() || !stream.device()->isReadable() )
+        return false;
+
+    stream.setCodec("UTF-8");
+    QString header;
+    QString tag;
+    Track* cur = 0;
+    stream >> header;
+    while ( !stream.atEnd() )
+    {
+        QString line = stream.readLine(1024);        
+        if ( line.startsWith("File") )
+        {
+            QString path = line.section("=", -1);
+            cur = Track::forPath(path);
+            addTrack(cur);
+        }
+        else if ( line.startsWith("Title") && cur != NULL )
+        {
+            tag = line.right(line.size()-line.indexOf("=")-1);
+            if ( !tag.isNull() && !tag.isEmpty() )
+                cur->setTitle(tag);
+        }
+    }
+
+    return true;
 }

@@ -78,6 +78,8 @@ private:
     void initPhonon();
     void checkForUpdate();
     static QString formatTime(qint64 time);
+    void savePlaylist();
+    void loadPlaylist();
 
     // view mechanism
     QStackedWidget *views;
