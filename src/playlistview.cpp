@@ -4,6 +4,7 @@
 #include "playlistitemdelegate.h"
 #include "droparea.h"
 #include "globalshortcuts.h"
+#include "fontutils.h"
 
 namespace The {
     QMap<QString, QAction*>* globalActions();
@@ -169,22 +170,17 @@ void PlaylistView::paintEvent(QPaintEvent *event) {
         event->accept();
 
         QPainter painter(this->viewport());
-        QPen textPen(Qt::DashLine);
-        textPen.setWidth(2);
+        QPen textPen;
+        textPen.setBrush(palette().mid());
         painter.setPen(textPen);
+        painter.setFont(FontUtils::bigBold());
 
-        QFont biggerFont = qApp->font();
-        biggerFont.setPointSize(24);
-        painter.setFont(biggerFont);
-
-        QSize textSize(this->size().width()-5, 100);
+        QSize textSize(QFontMetrics(painter.font()).size(Qt::TextSingleLine, emptyMessage));
         QPoint centerPoint((this->width()-textSize.width())/2,
-                           (this->height()/3));
+                           ((this->height()-textSize.height())/2));
         QRect centerRect(centerPoint, textSize);
         QRect boundRect;
         painter.drawText(centerRect, Qt::AlignCenter, emptyMessage, &boundRect);
-        boundRect.adjust(-7, -7, 7, 7);
-        painter.drawRect(boundRect);
     }
 }
 
