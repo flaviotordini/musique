@@ -72,6 +72,9 @@ MainWindow::MainWindow() {
 
     setCentralWidget(views);
 
+    // restore window position
+    readSettings();
+
     // show the initial view
     Database &db = Database::instance();
     if (db.status() == ScanComplete) {
@@ -91,9 +94,6 @@ MainWindow::MainWindow() {
 
     // event filter to block ugly toolbar tooltips
     qApp->installEventFilter(this);
-
-    // restore window position
-    readSettings();
 
     // Global shortcuts
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
@@ -201,7 +201,7 @@ void MainWindow::createActions() {
 #endif
     actions->insert("play", playAct);
 
-#ifndef APP_MAC
+#ifndef APP_MAC_NO
     fullscreenAct = new QAction(
             QtIconLoader::icon("view-restore"),
             tr("&Full Screen"), this);
@@ -356,7 +356,6 @@ void MainWindow::createMenus() {
 
     QMap<QString, QMenu*> *menus = The::globalMenus();
 
-
     fileMenu = menuBar()->addMenu(tr("&Application"));
     fileMenu->addAction(chooseFolderAct);
 #ifndef APP_MAC
@@ -497,6 +496,10 @@ void MainWindow::createStatusBar() {
 void MainWindow::readSettings() {
     QSettings settings;
     restoreGeometry(settings.value("geometry").toByteArray());
+#ifdef APP_MAC
+    if (!isMaximized())
+        move(x(), y() + mainToolBar->height() + 8);
+#endif
     m_maximized = isMaximized();
     The::globalActions()->value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
     The::globalActions()->value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
@@ -803,14 +806,16 @@ void MainWindow::toggleFullscreen() {
 
         mainToolBar->removeAction(fullscreenAct);
 
-        seekSlider->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
-        mainToolBar->updateGeometry();
-
-        setUnifiedTitleAndToolBarOnMac(true);
-        showNormal();
+#ifdef APP_MAC
+        setCentralWidget(views);
+        views->showNormal();
+        show();
+        mediaView->setFocus();
+#else
+        // mainToolBar->show();
         if (m_maximized) showMaximized();
-
-        // QTimer::singleShot(100, this, SLOT(enableUnifiedToolbar()));
+        else showNormal();
+#endif
 
         activateWindow();
 
@@ -829,8 +834,15 @@ void MainWindow::toggleFullscreen() {
 
         mainToolBar->addAction(fullscreenAct);
 
-        setUnifiedTitleAndToolBarOnMac(false);
+#ifdef APP_MAC
+        hide();
+        views->setParent(0);
+        QTimer::singleShot(0, views, SLOT(showFullScreen()));
+#else
+        // mainToolBar->hide();
         showFullScreen();
+#endif
+
     }
 
 #ifndef APP_MAC
