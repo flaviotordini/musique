@@ -425,7 +425,7 @@ bool PlaylistModel::loadFrom(QTextStream & stream)
         {
             QString path = line.section("=", -1);
             cur = Track::forPath(path);
-            addTrack(cur);
+            if (cur) addTrack(cur);
         }
         else if ( line.startsWith("Title") && cur != NULL )
         {
