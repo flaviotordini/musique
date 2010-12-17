@@ -133,14 +133,17 @@ void CollectionScanner::popFromQueue() {
     // Copy TagLib::FileRef in our Tags class.
     // TagLib::FileRef keeps files open and we would quickly reach the max open files limit
     Tags *tags = new Tags();
-    tags->title = Tags::toQString(fileref.tag()->title());
-    tags->artist = Tags::toQString(fileref.tag()->artist());
-    tags->album = Tags::toQString(fileref.tag()->album());
-    tags->track = fileref.tag()->track();
-    tags->year = fileref.tag()->year();
-    TagLib::AudioProperties *audioProperties = fileref.audioProperties();
-    if (audioProperties)
-        tags->length = audioProperties->length();
+    TagLib::Tag *tag = fileref.tag();
+    if (tag) {
+        tags->title = Tags::toQString(tag->title());
+        tags->artist = Tags::toQString(tag->artist());
+        tags->album = Tags::toQString(tag->album());
+        tags->track = tag->track();
+        tags->year = tag->year();
+        TagLib::AudioProperties *audioProperties = fileref.audioProperties();
+        if (audioProperties)
+            tags->length = audioProperties->length();
+    }
     file->setTags(tags);
 
     // get data from the internet
