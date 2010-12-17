@@ -161,7 +161,7 @@ void MediaView::activeRowChanged(int row, bool manual) {
     window()->setWindowTitle(windowTitle);
 
 #ifdef APP_DEMO
-    if (tracksPlayed > 8) demoExpired();
+    if (tracksPlayed > 1) demoExpired();
     else tracksPlayed++;
 #endif
 
@@ -233,6 +233,6 @@ void MediaView::demoExpired() {
         QDesktopServices::openUrl(QString(Constants::WEBSITE) + "#download");
     }
 
-    tracksPlayed = 4;
+    tracksPlayed = 0;
 }
 #endif
