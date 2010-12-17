@@ -78,6 +78,7 @@ private:
     void initPhonon();
     void checkForUpdate();
     static QString formatTime(qint64 time);
+    QString playlistPath();
     void savePlaylist();
     void loadPlaylist();
 

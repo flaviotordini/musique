@@ -20,7 +20,7 @@
 #ifdef Q_WS_X11
 #include "gnomeglobalshortcutbackend.h"
 #endif
-#ifdef APP_MAC
+#ifdef SNOW_LEOPARD
 #include "local/mac/mac_startup.h"
 #endif
 
@@ -102,7 +102,7 @@ MainWindow::MainWindow() {
     if (GnomeGlobalShortcutBackend::IsGsdAvailable())
         shortcuts.setBackend(new GnomeGlobalShortcutBackend(&shortcuts));
 #endif
-#ifdef APP_MAC
+#ifdef SNOW_LEOPARD
     mac::MacSetup();
 #endif
     connect(&shortcuts, SIGNAL(PlayPause()), playAct, SLOT(trigger()));
@@ -388,7 +388,7 @@ void MainWindow::createMenus() {
 
     QMenu *viewMenu = menuBar()->addMenu(tr("&View"));
     viewMenu->addAction(contextualAct);
-#ifndef APP_MAC
+#ifndef APP_MAC_NO
     viewMenu->addSeparator();
     viewMenu->addAction(fullscreenAct);
 #endif
@@ -1003,40 +1003,44 @@ void MainWindow::gotNewVersion(QString version) {
     statusBar()->addWidget(message);
 }
 
-void MainWindow::savePlaylist()
-{
+QString MainWindow::playlistPath() {
+    const QString storageLocation =
+            QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    // We need to use a default name, so why not the application one? (minitunes.pls sounds fine)
+    return QString("%1/%2.pls").arg(storageLocation).arg(qApp->applicationName().toLower());
+}
+
+void MainWindow::savePlaylist() {
     const PlaylistModel* playlistModel = mediaView->getPlaylistModel();
     if (playlistModel == 0)
         return;
 
-    QSettings settings;
-
-    const QString storageLocation =
-            QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-    // We need to use a default name, so why not the application one? (minitunes.pls sounds fine)
-    QString defaultPls = QString("%1/%2.pls").arg(storageLocation).arg(qApp->applicationName());
-    QString plsPath = settings.value("loadedPlaylist", defaultPls).toString();
+    QString plsPath = playlistPath();
 
     QFile plsFile(plsPath);
     QTextStream plsStream(&plsFile);
-    if ( plsFile.open(QFile::WriteOnly | QFile::Truncate) && playlistModel->saveTo(plsStream) )
-        settings.setValue("loadedPlaylist", plsPath);
+    if (!plsFile.open(QFile::WriteOnly | QFile::Truncate)) {
+        qDebug() << "Cannot open file" << plsPath;
+        return;
+    }
+    if (!playlistModel->saveTo(plsStream)) {
+        qDebug() << "Error saving playlist";
+    }
 }
 
-void MainWindow::loadPlaylist()
-{
-    QSettings settings;
-    QString plsPath = settings.value("loadedPlaylist").toString();
-    qDebug() << "loading playlist: " << plsPath;
+void MainWindow::loadPlaylist() {
+
+    QString plsPath = playlistPath();
     if (!QFile::exists(plsPath))
         return;
     PlaylistModel* playlistModel = mediaView->getPlaylistModel();
     if (playlistModel == 0)
         return;
+    // qDebug() << "Loading playlist: " << plsPath;
     QFile plsFile(plsPath);
     QTextStream plsStream(&plsFile);
     if ( plsFile.open(QFile::ReadOnly) )
         playlistModel->loadFrom(plsStream);
     else
-        qDebug() << "Fail to open: " << plsPath;
+        qDebug() << "Cannot open file" << plsPath;
 }
