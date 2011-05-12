@@ -22,7 +22,9 @@
 - Select all relevant tracks when clicking the playlist album header
 
 ## Features
-- Restore the playlist accross sessions
+- Ubuntu Sound Menu integration
+    https://wiki.ubuntu.com/SoundMenu#Music%20player%20integration
+    http://askubuntu.com/questions/7859/which-music-players-use-the-soundmenu/7883#7883
 - Gapless playback
 - CLI
 - View crossfades
