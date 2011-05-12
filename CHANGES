@@ -1,2 +1,12 @@
-0.1 - 
+0.2
+- Playlist is persisted across sessions (Thanks to Daniele S.)
+- Drag'n'drop tip when the playlist is empty (Thanks to Daniele S.)
+- Fullscreen support on the Mac
+
+0.1.1
+- Fixed stack overflow issues on library scanning
+- AAC support on the Mac
+- 32bit build on the Mac
+
+0.1
 - First release
