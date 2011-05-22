@@ -1,7 +1,10 @@
 # This voodoo comes from the Arora project
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
-TRANSLATIONS += 
+
+# ls -1 *.ts | tr '\n' ' '
+TRANSLATIONS += cs_CZ.ts de.ts el.ts es_ES.ts fr.ts it.ts lv.ts nb.ts pt.ts pt_BR.ts ru.ts sr.ts tr.ts
+
 isEmpty(QMAKE_LRELEASE) { 
     win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
     else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
