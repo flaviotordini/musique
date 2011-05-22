@@ -31,11 +31,9 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
                    .arg(QString(Constants::WEBSITE).append("#donate"), Constants::APP_NAME) + "</p>"
 #endif
 
-                   /*
-                   "<p>" + tr("Translated by %1").arg(
-                                                      "Nikita Lyalin (ru_RU), "
-                                                      "Grzegorz Gibas (pl_PL)"
-                                                      ) + "</p>"*/
+                    "<p>" + tr("Translated by the cool people at %1")
+                    .arg("<a href='http://www.transifex.net/projects/p/minitunes/resource/main/'>Transifex</a>")
+                    + "</p>"
 
 #if !defined(APP_MAC) && !defined(Q_WS_WIN)
                    "<p>" + tr("Released under the <a href='%1'>GNU General Public License</a>")
