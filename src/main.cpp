@@ -32,7 +32,11 @@ int main(int argc, char **argv) {
     app.installTranslator(&qtTranslator);
 
     // app translations
+#ifdef PKGDATADIR
     QString dataDir = QLatin1String(PKGDATADIR);
+#else
+    QString dataDir = "";
+#endif
     QString localeDir = dataDir + QDir::separator() + "locale";
     // if app was not "installed" use the app directory
     if (!QFile::exists(localeDir)) {
