@@ -1,9 +1,7 @@
 CONFIG += release
 TEMPLATE = app
-VERSION = 0.1.1
+VERSION = 0.2
 DEFINES += APP_VERSION="$$VERSION"
-INCLUDEPATH += /usr/include/phonon
-INCLUDEPATH += /usr/include/taglib
 
 # Saner string behaviour
 # DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_STRICT_ITERATORS
@@ -13,9 +11,6 @@ QT += network \
     xml \
     phonon \
     sql
-unix:!mac {
-    QT += dbus
-}
 include(src/qtsingleapplication/qtsingleapplication.pri)
 include(src/thlibrary/thlibrary.pri)
 HEADERS += src/mainwindow.h \
@@ -142,7 +137,10 @@ include(locale/locale.pri)
 # deploy
 DISTFILES += CHANGES \
     LICENSE
-unix { 
+unix:!mac {
+    QT += dbus
+    INCLUDEPATH += /usr/include/phonon
+    INCLUDEPATH += /usr/include/taglib
     isEmpty(PREFIX):PREFIX = /usr/local
     BINDIR = $$PREFIX/bin
     INSTALLS += target
@@ -169,7 +167,7 @@ unix {
     iconsvg.path = $$DATADIR/icons/hicolor/scalable/apps
     iconsvg.files += data/minitunes.svg
     icon16.path = $$DATADIR/icons/hicolor/16x16/apps
-    icon16.files += data/22x22/minitunes.png
+    icon16.files += data/16x16/minitunes.png
     icon22.path = $$DATADIR/icons/hicolor/22x22/apps
     icon22.files += data/22x22/minitunes.png
     icon32.path = $$DATADIR/icons/hicolor/32x32/apps
