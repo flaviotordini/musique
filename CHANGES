@@ -2,6 +2,7 @@
 - Playlist is persisted across sessions (Thanks to Daniele S.)
 - Drag'n'drop tip when the playlist is empty (Thanks to Daniele S.)
 - Fullscreen support on the Mac
+- Many new translations
 
 0.1.1
 - Fixed stack overflow issues on library scanning
