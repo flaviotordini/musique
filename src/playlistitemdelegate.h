@@ -22,7 +22,8 @@ private:
     void paintTrackNumber(QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const;
     void paintTrackTitle(QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const;
     void paintTrackLength(QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const;
-    void paintActiveOverlay(QPainter *painter, const QStyleOptionViewItem& option, QRect line) const;;
+    void paintActiveOverlay(QPainter *painter, const QStyleOptionViewItem& option, QRect line) const;
+    void paintSelectedOverlay( QPainter *painter, QRect line) const;
 
     static const int PADDING;
     static int ITEM_HEIGHT;

@@ -80,6 +80,12 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     painter->translate(option.rect.topLeft());
     QRect line(0, 0, option.rect.width(), option.rect.height());
 
+#if defined(APP_MAC) | defined(APP_WIN)
+    if (isSelected) {
+        paintSelectedOverlay(painter, line);
+    }
+#endif
+
     // text color
     if (isSelected)
         painter->setPen(QPen(option.palette.brush(QPalette::HighlightedText), 0));
@@ -167,9 +173,16 @@ void PlaylistItemDelegate::paintAlbumHeader(
     painter->setFont(boldFont);
 
     // text size
-    QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, headerTitle));
-    QPoint textLoc(PADDING*6, 0);
-    QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
+    QFontMetrics fontMetrics = QFontMetrics(painter->font());
+    QSize trackStringSize(fontMetrics.size(Qt::TextSingleLine, headerTitle));
+
+    int width = trackStringSize.width();
+    const int maxWidth = line.width() - 80;
+    if (width > maxWidth) width = maxWidth;
+
+    QPoint textLoc(15, 0);
+    QRect trackTextBox(textLoc.x(), textLoc.y(), width, line.height());
+    headerTitle = fontMetrics.elidedText(headerTitle, Qt::ElideRight, trackTextBox.width());
 
     // text shadow
     painter->setPen(QColor(0, 0, 0, 64));
@@ -192,6 +205,12 @@ void PlaylistItemDelegate::paintAlbumHeader(
         normalFont.setBold(false);
         // normalFont.setPointSize(boldFont.pointSize()*.9);
         painter->setFont(normalFont);
+
+        // text shadow
+        painter->setPen(QColor(0, 0, 0, 64));
+        painter->drawText(line.translated(-PADDING, -1), Qt::AlignRight | Qt::AlignVCenter, albumLength);
+
+        painter->setPen(option.palette.color(QPalette::Light));
         painter->drawText(line.translated(-PADDING, 0), Qt::AlignRight | Qt::AlignVCenter, albumLength);
     }
 
@@ -238,13 +257,21 @@ void PlaylistItemDelegate::paintTrackNumber(
 void PlaylistItemDelegate::paintTrackTitle(
         QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const {
 
-    const QString trackTitle = track->getTitle();
-    QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackTitle));
+    QFontMetrics fontMetrics = QFontMetrics(painter->font());
+
+    QString trackTitle = track->getTitle();
+
+    QSize trackStringSize(fontMetrics.size(Qt::TextSingleLine, trackTitle));
     QPoint textLoc(PADDING*6, 0);
-    QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
+
+    int width = trackStringSize.width();
+    const int maxWidth = line.width() - 110;
+    if (width > maxWidth) width = maxWidth;
+
+    QRect trackTextBox(textLoc.x(), textLoc.y(), width, line.height());
+    trackTitle = fontMetrics.elidedText(trackTitle, Qt::ElideRight, trackTextBox.width());
 
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, trackTitle);
-
 }
 
 void PlaylistItemDelegate::paintTrackLength(
@@ -289,5 +316,18 @@ void PlaylistItemDelegate::paintActiveOverlay(
     linearGradient.setColorAt(0.0, color1);
     linearGradient.setColorAt(1.0, color2);
     painter->fillRect(line, linearGradient);
+    painter->restore();
+}
+
+void PlaylistItemDelegate::paintSelectedOverlay( QPainter *painter, QRect line) const {
+    QColor color1 = QColor::fromRgb(0x69, 0xa6, 0xd9);
+    QColor color2 = QColor::fromRgb(0x14, 0x6b, 0xd4);
+    painter->save();
+    painter->setPen(Qt::NoPen);
+    QLinearGradient linearGradient(0, 0, 0, line.height());
+    linearGradient.setColorAt(0.0, color1);
+    linearGradient.setColorAt(1.0, color2);
+    painter->setBrush(linearGradient);
+    painter->drawRect(line);
     painter->restore();
 }
