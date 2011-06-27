@@ -40,7 +40,7 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
                    .arg("http://www.gnu.org/licenses/gpl.html") + "</p>"
 #endif
 
-                   "<p style='color:palette(mid)'>&copy; 2010 " + Constants::ORG_NAME + "</p>"
+                   "<p style='color:palette(mid)'>&copy; 2010-2011 " + Constants::ORG_NAME + "</p>"
                    "</body></html>";
     QLabel *infoLabel = new QLabel(info, this);
     infoLabel->setOpenExternalLinks(true);
