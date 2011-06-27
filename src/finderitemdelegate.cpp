@@ -342,7 +342,16 @@ void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem 
     painter->setPen(Qt::NoPen);
     if (isSelected) {
         painter->setOpacity(.9);
+#if defined(APP_MAC) | defined(APP_WIN)
+        QColor color1 = QColor::fromRgb(0x69, 0xa6, 0xd9);
+        QColor color2 = QColor::fromRgb(0x14, 0x6b, 0xd4);
+        QLinearGradient linearGradient(textBox.x(), textBox.y(), textBox.x(), textBox.y() + textBox.height());
+        linearGradient.setColorAt(0.0, color1);
+        linearGradient.setColorAt(1.0, color2);
+        painter->setBrush(linearGradient);
+#else
         painter->setBrush(option.palette.highlight());
+#endif
     } else {
         painter->setBrush(QColor(0, 0, 0, 128));
     }
