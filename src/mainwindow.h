@@ -26,6 +26,7 @@ public slots:
     void showMediaView();
     void showChooseFolderView();
     void toggleContextualView();
+    void hideContextualView();
     void updateContextualView(Track *track);
 
 protected:
@@ -63,9 +64,12 @@ private slots:
 
     // app logic
     void startFullScan(QString dir);
+    void fullScanFinished();
     void startIncrementalScan();
     void incrementalScanProgress(int percent);
     void incrementalScanFinished();
+    void search(QString query);
+    void searchCleared();
 
 private:
     void showView(QWidget*);

@@ -13,6 +13,10 @@ class TrackSqlModel;
 class FileSystemModel;
 class FileSystemFinderView;
 class Track;
+class SearchModel;
+class SearchView;
+class Artist;
+class Album;
 
 namespace Finder {
 
@@ -37,7 +41,7 @@ namespace Finder {
 
 class FinderWidget : public QWidget {
 
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     FinderWidget(QWidget *parent);
@@ -48,6 +52,11 @@ public:
         this->playlistView = playlistView;
     }
     void appear();
+    void showSearch(QString query);
+    void addTracksAndPlay(QList<Track*> tracks);
+    void artistActivated(Artist *artist);
+    void albumActivated(Album *album);
+    void trackActivated(Track *track);
 
 private slots:
     void goBack();
@@ -72,13 +81,14 @@ private slots:
     void folderPlayed(const QModelIndex &index);
 
 private:
+    void restoreSavedView();
     void setupBar();
     void setupArtists();
     void setupAlbums();
     void setupFolders();
     void setupTracks();
+    void setupSearch();
     void showWidget(QWidget *widget, bool isRoot);
-    void addTracksAndPlay(QList<Track*> tracks);
 
     THBlackBar *finderBar;
     QAction *artistsAction;
@@ -104,6 +114,9 @@ private:
 
     QListView *trackListView;
     TrackSqlModel *trackListModel;
+
+    SearchModel *searchModel;
+    SearchView *searchView;
 
 };
 

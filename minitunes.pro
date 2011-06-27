@@ -1,6 +1,6 @@
-CONFIG += release
+CONFIG += debug
 TEMPLATE = app
-VERSION = 0.2
+VERSION = 1.0
 DEFINES += APP_VERSION="$$VERSION"
 
 # Saner string behaviour
@@ -68,7 +68,12 @@ HEADERS += src/mainwindow.h \
     src/filteringfilesystemmodel.h \
     src/gnomeglobalshortcutbackend.h \
     src/globalshortcuts.h \
-    src/globalshortcutbackend.h
+    src/globalshortcutbackend.h \
+    src/suggester.h \
+    src/autocomplete.h \
+    src/searchview.h \
+    src/searchmodel.h \
+    src/collectionsuggester.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -122,7 +127,11 @@ SOURCES += src/main.cpp \
     src/constants.cpp \
     src/gnomeglobalshortcutbackend.cpp \
     src/globalshortcuts.cpp \
-    src/globalshortcutbackend.cpp
+    src/globalshortcutbackend.cpp \
+    src/autocomplete.cpp \
+    src/searchview.cpp \
+    src/searchmodel.cpp \
+    src/collectionsuggester.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

@@ -34,6 +34,7 @@ public slots:
     void appear();
     void playPause();
     void trackRemoved();
+    void search(QString query);
 
 private slots:
     void activeRowChanged(int row, bool manual);

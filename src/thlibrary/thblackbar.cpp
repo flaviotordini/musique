@@ -53,6 +53,10 @@ QAction *THBlackBar::addAction(const QString& text) {
 void THBlackBar::setCheckedAction(int index) {
     if (d->checkedAction)
         d->checkedAction->setChecked(false);
+    if (index < 0) {
+        d->checkedAction = 0;
+        return;
+    }
     d->checkedAction = d->actionList.at(index);
     d->checkedAction->setChecked(true);
     update();

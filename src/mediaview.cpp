@@ -236,3 +236,7 @@ void MediaView::demoExpired() {
     tracksPlayed = 0;
 }
 #endif
+
+void MediaView::search(QString query) {
+    finderWidget->showSearch(query);
+}

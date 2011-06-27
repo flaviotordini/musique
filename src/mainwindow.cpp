@@ -23,6 +23,7 @@
 #ifdef SNOW_LEOPARD
 #include "local/mac/mac_startup.h"
 #endif
+#include "collectionsuggester.h"
 
 /*
 class CentralWidget : public QWidget {
@@ -50,12 +51,12 @@ MainWindow::MainWindow() {
     aboutView = 0;
     contextualView = 0;
 
-    /*
     toolbarSearch = new SearchLineEdit(this);
     toolbarSearch->setFont(qApp->font());
     toolbarSearch->setMinimumWidth(toolbarSearch->fontInfo().pixelSize()*15);
-    // TODO connect(toolbarSearch, SIGNAL(search(const QString&)), searchView, SLOT(watch(const QString&)));
-    */
+    toolbarSearch->setSuggester(new CollectionSuggester(this));
+    connect(toolbarSearch, SIGNAL(search(const QString&)), SLOT(search(const QString&)));
+    connect(toolbarSearch, SIGNAL(cleared()), SLOT(searchCleared()));
 
     // build ui
     createActions();
@@ -167,8 +168,8 @@ void MainWindow::createActions() {
     */
 
     skipBackwardAct = new QAction(
-            QtIconLoader::icon("media-skip-backward"),
-            tr("P&revious"), this);
+                QtIconLoader::icon("media-skip-backward"),
+                tr("P&revious"), this);
     skipBackwardAct->setStatusTip(tr("Go back to the previous track"));
     skipBackwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Left));
 #if QT_VERSION >= 0x040600
@@ -178,8 +179,8 @@ void MainWindow::createActions() {
     actions->insert("previous", skipBackwardAct);
 
     skipForwardAct = new QAction(
-            QtIconLoader::icon("media-skip-forward"),
-            tr("&Next"), this);
+                QtIconLoader::icon("media-skip-forward"),
+                tr("&Next"), this);
     skipForwardAct->setStatusTip(tr("Skip to the next track"));
     skipForwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Right));
 #if QT_VERSION >= 0x040600
@@ -189,8 +190,8 @@ void MainWindow::createActions() {
     actions->insert("skip", skipForwardAct);
 
     playAct = new QAction(
-            QtIconLoader::icon("media-playback-start"),
-            tr("&Play"), this);
+                QtIconLoader::icon("media-playback-start"),
+                tr("&Play"), this);
     playAct->setStatusTip(tr("Start playback"));
     playAct->setShortcuts(QList<QKeySequence>()
                           << QKeySequence(Qt::Key_Space)
@@ -204,8 +205,8 @@ void MainWindow::createActions() {
 
 #ifndef APP_MAC_NO
     fullscreenAct = new QAction(
-            QtIconLoader::icon("view-restore"),
-            tr("&Full Screen"), this);
+                QtIconLoader::icon("view-restore"),
+                tr("&Full Screen"), this);
     fullscreenAct->setStatusTip(tr("Go full screen"));
     fullscreenAct->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Return));
     fullscreenAct->setShortcuts(QList<QKeySequence>()
@@ -274,7 +275,7 @@ void MainWindow::createActions() {
     actions->insert("clearPlaylist", action);
 
     action = new QAction(
-            QtIconLoader::icon("media-playlist-shuffle"), tr("&Shuffle"), this);
+                QtIconLoader::icon("media-playlist-shuffle"), tr("&Shuffle"), this);
     action->setStatusTip(tr("Random playlist mode"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     action->setCheckable(true);
@@ -282,8 +283,8 @@ void MainWindow::createActions() {
     actions->insert("shufflePlaylist", action);
 
     action = new QAction(
-            QtIconLoader::icon("media-playlist-repeat"),
-            tr("&Repeat"), this);
+                QtIconLoader::icon("media-playlist-repeat"),
+                tr("&Repeat"), this);
     action->setStatusTip(tr("Play first song again after all songs are played"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
     action->setCheckable(true);
@@ -456,8 +457,8 @@ void MainWindow::createToolBars() {
     QSlider* volumeQSlider = volumeSlider->findChild<QSlider*>();
     if (volumeQSlider)
         volumeQSlider->setStatusTip(tr("Press %1 to raise the volume, %2 to lower it").arg(
-                volumeUpAct->shortcut().toString(QKeySequence::NativeText),
-                volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
+                                        volumeUpAct->shortcut().toString(QKeySequence::NativeText),
+                                        volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
 
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
@@ -465,7 +466,7 @@ void MainWindow::createToolBars() {
 
     mainToolBar->addWidget(new Spacer());
 
-    // mainToolBar->addWidget(new Spacer(mainToolBar, toolbarSearch));
+    mainToolBar->addWidget(toolbarSearch);
 
     addToolBar(mainToolBar);
 }
@@ -474,7 +475,7 @@ void MainWindow::createStatusBar() {
 
     // remove ugly borders on OSX
     statusBar()->setStyleSheet(
-            "::item{border:0 solid} QStatusBar, QToolBar {padding:0;margin:0} QToolButton {padding:1px}");
+                "::item{border:0 solid} QStatusBar, QToolBar {padding:0;margin:0} QToolButton {padding:1px}");
 
     statusToolBar = new QToolBar(this);
     statusToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -499,7 +500,11 @@ void MainWindow::readSettings() {
     restoreGeometry(settings.value("geometry").toByteArray());
 #ifdef APP_MAC
     if (!isMaximized())
+#ifdef QT_MAC_USE_COCOA
+        move(x(), y() + 10);
+#else
         move(x(), y() + mainToolBar->height() + 8);
+#endif
 #endif
     m_maximized = isMaximized();
     The::globalActions()->value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
@@ -659,6 +664,11 @@ void MainWindow::showMediaView() {
         connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
         views->addWidget(mediaView);
     }
+
+    if (views->currentWidget() == contextualView) {
+        hideContextualView();
+    }
+
     mediaView->setFocus();
     showView(mediaView);
 }
@@ -669,14 +679,7 @@ void MainWindow::toggleContextualView() {
         views->addWidget(contextualView);
     }
     if (views->currentWidget() == contextualView) {
-        goBack();
-        contextualAct->setChecked(false);
-
-        QList<QKeySequence> shortcuts;
-        shortcuts << QKeySequence(Qt::CTRL + Qt::Key_Return);
-        contextualAct->setShortcuts(shortcuts);
-        // stopAct->setShortcut(QKeySequence(Qt::Key_Escape));
-
+        hideContextualView();
     } else {
         Track *track = mediaView->getActiveTrack();
         if (track) {
@@ -691,6 +694,16 @@ void MainWindow::toggleContextualView() {
             contextualAct->setShortcuts(shortcuts);
         }
     }
+}
+
+void MainWindow::hideContextualView() {
+    goBack();
+    contextualAct->setChecked(false);
+
+    QList<QKeySequence> shortcuts;
+    shortcuts << QKeySequence(Qt::CTRL + Qt::Key_Return);
+    contextualAct->setShortcuts(shortcuts);
+    // stopAct->setShortcut(QKeySequence(Qt::Key_Escape));
 }
 
 void MainWindow::updateContextualView(Track *track) {
@@ -711,6 +724,7 @@ void MainWindow::startFullScan(QString directory) {
     CollectionScannerThread *scannerThread = new CollectionScannerThread();
     collectionScannerView->setCollectionScannerThread(scannerThread);
     scannerThread->setDirectory(directory);
+    connect(scannerThread, SIGNAL(finished()), SLOT(fullScanFinished()));
     scannerThread->start();
 
     if (mediaView) {
@@ -720,6 +734,10 @@ void MainWindow::startFullScan(QString directory) {
             playlistModel->clear();
         }
     }
+}
+
+void MainWindow::fullScanFinished() {
+    QApplication::alert(this, 0);
 }
 
 void MainWindow::startIncrementalScan() {
@@ -763,28 +781,28 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
         }
         break;
 
-         case Phonon::PlayingState:
+    case Phonon::PlayingState:
         // stopAct->setEnabled(true);
         contextualAct->setEnabled(true);
         break;
 
-         case Phonon::StoppedState:
+    case Phonon::StoppedState:
         // stopAct->setEnabled(false);
         contextualAct->setEnabled(false);
         break;
 
-         case Phonon::PausedState:
+    case Phonon::PausedState:
         // stopAct->setEnabled(true);
         break;
 
-         case Phonon::BufferingState:
-         case Phonon::LoadingState:
+    case Phonon::BufferingState:
+    case Phonon::LoadingState:
         // stopAct->setEnabled(true);
         currentTime->clear();
         totalTime->clear();
         break;
 
-         default:
+    default:
         contextualAct->setEnabled(false);
     }
 }
@@ -857,10 +875,8 @@ void MainWindow::toggleFullscreen() {
 }
 
 void MainWindow::searchFocus() {
-    QWidget *view = views->currentWidget();
-    if (view == mediaView) {
-        // toolbarSearch->setFocus();
-    }
+    toolbarSearch->selectAll();
+    toolbarSearch->setFocus();
 }
 
 void MainWindow::initPhonon() {
@@ -991,7 +1007,7 @@ void MainWindow::gotNewVersion(QString version) {
     QLabel *message = new QLabel(this);
 
     QString text = tr("%1 %2 is available!").arg(
-            Constants::APP_NAME, version);
+                Constants::APP_NAME, version);
 
 #if !defined(APP_MAC) && !defined(Q_WS_WIN)
     text += " " + tr("Please <a href='%2'>update now</a>.")
@@ -1043,4 +1059,14 @@ void MainWindow::loadPlaylist() {
         playlistModel->loadFrom(plsStream);
     else
         qDebug() << "Cannot open file" << plsPath;
+}
+
+void MainWindow::search(QString query) {
+    showMediaView();
+    mediaView->search(query);
+    toolbarSearch->setFocus();
+}
+
+void MainWindow::searchCleared() {
+    mediaView->search("");
 }
