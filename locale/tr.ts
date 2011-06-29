@@ -22,12 +22,17 @@
         <translation>%2&apos;nin kesintisiz olarak geliştirilmesine destek olmak için lütfen &lt;a href=&apos;%1&apos;&gt;bağış yapın.&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="41"/>
+        <location filename="src/aboutview.cpp" line="34"/>
+        <source>Translated by the cool people at %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="src/aboutview.cpp" line="39"/>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
         <translation>&lt;a href=&apos;%1&apos;&gt;GNU Genel Kamu Lisansı&lt;/a&gt; şartları altında dağıtılmaktadır</translation>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="54"/>
+        <location filename="src/aboutview.cpp" line="52"/>
         <source>&amp;Close</source>
         <translation>&amp;Kapat</translation>
     </message>

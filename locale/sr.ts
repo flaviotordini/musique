@@ -22,12 +22,17 @@
         <translation>Молимо да &lt;a href=&apos;%1&apos;&gt;донацијама&lt;/a&gt; подржите даљи развој програма %2.</translation>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="41"/>
+        <location filename="src/aboutview.cpp" line="34"/>
+        <source>Translated by the cool people at %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="src/aboutview.cpp" line="39"/>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
         <translation>Под &lt;a href=&apos;%1&apos;&gt;ГНУовом Општом Јавном Лиценцом&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="54"/>
+        <location filename="src/aboutview.cpp" line="52"/>
         <source>&amp;Close</source>
         <translation>&amp;Затвори</translation>
     </message>
@@ -60,7 +65,7 @@
     <message>
         <location filename="src/context/artistinfo.cpp" line="59"/>
         <source>Read more</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -81,7 +86,7 @@
     <message>
         <location filename="src/choosefolderview.cpp" line="29"/>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="39"/>
@@ -112,12 +117,12 @@
     <message>
         <location filename="src/choosefolderview.cpp" line="78"/>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="80"/>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="91"/>
@@ -161,7 +166,7 @@
     <message>
         <location filename="src/collectionscannerview.cpp" line="26"/>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/collectionscannerview.cpp" line="29"/>
@@ -179,7 +184,7 @@
     <message>
         <location filename="src/droparea.cpp" line="44"/>
         <source>Drop here to append to the playlist</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -424,7 +429,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="277"/>
         <source>&amp;Shuffle</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="278"/>
@@ -510,22 +515,22 @@
     <message>
         <location filename="src/mainwindow.cpp" line="762"/>
         <source>Error: %1</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="830"/>
         <source>Leave &amp;Full Screen</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="897"/>
         <source>Remaining time: %1</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="946"/>
         <source>Volume at %1%</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="952"/>

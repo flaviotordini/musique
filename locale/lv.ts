@@ -22,12 +22,17 @@
         <translation>Lūdzu &lt;a href=&apos;%1&apos;&gt;ziedot&lt;/a&gt; , lai atbalstītu nepārtrauktu attīstību %2.</translation>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="41"/>
-        <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation/>
+        <location filename="src/aboutview.cpp" line="34"/>
+        <source>Translated by the cool people at %1</source>
+        <translation type="unfinished"/>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="54"/>
+        <location filename="src/aboutview.cpp" line="39"/>
+        <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="src/aboutview.cpp" line="52"/>
         <source>&amp;Close</source>
         <translation>&amp;Aizvērt</translation>
     </message>
@@ -112,7 +117,7 @@
     <message>
         <location filename="src/choosefolderview.cpp" line="78"/>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="80"/>
@@ -179,7 +184,7 @@
     <message>
         <location filename="src/droparea.cpp" line="44"/>
         <source>Drop here to append to the playlist</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -288,7 +293,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="171"/>
         <source>P&amp;revious</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="172"/>
@@ -429,7 +434,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="278"/>
         <source>Random playlist mode</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="286"/>
@@ -439,7 +444,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="287"/>
         <source>Play first song again after all songs are played</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="319"/>
@@ -459,12 +464,12 @@
     <message>
         <location filename="src/mainwindow.cpp" line="367"/>
         <source>&amp;Playback</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="379"/>
         <source>Play&amp;list</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="389"/>
@@ -479,7 +484,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="458"/>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="617"/>
@@ -505,7 +510,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="760"/>
         <source>Fatal error: %1</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="762"/>
@@ -568,7 +573,7 @@
     <message>
         <location filename="src/mediaview.cpp" line="223"/>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation/>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mediaview.cpp" line="227"/>

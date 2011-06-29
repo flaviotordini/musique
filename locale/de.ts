@@ -22,12 +22,17 @@
         <translation>Bitte &lt;a href=&apos;%1&apos;&gt;spende&lt;/a&gt; um die weitere Entwicklung von %2 zu unterstützen.</translation>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="41"/>
+        <location filename="src/aboutview.cpp" line="34"/>
+        <source>Translated by the cool people at %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="src/aboutview.cpp" line="39"/>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
         <translation>Veröffentlicht unter der &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
-        <location filename="src/aboutview.cpp" line="54"/>
+        <location filename="src/aboutview.cpp" line="52"/>
         <source>&amp;Close</source>
         <translation>&amp;Schließen</translation>
     </message>

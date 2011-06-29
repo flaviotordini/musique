@@ -1,25 +1,25 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="bn_IN" version="2.0">
 <context>
     <name>AboutView</name>
     <message>
         <location filename="src/aboutview.cpp" line="22"/>
         <source>Version %1</source>
-        <translation>Verze %1</translation>
+        <translation>সংস্করণ %1</translation>
     </message>
     <message>
         <location filename="src/aboutview.cpp" line="26"/>
         <source>Report bugs and send in your ideas to %1</source>
-        <translation type="unfinished"/>
+        <translation>আপনার বাগ রিপোর্ট বা চিন্তাধারা %1 -তে পাঠিয়ে দিন</translation>
     </message>
     <message>
         <location filename="src/aboutview.cpp" line="29"/>
         <source>%1 is Free Software but its development takes precious time.</source>
-        <translation type="unfinished"/>
+        <translation>%1 স্বতন্ত্র সফ্টওয়্যার কিন্ত সময়সাপেক্ষ</translation>
     </message>
     <message>
         <location filename="src/aboutview.cpp" line="30"/>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation type="unfinished"/>
+        <translation>অনুরোধ করা হচ্ছে যে &lt;a href=&apos;%1&apos;&gt;দান করুন&lt;/a&gt; যাতে ডেভেলপমেন্ট চলতে থাকে %2.</translation>
     </message>
     <message>
         <location filename="src/aboutview.cpp" line="34"/>
@@ -29,22 +29,22 @@
     <message>
         <location filename="src/aboutview.cpp" line="39"/>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
         <location filename="src/aboutview.cpp" line="52"/>
         <source>&amp;Close</source>
-        <translation>&amp;Zavřít</translation>
+        <translation>&amp;বন্ধ করুন</translation>
     </message>
     <message>
         <location filename="src/aboutview.h" line="18"/>
         <source>About</source>
-        <translation>O aplikaci</translation>
+        <translation>পরিচিতি</translation>
     </message>
     <message>
         <location filename="src/aboutview.h" line="20"/>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation type="unfinished"/>
+        <translation>%1 যে তথ্য আপনি সবসময় জানতে চেয়েছিলেন</translation>
     </message>
 </context>
 <context>
@@ -52,12 +52,12 @@
     <message>
         <location filename="src/context/albuminfo.cpp" line="37"/>
         <source>Buy on %1</source>
-        <translation>Kup na %1</translation>
+        <translation>%1 তে ক্রয় করুন</translation>
     </message>
     <message>
         <location filename="src/context/albuminfo.cpp" line="85"/>
         <source>Read more</source>
-        <translation type="unfinished"/>
+        <translation>অধিক তথ্য</translation>
     </message>
 </context>
 <context>
@@ -65,7 +65,7 @@
     <message>
         <location filename="src/context/artistinfo.cpp" line="59"/>
         <source>Read more</source>
-        <translation type="unfinished"/>
+        <translation>অধিক তথ্য</translation>
     </message>
 </context>
 <context>
@@ -73,12 +73,12 @@
     <message>
         <location filename="src/breadcrumbwidget.cpp" line="15"/>
         <source>&amp;Back</source>
-        <translation>&amp;Zpět</translation>
+        <translation>&amp;ফিরে চলুন</translation>
     </message>
     <message>
         <location filename="src/breadcrumbwidget.cpp" line="18"/>
         <source>Go back</source>
-        <translation type="unfinished"/>
+        <translation>ফিরে চলুন</translation>
     </message>
 </context>
 <context>
@@ -86,7 +86,7 @@
     <message>
         <location filename="src/choosefolderview.cpp" line="29"/>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Vítejte v  &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="39"/>
@@ -97,22 +97,22 @@
     <message>
         <location filename="src/choosefolderview.cpp" line="47"/>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>ত্যাগ করুন</translation>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="52"/>
         <source>Use iTunes collection</source>
-        <translation>Použít sbírku iTunes</translation>
+        <translation>iTunes সংগ্রহ ব্যবহার করুন</translation>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="62"/>
         <source>Use %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 ব্যবহার করুন</translation>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="71"/>
         <source>Choose a folder...</source>
-        <translation>Vyberte složku...</translation>
+        <translation>একটি ফোল্ডার বেছে নিন...</translation>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="78"/>
@@ -127,12 +127,12 @@
     <message>
         <location filename="src/choosefolderview.cpp" line="91"/>
         <source>Where&apos;s your music collection?</source>
-        <translation>Kde je vaše hudení sbírka?</translation>
+        <translation>আপনার গানের সংগ্রহ কোথায়?</translation>
     </message>
     <message>
         <location filename="src/choosefolderview.cpp" line="114"/>
         <source>Select the location of your music collection.</source>
-        <translation>Vyberte umístění vaší hudební sbírky.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/choosefolderview.h" line="17"/>
@@ -145,7 +145,7 @@
     <message>
         <location filename="src/searchlineedit.cpp" line="52"/>
         <source>Clear</source>
-        <translation>Vyprázdnit</translation>
+        <translation>মুছে ফেলুন</translation>
     </message>
 </context>
 <context>
@@ -161,7 +161,7 @@
     <message>
         <location filename="src/collectionscannerview.cpp" line="16"/>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 prohledává vaši hudební sbírku.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/collectionscannerview.cpp" line="26"/>
@@ -176,7 +176,7 @@
     <message>
         <location filename="src/collectionscannerview.h" line="20"/>
         <source>Go grab a coffee</source>
-        <translation type="unfinished"/>
+        <translation>একটু আরাম করে নিন</translation>
     </message>
 </context>
 <context>
@@ -192,17 +192,17 @@
     <message>
         <location filename="src/finderwidget.cpp" line="91"/>
         <source>Artists</source>
-        <translation>Umělci</translation>
+        <translation>শিল্পী</translation>
     </message>
     <message>
         <location filename="src/finderwidget.cpp" line="100"/>
         <source>Albums</source>
-        <translation>Alba</translation>
+        <translation>অ্যালবাম</translation>
     </message>
     <message>
         <location filename="src/finderwidget.cpp" line="109"/>
         <source>Folders</source>
-        <translation>Složky</translation>
+        <translation>ফোল্ডার</translation>
     </message>
 </context>
 <context>
@@ -210,52 +210,52 @@
     <message>
         <location filename="src/globalshortcuts.cpp" line="16"/>
         <source>Play</source>
-        <translation>Přehrát</translation>
+        <translation>চালু করুন</translation>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="17"/>
         <source>Pause</source>
-        <translation>Pozastavit</translation>
+        <translation>থামিয়ে দিন</translation>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="18"/>
         <source>Play/Pause</source>
-        <translation>Přehrát/Pozastavit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="19"/>
         <source>Stop</source>
-        <translation>Zastavit</translation>
+        <translation>বন্ধ করুন</translation>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="20"/>
         <source>Stop playing after current track</source>
-        <translation>Zastavit po této skladbě</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="21"/>
         <source>Next track</source>
-        <translation>Další skladba</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="22"/>
         <source>Previous track</source>
-        <translation>Předchozí skladba</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="23"/>
         <source>Increase volume</source>
-        <translation>Zvýšit hlasitost</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="24"/>
         <source>Decrease volume</source>
-        <translation>Snížit hlasitost</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="25"/>
         <source>Mute</source>
-        <translation>Ztlumit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/globalshortcuts.cpp" line="26"/>
@@ -273,7 +273,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="137"/>
         <source>&amp;Back</source>
-        <translation>&amp;Zpět</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="140"/>
@@ -283,12 +283,12 @@
     <message>
         <location filename="src/mainwindow.cpp" line="150"/>
         <source>&amp;Info</source>
-        <translation>&amp;Informace</translation>
+        <translation>&amp;তথ্য</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="151"/>
         <source>Show information about the current track</source>
-        <translation>Zobrazit informace o této skladbě</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="171"/>
@@ -303,28 +303,28 @@
     <message>
         <location filename="src/mainwindow.cpp" line="182"/>
         <source>&amp;Next</source>
-        <translation>&amp;Další</translation>
+        <translation>&amp;পরবর্তী</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="183"/>
         <source>Skip to the next track</source>
-        <translation>Přeskočit na další skladbu</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="193"/>
         <source>&amp;Play</source>
-        <translation>&amp;Přehrát</translation>
+        <translation>&amp;চালু করুন</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="194"/>
         <source>Start playback</source>
-        <translation>Začít přehrávat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="208"/>
         <location filename="src/mainwindow.cpp" line="806"/>
         <source>&amp;Full Screen</source>
-        <translation>&amp;Celá obrazovka</translation>
+        <translation>&amp;পুরো পর্দা জুড়ে</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="209"/>
@@ -334,7 +334,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="219"/>
         <source>&amp;Remove</source>
-        <translation>&amp;Odstranit</translation>
+        <translation>&amp;মুছে ফেলুন</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="220"/>
@@ -344,7 +344,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="225"/>
         <source>Move &amp;Up</source>
-        <translation>Přesunout &amp;nahoru</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="226"/>
@@ -354,7 +354,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="231"/>
         <source>Move &amp;Down</source>
-        <translation>Přesunout &amp;dolů</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="232"/>
@@ -364,22 +364,22 @@
     <message>
         <location filename="src/mainwindow.cpp" line="237"/>
         <source>&amp;Quit</source>
-        <translation>&amp;Ukončit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="239"/>
         <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="240"/>
         <source>Bye</source>
-        <translation>Nashledanou</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="244"/>
         <source>&amp;Change collection folder...</source>
-        <translation>&amp;Změnit složku s hudbou</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="245"/>
@@ -424,42 +424,42 @@
     <message>
         <location filename="src/mainwindow.cpp" line="272"/>
         <source>Remove all tracks from the playlist</source>
-        <translation>Vyprázdnit seznam skladeb</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="277"/>
         <source>&amp;Shuffle</source>
-        <translation>&amp;Zamíchat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="278"/>
         <source>Random playlist mode</source>
-        <translation>&amp;Náhodný režim</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="286"/>
         <source>&amp;Repeat</source>
-        <translation>&amp;Opakovat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="287"/>
         <source>Play first song again after all songs are played</source>
-        <translation>Přehrát první skladbu poté, co byly odehrány všechny skladby</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="319"/>
         <source>Mute volume</source>
-        <translation>Ztlumit hlasitost</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="321"/>
         <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="360"/>
         <source>&amp;Application</source>
-        <translation>&amp;Aplikace</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="367"/>
@@ -474,48 +474,48 @@
     <message>
         <location filename="src/mainwindow.cpp" line="389"/>
         <source>&amp;View</source>
-        <translation>&amp;Zobrazit</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="396"/>
         <source>&amp;Help</source>
-        <translation>&amp;Pomoc</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="458"/>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation>Stiskněte %1 pro zvýšení hlasitosti, %2 pro snížení.</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="617"/>
         <location filename="src/mainwindow.cpp" line="623"/>
         <source>Opening %1</source>
-        <translation>Otevírám %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="726"/>
         <source>Updating collection...</source>
-        <translation>Obnovuji sbírku...</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="737"/>
         <source>Updating collection - %1%</source>
-        <translation>Obnovuji sbírku - %1%</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="742"/>
         <source>Collection updated</source>
-        <translation>Sbírka obnovena</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="760"/>
         <source>Fatal error: %1</source>
-        <translation>Kritická chyba: %1</translation>
+        <translation>Fatal error: %1</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="762"/>
         <source>Error: %1</source>
-        <translation>Chyba: %1</translation>
+        <translation>ত্রুটি: %1</translation>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="830"/>
@@ -525,7 +525,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="897"/>
         <source>Remaining time: %1</source>
-        <translation>Zbývající čas: %1</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="946"/>
@@ -535,7 +535,7 @@
     <message>
         <location filename="src/mainwindow.cpp" line="952"/>
         <source>Volume is muted</source>
-        <translation>Hlasitost je ztlumena</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mainwindow.cpp" line="955"/>
@@ -578,12 +578,12 @@
     <message>
         <location filename="src/mediaview.cpp" line="227"/>
         <source>Continue</source>
-        <translation>Pokračovat</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/mediaview.cpp" line="228"/>
         <source>Get the full version</source>
-        <translation>Získejte plnou verzi</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -591,12 +591,12 @@
     <message>
         <location filename="src/playlistview.cpp" line="114"/>
         <source>Playlist is empty</source>
-        <translation>Seznam skladeb je prázdný</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="src/playlistview.cpp" line="122"/>
         <source>%1 tracks - Total length is %2</source>
-        <translation>%1 skladeb - Celková  délka je %2</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -604,7 +604,7 @@
     <message>
         <location filename="src/searchlineedit.cpp" line="173"/>
         <source>Search</source>
-        <translation>Hledat</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -612,7 +612,7 @@
     <message>
         <location filename="src/tracklistview.cpp" line="8"/>
         <source>Tracks</source>
-        <translation>Skladby</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
