@@ -812,11 +812,6 @@ void MainWindow::toggleFullscreen() {
 
     // setUpdatesEnabled(false);
 
-    // workaround: prevent focus on the search bar
-    // it steals the Space key needed for Play/Pause
-    toolbarSearch->setVisible(m_fullscreen);
-    toolbarSearch->setEnabled(m_fullscreen);
-
     if (m_fullscreen) {
         fullscreenAct->setShortcuts(QList<QKeySequence>()
                                     << QKeySequence(Qt::ALT + Qt::Key_Return)
