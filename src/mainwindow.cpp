@@ -340,7 +340,7 @@ void MainWindow::createActions() {
         // action->setToolTip(action->statusTip());
 
         // make the actions work when in fullscreen
-        // action->setShortcutContext(Qt::ApplicationShortcut);
+        action->setShortcutContext(Qt::ApplicationShortcut);
 
         // show keyboard shortcuts in the status bar
         if (!action->shortcut().isEmpty())
@@ -413,15 +413,10 @@ void MainWindow::createToolBars() {
 #endif
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
-#ifdef APP_MAC
+
     mainToolBar->addAction(skipBackwardAct);
     mainToolBar->addAction(playAct);
     mainToolBar->addAction(skipForwardAct);
-#else
-    mainToolBar->addAction(playAct);
-    mainToolBar->addAction(skipBackwardAct);
-    mainToolBar->addAction(skipForwardAct);
-#endif
 
     mainToolBar->addAction(contextualAct);
 
@@ -817,6 +812,11 @@ void MainWindow::toggleFullscreen() {
 
     // setUpdatesEnabled(false);
 
+    // workaround: prevent focus on the search bar
+    // it steals the Space key needed for Play/Pause
+    toolbarSearch->setVisible(m_fullscreen);
+    toolbarSearch->setEnabled(m_fullscreen);
+
     if (m_fullscreen) {
         fullscreenAct->setShortcuts(QList<QKeySequence>()
                                     << QKeySequence(Qt::ALT + Qt::Key_Return)
@@ -826,7 +826,7 @@ void MainWindow::toggleFullscreen() {
 
         mainToolBar->removeAction(fullscreenAct);
 
-#ifdef APP_MAC
+#if APP_MAC
         setCentralWidget(views);
         views->showNormal();
         show();
@@ -1004,6 +1004,10 @@ void MainWindow::checkForUpdate() {
 }
 
 void MainWindow::gotNewVersion(QString version) {
+#ifdef APP_MAC_STORE
+    return;
+#endif
+
     QLabel *message = new QLabel(this);
 
     QString text = tr("%1 %2 is available!").arg(
