@@ -17,7 +17,7 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     layout->setSpacing(30);
     aboutlayout->addLayout(layout);
 
-    QString info = "<html><style>a { color: palette(text); }</style><body><h1>" +
+    QString info = "<html><style>a { color: palette(text); text-decoration: none; font-weight: bold }</style><body><h1>" +
                    QString(Constants::APP_NAME) + "</h1>"
                    "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>"
                    + QString("<p><a href=\"%1/\">%1</a></p>").arg(Constants::WEBSITE) +
@@ -59,4 +59,17 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     
     layout->addLayout(buttonLayout);
     
+}
+
+void AboutView::paintEvent(QPaintEvent * /*event*/) {
+#if defined(APP_MAC) | defined(APP_WIN)
+    QBrush brush;
+    if (window()->isActiveWindow()) {
+        brush = QBrush(QColor(0xdd, 0xe4, 0xeb));
+    } else {
+        brush = palette().window();
+    }
+    QPainter painter(this);
+    painter.fillRect(0, 0, width(), height(), brush);
+#endif
 }

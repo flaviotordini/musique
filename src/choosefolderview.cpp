@@ -7,31 +7,31 @@ static const int PADDING = 30;
 
 ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
 
-    QBoxLayout *layout = new QVBoxLayout(this);
+    QBoxLayout *layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(PADDING);
     layout->setMargin(PADDING);
 
-    welcomeLayout = new QHBoxLayout();
-    welcomeLayout->setAlignment(Qt::AlignLeft);
-    welcomeLayout->setSpacing(0);
-    welcomeLayout->setMargin(0);
-    layout->addLayout(welcomeLayout);
-
     QLabel *logo = new QLabel(this);
     logo->setPixmap(QPixmap(":/images/app.png"));
-    welcomeLayout->addWidget(logo, 0, Qt::AlignTop);
+    layout->addWidget(logo, 0, Qt::AlignTop);
+
+    QBoxLayout *vLayout = new QVBoxLayout();
+    vLayout->setAlignment(Qt::AlignCenter);
+    vLayout->setSpacing(PADDING);
+    vLayout->setMargin(0);
+    layout->addLayout(vLayout);
 
     // hLayout->addSpacing(PADDING);
 
-    QLabel *welcomeLabel =
-            new QLabel("<h1>" +
+    welcomeLabel =
+            new QLabel("<h1 style='font-weight:normal'>" +
                        tr("Welcome to <a href='%1'>%2</a>,")
-                       .replace("<a ", "<a style='color:palette(text)'")
+                       .replace("<a href", "<a style='text-decoration:none; color:palette(text); font-weight:bold' href")
                        .arg(Constants::WEBSITE, Constants::APP_NAME)
                        + "</h1>", this);
     welcomeLabel->setOpenExternalLinks(true);
-    welcomeLayout->addWidget(welcomeLabel);
+    vLayout->addWidget(welcomeLabel);
 
     // layout->addSpacing(PADDING);
 
@@ -39,10 +39,10 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
             tr("%1 needs to scan your music collection.").arg(Constants::APP_NAME)
             , this);
     tipLabel->setFont(FontUtils::big());
-    layout->addWidget(tipLabel);
+    vLayout->addWidget(tipLabel);
 
     QBoxLayout *buttonLayout = new QHBoxLayout();
-    layout->addLayout(buttonLayout);
+    vLayout->addLayout(buttonLayout);
 
     cancelButton = new QPushButton(tr("Cancel"));
     connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
@@ -82,7 +82,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     privacyLabel->setFont(FontUtils::small());
     privacyLabel->setOpenExternalLinks(true);
     privacyLabel->setWordWrap(true);
-    layout->addWidget(privacyLabel);
+    vLayout->addWidget(privacyLabel);
 #endif
 
 }
@@ -113,16 +113,23 @@ void ChooseFolderView::appear() {
     if (db.status() == ScanComplete) {
         tipLabel->setText(tr("Select the location of your music collection."));
         cancelButton->show();
-        for (int i = 0; i < welcomeLayout->count(); ++i) {
-            QWidget *widget = welcomeLayout->itemAt(i)->widget();
-            if (widget) widget->hide();
-        }
+        welcomeLabel->hide();
     } else {
         tipLabel->setText(tr("%1 needs to scan your music collection.").arg(Constants::APP_NAME));
         cancelButton->hide();
-        for (int i = 0; i < welcomeLayout->count(); ++i) {
-            QWidget *widget = welcomeLayout->itemAt(i)->widget();
-            if (widget) widget->show();
-        }
+        welcomeLabel->show();
     }
+}
+
+void ChooseFolderView::paintEvent(QPaintEvent * /*event*/) {
+#if defined(APP_MAC) | defined(APP_WIN)
+    QBrush brush;
+    if (window()->isActiveWindow()) {
+        brush = QBrush(QColor(0xdd, 0xe4, 0xeb));
+    } else {
+        brush = palette().window();
+    }
+    QPainter painter(this);
+    painter.fillRect(0, 0, width(), height(), brush);
+#endif
 }
