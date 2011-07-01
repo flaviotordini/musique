@@ -15,7 +15,6 @@
 - Tracks not draggable on the Mac
 
 ## Sorely missing features
-- Search
 - QFileSystemWatcher on scanner
 - CUE file support
 - Drop area when playlist has a vertical scrollbar

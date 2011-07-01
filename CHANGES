@@ -1,4 +1,5 @@
-0.2
+1.0
+- Search
 - Playlist is persisted across sessions (Thanks to Daniele S.)
 - Drag'n'drop tip when the playlist is empty (Thanks to Daniele S.)
 - Fullscreen support on the Mac
