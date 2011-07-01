@@ -1,4 +1,4 @@
-CONFIG += debug
+CONFIG += release
 TEMPLATE = app
 VERSION = 1.0
 DEFINES += APP_VERSION="$$VERSION"
