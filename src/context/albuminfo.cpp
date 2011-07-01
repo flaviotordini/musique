@@ -31,6 +31,7 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     photoLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     layout->addWidget(photoLabel);
 
+#ifdef APP_AFFILIATE_AMAZON
     buyOnAmazonButton = new QPushButton(this);
     buyOnAmazonButton->hide();
     buyOnAmazonButton->setFont(FontUtils::small());
@@ -38,6 +39,7 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
     buyOnAmazonButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
     connect(buyOnAmazonButton, SIGNAL(clicked()), SLOT(amazonClicked()));
     layout->addWidget(buyOnAmazonButton);
+#endif
 
     wikiLabel = new QLabel(this);
     wikiLabel->setAlignment(Qt::AlignTop);
@@ -97,12 +99,14 @@ void AlbumInfo::setAlbum(Album *album) {
         photoLabel->show();
     }
 
+#ifdef APP_AFFILIATE_AMAZON
     QString query;
     if (album->getArtist())
         query = album->getArtist()->getName() + " - ";
     query += album->getTitle();
     buyOnAmazonButton->setProperty("query", query);
     buyOnAmazonButton->show();
+#endif
 
     /*
     QString qry("SELECT id FROM tracks where album=%1 order by track, title");
@@ -121,11 +125,14 @@ void AlbumInfo::clear() {
     photoLabel->clear();
     photoLabel->hide();
     wikiLabel->clear();
+#ifdef APP_AFFILIATE_AMAZON
     buyOnAmazonButton->hide();
     buyOnAmazonButton->setProperty("query", QVariant());
+#endif
     // trackListModel->clear();
 }
 
+#ifdef APP_AFFILIATE_AMAZON
 void AlbumInfo::amazonClicked() {
     QString query = buyOnAmazonButton->property("query").toString();
 
@@ -140,3 +147,4 @@ void AlbumInfo::amazonClicked() {
     url.addQueryItem("creative", "9325");
     QDesktopServices::openUrl(url);
 }
+#endif

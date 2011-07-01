@@ -17,13 +17,17 @@ public:
     void clear();
 
 private slots:
+#ifdef APP_AFFILIATE_AMAZON
     void amazonClicked();
+#endif
 
 private:
     QLabel *titleLabel;
     QLabel *photoLabel;
     QLabel *wikiLabel;
+#ifdef APP_AFFILIATE_AMAZON
     QPushButton *buyOnAmazonButton;
+#endif
 
     /*
     TrackListView *trackListView;
