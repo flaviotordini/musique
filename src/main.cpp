@@ -3,13 +3,13 @@
 #include <qtsingleapplication.h>
 #include "constants.h"
 #include "mainwindow.h"
-#ifdef APP_MAC
+#ifdef QT_MAC_USE_COCOA
 #include "local/mac/mac_startup.h"
 #endif
 
 int main(int argc, char **argv) {
 
-#ifdef APP_MAC
+#ifdef QT_MAC_USE_COCOA
     mac::MacMain();
 #endif
 
@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
     app.setWheelScrollLines(1);
-    app.setQuitOnLastWindowClosed(false);
+    // app.setQuitOnLastWindowClosed(false);
 
     const QString locale = QLocale::system().name();
 

@@ -20,7 +20,7 @@
 #ifdef Q_WS_X11
 #include "gnomeglobalshortcutbackend.h"
 #endif
-#ifdef SNOW_LEOPARD
+#ifdef QT_MAC_USE_COCOA
 #include "local/mac/mac_startup.h"
 #endif
 #include "collectionsuggester.h"
@@ -103,7 +103,7 @@ MainWindow::MainWindow() {
     if (GnomeGlobalShortcutBackend::IsGsdAvailable())
         shortcuts.setBackend(new GnomeGlobalShortcutBackend(&shortcuts));
 #endif
-#ifdef SNOW_LEOPARD
+#ifdef QT_MAC_USE_COCOA
     mac::MacSetup();
 #endif
     connect(&shortcuts, SIGNAL(PlayPause()), playAct, SLOT(trigger()));
