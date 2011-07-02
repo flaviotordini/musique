@@ -15,12 +15,13 @@
 - Tracks not draggable on the Mac
 
 ## Sorely missing features
-- QFileSystemWatcher on scanner
 - CUE file support
 - Drop area when playlist has a vertical scrollbar
 - Select all relevant tracks when clicking the playlist album header
+- Keyboard shortcut to play current finder item
 
 ## Features
+- QFileSystemWatcher on scanner
 - Ubuntu Sound Menu integration
     https://wiki.ubuntu.com/SoundMenu#Music%20player%20integration
     http://askubuntu.com/questions/7859/which-music-players-use-the-soundmenu/7883#7883
