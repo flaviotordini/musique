@@ -150,12 +150,73 @@ void Artist::fetchLastFmSearch() {
     connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
 }
 
+void Artist::parseNameAndMbid(QByteArray bytes, QString preferredValue) {
+    QXmlStreamReader xml(bytes);
+
+    QString firstValue;
+
+    /* We'll parse the XML until we reach end of it.*/
+    while(!xml.atEnd() && !xml.hasError()) {
+
+        /* Read next element.*/
+        QXmlStreamReader::TokenType token = xml.readNext();
+
+        /*
+        qDebug() << xml.name();
+        foreach (QXmlStreamAttribute attribute, xml.attributes())
+            qDebug() << attribute.name() << ":" << attribute.value();
+            */
+
+        /* If token is StartElement, we'll see if we can read it.*/
+        if(token == QXmlStreamReader::StartElement
+           && xml.name() == "name") {
+            QString text = xml.readElementText();
+            // qDebug() << element << ":" << text;
+
+            if (text == preferredValue) {
+                name = text;
+
+                // now read its mbid
+                while (!xml.atEnd() && !xml.hasError()) {
+                        QXmlStreamReader::TokenType token = xml.readNext();
+
+                        // stop at current artist to avoid getting the mbid of another one
+                        if(token == QXmlStreamReader::EndElement
+                              && xml.name() == "artist") return;
+
+                        if(token == QXmlStreamReader::StartElement
+                           && xml.name() == "mbid") {
+                           mbid = xml.readElementText();
+                           return;
+                        }
+                }
+
+                return;
+            }
+
+            if (firstValue.isNull()) firstValue = text;
+        }
+
+    }
+
+    /* Error handling. */
+    if(xml.hasError()) {
+        qDebug() << xml.errorString();
+    }
+
+    name = firstValue;
+    // and mbid should be null
+
+}
+
 void Artist::parseLastFmSearch(QByteArray bytes) {
 
     static const QString redirectToken = "+noredirect/";
 
-    mbid = DataUtils::getXMLElementText(bytes, "mbid");
-    name = DataUtils::getXMLElementText(bytes, "name");
+    // mbid = DataUtils::getXMLElementText(bytes, "mbid");
+    // name = DataUtils::getXMLElementTextWithPreferredValue(bytes, "name", name);
+
+    parseNameAndMbid(bytes, name);
 
     if (mbid.isEmpty()) {
         QString urlString = DataUtils::getXMLElementText(bytes, "url");

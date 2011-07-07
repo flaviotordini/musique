@@ -74,6 +74,7 @@ private slots:
     void setPhoto(QByteArray bytes);
 
 private:
+    void parseNameAndMbid(QByteArray bytes, QString preferredName);
     static QString getHash(QString);
 
     static QHash<int, Artist*> cache;
