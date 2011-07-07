@@ -112,6 +112,7 @@ private:
     QStringList nontrackPaths;
 
     QStringList directoryBlacklist;
+    QStringList fileExtensionsBlacklist;
 
 };
 

@@ -15,6 +15,8 @@ CollectionScanner::CollectionScanner(QObject *parent) :
     QString iTunesAlbumArtwork = QDesktopServices::storageLocation(QDesktopServices::MusicLocation) + "/iTunes/Album Artwork";
     directoryBlacklist.append(iTunesAlbumArtwork);
 #endif
+
+    fileExtensionsBlacklist << "jpg" << "png" << "gif" << "txt" << "doc" << "rtf" << "pdf" << "db" << "cue" << "log" << "zip" << "rar" << "dmg" << "iso";
 }
 
 void CollectionScanner::reset() {
@@ -106,7 +108,7 @@ void CollectionScanner::popFromQueue() {
     qDebug() << "Processing " << fileInfo.absoluteFilePath();
 
     // parse metadata with TagLib
-    TagLib::FileRef fileref(fileInfo.absoluteFilePath().toUtf8());
+    TagLib::FileRef fileref((TagLib::FileName)fileInfo.absoluteFilePath().toUtf8());
     // or maybe QFile::encodeName(p_FilePath).data()
 
     // if taglib cannot parse the file, drop it
@@ -285,6 +287,12 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
     static const int MAX_FILE_SIZE = 1024 * 1024 * 1024;
     // skip big files
     if (fileInfo.size() > MAX_FILE_SIZE) {
+        qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
+        return;
+    }
+
+    // blacklist image files and other common file extensions
+    if (fileExtensionsBlacklist.contains(fileInfo.suffix().toLower())) {
         qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
         return;
     }
