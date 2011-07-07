@@ -6,6 +6,10 @@
 #ifdef QT_MAC_USE_COCOA
 #include "local/mac/mac_startup.h"
 #endif
+#ifdef APP_WIN
+#include "qtwin.h"
+#include "winsupport.h"
+#endif
 
 int main(int argc, char **argv) {
 
@@ -65,6 +69,14 @@ int main(int argc, char **argv) {
         // appIcon.addPixmap(QPixmap(png));
     }
     mainWin.setWindowIcon(appIcon);
+#endif
+
+#ifdef APP_WIN
+    if (QtWin::isCompositionEnabled()) {
+        QtWin::extendFrameIntoClientArea(&mainWin);
+        mainWin.setContentsMargins(0, 0, 0, 0);
+    }
+    app.setFont(QFont("Segoe UI", 9));
 #endif
 
     mainWin.show();

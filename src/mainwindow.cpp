@@ -396,7 +396,7 @@ void MainWindow::createMenus() {
 
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->addAction(siteAct);
-#if !defined(APP_MAC) && !defined(Q_WS_WIN)
+#if !defined(APP_MAC) && !defined(APP_WIN)
     helpMenu->addAction(donateAct);
 #endif
     helpMenu->addAction(aboutAct);
@@ -408,11 +408,23 @@ void MainWindow::createToolBars() {
     mainToolBar = new QToolBar(this);
 #if QT_VERSION < 0x040600
     mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+#elif defined(APP_WIN)
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    mainToolBar->setStyleSheet(
+            "QToolBar {"
+                "background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #fff, stop:.5 #ececec, stop:.51 #e0e0e0, stop:1 #ccc);"
+                "border: 0;"
+                "border-bottom: 1px solid #a0afc3;"
+            "}");
 #else
     mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 #endif
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
+
+#if defined(APP_MAC) | defined(APP_WIN)
+    mainToolBar->setIconSize(QSize(32, 32));
+#endif
 
     mainToolBar->addAction(skipBackwardAct);
     mainToolBar->addAction(playAct);
@@ -469,8 +481,7 @@ void MainWindow::createToolBars() {
 void MainWindow::createStatusBar() {
 
     // remove ugly borders on OSX
-    statusBar()->setStyleSheet(
-                "::item{border:0 solid} QStatusBar, QToolBar {padding:0;margin:0} QToolButton {padding:1px}");
+    statusBar()->setStyleSheet("::item{border:0 solid} QToolBar {padding:0;spacing:0;margin:0;border:0}");
 
     statusToolBar = new QToolBar(this);
     statusToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -555,9 +566,8 @@ void MainWindow::showView(QWidget* widget) {
         statusBar()->showMessage((metadata.value("description").toString()));
     }
 
-#ifndef APP_MAC
+
     fullscreenAct->setEnabled(widget == mediaView || widget == contextualView);
-#endif
     aboutAct->setEnabled(widget != aboutView);
     chooseFolderAct->setEnabled(widget != chooseFolderView && widget != collectionScannerView);
 
@@ -570,7 +580,7 @@ void MainWindow::showView(QWidget* widget) {
 
     mainToolBar->setVisible(true);
     statusBar()->setVisible(true);
-#ifdef APP_MAC
+#if defined(APP_MAC) || defined(APP_WIN)
     // crossfade only on OSX
     // where we can be sure of video performance
     // crossfadeViews(views->currentWidget(), widget);

@@ -237,10 +237,10 @@ void THBlackBar::drawButton (	QPainter *painter,
 
     painter->fillRect(0, 0, width, mh, QBrush(gradient));
     painter->fillRect(0, mh, width, mh, color);
-#ifdef APP_MAC
+#if defined(APP_MAC) | defined(APP_WIN)
     painter->drawRect(-1, -1, width+1, height);
 #else
-    painter->drawRect(0, 0, width, height-1);
+    painter->drawRect(0, 0, width, height);
 #endif
     QFont smallerBoldFont = FontUtils::smallBold();
     painter->setFont(smallerBoldFont);
