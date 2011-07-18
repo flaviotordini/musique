@@ -223,7 +223,7 @@ QString CollectionScanner::directoryHash(QDir directory) {
 
 QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
     // qDebug() << "Hashing" << directory.absolutePath();
-    directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
+    directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
     QFileInfoList list = directory.entryInfoList();
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
@@ -257,7 +257,7 @@ void CollectionScanner::scanDirectory(QDir directory) {
         const QDir dir = stack.pop();
         const QFileInfoList flist = dir.entryInfoList(
                 QDir::NoDotAndDotDot |
-                QDir::Dirs | QDir::Files
+                QDir::Dirs | QDir::Files | QDir::Readable
                 );
 
         QFileInfo fileInfo;
