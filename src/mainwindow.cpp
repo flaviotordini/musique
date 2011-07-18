@@ -1036,9 +1036,10 @@ QString MainWindow::playlistPath() {
 }
 
 void MainWindow::savePlaylist() {
+    if (!mediaView) return;
+
     const PlaylistModel* playlistModel = mediaView->getPlaylistModel();
-    if (playlistModel == 0)
-        return;
+    if (!playlistModel) return;
 
     QString plsPath = playlistPath();
 
