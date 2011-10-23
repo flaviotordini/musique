@@ -17,14 +17,14 @@ void UpdateChecker::checkForUpdate() {
 #ifdef APP_MAC
     updateUrl.addQueryItem("os", "mac");
 #endif
-#ifdef APP_MAC_STORE
-    updateUrl.addQueryItem("appstore", "");
-#endif
 #ifdef APP_WIN
     updateUrl.addQueryItem("os", "win");
 #endif
 #ifdef APP_DEMO
     updateUrl.addQueryItem("t", "demo");
+#endif
+#ifdef APP_MAC_STORE
+    updateUrl.addQueryItem("store", "mac");
 #endif
 
 
