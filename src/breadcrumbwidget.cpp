@@ -20,6 +20,7 @@ BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
     connect(backAction, SIGNAL(triggered()), SIGNAL(goneBack()));
     addAction(backAction);
 
+    setStyleSheet("QToolButton { color:white } QToolBar { border:0 }");
 }
 
 void BreadcrumbWidget::addItem(QString title) {
