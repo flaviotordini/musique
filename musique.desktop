@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Musique
+Comment=Play your music collection
+GenericName=Music Player
+Exec=musique
+Terminal=false
+Type=Application
+Icon=minitunes
+Categories=Qt;Audio;Music;Player;AudioVideo;
+StartupNotify=true
