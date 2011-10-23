@@ -2,7 +2,7 @@
 #include "constants.h"
 #include <QDesktopServices>
 
-static const QString dbName = "minitunes.db";
+static const QString dbName = QLatin1String(Constants::UNIX_NAME) + ".db";
 static Database *databaseInstance = 0;
 
 Database::Database() {

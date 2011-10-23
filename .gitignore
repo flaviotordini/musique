@@ -1,6 +1,6 @@
 build/
 Makefile*
-minitunes.pro.user
+*.pro.user
 .settings/
 .DS_Store
 .cproject
@@ -8,3 +8,4 @@ minitunes.pro.user
 stuff
 *.sh
 local/
+.tx/

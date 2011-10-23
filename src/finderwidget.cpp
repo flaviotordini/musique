@@ -49,12 +49,11 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
     // colors
     QPalette p = palette();
-    p.setBrush(QPalette::Window, Qt::black);
     p.setBrush(QPalette::Text, Qt::white);
+    p.setBrush(QPalette::Foreground, QColor(0xdc, 0xdc, 0xdc));
     p.setBrush(QPalette::WindowText, Qt::white);
     p.setBrush(QPalette::ButtonText, Qt::white);
     setPalette(p);
-    setAutoFillBackground(true);
 
     QBoxLayout *layout = new QVBoxLayout();
     layout->setMargin(0);
@@ -78,10 +77,40 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->addWidget(stackedWidget);
     setLayout(layout);
 
-    setMinimumWidth(150 * 3 + 8 + style()->pixelMetric(QStyle::PM_ScrollBarExtent));
+    setMinimumWidth(150 * 3 + 4 + style()->pixelMetric(QStyle::PM_ScrollBarExtent));
     setMinimumHeight(150 + finderBar->minimumHeight());
 
     restoreSavedView();
+
+}
+
+void FinderWidget::paintEvent(QPaintEvent*) {
+
+    QPainter painter(this);
+
+    const int hCenter = width() * .5;
+    QRadialGradient gradient(hCenter, 0,
+                             width(),
+                             hCenter, 0);
+    gradient.setColorAt(1, QColor(0x00, 0x00, 0x00));
+    gradient.setColorAt(0, QColor(0x2c, 0x2c, 0x2c));
+
+    QRect rect = visibleRegion().boundingRect().adjusted(0, finderBar->height(), 0, 0);
+    painter.fillRect(rect, QBrush(gradient));
+
+    QLinearGradient shadow;
+    shadow.setColorAt(0, QColor(0x00, 0x00, 0x00, 64));
+    shadow.setColorAt(1, QColor(0x00, 0x00, 0x00, 0));
+
+    QRect shadowRect(rect.x(), rect.y(), rect.width(), 20);
+    shadow.setStart(shadowRect.topLeft());
+    shadow.setFinalStop(shadowRect.bottomLeft());
+    painter.fillRect(shadowRect, QBrush(shadow));
+
+    shadowRect = QRect(rect.width() - 20, rect.y(), 20, rect.height());
+    shadow.setStart(shadowRect.topRight());
+    shadow.setFinalStop(shadowRect.topLeft());
+    painter.fillRect(shadowRect, QBrush(shadow));
 
 }
 
@@ -217,8 +246,8 @@ void FinderWidget::showAlbums() {
     if (!albumListView) setupAlbums();
 
     albumListModel->setQuery(
-            "select id from albums where trackCount>1 order by artist, year desc, trackCount desc",
-            Database::instance().getConnection());
+                "select id from albums where trackCount>1 order by artist, year desc, trackCount desc",
+                Database::instance().getConnection());
     if (albumListModel->lastError().isValid())
         qDebug() << albumListModel->lastError();
 

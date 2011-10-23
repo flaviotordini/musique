@@ -5,12 +5,15 @@
 ArtistInfo::ArtistInfo(QWidget *parent) :
         QWidget(parent) {
 
+    setPalette(parent->palette());
+
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     layout->setSpacing(20);
     layout->setMargin(20);
 
     titleLabel = new QLabel(this);
+    titleLabel->setPalette(parent->palette());
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::bigBold());
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -29,6 +32,7 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
     layout->addWidget(photoLabel);
 
     bioLabel = new QLabel(this);
+    bioLabel->setPalette(parent->palette());
     bioLabel->setTextFormat(Qt::RichText);
     bioLabel->setAlignment(Qt::AlignTop);
     bioLabel->setOpenExternalLinks(true);

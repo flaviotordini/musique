@@ -13,13 +13,14 @@ class ContextualView;
 class SearchLineEdit;
 class Track;
 class UpdateChecker;
+class FaderWidget;
 
 class MainWindow : public QMainWindow {
 
     Q_OBJECT
 
 public:
-    MainWindow();
+    static MainWindow* instance();
     ~MainWindow();
 
 public slots:
@@ -28,10 +29,16 @@ public slots:
     void toggleContextualView();
     void hideContextualView();
     void updateContextualView(Track *track);
+    void showInitialView();
+#ifdef APP_DEMO
+    void showDemoDialog(QString message);
+    void buy();
+#endif
 
 protected:
     void closeEvent(QCloseEvent *);
     bool eventFilter(QObject *obj, QEvent *event);
+    void resizeEvent(QResizeEvent *);
 
 private slots:
     void crossfadeViews(QWidget *oldWidget, QWidget *newWidget);
@@ -41,8 +48,10 @@ private slots:
     void about();
     void quit();
     void toggleFullscreen();
+    void updateUIForFullscreen();
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
+    void checkForUpdate();
     void gotNewVersion(QString version);
     void enableUnifiedToolbar() {
         setUnifiedTitleAndToolBarOnMac(true);
@@ -72,6 +81,7 @@ private slots:
     void searchCleared();
 
 private:
+    MainWindow();
     void showView(QWidget*);
     void createActions();
     void createMenus();
@@ -80,13 +90,13 @@ private:
     void readSettings();
     void writeSettings();
     void initPhonon();
-    void checkForUpdate();
     static QString formatTime(qint64 time);
     QString playlistPath();
     void savePlaylist();
     void loadPlaylist();
 
     // view mechanism
+    QPointer<FaderWidget> faderWidget;
     QStackedWidget *views;
     QStack<QWidget*> *history;
 

@@ -28,7 +28,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
             new QLabel("<h1 style='font-weight:normal'>" +
                        tr("Welcome to <a href='%1'>%2</a>,")
                        .replace("<a href", "<a style='text-decoration:none; color:palette(text); font-weight:bold' href")
-                       .arg(Constants::WEBSITE, Constants::APP_NAME)
+                       .arg(Constants::WEBSITE, Constants::NAME)
                        + "</h1>", this);
     welcomeLabel->setOpenExternalLinks(true);
     vLayout->addWidget(welcomeLabel);
@@ -36,7 +36,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     // layout->addSpacing(PADDING);
 
     tipLabel = new QLabel(
-            tr("%1 needs to scan your music collection.").arg(Constants::APP_NAME)
+            tr("%1 needs to scan your music collection.").arg(Constants::NAME)
             , this);
     tipLabel->setFont(FontUtils::big());
     vLayout->addWidget(tipLabel);
@@ -76,7 +76,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     QLabel *privacyLabel =
             new QLabel(
                     tr("%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.")
-                    .arg(Constants::APP_NAME) + " " +
+                    .arg(Constants::NAME) + " " +
                     tr("If you have privacy concerns about this you can quit now.")
                     , this);
     privacyLabel->setFont(FontUtils::small());
@@ -115,7 +115,7 @@ void ChooseFolderView::appear() {
         cancelButton->show();
         welcomeLabel->hide();
     } else {
-        tipLabel->setText(tr("%1 needs to scan your music collection.").arg(Constants::APP_NAME));
+        tipLabel->setText(tr("%1 needs to scan your music collection.").arg(Constants::NAME));
         cancelButton->hide();
         welcomeLabel->show();
     }

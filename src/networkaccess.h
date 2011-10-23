@@ -4,7 +4,7 @@
 #include <QtNetwork>
 #include "constants.h"
 
-static const QString USER_AGENT = QString(Constants::APP_NAME)
+static const QString USER_AGENT = QString(Constants::NAME)
                                   + " " + Constants::VERSION
                                   + " (" + Constants::WEBSITE + ")";
 
@@ -48,18 +48,9 @@ public:
     QNetworkReply* simpleGet(QUrl url, int operation = QNetworkAccessManager::GetOperation);
     NetworkReply* get(QUrl url);
     NetworkReply* head(QUrl url);
-    QNetworkReply* syncGet(QUrl url);
-    QByteArray syncGetBytes(QUrl url);
-    QString syncGetString(QUrl url);
 
 private slots:
     void error(QNetworkReply::NetworkError);
-    void syncMetaDataChanged();
-    void syncFinished();
-
-private:
-    QNetworkReply *networkReply;
-    bool working;
 
 };
 

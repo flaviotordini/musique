@@ -2,7 +2,7 @@
 #include "droparea.h"
 #include "playlistview.h"
 
-PlaylistWidget::PlaylistWidget(
+PlaylistArea::PlaylistArea(
         PlaylistView *playlistView, DropArea *dropArea, QWidget *parent)
             : QWidget(parent) {
 

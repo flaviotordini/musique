@@ -76,6 +76,7 @@ private:
     Track *activeTrack;
 
     QString errorMessage;
+
 };
 
 #endif // PLAYLISTMODEL_H

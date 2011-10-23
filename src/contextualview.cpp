@@ -6,6 +6,7 @@
 
 ContextualView::ContextualView(QWidget *parent) :
         QScrollArea(parent) {
+    setPalette(parent->palette());
     scrollingContextualView = new ScrollingContextualView(this);
     setFrameShape(QFrame::NoFrame);
     setWidgetResizable(true);
@@ -56,14 +57,26 @@ ScrollingContextualView::ScrollingContextualView(QWidget *parent) :
     layout->addWidget(trackInfo);
 
     setLayout(layout);
-    
+
 }
 
 void ScrollingContextualView::paintEvent(QPaintEvent * /*event*/) {
     QPainter painter(this);
-    const int gradientHeight = parentWidget()->height();
-    QLinearGradient linearGrad(0, 0, 0, gradientHeight);
-    linearGrad.setColorAt(0, QColor(0x0, 0x0, 0x0));
-    linearGrad.setColorAt(1, QColor(0x30, 0x30, 0x30));
-    painter.fillRect(0, 0, width(), gradientHeight, QBrush(linearGrad));
+
+    const int hCenter = width() * .5;
+    QRadialGradient gradient(hCenter, 0,
+                             width(),
+                             hCenter, 0);
+    gradient.setColorAt(1, QColor(0x00, 0x00, 0x00));
+    gradient.setColorAt(0, QColor(0x4c, 0x4c, 0x4c));
+
+    QRect rect = visibleRegion().boundingRect();
+    painter.fillRect(rect, QBrush(gradient));
+
+    QLinearGradient shadow;
+    shadow.setFinalStop(0, 20);
+    shadow.setColorAt(0, QColor(0x00, 0x00, 0x00, 48));
+    shadow.setColorAt(1, QColor(0x00, 0x00, 0x00, 0));
+    painter.fillRect(rect.x(), rect.y(), rect.width(), 20, QBrush(shadow));
+
 }

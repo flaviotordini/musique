@@ -8,12 +8,15 @@
 AlbumInfo::AlbumInfo(QWidget *parent) :
         QWidget(parent) {
 
+    setPalette(parent->palette());
+
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     layout->setSpacing(20);
     layout->setMargin(20);
 
     titleLabel = new QLabel(this);
+    titleLabel->setPalette(parent->palette());
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::bigBold());
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -42,6 +45,7 @@ AlbumInfo::AlbumInfo(QWidget *parent) :
 #endif
 
     wikiLabel = new QLabel(this);
+    wikiLabel->setPalette(parent->palette());
     wikiLabel->setAlignment(Qt::AlignTop);
     wikiLabel->setOpenExternalLinks(true);
     wikiLabel->setWordWrap(true);

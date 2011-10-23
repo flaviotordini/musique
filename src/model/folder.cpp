@@ -38,7 +38,7 @@ Album* Folder::getAlbum() {
 
     QSqlQuery query(db);
     query.prepare("select id from albums where title like ? limit 1");
-    query.bindValue(0, "%" + dir.dirName() + "%");
+    query.bindValue(0, QString("%" + dir.dirName() + "%"));
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
     if (query.next()) {
@@ -51,7 +51,7 @@ Artist* Folder::getArtist() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select artist from tracks where path like ? limit 1");
-    query.bindValue(0, path + "/%");
+    query.bindValue(0, QString(path + "/%"));
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
     if (query.next()) {
@@ -98,7 +98,7 @@ QList<Track*> Folder::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select id from tracks where path like ? order by artist, album, track, path");
-    query.bindValue(0, relativePath + "/%");
+    query.bindValue(0, QString(relativePath + "/%"));
     bool success = query.exec();
     if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();

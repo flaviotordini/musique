@@ -6,12 +6,12 @@
 class PlaylistView;
 class DropArea;
 
-class PlaylistWidget : public QWidget {
+class PlaylistArea : public QWidget {
 
     Q_OBJECT;
 
 public:
-    PlaylistWidget(PlaylistView *playlistView, DropArea *dropArea, QWidget *parent);
+    PlaylistArea(PlaylistView *playlistView, DropArea *dropArea, QWidget *parent);
 
 };
 

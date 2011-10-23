@@ -335,6 +335,7 @@ void Album::parseLastFmInfo(QByteArray bytes) {
             // TODO check at least parent element name
             else if(xml.name() == "content") {
                 QString bio = xml.readElementText();
+                bio.remove(QRegExp("User-contributed text.*"));
                 // qDebug() << name << " got wiki";
                 if (!bio.isEmpty()) {
                     // store bio

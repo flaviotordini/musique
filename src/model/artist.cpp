@@ -328,6 +328,10 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
             else if(!gotBio && xml.name() == "content") {
                 gotBio = true;
                 bio = xml.readElementText();
+
+                static QRegExp licenseRE("User-contributed text is available.*");
+                bio.remove(licenseRE);
+
                 // qDebug() << name << " got bio";
                 if (!bio.isEmpty()) {
                     // store bio

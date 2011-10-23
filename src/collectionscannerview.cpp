@@ -13,7 +13,7 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
     layout->setMargin(PADDING);
 
     QLabel *tipLabel = new QLabel(
-            tr("%1 is scanning your music collection.").arg(Constants::APP_NAME)
+            tr("%1 is scanning your music collection.").arg(Constants::NAME)
             , this);
     tipLabel->setFont(FontUtils::big());
     layout->addWidget(tipLabel);
@@ -24,7 +24,7 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent
 
     tipLabel = new QLabel("<html><style>a { color: palette(text); }</style><body>" +
             tr("%1 is using <a href='%2'>%3</a> to catalog your music.")
-            .arg(Constants::APP_NAME, "http://last.fm", "Last.fm")
+            .arg(Constants::NAME, "http://last.fm", "Last.fm")
             + " " +
             tr("This will take time depending on your collection size and network speed.")
             + "</body></html>"

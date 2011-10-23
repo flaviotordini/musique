@@ -3,14 +3,25 @@
 #include "trackmimedata.h"
 #include "model/album.h"
 #include "model/artist.h"
+#include "mainwindow.h"
 
 namespace The {
-    QMap<QString, QAction*>* globalActions();
+QMap<QString, QAction*>* globalActions();
 }
+
+#ifdef APP_DEMO
+    static const int demoMaxTracks = 10;
+    static QString demoMessage;
+#endif
 
 PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
     activeTrack = 0;
     activeRow = -1;
+
+#ifdef APP_DEMO
+    demoMessage = tr("This demo is limited to only %1 tracks in the playlist.").arg(QString::number(demoMaxTracks));
+#endif
+
 }
 
 int PlaylistModel::rowCount(const QModelIndex & /* parent */) const {
@@ -172,6 +183,14 @@ void PlaylistModel::addShuffledTrack(Track* track) {
 void PlaylistModel::addTrack(Track* track) {
     // no duplicates
     if (!tracks.contains(track)) {
+
+#ifdef APP_DEMO
+        if (this->tracks.size() >= demoMaxTracks) {
+            MainWindow::instance()->showDemoDialog(demoMessage);
+            return;
+        }
+#endif
+
         track->setPlayed(false);
         connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
         beginInsertRows(QModelIndex(), tracks.size(), tracks.size());
@@ -187,14 +206,31 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
             tracks.removeAll(track);
         }
         if (!tracks.empty()) {
-            beginInsertRows(QModelIndex(), this->tracks.size(), this->tracks.size() + tracks.size() - 1);
-            this->tracks.append(tracks);
-            endInsertRows();
 
-            foreach (Track *track, tracks) {
+#ifdef APP_DEMO
+            if (this->tracks.size() >= demoMaxTracks) {
+                MainWindow::instance()->showDemoDialog(demoMessage);
+                return;
+            }
+#endif
+
+            beginInsertRows(QModelIndex(), this->tracks.size(), this->tracks.size() + tracks.size() - 1);
+            // this->tracks.append(tracks);
+            foreach(Track* track, tracks) {
+
+#ifdef APP_DEMO
+                if (this->tracks.size() >= demoMaxTracks) {
+                    endInsertRows();
+                    MainWindow::instance()->showDemoDialog(demoMessage);
+                    return;
+                }
+#endif
+
+                this->tracks.append(track);
                 track->setPlayed(false);
                 connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
             }
+            endInsertRows();
 
         }
     }
@@ -311,6 +347,13 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
         if (trackRow != -1)
             removeRows(trackRow, 1, QModelIndex());
 
+#ifdef APP_DEMO
+        if (this->tracks.size() >= demoMaxTracks) {
+            MainWindow::instance()->showDemoDialog(demoMessage);
+            return true;
+        }
+#endif
+
         // and then add it at the new position
         const int targetRow = beginRow + counter;
         beginInsertRows(QModelIndex(), targetRow, targetRow);
@@ -420,7 +463,7 @@ bool PlaylistModel::loadFrom(QTextStream & stream)
     stream >> header;
     while ( !stream.atEnd() )
     {
-        QString line = stream.readLine(1024);        
+        QString line = stream.readLine(1024);
         if ( line.startsWith("File") )
         {
             QString path = line.section("=", -1);

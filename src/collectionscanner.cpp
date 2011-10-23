@@ -105,7 +105,7 @@ void CollectionScanner::popFromQueue() {
     }
 
     QFileInfo fileInfo = fileQueue.first();
-    qDebug() << "Processing " << fileInfo.absoluteFilePath();
+    // qDebug() << "Processing " << fileInfo.absoluteFilePath();
 
     // parse metadata with TagLib
     TagLib::FileRef fileref((TagLib::FileName)fileInfo.absoluteFilePath().toUtf8());
@@ -287,13 +287,13 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
     static const int MAX_FILE_SIZE = 1024 * 1024 * 1024;
     // skip big files
     if (fileInfo.size() > MAX_FILE_SIZE) {
-        qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
+        // qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
         return;
     }
 
     // blacklist image files and other common file extensions
     if (fileExtensionsBlacklist.contains(fileInfo.suffix().toLower())) {
-        qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
+        // qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
         return;
     }
 
@@ -535,7 +535,7 @@ void CollectionScanner::gotAlbumInfo() {
     int albumId = Album::idForName(album->getTitle());
     album->setId(albumId);
     if (albumId < 0) {
-        qDebug() << "We have a new cool album:" << album->getTitle();
+        // qDebug() << "We have a new cool album:" << album->getTitle();
         album->insert();
         // TODO last insert id
         albumId = Album::idForName(album->getTitle());

@@ -21,6 +21,7 @@
 - Keyboard shortcut to play current finder item
 
 ## Features
+- Stop after this track
 - QFileSystemWatcher on scanner
 - Ubuntu Sound Menu integration
     https://wiki.ubuntu.com/SoundMenu#Music%20player%20integration
@@ -35,7 +36,6 @@
 - "Drag things here" as empty playlist background
 - Finder: Highlight currently playing items (Artists, Albums, Folders)
 - Scanner: hanging HTTP requests
-- Search suggestions
 - Stop when finished
 - Artist hover: show number of album, songs & total duration on the status bar
 - Playlist editing undo

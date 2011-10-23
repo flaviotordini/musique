@@ -11,6 +11,7 @@ AutoComplete::AutoComplete(QWidget *parent, QLineEdit *editor):
     popup->installEventFilter(this);
     popup->setMouseTracking(true);
     popup->setWindowOpacity(.9);
+    popup->setProperty("suggest", true);
 
     connect(popup, SIGNAL(itemClicked(QListWidgetItem*)),
             SLOT(doneCompletion()));

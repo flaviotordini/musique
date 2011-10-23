@@ -3,8 +3,9 @@
 
 #include <QMimeData>
 #include "model/track.h"
+#include "constants.h"
 
-const QString TRACK_MIME = "application/x-minitunes-tracks";
+static const QString TRACK_MIME = "application/x-" + QLatin1String(Constants::UNIX_NAME) + "-tracks";
 
 class TrackMimeData : public QMimeData {
 

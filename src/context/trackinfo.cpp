@@ -5,12 +5,15 @@
 TrackInfo::TrackInfo(QWidget *parent) :
         QWidget(parent) {
 
+    setPalette(parent->palette());
+
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     layout->setSpacing(20);
     layout->setMargin(20);
 
     titleLabel = new QLabel(this);
+    titleLabel->setPalette(palette());
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::bigBold());
     titleLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
@@ -22,6 +25,7 @@ TrackInfo::TrackInfo(QWidget *parent) :
     */
 
     lyricsLabel = new QLabel(this);
+    lyricsLabel->setPalette(parent->palette());
     lyricsLabel->setTextFormat(Qt::RichText);
     lyricsLabel->setAlignment(Qt::AlignTop);
     lyricsLabel->setWordWrap(true);

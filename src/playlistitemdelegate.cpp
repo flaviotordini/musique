@@ -114,6 +114,7 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
         paintTrackNumber(painter, option, line, track);
     }
 
+    // qDebug() << "painting" << track;
     paintTrackTitle(painter, option, line, track);
     paintTrackLength(painter, option, line, track);
 

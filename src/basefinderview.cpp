@@ -26,6 +26,7 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     QPalette p = palette();
     p.setBrush(QPalette::Base, Qt::black);
     p.setBrush(QPalette::Text, Qt::white);
+    p.setColor(QPalette::Background, Qt::transparent);
     this->setPalette(p);
 
     // dragndrop
@@ -36,6 +37,7 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     this->setFrameShape( QFrame::NoFrame );
     this->setAttribute(Qt::WA_MacShowFocusRect, false);
+    // setStyleSheet("background:transparent");
 
     verticalScrollBar()->setPageStep(3);
     verticalScrollBar()->setSingleStep(1);
@@ -90,12 +92,12 @@ void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
 
 }
 
-void BaseFinderView::mousePressEvent(QMouseEvent *event) {
+void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton
         && isHoveringPlayIcon(event)) {
         emit play(indexAt(event->pos()));
     } else {
-        QListView::mousePressEvent(event);
+        QListView::mouseReleaseEvent(event);
     }
 }
 

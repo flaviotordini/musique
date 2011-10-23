@@ -14,7 +14,7 @@ class DropArea;
 
 class MediaView : public QWidget, public View {
 
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     MediaView(QWidget *parent);
@@ -41,6 +41,10 @@ private slots:
     void stateChanged(Phonon::State newState, Phonon::State oldState);
     void handleError(QString message);
     void playlistFinished();
+    void playbackFinished();
+#ifdef APP_DEMO
+    void updateContinueButton(int);
+#endif
 
 private:
     QSplitter *splitter;
@@ -48,13 +52,13 @@ private:
     FinderWidget *finderWidget;
     PlaylistView *playlistView;
     PlaylistModel *playlistModel;
-    PlaylistWidget *playlistWidget;
+    PlaylistArea *playlistWidget;
     QTimer *errorTimer;
     DropArea *dropArea;
     Track *activeTrack;
 
 #ifdef APP_DEMO
-    void demoExpired();
+    void demoMessage();
     int tracksPlayed;
 #endif
 

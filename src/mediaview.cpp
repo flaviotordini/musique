@@ -7,8 +7,8 @@
 #include "constants.h"
 
 namespace The {
-    QMap<QString, QAction*>* globalActions();
-    QMap<QString, QMenu*>* globalMenus();
+QMap<QString, QAction*>* globalActions();
+QMap<QString, QMenu*>* globalMenus();
 }
 
 MediaView::MediaView(QWidget *parent) : QWidget(parent) {
@@ -49,12 +49,12 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     // connect(playlistView, SIGNAL(needDropArea()), SLOT(showDropArea()));
 
     // playlist widget, handles the playlist/droparea layout
-    PlaylistWidget *playlistWidget = new PlaylistWidget(playlistView, dropArea, this);
+    PlaylistArea *playlistWidget = new PlaylistArea(playlistView, dropArea, this);
     splitter->addWidget(playlistWidget);
 
     finderWidget->setPlaylistView(playlistView);
 
-    splitter->setStretchFactor(0, 4);
+    splitter->setStretchFactor(0, 6);
     splitter->setStretchFactor(1, 1);
 
     // restore splitter state
@@ -76,6 +76,7 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
     this->mediaObject = mediaObject;
     // connect(mediaObject, SIGNAL(aboutToFinish()), this, SLOT(aboutToFinish()));
+    connect(mediaObject, SIGNAL(finished()), SLOT(playbackFinished()));
     connect(mediaObject, SIGNAL(finished()), playlistModel, SLOT(skipForward()));
     connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
             SLOT(stateChanged(Phonon::State, Phonon::State)));
@@ -105,7 +106,7 @@ void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/)
 
     case Phonon::StoppedState:
         // reset window title
-        window()->setWindowTitle(Constants::APP_NAME);
+        window()->setWindowTitle(Constants::NAME);
         break;
 
     case Phonon::PausedState:
@@ -160,11 +161,6 @@ void MediaView::activeRowChanged(int row, bool manual) {
     }
     window()->setWindowTitle(windowTitle);
 
-#ifdef APP_DEMO
-    if (tracksPlayed > 1) demoExpired();
-    else tracksPlayed++;
-#endif
-
 }
 
 void MediaView::handleError(QString message) {
@@ -213,30 +209,63 @@ void MediaView::playlistFinished() {
     if (mainWindow) mainWindow->statusBar()->showMessage(tr("Playlist finished"));
 }
 
+void MediaView::playbackFinished() {
 #ifdef APP_DEMO
-void MediaView::demoExpired() {
+    if (tracksPlayed > 1) demoMessage();
+    else tracksPlayed++;
+#endif
+}
+
+#ifdef APP_DEMO
+
+static QPushButton *continueButton;
+
+void MediaView::demoMessage() {
     mediaObject->pause();
 
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(QPixmap(":/images/app.png").scaled(80, 80, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    msgBox.setText(tr("This is just the demo version of %1.").arg(Constants::APP_NAME));
+    msgBox.setIconPixmap(QPixmap(":/data/128x128/musictube.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    msgBox.setText(tr("This is just the demo version of %1.").arg(Constants::NAME));
     msgBox.setInformativeText(tr("It allows you to play a few tracks so you can test the application and see if it works for you."));
     msgBox.setModal(true);
     // make it a "sheet" on the Mac
     msgBox.setWindowModality(Qt::WindowModal);
 
-    QPushButton *quitButton = msgBox.addButton(tr("Continue"), QMessageBox::RejectRole);
+    continueButton = msgBox.addButton("5", QMessageBox::RejectRole);
+    continueButton->setEnabled(false);
     QPushButton *buyButton = msgBox.addButton(tr("Get the full version"), QMessageBox::ActionRole);
+
+    QTimeLine *timeLine = new QTimeLine(6000, this);
+    timeLine->setCurveShape(QTimeLine::LinearCurve);
+    timeLine->setFrameRange(5, 0);
+    connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updateContinueButton(int)));
+    timeLine->start();
 
     msgBox.exec();
 
     if (msgBox.clickedButton() == buyButton) {
-        QDesktopServices::openUrl(QString(Constants::WEBSITE) + "#download");
+        QDesktopServices::openUrl(QUrl(QString(Constants::WEBSITE) + "#download"));
     }
 
     tracksPlayed = 0;
+
+    delete timeLine;
+
 }
+
+void MediaView::updateContinueButton(int value) {
+    if (value == 0) {
+        continueButton->setText(tr("Continue"));
+        continueButton->setEnabled(true);
+    } else {
+        continueButton->setText(QString::number(value));
+    }
+}
+
 #endif
+
+
+
 
 void MediaView::search(QString query) {
     finderWidget->showSearch(query);
