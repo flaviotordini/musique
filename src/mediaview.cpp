@@ -224,7 +224,7 @@ void MediaView::demoMessage() {
     mediaObject->pause();
 
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(QPixmap(":/data/128x128/musictube.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    msgBox.setIconPixmap(QPixmap(":/data/app.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     msgBox.setText(tr("This is just the demo version of %1.").arg(Constants::NAME));
     msgBox.setInformativeText(tr("It allows you to play a few tracks so you can test the application and see if it works for you."));
     msgBox.setModal(true);
