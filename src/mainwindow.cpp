@@ -431,14 +431,6 @@ void MainWindow::createToolBars() {
     mainToolBar = new QToolBar(this);
 #if QT_VERSION < 0x040600
     mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-#elif defined(APP_WIN)
-    mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-    mainToolBar->setStyleSheet(
-            "QToolBar {"
-                "background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #fff, stop:.5 #ececec, stop:.51 #e0e0e0, stop:1 #ccc);"
-                "border: 0;"
-                "border-bottom: 1px solid #a0afc3;"
-            "}");
 #else
     mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
 #endif

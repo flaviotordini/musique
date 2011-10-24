@@ -35,6 +35,12 @@ int main(int argc, char **argv) {
     app.setStyleSheet(QLatin1String(file.readAll()));
 #endif
 
+#ifdef APP_WIN
+    QFile file(":/win.css");
+    file.open(QFile::ReadOnly);
+    app.setStyleSheet(QLatin1String(file.readAll()));
+#endif
+
     const QString locale = QLocale::system().name();
 
     // qt translations
@@ -86,7 +92,7 @@ int main(int argc, char **argv) {
 
 #ifdef APP_WIN
     if (QtWin::isCompositionEnabled()) {
-        QtWin::extendFrameIntoClientArea(&mainWin);
+        QtWin::extendFrameIntoClientArea(mainWin);
         mainWin->setContentsMargins(0, 0, 0, 0);
     }
     app.setFont(QFont("Segoe UI", 9));
