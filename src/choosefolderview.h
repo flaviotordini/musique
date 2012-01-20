@@ -29,6 +29,7 @@ private slots:
     void chooseFolder();
     void systemDirChosen();
     void iTunesDirChosen();
+    void folderChosen(const QString &folder);
 
 private:
     QLabel *welcomeLabel;

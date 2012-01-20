@@ -88,14 +88,24 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
 }
 
 void ChooseFolderView::chooseFolder() {
-    QString dir = QFileDialog::getExistingDirectory(this, tr("Where's your music collection?"),
+#ifdef APP_MAC
+    QFileDialog* dialog = new QFileDialog(this);
+    dialog->setFileMode(QFileDialog::Directory);
+    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
+    dialog->setDirectory(QDesktopServices::storageLocation(QDesktopServices::HomeLocation));
+    dialog->open(this, SLOT(folderChosen(const QString &)));
+#else
+    QString folder = QFileDialog::getExistingDirectory(window(), tr("Where's your music collection?"),
                                                     QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
-                                                    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+                                                    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
+    folderChosen(folder);
+#endif
+}
 
-    if (!dir.isEmpty()) {
-        emit locationChanged(dir);
+void ChooseFolderView::folderChosen(const QString &folder) {
+    if (!folder.isEmpty()) {
+        emit locationChanged(folder);
     }
-
 }
 
 void ChooseFolderView::systemDirChosen() {
