@@ -22,8 +22,6 @@ protected:
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 
-    bool playIconHovered;
-
 private:
     bool isHoveringPlayIcon(QMouseEvent *event);
 

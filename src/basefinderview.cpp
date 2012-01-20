@@ -7,8 +7,6 @@
 
 BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
-    playIconHovered = false;
-
     this->setItemDelegate(new FinderItemDelegate(this));
     this->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
