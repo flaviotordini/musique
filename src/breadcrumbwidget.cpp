@@ -3,13 +3,6 @@
 
 BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
 
-    QPalette p = palette();
-    p.setBrush(QPalette::Window, Qt::black);
-    p.setBrush(QPalette::Text, Qt::white);
-    p.setBrush(QPalette::WindowText, Qt::white);
-    p.setBrush(QPalette::ButtonText, Qt::white);
-    setPalette(p);
-
     backAction = new QAction(
             QtIconLoader::icon("go-previous"),
             tr("&Back"), this);
@@ -20,7 +13,7 @@ BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
     connect(backAction, SIGNAL(triggered()), SIGNAL(goneBack()));
     addAction(backAction);
 
-    setStyleSheet("QToolButton { color:white } QToolBar { border:0 }");
+    setStyleSheet("QToolButton { color:white } QToolBar { background: black; border:0 }");
 }
 
 void BreadcrumbWidget::addItem(QString title) {
