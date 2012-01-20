@@ -5,6 +5,6 @@ GenericName=Music Player
 Exec=musique
 Terminal=false
 Type=Application
-Icon=minitunes
+Icon=musique
 Categories=Qt;Audio;Music;Player;AudioVideo;
 StartupNotify=true
