@@ -102,6 +102,10 @@ QString Artist::getHash(QString name) {
     return DataUtils::normalizeTag(name);
 }
 
+QString Artist::getStatusTip() {
+    return name;
+}
+
 void Artist::fetchInfo() {
     fetchLastFmSearch();
 }
@@ -307,7 +311,7 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
                 if (QFile::exists(imageLocation)) {
                     QFileInfo imageFileInfo(imageLocation);
                     const uint imagelastModified = imageFileInfo.lastModified().toTime_t();
-                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*30) {
+                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*60) {
                         imageAlreadyPresent = true;
                     }
                 }

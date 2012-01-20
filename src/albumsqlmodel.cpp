@@ -30,6 +30,10 @@ QVariant AlbumSqlModel::data(const QModelIndex &index, int role) const
     case Finder::PlayIconHoveredRole:
         return playIconHovered;
 
+    case Qt::StatusTipRole:
+        album = Album::forId(QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt());
+        return album->getStatusTip();
+
     }
 
     return QVariant();

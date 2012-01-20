@@ -116,6 +116,15 @@ QString Album::getHash(QString name) {
     return DataUtils::normalizeTag(name);
 }
 
+QString Album::getStatusTip() {
+    QString tip = "◯ ";
+    Artist* artist = getArtist();
+    if (artist) tip += artist->getName() + " - ";
+    tip += getTitle();
+    if (year) tip += " (" + QString::number(year) + ")";
+    return tip;
+}
+
 void Album::fetchInfo() {
     // an artist name is needed in order to fix the album title
     // also workaround last.fm bug with selftitled albums
@@ -301,7 +310,7 @@ void Album::parseLastFmInfo(QByteArray bytes) {
                 if (QFile::exists(imageLocation)) {
                     QFileInfo imageFileInfo(imageLocation);
                     const uint imagelastModified = imageFileInfo.lastModified().toTime_t();
-                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*30) {
+                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*60) {
                         imageAlreadyPresent = true;
                     }
                 }

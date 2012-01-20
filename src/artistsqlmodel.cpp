@@ -28,6 +28,11 @@ QVariant ArtistSqlModel::data(const QModelIndex &index, int role) const {
     case Finder::PlayIconHoveredRole:
         return playIconHovered;
 
+    case Qt::StatusTipRole:
+        artistId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
+        artist = Artist::forId(artistId);
+        return artist->getStatusTip();
+
     }
 
     return QVariant();

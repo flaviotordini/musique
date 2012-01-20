@@ -20,6 +20,7 @@ public:
         tracks << this;
         return tracks;
     }
+    QString getStatusTip();
 
     // properties
     QString getName() { return title; }

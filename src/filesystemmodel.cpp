@@ -47,6 +47,15 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
     case Finder::PlayIconHoveredRole:
         return playIconHovered;
 
+    case Qt::StatusTipRole:
+        if (!isDir(index)) {
+            path = QFileSystemModel::data(index, QFileSystemModel::FilePathRole).toString();
+            path.remove(Database::instance().collectionRoot() + "/");
+            track = Track::forPath(path);
+            return track->getStatusTip();
+        }
+        return QVariant();
+
     default:
         return QFileSystemModel::data(index, role);
 

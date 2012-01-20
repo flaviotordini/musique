@@ -15,6 +15,7 @@ public:
 
     // item
     QList<Track*> getTracks();
+    QString getStatusTip();
 
     // properties
     QString getName() { return name; }

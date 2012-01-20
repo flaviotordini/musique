@@ -286,6 +286,18 @@ QString Track::getHash(QString name) {
     return DataUtils::normalizeTag(name);
 }
 
+QString Track::getStatusTip() {
+    QString tip = "♫ ";
+    Artist* artist = getArtist();
+    if (artist) tip += artist->getName() + " - ";
+    Album* album = getAlbum();
+    if (album) tip += album->getName() + " - ";
+    tip += getTitle();
+    int duration = getLength();
+    if (duration) tip += " (" + QString::number(duration) + ")";
+    return tip;
+}
+
 void Track::fetchInfo() {
     emit gotInfo();
     // fetchMusicBrainzTrack();
@@ -325,6 +337,12 @@ QString Track::getAbsolutePath() {
 }
 
 void Track::getLyrics() {
+#ifdef APP_MAC_STORE
+    bool haveStyle = (QFile::exists(qApp->applicationDirPath() + "/../Resources/style.css"));
+    if (!haveStyle) {
+        return;
+    }
+#endif
 
     QString artistName;
     if (artist) artistName = artist->getName();
