@@ -2,19 +2,20 @@
 #include "suggester.h"
 
 AutoComplete::AutoComplete(QWidget *parent, QLineEdit *editor):
-        QObject(parent), buddy(parent), editor(editor), suggester(0) {
+    QObject(parent), buddy(parent), editor(editor), suggester(0) {
 
     enabled = true;
 
     popup = new QListWidget;
     popup->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    popup->installEventFilter(this);
     popup->setMouseTracking(true);
     popup->setWindowOpacity(.9);
-    popup->setProperty("suggest", true);
+    popup->installEventFilter(this);
+    popup->setWindowFlags(Qt::Popup);
+    popup->setFocusPolicy(Qt::NoFocus);
+    popup->setFocusProxy(parent);
 
-    connect(popup, SIGNAL(itemClicked(QListWidgetItem*)),
-            SLOT(doneCompletion()));
+    connect(popup, SIGNAL(itemClicked(QListWidgetItem*)), SLOT(doneCompletion()));
 
     // connect(popup, SIGNAL(currentItemChanged(QListWidgetItem *, QListWidgetItem *)),
     //    SLOT(currentItemChanged(QListWidgetItem *)));
@@ -23,15 +24,15 @@ AutoComplete::AutoComplete(QWidget *parent, QLineEdit *editor):
     // connect(popup, SIGNAL(itemEntered(QListWidgetItem*)),
     //    SLOT(currentItemChanged(QListWidgetItem *)));
 
-    popup->setWindowFlags(Qt::Popup);
-    popup->setFocusPolicy(Qt::NoFocus);
-    popup->setFocusProxy(parent);
-
     timer = new QTimer(this);
     timer->setSingleShot(true);
-    timer->setInterval(300);
+    timer->setInterval(600);
     connect(timer, SIGNAL(timeout()), SLOT(autoSuggest()));
+#ifdef APP_MAC
+    connect(parent, SIGNAL(textChanged(QString)), timer, SLOT(start()));
+#else
     connect(editor, SIGNAL(textEdited(QString)), timer, SLOT(start()));
+#endif
 
 }
 
@@ -120,7 +121,7 @@ void AutoComplete::showCompletion(const QStringList &choices) {
 
     popup->move(buddy->mapToGlobal(QPoint(0, buddy->height())));
 
-    popup->setFocus();
+    // popup->setFocus();
     popup->show();
 }
 
@@ -131,11 +132,7 @@ void AutoComplete::doneCompletion() {
     QListWidgetItem *item = popup->currentItem();
     if (item) {
         editor->setText(item->text());
-        QKeyEvent *e;
-        e = new QKeyEvent(QEvent::KeyPress, Qt::Key_Enter, Qt::NoModifier);
-        QApplication::postEvent(editor, e);
-        e = new QKeyEvent(QEvent::KeyRelease, Qt::Key_Enter, Qt::NoModifier);
-        QApplication::postEvent(editor, e);
+        emit suggestionAccepted(item->text());
     }
 }
 
@@ -163,7 +160,10 @@ void AutoComplete::autoSuggest() {
     QString query = editor->text();
     originalText = query;
     // qDebug() << "originalText" << originalText;
-    if (query.isEmpty()) return;
+    if (query.isEmpty()) {
+        popup->hide();
+        return;
+    }
 
     if (suggester)
         suggester->suggest(query);

@@ -12,7 +12,7 @@
 class Tags {
 
 public:
-    Tags() : track(0), year(0), length(0) { };
+    Tags() : track(0), year(0), length(0) { }
     QString title;
     QString artist;
     QString album;
@@ -81,7 +81,6 @@ private slots:
     void processAlbum(FileInfo *file);
     void gotAlbumInfo();
     void processTrack(FileInfo *file);
-    void gotTrackInfo();
     void emitFinished();
 
 private:

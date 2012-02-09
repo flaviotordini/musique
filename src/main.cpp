@@ -8,7 +8,6 @@
 #include "macfullscreen.h"
 #endif
 #ifdef APP_WIN
-#include "qtwin.h"
 #include "winsupport.h"
 #endif
 #include "iconloader/qticonloader.h"
@@ -27,7 +26,6 @@ int main(int argc, char **argv) {
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
     app.setWheelScrollLines(1);
-    app.setQuitOnLastWindowClosed(false);
 
 #ifdef APP_MAC
     QFile file(":/mac.css");
@@ -47,6 +45,7 @@ int main(int argc, char **argv) {
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + locale,
                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
+    // qWarning() << "Qt translations:" << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
     app.installTranslator(&qtTranslator);
 
     // app translations
@@ -68,6 +67,7 @@ int main(int argc, char **argv) {
     mainWin->setWindowTitle(Constants::NAME);
 
 #ifdef APP_MAC
+    app.setQuitOnLastWindowClosed(false);
     mac::SetupFullScreenWindow(mainWin->winId());
 #endif
 
@@ -91,10 +91,6 @@ int main(int argc, char **argv) {
 #endif
 
 #ifdef APP_WIN
-    if (QtWin::isCompositionEnabled()) {
-        QtWin::extendFrameIntoClientArea(mainWin);
-        mainWin->setContentsMargins(0, 0, 0, 0);
-    }
     app.setFont(QFont("Segoe UI", 9));
 #endif
 

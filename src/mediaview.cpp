@@ -5,6 +5,7 @@
 #include "droparea.h"
 #include "minisplitter.h"
 #include "constants.h"
+#include "lastfm.h"
 
 namespace The {
 QMap<QString, QAction*>* globalActions();
@@ -77,7 +78,6 @@ void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
     this->mediaObject = mediaObject;
     // connect(mediaObject, SIGNAL(aboutToFinish()), this, SLOT(aboutToFinish()));
     connect(mediaObject, SIGNAL(finished()), SLOT(playbackFinished()));
-    connect(mediaObject, SIGNAL(finished()), playlistModel, SLOT(skipForward()));
     connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
             SLOT(stateChanged(Phonon::State, Phonon::State)));
     //connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)),
@@ -140,6 +140,8 @@ void MediaView::activeRowChanged(int row, bool manual) {
     mediaObject->setCurrentSource(path);
     mediaObject->play();
 
+    track->setStartTime(QDateTime::currentDateTime().toTime_t());
+
     // ensure active item is visible
     QModelIndex index = playlistModel->indexForTrack(track);
     if (manual)
@@ -160,6 +162,16 @@ void MediaView::activeRowChanged(int row, bool manual) {
         windowTitle += " - " + artist->getName();
     }
     window()->setWindowTitle(windowTitle);
+
+    // enable/disable actions
+    The::globalActions()->value("stopafterthis")->setEnabled(true);
+
+    // scrobbling
+    QSettings settings;
+    if (settings.value("scrobbling").toBool() &&
+            LastFm::instance().isAuthorized()) {
+        LastFm::instance().nowPlaying(track);
+    }
 
 }
 
@@ -214,6 +226,24 @@ void MediaView::playbackFinished() {
     if (tracksPlayed > 1) demoMessage();
     else tracksPlayed++;
 #endif
+
+    // scrobbling
+    bool needScrobble = false;
+    Track *track = 0;
+    QSettings settings;
+    if (settings.value("scrobbling").toBool() &&
+            LastFm::instance().isAuthorized()) {
+        track = playlistModel->getActiveTrack();
+        needScrobble = true;
+    }
+
+    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
+    if (stopAfterThisAction->isChecked()) {
+        stopAfterThisAction->setChecked(false);
+    } else playlistModel->skipForward();
+
+    if (needScrobble && track) LastFm::instance().scrobble(track);
+
 }
 
 #ifdef APP_DEMO
@@ -263,9 +293,6 @@ void MediaView::updateContinueButton(int value) {
 }
 
 #endif
-
-
-
 
 void MediaView::search(QString query) {
     finderWidget->showSearch(query);

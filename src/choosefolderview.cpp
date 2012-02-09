@@ -98,14 +98,12 @@ void ChooseFolderView::chooseFolder() {
     QString folder = QFileDialog::getExistingDirectory(window(), tr("Where's your music collection?"),
                                                     QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
-    folderChosen(folder);
+    if (!folder.isEmpty()) emit locationChanged(folder);
 #endif
 }
 
 void ChooseFolderView::folderChosen(const QString &folder) {
-    if (!folder.isEmpty()) {
-        emit locationChanged(folder);
-    }
+    if (!folder.isEmpty()) emit locationChanged(folder);
 }
 
 void ChooseFolderView::systemDirChosen() {

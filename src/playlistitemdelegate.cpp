@@ -288,7 +288,11 @@ void PlaylistItemDelegate::paintTrackLength(
     QPoint textLoc(PADDING*10, 0);
     QRect trackTextBox(textLoc.x(), textLoc.y(), line.width() - textLoc.x() - PADDING, line.height());
 
+    const bool isSelected = option.state & QStyle::State_Selected;
+    painter->save();
+    if (!isSelected) painter->setPen(option.palette.color(QPalette::Mid));
     painter->drawText(trackTextBox, Qt::AlignRight | Qt::AlignVCenter, trackLength);
+    painter->restore();
 
 }
 

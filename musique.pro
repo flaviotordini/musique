@@ -1,8 +1,9 @@
 CONFIG += release
+DEFINES += QT_NO_DEBUG_OUTPUT
 
 TEMPLATE = app
 
-VERSION = 1.0
+VERSION = 1.1
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
@@ -23,7 +24,7 @@ QT += network \
     phonon \
     sql
 include(src/qtsingleapplication/qtsingleapplication.pri)
-include(src/thlibrary/thlibrary.pri)
+
 HEADERS += src/mainwindow.h \
     src/aboutview.h \
     src/view.h \
@@ -85,7 +86,12 @@ HEADERS += src/mainwindow.h \
     src/searchview.h \
     src/searchmodel.h \
     src/collectionsuggester.h \
-    src/diskcache.h
+    src/diskcache.h \
+    src/segmentedcontrol.h \
+    src/coverutils.h \
+    src/lastfmlogindialog.h \
+    src/lastfm.h \
+    src/imagedownloader.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -144,7 +150,12 @@ SOURCES += src/main.cpp \
     src/searchview.cpp \
     src/searchmodel.cpp \
     src/collectionsuggester.cpp \
-    src/diskcache.cpp
+    src/diskcache.cpp \
+    src/segmentedcontrol.cpp \
+    src/coverutils.cpp \
+    src/lastfmlogindialog.cpp \
+    src/lastfm.cpp \
+    src/imagedownloader.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

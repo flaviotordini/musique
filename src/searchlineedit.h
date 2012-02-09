@@ -81,6 +81,7 @@ class SearchLineEdit : public ExLineEdit
 signals:
     void textChanged(const QString &text);
     void search(const QString &text);
+    void suggestionAccepted(const QString &suggestion);
 
 public:
     SearchLineEdit(QWidget *parent = 0);
@@ -93,7 +94,7 @@ public:
     void updateGeometries();
     void enableSuggest();
     void preventSuggest();
-    void selectAll() { lineEdit()->selectAll(); };
+    void selectAll() { lineEdit()->selectAll(); }
     void setSuggester(Suggester *suggester) { completion->setSuggester(suggester); }
 
 protected:

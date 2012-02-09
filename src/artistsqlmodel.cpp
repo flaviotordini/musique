@@ -1,4 +1,5 @@
 #include "artistsqlmodel.h"
+#include "mainwindow.h"
 
 ArtistSqlModel::ArtistSqlModel(QObject *parent) : BaseSqlModel(parent) {
 
@@ -17,6 +18,7 @@ QVariant ArtistSqlModel::data(const QModelIndex &index, int role) const {
     case Finder::DataObjectRole:
         artistId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
         artist = Artist::forId(artistId);
+        connect(artist, SIGNAL(gotPhoto()), MainWindow::instance(), SLOT(update()), Qt::UniqueConnection);
         return QVariant::fromValue(QPointer<Artist>(artist));
 
     case Finder::HoveredItemRole:

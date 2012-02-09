@@ -2,21 +2,28 @@
 #include "database.h"
 #include "model/track.h"
 #include "datautils.h"
+#include "coverutils.h"
+#include "imagedownloader.h"
 
 CollectionScanner::CollectionScanner(QObject *parent) :
-        QObject(parent),
-        working(false),
-        stopped(false),
-        incremental(false),
-        lastUpdate(0),
-        maxQueueSize(0) {
+    QObject(parent),
+    working(false),
+    stopped(false),
+    incremental(false),
+    lastUpdate(0),
+    maxQueueSize(0) {
 
 #ifdef APP_MAC
     QString iTunesAlbumArtwork = QDesktopServices::storageLocation(QDesktopServices::MusicLocation) + "/iTunes/Album Artwork";
     directoryBlacklist.append(iTunesAlbumArtwork);
 #endif
 
-    fileExtensionsBlacklist << "jpg" << "png" << "gif" << "txt" << "doc" << "rtf" << "pdf" << "db" << "cue" << "log" << "zip" << "rar" << "dmg" << "iso";
+    fileExtensionsBlacklist
+            << "jpg" << "png" << "gif" << "bmp"
+            << "txt" << "doc" << "rtf" << "pdf"
+            << "db" << "log"
+            << "zip" << "rar" << "dmg" << "iso"
+            << "m3u" << "pls" << "cue";
 }
 
 void CollectionScanner::reset() {
@@ -54,6 +61,7 @@ void CollectionScanner::run() {
             // qDebug() << "Nothing changed since the last time";
             stopped = false;
             working = false;
+            Database::instance().closeConnection();
             QTimer::singleShot(0, this, SLOT(emitFinished()));
             return;
         }
@@ -156,6 +164,7 @@ void CollectionScanner::stop() {
     if (working) {
         qDebug() << "Scan stopped";
         Database::instance().getConnection().rollback();
+        Database::instance().closeConnection();
         stopped = true;
         working = false;
         qDebug() << "stop thread" << thread();
@@ -176,7 +185,7 @@ void CollectionScanner::complete() {
 
     if (!incremental) {
         if (!Database::instance().getConnection().commit()) {
-            qDebug() << "Commit failed!";
+            qWarning() << "Commit failed!";
         }
     }
 
@@ -191,6 +200,7 @@ void CollectionScanner::complete() {
     stopped = false;
     working = false;
 
+    Database::instance().closeConnection();
 
     qDebug() << "Scan complete";
 
@@ -198,7 +208,6 @@ void CollectionScanner::complete() {
 }
 
 void CollectionScanner::emitFinished() {
-    // qDebug() << "emitFinished()";
     emit finished();
 }
 
@@ -231,10 +240,10 @@ QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
             // this is a directory, recurse
             QString subDirPath = fileInfo.absoluteFilePath();
 #ifdef APP_MAC
-                if (directoryBlacklist.contains(subDirPath)) {
-                    // qDebug() << "Skipping directory" << subDirPath;
-                    continue;
-                }
+            if (directoryBlacklist.contains(subDirPath)) {
+                // qDebug() << "Skipping directory" << subDirPath;
+                continue;
+            }
 #endif
             hash += DataUtils::md5(treeFingerprint(QDir(subDirPath), hash));
         } else {
@@ -256,9 +265,9 @@ void CollectionScanner::scanDirectory(QDir directory) {
 
         const QDir dir = stack.pop();
         const QFileInfoList flist = dir.entryInfoList(
-                QDir::NoDotAndDotDot |
-                QDir::Dirs | QDir::Files | QDir::Readable
-                );
+                    QDir::NoDotAndDotDot |
+                    QDir::Dirs | QDir::Files | QDir::Readable
+                    );
 
         QFileInfo fileInfo;
         Q_FOREACH(fileInfo, flist) {
@@ -291,8 +300,10 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
         return;
     }
 
+    // skip UNIX hidden files
     // blacklist image files and other common file extensions
-    if (fileExtensionsBlacklist.contains(fileInfo.suffix().toLower())) {
+    if (fileInfo.baseName().isEmpty() ||
+            fileExtensionsBlacklist.contains(fileInfo.suffix().toLower())) {
         // qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
         return;
     }
@@ -429,6 +440,11 @@ void CollectionScanner::gotArtistInfo() {
     }
     artist->setId(artistId);
 
+    // now that we have an id, let's enqueue the cover image download
+    QString imageUrl = artist->property("imageUrl").toString();
+    if (!imageUrl.isEmpty())
+        ImageDownloader::enqueue(artistId, ImageDownloader::ArtistType, imageUrl);
+
     const QString hash = artist->property("originalHash").toString();
     QList<FileInfo *> files = filesWaitingForArtists.value(hash);
     filesWaitingForArtists.remove(hash);
@@ -488,6 +504,20 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     album->setYear(file->getTags()->year);
     album->setProperty("originalHash", album->getHash());
 
+    // local covers
+    const QString imageLocation = album->getImageLocation();
+    if (!QFile::exists(imageLocation)) {
+        const QString filePath = file->getFileInfo().absolutePath();
+        bool localCover = false;
+        localCover = CoverUtils::coverFromFile(filePath, imageLocation);
+        if (!localCover) {
+            localCover = CoverUtils::coverFromTags(filePath, imageLocation);
+            if (localCover)
+                qDebug() << "Found embedded cover for" << filePath;
+        }
+        if (localCover) album->setProperty("localCover", true);
+    }
+
     Artist *artist = file->getArtist();
     if (artist && artist->getId() > 0) album->setArtist(artist);
     else qDebug() << "Album" << album->getTitle() << "lacks an artist";
@@ -499,7 +529,7 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     }
     if (filesWaitingForAlbums.contains(album->getHash())) {
         qDebug() << "ERROR Processing album multiple times!"
-                << album->getTitle() << album->getHash() << file->getFileInfo().baseName();
+                 << album->getTitle() << album->getHash() << file->getFileInfo().baseName();
         return;
     }
 
@@ -544,6 +574,11 @@ void CollectionScanner::gotAlbumInfo() {
         album->update();
     }
     album->setId(albumId);
+
+    // now that we have an id, let's enqueue the cover image download
+    QString imageUrl = album->property("imageUrl").toString();
+    if (!imageUrl.isEmpty())
+        ImageDownloader::enqueue(albumId, ImageDownloader::AlbumType, imageUrl);
 
     // continue the processing of blocked files
     // qDebug() << files.size() << "files were waiting for album" << album->getTitle();
@@ -603,27 +638,13 @@ void CollectionScanner::processTrack(FileInfo *file) {
     track->setArtist(artist);
     // }
 
+    if (album)
+        album->fixTrackTitle(track);
+
     // qDebug() << "Removing" << file->getFileInfo().baseName() << "from queue";
     if (!fileQueue.removeAll(file->getFileInfo())) {
         qDebug() << "Cannot remove file from queue";
     }
-
-    connect(track, SIGNAL(gotInfo()), SLOT(gotTrackInfo()));
-    track->fetchInfo();
-
-    // http://musicbrainz.org/ws/1/release/579278d5-75dc-4d2f-a5f3-6cc86f6c510e?type=xml&inc=tracks
-
-}
-
-void CollectionScanner::gotTrackInfo() {
-
-    // get the Track that sent the signal
-    Track *track = static_cast<Track *>(sender());
-    if (!track) {
-        qDebug() << "Cannot get sender";
-        return;
-    }
-    // qDebug() << "got info for track" << track->getTitle();
 
     if (incremental && Track::exists(track->getPath())) {
         qDebug() << "Updating track:" << track->getTitle();

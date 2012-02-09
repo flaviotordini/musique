@@ -2,5 +2,9 @@
     <qresource prefix="/">
         <file>images/app.png</file>
         <file>images/missing.png</file>
+        <file>images/audioscrobbler.png</file>
+        <file>images/item/album.png</file>
+        <file>images/item/artist.png</file>
+        <file>images/item/track.png</file>
     </qresource>
 </RCC>

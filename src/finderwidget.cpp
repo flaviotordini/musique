@@ -1,6 +1,6 @@
 #include "finderwidget.h"
 
-#include "thlibrary/thblackbar.h"
+#include "segmentedcontrol.h"
 
 #include "breadcrumbwidget.h"
 
@@ -87,6 +87,7 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 void FinderWidget::paintEvent(QPaintEvent*) {
 
     QPainter painter(this);
+    painter.translate(0, stackedWidget->y());
 
     const int hCenter = width() * .5;
     QRadialGradient gradient(hCenter, 0,
@@ -95,7 +96,7 @@ void FinderWidget::paintEvent(QPaintEvent*) {
     gradient.setColorAt(1, QColor(0x00, 0x00, 0x00));
     gradient.setColorAt(0, QColor(0x2c, 0x2c, 0x2c));
 
-    QRect rect = visibleRegion().boundingRect().adjusted(0, finderBar->height(), 0, 0);
+    QRect rect = visibleRegion().boundingRect();
     painter.fillRect(rect, QBrush(gradient));
 
     QLinearGradient shadow;
@@ -130,36 +131,32 @@ void FinderWidget::restoreSavedView() {
 }
 
 void FinderWidget::setupBar() {
-    finderBar = new THBlackBar(this);
+    finderBar = new SegmentedControl(this);
 
     artistsAction = new QAction(tr("Artists"), this);
-    QKeySequence keySequence(Qt::CTRL + Qt::Key_1);
-    artistsAction->setShortcut(keySequence);
-    artistsAction->setStatusTip(artistsAction->text() + " (" +
-                                keySequence.toString(QKeySequence::NativeText) + ")");
-    addAction(artistsAction);
+    artistsAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
     connect(artistsAction, SIGNAL(triggered()), SLOT(showArtists()));
     finderBar->addAction(artistsAction);
 
     albumsAction = new QAction(tr("Albums"), this);
-    keySequence = QKeySequence(Qt::CTRL + Qt::Key_2);
-    albumsAction->setShortcut(keySequence);
-    albumsAction->setStatusTip(albumsAction->text() + " (" +
-                               keySequence.toString(QKeySequence::NativeText) + ")");
-    addAction(albumsAction);
+    albumsAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
     connect(albumsAction, SIGNAL(triggered()), SLOT(showAlbums()));
     finderBar->addAction(albumsAction);
 
     foldersAction = new QAction(tr("Folders"), this);
-    keySequence = QKeySequence(Qt::CTRL + Qt::Key_3);
-    foldersAction->setShortcut(keySequence);
-    foldersAction->setStatusTip(foldersAction->text() + " (" +
-                                keySequence.toString(QKeySequence::NativeText) + ")");
-    addAction(foldersAction);
+    foldersAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
     connect(foldersAction, SIGNAL(triggered()), SLOT(showFolders()));
     finderBar->addAction(foldersAction);
 
+    foreach (QAction* action, finderBar->actions()) {
+        addAction(action);
+        action->setAutoRepeat(false);
+        if (!action->shortcut().isEmpty())
+            action->setStatusTip(action->text() + " (" + action->shortcut().toString(QKeySequence::NativeText) + ")");
+    }
+
     finderBar->setCheckedAction(0);
+
 }
 
 void FinderWidget::setupArtists() {
@@ -374,7 +371,7 @@ void FinderWidget::artistActivated(Artist *artist) {
         qDebug() << albumListModel->lastError();
 
     albumListView->setWindowTitle(artist->getName());
-
+    albumListView->scrollToTop();
     showWidget(albumListView, false);
 }
 
@@ -400,6 +397,7 @@ void FinderWidget::albumActivated ( Album* album) {
         qDebug() << trackListModel->lastError();
 
     trackListView->setWindowTitle(album->getName());
+    trackListView->scrollToTop();
     showWidget(trackListView, false);
 
 }

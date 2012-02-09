@@ -65,12 +65,12 @@ QPixmap FinderItemDelegate::createMissingItemBackground() const {
     return missingItemBackground;
 }
 
-QPixmap FinderItemDelegate::createMissingItemPixmap() const {
+QPixmap FinderItemDelegate::createMissingItemPixmap(QString type) const {
 
     QPixmap missingItemPixmap = QPixmap(getMissingItemBackground());
     QPainter painter(&missingItemPixmap);
 
-    QPixmap missingIcon = QPixmap::fromImage(QImage(":/images/missing.png"));
+    QPixmap missingIcon = QPixmap::fromImage(QImage(":/images/item/" + type + ".png"));
     painter.setOpacity(.1);
     painter.drawPixmap((ITEM_WIDTH - missingIcon.width()) / 2, (ITEM_HEIGHT - missingIcon.height()) / 3, missingIcon);
 
@@ -102,10 +102,26 @@ QPixmap FinderItemDelegate::getMissingItemBackground() const {
     return missingItemBackground;
 }
 
-QPixmap FinderItemDelegate::getMissingItemPixmap() const {
+QPixmap FinderItemDelegate::getMissingArtistPixmap() const {
     static QPixmap missingItemPixmap;
     if (missingItemPixmap.isNull()) {
-        missingItemPixmap = createMissingItemPixmap();
+        missingItemPixmap = createMissingItemPixmap("artist");
+    }
+    return missingItemPixmap;
+}
+
+QPixmap FinderItemDelegate::getMissingAlbumPixmap() const {
+    static QPixmap missingItemPixmap;
+    if (missingItemPixmap.isNull()) {
+        missingItemPixmap = createMissingItemPixmap("album");
+    }
+    return missingItemPixmap;
+}
+
+QPixmap FinderItemDelegate::getMissingTrackPixmap() const {
+    static QPixmap missingItemPixmap;
+    if (missingItemPixmap.isNull()) {
+        missingItemPixmap = createMissingItemPixmap("track");
     }
     return missingItemPixmap;
 }
@@ -153,7 +169,7 @@ void FinderItemDelegate::paintArtist(QPainter* painter,
 
     // thumb
     QPixmap pixmap = getArtistPixmap(artist);
-    if (pixmap.isNull()) pixmap = getMissingItemPixmap();
+    if (pixmap.isNull()) pixmap = getMissingArtistPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
     // play icon overlayed on the thumb
@@ -194,7 +210,7 @@ void FinderItemDelegate::paintAlbum(QPainter* painter,
 
     // thumb
     QPixmap pixmap = getAlbumPixmap(album);
-    if (pixmap.isNull()) pixmap = getMissingItemPixmap();
+    if (pixmap.isNull()) pixmap = getMissingAlbumPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
     // play icon overlayed on the thumb

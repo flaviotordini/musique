@@ -10,6 +10,10 @@
 #include <QtNetwork>
 #include "../mbnetworkaccess.h"
 
+#include <mpegfile.h>
+#include <id3v2tag.h>
+#include <unsynchronizedlyricsframe.h>
+
 namespace The {
     NetworkAccess* http();
 }
@@ -20,9 +24,12 @@ Track::Track() {
     number = 0;
     year = 0;
     length = 0;
+    /*
     start = 0;
     end = 0;
+    */
     played = false;
+    startTime = 0;
 }
 
 QHash<int, Track*> Track::cache;
@@ -337,7 +344,7 @@ QString Track::getAbsolutePath() {
 }
 
 void Track::getLyrics() {
-#ifdef APP_MAC_STORE
+#ifdef APP_MAC_STORE_NO
     bool haveStyle = (QFile::exists(qApp->applicationDirPath() + "/../Resources/style.css"));
     if (!haveStyle) {
         return;
@@ -386,7 +393,9 @@ void Track::parseLyricsSearchResults(QByteArray bytes) {
     QString lyricsUrl = DataUtils::getXMLElementText(bytes, "url");
     if (lyricsUrl.contains("action=edit")) {
         // Lyrics not found
-        qDebug() << "Lyrics not available for" << title;
+        // qDebug() << "Lyrics not available for" << title;
+        readLyricsFromTags();
+
     } else {
         // Lyrics found, get them
         QUrl url = QUrl::fromEncoded(lyricsUrl.toUtf8());
@@ -433,6 +442,7 @@ void Track::scrapeLyrics(QByteArray bytes) {
     // drop partial lyrics
     if (lyrics.indexOf("Special:Random") != -1) {
         qDebug() << "Discarding incomplete lyrics for" << title;
+        readLyricsFromTags();
         return;
     }
 
@@ -455,6 +465,31 @@ void Track::scrapeLyrics(QByteArray bytes) {
     }
 
     emit gotLyrics(lyrics);
+}
+
+void Track::readLyricsFromTags() {
+
+    const QString absolutePath = getAbsolutePath();
+
+    const QString suffix = QFileInfo(absolutePath).suffix().toLower();
+    if (suffix != "mp3") return;
+
+    TagLib::MPEG::File f((TagLib::FileName) absolutePath.toUtf8());
+    if (!f.isValid()) return;
+
+    TagLib::ID3v2::Tag *tag = f.ID3v2Tag();
+    if (!tag) return;
+
+    TagLib::ID3v2::FrameList list = tag->frameList("USLT");
+    if (list.isEmpty()) return;
+
+    TagLib::ID3v2::UnsynchronizedLyricsFrame *frame =
+            static_cast<TagLib::ID3v2::UnsynchronizedLyricsFrame *>(list.front());
+    if (!frame) return;
+
+    QString lyrics = QString::fromUtf8(frame->text().toCString(true));
+    emit gotLyrics(lyrics);
+
 }
 
 int Track::getTotalLength(QList<Track *>tracks) {

@@ -1,11 +1,11 @@
 #include "albumsqlmodel.h"
 #include "model/album.h"
+#include "mainwindow.h"
 
 AlbumSqlModel::AlbumSqlModel(QObject *parent) : BaseSqlModel(parent) {
 }
 
-QVariant AlbumSqlModel::data(const QModelIndex &index, int role) const
-{
+QVariant AlbumSqlModel::data(const QModelIndex &index, int role) const {
 
     Album* album = 0;
 
@@ -17,6 +17,7 @@ QVariant AlbumSqlModel::data(const QModelIndex &index, int role) const
 
     case Finder::DataObjectRole:
         album = Album::forId(QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt());
+        connect(album, SIGNAL(gotPhoto()), MainWindow::instance(), SLOT(update()), Qt::UniqueConnection);
         return QVariant::fromValue(QPointer<Album>(album));
         break;
 

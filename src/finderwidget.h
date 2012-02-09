@@ -6,7 +6,7 @@
 class BreadcrumbWidget;
 class PlaylistModel;
 class PlaylistView;
-class THBlackBar;
+class SegmentedControl;
 class ArtistSqlModel;
 class AlbumSqlModel;
 class TrackSqlModel;
@@ -93,7 +93,7 @@ private:
     void setupSearch();
     void showWidget(QWidget *widget, bool isRoot);
 
-    THBlackBar *finderBar;
+    SegmentedControl *finderBar;
     QAction *artistsAction;
     QAction *albumsAction;
     QAction *foldersAction;

@@ -1,6 +1,17 @@
+1.1
+- Last.fm scrobbling
+- Album covers from image files or embedded in audio files
+- Lyrics are now read from inside MP3 files when not available online
+- Faster music collection scanning
+- Album covers and artist photos are downloaded in the background
+- Album release year inside tags has now precedence over Last.fm often incorrect release year
+- Fixed duplicate tracks after rescan on Windows
+- Lots of minor UI enhancements
+
 Musique 1.0
 - Renamed to Musique
 - Added disk-based cache for HTTP requests
+- Mac OS X Lion full-screen mode
 - View crossfade on Mac and Windows
 - Fixed crash when quitting app while scanning music collection
 - Fixed missing application icon in Linux packages

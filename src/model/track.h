@@ -38,6 +38,10 @@ public:
     QString getAbsolutePath();
     int isPlayed() { return played; }
     void setPlayed(int played) { this->played = played; }
+    int getStartTime() { return startTime; }
+    void setStartTime(int startTime) { this->startTime = startTime; }
+
+
 
     // relations
     Album* getAlbum() { return album; }
@@ -82,6 +86,7 @@ private slots:
     void parseMusicBrainzTrack(QByteArray bytes);
     void parseLyricsSearchResults(QByteArray bytes);
     void scrapeLyrics(QByteArray bytes);
+    void readLyricsFromTags();
 
 private:
     static QString getHash(QString);
@@ -98,9 +103,11 @@ private:
     int year;
     int length;
 
+    /*
     // CUE support
     int start;
     int end;
+    */
 
     // relations
     Album *album;
@@ -109,10 +116,13 @@ private:
     // playlist
     bool played;
 
+    // scrobbling
+    uint startTime;
+
 };
 
 // This is required in order to use QPointer<Track> as a QVariant
 typedef QPointer<Track> TrackPointer;
-Q_DECLARE_METATYPE(TrackPointer);
+Q_DECLARE_METATYPE(TrackPointer)
 
 #endif // TRACK_H

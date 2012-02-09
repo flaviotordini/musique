@@ -25,6 +25,8 @@ Database::Database() {
 
     } else createDatabase();
 
+    maybeCreateDownloadsTable();
+
 }
 
 Database::~Database() {
@@ -86,6 +88,29 @@ void Database::createDatabase() {
 
 }
 
+void Database::maybeCreateDownloadsTable() {
+    const QSqlDatabase db = getConnection();
+
+    bool createTable = false;
+
+    QSqlQuery query(db);
+    if (!query.exec("SELECT name FROM sqlite_master WHERE type='table' AND name='downloads'")) {
+        qWarning() << query.lastQuery() << query.lastError().text();
+        createTable = true;
+    } else if (query.next()) return;
+
+    QSqlQuery("create table downloads ("
+              "id integer primary key autoincrement,"
+              "objectid integer,"
+              "type integer,"
+              "status integer,"
+              "errors integer,"
+              "url varchar(255))"
+              , db);
+
+    qDebug() << "Downloads table created";
+}
+
 Database& Database::instance() {
     static QMutex mutex;
     QMutexLocker locker(&mutex);
@@ -101,15 +126,15 @@ QSqlDatabase Database::getConnection() {
     }
 
     const QString threadName = currentThread->objectName();
-    // qDebug() << "threadName" << threadName;
+    // qDebug() << "threadName" << threadName << currentThread;
     if (connections.contains(currentThread)) {
         return connections.value(currentThread);
     } else {
-        // qDebug() << "Creating db connection for" << threadName;
+        qDebug() << "Creating db connection for" << threadName;
         QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", threadName);
         connection.setDatabaseName(dbLocation);
         if(!connection.open()) {
-            qDebug() << QString("Cannot connect to database %1 in thread %2").arg(dbLocation, threadName);
+            qWarning() << QString("Cannot connect to database %1 in thread %2").arg(dbLocation, threadName);
         }
         connections.insert(currentThread, connection);
         return connection;
@@ -167,8 +192,30 @@ void Database::setAttribute(QString name, QVariant value) {
   * After calling this method you have to reacquire a valid instance using instance()
   */
 void Database::drop() {
+    /// closeConnections();
     if (!QFile::remove(dbLocation)) {
-        qDebug() << "Cannot delete database" << dbLocation;
+        qWarning() << "Cannot delete database" << dbLocation;
+
+        // fallback to delete records in tables
+        const QSqlDatabase db = getConnection();
+        QSqlQuery query(db);
+        if (!query.exec("select name from sqlite_master where type='table'")) {
+            qWarning() << query.lastQuery() << query.lastError().text();
+        }
+
+        while (query.next()) {
+            QString tableName = query.value(0).toString();
+            if (tableName.startsWith("sqlite_") || tableName == "attributes") continue;
+            QString dropSQL = "delete from " + tableName;
+            qWarning() << "dropSQL" << dropSQL;
+            QSqlQuery query2(db);
+            if (!query2.exec(dropSQL)) {
+                qWarning() << query2.lastQuery() << query2.lastError().text();
+            }
+        }
+
+        query.exec("delete from sqlite_sequence");
+
     }
     if (databaseInstance) delete databaseInstance;
     databaseInstance = 0;
@@ -176,8 +223,16 @@ void Database::drop() {
 
 void Database::closeConnections() {
     foreach(QSqlDatabase connection, connections.values()) {
-        // qDebug() << "Closing connection" << connection;
+        qDebug() << "Closing connection" << connection;
         connection.close();
     }
     connections.clear();
+}
+
+void Database::closeConnection() {
+    QThread *currentThread = QThread::currentThread();
+    if (!connections.contains(currentThread)) return;
+    QSqlDatabase connection = connections.take(currentThread);
+    qDebug() << "Closing connection" << connection;
+    connection.close();
 }

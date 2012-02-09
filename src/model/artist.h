@@ -48,6 +48,7 @@ public:
       */
     void fetchInfo();
 
+    QString getImageLocation();
     QImage getPhoto();
 
     // qhash
@@ -58,6 +59,9 @@ public:
     inline uint qHash(const Artist &key) {
         return key.getId();
     }*/
+
+public slots:
+    void setPhoto(QByteArray bytes);
 
 signals:
     void gotInfo();
@@ -72,7 +76,6 @@ private slots:
     void fetchLastFmInfo();
     void parseLastFmInfo(QByteArray bytes);
     void parseLastFmRedirectedName(QNetworkReply *reply);
-    void setPhoto(QByteArray bytes);
 
 private:
     void parseNameAndMbid(QByteArray bytes, QString preferredName);
@@ -85,8 +88,6 @@ private:
     QString name;
     QString bio;
     QString mbid;
-    int lifeBegin;
-    int lifeEnd;
 
     QStringList lastFmSearches;
 
@@ -94,6 +95,6 @@ private:
 
 // This is required in order to use QPointer<Artist> as a QVariant
 typedef QPointer<Artist> ArtistPointer;
-Q_DECLARE_METATYPE(ArtistPointer);
+Q_DECLARE_METATYPE(ArtistPointer)
 
 #endif // ARTIST_H

@@ -3,12 +3,19 @@
 #include <QtGui>
 
 namespace The {
-    NetworkAccess* http();
+NetworkAccess* http();
 }
 
 NetworkReply::NetworkReply(QNetworkReply *networkReply) : QObject(networkReply) {
     this->networkReply = networkReply;
     followRedirects = true;
+
+    // error signal
+    connect(networkReply, SIGNAL(error(QNetworkReply::NetworkError)),
+            SLOT(requestError(QNetworkReply::NetworkError)), Qt::QueuedConnection);
+
+    // when the request is finished we'll invoke the target method
+    connect(networkReply, SIGNAL(finished()), SLOT(finished()), Qt::QueuedConnection);
 
     timer = new QTimer(this);
     timer->setInterval(60000);
@@ -21,7 +28,8 @@ void NetworkReply::finished() {
     timer->stop();
 
     if (networkReply->error() != QNetworkReply::NoError) {
-        qDebug() << networkReply->url() << "finished with error" << networkReply->error();
+        qWarning() << networkReply->url().toString() << "finished with error" << networkReply->error();
+        emit error(networkReply);
         networkReply->deleteLater();
         return;
     }
@@ -61,11 +69,10 @@ void NetworkReply::finished() {
 
 void NetworkReply::requestError(QNetworkReply::NetworkError /*code*/) {
     timer->stop();
-    emit error(networkReply);
 }
 
 void NetworkReply::abort() {
-    qDebug() << "HTTP timeout" << networkReply->url();
+    qWarning() << "HTTP timeout" << networkReply->url().toString();
     networkReply->abort();
     emit error(networkReply);
 }
@@ -74,7 +81,7 @@ void NetworkReply::abort() {
 
 NetworkAccess::NetworkAccess(QObject* parent) : QObject( parent ) {}
 
-QNetworkReply* NetworkAccess::simpleGet(QUrl url, int operation) {
+QNetworkReply* NetworkAccess::simpleGet(QUrl url, int operation, const QByteArray& body) {
 
     QNetworkAccessManager *manager = The::networkAccessManager();
 
@@ -95,8 +102,15 @@ QNetworkReply* NetworkAccess::simpleGet(QUrl url, int operation) {
         networkReply = manager->head(request);
         break;
 
+    case QNetworkAccessManager::PostOperation:
+        // qDebug() << "POST" << url.toEncoded();
+        if (!body.isEmpty())
+            request.setRawHeader("Content-Type", "application/x-www-form-urlencoded");
+        networkReply = manager->post(request, body);
+        break;
+
     default:
-        qDebug() << "Unknown operation:" << operation;
+        qWarning() << "Unknown operation:" << operation;
         return 0;
 
     }
@@ -110,36 +124,30 @@ QNetworkReply* NetworkAccess::simpleGet(QUrl url, int operation) {
 }
 
 NetworkReply* NetworkAccess::get(const QUrl url) {
-
     QNetworkReply *networkReply = simpleGet(url);
-    NetworkReply *reply = new NetworkReply(networkReply);
-
-    // error signal
-    connect(networkReply, SIGNAL(error(QNetworkReply::NetworkError)),
-            reply, SLOT(requestError(QNetworkReply::NetworkError)), Qt::QueuedConnection);
-
-    // when the request is finished we'll invoke the target method
-    connect(networkReply, SIGNAL(finished()), reply, SLOT(finished()), Qt::QueuedConnection);
-
-    return reply;
-
+    return new NetworkReply(networkReply);
 }
 
 NetworkReply* NetworkAccess::head(const QUrl url) {
-
     QNetworkReply *networkReply = simpleGet(url, QNetworkAccessManager::HeadOperation);
     NetworkReply *reply = new NetworkReply(networkReply);
     reply->followRedirects = false;
-
-    // error signal
-    connect(networkReply, SIGNAL(error(QNetworkReply::NetworkError)),
-            reply, SLOT(requestError(QNetworkReply::NetworkError)), Qt::QueuedConnection);
-
-    // when the request is finished we'll invoke the target method
-    connect(networkReply, SIGNAL(finished()), reply, SLOT(finished()), Qt::QueuedConnection);
-
     return reply;
+}
 
+NetworkReply* NetworkAccess::post(const QUrl url, const QMap<QString, QString>& params) {
+    QByteArray body;
+    QMapIterator<QString, QString> i(params);
+    while (i.hasNext()) {
+        i.next();
+        body += QUrl::toPercentEncoding(i.key())
+                + '='
+                + QUrl::toPercentEncoding(i.value())
+                + '&';
+    }
+    QNetworkReply *networkReply = simpleGet(url, QNetworkAccessManager::PostOperation, body);
+    NetworkReply *reply = new NetworkReply(networkReply);
+    return reply;
 }
 
 void NetworkAccess::error(QNetworkReply::NetworkError code) {
@@ -150,7 +158,8 @@ void NetworkAccess::error(QNetworkReply::NetworkError code) {
         return;
     }
 
-    qDebug() << networkReply->errorString() << code;
+    qWarning() << networkReply->errorString() << code;
+    // qDebug() << networkReply->readAll();
 
     networkReply->deleteLater();
 }

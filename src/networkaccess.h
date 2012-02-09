@@ -45,9 +45,12 @@ class NetworkAccess : public QObject {
 
 public:
     NetworkAccess( QObject* parent=0);
-    QNetworkReply* simpleGet(QUrl url, int operation = QNetworkAccessManager::GetOperation);
+    QNetworkReply* simpleGet(QUrl url,
+                             int operation = QNetworkAccessManager::GetOperation,
+                             const QByteArray& body = QByteArray());
     NetworkReply* get(QUrl url);
     NetworkReply* head(QUrl url);
+    NetworkReply* post(QUrl url, const QMap<QString, QString>& params);
 
 private slots:
     void error(QNetworkReply::NetworkError);

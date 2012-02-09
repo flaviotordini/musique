@@ -14,6 +14,7 @@ public:
     static const char *WEBSITE;
     static const char *EMAIL;
     static const char *LASTFM_API_KEY;
+    static const char *LASTFM_SHARED_SECRET;
 
 };
 

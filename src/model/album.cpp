@@ -11,7 +11,7 @@
 #include "../mbnetworkaccess.h"
 
 namespace The {
-    NetworkAccess* http();
+NetworkAccess* http();
 }
 
 static QHash<QString, QByteArray> artistAlbums;
@@ -128,7 +128,7 @@ QString Album::getStatusTip() {
 void Album::fetchInfo() {
     // an artist name is needed in order to fix the album title
     // also workaround last.fm bug with selftitled albums
-    if (artist && artist->getName() != name) {
+    if (false && artist && artist->getName() != name) {
         fetchLastFmSearch();
     } else
         fetchLastFmInfo();
@@ -203,6 +203,7 @@ void Album::fetchLastFmSearch() {
     url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
     url.addQueryItem("artist", artist->getName());
     url.addQueryItem("album", name);
+    url.addQueryItem("limit", "5");
 
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
@@ -282,6 +283,7 @@ void Album::fetchLastFmInfo() {
     QUrl url("http://ws.audioscrobbler.com/2.0/");
     url.addQueryItem("method", "album.getinfo");
     url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
+    url.addQueryItem("autocorrect", "1");
     if (mbid.isEmpty()) {
         url.addQueryItem("artist", artist->getName());
         url.addQueryItem("album", name);
@@ -297,37 +299,76 @@ void Album::fetchLastFmInfo() {
 void Album::parseLastFmInfo(QByteArray bytes) {
     QXmlStreamReader xml(bytes);
 
+    QMap<QString, QVariant> trackNames;
+
     while(!xml.atEnd() && !xml.hasError()) {
         QXmlStreamReader::TokenType token = xml.readNext();
         if(token == QXmlStreamReader::StartElement) {
 
-            if(xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
+            if(xml.name() == "toptags") {
+                xml.skipCurrentElement();
+                continue;
+            }
+
+            else if(xml.name() == "track") {
+
+                QString number = xml.attributes().value("rank").toString();
+                if (trackNames.contains(number)) xml.skipCurrentElement();
+                else
+                while (xml.readNextStartElement()) {
+                    // qDebug() << this << track << xml.name();
+                    if (xml.name() == "name") {
+                        QString title = xml.readElementText();
+                        trackNames.insert(number, title);
+                    }
+                    else xml.skipCurrentElement();
+                }
+            }
+
+            else if(xml.name() == "name") {
+                QString albumTitle = xml.readElementText();
+                if (name != albumTitle) {
+                    qDebug() << "Fixed album name" << name << "->" << albumTitle;
+                    name = albumTitle;
+                }
+            }
+
+            else if(xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
 
                 // qDebug() << title << " photo:" << imageUrl;
 
                 bool imageAlreadyPresent = false;
-                QString imageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash();
+                imageAlreadyPresent = property("localCover").toBool();
+                if (!imageAlreadyPresent)
+                    imageAlreadyPresent = QFile::exists(getImageLocation());
+                /*
                 if (QFile::exists(imageLocation)) {
                     QFileInfo imageFileInfo(imageLocation);
                     const uint imagelastModified = imageFileInfo.lastModified().toTime_t();
                     if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*60) {
                         imageAlreadyPresent = true;
                     }
-                }
+                }*/
 
                 if (!imageAlreadyPresent) {
                     QString imageUrl = xml.readElementText();
                     // qDebug() << name << " photo:" << imageUrl;
                     if (!imageUrl.isEmpty()) {
+                        /*
                         QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
                         QObject *reply = The::http()->get(url);
                         connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
+                        connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+                        waitForImage = true;
+                        */
+
+                        setProperty("imageUrl", imageUrl);
                     }
                 }
 
             }
 
-            else if(xml.name() == "releasedate") {
+            else if(xml.name() == "releasedate" && year < 1600) {
                 QString releasedateString = xml.readElementText().simplified();
                 if (!releasedateString.isEmpty()) {
                     // Something like "6 Apr 1999, 00:00"
@@ -366,27 +407,38 @@ void Album::parseLastFmInfo(QByteArray bytes) {
 
     }
 
+    setProperty("trackNames", trackNames);
+
     /* Error handling. */
     if(xml.hasError()) {
-        qDebug() << xml.errorString();
+        qWarning() << xml.errorString();
     }
 
     emit gotInfo();
+}
+
+QString Album::getImageLocation() {
+    QString l = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/";
+    // if (artist) l += artist->getHash() + "/";
+    l += getHash(); // + ".jpg";
+    return l;
 }
 
 void Album::setPhoto(QByteArray bytes) {
     qDebug() << "Storing photo for" << name;
 
     // store photo
-    QString storageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/";
+    QString storageLocation = getImageLocation();
+    QFile file(storageLocation);
     QDir dir;
-    dir.mkpath(storageLocation);
-    QFile file(storageLocation + getHash());
+    dir.mkpath(QFileInfo(file).path());
     if (!file.open(QIODevice::WriteOnly)) {
-        qDebug() << "Error opening file for writing" << file.fileName();
+        qWarning() << "Error opening file for writing" << file.fileName();
     }
     QDataStream stream( &file ); // we will serialize the data into the file
     stream.writeRawData(bytes.constData(), bytes.size());
+
+    emit gotPhoto();
 }
 
 QList<Track*> Album::getTracks() {
@@ -427,5 +479,167 @@ QString Album::getWiki() {
 
     QByteArray bytes = file.readAll();
     return QString::fromUtf8(bytes.data());
+
+}
+
+QString normalizeString(QString s) {
+
+    s = s.toLower();
+    QString s2;
+
+    // remove short words
+    // QRegExp re("\\b(the|a|of|and|n|or|s|is)\\b");
+    s2 = s;
+    static const QRegExp shortWordsRE("\\b([a-z]{1,1}|the|of|and|or|is)\\b");
+    s2.remove(shortWordsRE);
+    if (s2.simplified().length() > 4) s = s2;
+    s2.clear();
+
+    // keep only letters
+    int stringSize = s.size();
+    for (int i = 0; i < stringSize; ++i) {
+        const QChar c = s.at(i);
+        if (c.isLetter())
+            s2.append(c);
+    }
+    s = s2;
+    s2.clear();
+
+    // simplify accented chars èé=>e etc
+    static QList<QPair<QChar, QString> > charVariants;
+    static int charVariantsSize;
+    if (charVariants.isEmpty()) {
+        charVariants
+                << QPair<QChar, QString>('a', "áàâäãåāăą")
+                << QPair<QChar, QString>('e', "éèêëēĕėęě")
+                << QPair<QChar, QString>('i', "íìıîïĩīĭį")
+                << QPair<QChar, QString>('o', "óòôöõōŏőơ")
+                << QPair<QChar, QString>('u', "úùûüũūŭůűųư")
+                << QPair<QChar, QString>('c', "çćčĉċ")
+                << QPair<QChar, QString>('d', "đ")
+                << QPair<QChar, QString>('g', "ğĝġģǵ")
+                << QPair<QChar, QString>('h', "ĥħ")
+                << QPair<QChar, QString>('j', "ĵ")
+                << QPair<QChar, QString>('k', "ķĸ")
+                << QPair<QChar, QString>('l', "ĺļľŀ")
+                << QPair<QChar, QString>('n', "ñńņňŉŋ")
+                << QPair<QChar, QString>('r', "ŕŗř")
+                << QPair<QChar, QString>('s', "śŝſș")
+                << QPair<QChar, QString>('t', "ţťŧț")
+                << QPair<QChar, QString>('r', "ŕŗř")
+                << QPair<QChar, QString>('w', "ŵ")
+                << QPair<QChar, QString>('y', "ýÿŷ")
+                << QPair<QChar, QString>('z', "źż");
+        charVariantsSize = charVariants.size();
+    }
+
+    stringSize = s.size();
+    for (int i = 0; i < stringSize; ++i) {
+        // qDebug() << s.at(i) << s.at(i).decomposition();
+        const QChar currentChar = s.at(i);
+        bool replaced = false;
+
+        for (int y = 0; y < charVariantsSize; ++y) {
+            QPair<QChar, QString> pair = charVariants.at(y);
+            QChar c = pair.first;
+            QString variants = pair.second;
+            if (variants.contains(currentChar)) {
+                s2.append(c);
+                replaced = true;
+                break;
+            }
+        }
+
+        if (!replaced) s2.append(currentChar);
+    }
+
+    return s2;
+}
+
+QString Album::fixTrackTitleUsingTitle(Track *track, QString newTitle) {
+
+    const QString trackTitle = track->getTitle();
+
+    // handle Last.fm parenthesis stuff like "Song name (Remastered)"
+    if (!trackTitle.contains('('))
+        newTitle.remove(QRegExp(" *\\(.*\\)"));
+    else if (newTitle.count('(') > 1) {
+        int i = newTitle.indexOf('(');
+        if (i != -1) {
+            i = newTitle.indexOf('(', i+1);
+            if (i != -1)
+                newTitle = newTitle.left(i).simplified();
+        }
+    }
+
+    if (trackTitle == newTitle) return newTitle;
+
+    QString normalizedNewTitle = normalizeString(newTitle);
+    if (normalizedNewTitle.isEmpty()) return QString();
+
+    QString normalizedTrackTitle = normalizeString(trackTitle);
+    if (normalizedTrackTitle.isEmpty()) return QString();
+
+    if (normalizedNewTitle == normalizedTrackTitle
+            || (normalizedTrackTitle.size() > 3 && normalizedNewTitle.contains(normalizedTrackTitle))
+            || (normalizedNewTitle.size() > 3 && normalizedTrackTitle.contains(normalizedNewTitle))
+            || (track->getNumber() && normalizedTrackTitle == "track")
+            ) {
+#ifndef QT_NO_DEBUG_OUTPUT
+        if (trackTitle.toLower() != newTitle.toLower())
+            qDebug() << "✓" << artist->getName() << name << trackTitle << "->" << newTitle;
+#endif
+        return newTitle;
+    } else {
+        // qDebug() << artist->getName() << name << normalizedTrackTitle << "!=" << normalizedNewTitle;
+    }
+
+    return QString();
+}
+
+void Album::fixTrackTitle(Track *track) {
+    QMap<QString, QVariant> trackNames = property("trackNames").toMap();
+    if (trackNames.isEmpty()) return;
+
+    const QString trackTitle = track->getTitle();
+    const int trackNumber = track->getNumber();
+
+    // first, try the corresponding track number
+    if (trackNumber && trackNames.contains(QString::number(trackNumber))) {
+        QString newTitle = trackNames.value(QString::number(trackNumber)).toString();
+        if (trackTitle.isEmpty()) {
+            qDebug() << "✓" << artist->getName() << name << "[empty title]" << "->" << newTitle;
+            track->setTitle(newTitle);
+            trackNames.remove(QString::number(trackNumber));
+            setProperty("trackNames", trackNames);
+            return;
+        }
+        newTitle = fixTrackTitleUsingTitle(track, newTitle);
+        if (!newTitle.isEmpty()) {
+            track->setTitle(newTitle);
+            trackNames.remove(QString::number(trackNumber));
+            setProperty("trackNames", trackNames);
+            return;
+        }
+    }
+
+    // iterate on all tracks
+    QMutableMapIterator<QString, QVariant> i(trackNames);
+    while (i.hasNext()) {
+        i.next();
+        QString newTitle = i.value().toString();
+        newTitle = fixTrackTitleUsingTitle(track, newTitle);
+        if (!newTitle.isEmpty()) {
+            track->setTitle(newTitle);
+            int newNumber = i.key().toInt();
+            if (newNumber && track->getNumber() == 0 && track->getNumber() != newNumber) {
+                qDebug() << "Track number" << track->getNumber() << "->" << newNumber;
+                track->setNumber(newNumber);
+            }
+            i.remove();
+            setProperty("trackNames", trackNames);
+            return;
+        }
+    }
 
 }

@@ -19,10 +19,12 @@ public:
 private:
     QPixmap createPlayIcon(bool hovered) const;
     QPixmap createMissingItemBackground() const;
-    QPixmap createMissingItemPixmap() const;
+    QPixmap createMissingItemPixmap(QString type) const;
     QPixmap getPlayIcon(bool hovered) const;
     QPixmap getMissingItemBackground() const;
-    QPixmap getMissingItemPixmap() const;
+    QPixmap getMissingArtistPixmap() const;
+    QPixmap getMissingAlbumPixmap() const;
+    QPixmap getMissingTrackPixmap() const;
     void paintArtist( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintAlbum( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintFolder( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;

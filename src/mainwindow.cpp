@@ -7,7 +7,11 @@
 #include <QtSql>
 #include "contextualview.h"
 #include "faderwidget/faderwidget.h"
+#ifdef APP_MAC
+#include "searchlineedit_mac.h"
+#else
 #include "searchlineedit.h"
+#endif
 #include "view.h"
 #include "mediaview.h"
 #include "aboutview.h"
@@ -20,14 +24,19 @@
 #ifdef Q_WS_X11
 #include "gnomeglobalshortcutbackend.h"
 #endif
-#ifdef APP_MAC
+#ifdef Q_WS_MAC
 #include "mac_startup.h"
 #include "macfullscreen.h"
+#include "macsupport.h"
+#include "macutils.h"
 #endif
 #include "collectionsuggester.h"
 #ifdef APP_DEMO
 #include "demostartupview.h"
 #endif
+#include "lastfm.h"
+#include "lastfmlogindialog.h"
+#include "imagedownloader.h"
 
 /*
 class CentralWidget : public QWidget {
@@ -55,6 +64,8 @@ MainWindow* MainWindow::instance() {
 MainWindow::MainWindow() : updateChecker(0) {
     m_fullscreen = false;
 
+    singleton = this;
+
     // lazily initialized views
     mediaView = 0;
     collectionScannerView = 0;
@@ -62,13 +73,6 @@ MainWindow::MainWindow() : updateChecker(0) {
     aboutView = 0;
     contextualView = 0;
     faderWidget = 0;
-
-    toolbarSearch = new SearchLineEdit(this);
-    toolbarSearch->setFont(qApp->font());
-    toolbarSearch->setMinimumWidth(toolbarSearch->fontInfo().pixelSize()*15);
-    toolbarSearch->setSuggester(new CollectionSuggester(this));
-    connect(toolbarSearch, SIGNAL(search(const QString&)), SLOT(search(const QString&)));
-    connect(toolbarSearch, SIGNAL(cleared()), SLOT(searchCleared()));
 
     // build ui
     createActions();
@@ -123,10 +127,10 @@ void MainWindow::showInitialView() {
     if (db.status() == ScanComplete) {
 
         showMediaView();
-        loadPlaylist();
+        QTimer::singleShot(0, this, SLOT(loadPlaylist()));
 
         // update the collection when idle
-        QTimer::singleShot(1000, this, SLOT(startIncrementalScan()));
+        QTimer::singleShot(0, this, SLOT(startIncrementalScan()));
 
         QTimer::singleShot(0, this, SLOT(checkForUpdate()));
 
@@ -233,7 +237,7 @@ void MainWindow::createActions() {
 #ifdef APP_MAC
     fsShortcuts << QKeySequence(Qt::CTRL + Qt::META + Qt::Key_F);
 #else
-    fsShortcuts << QKeySequence(Qt::Key_F11);
+    fsShortcuts << QKeySequence(Qt::Key_F11) << QKeySequence(Qt::ALT + Qt::Key_Return);
 #endif
     fullscreenAct->setShortcuts(fsShortcuts);
     fullscreenAct->setShortcutContext(Qt::ApplicationShortcut);
@@ -260,10 +264,10 @@ void MainWindow::createActions() {
 
     quitAct = new QAction(tr("&Quit"), this);
     quitAct->setMenuRole(QAction::QuitRole);
-    quitAct->setShortcut(tr("Ctrl+Q"));
+    quitAct->setShortcut(QKeySequence(QKeySequence::Quit));
     quitAct->setStatusTip(tr("Bye"));
     actions->insert("quit", quitAct);
-    connect(quitAct, SIGNAL(triggered()), this, SLOT(quit()));
+    connect(quitAct, SIGNAL(triggered()), SLOT(quit()));
 
     chooseFolderAct = new QAction(tr("&Change collection folder..."), this);
     chooseFolderAct->setStatusTip(tr("Choose a different music collection folder"));
@@ -314,6 +318,33 @@ void MainWindow::createActions() {
     connect(action, SIGNAL(toggled(bool)), SLOT(setRepeat(bool)));
     actions->insert("repeatPlaylist", action);
 
+    action = new QAction(tr("&Close"), this);
+    action->setShortcut(QKeySequence(QKeySequence::Close));
+    actions->insert("close", action);
+    connect(action, SIGNAL(triggered()), SLOT(close()));
+
+    action = new QAction(QtIconLoader::icon("media-playback-stop"),
+                         tr("&Stop After This Track"), this);
+    action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Escape));
+    action->setCheckable(true);
+    action->setEnabled(false);
+    actions->insert("stopafterthis", action);
+    connect(action, SIGNAL(toggled(bool)), SLOT(showStopAfterThisInStatusBar(bool)));
+
+    action = new QAction(QIcon(":/images/audioscrobbler.png"), tr("&Scrobbling"), this);
+    action->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
+    action->setCheckable(true);
+    actions->insert("scrobbling", action);
+    connect(action, SIGNAL(toggled(bool)), SLOT(toggleScrobbling(bool)));
+
+    action = new QAction(tr("&Log Out from %1").arg("Last.fm"), this);
+    action->setMenuRole(QAction::ApplicationSpecificRole);
+    action->setEnabled(false);
+    action->setVisible(false);
+    actions->insert("lastFmLogout", action);
+    connect(action, SIGNAL(triggered()), SLOT(lastFmLogout()));
+
     // Invisible actions
 
     searchFocusAct = new QAction(this);
@@ -323,17 +354,13 @@ void MainWindow::createActions() {
     addAction(searchFocusAct);
 
     volumeUpAct = new QAction(this);
-    volumeUpAct->setShortcuts(QList<QKeySequence>()
-                              << QKeySequence(Qt::CTRL + Qt::Key_Plus)
-                              << QKeySequence(Qt::Key_VolumeUp));
+    volumeUpAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Plus));
     actions->insert("volume-up", volumeUpAct);
     connect(volumeUpAct, SIGNAL(triggered()), SLOT(volumeUp()));
     addAction(volumeUpAct);
 
     volumeDownAct = new QAction(this);
-    volumeDownAct->setShortcuts(QList<QKeySequence>()
-                                << QKeySequence(Qt::CTRL + Qt::Key_Minus)
-                                << QKeySequence(Qt::Key_VolumeDown));
+    volumeDownAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Minus));
     actions->insert("volume-down", volumeDownAct);
     connect(volumeDownAct, SIGNAL(triggered()), SLOT(volumeDown()));
     addAction(volumeDownAct);
@@ -341,9 +368,7 @@ void MainWindow::createActions() {
     volumeMuteAct = new QAction(this);
     volumeMuteAct->setIcon(QtIconLoader::icon("audio-volume-high"));
     volumeMuteAct->setStatusTip(tr("Mute volume"));
-    volumeMuteAct->setShortcuts(QList<QKeySequence>()
-                                << QKeySequence(tr("Ctrl+M"))
-                                << QKeySequence(Qt::Key_VolumeMute));
+    volumeMuteAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_E));
     actions->insert("volume-mute", volumeMuteAct);
     connect(volumeMuteAct, SIGNAL(triggered()), SLOT(volumeMute()));
     addAction(volumeMuteAct);
@@ -382,22 +407,31 @@ void MainWindow::createMenus() {
     QMap<QString, QMenu*> *menus = The::globalMenus();
 
     fileMenu = menuBar()->addMenu(tr("&Application"));
+#ifdef APP_DEMO
+    QAction* action = new QAction(tr("Buy %1...").arg(Constants::NAME), this);
+    action->setMenuRole(QAction::ApplicationSpecificRole);
+    connect(action, SIGNAL(triggered()), SLOT(buy()));
+    fileMenu->addAction(action);
+#endif
     fileMenu->addAction(chooseFolderAct);
+    fileMenu->addAction(The::globalActions()->value("lastFmLogout"));
 #ifndef APP_MAC
     fileMenu->addSeparator();
-    fileMenu->addAction(quitAct);
 #endif
+    fileMenu->addAction(quitAct);
 
     playbackMenu = menuBar()->addMenu(tr("&Playback"));
     menus->insert("playback", playbackMenu);
     // playbackMenu->addAction(stopAct);
     playbackMenu->addAction(playAct);
+    playbackMenu->addAction(The::globalActions()->value("stopafterthis"));
     playbackMenu->addSeparator();
     playbackMenu->addAction(skipForwardAct);
     playbackMenu->addAction(skipBackwardAct);
+    playbackMenu->addSeparator();
+    playbackMenu->addAction(The::globalActions()->value("scrobbling"));
 #ifdef APP_MAC
-    extern void qt_mac_set_dock_menu(QMenu *);
-    qt_mac_set_dock_menu(playbackMenu);
+    MacSupport::dockMenu(playbackMenu);
 #endif
 
     playlistMenu = menuBar()->addMenu(tr("Play&list"));
@@ -412,9 +446,11 @@ void MainWindow::createMenus() {
 
     QMenu *viewMenu = menuBar()->addMenu(tr("&View"));
     viewMenu->addAction(contextualAct);
-#ifndef APP_MAC_NO
     viewMenu->addSeparator();
     viewMenu->addAction(fullscreenAct);
+
+#ifdef APP_MAC
+    MacSupport::windowMenu(this);
 #endif
 
     helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -488,9 +524,26 @@ void MainWindow::createToolBars() {
 
     mainToolBar->addWidget(new Spacer());
 
+#ifdef APP_MAC
+    SearchWrapper* searchWrapper = new SearchWrapper(this);
+    toolbarSearch = searchWrapper->getSearchLineEdit();
+#else
+    toolbarSearch = new SearchLineEdit(this);
+#endif
+    toolbarSearch->setMinimumWidth(toolbarSearch->fontInfo().pixelSize()*15);
+    toolbarSearch->setSuggester(new CollectionSuggester(this));
+    connect(toolbarSearch, SIGNAL(search(const QString&)), SLOT(search(const QString&)));
+    connect(toolbarSearch, SIGNAL(cleared()), SLOT(searchCleared()));
+    connect(toolbarSearch, SIGNAL(suggestionAccepted(const QString&)), SLOT(search(const QString&)));
+    toolbarSearch->setStatusTip(searchFocusAct->statusTip());
+#ifdef APP_MAC
+    mainToolBar->addWidget(searchWrapper);
+#else
     mainToolBar->addWidget(toolbarSearch);
-
-    mainToolBar->addWidget(new Spacer());
+    Spacer* spacer = new Spacer();
+    // spacer->setWidth(4);
+    mainToolBar->addWidget(spacer);
+#endif
 
     addToolBar(mainToolBar);
 }
@@ -532,6 +585,10 @@ void MainWindow::readSettings() {
     m_maximized = isMaximized();
     The::globalActions()->value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
     The::globalActions()->value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
+
+    bool scrobbling = settings.value("scrobbling").toBool();
+    The::globalActions()->value("scrobbling")->setChecked(scrobbling);
+    toggleScrobbling(scrobbling);
 }
 
 void MainWindow::writeSettings() {
@@ -597,8 +654,10 @@ void MainWindow::showView(QWidget* widget) {
 
     setUpdatesEnabled(true);
 
+    /*
     mainToolBar->setVisible(true);
     statusBar()->setVisible(true);
+    */
 
     QWidget *oldWidget = views->currentWidget();
     views->setCurrentWidget(widget);
@@ -610,6 +669,10 @@ void MainWindow::showView(QWidget* widget) {
 #endif
 
     history->push(widget);
+
+#ifdef APP_MAC
+        mac::uncloseWindow(window()->winId());
+#endif
 
 }
 
@@ -661,8 +724,13 @@ void MainWindow::quit() {
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
+#ifdef APP_MAC
+    mac::closeWindow(winId());
+    event->ignore();
+#else
     quit();
     QMainWindow::closeEvent(event);
+#endif
 }
 
 void MainWindow::showChooseFolderView() {
@@ -739,7 +807,7 @@ void MainWindow::startFullScan(QString directory) {
     CollectionScannerThread *scannerThread = new CollectionScannerThread();
     collectionScannerView->setCollectionScannerThread(scannerThread);
     scannerThread->setDirectory(directory);
-    connect(scannerThread, SIGNAL(finished()), SLOT(fullScanFinished()));
+    connect(scannerThread, SIGNAL(finished()), SLOT(fullScanFinished()), Qt::UniqueConnection);
     scannerThread->start();
 
     if (mediaView) {
@@ -753,6 +821,7 @@ void MainWindow::startFullScan(QString directory) {
 
 void MainWindow::fullScanFinished() {
     QApplication::alert(this, 0);
+    startImageDownload();
 }
 
 void MainWindow::startIncrementalScan() {
@@ -761,8 +830,8 @@ void MainWindow::startIncrementalScan() {
     CollectionScannerThread *scannerThread = new CollectionScannerThread();
     // incremental!
     scannerThread->setDirectory(QString());
-    connect(scannerThread, SIGNAL(progress(int)), SLOT(incrementalScanProgress(int)));
-    connect(scannerThread, SIGNAL(finished()), SLOT(incrementalScanFinished()));
+    connect(scannerThread, SIGNAL(progress(int)), SLOT(incrementalScanProgress(int)), Qt::UniqueConnection);
+    connect(scannerThread, SIGNAL(finished()), SLOT(incrementalScanFinished()), Qt::UniqueConnection);
     scannerThread->start();
 }
 
@@ -773,6 +842,18 @@ void MainWindow::incrementalScanProgress(int percent) {
 void MainWindow::incrementalScanFinished() {
     chooseFolderAct->setEnabled(true);
     statusBar()->showMessage(tr("Collection updated"));
+    startImageDownload();
+}
+
+void MainWindow::startImageDownload() {
+    chooseFolderAct->setEnabled(false);
+    ImageDownloaderThread *downladerThread = new ImageDownloaderThread();
+    connect(downladerThread, SIGNAL(finished()), SLOT(imageDownloadFinished()));
+    downladerThread->start();
+}
+
+void MainWindow::imageDownloadFinished() {
+    chooseFolderAct->setEnabled(true);
 }
 
 void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState */) {
@@ -1080,10 +1161,6 @@ void MainWindow::gotNewVersion(QString version) {
                 );
     msgBox.addButton(QMessageBox::Ok);
 #else
-    msgBox.setInformativeText(
-                tr("To get the updated version, download %1 again from the link you received via email and reinstall.")
-                .arg(Constants::NAME)
-                );
     updateButton = msgBox.addButton(tr("Update"), QMessageBox::AcceptRole);
 #endif
 
@@ -1175,3 +1252,72 @@ void MainWindow::buy() {
     QDesktopServices::openUrl(QUrl(QString(Constants::WEBSITE) + "#download"));
 }
 #endif
+
+void MainWindow::showStopAfterThisInStatusBar(bool show) {
+    QAction* action = The::globalActions()->value("stopafterthis");
+    showActionInStatusBar(action, show);
+}
+
+void MainWindow::showActionInStatusBar(QAction* action, bool show) {
+    if (show) {
+        if (!statusToolBar->actions().contains(action))
+            statusToolBar->insertAction(statusToolBar->actions().first(), action);
+    } else {
+        statusToolBar->removeAction(action);
+    }
+}
+
+void MainWindow::handleError(QString message) {
+    qWarning() << message;
+    showMessage(message);
+}
+
+void MainWindow::showMessage(QString message) {
+    statusBar()->showMessage(message, 60000);
+}
+
+void MainWindow::toggleScrobbling(bool enable) {
+    QSettings settings;
+    settings.setValue("scrobbling", enable);
+
+    // show in status bar
+    const bool isAuthorized = LastFm::instance().isAuthorized();
+    const bool showInStatusBar = enable || isAuthorized;
+    showActionInStatusBar(The::globalActions()->value("scrobbling"), showInStatusBar);
+
+    // need login?
+    if (enable && !isAuthorized) {
+        LastFmLoginDialog* dialog = new LastFmLoginDialog(this);
+        dialog->setAttribute(Qt::WA_DeleteOnClose);
+        connect(dialog, SIGNAL(accepted()), SLOT(enableScrobbling()));
+        connect(dialog, SIGNAL(rejected()), SLOT(disableScrobbling()));
+        QTimer::singleShot(0, dialog, SLOT(show()));
+    }
+
+    // enable logout
+    if (isAuthorized) {
+        QAction* action = The::globalActions()->value("lastFmLogout");
+        action->setEnabled(true);
+        action->setVisible(true);
+    }
+
+}
+
+void MainWindow::enableScrobbling() {
+    QAction* action = The::globalActions()->value("lastFmLogout");
+    action->setEnabled(true);
+    action->setVisible(true);
+}
+
+void MainWindow::disableScrobbling() {
+    The::globalActions()->value("scrobbling")->setChecked(false);
+    toggleScrobbling(false);
+}
+
+void MainWindow::lastFmLogout() {
+    LastFm::instance().logout();
+    disableScrobbling();
+    QAction* action = The::globalActions()->value("lastFmLogout");
+    action->setEnabled(false);
+    action->setVisible(false);
+}

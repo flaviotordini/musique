@@ -33,6 +33,11 @@ QVariant TrackSqlModel::data(const QModelIndex &index, int role) const {
     case Finder::PlayIconHoveredRole:
         return playIconHovered;
 
+    case Qt::StatusTipRole:
+        trackId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
+        track = Track::forId(trackId);
+        return track->getStatusTip();
+
     }
 
     return QVariant();

@@ -49,9 +49,16 @@ public:
       */
     void fetchInfo();
     QImage getPhoto();
+    QString getImageLocation();
+
+    void fixTrackTitle(Track* track);
+
+public slots:
+    void setPhoto(QByteArray bytes);
 
 signals:
     void gotInfo();
+    void gotPhoto();
 
 private slots:
     void fetchMusicBrainzRelease();
@@ -65,10 +72,9 @@ private slots:
     void parseLastFmInfo(QByteArray bytes);
     void parseLastFmRedirectedName(QNetworkReply *reply);
 
-    void setPhoto(QByteArray bytes);
-
 private:
     static QString getHash(QString);
+    QString fixTrackTitleUsingTitle(Track* track, QString newTitle);
 
     static QHash<int, Album*> cache;
 
@@ -81,6 +87,6 @@ private:
 
 // This is required in order to use QPointer<Album> as a QVariant
 typedef QPointer<Album> AlbumPointer;
-Q_DECLARE_METATYPE(AlbumPointer);
+Q_DECLARE_METATYPE(AlbumPointer)
 
 #endif // ALBUM_H

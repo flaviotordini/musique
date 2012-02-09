@@ -3,7 +3,7 @@
 
 CollectionScannerThread::CollectionScannerThread(QObject *parent) : QThread(parent) {
     // This will be used by Database to cache connections for this thread
-    setObjectName("scanner");
+    setObjectName("scanner" + QString::number(qrand()));
 }
 
 void CollectionScannerThread::run() {
@@ -15,7 +15,7 @@ void CollectionScannerThread::run() {
     connect(scanner, SIGNAL(progress(int)), SIGNAL(progress(int)), Qt::QueuedConnection);
     connect(scanner, SIGNAL(error(QString)), SIGNAL(error(QString)), Qt::QueuedConnection);
     connect(scanner, SIGNAL(finished()), SLOT(finish()), Qt::QueuedConnection);
-    connect(scanner, SIGNAL(finished()), SIGNAL(finished()), Qt::QueuedConnection);
+    // connect(scanner, SIGNAL(finished()), SIGNAL(finished()), Qt::QueuedConnection);
     scanner->run();
 
     // Start thread event loop
@@ -31,7 +31,7 @@ void CollectionScannerThread::setDirectory(QString directory) {
 }
 
 void CollectionScannerThread::cleanup() {
-    // qDebug() << "Cleanup";
+    qDebug() << "Cleanup";
     delete scanner;
     exit();
 }

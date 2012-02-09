@@ -1,18 +1,18 @@
 # Minitunes TODO list
 
+## On the Radar
+- Embedded lyrics:
+    http://developer.kde.org/~wheeler/taglib/api/classTagLib_1_1ID3v2_1_1UnsynchronizedLyricsFrame.html
+    4.8   USLT Unsynchronised lyric/text transcription
+
 ## Known issues
 - Album years on AudioScrobbler are mostly wrong:
     http://www.last.fm/group/Last.fm+Web+Services/forum/21604/_/624369
 
-## Deploy
-- Windows, test VLC backend
-
 ## Bugs
 - Fix long names in finder
-- Fix long titles in playlist
 - Artist.getTracks() albums not correctly sorted. Year-based album ordering
 - Playlist: Restore selection after drag n drop
-- Tracks not draggable on the Mac
 
 ## Sorely missing features
 - CUE file support
@@ -21,25 +21,19 @@
 - Keyboard shortcut to play current finder item
 
 ## Features
-- Stop after this track
 - QFileSystemWatcher on scanner
 - Ubuntu Sound Menu integration
     https://wiki.ubuntu.com/SoundMenu#Music%20player%20integration
     http://askubuntu.com/questions/7859/which-music-players-use-the-soundmenu/7883#7883
 - Gapless playback
 - CLI
-- View crossfades
 - Browse by Last.fm album tags (new Genres finder tab)
 - Queue tracks
 - Playlist: Restore selection after dragndrop
 - Next/Previous album playback actions
-- "Drag things here" as empty playlist background
 - Finder: Highlight currently playing items (Artists, Albums, Folders)
-- Scanner: hanging HTTP requests
-- Stop when finished
 - Artist hover: show number of album, songs & total duration on the status bar
 - Playlist editing undo
-- Silently prefetch lyrics in background, 1 per minute
 - Scanner: Fetch album and artist images in a separate thread, outside of the scanner thread
 - Finder: Option to hide items with missing image
 - Finder: A bit of sorting & filtering on Albums and Artist views

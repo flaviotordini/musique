@@ -25,12 +25,15 @@ public:
     void setCollectionRoot(QString dir);
     void drop();
     void closeConnections();
+    void closeConnection();
 
 private:
     Database();
     void createDatabase();
     QVariant getAttribute(QString name);
     void setAttribute(QString name, QVariant value);
+
+    void maybeCreateDownloadsTable();
 
     QMutex lock;
     QString dbLocation;

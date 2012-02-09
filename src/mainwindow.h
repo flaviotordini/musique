@@ -34,6 +34,9 @@ public slots:
     void showDemoDialog(QString message);
     void buy();
 #endif
+    void quit();
+    void showMessage(QString message);
+    void handleError(QString message);
 
 protected:
     void closeEvent(QCloseEvent *);
@@ -46,7 +49,6 @@ private slots:
     void visitSite();
     void donate();
     void about();
-    void quit();
     void toggleFullscreen();
     void updateUIForFullscreen();
     void setShuffle(bool enabled);
@@ -77,8 +79,21 @@ private slots:
     void startIncrementalScan();
     void incrementalScanProgress(int percent);
     void incrementalScanFinished();
+    void startImageDownload();
+    void imageDownloadFinished();
     void search(QString query);
     void searchCleared();
+
+    void showActionInStatusBar(QAction*, bool show);
+    void showStopAfterThisInStatusBar(bool show);
+
+    void toggleScrobbling(bool enable);
+    void enableScrobbling();
+    void disableScrobbling();
+    void lastFmLogout();
+
+    void savePlaylist();
+    void loadPlaylist();
 
 private:
     MainWindow();
@@ -92,8 +107,6 @@ private:
     void initPhonon();
     static QString formatTime(qint64 time);
     QString playlistPath();
-    void savePlaylist();
-    void loadPlaylist();
 
     // view mechanism
     QPointer<FaderWidget> faderWidget;

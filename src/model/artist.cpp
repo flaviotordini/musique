@@ -10,7 +10,7 @@
 #include "../mbnetworkaccess.h"
 
 namespace The {
-    NetworkAccess* http();
+NetworkAccess* http();
 }
 
 Artist::Artist(QObject *parent) : Item(parent) {
@@ -107,14 +107,15 @@ QString Artist::getStatusTip() {
 }
 
 void Artist::fetchInfo() {
-    fetchLastFmSearch();
+    // fetchLastFmSearch();
+    fetchLastFmInfo();
 }
 
 // *** MusicBrainz ***
 
 void Artist::fetchMusicBrainzArtist() {
     QUrl url = QString("http://musicbrainz.org/ws/1/artist/?type=xml&name=%1&limit=1")
-               .arg(name);
+            .arg(name);
 
     MBNetworkAccess *http = new MBNetworkAccess();
     QObject *reply = http->get(url);
@@ -135,6 +136,10 @@ void Artist::parseMusicBrainzArtist(QByteArray bytes) {
 // *** Last.fm ***
 
 void Artist::fetchLastFmSearch() {
+    if (name.isEmpty()) {
+        emit gotInfo();
+        return;
+    }
 
     // Avoid rare infinite loops with redirected artists
     if (lastFmSearches.contains(name)) {
@@ -146,6 +151,7 @@ void Artist::fetchLastFmSearch() {
     url.addQueryItem("method", "artist.search");
     url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
     url.addQueryItem("artist", name);
+    url.addQueryItem("limit", "5");
 
     lastFmSearches << name;
 
@@ -157,7 +163,9 @@ void Artist::fetchLastFmSearch() {
 void Artist::parseNameAndMbid(QByteArray bytes, QString preferredValue) {
     QXmlStreamReader xml(bytes);
 
+    const QString preferredValueLower = preferredValue.toLower();
     QString firstValue;
+    QString firstMbid;
 
     /* We'll parse the XML until we reach end of it.*/
     while(!xml.atEnd() && !xml.hasError()) {
@@ -173,32 +181,38 @@ void Artist::parseNameAndMbid(QByteArray bytes, QString preferredValue) {
 
         /* If token is StartElement, we'll see if we can read it.*/
         if(token == QXmlStreamReader::StartElement
-           && xml.name() == "name") {
+                && xml.name() == "name") {
             QString text = xml.readElementText();
-            // qDebug() << element << ":" << text;
+            // qDebug() << xml.name() << ":" << text;
 
-            if (text == preferredValue) {
-                name = text;
+            QString artistMbid;
 
-                // now read its mbid
-                while (!xml.atEnd() && !xml.hasError()) {
-                        QXmlStreamReader::TokenType token = xml.readNext();
+            // now read its mbid
+            while (!xml.atEnd() && !xml.hasError()) {
+                QXmlStreamReader::TokenType token = xml.readNext();
 
-                        // stop at current artist to avoid getting the mbid of another one
-                        if(token == QXmlStreamReader::EndElement
-                              && xml.name() == "artist") return;
+                // stop at current artist to avoid getting the mbid of another one
+                if(token == QXmlStreamReader::EndElement
+                        && xml.name() == "artist") break;
 
-                        if(token == QXmlStreamReader::StartElement
-                           && xml.name() == "mbid") {
-                           mbid = xml.readElementText();
-                           return;
-                        }
+                if(token == QXmlStreamReader::StartElement
+                        && xml.name() == "mbid") {
+                    artistMbid = xml.readElementText();
+                    break;
                 }
+            }
 
+            if (text.toLower() == preferredValueLower) {
+                name = text;
+                mbid = artistMbid;
                 return;
             }
 
-            if (firstValue.isNull()) firstValue = text;
+            if (firstValue.isNull()) {
+                firstValue = text;
+                firstMbid = artistMbid;
+            }
+
         }
 
     }
@@ -209,7 +223,7 @@ void Artist::parseNameAndMbid(QByteArray bytes, QString preferredValue) {
     }
 
     name = firstValue;
-    // and mbid should be null
+    mbid = firstMbid;
 
 }
 
@@ -222,6 +236,7 @@ void Artist::parseLastFmSearch(QByteArray bytes) {
 
     parseNameAndMbid(bytes, name);
 
+    /*
     if (mbid.isEmpty()) {
         QString urlString = DataUtils::getXMLElementText(bytes, "url");
         if (!urlString.isEmpty() && urlString.contains(redirectToken)) {
@@ -240,6 +255,7 @@ void Artist::parseLastFmSearch(QByteArray bytes) {
         }
 
     }
+    */
 
     fetchLastFmInfo();
 
@@ -263,16 +279,14 @@ void Artist::parseLastFmRedirectedName(QNetworkReply *reply) {
 
 void Artist::fetchLastFmInfo() {
 
-    if (mbid.isEmpty()) {
-        qDebug() << "Missing mbid for" << name;
-        emit gotInfo();
-        return;
-    }
-
     QUrl url("http://ws.audioscrobbler.com/2.0/");
     url.addQueryItem("method", "artist.getinfo");
     url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
-    url.addQueryItem("mbid", mbid);
+
+    if (mbid.isEmpty()) {
+        url.addQueryItem("autocorrect", "1");
+        url.addQueryItem("artist", name);
+    } else url.addQueryItem("mbid", mbid);
 
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmInfo(QByteArray)));
@@ -302,10 +316,27 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
         /* If token is StartElement, we'll see if we can read it.*/
         if(token == QXmlStreamReader::StartElement) {
 
+            if(xml.name() == "similar" || xml.name() == "tags") {
+                xml.skipCurrentElement();
+                continue;
+            }
+
+            else if(xml.name() == "name") {
+                QString artistName = xml.readElementText();
+                if (name != artistName) {
+                    qDebug() << "Fixed artist name" << name << "->" << artistName;
+                    name = artistName;
+                }
+            }
+
             // image
-            if(!gotImage && xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
+            else if(!gotImage && xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
                 gotImage = true;
 
+                QString imageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash();
+                bool imageAlreadyPresent = QFile::exists(imageLocation);
+
+                /*
                 bool imageAlreadyPresent = false;
                 QString imageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash();
                 if (QFile::exists(imageLocation)) {
@@ -315,14 +346,20 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
                         imageAlreadyPresent = true;
                     }
                 }
+                */
 
                 if (!imageAlreadyPresent) {
                     QString imageUrl = xml.readElementText();
                     // qDebug() << name << " photo:" << imageUrl;
                     if (!imageUrl.isEmpty()) {
+                        /*
                         QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
                         QObject *reply = The::http()->get(url);
                         connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
+                        connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+                        waitForImage = true;
+                        */
+                        setProperty("imageUrl", imageUrl);
                     }
                 }
             }
@@ -366,14 +403,16 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
     emit gotInfo();
 }
 
+QString Artist::getImageLocation() {
+    return QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash();
+}
+
 QImage Artist::getPhoto() {
-    return QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash());
+    return QImage(getImageLocation());
 }
 
 void Artist::setPhoto(QByteArray bytes) {
-    // photo = QImage::fromData(bytes);
-
-    // qDebug() << "Storing photo for" << name;
+    qDebug() << "Storing photo for" << name;
 
     // store photo
     QString storageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/";
