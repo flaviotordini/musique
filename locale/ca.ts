@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Tradueix %1 al teu idioma utilitzant %2</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>La versió completa us permet afegir més de %1 pistes a la llista de reproducció i escoltar la vostra música sense interrupcions.</translation>
     </message>
 </context>
 <context>
@@ -258,6 +258,36 @@
     <message>
         <source>Seek backward</source>
         <translation>Cerca enrere</translation>
+    </message>
+</context>
+<context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -339,10 +369,6 @@
         <translation>&amp;Surt</translation>
     </message>
     <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
         <source>Bye</source>
         <translation>Adéu</translation>
     </message>
@@ -405,10 +431,6 @@
     <message>
         <source>Mute volume</source>
         <translation>Silencia el volum</translation>
-    </message>
-    <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -484,18 +506,50 @@
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>%1 la versió %2 ja està disponible.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"/>
+        <translation>Recorda&apos;m-ho més tard</translation>
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation type="unfinished"/>
+        <translation>Per aconseguir la versió actualitzada, descarregeu %1 de nou des del link que heu rebut via email i reinstal·leu.</translation>
     </message>
     <message>
         <source>Update</source>
+        <translation>Actualitza</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Finestra</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Minimitza</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Tanca</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>Compra %1...</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation>&amp;Atura després d&apos;aquesta pista</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -530,7 +584,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Aquesta versió de prova és limitada a tan sols %1 pistes a la llista de reproducció.</translation>
     </message>
 </context>
 <context>

@@ -32,19 +32,19 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Bunun yanında diğer uygulamalarımı da denemek isteyebilirsiniz:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, bir YouTube uygulaması</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation type="unfinished"/>
+        <translation>%1, bir YouTube müzik çalıcısı</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>%1&apos;i, %2 kullanarak kendi dilinize çevirin</translation>
     </message>
 </context>
 <context>
@@ -160,31 +160,31 @@
     <name>DemoStartupView</name>
     <message>
         <source>Please license %1</source>
-        <translation type="unfinished"/>
+        <translation>Lütfen %1&apos;i kaydettirin</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation type="unfinished"/>
+        <translation>Bu deneme sürümünün süresi dolmuş.</translation>
     </message>
     <message>
         <source>This demo will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Bu deneme sürümünün süresi %1 gün içinde dolacak.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation type="unfinished"/>
+        <translation>Tam sürümü satın alarak, %1&apos;i oluşturmaya harcadığım emeği de desteklemiş olacaksınız.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation type="unfinished"/>
+        <translation>Deneme Sürümü Kullan</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Tam sürüme geç</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Tam sürüm, çalma listesine %1&apos;den fazla parça eklemenize ve müziklerinizi kesintisiz olarak dinlemenize izin verir.</translation>
     </message>
 </context>
 <context>
@@ -258,6 +258,36 @@
     <message>
         <source>Seek backward</source>
         <translation>Geri sar</translation>
+    </message>
+</context>
+<context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -339,10 +369,6 @@
         <translation>&amp;Kapat</translation>
     </message>
     <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
         <source>Bye</source>
         <translation>Hoşçakalın</translation>
     </message>
@@ -405,10 +431,6 @@
     <message>
         <source>Mute volume</source>
         <translation>Sesi kapat</translation>
-    </message>
-    <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -480,22 +502,54 @@
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Tam sürüme geç</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>%1 sürüm %2 kullanılabilir durumda.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"/>
+        <translation>Daha sonra hatırlat</translation>
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation type="unfinished"/>
+        <translation>Güncellenmiş sürümü edinmek için, e-posta yoluyla aldığınız bağlantı üzerinden %1&apos;i indirin ve yeniden kurun.</translation>
     </message>
     <message>
         <source>Update</source>
+        <translation>Güncelle</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Pencere</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Simge Durumuna Küçült</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Kapat</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>%1&apos;i Satın Al...</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation>Bu Parçadan Sonra &amp;Dur</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -530,7 +584,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Bu deneme sürümü, çalma listesini %1 parça ile kısıtlar.</translation>
     </message>
 </context>
 <context>
@@ -555,7 +609,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>Aramanız sonuç döndürmedi.</translation>
     </message>
 </context>
 <context>

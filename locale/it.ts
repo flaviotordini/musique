@@ -141,7 +141,7 @@
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 sta indicizzando la tua collezione musicale</translation>
+        <translation>%1 sta indicizzando la tua collezione musicale.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Mute</source>
-        <translation>Silenzio</translation>
+        <translation>Disattiva audio</translation>
     </message>
     <message>
         <source>Seek forward</source>
@@ -258,6 +258,36 @@
     <message>
         <source>Seek backward</source>
         <translation>Vai indietro</translation>
+    </message>
+</context>
+<context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation>Autenticazione non riuscita</translation>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation>Accedi a %1</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>Nome &amp;utente:</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Password:</translation>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation>Crea un account su %1</translation>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
+        <translation>Hai dimenticato il &lt;a href=&apos;%1&apos;&gt;nome utente&lt;/a&gt; o la &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</translation>
     </message>
 </context>
 <context>
@@ -339,16 +369,12 @@
         <translation>&amp;Esci</translation>
     </message>
     <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
         <source>Bye</source>
         <translation>Ciao</translation>
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation>&amp;Cambia la cartella della collezione musicale</translation>
+        <translation>&amp;Cambia la cartella della collezione musicale...</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
@@ -404,11 +430,7 @@
     </message>
     <message>
         <source>Mute volume</source>
-        <translation>Muta il volume</translation>
-    </message>
-    <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
+        <translation>Disattiva l&apos;audio</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -497,6 +519,38 @@
     <message>
         <source>Update</source>
         <translation>Aggiorna</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Finestra</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Contrai</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Chiudi</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>Compra %1</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation>&amp;Ferma dopo questa traccia</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation>&amp;Scrobbling</translation>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation>Invia i titoli delle tracce ascoltate a %1</translation>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
+        <translation>&amp;Esci da %1</translation>
     </message>
 </context>
 <context>

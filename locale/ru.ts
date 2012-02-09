@@ -32,19 +32,19 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Вы также можете попробовать другие мои приложения:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, приложение YouTube</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation type="unfinished"/>
+        <translation>%1, музыкальный плеер для YouTube</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Перевести %1 на ваш родной язык с помощью %2</translation>
     </message>
 </context>
 <context>
@@ -160,27 +160,28 @@
     <name>DemoStartupView</name>
     <message>
         <source>Please license %1</source>
-        <translation type="unfinished"/>
+        <translation>	
+Лицензия %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation type="unfinished"/>
+        <translation>Демонстрационный период истек.</translation>
     </message>
     <message>
         <source>This demo will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Демонстрационный период истекает через %1 дн.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation type="unfinished"/>
+        <translation>При покупке полной версии, вы также оказываете поддержку тяжелой работы в создании %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation type="unfinished"/>
+        <translation>Демонстрация</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Получить полную версию</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
@@ -258,6 +259,36 @@
     <message>
         <source>Seek backward</source>
         <translation>Перемотать назад</translation>
+    </message>
+</context>
+<context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation>Ошибка аутентификации</translation>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation>Войти на %1</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>&amp;Имя пользователя:</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Пароль:</translation>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
+        <translation>Забыли свой &lt;a href=&apos;%1&apos;&gt;логин&lt;/a&gt; или &lt;a href=&apos;%2&apos;&gt;пароль&lt;/a&gt;?</translation>
     </message>
 </context>
 <context>
@@ -339,10 +370,6 @@
         <translation>Выйт&amp;и</translation>
     </message>
     <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
         <source>Bye</source>
         <translation>Пока</translation>
     </message>
@@ -405,10 +432,6 @@
     <message>
         <source>Mute volume</source>
         <translation>Выключить звук</translation>
-    </message>
-    <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -480,7 +503,7 @@
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Получить полную версию</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -497,6 +520,38 @@
     <message>
         <source>Update</source>
         <translation>Обновление</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Окно</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Свернуть</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Закрыть</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>Купить %1...</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation>Ост&amp;ановить после текущего трека</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation>&amp;Скробблинг</translation>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation>Отправлять называния воспроизведенных треков на %1</translation>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
+        <translation>&amp;Выйти из %1</translation>
     </message>
 </context>
 <context>
@@ -530,7 +585,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Демонстрационный режим ограничивается только %1 треками в плейлисте.</translation>
     </message>
 </context>
 <context>
@@ -555,7 +610,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>По Вашему поисковому запросу нет никаких результатов.</translation>
     </message>
 </context>
 <context>

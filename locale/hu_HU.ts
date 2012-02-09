@@ -28,23 +28,23 @@
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Amit mindig tudni akartál %1-ról és sosem merted megkérdezni</translation>
+        <translation>Amit mindig tudni akart %1-ról de sosem merte megkérdezni</translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Érdemes kipróbálni más alkalmazásaimat is:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, egy YouTube alkalmazás</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation type="unfinished"/>
+        <translation>%1, egy Youtube zenelejátszó</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Fordítsa le a(z) %1 programot az anyanyelvére a(z) %2 segítségével.</translation>
     </message>
 </context>
 <context>
@@ -55,14 +55,14 @@
     </message>
     <message>
         <source>Read more</source>
-        <translation>Tudj meg többet</translation>
+        <translation>Tudjon meg többet</translation>
     </message>
 </context>
 <context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
-        <translation>Tudj meg többet</translation>
+        <translation>Tudjon meg többet</translation>
     </message>
 </context>
 <context>
@@ -108,19 +108,19 @@
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Ha adatvédelmi aggályaid lennének most kiléphetsz.</translation>
+        <translation>Ha adatvédelmi aggályai lennének most kiléphet.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Hol van a zene gyűjteményed?</translation>
+        <translation>Hol van a zene gyűjteménye?</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation>Válaszd ki a zene gyűjteményed helyét.</translation>
+        <translation>Válassza ki a zene gyűjteménye helyét.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
-        <translation>Keresd meg a gyűjteményed</translation>
+        <translation>Keresse meg a gyűjteményét</translation>
     </message>
 </context>
 <context>
@@ -141,7 +141,7 @@
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>A %1 átvizsgálja a zene gyűjteményed.</translation>
+        <translation>A %1 átvizsgálja a zene gyűjteményét.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
@@ -149,49 +149,49 @@
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
-        <translation>Ez időt vesz igénybe attól függően mekkora a gyűjteményed mérete és milyen gyors a hálózatod sebessége.</translation>
+        <translation>Ez időt vesz igénybe attól függően mekkora a gyűjteménye mérete és milyen gyors a hálózata sebessége.</translation>
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation>Hozz egy kávét</translation>
+        <translation>Hozzon egy kávét</translation>
     </message>
 </context>
 <context>
     <name>DemoStartupView</name>
     <message>
         <source>Please license %1</source>
-        <translation type="unfinished"/>
+        <translation>Kérem licencelje %1  </translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation type="unfinished"/>
+        <translation>Ez a demo már lejárt.</translation>
     </message>
     <message>
         <source>This demo will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Ez a demo le fog járni %1 nap múlva.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation type="unfinished"/>
+        <translation>A teljes verzió megvételével, támogatni fogja a kemény munkát amit belefektettem a(z) %1 fejlesztésébe.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation type="unfinished"/>
+        <translation>Demo használata</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Teljes verzió beszerzése</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>A teljes verzió engedélyezi önnek, hogy %1 számnál többet adjon a lejátszólistájához, és megszakítások nélkül hallgathatja a zenéit.</translation>
     </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation>Dobd ide, a lejátszólistához hozzáadáshoz</translation>
+        <translation>Dobja ide, a lejátszólistához hozzáadáshoz</translation>
     </message>
 </context>
 <context>
@@ -229,7 +229,7 @@
     </message>
     <message>
         <source>Stop playing after current track</source>
-        <translation>Lejátszás megállítása az akutális szám után</translation>
+        <translation>Lejátszás megállítása az aktuális szám után</translation>
     </message>
     <message>
         <source>Next track</source>
@@ -258,6 +258,36 @@
     <message>
         <source>Seek backward</source>
         <translation>Visszalépés</translation>
+    </message>
+</context>
+<context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation>Hitelesítés sikertelen</translation>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation>Bejelentkezés ide: %1</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>&amp;Felhasználónév</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Jelszó</translation>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation>Regisztráció a %1 oldalra</translation>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
+        <translation>Elfelejtette a &lt;a href=&apos;%1&apos;&gt;felhasználónevét&lt;/a&gt; vagy a &lt;a href=&apos;%2&apos;&gt;jelszavát&lt;/a&gt;?</translation>
     </message>
 </context>
 <context>
@@ -320,7 +350,7 @@
     </message>
     <message>
         <source>Move &amp;Up</source>
-        <translation>&amp;Feljebb</translation>
+        <translation>&amp;Fel</translation>
     </message>
     <message>
         <source>Move up the selected tracks in the playlist</source>
@@ -328,7 +358,7 @@
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation>Le&amp;jjebb</translation>
+        <translation>&amp;Le</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
@@ -337,10 +367,6 @@
     <message>
         <source>&amp;Quit</source>
         <translation>&amp;Kilépés</translation>
-    </message>
-    <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
     </message>
     <message>
         <source>Bye</source>
@@ -356,7 +382,7 @@
     </message>
     <message>
         <source>&amp;Website</source>
-        <translation>&amp;Webolda</translation>
+        <translation>&amp;Weboldal</translation>
     </message>
     <message>
         <source>%1 on the Web</source>
@@ -368,7 +394,7 @@
     </message>
     <message>
         <source>Please support the continued development of %1</source>
-        <translation>Kérlek támogasd a %1 további fejlesztését</translation>
+        <translation>Kérem támogassa a %1 további fejlesztését</translation>
     </message>
     <message>
         <source>&amp;About</source>
@@ -405,10 +431,6 @@
     <message>
         <source>Mute volume</source>
         <translation>Hangerő némítása</translation>
-    </message>
-    <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -480,30 +502,62 @@
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Teljes verzió beszerzése</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>A %1 %2 verziója most elérhető.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"/>
+        <translation>Emlékeztess késöbb</translation>
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation type="unfinished"/>
+        <translation>A frissítéshez töltsd le a(z) %1 programot újra a link segítségével amit e-mailben kapott, és telepítse újra a programot.</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Frissítés</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Ablak</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Minimalizálás</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Bezárás</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>%1 megvásárlása...</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation>&amp;Megállítás a szám után</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation>&amp;Továbbítás</translation>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation>Lejátszott számcímek küldése a %1 oldalnak</translation>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
+        <translation>&amp;Kijelentkezés ebből: %1</translation>
     </message>
 </context>
 <context>
     <name>MediaView</name>
     <message>
         <source>Drop items here</source>
-        <translation>Ide dobd az elemeket</translation>
+        <translation>Ide dobja az elemeket</translation>
     </message>
     <message>
         <source>Playlist finished</source>
@@ -515,7 +569,7 @@
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Ez lehetőséget ad, hogy pár számot lejátssz, így kipróbálhatod az alkalmazást és megnézheted, hogy működik neked.</translation>
+        <translation>Ez lehetőséget ad, hogy pár számot lejátsszon, kipróbálhatja az alkalmazást és megnézheti, hogy működik önnek.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -555,7 +609,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>A keresésnek nincs eredménye.</translation>
     </message>
 </context>
 <context>

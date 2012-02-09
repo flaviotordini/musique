@@ -3,7 +3,7 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 # ls -1 *.ts | tr '\n' ' '
-TRANSLATIONS += ca.ts de.ts el.ts es_ES.ts fr.ts hu_HU.ts ia.ts it.ts lv.ts nb.ts pl.ts pt.ts pt_BR.ts ru.ts sr.ts tr.ts uk.ts 
+TRANSLATIONS += ast.ts ca.ts cs_CZ.ts de.ts el.ts es_ES.ts fi_FI.ts fr.ts hu_HU.ts ia.ts it.ts nb.ts pl.ts pt.ts pt_BR.ts ru.ts sk.ts sr.ts tr.ts tt.ts uk.ts zh_CN.ts 
 
 isEmpty(QMAKE_LRELEASE) { 
     win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe

@@ -32,15 +32,15 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Спробуйте інші програми:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, застосунок YouTube</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation type="unfinished"/>
+        <translation>%1, музичний програвач для YouTube</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -160,27 +160,27 @@
     <name>DemoStartupView</name>
     <message>
         <source>Please license %1</source>
-        <translation type="unfinished"/>
+        <translation>Ліцензуйте %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation type="unfinished"/>
+        <translation>Пробний період вичерпано</translation>
     </message>
     <message>
         <source>This demo will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Пробний період завершується за %1 днів.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation type="unfinished"/>
+        <translation>Повна версія дозволяє додавати більше %1 треків у плейлист і слухати музику без перерви.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation type="unfinished"/>
+        <translation>Демонстрація</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Отримати повнофункціональну версію</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
@@ -258,6 +258,36 @@
     <message>
         <source>Seek backward</source>
         <translation>Прокрутити назад</translation>
+    </message>
+</context>
+<context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -339,10 +369,6 @@
         <translation>&amp;Вийти</translation>
     </message>
     <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
         <source>Bye</source>
         <translation>Щасливо</translation>
     </message>
@@ -405,10 +431,6 @@
     <message>
         <source>Mute volume</source>
         <translation>Вимкнути звук</translation>
-    </message>
-    <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -480,15 +502,15 @@
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Отримати повнофункціональну версію</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>%1 версія %2 доступна.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"/>
+        <translation>Нагадати мені пізніше</translation>
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
@@ -496,6 +518,38 @@
     </message>
     <message>
         <source>Update</source>
+        <translation>Оновлення</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Вікно</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Звернути</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Закрити</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>Придбати %1...</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -555,7 +609,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>Нічого не знайдено</translation>
     </message>
 </context>
 <context>

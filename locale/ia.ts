@@ -32,19 +32,19 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Tu pote tamben voler essayar mi altere applicationes:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, un application de YouTube</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation type="unfinished"/>
+        <translation>%1, un reproductor de musica de YouTube</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Traduce %1 in tu lingua materne per usar %2</translation>
     </message>
 </context>
 <context>
@@ -104,11 +104,11 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation type="unfinished"/>
+        <translation>%1 connectara al servicios web de Last.fm web e passara nomines de artista e titulos de album pro cercar copertas, biographias e multe plus.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation type="unfinished"/>
+        <translation>Si tu ha anxietate de intimitate super isto, tu pote quitar ora.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -153,38 +153,38 @@
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation type="unfinished"/>
+        <translation>Vade sasir un caffe</translation>
     </message>
 </context>
 <context>
     <name>DemoStartupView</name>
     <message>
         <source>Please license %1</source>
-        <translation type="unfinished"/>
+        <translation>Per favor, licentia %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation type="unfinished"/>
+        <translation>Iste demo ha expirate</translation>
     </message>
     <message>
         <source>This demo will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Iste demo expirara in %1 dies.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation type="unfinished"/>
+        <translation>Al comprar le version complete, tu va supportar tamben le dur labor que io habeva pro crear %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation type="unfinished"/>
+        <translation>Usar Demo</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Procura le version complete</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Le version complete permitte que tu reguarda videos, adde plus %1 tracias al lista de reproduction e ascolta tu musica sin interruptiones.</translation>
     </message>
 </context>
 <context>
@@ -253,10 +253,40 @@
     </message>
     <message>
         <source>Seek forward</source>
-        <translation type="unfinished"/>
+        <translation>Cerca in avante</translation>
     </message>
     <message>
         <source>Seek backward</source>
+        <translation>Cerca in retro</translation>
+    </message>
+</context>
+<context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -339,10 +369,6 @@
         <translation>&amp;Quitar</translation>
     </message>
     <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
         <source>Bye</source>
         <translation>Adeo</translation>
     </message>
@@ -405,10 +431,6 @@
     <message>
         <source>Mute volume</source>
         <translation>Sin sono</translation>
-    </message>
-    <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -480,7 +502,7 @@
     </message>
     <message>
         <source>Get the full version</source>
-        <translation type="unfinished"/>
+        <translation>Procura le version complete</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -492,11 +514,43 @@
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation type="unfinished"/>
+        <translation>Pro obtener le version actualisate, discarga novemente %1 ab le ligamine que tu recipeva per e-posta e reinstalla lo.</translation>
     </message>
     <message>
         <source>Update</source>
         <translation>Actualisar</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Fenestra</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Clauder</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>Comprar %1...</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -530,7 +584,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Iste demo es limitate a %1 pistas in le lista de reproduction.</translation>
     </message>
 </context>
 <context>
@@ -555,7 +609,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>Tu cerca no ha resultatos</translation>
     </message>
 </context>
 <context>

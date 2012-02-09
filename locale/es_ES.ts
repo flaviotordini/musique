@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Lo que siempre quiso saber sobre %1 pero nunca se atrevió a preguntar</translation>
+        <translation>Lo que siempre ha querido  saber sobre %1 pero nunca se ha atrevido a preguntar</translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Traduce %1 a tu idioma utilizando %2</translation>
     </message>
 </context>
 <context>
@@ -261,6 +261,36 @@
     </message>
 </context>
 <context>
+    <name>LastFm</name>
+    <message>
+        <source>Authentication failed</source>
+        <translation>Se ha producido un error en la autenticación</translation>
+    </message>
+</context>
+<context>
+    <name>LastFmLoginDialog</name>
+    <message>
+        <source>Log in to %1</source>
+        <translation>Inicie sesión en %1</translation>
+    </message>
+    <message>
+        <source>&amp;Username:</source>
+        <translation>&amp;Nombre de usuario:</translation>
+    </message>
+    <message>
+        <source>&amp;Password:</source>
+        <translation>&amp;Contraseña:</translation>
+    </message>
+    <message>
+        <source>Signup for a %1 account</source>
+        <translation>Crear una cuenta de %1</translation>
+    </message>
+    <message>
+        <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
+        <translation>¿Ha olvidado su &lt;a href=&apos;%1&apos;&gt;nombre de usuario&lt;/a&gt; o su &lt;a href=&apos;%2&apos;&gt;contraseña?</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Back</source>
@@ -272,7 +302,7 @@
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;Info.</translation>
+        <translation>&amp;Información</translation>
     </message>
     <message>
         <source>Show information about the current track</source>
@@ -339,10 +369,6 @@
         <translation>Sa&amp;lir</translation>
     </message>
     <message>
-        <source>Ctrl+Q</source>
-        <translation>Ctrl+Q</translation>
-    </message>
-    <message>
         <source>Bye</source>
         <translation>¡Hasta luego!</translation>
     </message>
@@ -407,10 +433,6 @@
         <translation>Silenciar volumen</translation>
     </message>
     <message>
-        <source>Ctrl+M</source>
-        <translation>Ctrl+M</translation>
-    </message>
-    <message>
         <source>&amp;Application</source>
         <translation>&amp;Aplicación</translation>
     </message>
@@ -420,7 +442,7 @@
     </message>
     <message>
         <source>Play&amp;list</source>
-        <translation>&amp;Lista de reprod.</translation>
+        <translation>&amp;Lista de reproducción</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -497,6 +519,38 @@
     <message>
         <source>Update</source>
         <translation>Actualizar</translation>
+    </message>
+    <message>
+        <source>&amp;Window</source>
+        <translation>&amp;Ventana completa</translation>
+    </message>
+    <message>
+        <source>&amp;Minimize</source>
+        <translation>&amp;Minimizar</translation>
+    </message>
+    <message>
+        <source>&amp;Close</source>
+        <translation>&amp;Cerrar</translation>
+    </message>
+    <message>
+        <source>Buy %1...</source>
+        <translation>Comprar %1...</translation>
+    </message>
+    <message>
+        <source>&amp;Stop After This Track</source>
+        <translation>&amp;Detener reproducción tras esta pista</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobbling</source>
+        <translation>&amp;Scrobbling</translation>
+    </message>
+    <message>
+        <source>Send played tracks titles to %1</source>
+        <translation>Enviar temas eproducidos a %1</translation>
+    </message>
+    <message>
+        <source>&amp;Log Out from %1</source>
+        <translation>&amp;Cerrar sesión de %1</translation>
     </message>
 </context>
 <context>
