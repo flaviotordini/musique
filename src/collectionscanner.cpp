@@ -116,8 +116,13 @@ void CollectionScanner::popFromQueue() {
     // qDebug() << "Processing " << fileInfo.absoluteFilePath();
 
     // parse metadata with TagLib
-    TagLib::FileRef fileref((TagLib::FileName)fileInfo.absoluteFilePath().toUtf8());
-    // or maybe QFile::encodeName(p_FilePath).data()
+    QString filename = fileInfo.absoluteFilePath();
+#ifdef Q_OS_WIN
+    const wchar_t * encodedName = reinterpret_cast<const wchar_t*>(filename.utf16());
+#else
+    const char * encodedName = QFile::encodeName(filename).constData();
+#endif
+    TagLib::FileRef fileref(encodedName);
 
     // if taglib cannot parse the file, drop it
     if (fileref.isNull()) {
