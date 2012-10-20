@@ -8,15 +8,15 @@
     </message>
     <message>
         <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 je distribuovaná ako Slobodný Softvér, avšak vývoj zaberá značnú dávku času.</translation>
+        <translation>%1 je Slobodným Softvérom, ktorého vývoj si žiada značnú dávku času.</translation>
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Prosím &lt;a href=&apos;%1&apos;&gt;prispej&lt;/a&gt; pre pokračovanie vývoja %2.</translation>
+        <translation>Prosím o finančnú &lt;a href=&apos;%1&apos;&gt;podporu&lt;/a&gt; pokračujúceho vývoja %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation>Uverejnené pod licenciou &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
+        <translation>Vydané pod &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Všetko čo chceš vedieť o %1 bez potreby spytovania sa</translation>
+        <translation>Všetko čo chceš o %1 vedieť, bez potreby sa vopred spýtať </translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
@@ -36,15 +36,15 @@
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation>%1, aplikácia pre YouTube</translation>
+        <translation>%1, komfortné YouTube rozhranie</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation>%1, prehrávač hudby z YouTube</translation>
+        <translation>%1, prehrávač YouTube muziky</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation>Preložiť %1 do tvojho materského jazyka pomocou %2</translation>
+        <translation>Prelož %1 do svojho materinského jazyka cez %2</translation>
     </message>
 </context>
 <context>
@@ -73,18 +73,18 @@
     </message>
     <message>
         <source>Go back</source>
-        <translation>Choď naspäť</translation>
+        <translation>Ísť späť</translation>
     </message>
 </context>
 <context>
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Vitaj v &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Vitaj v aplikácii &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 potrebuje preskenovať tvoju hudobnú kolekciu.</translation>
+        <translation>%1 najprv začlení tvoju hudobnú zbierku.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -92,7 +92,7 @@
     </message>
     <message>
         <source>Use iTunes collection</source>
-        <translation>Použiť kolekciu iTunes</translation>
+        <translation>Použiť kolekciu z iTunes</translation>
     </message>
     <message>
         <source>Use %1</source>
@@ -100,27 +100,27 @@
     </message>
     <message>
         <source>Choose a folder...</source>
-        <translation>Vyber si adresár...</translation>
+        <translation>Zvoľ adresár...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 sa pripojí k webovej službe Last.fm a poskytne mená autorov a názvy albumov v snahe získať grafické obaly, biografie a omnoho viac.</translation>
+        <translation>%1 sa pripojí k webovej službe Last.fm a načíta názvy skupín a albumov v snahe získať adekvátne hudobné informácie a grafické obaly.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Pokiaľ máš obavy ohľadom súkromia, môžeš to okamžite vypnúť.</translation>
+        <translation>Pokiaľ máš obavy vzhľadom na súkromie, môžeš proces prerušiť.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Kde sa nachádza tvoja hudobná kolekcia?</translation>
+        <translation>Kde máš svoju hudobnú zbierku?</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation>Vyber umiestnenie svojej hudobnej kolekcie.</translation>
+        <translation>Zvoľ cestu k svojej hudobnej zbierke.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
-        <translation>Nájsť svoju kolekciu</translation>
+        <translation>Nájsť svoju zbierku</translation>
     </message>
 </context>
 <context>
@@ -134,14 +134,14 @@
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>Prehľadávanie je už spustené</translation>
+        <translation>Katalogizácia už práve prebieha</translation>
     </message>
 </context>
 <context>
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 prehľadáva tvoju hudbonú kolekciu.</translation>
+        <translation>%1 začleňuje tvoju hudbonú zbierku.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
@@ -149,18 +149,18 @@
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
-        <translation>Potrvá to istý čas s ohľadom na veľkosť kolekcie a rýchlosti pripojenia.</translation>
+        <translation>Potrvá to istý čas s ohľadom na rozsiahlosť zbierky a rýchlosti spojenia.</translation>
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation>Daj si kávu</translation>
+        <translation>Počkaj chvíľku prosím</translation>
     </message>
 </context>
 <context>
     <name>DemoStartupView</name>
     <message>
         <source>Please license %1</source>
-        <translation>Prosím zohnaj si licenciu %1</translation>
+        <translation>Licencuj si %1 prosím</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
@@ -172,26 +172,26 @@
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Zakúpením plnej verzie taktiež podporíš námahu, ktorá bola vložená do tvorby %1.</translation>
+        <translation>Zakúpením plnej verzie podporíš námahu, vynaloženú pri tvorbe %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>Použť demoverziu</translation>
+        <translation>Použiť demoverziu</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Zohnať plnú verziu</translation>
+        <translation>Získať plnú verziu</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Plná verzia ti umožní pridať viac než %1 skladieb do playlistu a počúvať svoju hudbu bez prerušení.</translation>
+        <translation>Plná verzia ti umožní pridať viac než %1 skladieb do playlistu a počúvať hudbu bez prerušení.</translation>
     </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation>Pusť sem pre pridanie k playlistu</translation>
+        <translation>Pusť sem, pre pridanie do playlistu</translation>
     </message>
 </context>
 <context>
@@ -229,15 +229,15 @@
     </message>
     <message>
         <source>Stop playing after current track</source>
-        <translation>Zastav hranie po tejto skladbe</translation>
+        <translation>Zastav hranie po aktuálnej skladbe</translation>
     </message>
     <message>
         <source>Next track</source>
-        <translation>Nasledujúca skladba</translation>
+        <translation>Nasledovná skladba</translation>
     </message>
     <message>
         <source>Previous track</source>
-        <translation>Predchádzajúca skladba</translation>
+        <translation>Predošlá skladba</translation>
     </message>
     <message>
         <source>Increase volume</source>
@@ -253,41 +253,41 @@
     </message>
     <message>
         <source>Seek forward</source>
-        <translation>Pretočiť dopredu</translation>
+        <translation>Pretočiť vpred</translation>
     </message>
     <message>
         <source>Seek backward</source>
-        <translation>Pretočiť dozadu</translation>
+        <translation>Pretočiť vzad</translation>
     </message>
 </context>
 <context>
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Overenie zlyhalo</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Prihlásenie do %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Používateľské meno:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Heslo:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Registrácia %1 účtu</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>Zabudnuté &lt;a href=&apos;%1&gt;používateľské meno&lt;/a&gt; alebo &lt;a href=&apos;%2&apos;&gt;heslo&lt;/a&gt;?</translation>
     </message>
 </context>
 <context>
@@ -298,7 +298,7 @@
     </message>
     <message>
         <source>Go to the previous view</source>
-        <translation>Ísť na predchádzajúce zobrazenie</translation>
+        <translation>Ísť na predošlé zobrazenie</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -310,19 +310,19 @@
     </message>
     <message>
         <source>P&amp;revious</source>
-        <translation>&amp;Predchádzajúca</translation>
+        <translation>&amp;Predošlá</translation>
     </message>
     <message>
         <source>Go back to the previous track</source>
-        <translation>Ísť späť na predchádzajúcu skladbu</translation>
+        <translation>Ísť na predošlú skladbu</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation>&amp;Nasledujúca</translation>
+        <translation>&amp;Nasledovná</translation>
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation>Preskočiť na nasledujúcu skladbu</translation>
+        <translation>Preskočiť na nasledovnú skladbu</translation>
     </message>
     <message>
         <source>&amp;Play</source>
@@ -338,7 +338,7 @@
     </message>
     <message>
         <source>Go full screen</source>
-        <translation>Zobraziť na celú obrazovku</translation>
+        <translation>Na celú obrazovku</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
@@ -354,7 +354,7 @@
     </message>
     <message>
         <source>Move up the selected tracks in the playlist</source>
-        <translation>Posunúť nahor vybrané skladby v playliste</translation>
+        <translation>Posunúť vybrané skladby v playliste nahor</translation>
     </message>
     <message>
         <source>Move &amp;Down</source>
@@ -362,23 +362,23 @@
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
-        <translation>Posunúť nadol vybrané skladby v playliste</translation>
+        <translation>Posunúť vybrané skladby v playliste nadol</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Uknočiť</translation>
+        <translation>&amp;Ukončiť</translation>
     </message>
     <message>
         <source>Bye</source>
-        <translation>Maj sa!</translation>
+        <translation>Maj sa</translation>
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation>&amp;Zmeniť adresár kolekcie...</translation>
+        <translation>&amp;Zmeniť adresár zbierky...</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
-        <translation>Vyber odlišný adresár hudobnej kolekcie</translation>
+        <translation>Vybrať odlišný adresár hudobnej kolekcie</translation>
     </message>
     <message>
         <source>&amp;Website</source>
@@ -386,15 +386,15 @@
     </message>
     <message>
         <source>%1 on the Web</source>
-        <translation>%1 na Webe</translation>
+        <translation>%1 na Internete</translation>
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>Dať autorovi &amp;príspevok</translation>
+        <translation>Darovať &amp;príspevok</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
-        <translation>Prosím podpor prebiehajúci vývoj %1</translation>
+        <translation>Podpor prosím pokračujúci vývoj %1</translation>
     </message>
     <message>
         <source>&amp;About</source>
@@ -402,7 +402,7 @@
     </message>
     <message>
         <source>Info about %1</source>
-        <translation>Info o projekte %1</translation>
+        <translation>Informácie o projekte %1</translation>
     </message>
     <message>
         <source>&amp;Clear</source>
@@ -414,11 +414,11 @@
     </message>
     <message>
         <source>&amp;Shuffle</source>
-        <translation>&amp;Premiešať</translation>
+        <translation>&amp;Zamiešať</translation>
     </message>
     <message>
         <source>Random playlist mode</source>
-        <translation>Prehrávanie náhodných skladieb</translation>
+        <translation>Náhodné prehrávanie skladieb</translation>
     </message>
     <message>
         <source>&amp;Repeat</source>
@@ -426,7 +426,7 @@
     </message>
     <message>
         <source>Play first song again after all songs are played</source>
-        <translation>Znovu prehraj prvú pieseň po skončení všetkých</translation>
+        <translation>Opätovne prehrať prvú pieseň po skončení</translation>
     </message>
     <message>
         <source>Mute volume</source>
@@ -462,11 +462,11 @@
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation>Aktualizujem kolekciu...</translation>
+        <translation>Aktualizácia kolekcie...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
-        <translation>Aktualizujem kolekciu - %1%</translation>
+        <translation>Aktualizácia kolekcie - %1%</translation>
     </message>
     <message>
         <source>Collection updated</source>
@@ -482,7 +482,7 @@
     </message>
     <message>
         <source>Leave &amp;Full Screen</source>
-        <translation>Opustiť &amp;Celá obrazovka</translation>
+        <translation>Opustiť &amp;Celú Obrazovku</translation>
     </message>
     <message>
         <source>Remaining time: %1</source>
@@ -502,11 +502,11 @@
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Zohnať plnú verziu</translation>
+        <translation>Získať plnú verziu</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation>%1 verzia %2 je teraz dostupná.</translation>
+        <translation>%1 verzie %2 je práve dostupný.</translation>
     </message>
     <message>
         <source>Remind me later</source>
@@ -514,7 +514,7 @@
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Pre získanie aktualizovanej verzie stiahni %1 znovu z odkazu, ktorý ti bude zaslaný na e-mailovú adresu a následne aplikáciu reinštaluj.</translation>
+        <translation>Pre získanie novšej verzie stiahni %1 z odkazu, ktorý ti bude zaslaný na e-mailovú adresu a preinštaluj aplikáciu.</translation>
     </message>
     <message>
         <source>Update</source>
@@ -538,26 +538,26 @@
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Zastav po tejto skladbe</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Vedenie štatistík, skroblovanie</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Odoslať prehraté skladby na %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Odhlásenie z %1</translation>
     </message>
 </context>
 <context>
     <name>MediaView</name>
     <message>
         <source>Drop items here</source>
-        <translation>Pusť sem položky</translation>
+        <translation>Pusť sem skladby</translation>
     </message>
     <message>
         <source>Playlist finished</source>
@@ -569,11 +569,11 @@
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Umožňuje ti prehrať niekoľko skladieb, takže môžeš aplikáciu vyskúšať a uvidieť či funguje tak ako má.</translation>
+        <translation>Umožní ti prehrať niekoľko skladieb, takže môžeš aplikáciu vyskúšať a pohodlne otestovať.</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Pokračovať</translation>
+        <translation>Pokračuj</translation>
     </message>
     <message>
         <source>Get the full version</source>
@@ -595,7 +595,7 @@
     </message>
     <message>
         <source>%1 tracks - Total length is %2</source>
-        <translation>%1 skladby - Celková dĺžka je %2</translation>
+        <translation>%1 skladieb - Celková dĺžka je %2</translation>
     </message>
 </context>
 <context>
@@ -609,14 +609,14 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation>Hľadaná fráza nebola nájdená.</translation>
+        <translation>Žiadne výsledky hľadania.</translation>
     </message>
 </context>
 <context>
     <name>TrackListView</name>
     <message>
         <source>Tracks</source>
-        <translation>Skladby</translation>
+        <translation>Skladieb</translation>
     </message>
 </context>
 </TS>

@@ -153,7 +153,7 @@
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation>Vatti a prendere un caffé</translation>
+        <translation>Ti va un caffé?</translation>
     </message>
 </context>
 <context>

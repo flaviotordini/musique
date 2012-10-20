@@ -264,30 +264,30 @@
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Kimlik kanıtlama başarısız oldu</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>%1&apos;de oturum aç</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kullanıcı Adı:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Parola:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>%1 hesabı için oturum aç</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&apos;%1&apos;&gt;kullanıcı adı&lt;/a&gt; vaye &lt;a href=&apos;%2&apos;&gt;parolanızı&lt;/a&gt; mı unuttunuz?</translation>
     </message>
 </context>
 <context>
@@ -542,15 +542,15 @@
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Skropluyor</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Çalınan parçalar %1&apos;e gönderildi</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>%1 &amp;oturumunu kapat</translation>
     </message>
 </context>
 <context>

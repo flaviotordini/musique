@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>La version complète vous permet d&apos;ajouter plus de %1 chansons à la playlist et d&apos;écouter votre musique sans interruption</translation>
     </message>
 </context>
 <context>
@@ -264,30 +264,31 @@
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Échec de l&apos;autentification</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Se connnecter à %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Mot de passe</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>S&apos;enregistrer pour un compte %1</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>Vous avez oublié votre &lt;a href=&apos;%1&apos;&gt;nom d&apos;utilisateur&lt;/a&gt; ou votre &lt;a href=&apos;%2&apos;&gt;mot de passe&lt;/a&gt;?
+</translation>
     </message>
 </context>
 <context>
@@ -542,15 +543,15 @@
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Scrobbling</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Envoyer les pistes jouées vers %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Se déconnecter de %1</translation>
     </message>
 </context>
 <context>

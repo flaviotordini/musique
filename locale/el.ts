@@ -32,11 +32,11 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Μπορεί, επίσης, να θέλετε να δοκιμάσετε και τις άλλες μου εφαρμογές:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, μια εφαρμογή του Youtube</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Μετάφραση %1 στην μητρική σας γλώσσα με την χρήση %2</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Η πλήρης έκδοση, σας επιτρέπει να προσθέσετε περισσότερα από %1 κομμάτια στην λίστα αναπαραγωγή σας και να ακούτε την μουσική σας χωρίς διακοπές.</translation>
     </message>
 </context>
 <context>
@@ -264,30 +264,30 @@
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Αποτυχία πιστοποίησης</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Είσοδος στο %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Όνομα Χρήστη:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Κωδικός:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Κάντε εγγραφή στο %1 για ένα λογαριασμό</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>Ξεχάσατε το &lt;a href=&apos;%1&apos;&gt;Όνομα Χρήστη&lt;/a&gt; ή &lt;a href=&apos;%2&apos;&gt;Κωδικός Χρήστη&lt;/a&gt;;</translation>
     </message>
 </context>
 <context>
@@ -506,15 +506,15 @@
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>%1 έκδοση %2 είναι τώρα διαθέσιμη.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"/>
+        <translation>Υπενθήμηση αργότερα</translation>
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation type="unfinished"/>
+        <translation>Για να πάρετε την αναβαθμισμένη έκδοση, κάντε λήψη του %1, ξανά, από το σύνδεσμο που λάβατε μέσο email και κάντε επανεγκατάσταση.</translation>
     </message>
     <message>
         <source>Update</source>
@@ -538,19 +538,19 @@
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation type="unfinished"/>
+        <translation>%Σταμάτημα Μετά Από Αυτό Το Κομμάτι</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Scrobbling</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Αποστολή τίτλων κομματιών, που έχουν αναπαραχθεί, στο %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Αποσύνδεση από %1</translation>
     </message>
 </context>
 <context>
@@ -584,7 +584,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Στην δοκιμαστική έκδοση μπορείτε να προσθέσετε μόνο %1 κομμάτια στην λίστα αναπαραγωγής.</translation>
     </message>
 </context>
 <context>
@@ -609,7 +609,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>Η αναζήτηση σας δεν είχε κανένα αποτέλεσμα.</translation>
     </message>
 </context>
 <context>

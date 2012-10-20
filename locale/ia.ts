@@ -271,15 +271,15 @@
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Initiar session in %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>Nomine de &amp;usator:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Contrasigno:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
@@ -550,7 +550,7 @@
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>C&amp;lauder session in %1</translation>
     </message>
 </context>
 <context>

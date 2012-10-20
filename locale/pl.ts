@@ -32,19 +32,19 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Być może chciałbyś wypróbować moje inne aplikacje:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, aplikacja YouTube</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation type="unfinished"/>
+        <translation>%1, odtwarzacz muzyki YouTube</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Przetłumacz %1 na twój język ojczysty używając %2</translation>
     </message>
 </context>
 <context>
@@ -160,23 +160,23 @@
     <name>DemoStartupView</name>
     <message>
         <source>Please license %1</source>
-        <translation type="unfinished"/>
+        <translation>Proszę licencjonować  %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation type="unfinished"/>
+        <translation>To demo wygasło.</translation>
     </message>
     <message>
         <source>This demo will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>To demo wygaśnie za %1 dni</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation type="unfinished"/>
+        <translation>Przez zakup pełnej wersji wesprzesz również ciężką pracę, którą włożyłem w stworzenie %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation type="unfinished"/>
+        <translation>Użyj wersji demo</translation>
     </message>
     <message>
         <source>Get the full version</source>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Pełna wersja pozwala dodać więcej niż %1 utworów do listy odtwarzania i słuchać muzyki bez przerwy.</translation>
     </message>
 </context>
 <context>
@@ -264,30 +264,30 @@
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Autoryzacja nie powiodła się</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Zaloguj do %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Nazwa użytkownika:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Hasło:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Załóż konto dla %1</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>Zapomniałeś &lt;a href=&apos;%1&apos;&gt;nazwę użytkownika&lt;/a&gt; albo &lt;a href=&apos;%2&apos;&gt;hasło&lt;/a&gt;?</translation>
     </message>
 </context>
 <context>
@@ -506,27 +506,27 @@
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>%1 wersja %2 jest teraz dostępna.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"/>
+        <translation>Przypomnij później</translation>
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation type="unfinished"/>
+        <translation>Aby uzyskać zaktualizowaną wersję, pobierz %1 ponownie z linku, który otrzymałeś przez e-mail i zainstaluj ponownie.</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizuj</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Okno</translation>
     </message>
     <message>
         <source>&amp;Minimize</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Minimalizuj</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -534,23 +534,23 @@
     </message>
     <message>
         <source>Buy %1...</source>
-        <translation type="unfinished"/>
+        <translation>Kup %1</translation>
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Zatrzymaj po tym tytule</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Skroblowanie</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Wyślij odsłuchane tytuły do %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Wyloguj z %1</translation>
     </message>
 </context>
 <context>
@@ -584,7 +584,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Ta wersja demo jest ograniczone do tylko %1 tytułów na liście odtwarzania.</translation>
     </message>
 </context>
 <context>
@@ -609,7 +609,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>Twoje wyszukiwanie nie przyniosło rezultatów.</translation>
     </message>
 </context>
 <context>

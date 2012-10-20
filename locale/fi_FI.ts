@@ -12,11 +12,11 @@
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation type="unfinished"/>
+        <translation>&lt;a href=&apos;%1&apos;&gt;Lahjoita&lt;/a&gt; tukeaksesi sovelluksen %2 jatkokehitystä.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation type="unfinished"/>
+        <translation>Julkaistu &lt;a href=&apos;%1&apos;&gt;GNU-hankkeen yleisellä lisenssillä&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation type="unfinished"/>
+        <translation>Mitä olet aina halunnut tietää sovelluksesta %1, mutta et ole koskaan kysynyt</translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
@@ -51,7 +51,7 @@
     <name>AlbumInfo</name>
     <message>
         <source>Buy on %1</source>
-        <translation type="unfinished"/>
+        <translation>Osta palvelusta %1</translation>
     </message>
     <message>
         <source>Read more</source>
@@ -104,11 +104,11 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation type="unfinished"/>
+        <translation>%1 yhdistää Last.fm -verkkopalveluihin ja välittää artistin ja albumin nimen noutaakseen kansitaiteen, biografian ja paljon muuta.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation type="unfinished"/>
+        <translation>Jos sinua mietityttää tämän yksityisyys, voit lopettaa nyt.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation type="unfinished"/>
+        <translation>Valitse musiikkikokoelmasi sijainti.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
@@ -184,14 +184,14 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Koko versio sallii useamman kuin %1 kappaleen lisäämiseen soittolistaan ja musiikin kuuntelun ilman taukoja.</translation>
     </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation type="unfinished"/>
+        <translation>Pudota tähän lisätäksesi soittolistaan</translation>
     </message>
 </context>
 <context>
@@ -253,11 +253,11 @@
     </message>
     <message>
         <source>Seek forward</source>
-        <translation type="unfinished"/>
+        <translation>Hae eteenpäin</translation>
     </message>
     <message>
         <source>Seek backward</source>
-        <translation type="unfinished"/>
+        <translation>Hae taaksepäin</translation>
     </message>
 </context>
 <context>
@@ -271,7 +271,7 @@
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Kirjaudu palveluun %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
@@ -283,7 +283,7 @@
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Rekisteröi %1-tunnus</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
@@ -298,7 +298,7 @@
     </message>
     <message>
         <source>Go to the previous view</source>
-        <translation type="unfinished"/>
+        <translation>Mene edelliseen näkymään</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -314,7 +314,7 @@
     </message>
     <message>
         <source>Go back to the previous track</source>
-        <translation type="unfinished"/>
+        <translation>Siirry edelliseen kappaleeseen</translation>
     </message>
     <message>
         <source>&amp;Next</source>
@@ -322,7 +322,7 @@
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation type="unfinished"/>
+        <translation>Siirry seuraavaan kappaleeseen</translation>
     </message>
     <message>
         <source>&amp;Play</source>
@@ -414,11 +414,11 @@
     </message>
     <message>
         <source>&amp;Shuffle</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Sekoita</translation>
     </message>
     <message>
         <source>Random playlist mode</source>
-        <translation type="unfinished"/>
+        <translation>Satunnainen soittolistatila</translation>
     </message>
     <message>
         <source>&amp;Repeat</source>
@@ -426,7 +426,7 @@
     </message>
     <message>
         <source>Play first song again after all songs are played</source>
-        <translation type="unfinished"/>
+        <translation>Toista ensimmäinen kappale uudestaan, kun kaikki laulut on toistettu</translation>
     </message>
     <message>
         <source>Mute volume</source>
@@ -438,11 +438,11 @@
     </message>
     <message>
         <source>&amp;Playback</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Toisto</translation>
     </message>
     <message>
         <source>Play&amp;list</source>
-        <translation type="unfinished"/>
+        <translation>So&amp;ittolista</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -454,7 +454,7 @@
     </message>
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation type="unfinished"/>
+        <translation>Paina %1 nostaaksesi äänenvoimakkuutta, %2 laskeaksesi äänenvoimakkuutta</translation>
     </message>
     <message>
         <source>Opening %1</source>
@@ -482,11 +482,11 @@
     </message>
     <message>
         <source>Leave &amp;Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Poistu koko näytön tilasta</translation>
     </message>
     <message>
         <source>Remaining time: %1</source>
-        <translation type="unfinished"/>
+        <translation>Aikaa jäljellä: %1</translation>
     </message>
     <message>
         <source>Volume at %1%</source>
@@ -498,7 +498,7 @@
     </message>
     <message>
         <source>Volume is unmuted</source>
-        <translation type="unfinished"/>
+        <translation>Ääni on palautettu</translation>
     </message>
     <message>
         <source>Get the full version</source>
@@ -506,7 +506,7 @@
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>%1 versio %2 on nyt saatavilla.</translation>
     </message>
     <message>
         <source>Remind me later</source>
@@ -514,7 +514,7 @@
     </message>
     <message>
         <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation type="unfinished"/>
+        <translation>Saadaksesi päivitetyn version lataa %1 uudestaan linkistä, jonka sait sähköpostiin ja asenna uudelleen.</translation>
     </message>
     <message>
         <source>Update</source>
@@ -542,15 +542,15 @@
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Scrobblaus</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Lähetä soitetut kappalenimet palveluun %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kirjaudu ulos palvelusta %1</translation>
     </message>
 </context>
 <context>
@@ -569,7 +569,7 @@
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation type="unfinished"/>
+        <translation>Se sallii muutamien kappaleiden toistamisen, jotta voit testata sovellusta ja todeta sen toimivuuden itselläsi.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -584,7 +584,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Tässä demossa soittolistan koko on rajoitettu %1 kappaleeseen.</translation>
     </message>
 </context>
 <context>
