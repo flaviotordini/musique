@@ -301,118 +301,88 @@ void Album::parseLastFmInfo(QByteArray bytes) {
 
     QMap<QString, QVariant> trackNames;
 
-    while(!xml.atEnd() && !xml.hasError()) {
-        QXmlStreamReader::TokenType token = xml.readNext();
-        if(token == QXmlStreamReader::StartElement) {
+    while(xml.readNextStartElement()) {
 
-            if(xml.name() == "toptags") {
-                xml.skipCurrentElement();
-                continue;
-            }
+        if (xml.name() == "album") {
 
-            else if(xml.name() == "track") {
+            while (xml.readNextStartElement()) {
 
-                QString number = xml.attributes().value("rank").toString();
-                if (trackNames.contains(number)) xml.skipCurrentElement();
-                else
-                while (xml.readNextStartElement()) {
-                    // qDebug() << this << track << xml.name();
-                    if (xml.name() == "name") {
-                        QString title = xml.readElementText();
-                        trackNames.insert(number, title);
-                    }
-                    else xml.skipCurrentElement();
+                if(xml.name() == "track") {
+                    QString number = xml.attributes().value("rank").toString();
+                    if (trackNames.contains(number)) xml.skipCurrentElement();
+                    else
+                        while (xml.readNextStartElement()) {
+                            if (xml.name() == "name") {
+                                QString title = xml.readElementText();
+                                trackNames.insert(number, title);
+                            }
+                            else xml.skipCurrentElement();
+                        }
                 }
-            }
 
-            else if(xml.name() == "name") {
-                QString albumTitle = xml.readElementText();
-                if (name != albumTitle) {
-                    qDebug() << "Fixed album name" << name << "->" << albumTitle;
-                    name = albumTitle;
-                }
-            }
-
-            else if(xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
-
-                // qDebug() << title << " photo:" << imageUrl;
-
-                bool imageAlreadyPresent = false;
-                imageAlreadyPresent = property("localCover").toBool();
-                if (!imageAlreadyPresent)
-                    imageAlreadyPresent = QFile::exists(getImageLocation());
-                /*
-                if (QFile::exists(imageLocation)) {
-                    QFileInfo imageFileInfo(imageLocation);
-                    const uint imagelastModified = imageFileInfo.lastModified().toTime_t();
-                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*60) {
-                        imageAlreadyPresent = true;
-                    }
-                }*/
-
-                if (!imageAlreadyPresent) {
-                    QString imageUrl = xml.readElementText();
-                    // qDebug() << name << " photo:" << imageUrl;
-                    if (!imageUrl.isEmpty()) {
-                        /*
-                        QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
-                        QObject *reply = The::http()->get(url);
-                        connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
-                        connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
-                        waitForImage = true;
-                        */
-
-                        setProperty("imageUrl", imageUrl);
+                else if(xml.name() == "name") {
+                    QString albumTitle = xml.readElementText();
+                    if (name != albumTitle) {
+                        qDebug() << "Fixed album name" << name << "->" << albumTitle;
+                        name = albumTitle;
                     }
                 }
 
-            }
-
-            else if(xml.name() == "releasedate" && year < 1600) {
-                QString releasedateString = xml.readElementText().simplified();
-                if (!releasedateString.isEmpty()) {
-                    // Something like "6 Apr 1999, 00:00"
-                    QDateTime releaseDate = QDateTime::fromString(releasedateString, "d MMM yyyy, hh:mm");
-                    int releaseYear = releaseDate.date().year();
-                    if (releaseYear > 0) {
-                        year = releaseDate.date().year();
+                else if(xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
+                    bool imageAlreadyPresent = property("localCover").toBool();
+                    if (!imageAlreadyPresent)
+                        imageAlreadyPresent = QFile::exists(getImageLocation());
+                    if (!imageAlreadyPresent) {
+                        QString imageUrl = xml.readElementText();
+                        if (!imageUrl.isEmpty())
+                            setProperty("imageUrl", imageUrl);
                     }
-                    // qDebug() << name << releasedateString << releaseDate.toString();
                 }
-            }
 
-            // wiki
-            // TODO check at least parent element name
-            else if(xml.name() == "content") {
-                QString bio = xml.readElementText();
-                bio.remove(QRegExp("User-contributed text.*"));
-                // qDebug() << name << " got wiki";
-                if (!bio.isEmpty()) {
-                    // store bio
-                    const QString storageLocation =
-                            QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-                            + "/albums/wikis/";
-                    QDir dir;
-                    dir.mkpath(storageLocation);
-                    QFile file(storageLocation + getHash());
-                    if (!file.open(QIODevice::WriteOnly)) {
-                        qDebug() << "Error opening file for writing" << file.fileName();
+                else if(xml.name() == "releasedate" && year < 1600) {
+                    QString releasedateString = xml.readElementText().simplified();
+                    if (!releasedateString.isEmpty()) {
+                        // Something like "6 Apr 1999, 00:00"
+                        QDateTime releaseDate = QDateTime::fromString(releasedateString, "d MMM yyyy, hh:mm");
+                        int releaseYear = releaseDate.date().year();
+                        if (releaseYear > 0)
+                            year = releaseDate.date().year();
                     }
-                    QTextStream stream( &file ); // we will serialize the data into the file
-                    stream << bio;
                 }
-            }
 
+                // wiki
+                else if(xml.name() == "wiki") {
+                    while (xml.readNextStartElement()) {
+                        if(xml.name() == "content") {
+                            QString bio = xml.readElementText();
+                            static const QRegExp re("User-contributed text.*");
+                            bio.remove(re);
+                            if (!bio.isEmpty()) {
+                                const QString storageLocation =
+                                        QDesktopServices::storageLocation(QDesktopServices::DataLocation)
+                                        + "/albums/wikis/";
+                                QDir dir;
+                                dir.mkpath(storageLocation);
+                                QFile file(storageLocation + getHash());
+                                if (!file.open(QIODevice::WriteOnly))
+                                    qWarning() << "Error opening file for writing" << file.fileName();
+                                QTextStream stream(&file); // we will serialize the data into the file
+                                stream << bio;
+                            }
+                        } else xml.skipCurrentElement();
+                    }
+                }
+
+                else xml.skipCurrentElement();
+
+            }
         }
-
     }
 
     setProperty("trackNames", trackNames);
 
-    /* Error handling. */
-    if(xml.hasError()) {
+    if(xml.hasError())
         qWarning() << xml.errorString();
-    }
 
     emit gotInfo();
 }

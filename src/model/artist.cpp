@@ -229,7 +229,7 @@ void Artist::parseNameAndMbid(QByteArray bytes, QString preferredValue) {
 
 void Artist::parseLastFmSearch(QByteArray bytes) {
 
-    static const QString redirectToken = "+noredirect/";
+    // static const QString redirectToken = "+noredirect/";
 
     // mbid = DataUtils::getXMLElementText(bytes, "mbid");
     // name = DataUtils::getXMLElementTextWithPreferredValue(bytes, "name", name);
@@ -296,109 +296,60 @@ void Artist::fetchLastFmInfo() {
 void Artist::parseLastFmInfo(QByteArray bytes) {
     QXmlStreamReader xml(bytes);
 
-    bool gotImage = false;
-    bool gotBio = false;
+    while(xml.readNextStartElement()) {
 
-    // qDebug() << "Artist::parseLastFmInfo";
+        if (xml.name() == "artist") {
 
-    /* We'll parse the XML until we reach end of it.*/
-    while(!xml.atEnd() && !xml.hasError()) {
+            while (xml.readNextStartElement()) {
 
-        /* Read next element.*/
-        QXmlStreamReader::TokenType token = xml.readNext();
-
-        /*
-        qDebug() << xml.name();
-        foreach (QXmlStreamAttribute attribute, xml.attributes())
-            qDebug() << attribute.name() << ":" << attribute.value();
-            */
-
-        /* If token is StartElement, we'll see if we can read it.*/
-        if(token == QXmlStreamReader::StartElement) {
-
-            if(xml.name() == "similar" || xml.name() == "tags") {
-                xml.skipCurrentElement();
-                continue;
-            }
-
-            else if(xml.name() == "name") {
-                QString artistName = xml.readElementText();
-                if (name != artistName) {
-                    qDebug() << "Fixed artist name" << name << "->" << artistName;
-                    name = artistName;
-                }
-            }
-
-            // image
-            else if(!gotImage && xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
-                gotImage = true;
-
-                QString imageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash();
-                bool imageAlreadyPresent = QFile::exists(imageLocation);
-
-                /*
-                bool imageAlreadyPresent = false;
-                QString imageLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash();
-                if (QFile::exists(imageLocation)) {
-                    QFileInfo imageFileInfo(imageLocation);
-                    const uint imagelastModified = imageFileInfo.lastModified().toTime_t();
-                    if (imagelastModified > QDateTime::currentDateTime().toTime_t() - 86400*60) {
-                        imageAlreadyPresent = true;
+                if(xml.name() == "name") {
+                    QString artistName = xml.readElementText();
+                    if (name != artistName) {
+                        qDebug() << "Fixed artist name" << name << "->" << artistName;
+                        name = artistName;
                     }
                 }
-                */
 
-                if (!imageAlreadyPresent) {
-                    QString imageUrl = xml.readElementText();
-                    // qDebug() << name << " photo:" << imageUrl;
-                    if (!imageUrl.isEmpty()) {
-                        /*
-                        QUrl url = QUrl::fromEncoded(imageUrl.toUtf8());
-                        QObject *reply = The::http()->get(url);
-                        connect(reply, SIGNAL(data(QByteArray)), SLOT(setPhoto(QByteArray)));
-                        connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
-                        waitForImage = true;
-                        */
-                        setProperty("imageUrl", imageUrl);
+                else if(xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
+                    if (!QFile::exists(getImageLocation())) {
+                        QString imageUrl = xml.readElementText();
+                        if (!imageUrl.isEmpty())
+                            setProperty("imageUrl", imageUrl);
                     }
                 }
-            }
 
-            // bio
-            // TODO check at least parent element name
-            else if(!gotBio && xml.name() == "content") {
-                gotBio = true;
-                bio = xml.readElementText();
-
-                static QRegExp licenseRE("User-contributed text is available.*");
-                bio.remove(licenseRE);
-
-                // qDebug() << name << " got bio";
-                if (!bio.isEmpty()) {
-                    // store bio
-                    const QString storageLocation =
-                            QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-                            + "/artists/biographies/";
-                    QDir dir;
-                    dir.mkpath(storageLocation);
-                    QFile file(storageLocation + getHash());
-                    if (!file.open(QIODevice::WriteOnly)) {
-                        qDebug() << "Error opening file for writing" << file.fileName();
+                else if(xml.name() == "bio") {
+                    while (xml.readNextStartElement()) {
+                        if(xml.name() == "content") {
+                            bio = xml.readElementText();
+                            static const QRegExp licenseRE("User-contributed text is available.*");
+                            bio.remove(licenseRE);
+                            if (!bio.isEmpty()) {
+                                const QString storageLocation =
+                                        QDesktopServices::storageLocation(QDesktopServices::DataLocation)
+                                        + "/artists/biographies/";
+                                QDir dir;
+                                dir.mkpath(storageLocation);
+                                QFile file(storageLocation + getHash());
+                                if (!file.open(QIODevice::WriteOnly))
+                                    qWarning() << "Error opening file for writing" << file.fileName();
+                                QTextStream stream(&file);
+                                stream << bio;
+                            }
+                        } else xml.skipCurrentElement();
                     }
-                    QTextStream stream( &file ); // we will serialize the data into the file
-                    stream << bio;
                 }
+
+                else xml.skipCurrentElement();
+
             }
 
         }
 
-        // if (gotImage && gotBio) break;
     }
 
-    /* Error handling. */
-    if(xml.hasError()) {
-        qDebug() << xml.errorString();
-    }
+    if(xml.hasError())
+        qWarning() << xml.errorString();
 
     emit gotInfo();
 }
