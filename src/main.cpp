@@ -19,15 +19,23 @@ int main(int argc, char **argv) {
 #endif
 
     QtSingleApplication app(argc, argv);
-    if (app.sendMessage("Wake up!"))
+    QString message = app.arguments().size() > 1 ? app.arguments().at(1) : "";
+    if (message == "--help") {
+        MainWindow::printHelp();
+        return 0;
+    }
+    if (app.sendMessage(message))
         return 0;
 
     app.setApplicationName(Constants::NAME);
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
+#ifndef APP_WIN
     app.setWheelScrollLines(1);
+#endif
 
 #ifdef APP_MAC
+    QCoreApplication::setAttribute(Qt::AA_NativeWindows);
     QFile file(":/mac.css");
     file.open(QFile::ReadOnly);
     app.setStyleSheet(QLatin1String(file.readAll()));
@@ -96,6 +104,7 @@ int main(int argc, char **argv) {
 
     mainWin->show();
 
+    mainWin->connect(&app, SIGNAL(messageReceived(const QString &)), mainWin, SLOT(messageReceived(const QString &)));
     app.setActivationWindow(mainWin, true);
 
     // all string literals are UTF-8

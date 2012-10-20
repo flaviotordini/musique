@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow {
 public:
     static MainWindow* instance();
     ~MainWindow();
+    static void printHelp();
 
 public slots:
     void showMediaView();
@@ -37,6 +38,8 @@ public slots:
     void quit();
     void showMessage(QString message);
     void handleError(QString message);
+    void restore();
+    void messageReceived(const QString &message);
 
 protected:
     void closeEvent(QCloseEvent *);

@@ -6,6 +6,10 @@
 #include "minisplitter.h"
 #include "constants.h"
 #include "lastfm.h"
+#include "model/album.h"
+#ifdef Q_WS_MAC
+#include "macutils.h"
+#endif
 
 namespace The {
 QMap<QString, QAction*>* globalActions();
@@ -129,10 +133,15 @@ void MediaView::activeRowChanged(int row, bool manual) {
     errorTimer->stop();
 
     Track *track = playlistModel->trackAt(row);
-    if (!track) return;
+    if (!track) {
+        activeTrack = 0;
+        // The::globalActions()->value("contextual")->setEnabled(false);
+        return;
+    }
 
     connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
     activeTrack = track;
+    The::globalActions()->value("contextual")->setEnabled(true);
 
     // go!
     QString path = track->getAbsolutePath();
@@ -165,6 +174,14 @@ void MediaView::activeRowChanged(int row, bool manual) {
 
     // enable/disable actions
     The::globalActions()->value("stopafterthis")->setEnabled(true);
+
+#ifdef Q_WS_MAC
+    if (mac::canNotify()) {
+        QString artistName = track->getArtist() ? track->getArtist()->getName() : "";
+        QString albumName = track->getAlbum() ? track->getAlbum()->getName() : "";
+        mac::notify(track->getTitle(), artistName, albumName);
+    }
+#endif
 
     // scrobbling
     QSettings settings;

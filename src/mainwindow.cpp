@@ -37,6 +37,7 @@
 #include "lastfm.h"
 #include "lastfmlogindialog.h"
 #include "imagedownloader.h"
+#include <iostream>
 
 /*
 class CentralWidget : public QWidget {
@@ -322,6 +323,11 @@ void MainWindow::createActions() {
     action->setShortcut(QKeySequence(QKeySequence::Close));
     actions->insert("close", action);
     connect(action, SIGNAL(triggered()), SLOT(close()));
+
+    action = new QAction(Constants::NAME, this);
+    action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_1));
+    actions->insert("restore", action);
+    connect(action, SIGNAL(triggered()), SLOT(restore()));
 
     action = new QAction(QtIconLoader::icon("media-playback-stop"),
                          tr("&Stop After This Track"), this);
@@ -776,7 +782,7 @@ void MainWindow::toggleContextualView() {
             QList<QKeySequence> shortcuts;
             shortcuts << contextualAct->shortcuts() << QKeySequence(Qt::Key_Escape);
             contextualAct->setShortcuts(shortcuts);
-        }
+        } else contextualAct->setChecked(false);
     }
 }
 
@@ -871,20 +877,18 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
 
     case Phonon::ErrorState:
         if (mediaObject->errorType() == Phonon::FatalError) {
-            statusBar()->showMessage(tr("Fatal error: %1").arg(mediaObject->errorString()));
+            showMessage(tr("Fatal error: %1").arg(mediaObject->errorString()));
         } else {
-            statusBar()->showMessage(tr("Error: %1").arg(mediaObject->errorString()));
+            showMessage(tr("Error: %1").arg(mediaObject->errorString()));
         }
         break;
 
     case Phonon::PlayingState:
         // stopAct->setEnabled(true);
-        contextualAct->setEnabled(true);
         break;
 
     case Phonon::StoppedState:
         // stopAct->setEnabled(false);
-        contextualAct->setEnabled(false);
         break;
 
     case Phonon::PausedState:
@@ -897,9 +901,6 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
         currentTime->clear();
         totalTime->clear();
         break;
-
-    default:
-        contextualAct->setEnabled(false);
     }
 }
 
@@ -1320,4 +1321,35 @@ void MainWindow::lastFmLogout() {
     QAction* action = The::globalActions()->value("lastFmLogout");
     action->setEnabled(false);
     action->setVisible(false);
+}
+
+void MainWindow::restore() {
+#ifdef APP_MAC
+    mac::uncloseWindow(window()->winId());
+#endif
+}
+
+void MainWindow::messageReceived(const QString &message) {
+    if (message.isEmpty()) return;
+
+    if (message == "--toggle-playing" && playAct->isEnabled()) playAct->trigger();
+    else if (message == "--next" && skipForwardAct->isEnabled()) skipForwardAct->trigger();
+    else if (message == "--previous" && skipBackwardAct->isEnabled()) skipBackwardAct->trigger();
+    else if (message == "--info" && contextualAct->isEnabled()) contextualAct->trigger();
+    else MainWindow::printHelp();
+}
+
+void MainWindow::printHelp() {
+    QString msg = QString("%1 %2\n\n").arg(Constants::NAME, Constants::VERSION);
+    msg += "Usage: musique [options]\n";
+    msg += "Options:\n";
+    msg += "  --toggle-playing\t";
+    msg += "Start or pause playback.\n";
+    msg += "  --next\t\t";
+    msg += "Skip to the next track.\n";
+    msg += "  --previous\t\t";
+    msg += "Go back to the previous track.\n";
+    msg += "  --info\t\t";
+    msg += "Display information about the current track.\n";
+    std::cout << msg.toLocal8Bit().data();
 }
