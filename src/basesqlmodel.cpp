@@ -51,7 +51,7 @@ void BaseSqlModel::updatePlayIcon() {
 // --- Sturm und drang ---
 
 Qt::DropActions BaseSqlModel::supportedDropActions() const {
-    return Qt::MoveAction;
+    return Qt::CopyAction;
 }
 
 Qt::ItemFlags BaseSqlModel::flags(const QModelIndex &index) const {

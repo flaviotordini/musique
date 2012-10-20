@@ -33,7 +33,6 @@ public slots:
     void updatePlaylistActions();
     void selectTracks(QList<Track*> tracks);
 
-
 protected:
     void paintEvent(QPaintEvent *event);
     /*

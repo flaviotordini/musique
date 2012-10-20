@@ -24,8 +24,9 @@ PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
 
 }
 
-int PlaylistModel::rowCount(const QModelIndex & /* parent */) const {
-    return tracks.size();
+int PlaylistModel::rowCount(const QModelIndex &parent) const {
+    if (parent.isValid()) return 0;
+    else return tracks.size();
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
@@ -243,18 +244,35 @@ void PlaylistModel::clear() {
     activeRow = -1;
     emit layoutChanged();
     emit reset();
+    emit activeRowChanged(-1, false);
 }
 
 // --- item removal
 
-bool PlaylistModel::removeRows(int position, int rows, const QModelIndex & /*parent*/) {
-    beginRemoveRows(QModelIndex(), position, position + rows - 1);
-    for (int row = 0; row < rows; ++row) {
-        Track *track = tracks.takeAt(position);
+bool PlaylistModel::removeRows(int position, int rows, const QModelIndex &parent) {
+    qDebug() << __PRETTY_FUNCTION__ << position << rows << parent;
+
+    // return false;
+
+    if (position < 0 || position >= tracks.size() || position + rows > tracks.size()) {
+      return false;
+    }
+
+    if (parent.isValid()) return false;
+
+    if (position >= tracks.size() || position + rows <= 0) return false;
+
+    int beginRow = qMax(0, position);
+    int endRow = qMin(position + rows - 1, tracks.size() - 1);
+
+    beginRemoveRows(QModelIndex(), beginRow, endRow);
+    while (beginRow <= endRow) {
+        Track *track = tracks.takeAt(beginRow);
         if (track) {
             track->setPlayed(false);
             playedTracks.removeAll(track);
         }
+        ++beginRow;
     }
     endRemoveRows();
     return true;
@@ -280,15 +298,18 @@ void PlaylistModel::removeIndexes(QModelIndexList &indexes) {
 // --- Sturm und drang ---
 
 Qt::DropActions PlaylistModel::supportedDropActions() const {
-    return Qt::MoveAction;
+    return Qt::MoveAction | Qt::CopyAction;
+}
+
+
+Qt::DropActions PlaylistModel::supportedDragActions() const {
+    return Qt::CopyAction;
 }
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const {
-    Qt::ItemFlags defaultFlags = QAbstractListModel::flags(index);
-    if (index.isValid()) {
-        return ( defaultFlags | Qt::ItemIsDropEnabled | Qt::ItemIsDragEnabled );
-    } else
-        return Qt::ItemIsDropEnabled | defaultFlags;
+    if (index.isValid())
+        return (Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
+    return Qt::ItemIsDropEnabled;
 }
 
 QStringList PlaylistModel::mimeTypes() const {
@@ -312,64 +333,54 @@ QMimeData* PlaylistModel::mimeData( const QModelIndexList &indexes ) const {
 bool PlaylistModel::dropMimeData(const QMimeData *data,
                                  Qt::DropAction action, int row, int column,
                                  const QModelIndex &parent) {
-
-    QAbstractListModel::dropMimeData(data, action, row, column, parent);
-
-    if (action == Qt::IgnoreAction)
-        return true;
-
-    if (!data->hasFormat(TRACK_MIME))
-        return false;
-
-    if (column > 0)
-        return false;
+    if (action == Qt::IgnoreAction) return true;
+    if (!data->hasFormat(TRACK_MIME)) return false;
+    if (column > 0) return false;
 
     int beginRow;
-    if (row != -1)
-        beginRow = row;
-    else if (parent.isValid())
-        beginRow = parent.row();
-    else
-        beginRow = rowCount();
+    if (row != -1) beginRow = row;
+    else if (parent.isValid()) beginRow = parent.row();
+    else beginRow = rowCount();
 
-    const TrackMimeData* trackMimeData = dynamic_cast<const TrackMimeData*>( data );
-    if(!trackMimeData ) return false;
+    const TrackMimeData* trackMimeData = dynamic_cast<const TrackMimeData*>(data);
+    if (!trackMimeData) return false;
 
-    int counter = 0;
     QList<Track*> droppedTracks = trackMimeData->tracks();
 
-    // qDebug() << "Dropped" << droppedTracks << "at" << beginRow;
+    layoutAboutToBeChanged();
 
+    bool insert = false;
+    QList<Track*> movedTracks;
+    int counter = 0;
     foreach(Track *track, droppedTracks) {
-
-        // remove track
-        const int trackRow = tracks.indexOf(track);
-        if (trackRow != -1)
-            removeRows(trackRow, 1, QModelIndex());
-
+        // if preset, remove track and maybe fix beginRow
+        int originalRow = tracks.indexOf(track);
+        if (originalRow != -1) {
+            Track *movedTrack = tracks.takeAt(originalRow);
+            movedTracks << movedTrack;
+            if (originalRow < beginRow) beginRow--;
+        } else insert = true;
+        const int targetRow = beginRow + counter;
+        tracks.insert(targetRow, track);
 #ifdef APP_DEMO
-        if (this->tracks.size() >= demoMaxTracks) {
+        if (tracks.size() >= demoMaxTracks) {
             MainWindow::instance()->showDemoDialog(demoMessage);
+            layoutChanged();
             return true;
         }
 #endif
-
-        // and then add it at the new position
-        const int targetRow = beginRow + counter;
-        beginInsertRows(QModelIndex(), targetRow, targetRow);
-        tracks.insert(targetRow, track);
-        endInsertRows();
         counter++;
-
     }
 
     // fix activeRow after all this
     activeRow = tracks.indexOf(activeTrack);
 
-    emit needSelectionFor(droppedTracks);
+    layoutChanged();
+
+    if (!insert)
+        emit needSelectionFor(movedTracks);
 
     return true;
-
 }
 
 int PlaylistModel::rowForTrack(Track* track) {

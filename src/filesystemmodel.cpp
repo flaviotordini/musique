@@ -103,7 +103,7 @@ void FileSystemModel::updatePlayIcon() {
 // --- Sturm und drang ---
 
 Qt::DropActions FileSystemModel::supportedDropActions() const {
-    return Qt::MoveAction;
+    return Qt::CopyAction;
 }
 
 Qt::ItemFlags FileSystemModel::flags(const QModelIndex &index) const {

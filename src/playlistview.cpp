@@ -5,6 +5,7 @@
 #include "droparea.h"
 #include "globalshortcuts.h"
 #include "fontutils.h"
+#include "mainwindow.h"
 
 namespace The {
     QMap<QString, QAction*>* globalActions();
@@ -23,15 +24,12 @@ PlaylistView::PlaylistView(QWidget *parent) :
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
-    // setAlternatingRowColors(true);
 
     // behaviour
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // dragndrop
-    setDragEnabled(true);
-    setAcceptDrops(true);
-    setDropIndicatorShown(false);
+    setDropIndicatorShown(true);
     setDragDropMode(QAbstractItemView::DragDrop);
 
     // actions
@@ -79,14 +77,13 @@ void PlaylistView::removeSelected() {
 }
 
 void PlaylistView::selectTracks(QList<Track*> tracks) {
-    /*
+    selectionModel()->clear();
     foreach (Track *track, tracks) {
         QModelIndex index = playlistModel->indexForTrack(track);
-        // FIXME this causes dropped tracks to disappear!
-        selectionModel()->select(index, QItemSelectionModel::Select);
-        // scrollTo(index, QAbstractItemView::EnsureVisible);
+        if (index.isValid())
+            selectionModel()->select(index, QItemSelectionModel::Select);
+        else qWarning() << "Invalid index" << index;
     }
-    */
 }
 
 void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
