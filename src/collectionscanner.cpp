@@ -119,10 +119,11 @@ void CollectionScanner::popFromQueue() {
     QString filename = fileInfo.absoluteFilePath();
 #ifdef Q_OS_WIN
     const wchar_t * encodedName = reinterpret_cast<const wchar_t*>(filename.utf16());
-#else
-    const char * encodedName = QFile::encodeName(filename).constData();
-#endif
     TagLib::FileRef fileref(encodedName);
+#else
+    // const char * encodedName = QFile::encodeName(filename).constData();
+    TagLib::FileRef fileref((TagLib::FileName)filename.toUtf8());
+#endif
 
     // if taglib cannot parse the file, drop it
     if (fileref.isNull()) {
