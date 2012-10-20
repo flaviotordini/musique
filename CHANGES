@@ -1,3 +1,18 @@
+1.2
+- Fixed wrong artist names, please rescan your collection
+- Long artist names and album titles displaying incorrectly
+- Fixed disabled Info button when the playlist finishes
+- OS X Mountain Lion notifications
+- Mac Sandbox support
+- Compatible with OS X Mountain Lion Gatekeeper
+- Partial Retina Display support. Still using 1x bitmaps because of Qt not being ready
+- Fixed search box being erroneously focused on the Mac
+- Fixed wrong localization of some menu items on the Mac
+- Added missing menu item to restore hidden window, as per the OS X HIG
+- Unity & GNOME 3 actions (aka Quicklists)
+- CLI
+- New and updated translations
+
 1.1
 - Last.fm scrobbling
 - Album covers from image files or embedded in audio files
