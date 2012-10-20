@@ -348,11 +348,11 @@ void FinderItemDelegate::paintPlayIcon(QPainter *painter, const QRect& rect, dou
 
 void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem &option, QString name, const QRect& rect, bool isSelected) const {
 
-    QRect textBox = rect;
+    QRect nameBox = rect;
     // add padding
-    textBox.adjust(0, 0, 0, -ITEM_HEIGHT*2/3);
+    nameBox.adjust(0, 0, 0, -ITEM_HEIGHT*2/3);
     // move to the bottom
-    textBox.translate(0, ITEM_HEIGHT - textBox.height());
+    nameBox.translate(0, ITEM_HEIGHT - nameBox.height());
 
     painter->save();
     painter->setPen(Qt::NoPen);
@@ -361,7 +361,7 @@ void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem 
 #if defined(APP_MAC) | defined(APP_WIN)
         QColor color1 = QColor::fromRgb(0x69, 0xa6, 0xd9);
         QColor color2 = QColor::fromRgb(0x14, 0x6b, 0xd4);
-        QLinearGradient linearGradient(textBox.x(), textBox.y(), textBox.x(), textBox.y() + textBox.height());
+        QLinearGradient linearGradient(nameBox.x(), nameBox.y(), nameBox.x(), nameBox.y() + nameBox.height());
         linearGradient.setColorAt(0.0, color1);
         linearGradient.setColorAt(1.0, color2);
         painter->setBrush(linearGradient);
@@ -372,14 +372,31 @@ void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem 
         painter->setBrush(QColor(0, 0, 0, 128));
     }
 
-    painter->drawRect(textBox);
+    painter->drawRect(nameBox);
     painter->restore();
 
     painter->save();
+
+    bool tooBig = false;
+    QRect textBox = painter->boundingRect(nameBox, Qt::AlignCenter | Qt::TextWordWrap, name);
+    if (textBox.height() > nameBox.height()) {
+        painter->setFont(FontUtils::small());
+        textBox = painter->boundingRect(nameBox, Qt::AlignCenter | Qt::TextWordWrap, name);
+        if (textBox.height() > nameBox.height()) {
+            // it's still too big
+            painter->setClipRect(nameBox);
+            tooBig = true;
+        }
+    }
+
     if (isSelected)
         painter->setPen(QPen(option.palette.highlightedText(), 0));
 
-    painter->drawText(textBox, Qt::AlignCenter | Qt::TextWordWrap, name);
+    if (tooBig)
+        painter->drawText(nameBox, Qt::AlignHCenter | Qt::AlignTop | Qt::TextWordWrap, name);
+    else
+        painter->drawText(textBox, Qt::AlignCenter | Qt::TextWordWrap, name);
+
     painter->restore();
 }
 
