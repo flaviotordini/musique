@@ -80,7 +80,7 @@ void SearchModel::search(QString query) {
 
 
     QSqlQuery q(Database::instance().getConnection());
-    q.prepare("select id from artists where name like ? and trackCount>1 order by trackCount desc");
+    q.prepare("select id from artists where name like ? and trackCount>0 order by trackCount desc");
     q.bindValue(0, likeQuery);
     q.exec();
     artistListModel->setQuery(q);

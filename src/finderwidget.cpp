@@ -228,7 +228,7 @@ void FinderWidget::setupSearch() {
 void FinderWidget::showArtists() {
     if (!artistListView) setupArtists();
 
-    artistListModel->setQuery("select id from artists where trackCount>1 order by trackCount desc",
+    artistListModel->setQuery("select id from artists where trackCount>0 order by trackCount desc",
                               Database::instance().getConnection());
     if (artistListModel->lastError().isValid())
         qDebug() << artistListModel->lastError();
@@ -243,7 +243,7 @@ void FinderWidget::showAlbums() {
     if (!albumListView) setupAlbums();
 
     albumListModel->setQuery(
-                "select id from albums where trackCount>1 order by artist, year desc, trackCount desc",
+                "select id from albums where trackCount>0 order by artist, year desc, trackCount desc",
                 Database::instance().getConnection());
     if (albumListModel->lastError().isValid())
         qDebug() << albumListModel->lastError();
