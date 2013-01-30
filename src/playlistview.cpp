@@ -8,8 +8,8 @@
 #include "mainwindow.h"
 
 namespace The {
-    QMap<QString, QAction*>* globalActions();
-    QMap<QString, QMenu*>* globalMenus();
+    QHash<QString, QAction*>* globalActions();
+    QHash<QString, QMenu*>* globalMenus();
 }
 
 PlaylistView::PlaylistView(QWidget *parent) :

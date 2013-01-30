@@ -12,20 +12,14 @@
 
 namespace The {
 
-    static QMap<QString, QAction*> *g_actions = 0;
-
-    QMap<QString, QAction*>* globalActions() {
-        if (!g_actions)
-            g_actions = new QMap<QString, QAction*>;
-        return g_actions;
+    QHash<QString, QAction*>* globalActions() {
+        static QHash<QString, QAction*> *actions = new QHash<QString, QAction*>;
+        return actions;
     }
 
-    static QMap<QString, QMenu*> *g_menus = 0;
-
-    QMap<QString, QMenu*>* globalMenus() {
-        if (!g_menus)
-            g_menus = new QMap<QString, QMenu*>;
-        return g_menus;
+    QHash<QString, QMenu*>* globalMenus() {
+        static QHash<QString, QMenu*> *menus = new QHash<QString, QMenu*>;
+        return menus;
     }
 
     void maybeSetSystemProxy() {
@@ -124,53 +118,24 @@ namespace The {
         }
     }
 
-    // static QNetworkAccessManager *nam = 0;
-    static QHash<QThread*, QNetworkAccessManager *> g_nams;
-
-    QNetworkAccessManager* createNetworkAccessManager() {
-        // if (!nam) {
+    QNetworkAccessManager* networkAccessManager() {
+        static QNetworkAccessManager *nam = 0;
+        if (!nam) {
             networkHttpProxySetting();
             maybeSetSystemProxy();
-            QNetworkAccessManager *nam = new QNetworkAccessManager();
-
-            // A simple disk based cache
+            nam = new QNetworkAccessManager();
             QNetworkDiskCache *cache = new DiskCache();
-            QString cacheLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-            qDebug() << cacheLocation;
+            QString cacheLocation = QDesktopServices::storageLocation(
+                        QDesktopServices::DataLocation);
             cache->setCacheDirectory(cacheLocation);
             nam->setCache(cache);
-        // }
+        }
         return nam;
     }
 
-    QNetworkAccessManager* networkAccessManager() {
-        // const QString threadName = QThread::currentThread()->objectName();
-        // qDebug() << "threadName" << threadName;
-        if (g_nams.contains(QThread::currentThread())) {
-            return g_nams.value(QThread::currentThread());
-        } else {
-            // qDebug() << "NetworkAccessManager for thread" << QThread::currentThread();
-            QNetworkAccessManager* nam = createNetworkAccessManager();
-            g_nams.insert(QThread::currentThread(), nam);
-            return nam;
-        }
-    }
-
-    // static NetworkAccess *g_http = 0;
-    // key is thread itself
-    static QHash<QThread*, NetworkAccess *> g_http;
-
     NetworkAccess* http() {
-        // const QString threadName = QThread::currentThread()->objectName();
-        // qDebug() << "threadName" << threadName;
-        if (g_http.contains(QThread::currentThread())) {
-            return g_http.value(QThread::currentThread());
-        } else {
-            // qDebug() << "NetworkAccess for thread" << QThread::currentThread();
-            NetworkAccess *http = new NetworkAccess();
-            g_http.insert(QThread::currentThread(), http);
-            return http;
-        }
+        static NetworkAccess *na = new NetworkAccess();
+        return na;
     }
 
 }

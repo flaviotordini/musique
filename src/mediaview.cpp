@@ -1,7 +1,7 @@
 #include "mediaview.h"
 #include "model/track.h"
 #include "model/artist.h"
-#include "../mainwindow.h"
+#include "mainwindow.h"
 #include "droparea.h"
 #include "minisplitter.h"
 #include "constants.h"
@@ -10,17 +10,20 @@
 #ifdef Q_WS_MAC
 #include "macutils.h"
 #endif
+#ifdef APP_ACTIVATION
+#include "activation.h"
+#endif
 
 namespace The {
-QMap<QString, QAction*>* globalActions();
-QMap<QString, QMenu*>* globalMenus();
+QHash<QString, QAction*>* globalActions();
+QHash<QString, QMenu*>* globalMenus();
 }
 
 MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     activeTrack = 0;
 
-#ifdef APP_DEMO
+#ifdef APP_ACTIVATION
     tracksPlayed = 0;
 #endif
 
@@ -195,9 +198,7 @@ void MediaView::activeRowChanged(int row, bool manual) {
 void MediaView::handleError(QString message) {
     // recover from errors by skipping to the next track
     errorTimer->start();
-
-    MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
-    if (mainWindow) mainWindow->statusBar()->showMessage(message);
+    MainWindow::instance()->showMessage(message);
 }
 
 void MediaView::appear() {
@@ -239,9 +240,10 @@ void MediaView::playlistFinished() {
 }
 
 void MediaView::playbackFinished() {
-#ifdef APP_DEMO
-    if (tracksPlayed > 1) demoMessage();
-    else tracksPlayed++;
+#ifdef APP_ACTIVATION
+    if (!Activation::instance().isActivated())
+        if (tracksPlayed > 1) demoMessage();
+        else tracksPlayed++;
 #endif
 
     // scrobbling
@@ -263,7 +265,7 @@ void MediaView::playbackFinished() {
 
 }
 
-#ifdef APP_DEMO
+#ifdef APP_ACTIVATION
 
 static QPushButton *continueButton;
 
