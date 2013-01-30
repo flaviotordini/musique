@@ -6,5 +6,6 @@
         <file>images/item/album.png</file>
         <file>images/item/artist.png</file>
         <file>images/item/track.png</file>
+        <file>style.css</file>
     </qresource>
 </RCC>
