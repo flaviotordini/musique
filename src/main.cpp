@@ -3,14 +3,60 @@
 #include <qtsingleapplication.h>
 #include "constants.h"
 #include "mainwindow.h"
-#ifdef QT_MAC_USE_COCOA
+#include "utils.h"
+#ifndef Q_WS_X11
+#include "extra.h"
+#endif
+#ifdef Q_WS_MAC
 #include "mac_startup.h"
-#include "macfullscreen.h"
 #endif
-#ifdef APP_WIN
-#include "winsupport.h"
+
+#ifdef Q_WS_X11
+QString getThemeName() {
+    QString themeName;
+
+    QProcess process;
+    process.start("dconf",
+                  QStringList() << "read" << "/org/gnome/desktop/interface/gtk-theme");
+    if (process.waitForFinished()) {
+        themeName = process.readAllStandardOutput();
+        themeName = themeName.trimmed();
+        themeName.remove('\'');
+        if (!themeName.isEmpty()) return themeName;
+    }
+
+    QString rcPaths = QString::fromLocal8Bit(qgetenv("GTK2_RC_FILES"));
+    if (!rcPaths.isEmpty()) {
+        QStringList paths = rcPaths.split(QLatin1String(":"));
+        foreach (const QString &rcPath, paths) {
+            if (!rcPath.isEmpty()) {
+                QFile rcFile(rcPath);
+                if (rcFile.exists() && rcFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
+                    QTextStream in(&rcFile);
+                    while(!in.atEnd()) {
+                        QString line = in.readLine();
+                        if (line.contains(QLatin1String("gtk-theme-name"))) {
+                            line = line.right(line.length() - line.indexOf(QLatin1Char('=')) - 1);
+                            line.remove(QLatin1Char('\"'));
+                            line = line.trimmed();
+                            themeName = line;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (!themeName.isEmpty())
+                break;
+        }
+    }
+
+    // Fall back to gconf
+    if (themeName.isEmpty())
+        themeName = QGtkStyle::getGConfString(QLatin1String("/desktop/gnome/interface/gtk_theme"));
+
+    return themeName;
+}
 #endif
-#include "iconloader/qticonloader.h"
 
 int main(int argc, char **argv) {
 
@@ -30,21 +76,22 @@ int main(int argc, char **argv) {
     app.setApplicationName(Constants::NAME);
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
-#ifndef APP_WIN
     app.setWheelScrollLines(1);
-#endif
+    app.setAttribute(Qt::AA_DontShowIconsInMenus);
 
-#ifdef APP_MAC
-    QCoreApplication::setAttribute(Qt::AA_NativeWindows);
-    QFile file(":/mac.css");
-    file.open(QFile::ReadOnly);
-    app.setStyleSheet(QLatin1String(file.readAll()));
-#endif
-
-#ifdef APP_WIN
-    QFile file(":/win.css");
-    file.open(QFile::ReadOnly);
-    app.setStyleSheet(QLatin1String(file.readAll()));
+#ifndef Q_WS_X11
+    Extra::appSetup(&app);
+#else
+    bool isGtk = app.style()->metaObject()->className() == QLatin1String("QGtkStyle");
+    if (isGtk) {
+        app.setProperty("gtk", isGtk);
+        QString themeName = getThemeName();
+        app.setProperty("style", themeName);
+    }
+    QFile cssFile(":/style.css");
+    cssFile.open(QFile::ReadOnly);
+    QString styleSheet = QLatin1String(cssFile.readAll());
+    app.setStyleSheet(styleSheet);
 #endif
 
     const QString locale = QLocale::system().name();
@@ -67,22 +114,23 @@ int main(int argc, char **argv) {
         localeDir = dataDir + QDir::separator() + "locale";
     }
     QTranslator translator;
-    translator.load(locale, localeDir);
+    translator.load(QLocale::system(), localeDir);
     app.installTranslator(&translator);
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
     MainWindow* mainWin = MainWindow::instance();
     mainWin->setWindowTitle(Constants::NAME);
 
-#ifdef APP_MAC
-    app.setQuitOnLastWindowClosed(false);
-    mac::SetupFullScreenWindow(mainWin->winId());
+#ifndef Q_WS_X11
+    Extra::windowSetup(mainWin);
+#else
+    mainWin->setProperty("style", app.property("style"));
 #endif
 
 #ifndef APP_MAC
     QIcon appIcon;
     if (QDir(dataDir).exists()) {
-        appIcon = QtIconLoader::icon(Constants::UNIX_NAME);
+        appIcon = Utils::icon(Constants::UNIX_NAME);
     } else {
         dataDir = qApp->applicationDirPath() + "/data";
         const int iconSizes [] = { 16, 22, 32, 48, 64, 128, 256, 512 };
@@ -98,17 +146,13 @@ int main(int argc, char **argv) {
     mainWin->setWindowIcon(appIcon);
 #endif
 
-#ifdef APP_WIN
-    app.setFont(QFont("Segoe UI", 9));
-#endif
-
     mainWin->show();
 
     mainWin->connect(&app, SIGNAL(messageReceived(const QString &)), mainWin, SLOT(messageReceived(const QString &)));
     app.setActivationWindow(mainWin, true);
 
     // all string literals are UTF-8
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    // QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
 
     // This is required in order to use QNetworkReply::NetworkError in QueuedConnetions
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
