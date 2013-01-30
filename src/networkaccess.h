@@ -1,12 +1,8 @@
 #ifndef NETWORKACCESS_H
 #define NETWORKACCESS_H
 
+#include <QtCore>
 #include <QtNetwork>
-#include "constants.h"
-
-static const QString USER_AGENT = QString(Constants::NAME)
-                                  + " " + Constants::VERSION
-                                  + " (" + Constants::WEBSITE + ")";
 
 namespace The {
     QNetworkAccessManager* networkAccessManager();
@@ -18,11 +14,7 @@ class NetworkReply : public QObject {
 
 public:
     NetworkReply(QNetworkReply* networkReply);
-    bool followRedirects;
-
-public slots:
-    void finished();
-    void requestError(QNetworkReply::NetworkError);
+    QNetworkReply* getNetworkReply() { return networkReply; }
 
 signals:
     void data(QByteArray);
@@ -30,34 +22,35 @@ signals:
     void finished(QNetworkReply*);
 
 private slots:
-    void abort();
+    void finished();
+    void requestError(QNetworkReply::NetworkError);
+    void downloadProgress(qint64 bytesReceived, qint64 bytesTotal);
+    void readTimeout();
 
 private:
+    void setupReply();
     QNetworkReply *networkReply;
-    QTimer *timer;
+    QTimer *readTimeoutTimer;
+    int retryCount;
 
 };
-
 
 class NetworkAccess : public QObject {
 
     Q_OBJECT
 
 public:
-    NetworkAccess( QObject* parent=0);
-    QNetworkReply* simpleGet(QUrl url,
+    NetworkAccess(QObject* parent = 0);
+    QNetworkReply* request(QUrl url,
                              int operation = QNetworkAccessManager::GetOperation,
-                             const QByteArray& body = QByteArray());
+                             const QByteArray &body = QByteArray());
     NetworkReply* get(QUrl url);
     NetworkReply* head(QUrl url);
     NetworkReply* post(QUrl url, const QMap<QString, QString>& params);
 
-private slots:
-    void error(QNetworkReply::NetworkError);
+private:
+    QNetworkRequest buildRequest(QUrl url);
 
 };
-
-typedef QPointer<QObject> ObjectPointer;
-Q_DECLARE_METATYPE(ObjectPointer)
 
 #endif // NETWORKACCESS_H
