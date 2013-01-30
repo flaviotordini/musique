@@ -65,7 +65,7 @@ void ArtistInfo::setArtist(Artist *artist) {
     htmlBio += "</body></html>";
     bioLabel->setText(htmlBio);
 
-    photoLabel->setPixmap(QPixmap::fromImage(artist->getPhoto()));
+    photoLabel->setPixmap(artist->getPhoto());
 
 }
 

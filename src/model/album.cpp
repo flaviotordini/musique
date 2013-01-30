@@ -117,7 +117,7 @@ QString Album::getHash(QString name) {
 }
 
 QString Album::getStatusTip() {
-    QString tip = "◯ ";
+    QString tip = QString::fromUtf8("◯ ");
     Artist* artist = getArtist();
     if (artist) tip += artist->getName() + " - ";
     tip += getTitle();
@@ -192,8 +192,8 @@ void Album::parseMusicBrainzReleaseDetails(QByteArray bytes) {
 
 // *** Last.fm Photo ***
 
-QImage Album::getPhoto() {
-    return QImage(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash());
+QPixmap Album::getPhoto() {
+    return QPixmap(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash());
 }
 
 void Album::fetchLastFmSearch() {

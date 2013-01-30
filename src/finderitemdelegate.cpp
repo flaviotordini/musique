@@ -441,14 +441,14 @@ QPixmap FinderItemDelegate::getArtistPixmap(Artist *artist) const {
     QPixmap pixmap = artist->property("pixmap").value<QPixmap>();
     if (pixmap.isNull()) {
         // qDebug() << "Creating pixmap for" << artist;
-        QImage p = artist->getPhoto();
+        QPixmap p = artist->getPhoto();
         int xOffset = 0;
         int wDiff = p.width() - ITEM_WIDTH;
         if (wDiff > 0) xOffset = wDiff / 2;
         int yOffset = 0;
         int hDiff = p.height() - ITEM_HEIGHT;
         if (hDiff > 0) yOffset = hDiff / 4;
-        pixmap = QPixmap::fromImage(p.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT));
+        pixmap = p.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT);
         artist->setProperty("pixmap", pixmap);
     }
     return pixmap;
@@ -475,10 +475,9 @@ QPixmap FinderItemDelegate::getAlbumPixmap(Album *album) const {
     QPixmap pixmap = album->property("pixmap").value<QPixmap>();
     if (pixmap.isNull()) {
         // qDebug() << "Creating pixmap for" << album;
-        QImage p = album->getPhoto();
+        QPixmap p = album->getPhoto();
         if (!p.isNull())
-            p = album->getPhoto().scaled(ITEM_WIDTH, ITEM_HEIGHT);
-        pixmap = QPixmap::fromImage(p);
+            pixmap = album->getPhoto().scaled(ITEM_WIDTH, ITEM_HEIGHT);
         album->setProperty("pixmap", pixmap);
     }
     return pixmap;

@@ -94,12 +94,12 @@ void AlbumInfo::setAlbum(Album *album) {
         wikiLabel->setText(html);
     }
 
-    QImage photo = album->getPhoto();
+    QPixmap photo = album->getPhoto();
     if (photo.isNull()) {
         photoLabel->clear();
         photoLabel->hide();
     } else {
-        photoLabel->setPixmap(QPixmap::fromImage(photo));
+        photoLabel->setPixmap(photo);
         photoLabel->show();
     }
 

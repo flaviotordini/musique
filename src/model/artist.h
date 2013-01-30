@@ -49,7 +49,7 @@ public:
     void fetchInfo();
 
     QString getImageLocation();
-    QImage getPhoto();
+    QPixmap getPhoto();
 
     // qhash
     /*

@@ -358,8 +358,8 @@ QString Artist::getImageLocation() {
     return QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/artists/" + getHash();
 }
 
-QImage Artist::getPhoto() {
-    return QImage(getImageLocation());
+QPixmap Artist::getPhoto() {
+    return QPixmap(getImageLocation());
 }
 
 void Artist::setPhoto(QByteArray bytes) {

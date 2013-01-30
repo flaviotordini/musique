@@ -48,7 +48,7 @@ public:
       * This will also emit gotPhoto() when the photo is ready.
       */
     void fetchInfo();
-    QImage getPhoto();
+    QPixmap getPhoto();
     QString getImageLocation();
 
     void fixTrackTitle(Track* track);

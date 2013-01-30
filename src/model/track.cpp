@@ -294,7 +294,7 @@ QString Track::getHash(QString name) {
 }
 
 QString Track::getStatusTip() {
-    QString tip = "♫ ";
+    QString tip = QString::fromUtf8("♫ ");
     Artist* artist = getArtist();
     if (artist) tip += artist->getName() + " - ";
     Album* album = getAlbum();
