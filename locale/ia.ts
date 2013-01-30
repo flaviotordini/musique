@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Traduce %1 in tu lingua materne per usar %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>&amp;E-posta</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Codice</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Per favor, licentia %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Iste demo ha expirate</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>Al comprar le version complete, tu va supportar tamben le dur labor que io habeva pro crear %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Usar Demo</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Per favor, licentia %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Iste demo ha expirate</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Iste demo expirara in %1 dies.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Al comprar le version complete, tu va supportar tamben le dur labor que io habeva pro crear %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Usar Demo</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Procura le version complete</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Le version complete permitte que tu reguarda videos, adde plus %1 tracias al lista de reproduction e ascolta tu musica sin interruptiones.</translation>
+        <source>Downloading update...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -288,6 +318,10 @@
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancellar</translation>
     </message>
 </context>
 <context>
@@ -513,10 +547,6 @@
         <translation>Rememora me plus tarde</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Pro obtener le version actualisate, discarga novemente %1 ab le ligamine que tu recipeva per e-posta e reinstalla lo.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Actualisar</translation>
     </message>
@@ -552,6 +582,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>C&amp;lauder session in %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Reportar un problema...</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Obtener le version complete</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 ora es disponibile. Tu ha %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Rememora me plus tarde</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Installar actualisation</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

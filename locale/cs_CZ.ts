@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Přeložte %1 do vašeho mateřského jazyka pomocí %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>Licence k: %1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>Vložte detaily vaší licence</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>&amp;Email:</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Kód</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Sežeňte si, prosím, licenci %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Platnost demoverze vypršela.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation>Bez licence žádost vyprší za %1 dnů</translation>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>Zakoupením plné verze také podpoříte práci, která byla vložená do tvorby %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Použít demoverzi</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>Vložit licenci</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>Koupit licenci</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation>Plná verze vám do seznamu skladeb umožňuje přidat více než %1 skladeb a poslouchat hudbu bez přerušení.</translation>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Sežeňte si, prosím, licenci %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Platnost demoverze vypršela.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Platnost demoverze vyprší za %1 dnů.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Zakoupením plné verze také podpoříte práci, která byla vložená do tvorby %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Použít demoverzi</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Dostat plnou verzi</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Plná verze ti umožní přidat víc než %1 skladeb do seznamu skladeb a poslouchat svoji hudbu bez přerušení.</translation>
+        <source>Downloading update...</source>
+        <translation>Stahování aktualizace...</translation>
     </message>
 </context>
 <context>
@@ -288,6 +318,10 @@
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>Zapomněl jste &lt;a href=&apos;%1&apos;&gt;uživatelské jméno&lt;/a&gt; nebo &lt;a href=&apos;%2&apos;&gt;heslo&lt;/a&gt;?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
     </message>
 </context>
 <context>
@@ -513,10 +547,6 @@
         <translation>Připomenout později</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Pro získání aktualizované verze stáhněte %1 znovu z odkazu, který vám bude zaslaný na e-mailovou adresu a následně program nainstalujte znovu.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Aktualizovat</translation>
     </message>
@@ -552,6 +582,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>&amp;Odhlásit se z %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Nahlásit chybu...</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Získejte plnou verzi</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Nová verze %1 je k dispozici!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 je nyní k dispozici. Vy máte %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Chcete ji nyní stáhnout?</translation>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation>Přeskočit tuto verzi</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Připomenout později</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Nainstalovat aktualizaci</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation>Vložit</translation>
     </message>
 </context>
 <context>

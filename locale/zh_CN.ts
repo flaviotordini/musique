@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>使用 %2 将 %1 翻译为您的母语</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>遵循协议：%1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>输入您的许可协议详情</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>邮件(&amp;E)：</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>请购买 %1 授权</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>该 Demo 已经过期。</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>通过购买完整版本，您也将支持我在创建 %1 时的辛苦工作。</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>使用 Demo</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>输入许可</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>购买许可</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>请购买 %1 授权</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>该试用版已经过期。</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>该试用版将在 %1 内过期。</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>通过购买完整版本，您也将支持我在创建 %1 时的辛苦工作。</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>使用试用版</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>获得完整版</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>完整版本允许添加超过 %1 的音轨到播放列表，并且可以畅听您的音乐而无需打扰。</translation>
+        <source>Downloading update...</source>
+        <translation>正在下载更新...</translation>
     </message>
 </context>
 <context>
@@ -288,6 +318,10 @@
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>忘记您的&lt;a href=&apos;%1&apos;&gt;用户名&lt;/a&gt; 或 &lt;a href=&apos;%2&apos;&gt;密码&lt;/a&gt;？</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
     </message>
 </context>
 <context>
@@ -513,10 +547,6 @@
         <translation>稍后提醒我</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>要下载更新版本，从您获得的邮件中的链接重新下载 %1 并重新安装。</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>更新</translation>
     </message>
@@ -552,6 +582,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>从 %1 登出(_L)</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>报告问题&amp;R…</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>获得完整版本</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

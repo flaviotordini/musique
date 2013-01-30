@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Traduisez %1 dans votre langue maternelle en utilisant %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>Licence accordée à : %1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>Entrez les details de votre licence</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>&amp;Email :</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Code :</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Veuillez obtenir une licence pour %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Cette version de démo a expiré.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation>En l&apos;absence de licence, l&apos;application expirera dans %1 jours.</translation>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>En achetant la version complète, vous supporterai aussi le grand travail que j&apos;ai investi dans la création de %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Utilisez la version de démo</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>Entrer une licence</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>Acheter une licence</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation>La version complète vous permet d&apos;ajouter plus d&apos;un morceau à la playlist et d&apos;écouter votre musique sans interruptions.</translation>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -104,7 +158,7 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 va se connecter à Last.fm et transmettre le nom de l&apos;artiste et les titres de l&apos;album pour récupérer la couverture, la biographie et bien plus.</translation>
+        <translation>%1 va se connecter à Last.fm et transmettre le nom des artistes et les titres d&apos;album pour récupérer la couverture, la biographie et bien plus</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
@@ -112,7 +166,7 @@
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Où est stockée votre musique?</translation>
+        <translation>Où est stockée votre musique </translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Veuillez obtenir une licence pour %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Cette version démo a expiré.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Cette version démo s&apos;expire dans %1 jours.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>En achetant la version complète, vous supporterais aussi le le grand travail que j&apos;ai investi à la création de %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Utilisez la version démo</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Obtenir la version complète</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>La version complète vous permet d&apos;ajouter plus de %1 chansons à la playlist et d&apos;écouter votre musique sans interruption</translation>
+        <source>Downloading update...</source>
+        <translation>Téléchargement de la mise à jour...</translation>
     </message>
 </context>
 <context>
@@ -289,6 +319,10 @@
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>Vous avez oublié votre &lt;a href=&apos;%1&apos;&gt;nom d&apos;utilisateur&lt;/a&gt; ou votre &lt;a href=&apos;%2&apos;&gt;mot de passe&lt;/a&gt;?
 </translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -514,10 +548,6 @@
         <translation>Me le rappeler plus tard</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Pour obtenir la version mise à jour, téléchargez à nouveau %1 à partir du lien que vous avez reçu par e-mail et réinstallez la.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Mettre à jour</translation>
     </message>
@@ -553,6 +583,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>&amp;Se déconnecter de %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Signaler un problème...</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -579,6 +613,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Obtenir la version complète</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Une nouvelle version de %1 est disponible !</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 est maintenant disponible. Vous avez %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Voulez-vous la télécharger maintenant ?</translation>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation>Sauter Cette Version</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Me Le Rappeler Plus Tard</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Installer La Mise à jour</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation>Coller</translation>
     </message>
 </context>
 <context>

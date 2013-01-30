@@ -46,6 +46,61 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Перевести %1 на ваш родной язык с помощью %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>Зарегистрирована на: %1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>Введите ваши детали лицензии</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>&amp;Email:</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Код:</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>	
+Лицензия %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Демонстрационный период истек.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation>Срок работы, этого приложения, без лицензии истекает через %1 дн.</translation>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>При покупке полной версии, вы также оказываете поддержку тяжелой работы в создании %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Использовать демо</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>Ввести лицензию</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>Купить лицензию</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation>Полная версия позволяет добавлять более %1 треков в плейлист и слушать музыку без перерывов.</translation>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,35 +212,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>	
-Лицензия %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Демонстрационный период истек.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Демонстрационный период истекает через %1 дн.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>При покупке полной версии, вы также оказываете поддержку тяжелой работы в создании %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Демонстрация</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Получить полную версию</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Полная версия позволяет добавлять более %1 треков в плейлист и слушать музыку без перерывов.</translation>
+        <source>Downloading update...</source>
+        <translation>Загрузка обновления....</translation>
     </message>
 </context>
 <context>
@@ -284,11 +314,15 @@
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Зарегистрировать %1 аккаунт</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>Забыли свой &lt;a href=&apos;%1&apos;&gt;логин&lt;/a&gt; или &lt;a href=&apos;%2&apos;&gt;пароль&lt;/a&gt;?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -514,10 +548,6 @@
         <translation>Напомнить позже</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Чтобы получить обновленную версию, скачайте %1 ещё раз по ссылке, которую вы получили по электронной почте и переустановите программу.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Обновление</translation>
     </message>
@@ -553,6 +583,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>&amp;Выйти из %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>Соо&amp;бщить об ошибке</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -579,6 +613,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Получить полную версию</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Новая версия приложения %1 уже доступна!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 уже доступна. У вас %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Хотите загрузить сейчас?</translation>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation>Пропустить эту версию</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Напомнить позже</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Установить обновление</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation>Вставить</translation>
     </message>
 </context>
 <context>

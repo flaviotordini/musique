@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Tradu %1 în limba proprie folosind %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>Licență pentru %1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>Introdu detaliile licenței tale</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>&amp;Email:</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Cod:</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Licențiază %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Versiunea demo a expirat.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation>Fără licență, aplicația va expira în %1 zile.</translation>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>Cumpărând versiunea integrală îmi sprijini efortul depus pentru crearea %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Folosește Demo</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>Introdu Licența</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>Cumpără Licență</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation>Versiunea integrală îți permite să adaugi mai mult de %1 melodii în lista de redare și să le asculți fără intreruperi.</translation>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Licențiază %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Versiunea demo a expirat.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Această versiune demo va expira în %1 zile.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Cumpărând versiunea integrală îmi sprijini efortul depus pentru crearea %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Folosește Demo</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Obține versiunea integrală</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Versiunea integrală îți permite să adaugi mai mult de %1 piese în lista de redare și să asculți muzica fără întreruperi.</translation>
+        <source>Downloading update...</source>
+        <translation>Descărcare actualizări...</translation>
     </message>
 </context>
 <context>
@@ -288,6 +318,10 @@
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>Ai uitat &lt;a href=&apos;%1&apos;&gt;utilizatorul&lt;/a&gt; sau &lt;a href=&apos;%2&apos;&gt;parola&lt;/a&gt;?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Renunță</translation>
     </message>
 </context>
 <context>
@@ -462,7 +496,7 @@
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation>Actualizare cilecție...</translation>
+        <translation>Actualizare colecție...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
@@ -513,10 +547,6 @@
         <translation>Amintește-mi mai târziu</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Pentru a avea versiunea la zi, descarcă %1 de pe adresa de internet primită pe email și reinstalează.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Actualizează</translation>
     </message>
@@ -552,6 +582,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>&amp;Ieși din contul tău %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Raportează o problemă...</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Obține versiunea integrală</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>O nouă versiune %1 este disponibilă!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 este acum disponibilă. Tu ai %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Dorești descărcarea ei acum?</translation>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation>Renunță la Această Versiune</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Amintește-mi Mai Târziu</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Instalează Actualizări</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation>Adaugă</translation>
     </message>
 </context>
 <context>

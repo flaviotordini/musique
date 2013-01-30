@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Käännä %1 omalle kielellesi %2-palvelussa</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>Lisensoitu henkilölle: %1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>Syötä tähän lisenssitietosi</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>&amp;Sähköposti:</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Koodi:</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Lisensioi %1.</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Tämä demon kokeiluaika on päättynyt.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation>Ilman lisenssiä tämä sovellus vanhenee %1 päivässä.</translation>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>Ostamalla täyden version tuet kovaa työtäni sovelluksen %1 parissa.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Käytä demoa</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>Syötä lisenssi</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>Osta lisenssi</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation>Täysversio sallii sinun lisätä useamman kuin %1 kappaletta soittolistaan ja kuunnella musiikkia keskeytyksettä.</translation>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Lisensioi %1.</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Tämä demon kokeiluaika on päättynyt.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Tämän demon kokeiluaika päättyy %1 päivän kuluttua</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Ostamalla täyden version tuet kovaa työtäni sovelluksen %1 parissa.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Käytä demoa</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Hanki täysversio</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Koko versio sallii useamman kuin %1 kappaleen lisäämiseen soittolistaan ja musiikin kuuntelun ilman taukoja.</translation>
+        <source>Downloading update...</source>
+        <translation>Ladataan päivitystä...</translation>
     </message>
 </context>
 <context>
@@ -288,6 +318,10 @@
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>Unohditko &lt;a href=&apos;%1&apos;&gt;käyttäjätunnuksesi&lt;/a&gt; tai &lt;a href=&apos;%2&apos;&gt;salasanasi&lt;/a&gt;?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Peruuta</translation>
     </message>
 </context>
 <context>
@@ -513,10 +547,6 @@
         <translation>Muistuta myöhemmin</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Saadaksesi päivitetyn version lataa %1 uudestaan linkistä, jonka sait sähköpostiin ja asenna uudelleen.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Päivitä</translation>
     </message>
@@ -552,6 +582,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>&amp;Kirjaudu ulos palvelusta %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Ilmoita ongelmasta...</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Hanki täysversio</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Uusi versio sovelluksesta %1 on saatavilla!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 on nyt saatavilla. Sinulla on %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Haluatko ladata sen nyt?</translation>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation>Ohita tämä versio</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Muistuta minua myöhemmin</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Asenna päivitys</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation>Liitä</translation>
     </message>
 </context>
 <context>

@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Μετάφραση %1 στην μητρική σας γλώσσα με την χρήση %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>Αδειοδοτημένο στον/ην: %1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>Εισάγετε τις λεπτομέρειες της άδειας χρήσης</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>&amp;Email:</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Κωδικός:</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Παρακαλώ αποκτήστε την άδεια χρήσης του %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Αυτή η δοκιμαστική έκδοση έληξε.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation>Χωρίς την άδεια χρήσης, η εφαρμογή θα λήξη σε %1 μέρες</translation>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>Αγοράζοντας την πλήρη έκδοση, υποστηρίζετε επίσης την σκληρή δουλειά που έχω κάνει για τη δημιουργία του %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Χρήση της δοκιμαστικής έκδοσης</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>Εισαγωγή άδειας χρήσης</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>Αγορά άδειας χρήσης</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation>Η πλήρη έκδοση σας επιτρέπη να προσθέσετε περισσότερα απο %1 κομμάτια στην λίστα αναπαραγωγής και να ακούτε την μουσική σας χωρίς διακοπές.</translation>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Παρακαλώ αποκτήστε την άδεια χρήσης του %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Αυτή η δοκιμαστική έκδοση έληξε.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Αυτή η δοκιμαστική έκδοση θα λήξει σε %1 ημέρες.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Αγοράζοντας την πλήρη έκδοση, υποστηρίζετε επίσης την σκληρή δουλειά που έχω κάνει για τη δημιουργία του %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Χρήση της δοκιμαστικής έκδοσης</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Αποκτήστε την πλήρη έκδοση</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Η πλήρης έκδοση, σας επιτρέπει να προσθέσετε περισσότερα από %1 κομμάτια στην λίστα αναπαραγωγή σας και να ακούτε την μουσική σας χωρίς διακοπές.</translation>
+        <source>Downloading update...</source>
+        <translation>Μεταφόρτωση ενημερώσεων...</translation>
     </message>
 </context>
 <context>
@@ -288,6 +318,10 @@
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>Ξεχάσατε το &lt;a href=&apos;%1&apos;&gt;Όνομα Χρήστη&lt;/a&gt; ή &lt;a href=&apos;%2&apos;&gt;Κωδικός Χρήστη&lt;/a&gt;;</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Ακύρωση</translation>
     </message>
 </context>
 <context>
@@ -513,10 +547,6 @@
         <translation>Υπενθήμηση αργότερα</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Για να πάρετε την αναβαθμισμένη έκδοση, κάντε λήψη του %1, ξανά, από το σύνδεσμο που λάβατε μέσο email και κάντε επανεγκατάσταση.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Ενημέρωση</translation>
     </message>
@@ -552,6 +582,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>&amp;Αποσύνδεση από %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Αναφέρετε κάποιο σφάλμα...</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Αποκτήστε την πλήρη έκδοση</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Μια νέα έκδοση του %1 είναι διαθέσιμη!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>Η %1 %2 είναι διαθέσιμη. Έχετε την %3</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Θα θέλατε να την κατεβάσετε τώρα;</translation>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation>Παράλειψη αυτής της έκδοσης</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Υπενθύμισε το μου αργότερα</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Εγκατάσταση Ενημερώσεων</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation>Επικόλληση</translation>
     </message>
 </context>
 <context>

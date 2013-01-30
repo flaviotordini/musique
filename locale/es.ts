@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Traduzca %1 a su idioma natal usando %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation>Licencia para: %1</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation>Introduzca los detalles de la licencia</translation>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation>Correo &amp;electrónico:</translation>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation>&amp;Código:</translation>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Obtenga una licencia de %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Esta versión de demostración ha caducado.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation>Sin una licencia, la aplicación caducará en %1 días.</translation>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>Al comprar la versión completa, también apoya el trabajo realizado en la creación de %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Usar demostración</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation>Introducir licencia</translation>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation>Comprar licencia</translation>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation>La versión completa te permite añadir mas de %1 pistas a la lista de reproducción y escuchar tu música sin interrupciones.</translation>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Obtenga una licencia de %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Esta versión de prueba ha caducado.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Esta versión de prueba caducará en %1 días.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Al comprar la versión completa, también apoya el duro trabajo hecho en la creación de %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Probar</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Obtener la versión completa</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <source>Downloading update...</source>
+        <translation>Descargando la actualización…</translation>
     </message>
 </context>
 <context>
@@ -264,30 +294,34 @@
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Falló la autenticación</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Iniciar sesión en %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Usuario:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Contraseña:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Regístrate para una cuenta de %1</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>Olvidaste tu &lt;a href=&apos;%1&apos;&gt;nombre de usuario&lt;/a&gt; o &lt;a href=&apos;%2&apos;&gt;contraseña&lt;/a&gt;?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -490,7 +524,7 @@
     </message>
     <message>
         <source>Volume at %1%</source>
-        <translation type="unfinished"/>
+        <translation>Volumen en %1%</translation>
     </message>
     <message>
         <source>Volume is muted</source>
@@ -511,10 +545,6 @@
     <message>
         <source>Remind me later</source>
         <translation>Recordarme después</translation>
-    </message>
-    <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Para obtener la última versión, descargue de nuevo %1 desde el enlace que ha recibido vía correo-e y reinstale.</translation>
     </message>
     <message>
         <source>Update</source>
@@ -538,19 +568,23 @@
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Detener Luego De Esta Pista</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Registrando en AudioScrobbler</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Enviar los títulos de las pistas reproducidas a %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Cerrar la sesión de %1</translation>
+    </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Informar de un problema...</translation>
     </message>
 </context>
 <context>
@@ -569,7 +603,7 @@
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation type="unfinished"/>
+        <translation>Te permite reproducir unas pocas pistas para que puedas probar la aplicación y ver si te sirve.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Obtener la versión completa</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Está disponible una versión nueva de %1.</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 está disponible ahora. Ud. tiene %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>¿Quiere descargarla ahora?</translation>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation>Omitir esta versión</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Recordarme después</translation>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation>Instalar actualización</translation>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation>Pegar</translation>
     </message>
 </context>
 <context>
@@ -616,7 +684,7 @@
     <name>TrackListView</name>
     <message>
         <source>Tracks</source>
-        <translation type="unfinished"/>
+        <translation>Pistas</translation>
     </message>
 </context>
 </TS>

@@ -46,6 +46,60 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Traduce %1 a tu idioma utilizando %2</translation>
     </message>
+    <message>
+        <source>Licensed to: %1</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ActivationDialog</name>
+    <message>
+        <source>Enter your License Details</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Email:</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Code:</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ActivationView</name>
+    <message>
+        <source>Please license %1</source>
+        <translation>Introduzca la licencia de %1</translation>
+    </message>
+    <message>
+        <source>This demo has expired.</source>
+        <translation>Esta versión de prueba ha caducado.</translation>
+    </message>
+    <message>
+        <source>Without a license, the application will expire in %1 days.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
+        <translation>Al comprar la versión completa, también apoya el trabajo empleado en la creación de %1.</translation>
+    </message>
+    <message>
+        <source>Use Demo</source>
+        <translation>Utilizar la versión de prueba</translation>
+    </message>
+    <message>
+        <source>Enter License</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy License</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AlbumInfo</name>
@@ -157,34 +211,10 @@
     </message>
 </context>
 <context>
-    <name>DemoStartupView</name>
+    <name>DownloadWidget</name>
     <message>
-        <source>Please license %1</source>
-        <translation>Introduzca la licencia de %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Esta versión de prueba ha caducado.</translation>
-    </message>
-    <message>
-        <source>This demo will expire in %1 days.</source>
-        <translation>Días en que caduca esta versión de prueba: %1.</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Al adquirir la versión completa, también apoya el gran esfuerzo que pongo en la creación de %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Utilizar versión de prueba</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Obtener la versión completa</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>La versión completa permite añadir más de %1 pistas a la lista de reproducción y escuchar su música sin interrupciones.</translation>
+        <source>Downloading update...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -288,6 +318,10 @@
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
         <translation>¿Ha olvidado su &lt;a href=&apos;%1&apos;&gt;nombre de usuario&lt;/a&gt; o su &lt;a href=&apos;%2&apos;&gt;contraseña?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
     </message>
 </context>
 <context>
@@ -513,10 +547,6 @@
         <translation>Recordarme después</translation>
     </message>
     <message>
-        <source>To get the updated version, download %1 again from the link you received via email and reinstall.</source>
-        <translation>Para obtener la versión actualizada, descargue %1 de nuevo desde el enlace que recibió por correo, y reinstale.</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>Actualizar</translation>
     </message>
@@ -552,6 +582,10 @@
         <source>&amp;Log Out from %1</source>
         <translation>&amp;Cerrar sesión de %1</translation>
     </message>
+    <message>
+        <source>&amp;Report an Issue...</source>
+        <translation>&amp;Reporte un inconveniente...</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -578,6 +612,40 @@
     <message>
         <source>Get the full version</source>
         <translation>Obtener la versión completa</translation>
+    </message>
+</context>
+<context>
+    <name>MessageWidget</name>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Skip This Version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Install Update</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PasteLineEdit</name>
+    <message>
+        <source>Paste</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
