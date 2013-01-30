@@ -1,3 +1,11 @@
+1.2.1
+- Faster painting of artist photos and album covers
+- Autoupdate on Mac and Windows
+- Updated Windows toolbar style
+- Ubuntu Ambiance theme integration
+- Fixed system language settings detection
+- New and updated translations
+
 1.2
 - Fixed wrong artist names, please rescan your collection
 - Long artist names and album titles displaying incorrectly
