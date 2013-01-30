@@ -13,7 +13,6 @@ class ContextualView;
 class SearchLineEdit;
 class Track;
 class UpdateChecker;
-class FaderWidget;
 
 class MainWindow : public QMainWindow {
 
@@ -25,21 +24,25 @@ public:
     static void printHelp();
 
 public slots:
-    void showMediaView();
-    void showChooseFolderView();
+    void showMediaView(bool transition = true);
+    void showChooseFolderView(bool transition = true);
     void toggleContextualView();
     void hideContextualView();
     void updateContextualView(Track *track);
     void showInitialView();
-#ifdef APP_DEMO
-    void showDemoDialog(QString message);
-    void buy();
-#endif
     void quit();
     void showMessage(QString message);
     void handleError(QString message);
     void restore();
     void messageReceived(const QString &message);
+    void goBack();
+#ifdef APP_ACTIVATION
+    void showActivationView(bool transition = true);
+    void showActivationDialog();
+    void buy();
+    void hideBuyAction();
+    void showDemoDialog(QString message);
+#endif
 
 protected:
     void closeEvent(QCloseEvent *);
@@ -47,10 +50,9 @@ protected:
     void resizeEvent(QResizeEvent *);
 
 private slots:
-    void crossfadeViews(QWidget *oldWidget, QWidget *newWidget);
-    void goBack();
     void visitSite();
     void donate();
+    void reportIssue();
     void about();
     void toggleFullscreen();
     void updateUIForFullscreen();
@@ -58,9 +60,6 @@ private slots:
     void setRepeat(bool enabled);
     void checkForUpdate();
     void gotNewVersion(QString version);
-    void enableUnifiedToolbar() {
-        setUnifiedTitleAndToolBarOnMac(true);
-    }
 
     // Phonon related logic
     void stop();
@@ -100,7 +99,7 @@ private slots:
 
 private:
     MainWindow();
-    void showView(QWidget*);
+    void showWidget(QWidget*, bool transition = true);
     void createActions();
     void createMenus();
     void createToolBars();
@@ -110,9 +109,9 @@ private:
     void initPhonon();
     static QString formatTime(qint64 time);
     QString playlistPath();
+    void simpleUpdateDialog(QString version);
 
     // view mechanism
-    QPointer<FaderWidget> faderWidget;
     QStackedWidget *views;
     QStack<QWidget*> *history;
 
@@ -137,7 +136,6 @@ private:
     QAction *skipBackwardAct;
     QAction *skipForwardAct;
     QAction *playAct;
-    // QAction *stopAct;
     QAction *fullscreenAct;
     QAction *volumeUpAct;
     QAction *volumeDownAct;

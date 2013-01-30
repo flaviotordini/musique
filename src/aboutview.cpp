@@ -1,5 +1,12 @@
 #include "aboutview.h"
 #include "constants.h"
+#ifdef APP_ACTIVATION
+#include "activation.h"
+#endif
+#ifdef APP_MAC
+#include "macutils.h"
+#include "mac_startup.h"
+#endif
 
 AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     
@@ -20,15 +27,20 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     QString info = "<html><style>a { color: palette(text); text-decoration: none; font-weight: bold }</style><body><h1>" +
             QString(Constants::NAME) + "</h1>"
             "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>"
-            + QString("<p><a href=\"%1/\">%1</a></p>").arg(Constants::WEBSITE) +
+            + QString("<p><a href=\"%1/\">%1</a></p>").arg(Constants::WEBSITE);
 
         #if !defined(APP_MAC) && !defined(Q_WS_WIN)
-            "<p>" +  tr("%1 is Free Software but its development takes precious time.").arg(Constants::NAME) + "<br/>"
+            info += "<p>" +  tr("%1 is Free Software but its development takes precious time.").arg(Constants::NAME) + "<br/>"
             + tr("Please <a href='%1'>donate</a> to support the continued development of %2.")
-            .arg(QString(Constants::WEBSITE).append("#donate"), Constants::NAME) + "</p>"
+            .arg(QString(Constants::WEBSITE).append("#donate"), Constants::NAME) + "</p>";
         #endif
 
-            "<p>" + tr("You may want to try my other apps as well:") + "</p>"
+        #ifdef APP_ACTIVATION
+            if (Activation::instance().isActivated())
+                info += "<p>" + tr("Licensed to: %1").arg("<b>" + Activation::instance().getEmail() + "</b>");
+        #endif
+
+            info += "<p>" + tr("You may want to try my other apps as well:") + "</p>"
             + "<ul>"
 
             + "<li>" + tr("%1, a YouTube app")
@@ -42,7 +54,7 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
             + "</ul>"
 
             "<p>" + tr("Translate %1 to your native language using %2").arg(Constants::NAME)
-            .arg("<a href='http://www.transifex.net/projects/p/" + QLatin1String(Constants::UNIX_NAME) + "/resource/main/'>Transifex</a>")
+            .arg("<a href='http://www.transifex.net/projects/p/" + QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>")
             + "</p>"
 
         #if !defined(APP_MAC) && !defined(Q_WS_WIN)
@@ -50,7 +62,7 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
             .arg("http://www.gnu.org/licenses/gpl.html") + "</p>"
         #endif
 
-            "<p style='color:palette(mid)'>&copy; 2010-2012 " + Constants::ORG_NAME + "</p>"
+            "<p style='color:palette(mid)'>&copy; 2010-2013 " + Constants::ORG_NAME + "</p>"
             "</body></html>";
     QLabel *infoLabel = new QLabel(info, this);
     infoLabel->setOpenExternalLinks(true);
@@ -81,5 +93,14 @@ void AboutView::paintEvent(QPaintEvent * /*event*/) {
     }
     QPainter painter(this);
     painter.fillRect(0, 0, width(), height(), brush);
+#endif
+}
+
+void AboutView::appear() {
+#ifdef APP_MAC
+    mac::uncloseWindow(window()->winId());
+#ifdef APP_ACTIVATION
+    mac::CheckForUpdates();
+#endif
 #endif
 }
