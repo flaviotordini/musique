@@ -3,7 +3,7 @@ DEFINES += QT_NO_DEBUG_OUTPUT
 
 TEMPLATE = app
 
-VERSION = 1.2
+VERSION = 1.2.1
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
@@ -14,15 +14,11 @@ DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 
 DEFINES += QT_USE_FAST_CONCATENATION
 DEFINES += QT_USE_FAST_OPERATOR_PLUS
+DEFINES += QT_STRICT_ITERATORS
 
-# Saner string behaviour
-# DEFINES += QT_NO_CAST_FROM_ASCII QT_NO_CAST_TO_ASCII QT_STRICT_ITERATORS
 TARGET = $${APP_UNIX_NAME}
 LIBS += -ltag
-QT += network \
-    xml \
-    phonon \
-    sql
+QT += network xml phonon sql
 include(src/qtsingleapplication/qtsingleapplication.pri)
 
 HEADERS += src/mainwindow.h \
@@ -32,7 +28,6 @@ HEADERS += src/mainwindow.h \
     src/urllineedit.h \
     src/spacer.h \
     src/constants.h \
-    src/iconloader/qticonloader.h \
     src/faderwidget/faderwidget.h \
     src/networkaccess.h \
     src/global.h \
@@ -91,14 +86,14 @@ HEADERS += src/mainwindow.h \
     src/coverutils.h \
     src/lastfmlogindialog.h \
     src/lastfm.h \
-    src/imagedownloader.h
+    src/imagedownloader.h \
+    src/utils.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
     src/searchlineedit.cpp \
     src/urllineedit.cpp \
     src/spacer.cpp \
-    src/iconloader/qticonloader.cpp \
     src/faderwidget/faderwidget.cpp \
     src/updatechecker.cpp \
     src/networkaccess.cpp \
@@ -155,7 +150,8 @@ SOURCES += src/main.cpp \
     src/coverutils.cpp \
     src/lastfmlogindialog.cpp \
     src/lastfm.cpp \
-    src/imagedownloader.cpp
+    src/imagedownloader.cpp \
+    src/utils.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
@@ -168,8 +164,7 @@ CODECFORSRC = UTF-8
 include(locale/locale.pri)
 
 # deploy
-DISTFILES += CHANGES \
-    LICENSE
+DISTFILES += CHANGES LICENSE
 unix:!mac {
     QT += dbus
     INCLUDEPATH += /usr/include/phonon
@@ -217,5 +212,3 @@ unix:!mac {
     icon512.files += data/512x512/$${APP_UNIX_NAME}.png
 }
 mac|win32:include(local/local.pri)
-
-
