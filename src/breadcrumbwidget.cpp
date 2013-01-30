@@ -1,10 +1,10 @@
 #include "breadcrumbwidget.h"
-#include "iconloader/qticonloader.h"
+#include "utils.h"
 
 BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
 
     backAction = new QAction(
-            QtIconLoader::icon("go-previous"),
+            Utils::icon("go-previous"),
             tr("&Back"), this);
     QKeySequence keySequence(Qt::ALT + Qt::Key_Left);
     backAction->setShortcut(keySequence);

@@ -1,6 +1,6 @@
 #include <QtGui>
 #include "droparea.h"
-#include "iconloader/qticonloader.h"
+#include "utils.h"
 #include "trackmimedata.h"
 #include "model/track.h"
 #include "playlistmodel.h"
@@ -42,7 +42,7 @@ void DropArea::dragLeaveEvent(QDragLeaveEvent *event) {
 
 void DropArea::clear() {
     setText("<b>" + tr("Drop here to append to the playlist") + "</b>");
-    setPixmap(QtIconLoader::icon("list-add").pixmap(24, 24));
+    setPixmap(Utils::icon("list-add").pixmap(24, 24));
     setBackgroundRole(QPalette::Base);
     setForegroundRole(QPalette::Text);
 

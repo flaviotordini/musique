@@ -3,7 +3,7 @@
 #include "model/album.h"
 #include "model/artist.h"
 #include "playlistmodel.h"
-#include "iconloader/qticonloader.h"
+#include "utils.h"
 
 const int PlaylistItemDelegate::PADDING = 10;
 int PlaylistItemDelegate::ITEM_HEIGHT = 0;
@@ -46,7 +46,7 @@ void PlaylistItemDelegate::paint(
 }
 
 QPixmap PlaylistItemDelegate::createPlayIcon() const {
-    QIcon icon = QtIconLoader::icon("media-playback-start");
+    QIcon icon = Utils::icon("media-playback-start");
     return icon.pixmap(16, 16);
 }
 
