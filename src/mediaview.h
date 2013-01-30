@@ -18,13 +18,6 @@ class MediaView : public QWidget, public View {
 
 public:
     MediaView(QWidget *parent);
-    void disappear() {}
-    QMap<QString, QVariant> metadata() {
-        QMap<QString, QVariant> metadata;
-        metadata.insert("title", "");
-        metadata.insert("description", "");
-        return metadata;
-    }
     void saveSplitterState();
     void setMediaObject(Phonon::MediaObject *mediaObject);
     Track* getActiveTrack() { return activeTrack; }
@@ -42,7 +35,7 @@ private slots:
     void handleError(QString message);
     void playlistFinished();
     void playbackFinished();
-#ifdef APP_DEMO
+#ifdef APP_ACTIVATION
     void updateContinueButton(int);
 #endif
 
@@ -57,7 +50,7 @@ private:
     DropArea *dropArea;
     Track *activeTrack;
 
-#ifdef APP_DEMO
+#ifdef APP_ACTIVATION
     void demoMessage();
     int tracksPlayed;
 #endif

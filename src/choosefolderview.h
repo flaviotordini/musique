@@ -12,10 +12,9 @@ public:
     ChooseFolderView(QWidget *parent);
     void appear();
     void disappear() {}
-    QMap<QString, QVariant> metadata() {
-        QMap<QString, QVariant> metadata;
+    QHash<QString, QVariant> metadata() {
+        QHash<QString, QVariant> metadata;
         metadata.insert("title", tr("Locate your collection"));
-        metadata.insert("description", "");
         return metadata;
     }
 

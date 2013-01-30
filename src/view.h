@@ -3,10 +3,10 @@
 
 class View {
 
-    public:
-        virtual QMap<QString, QVariant> metadata() = 0;
-        virtual void appear() = 0;
-        virtual void disappear() = 0;
+public:
+    virtual QHash<QString, QVariant> metadata() { return QHash<QString, QVariant>(); }
+    virtual void appear() {}
+    virtual void disappear() {}
 
 };
 

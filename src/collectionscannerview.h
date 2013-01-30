@@ -14,9 +14,8 @@ public:
 
     void appear() { progressBar->setMaximum(0); }
     void disappear() {}
-    QMap<QString, QVariant> metadata() {
-        QMap<QString, QVariant> metadata;
-        metadata.insert("title", "");
+    QHash<QString, QVariant> metadata() {
+        QHash<QString, QVariant> metadata;
         metadata.insert("description", tr("Go grab a coffee"));
         return metadata;
     }

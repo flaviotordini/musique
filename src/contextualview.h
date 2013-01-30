@@ -35,12 +35,7 @@ public:
 
     void appear() {}
     void disappear();
-    QMap<QString, QVariant> metadata() {
-        QMap<QString, QVariant> metadata;
-        metadata.insert("title", "");
-        metadata.insert("description", "");
-        return metadata;
-    }
+
     void setTrack(Track* track);
 
 private:

@@ -11,10 +11,9 @@ class AboutView : public QWidget, public View {
 
 public:
     AboutView(QWidget *parent);
-    void appear() {}
-    void disappear() {}
-    QMap<QString, QVariant> metadata() {
-        QMap<QString, QVariant> metadata;
+    void appear();
+    QHash<QString, QVariant> metadata() {
+        QHash<QString, QVariant> metadata;
         metadata.insert("title", tr("About"));
         metadata.insert("description",
                         tr("What you always wanted to know about %1 and never dared to ask")
