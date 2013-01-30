@@ -3,7 +3,7 @@
 #include "lastfm.h"
 
 namespace The {
-QMap<QString, QAction*>* globalActions();
+QHash<QString, QAction*>* globalActions();
 }
 
 LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
@@ -41,7 +41,7 @@ LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
 
     QDialogButtonBox* buttonBox = new QDialogButtonBox(this);
 
-    QPushButton *cancelButton = new QPushButton("Cancel");
+    QPushButton *cancelButton = new QPushButton(tr("Cancel"));
     connect(cancelButton, SIGNAL(clicked()), SLOT(close()));
     buttonBox->addButton(cancelButton, QDialogButtonBox::RejectRole);
 

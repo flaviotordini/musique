@@ -12,6 +12,7 @@ public:
     TrackListView(QWidget *parent);
 public slots:
     void appear();
+    void disappear() { }
 
 };
 
