@@ -183,41 +183,42 @@ void PlaylistModel::addTrack(Track* track) {
 }
 
 void PlaylistModel::addTracks(QList<Track*> tracks) {
+    if (tracks.empty()) return;
+
+    // remove duplicates
+    foreach(Track* track, this->tracks)
+        tracks.removeAll(track);
+
     if (!tracks.empty()) {
-        // remove duplicates
-        foreach(Track* track, this->tracks) {
-            tracks.removeAll(track);
-        }
-        if (!tracks.empty()) {
 
 #ifdef APP_ACTIVATION
-            bool activated = Activation::instance().isActivated();
+        bool activated = Activation::instance().isActivated();
+        if (!activated && this->tracks.size() >= demoMaxTracks) {
+            MainWindow::instance()->showDemoDialog(demoMessage);
+            return;
+        }
+#endif
+
+        beginInsertRows(QModelIndex(), this->tracks.size(),
+                        this->tracks.size() + tracks.size() - 1);
+        foreach(Track* track, tracks) {
+
+#ifdef APP_ACTIVATION
             if (!activated && this->tracks.size() >= demoMaxTracks) {
+                endInsertRows();
                 MainWindow::instance()->showDemoDialog(demoMessage);
                 return;
             }
 #endif
 
-            beginInsertRows(QModelIndex(), this->tracks.size(), this->tracks.size() + tracks.size() - 1);
-            // this->tracks.append(tracks);
-            foreach(Track* track, tracks) {
-
-#ifdef APP_ACTIVATION
-                if (!activated && this->tracks.size() >= demoMaxTracks) {
-                    endInsertRows();
-                    MainWindow::instance()->showDemoDialog(demoMessage);
-                    return;
-                }
-#endif
-
-                this->tracks.append(track);
-                track->setPlayed(false);
-                connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
-            }
-            endInsertRows();
-
+            this->tracks.append(track);
+            track->setPlayed(false);
+            connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
         }
+        endInsertRows();
+
     }
+
 }
 
 void PlaylistModel::clear() {
@@ -450,6 +451,8 @@ bool PlaylistModel::loadFrom(QTextStream & stream)
     if ( !stream.device()->isOpen() || !stream.device()->isReadable() )
         return false;
 
+    QList<Track*> tracks;
+
     stream.setCodec("UTF-8");
     QString header;
     QString tag;
@@ -462,7 +465,7 @@ bool PlaylistModel::loadFrom(QTextStream & stream)
         {
             QString path = line.section("=", -1);
             cur = Track::forPath(path);
-            if (cur) addTrack(cur);
+            if (cur) tracks << cur;
         }
         else if ( line.startsWith("Title") && cur != NULL )
         {
@@ -471,6 +474,8 @@ bool PlaylistModel::loadFrom(QTextStream & stream)
                 cur->setTitle(tag);
         }
     }
+
+    addTracks(tracks);
 
     return true;
 }
