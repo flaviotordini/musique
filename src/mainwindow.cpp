@@ -466,11 +466,7 @@ void MainWindow::createToolBars() {
 
     setUnifiedTitleAndToolBarOnMac(true);
     mainToolBar = new QToolBar(this);
-#if QT_VERSION < 0x040600
-    mainToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-#else
     mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
-#endif
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
 
@@ -809,19 +805,23 @@ void MainWindow::incrementalScanProgress(int percent) {
 }
 
 void MainWindow::incrementalScanFinished() {
-    chooseFolderAct->setEnabled(true);
+    if (views->currentWidget() == mediaView ||
+            views->currentWidget() == contextualView)
+        chooseFolderAct->setEnabled(true);
     statusBar()->showMessage(tr("Collection updated"));
     startImageDownload();
 }
 
 void MainWindow::startImageDownload() {
     chooseFolderAct->setEnabled(false);
-    ImageDownloaderThread *downladerThread = new ImageDownloaderThread();
-    connect(downladerThread, SIGNAL(finished()), SLOT(imageDownloadFinished()));
-    downladerThread->start();
+    ImageDownloaderThread *downloaderThread = new ImageDownloaderThread();
+    connect(downloaderThread, SIGNAL(finished()), SLOT(imageDownloadFinished()));
+    downloaderThread->start();
 }
 
 void MainWindow::imageDownloadFinished() {
+    if (views->currentWidget() == mediaView ||
+            views->currentWidget() == contextualView)
     chooseFolderAct->setEnabled(true);
 }
 
