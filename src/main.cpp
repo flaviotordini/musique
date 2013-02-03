@@ -114,7 +114,7 @@ int main(int argc, char **argv) {
         localeDir = dataDir + QDir::separator() + "locale";
     }
     QTranslator translator;
-    translator.load(QLocale::system(), localeDir);
+    translator.load(QLocale::system(), QString(), QString(), localeDir);
     app.installTranslator(&translator);
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
