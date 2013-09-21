@@ -343,6 +343,15 @@ QString Track::getAbsolutePath() {
     return absolutePath;
 }
 
+QString Track::getLyricsLocation() {
+    static const QString data = QDesktopServices::storageLocation(QDesktopServices::DataLocation)
+            + QLatin1String("/data/");
+    QString l = data;
+    if (artist) l += artist->getHash();
+    l += QLatin1String("/_lyrics/") + getHash();
+    return l;
+}
+
 void Track::getLyrics() {
 #ifdef APP_MAC_STORE_NO
     bool haveStyle = (QFile::exists(qApp->applicationDirPath() + "/../Resources/style.css"));
@@ -351,17 +360,7 @@ void Track::getLyrics() {
     }
 #endif
 
-    QString artistName;
-    if (artist) artistName = artist->getName();
-
-    // read from cache
-    const QString storageLocation =
-            QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-            + "/lyrics";
-    QString filePath = storageLocation;
-    if (artist) filePath += "/" + artist->getHash();
-    filePath += "/" + getHash();
-    QFile file(filePath);
+    QFile file(getLyricsLocation());
     if (file.exists()) {
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             qDebug() << "Cannot open file" << file.fileName();
@@ -371,6 +370,9 @@ void Track::getLyrics() {
             return;
         }
     }
+
+    QString artistName;
+    if (artist) artistName = artist->getName();
 
     // http://lyrics.wikia.com/LyricWiki:REST
     QUrl url = QString(
@@ -449,13 +451,8 @@ void Track::scrapeLyrics(QByteArray bytes) {
     lyrics = lyrics.simplified();
 
     // cache lyrics
-    QString filePath =
-            QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-            + "/lyrics";
-    if (artist) filePath += "/" + artist->getHash();
-    QDir dir;
-    dir.mkpath(filePath);
-    filePath += "/" + getHash();
+    QString filePath = getLyricsLocation();
+    QDir().mkpath(QFileInfo(filePath).absolutePath());
     QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly)) {
         qDebug() << "Error opening file for writing" << file.fileName();

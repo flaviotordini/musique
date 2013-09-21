@@ -89,6 +89,7 @@ private slots:
     void readLyricsFromTags();
 
 private:
+    QString getLyricsLocation();
     static QString getHash(QString);
 
     static QHash<int, Track*> cache;

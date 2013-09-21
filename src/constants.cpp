@@ -5,7 +5,7 @@
 #define STRINGIFY(x) STR(x)
 
 const char *Constants::VERSION = STRINGIFY(APP_VERSION);
-const int Constants::DATABASE_VERSION = 1;
+const int Constants::DATABASE_VERSION = 2;
 const char *Constants::NAME = STRINGIFY(APP_NAME);
 const char *Constants::UNIX_NAME = STRINGIFY(APP_UNIX_NAME);
 const char *Constants::ORG_NAME = "Flavio Tordini";

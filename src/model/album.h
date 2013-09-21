@@ -1,7 +1,7 @@
 #ifndef ALBUM_H
 #define ALBUM_H
 
-#include <QtCore>
+#include <QtGui>
 #include "item.h"
 #include "artist.h"
 #include "track.h"
@@ -23,7 +23,9 @@ public:
     void setTitle(QString title) { this->name = title; }
     int getYear() { return year; }
     void setYear(int year) { this->year = year; }
-    QString getHash();
+    static QString getHash(QString name, Artist *artist);
+    const QString &getHash();
+    QString getWikiLocation();
     QString getWiki();
 
     // relations
@@ -36,9 +38,11 @@ public:
         cache.clear();
     }
     static Album* forId(int albumId);
-    static int idForName(QString name);
+    static int idForHash(QString name);
     void insert();
     void update();
+
+    QString formattedDuration();
 
 
     // internet
@@ -48,8 +52,10 @@ public:
       * This will also emit gotPhoto() when the photo is ready.
       */
     void fetchInfo();
-    QPixmap getPhoto();
+    const QPixmap &getPhoto();
+    const QPixmap &getThumb();
     QString getImageLocation();
+    QString getThumbLocation();
 
     void fixTrackTitle(Track* track);
 
@@ -73,7 +79,7 @@ private slots:
     void parseLastFmRedirectedName(QNetworkReply *reply);
 
 private:
-    static QString getHash(QString);
+    QString getBaseLocation();
     QString fixTrackTitleUsingTitle(Track* track, QString newTitle);
 
     static QHash<int, Album*> cache;
@@ -82,6 +88,10 @@ private:
     int year;
     Artist* artist;
     QString mbid;
+    QString hash;
+    uint listeners;
+    QPixmap *photo;
+    QPixmap *thumb;
 
 };
 

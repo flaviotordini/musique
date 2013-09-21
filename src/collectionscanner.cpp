@@ -76,6 +76,7 @@ void CollectionScanner::run() {
 
         // drop the previous, if any
         Database::instance().drop();
+        Database::instance().create();
 
         // invalidate caches
         Artist::clearCache();
@@ -202,6 +203,8 @@ void CollectionScanner::complete() {
         qDebug() << "Setting collection hash to" << hash;
         trackPaths.clear();
     }
+
+    QSqlQuery("vacuum", Database::instance().getConnection());
 
     stopped = false;
     working = false;
@@ -475,7 +478,7 @@ void CollectionScanner::giveThisFileAnAlbum(FileInfo *file) {
     const QString albumTag = DataUtils::cleanTag(file->getTags()->album);
 
     // try to normalize the album title to a simpler form
-    const QString albumHash = DataUtils::normalizeTag(albumTag);
+    const QString albumHash = Album::getHash(albumTag, file->getArtist());
 
     if (albumTag.isEmpty()) {
         processTrack(file);
@@ -508,6 +511,15 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     const QString albumTag = file->getTags()->album;
     album->setTitle(DataUtils::cleanTag(albumTag));
     album->setYear(file->getTags()->year);
+
+    Artist *artist = file->getArtist();
+    if (artist) album->setArtist(artist); // && artist->getId() > 0
+    else qDebug() << "Album" << album->getTitle() << "lacks an artist";
+
+    if (artist && artist->getId() <= 0) qWarning() << "artist id" << artist->getId() << artist->getName();
+
+    // qDebug() << "Processing album:" << album->getTitle() << album->getHash();
+
     album->setProperty("originalHash", album->getHash());
 
     // local covers
@@ -515,19 +527,14 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     if (!QFile::exists(imageLocation)) {
         const QString filePath = file->getFileInfo().absolutePath();
         bool localCover = false;
-        localCover = CoverUtils::coverFromFile(filePath, imageLocation);
+        localCover = CoverUtils::coverFromFile(filePath, album);
         if (!localCover) {
-            localCover = CoverUtils::coverFromTags(filePath, imageLocation);
+            localCover = CoverUtils::coverFromTags(filePath, album);
             if (localCover)
                 qDebug() << "Found embedded cover for" << filePath;
         }
         if (localCover) album->setProperty("localCover", true);
     }
-
-    Artist *artist = file->getArtist();
-    if (artist && artist->getId() > 0) album->setArtist(artist);
-    else qDebug() << "Album" << album->getTitle() << "lacks an artist";
-    // qDebug() << "Processing album:" << album->getTitle() << album->getHash();
 
     if (loadedAlbums.contains(album->getHash())) {
         qDebug() << "ERROR Album already processed!" << album->getTitle() << album->getHash();
@@ -568,13 +575,13 @@ void CollectionScanner::gotAlbumInfo() {
     // if (hash != album->getHash())
     loadedAlbums.insert(album->getHash(), album);
 
-    int albumId = Album::idForName(album->getTitle());
+    int albumId = Album::idForHash(album->getHash());
     album->setId(albumId);
     if (albumId < 0) {
         // qDebug() << "We have a new cool album:" << album->getTitle();
         album->insert();
         // TODO last insert id
-        albumId = Album::idForName(album->getTitle());
+        albumId = Album::idForHash(album->getHash());
     } else {
         qDebug() << "Updating album" << album->getTitle();
         album->update();

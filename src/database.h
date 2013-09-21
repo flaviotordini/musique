@@ -17,26 +17,27 @@ public:
     static Database& instance();
     QSqlDatabase getConnection();
     ~Database();
+    void create();
+    void drop();
     int status();
     void setStatus(int status);
     uint lastUpdate();
     void setLastUpdate(uint date);
     QString collectionRoot();
     void setCollectionRoot(QString dir);
-    void drop();
     void closeConnections();
     void closeConnection();
 
+    static QString getDataLocation();
+    static QString getDbLocation();
+
 private:
     Database();
-    void createDatabase();
     QVariant getAttribute(QString name);
     void setAttribute(QString name, QVariant value);
-
-    void maybeCreateDownloadsTable();
+    bool removeRecursively(const QString & dirName);
 
     QMutex lock;
-    QString dbLocation;
     QHash<QThread*, QSqlDatabase> connections;
 
 };

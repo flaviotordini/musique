@@ -1,4 +1,5 @@
 #include "coverutils.h"
+#include "model/album.h"
 
 bool CoverUtils::isAcceptableImage(const QImage &image) {
     static const int minimumSize = 150;
@@ -30,19 +31,15 @@ QImage CoverUtils::maybeScaleImage(const QImage &image) {
     return image;
 }
 
-bool CoverUtils::saveImageToLocation(const QImage &image, QString imageLocation) {
-    qDebug() << "Saving scaled image to" << imageLocation;
-    QFile file(imageLocation);
-    QDir dir;
-    dir.mkpath(QFileInfo(file).path());
-    if (!file.open(QIODevice::WriteOnly)) {
-        qWarning() << "Error opening file for writing" << file.fileName();
-        return false;
-    }
-    return image.save(&file, "JPG");
+bool CoverUtils::saveImage(const QImage &image, Album *album) {
+    QImage scaledImage = maybeScaleImage(image);
+    QBuffer buffer;
+    scaledImage.save(&buffer, "JPG");
+    album->setPhoto(buffer.data());
+    return true;
 }
 
-bool CoverUtils::coverFromFile(QString dir, QString imageLocation) {
+bool CoverUtils::coverFromFile(QString dir, Album *album) {
     static QList<QRegExp> coverREs;
     if (coverREs.isEmpty()) {
         coverREs << QRegExp(".*cover.jpg", Qt::CaseInsensitive)
@@ -60,13 +57,8 @@ bool CoverUtils::coverFromFile(QString dir, QString imageLocation) {
             if (filename.contains(re)) {
                 qDebug() << "Found local cover" << filename;
                 QImage image(fileInfo.absoluteFilePath());
-                if (isAcceptableImage(image)) {
-                    QImage scaledImage = maybeScaleImage(image);
-                    if (image == scaledImage)
-                        return QFile::copy(fileInfo.absoluteFilePath(), imageLocation);
-                    else
-                        return saveImageToLocation(scaledImage, imageLocation);
-                }
+                if (isAcceptableImage(image))
+                    return saveImage(image, album);
                 break;
             }
         }
@@ -75,33 +67,33 @@ bool CoverUtils::coverFromFile(QString dir, QString imageLocation) {
     return false;
 }
 
-bool CoverUtils::coverFromTags(QString filename, QString imageLocation) {
+bool CoverUtils::coverFromTags(QString filename, Album *album) {
     const QString suffix = QFileInfo(filename).suffix().toLower();
     if (suffix == "mp3") {
         TagLib::MPEG::File f((TagLib::FileName)filename.toUtf8());
         if (!f.isValid()) return false;
-        return coverFromMPEGTags(f.ID3v2Tag(), imageLocation);
+        return coverFromMPEGTags(f.ID3v2Tag(), album);
     } else if (suffix == "ogg" || suffix == "oga") {
         TagLib::Ogg::Vorbis::File f((TagLib::FileName)filename.toUtf8());
         if (!f.isValid()) return false;
-        return coverFromXiphComment(f.tag(), imageLocation);
+        return coverFromXiphComment(f.tag(), album);
     } else if (suffix == "flac") {
         TagLib::FLAC::File f((TagLib::FileName)filename.toUtf8());
         bool res = false;
-        if (f.isValid()) res = coverFromMPEGTags(f.ID3v2Tag(), imageLocation);
-        if (!res) res = coverFromXiphComment(f.xiphComment(), imageLocation);
+        if (f.isValid()) res = coverFromMPEGTags(f.ID3v2Tag(), album);
+        if (!res) res = coverFromXiphComment(f.xiphComment(), album);
         return res;
     } else if (suffix == "aac" ||
                suffix == "m4a" ||
                suffix == "m4b" ||
                suffix == "m4p" ||
                suffix == "mp4") {
-        return coverFromMP4(filename, imageLocation);
+        return coverFromMP4(filename, album);
     }
     return false;
 }
 
-bool CoverUtils::coverFromMPEGTags(TagLib::ID3v2::Tag *tag, QString imageLocation) {
+bool CoverUtils::coverFromMPEGTags(TagLib::ID3v2::Tag *tag, Album *album) {
 
     if (!tag) return false;
 
@@ -118,24 +110,10 @@ bool CoverUtils::coverFromMPEGTags(TagLib::ID3v2::Tag *tag, QString imageLocatio
     image.loadFromData((const uchar *) frame->picture().data(), frame->picture().size());
     if (!isAcceptableImage(image)) return false;
 
-    QImage scaledImage = maybeScaleImage(image);
-    if (image != scaledImage)
-        return saveImageToLocation(scaledImage, imageLocation);
-
-    QFile imagefile(imageLocation);
-    QDir dir;
-    dir.mkpath(QFileInfo(imagefile).path());
-    if (!imagefile.open(QIODevice::WriteOnly)) {
-        qWarning() << "Error opening file for writing" << imagefile.fileName();
-        return false;
-    }
-    QDataStream stream(&imagefile);
-    stream.writeRawData(frame->picture().data(), frameSize);
-
-    return true;
+    return saveImage(image, album);
 }
 
-bool CoverUtils::coverFromXiphComment(TagLib::Ogg::XiphComment *xiphComment, QString imageLocation) {
+bool CoverUtils::coverFromXiphComment(TagLib::Ogg::XiphComment *xiphComment, Album *album) {
 
     if (!xiphComment) return false;
 
@@ -152,24 +130,10 @@ bool CoverUtils::coverFromXiphComment(TagLib::Ogg::XiphComment *xiphComment, QSt
 
     qDebug() << "Cover from Xiph!";
 
-    QImage scaledImage = maybeScaleImage(image);
-    if (image != scaledImage)
-        return saveImageToLocation(scaledImage, imageLocation);
-
-    QFile imagefile(imageLocation);
-    QDir dir;
-    dir.mkpath(QFileInfo(imagefile).path());
-    if (!imagefile.open(QIODevice::WriteOnly)) {
-        qWarning() << "Error opening file for writing" << imagefile.fileName();
-        return false;
-    }
-    QDataStream stream(&imagefile);
-    stream.writeRawData(data.constData(), data.size());
-
-    return true;
+    return saveImage(image, album);
 }
 
-bool CoverUtils::coverFromMP4(QString filename, QString imageLocation) {
+bool CoverUtils::coverFromMP4(QString filename, Album *album) {
 
     TagLib::MP4::File f((TagLib::FileName)filename.toUtf8());
     if (!f.isValid()) return false;
@@ -188,19 +152,5 @@ bool CoverUtils::coverFromMP4(QString filename, QString imageLocation) {
 
     qDebug() << "Cover from MP4!";
 
-    QImage scaledImage = maybeScaleImage(image);
-    if (image != scaledImage)
-        return saveImageToLocation(scaledImage, imageLocation);
-
-    QFile imagefile(imageLocation);
-    QDir dir;
-    dir.mkpath(QFileInfo(imagefile).path());
-    if (!imagefile.open(QIODevice::WriteOnly)) {
-        qWarning() << "Error opening file for writing" << imagefile.fileName();
-        return false;
-    }
-    QDataStream stream(&imagefile);
-    stream.writeRawData(coverArt.data().data(), coverArt.data().size());
-
-    return true;
+    return saveImage(image, album);
 }

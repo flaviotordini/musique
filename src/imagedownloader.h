@@ -16,17 +16,10 @@ public:
 
     enum ImageDownloadTypes {
         ArtistType = 0,
-        AlbumType = 1
-    };
-
-    enum ImageDownloadStatuses {
-        WaitingStatus = 0,
-        ProcessingStatus = 1,
-        FailedStatus = 2
+        AlbumType
     };
 
     static void enqueue(int objectId, int objectType, QString url);
-    static void clearQueue();
 
 public slots:
     void imageDownloaded(QByteArray bytes);

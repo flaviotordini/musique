@@ -22,8 +22,10 @@ public:
     // properties
     QString getName()  { return name; }
     void setName(QString name) { this->name = name; }
-    QString getHash();
+    const QString &getHash();
     int getTrackCount() { return trackCount; }
+    QString getBaseLocation();
+    QString getBioLocation();
     QString getBio();
 
     // relations
@@ -86,10 +88,16 @@ private:
     int trackCount;
 
     QString name;
-    QString bio;
     QString mbid;
 
+    int yearFrom;
+    int yearTo;
+    uint listeners;
+    // QStringList tags;
+
     QStringList lastFmSearches;
+
+    QString hash;
 
 };
 

@@ -16,7 +16,7 @@ NetworkAccess* http();
 
 static QHash<QString, QByteArray> artistAlbums;
 
-Album::Album() : year(0), artist(0) {
+Album::Album() : year(0), artist(0), listeners(0), photo(0), thumb(0) {
 
 }
 
@@ -44,8 +44,8 @@ Album* Album::forId(int albumId) {
 
         // relations
         int artistId = query.value(2).toInt();
-        // TODO this could be made lazy
         album->setArtist(Artist::forId(artistId));
+        // if (!album->getArtist()) qWarning() << "no artist for" << album->getName();
 
         // put into cache
         cache.insert(albumId, album);
@@ -55,12 +55,12 @@ Album* Album::forId(int albumId) {
     return 0;
 }
 
-int Album::idForName(QString name) {
+int Album::idForHash(QString hash) {
     int id = -1;
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select id from albums where hash=?");
-    query.bindValue(0, Album::getHash(name));
+    query.bindValue(0, hash);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     if (query.next()) {
@@ -73,12 +73,14 @@ int Album::idForName(QString name) {
 void Album::insert() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("insert into albums (hash,title,year,artist,trackCount) values (?,?,?,?,0)");
+    query.prepare("insert into albums (hash,title,year,artist,trackCount,listeners)"
+                  " values (?,?,?,?,0,?)");
     query.bindValue(0, getHash());
     query.bindValue(1, name);
     query.bindValue(2, year);
     int artistId = artist ? artist->getId() : 0;
     query.bindValue(3, artistId);
+    query.bindValue(4, listeners);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 
@@ -89,6 +91,17 @@ void Album::insert() {
         query.bindValue(0, artist->getId());
         bool success = query.exec();
         if (!success) qDebug() << query.lastError().text();
+
+        // for artists that have no yearFrom, use the earliest album year
+        if (year > 0) {
+            query = QSqlQuery(db);
+            query.prepare("update artists set yearFrom=? where id=? and (yearFrom=0 or yearFrom>?)");
+            query.bindValue(0, year);
+            query.bindValue(1, artist->getId());
+            query.bindValue(2, year);
+            bool success = query.exec();
+            if (!success) qDebug() << query.lastError().text();
+        }
     }
 
 }
@@ -107,13 +120,18 @@ void Album::update() {
     if (!success) qDebug() << query.lastError().text();
 }
 
-QString Album::getHash() {
-    return Album::getHash(name);
+QString Album::getHash(QString name, Artist *artist) {
+    QString h;
+    if (artist) h = artist->getHash() + "/";
+    else h = "_unknown/";
+    h += DataUtils::normalizeTag(name);
+    return h;
 }
 
-QString Album::getHash(QString name) {
-    // return DataUtils::calculateHash(DataUtils::normalizeTag(name));
-    return DataUtils::normalizeTag(name);
+const QString & Album::getHash() {
+    if (hash.isNull())
+        hash = getHash(name, artist);
+    return hash;
 }
 
 QString Album::getStatusTip() {
@@ -122,7 +140,18 @@ QString Album::getStatusTip() {
     if (artist) tip += artist->getName() + " - ";
     tip += getTitle();
     if (year) tip += " (" + QString::number(year) + ")";
+    // tip += " - " + formattedDuration();
     return tip;
+}
+
+QString Album::formattedDuration() {
+    int totalLength = Track::getTotalLength(getTracks());
+    QString duration;
+    if (totalLength > 3600)
+        duration =  QTime().addSecs(totalLength).toString("h:mm:ss");
+    else
+        duration = QTime().addSecs(totalLength).toString("m:ss");
+    return duration;
 }
 
 void Album::fetchInfo() {
@@ -187,13 +216,22 @@ void Album::parseMusicBrainzReleaseDetails(QByteArray bytes) {
     qDebug() << name << "-> MusicBrainz ->" << correctTitle;
     if (!correctTitle.isEmpty()) {
         this->name = correctTitle;
+        hash.clear();
     }
 }
 
 // *** Last.fm Photo ***
 
-QPixmap Album::getPhoto() {
-    return QPixmap(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash());
+const QPixmap &Album::getPhoto() {
+    if (!photo)
+        photo = new QPixmap(getImageLocation());
+    return *photo;
+}
+
+const QPixmap &Album::getThumb() {
+    if (!thumb)
+        thumb = new QPixmap(getThumbLocation());
+    return *thumb;
 }
 
 void Album::fetchLastFmSearch() {
@@ -234,6 +272,7 @@ void Album::parseLastFmSearch(QByteArray bytes) {
                     if (name != albumName) {
                         qDebug() << "Fixed album name" << name << "=>" << albumName;
                         name = albumName;
+                        hash.clear();
                     }
                     break;
                 }
@@ -257,6 +296,7 @@ void Album::parseLastFmRedirectedName(QNetworkReply *reply) {
         int slashIndex = location.lastIndexOf('/');
         if (slashIndex > 0) {
             name = location.mid(slashIndex);
+            hash.clear();
             // qDebug() << "*** Redirected name is" << name;
             fetchLastFmSearch();
             return;
@@ -303,11 +343,12 @@ void Album::parseLastFmInfo(QByteArray bytes) {
 
     while(xml.readNextStartElement()) {
 
-        if (xml.name() == "album") {
+        if (xml.name() == QLatin1String("album")) {
 
             while (xml.readNextStartElement()) {
+                const QStringRef n = xml.name();
 
-                if(xml.name() == "track") {
+                if(n == QLatin1String("track")) {
                     QString number = xml.attributes().value("rank").toString();
                     if (trackNames.contains(number)) xml.skipCurrentElement();
                     else
@@ -320,15 +361,17 @@ void Album::parseLastFmInfo(QByteArray bytes) {
                         }
                 }
 
-                else if(xml.name() == "name") {
+                else if(n == QLatin1String("name")) {
                     QString albumTitle = xml.readElementText();
                     if (name != albumTitle) {
                         qDebug() << "Fixed album name" << name << "->" << albumTitle;
                         name = albumTitle;
+                        hash.clear();
                     }
                 }
 
-                else if(xml.name() == "image" && xml.attributes().value("size") == "extralarge") {
+                else if(n == QLatin1String("image") &&
+                        xml.attributes().value("size") == QLatin1String("extralarge")) {
                     bool imageAlreadyPresent = property("localCover").toBool();
                     if (!imageAlreadyPresent)
                         imageAlreadyPresent = QFile::exists(getImageLocation());
@@ -336,10 +379,14 @@ void Album::parseLastFmInfo(QByteArray bytes) {
                         QString imageUrl = xml.readElementText();
                         if (!imageUrl.isEmpty())
                             setProperty("imageUrl", imageUrl);
-                    }
+                    } else xml.skipCurrentElement();
                 }
 
-                else if(xml.name() == "releasedate" && year < 1600) {
+                else if (n == QLatin1String("listeners")) {
+                    listeners = xml.readElementText().toUInt();
+                }
+
+                else if(n == QLatin1String("releasedate") && year < 1600) {
                     QString releasedateString = xml.readElementText().simplified();
                     if (!releasedateString.isEmpty()) {
                         // Something like "6 Apr 1999, 00:00"
@@ -351,23 +398,21 @@ void Album::parseLastFmInfo(QByteArray bytes) {
                 }
 
                 // wiki
-                else if(xml.name() == "wiki") {
+                else if(n == QLatin1String("wiki")) {
                     while (xml.readNextStartElement()) {
                         if(xml.name() == "content") {
-                            QString bio = xml.readElementText();
+                            QString wiki = xml.readElementText();
                             static const QRegExp re("User-contributed text.*");
-                            bio.remove(re);
-                            if (!bio.isEmpty()) {
-                                const QString storageLocation =
-                                        QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-                                        + "/albums/wikis/";
-                                QDir dir;
-                                dir.mkpath(storageLocation);
-                                QFile file(storageLocation + getHash());
+                            wiki.remove(re);
+                            wiki = wiki.trimmed();
+                            if (!wiki.isEmpty()) {
+                                QString wikiLocation = getWikiLocation();
+                                QDir().mkpath(QFileInfo(wikiLocation).absolutePath());
+                                QFile file(wikiLocation);
                                 if (!file.open(QIODevice::WriteOnly))
                                     qWarning() << "Error opening file for writing" << file.fileName();
-                                QTextStream stream(&file); // we will serialize the data into the file
-                                stream << bio;
+                                QTextStream stream(&file);
+                                stream << wiki;
                             }
                         } else xml.skipCurrentElement();
                     }
@@ -387,11 +432,22 @@ void Album::parseLastFmInfo(QByteArray bytes) {
     emit gotInfo();
 }
 
+QString Album::getBaseLocation() {
+    static const QString data = QDesktopServices::storageLocation(QDesktopServices::DataLocation)
+            + QLatin1String("/data/");
+    return data + getHash();
+}
+
 QString Album::getImageLocation() {
-    QString l = QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/";
-    // if (artist) l += artist->getHash() + "/";
-    l += getHash(); // + ".jpg";
-    return l;
+    return getBaseLocation() + QLatin1String("/_cover");
+}
+
+QString Album::getThumbLocation() {
+    return getBaseLocation() + QLatin1String("/_thumb");
+}
+
+QString Album::getWikiLocation() {
+    return getBaseLocation() + QLatin1String("/_wiki");
 }
 
 void Album::setPhoto(QByteArray bytes) {
@@ -399,14 +455,34 @@ void Album::setPhoto(QByteArray bytes) {
 
     // store photo
     QString storageLocation = getImageLocation();
+
+    QFileInfo info(storageLocation);
+    QDir().mkpath(info.absolutePath());
+
     QFile file(storageLocation);
-    QDir dir;
-    dir.mkpath(QFileInfo(file).path());
     if (!file.open(QIODevice::WriteOnly)) {
         qWarning() << "Error opening file for writing" << file.fileName();
     }
-    QDataStream stream( &file ); // we will serialize the data into the file
+    QDataStream stream(&file);
     stream.writeRawData(bytes.constData(), bytes.size());
+
+    // prescale 150x150 thumb
+    static const int maximumSize = 150;
+    QImage img = QImage::fromData(bytes);
+    img = img.scaled(maximumSize, maximumSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    if (!img.save(getThumbLocation(), "JPG")) {
+        qWarning() << "Error saving thumbnail" << file.fileName();
+    }
+
+    if (thumb) {
+        delete thumb;
+        thumb = 0;
+    }
+
+    if (photo) {
+        delete photo;
+        photo = 0;
+    }
 
     emit gotPhoto();
 }
@@ -434,22 +510,14 @@ QList<Track*> Album::getTracks() {
 }
 
 QString Album::getWiki() {
-
-    const QString storageLocation =
-            QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-            + "/albums/wikis/";
-    QFile file(storageLocation + getHash());
-
+    QFile file(getWikiLocation());
     if (!file.exists()) return QString();
-
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Cannot open file" << file.fileName();
         return QString();
     }
-
     QByteArray bytes = file.readAll();
     return QString::fromUtf8(bytes.data());
-
 }
 
 QString normalizeString(QString s) {
