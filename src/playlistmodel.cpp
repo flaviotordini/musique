@@ -48,7 +48,7 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-void PlaylistModel::setActiveRow(int row, bool manual) {
+void PlaylistModel::setActiveRow(int row, bool manual, bool startPlayback) {
     if (!rowExists(row)) return;
 
     const int oldActiveRow = activeRow;
@@ -65,7 +65,7 @@ void PlaylistModel::setActiveRow(int row, bool manual) {
     QModelIndex newIndex = index(activeRow, 0, QModelIndex());
     emit dataChanged(newIndex, newIndex);
 
-    emit activeRowChanged(row, manual);
+    emit activeRowChanged(row, manual, startPlayback);
 
 }
 
@@ -100,6 +100,21 @@ void PlaylistModel::skipBackward() {
 }
 
 void PlaylistModel::skipForward() {
+    Track *nextTrack = getNextTrack();
+    if (nextTrack) {
+        int nextRow = tracks.indexOf(nextTrack);
+        setActiveRow(nextRow);
+    } else {
+        activeRow = -1;
+        activeTrack = 0;
+        foreach(Track *track, playedTracks)
+            track->setPlayed(false);
+        playedTracks.clear();
+        emit playlistFinished();
+    }
+}
+
+Track* PlaylistModel::getNextTrack() {
     QSettings settings;
     const bool shuffle = settings.value("shuffle").toBool();
     const bool repeat = settings.value("repeat").toBool();
@@ -147,17 +162,7 @@ void PlaylistModel::skipForward() {
 
     }
 
-    if (nextTrack) {
-        int nextRow = tracks.indexOf(nextTrack);
-        setActiveRow(nextRow);
-    } else {
-        activeRow = -1;
-        activeTrack = 0;
-        foreach(Track *track, playedTracks)
-            track->setPlayed(false);
-        playedTracks.clear();
-        emit playlistFinished();
-    }
+    return nextTrack;
 }
 
 Track* PlaylistModel::trackAt(int row) const {
@@ -228,7 +233,7 @@ void PlaylistModel::clear() {
     activeRow = -1;
     emit layoutChanged();
     emit reset();
-    emit activeRowChanged(-1, false);
+    emit activeRowChanged(-1, false, false);
 }
 
 // --- item removal

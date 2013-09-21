@@ -38,7 +38,7 @@ public:
                       const QModelIndex &parent);
 
     // custom methods
-    void setActiveRow(int row, bool manual = false);
+    void setActiveRow(int row, bool manual = false, bool startPlayback = true);
     bool rowExists( int row ) const { return (( row >= 0 ) && ( row < tracks.size() ) ); }
     void removeIndexes(QModelIndexList &indexes);
     int rowForTrack(Track* track);
@@ -59,10 +59,11 @@ public slots:
     void clear();
     void skipBackward();
     void skipForward();
+    Track* getNextTrack();
     void trackRemoved();
 
 signals:
-    void activeRowChanged(int, bool);
+    void activeRowChanged(int row, bool manual, bool startPlayback);
     void needSelectionFor(QList<Track*>);
     void itemChanged(int total);
     void playlistFinished();

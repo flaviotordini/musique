@@ -7,11 +7,12 @@
 #include "constants.h"
 #include "lastfm.h"
 #include "model/album.h"
-#ifdef Q_WS_MAC
-#include "macutils.h"
-#endif
 #ifdef APP_ACTIVATION
 #include "activation.h"
+#endif
+#include "database.h"
+#ifdef APP_EXTRA
+#include "extra.h"
 #endif
 
 namespace The {
@@ -36,7 +37,8 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     // playlist model
     playlistModel = new PlaylistModel(this);
-    connect(playlistModel, SIGNAL(activeRowChanged(int, bool)), SLOT(activeRowChanged(int, bool)));
+    connect(playlistModel, SIGNAL(activeRowChanged(int, bool, bool)),
+            SLOT(activeRowChanged(int, bool, bool)));
     connect(playlistModel, SIGNAL(playlistFinished()), SLOT(playlistFinished()));
 
     // finder
@@ -83,12 +85,15 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
 void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
     this->mediaObject = mediaObject;
-    // connect(mediaObject, SIGNAL(aboutToFinish()), this, SLOT(aboutToFinish()));
+#ifdef APP_MAC
+    mediaObject->setTransitionTime(-300);
+#endif
     connect(mediaObject, SIGNAL(finished()), SLOT(playbackFinished()));
     connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
             SLOT(stateChanged(Phonon::State, Phonon::State)));
-    //connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)),
-    // this, SLOT(currentSourceChanged(Phonon::MediaSource)));
+    connect(mediaObject, SIGNAL(aboutToFinish()), SLOT(aboutToFinish()));
+    connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)),
+        SLOT(currentSourceChanged(Phonon::MediaSource)));
 }
 
 void MediaView::saveSplitterState() {
@@ -131,7 +136,7 @@ void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/)
     }
 }
 
-void MediaView::activeRowChanged(int row, bool manual) {
+void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
 
     errorTimer->stop();
 
@@ -147,10 +152,12 @@ void MediaView::activeRowChanged(int row, bool manual) {
     The::globalActions()->value("contextual")->setEnabled(true);
 
     // go!
-    QString path = track->getAbsolutePath();
-    // qDebug() << "Playing" << path;
-    mediaObject->setCurrentSource(path);
-    mediaObject->play();
+    if (startPlayback) {
+        QString path = track->getAbsolutePath();
+        qWarning() << "Playing" << path;
+        mediaObject->setCurrentSource(path);
+        mediaObject->play();
+    }
 
     track->setStartTime(QDateTime::currentDateTime().toTime_t());
 
@@ -178,12 +185,10 @@ void MediaView::activeRowChanged(int row, bool manual) {
     // enable/disable actions
     The::globalActions()->value("stopafterthis")->setEnabled(true);
 
-#ifdef Q_WS_MAC
-    if (mac::canNotify()) {
-        QString artistName = track->getArtist() ? track->getArtist()->getName() : "";
-        QString albumName = track->getAlbum() ? track->getAlbum()->getName() : "";
-        mac::notify(track->getTitle(), artistName, albumName);
-    }
+#ifdef APP_EXTRA
+    QString artistName = track->getArtist() ? track->getArtist()->getName() : "";
+    QString albumName = track->getAlbum() ? track->getAlbum()->getName() : "";
+    Extra::notify(track->getTitle(), artistName, albumName);
 #endif
 
     // scrobbling
@@ -203,6 +208,10 @@ void MediaView::handleError(QString message) {
 
 void MediaView::appear() {
     finderWidget->appear();
+}
+
+void MediaView::disappear() {
+    finderWidget->disappear();
 }
 
 void MediaView::playPause() {
@@ -241,9 +250,10 @@ void MediaView::playlistFinished() {
 
 void MediaView::playbackFinished() {
 #ifdef APP_ACTIVATION
-    if (!Activation::instance().isActivated())
+    if (!Activation::instance().isActivated()) {
         if (tracksPlayed > 1) demoMessage();
         else tracksPlayed++;
+    }
 #endif
 
     // scrobbling
@@ -263,6 +273,30 @@ void MediaView::playbackFinished() {
 
     if (needScrobble && track) LastFm::instance().scrobble(track);
 
+}
+
+void MediaView::aboutToFinish() {
+    qWarning() << __PRETTY_FUNCTION__;
+    Track *nextTrack = playlistModel->getNextTrack();
+    if (nextTrack) {
+        QString absolutePath = nextTrack->getAbsolutePath();
+        qWarning() << "Enqueuing" << absolutePath;
+        mediaObject->enqueue(absolutePath);
+    }
+}
+
+void MediaView::currentSourceChanged(Phonon::MediaSource mediaSource) {
+    qWarning() << __PRETTY_FUNCTION__;
+    QString path = mediaSource.fileName();
+    QString collectionRoot = Database::instance().collectionRoot();
+    path = path.mid(collectionRoot.length() + 1);
+    qWarning() << path;
+    Track* track = Track::forPath(path);
+    if (track) {
+        int row = playlistModel->rowForTrack(track);
+        if (row >= 0)
+            playlistModel->setActiveRow(row, false, false);
+    }
 }
 
 #ifdef APP_ACTIVATION

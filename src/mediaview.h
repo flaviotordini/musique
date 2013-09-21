@@ -25,16 +25,19 @@ public:
 
 public slots:
     void appear();
+    void disappear();
     void playPause();
     void trackRemoved();
     void search(QString query);
 
 private slots:
-    void activeRowChanged(int row, bool manual);
+    void activeRowChanged(int row, bool manual, bool startPlayback);
     void stateChanged(Phonon::State newState, Phonon::State oldState);
     void handleError(QString message);
     void playlistFinished();
     void playbackFinished();
+    void aboutToFinish();
+    void currentSourceChanged(Phonon::MediaSource mediaSource);
 #ifdef APP_ACTIVATION
     void updateContinueButton(int);
 #endif
