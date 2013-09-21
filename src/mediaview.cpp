@@ -276,7 +276,6 @@ void MediaView::playbackFinished() {
 }
 
 void MediaView::aboutToFinish() {
-    qWarning() << __PRETTY_FUNCTION__;
     Track *nextTrack = playlistModel->getNextTrack();
     if (nextTrack) {
         QString absolutePath = nextTrack->getAbsolutePath();
@@ -286,7 +285,6 @@ void MediaView::aboutToFinish() {
 }
 
 void MediaView::currentSourceChanged(Phonon::MediaSource mediaSource) {
-    qWarning() << __PRETTY_FUNCTION__;
     QString path = mediaSource.fileName();
     QString collectionRoot = Database::instance().collectionRoot();
     path = path.mid(collectionRoot.length() + 1);

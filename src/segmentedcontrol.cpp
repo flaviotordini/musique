@@ -155,7 +155,7 @@ QAction *SegmentedControl::hoveredAction(const QPoint& pos) const {
 }
 
 int SegmentedControl::calculateButtonWidth (void) const {
-    QFont smallerBoldFont = FontUtils::smallBold();
+    QFont smallerBoldFont = FontUtils::smallerBold();
     QFontMetrics fontMetrics(smallerBoldFont);
     int tmpItemWidth, itemWidth = 0;
     foreach (QAction *action, d->actionList) {
@@ -232,7 +232,7 @@ void SegmentedControl::paintButton(QPainter *painter, const QRect& rect, const Q
     painter->drawRect(0, 0, width, height - 1);
 #endif
 
-    painter->setFont(FontUtils::smallBold());
+    painter->setFont(FontUtils::smallerBold());
 
     // text shadow
     painter->setPen(QColor(0, 0, 0, 128));

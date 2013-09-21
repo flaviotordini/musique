@@ -15,7 +15,7 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
     titleLabel = new QLabel(this);
     titleLabel->setPalette(parent->palette());
     titleLabel->setWordWrap(true);
-    titleLabel->setFont(FontUtils::bigBold());
+    titleLabel->setFont(FontUtils::biggerBold());
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(titleLabel);
 

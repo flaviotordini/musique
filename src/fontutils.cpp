@@ -2,7 +2,7 @@
 
 static const int MIN_PIXEL_SIZE = 11;
 
-const QFont FontUtils::small() {
+const QFont &FontUtils::smaller() {
     static QFont font;
     static bool initialized = false;
     if (!initialized) {
@@ -13,7 +13,7 @@ const QFont FontUtils::small() {
     return font;
 }
 
-const QFont FontUtils::smallBold() {
+const QFont &FontUtils::smallerBold() {
     static QFont font;
     static bool initialized = false;
     if (!initialized) {
@@ -25,7 +25,7 @@ const QFont FontUtils::smallBold() {
     return font;
 }
 
-const QFont FontUtils::big() {
+const QFont &FontUtils::bigger() {
     static QFont font;
     static bool initialized = false;
     if (!initialized) {
@@ -35,7 +35,7 @@ const QFont FontUtils::big() {
     return font;
 }
 
-const QFont FontUtils::bigBold() {
+const QFont &FontUtils::biggerBold() {
     static QFont font;
     static bool initialized = false;
     if (!initialized) {

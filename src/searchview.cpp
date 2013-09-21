@@ -36,7 +36,7 @@ void SearchView::paintEvent(QPaintEvent *event) {
         QPen textPen;
         textPen.setBrush(palette().mid());
         painter.setPen(textPen);
-        painter.setFont(FontUtils::bigBold());
+        painter.setFont(FontUtils::biggerBold());
 
         QSize textSize(QFontMetrics(painter.font()).size(Qt::TextSingleLine, emptyMessage));
         QPoint centerPoint((this->width()-textSize.width())/2,

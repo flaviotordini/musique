@@ -239,7 +239,7 @@ void PlaylistModel::clear() {
 // --- item removal
 
 bool PlaylistModel::removeRows(int position, int rows, const QModelIndex &parent) {
-    qDebug() << __PRETTY_FUNCTION__ << position << rows << parent;
+    // qDebug() << __PRETTY_FUNCTION__ << position << rows << parent;
 
     // return false;
 

@@ -12,7 +12,7 @@ LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
     QFormLayout* layout = new QFormLayout(this);
 
     QLabel *label = new QLabel(tr("Log in to %1").arg("<b>Last.fm</b>"));
-    label->setFont(FontUtils::big());
+    label->setFont(FontUtils::bigger());
     layout->addWidget(label);
 
     // hack around https://bugreports.qt-project.org/browse/QTBUG-18308
@@ -56,7 +56,7 @@ LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
                                      tr("Signup for a %1 account").arg("Last.fm") +
                                      "</a>");
     signupLabel->setOpenExternalLinks(true);
-    signupLabel->setFont(FontUtils::small());
+    signupLabel->setFont(FontUtils::smaller());
     connect(signupLabel, SIGNAL(linkActivated(QString)), SLOT(close()));
     layout->addWidget(signupLabel);
 
@@ -68,7 +68,7 @@ LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
                 );
     forgotLabel->hide();
     forgotLabel->setOpenExternalLinks(true);
-    forgotLabel->setFont(FontUtils::small());
+    forgotLabel->setFont(FontUtils::smaller());
     connect(forgotLabel, SIGNAL(linkActivated(QString)), SLOT(close()));
     layout->addWidget(forgotLabel);
 

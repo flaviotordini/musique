@@ -31,7 +31,9 @@ int main(int argc, char **argv) {
     app.setApplicationName(Constants::NAME);
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
+#ifndef APP_WIN
     app.setWheelScrollLines(1);
+#endif
     app.setAttribute(Qt::AA_DontShowIconsInMenus);
 
 #ifdef APP_EXTRA

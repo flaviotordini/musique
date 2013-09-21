@@ -63,11 +63,6 @@ MainWindow::MainWindow() : updateChecker(0) {
     aboutView = 0;
     contextualView = 0;
 
-#ifdef APP_EXTRA
-    qDebug() << __PRETTY_FUNCTION__;
-    Extra::windowSetup(this);
-#endif
-
     // build ui
     createActions();
     createMenus();
@@ -82,6 +77,10 @@ MainWindow::MainWindow() : updateChecker(0) {
 
     // remove that useless menu/toolbar context menu
     setContextMenuPolicy(Qt::NoContextMenu);
+
+#ifdef APP_EXTRA
+    Extra::windowSetup(this);
+#endif
 
     // restore window position
     readSettings();

@@ -38,7 +38,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     tipLabel = new QLabel(
             tr("%1 needs to scan your music collection.").arg(Constants::NAME)
             , this);
-    tipLabel->setFont(FontUtils::big());
+    tipLabel->setFont(FontUtils::bigger());
     vLayout->addWidget(tipLabel);
 
     QBoxLayout *buttonLayout = new QHBoxLayout();

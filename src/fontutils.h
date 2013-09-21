@@ -6,10 +6,10 @@
 class FontUtils {
 
 public:
-    static const QFont small();
-    static const QFont smallBold();
-    static const QFont big();
-    static const QFont bigBold();
+    static const QFont smaller();
+    static const QFont smallerBold();
+    static const QFont bigger();
+    static const QFont biggerBold();
 
 };
 
