@@ -4,64 +4,19 @@
 #include "constants.h"
 #include "mainwindow.h"
 #include "utils.h"
-#ifndef Q_WS_X11
+#ifdef APP_EXTRA
 #include "extra.h"
 #endif
 #ifdef Q_WS_MAC
 #include "mac_startup.h"
 #endif
 
-#ifdef Q_WS_X11
-QString getThemeName() {
-    QString themeName;
-
-    QProcess process;
-    process.start("dconf",
-                  QStringList() << "read" << "/org/gnome/desktop/interface/gtk-theme");
-    if (process.waitForFinished()) {
-        themeName = process.readAllStandardOutput();
-        themeName = themeName.trimmed();
-        themeName.remove('\'');
-        if (!themeName.isEmpty()) return themeName;
-    }
-
-    QString rcPaths = QString::fromLocal8Bit(qgetenv("GTK2_RC_FILES"));
-    if (!rcPaths.isEmpty()) {
-        QStringList paths = rcPaths.split(QLatin1String(":"));
-        foreach (const QString &rcPath, paths) {
-            if (!rcPath.isEmpty()) {
-                QFile rcFile(rcPath);
-                if (rcFile.exists() && rcFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-                    QTextStream in(&rcFile);
-                    while(!in.atEnd()) {
-                        QString line = in.readLine();
-                        if (line.contains(QLatin1String("gtk-theme-name"))) {
-                            line = line.right(line.length() - line.indexOf(QLatin1Char('=')) - 1);
-                            line.remove(QLatin1Char('\"'));
-                            line = line.trimmed();
-                            themeName = line;
-                            break;
-                        }
-                    }
-                }
-            }
-            if (!themeName.isEmpty())
-                break;
-        }
-    }
-
-    // Fall back to gconf
-    if (themeName.isEmpty())
-        themeName = QGtkStyle::getGConfString(QLatin1String("/desktop/gnome/interface/gtk_theme"));
-
-    return themeName;
-}
-#endif
-
 int main(int argc, char **argv) {
 
-#ifdef QT_MAC_USE_COCOA
+#ifdef Q_WS_MAC
     mac::MacMain();
+    // https://bugreports.qt-project.org/browse/QTBUG-32789
+    QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
 #endif
 
     QtSingleApplication app(argc, argv);
@@ -79,28 +34,19 @@ int main(int argc, char **argv) {
     app.setWheelScrollLines(1);
     app.setAttribute(Qt::AA_DontShowIconsInMenus);
 
-#ifndef Q_WS_X11
+#ifdef APP_EXTRA
     Extra::appSetup(&app);
 #else
-    bool isGtk = app.style()->metaObject()->className() == QLatin1String("QGtkStyle");
-    if (isGtk) {
-        app.setProperty("gtk", isGtk);
-        QString themeName = getThemeName();
-        app.setProperty("style", themeName);
-    }
     QFile cssFile(":/style.css");
     cssFile.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(cssFile.readAll());
     app.setStyleSheet(styleSheet);
 #endif
 
-    const QString locale = QLocale::system().name();
-
     // qt translations
     QTranslator qtTranslator;
-    qtTranslator.load("qt_" + locale,
+    qtTranslator.load("qt_" + QLocale::system().name(),
                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    // qWarning() << "Qt translations:" << QLibraryInfo::location(QLibraryInfo::TranslationsPath);
     app.installTranslator(&qtTranslator);
 
     // app translations
@@ -109,23 +55,18 @@ int main(int argc, char **argv) {
 #else
     QString dataDir = "";
 #endif
-    QString localeDir = qApp->applicationDirPath() + QDir::separator() + "locale";
+    QString localeDir = qApp->applicationDirPath() + "/locale";
     if (!QDir(localeDir).exists()) {
-        localeDir = dataDir + QDir::separator() + "locale";
+        localeDir = dataDir + "/locale";
     }
+    // qDebug() << "Using locale dir" << localeDir << locale;
     QTranslator translator;
     translator.load(QLocale::system(), QString(), QString(), localeDir);
     app.installTranslator(&translator);
     QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
     MainWindow* mainWin = MainWindow::instance();
-    mainWin->setWindowTitle(Constants::NAME);
-
-#ifndef Q_WS_X11
-    Extra::windowSetup(mainWin);
-#else
-    mainWin->setProperty("style", app.property("style"));
-#endif
+    mainWin->show();
 
 #ifndef APP_MAC
     QIcon appIcon;
@@ -136,7 +77,8 @@ int main(int argc, char **argv) {
         const int iconSizes [] = { 16, 22, 32, 48, 64, 128, 256, 512 };
         for (int i = 0; i < 8; i++) {
             QString size = QString::number(iconSizes[i]);
-            QString png = dataDir + "/" + size + "x" + size + "/" + Constants::UNIX_NAME + ".png";
+            QString png = dataDir + "/" + size + "x" + size + "/" +
+                    Constants::UNIX_NAME + ".png";
             appIcon.addFile(png, QSize(iconSizes[i], iconSizes[i]));
         }
     }
@@ -146,9 +88,8 @@ int main(int argc, char **argv) {
     mainWin->setWindowIcon(appIcon);
 #endif
 
-    mainWin->show();
-
-    mainWin->connect(&app, SIGNAL(messageReceived(const QString &)), mainWin, SLOT(messageReceived(const QString &)));
+    mainWin->connect(&app, SIGNAL(messageReceived(const QString &)),
+                     mainWin, SLOT(messageReceived(const QString &)));
     app.setActivationWindow(mainWin, true);
 
     // all string literals are UTF-8
