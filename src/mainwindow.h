@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow {
 public:
     static MainWindow* instance();
     ~MainWindow();
+    QToolBar* getStatusToolbar() { return statusToolBar; }
     static void printHelp();
 
 public slots:
@@ -50,6 +51,7 @@ protected:
     void resizeEvent(QResizeEvent *);
 
 private slots:
+    void lazyInit();
     void visitSite();
     void donate();
     void reportIssue();

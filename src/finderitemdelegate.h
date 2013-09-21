@@ -34,7 +34,6 @@ private:
     void drawBadge(QPainter *painter, QString text, const QRect&) const;
     void drawCentralLabel(QPainter *painter, QString text, const QRect&) const;
     QPixmap getArtistPixmap(Artist*) const;
-    QPixmap getAlbumPixmap(Album*) const;
     QPixmap getFolderPixmap(Folder*) const;
 
     static const int ITEM_WIDTH;

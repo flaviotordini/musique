@@ -209,7 +209,7 @@ void FinderItemDelegate::paintAlbum(QPainter* painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
-    QPixmap pixmap = getAlbumPixmap(album);
+    QPixmap pixmap = album->getThumb();
     if (pixmap.isNull()) pixmap = getMissingAlbumPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
@@ -467,18 +467,6 @@ QPixmap FinderItemDelegate::getFolderPixmap(Folder *folder) const {
         if (hDiff > 0) yOffset = hDiff / 4;
         pixmap = QPixmap::fromImage(p.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT));
         folder->setProperty("pixmap", pixmap);
-    }
-    return pixmap;
-}
-
-QPixmap FinderItemDelegate::getAlbumPixmap(Album *album) const {
-    QPixmap pixmap = album->property("pixmap").value<QPixmap>();
-    if (pixmap.isNull()) {
-        // qDebug() << "Creating pixmap for" << album;
-        QPixmap p = album->getPhoto();
-        if (!p.isNull())
-            pixmap = album->getPhoto().scaled(ITEM_WIDTH, ITEM_HEIGHT);
-        album->setProperty("pixmap", pixmap);
     }
     return pixmap;
 }

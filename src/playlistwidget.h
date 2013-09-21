@@ -8,10 +8,13 @@ class DropArea;
 
 class PlaylistArea : public QWidget {
 
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     PlaylistArea(PlaylistView *playlistView, DropArea *dropArea, QWidget *parent);
+
+protected:
+    void resizeEvent(QResizeEvent *e);
 
 };
 

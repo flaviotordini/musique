@@ -227,12 +227,7 @@ void FinderWidget::setupSearch() {
 
 void FinderWidget::showArtists() {
     if (!artistListView) setupArtists();
-
-    artistListModel->setQuery("select id from artists where trackCount>0 order by trackCount desc",
-                              Database::instance().getConnection());
-    if (artistListModel->lastError().isValid())
-        qDebug() << artistListModel->lastError();
-
+    artistListView->updateQuery();
     showWidget(artistListView, true);
     finderBar->setCheckedAction(artistsAction);
     QSettings settings;
@@ -241,13 +236,8 @@ void FinderWidget::showArtists() {
 
 void FinderWidget::showAlbums() {
     if (!albumListView) setupAlbums();
-
-    albumListModel->setQuery(
-                "select id from albums where trackCount>0 order by artist, year desc, trackCount desc",
-                Database::instance().getConnection());
-    if (albumListModel->lastError().isValid())
-        qDebug() << albumListModel->lastError();
-
+    albumListView->updateQuery();
+    albumListView->setShowToolBar(true);
     showWidget(albumListView, true);
     finderBar->setCheckedAction(albumsAction);
     QSettings settings;
@@ -349,6 +339,14 @@ void FinderWidget::appear() {
     }
 }
 
+void FinderWidget::disappear() {
+    QWidget *currentWidget = stackedWidget->currentWidget();
+    if (currentWidget) {
+        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "disappear", Qt::DirectConnection);
+        if (!success) qDebug() << "Error invoking disappear() on" << stackedWidget->currentWidget();
+    }
+}
+
 void FinderWidget::artistEntered ( const QModelIndex & index ) {
     artistListModel->setHoveredRow(index.row());
 }
@@ -372,6 +370,7 @@ void FinderWidget::artistActivated(Artist *artist) {
 
     albumListView->setWindowTitle(artist->getName());
     albumListView->scrollToTop();
+    albumListView->setShowToolBar(false);
     showWidget(albumListView, false);
 }
 

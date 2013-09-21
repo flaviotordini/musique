@@ -7,7 +7,9 @@ class BreadcrumbWidget;
 class PlaylistModel;
 class PlaylistView;
 class SegmentedControl;
+class ArtistListView;
 class ArtistSqlModel;
+class AlbumListView;
 class AlbumSqlModel;
 class TrackSqlModel;
 class FileSystemModel;
@@ -52,6 +54,7 @@ public:
         this->playlistView = playlistView;
     }
     void appear();
+    void disappear();
     void showSearch(QString query);
     void addTracksAndPlay(QList<Track*> tracks);
     void artistActivated(Artist *artist);
@@ -109,10 +112,10 @@ private:
     FileSystemFinderView *fileSystemView;
     FileSystemModel *fileSystemModel;
 
-    QListView *artistListView;
+    ArtistListView *artistListView;
     ArtistSqlModel *artistListModel;
 
-    QListView *albumListView;
+    AlbumListView *albumListView;
     AlbumSqlModel *albumListModel;
 
     QListView *trackListView;

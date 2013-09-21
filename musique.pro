@@ -1,9 +1,6 @@
 CONFIG += release
-DEFINES += QT_NO_DEBUG_OUTPUT
-
 TEMPLATE = app
-
-VERSION = 1.2.1
+VERSION = 1.3
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
@@ -12,12 +9,14 @@ DEFINES += APP_NAME="$$APP_NAME"
 APP_UNIX_NAME = musique
 DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 
-DEFINES += QT_USE_FAST_CONCATENATION
-DEFINES += QT_USE_FAST_OPERATOR_PLUS
+# DEFINES *= QT_NO_DEBUG_OUTPUT
+DEFINES *= QT_USE_QSTRINGBUILDER
 DEFINES += QT_STRICT_ITERATORS
 
 TARGET = $${APP_UNIX_NAME}
-LIBS += -ltag
+unix:!mac {
+    LIBS += -ltag
+}
 QT += network xml phonon sql
 include(src/qtsingleapplication/qtsingleapplication.pri)
 
@@ -211,4 +210,4 @@ unix:!mac {
     icon512.path = $$DATADIR/icons/hicolor/512x512/apps
     icon512.files += data/512x512/$${APP_UNIX_NAME}.png
 }
-mac|win32:include(local/local.pri)
+mac|win32|contains(DEFINES, APP_UBUNTU):include(local/local.pri)

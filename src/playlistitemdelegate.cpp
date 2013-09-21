@@ -196,12 +196,7 @@ void PlaylistItemDelegate::paintAlbumHeader(
     // album length
     if (album) {
         // TODO this is the album duration, but not necessarily what we have in the playlist
-        int totalLength = Track::getTotalLength(album->getTracks());
-        QString albumLength;
-        if (totalLength > 3600)
-            albumLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
-        else
-            albumLength = QTime().addSecs(totalLength).toString("m:ss");
+        QString albumLength = album->formattedDuration();
         QFont normalFont = painter->font();
         normalFont.setBold(false);
         // normalFont.setPointSize(boldFont.pointSize()*.9);

@@ -7,5 +7,6 @@
         <file>images/item/artist.png</file>
         <file>images/item/track.png</file>
         <file>style.css</file>
+        <file>images/sort.png</file>
     </qresource>
 </RCC>

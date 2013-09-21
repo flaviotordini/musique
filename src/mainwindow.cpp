@@ -34,7 +34,7 @@
 #include "lastfmlogindialog.h"
 #include "imagedownloader.h"
 #include <iostream>
-#ifndef Q_WS_X11
+#ifdef APP_EXTRA
 #include "extra.h"
 #include "updatedialog.h"
 #endif
@@ -62,6 +62,11 @@ MainWindow::MainWindow() : updateChecker(0) {
     chooseFolderView = 0;
     aboutView = 0;
     contextualView = 0;
+
+#ifdef APP_EXTRA
+    qDebug() << __PRETTY_FUNCTION__;
+    Extra::windowSetup(this);
+#endif
 
     // build ui
     createActions();
@@ -93,6 +98,15 @@ MainWindow::MainWindow() : updateChecker(0) {
     // event filter to block ugly toolbar tooltips
     qApp->installEventFilter(this);
 
+    qApp->processEvents();
+    QTimer::singleShot(50, this, SLOT(lazyInit()));
+}
+
+MainWindow::~MainWindow() {
+    delete history;
+}
+
+void MainWindow::lazyInit() {
     // Global shortcuts
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
 #ifdef Q_WS_X11
@@ -104,11 +118,6 @@ MainWindow::MainWindow() : updateChecker(0) {
 #endif
     connect(&shortcuts, SIGNAL(PlayPause()), playAct, SLOT(trigger()));
     connect(&shortcuts, SIGNAL(Stop()), this, SLOT(stop()));
-
-}
-
-MainWindow::~MainWindow() {
-    delete history;
 }
 
 void MainWindow::showInitialView() {
@@ -117,12 +126,12 @@ void MainWindow::showInitialView() {
     if (db.status() == ScanComplete) {
 
         showMediaView(false);
-        QTimer::singleShot(1, this, SLOT(loadPlaylist()));
+        QTimer::singleShot(0, this, SLOT(loadPlaylist()));
 
         // update the collection when idle
-        QTimer::singleShot(2, this, SLOT(startIncrementalScan()));
+        QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
 
-        QTimer::singleShot(3, this, SLOT(checkForUpdate()));
+        QTimer::singleShot(1000, this, SLOT(checkForUpdate()));
 
     } else {
         // no db, do the first scan dance
@@ -348,6 +357,7 @@ void MainWindow::createActions() {
 
     searchFocusAct = new QAction(this);
     searchFocusAct->setShortcut(QKeySequence::Find);
+    searchFocusAct->setStatusTip(tr("Search"));
     actions->insert("search", searchFocusAct);
     connect(searchFocusAct, SIGNAL(triggered()), SLOT(searchFocus()));
     addAction(searchFocusAct);
@@ -437,6 +447,7 @@ void MainWindow::createMenus() {
     playlistMenu = menuBar()->addMenu(tr("Play&list"));
     menus->insert("playlist", playlistMenu);
     playlistMenu->addAction(The::globalActions()->value("clearPlaylist"));
+    playlistMenu->addSeparator();
     playlistMenu->addAction(The::globalActions()->value("shufflePlaylist"));
     playlistMenu->addAction(The::globalActions()->value("repeatPlaylist"));
     playlistMenu->addSeparator();
@@ -466,7 +477,7 @@ void MainWindow::createToolBars() {
 
     setUnifiedTitleAndToolBarOnMac(true);
     mainToolBar = new QToolBar(this);
-    mainToolBar->setToolButtonStyle(Qt::ToolButtonFollowStyle);
+    mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
 
@@ -546,13 +557,9 @@ void MainWindow::createToolBars() {
 }
 
 void MainWindow::createStatusBar() {
-
-    // remove ugly borders on OSX
-    statusBar()->setStyleSheet("::item{border:0 solid} QToolBar {padding:0;spacing:0;margin:0;border:0} QToolButton {padding:0;spacing:0;margin:0}");
-
     statusToolBar = new QToolBar(this);
     statusToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-
+    statusToolBar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
 #ifdef Q_WS_X11
     int iconHeight = 16;
     int iconWidth = iconHeight;
@@ -561,6 +568,11 @@ void MainWindow::createStatusBar() {
     int iconWidth = iconHeight * 3 / 2;
 #endif
     statusToolBar->setIconSize(QSize(iconWidth, iconHeight));
+
+    QWidget *spring = new QWidget();
+    spring->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    statusToolBar->addWidget(spring);
+
     statusToolBar->addAction(The::globalActions()->value("shufflePlaylist"));
     statusToolBar->addAction(The::globalActions()->value("repeatPlaylist"));
     statusToolBar->addAction(The::globalActions()->value("clearPlaylist"));
@@ -785,12 +797,19 @@ void MainWindow::startFullScan(QString directory) {
 }
 
 void MainWindow::fullScanFinished() {
+#ifdef APP_EXTRA
+    Extra::notify(tr("%1 finished scanning your music collection").arg(Constants::NAME), "", "");
+#else
     QApplication::alert(this, 0);
+#endif
+#ifdef APP_WIN
+    QApplication::alert(this, 0);
+#endif
     startImageDownload();
 }
 
 void MainWindow::startIncrementalScan() {
-    statusBar()->showMessage(tr("Updating collection..."));
+    showMessage(tr("Updating collection..."));
     chooseFolderAct->setEnabled(false);
     CollectionScannerThread *scannerThread = new CollectionScannerThread();
     // incremental!
@@ -801,14 +820,14 @@ void MainWindow::startIncrementalScan() {
 }
 
 void MainWindow::incrementalScanProgress(int percent) {
-    statusBar()->showMessage(tr("Updating collection - %1%").arg(QString::number(percent)));
+    showMessage(tr("Updating collection - %1%").arg(QString::number(percent)));
 }
 
 void MainWindow::incrementalScanFinished() {
     if (views->currentWidget() == mediaView ||
             views->currentWidget() == contextualView)
         chooseFolderAct->setEnabled(true);
-    statusBar()->showMessage(tr("Collection updated"));
+    showMessage(tr("Collection updated"));
     startImageDownload();
 }
 
@@ -1188,9 +1207,13 @@ void MainWindow::showStopAfterThisInStatusBar(bool show) {
 }
 
 void MainWindow::showActionInStatusBar(QAction* action, bool show) {
+#ifdef APP_EXTRA
+    Extra::fadeInWidget(statusBar(), statusBar());
+#endif
     if (show) {
         if (!statusToolBar->actions().contains(action))
-            statusToolBar->insertAction(statusToolBar->actions().first(), action);
+            // statusToolBar->insertAction(statusToolBar->actions().first(), action);
+            statusToolBar->insertAction(statusToolBar->actions().at(1), action);
     } else {
         statusToolBar->removeAction(action);
     }
@@ -1202,7 +1225,7 @@ void MainWindow::handleError(QString message) {
 }
 
 void MainWindow::showMessage(QString message) {
-    statusBar()->showMessage(message, 60000);
+    statusBar()->showMessage(message, 5000);
 }
 
 void MainWindow::toggleScrobbling(bool enable) {
