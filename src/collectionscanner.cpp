@@ -39,11 +39,12 @@ CollectionScanner::CollectionScanner(QObject *parent) :
 #endif
 
     fileExtensionsBlacklist
-            << "jpg" << "png" << "gif" << "bmp"
-            << "txt" << "doc" << "rtf" << "pdf"
-            << "db" << "log"
+            << "jpg" << "jpeg" << "png" << "gif" << "bmp"
+            << "txt" << "doc" << "rtf" << "pdf" << "html" << "htm" << "ps" << "xls"
+            << "db" << "log" << "url" << "nfo" << "ini" << "DS_Store"
             << "zip" << "rar" << "dmg" << "iso"
-            << "m3u" << "pls" << "cue";
+            << "m3u" << "pls" << "cue"
+            << "avi" << "flv";
 }
 
 void CollectionScanner::reset() {
