@@ -33,6 +33,7 @@ class AlbumListView;
 class AlbumSqlModel;
 class TrackSqlModel;
 class FileSystemModel;
+class FilteringFileSystemModel;
 class FileSystemFinderView;
 class Track;
 class SearchModel;
@@ -131,6 +132,7 @@ private:
 
     FileSystemFinderView *fileSystemView;
     FileSystemModel *fileSystemModel;
+    FilteringFileSystemModel *filteringFileSystemModel;
 
     ArtistListView *artistListView;
     ArtistSqlModel *artistListModel;

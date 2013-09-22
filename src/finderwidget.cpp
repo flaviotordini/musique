@@ -207,7 +207,6 @@ void FinderWidget::setupTracks() {
     trackListModel = new TrackSqlModel(this);
     trackListView = new TrackListView(this);
     connect(trackListView, SIGNAL(activated(const QModelIndex &)), SLOT(trackActivated(const QModelIndex &)));
-    connect(trackListView, SIGNAL(play(const QModelIndex &)), SLOT(trackPlayed(const QModelIndex &)));
     connect(trackListView, SIGNAL(entered(const QModelIndex &)), SLOT(trackEntered(const QModelIndex &)));
     connect(trackListView, SIGNAL(viewportEntered()), trackListModel, SLOT(clearHover()));
     trackListView->setModel(trackListModel);
@@ -218,15 +217,15 @@ void FinderWidget::setupFolders() {
     fileSystemModel = new FileSystemModel(this);
     fileSystemModel->setResolveSymlinks(true);
     fileSystemModel->setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
-    FilteringFileSystemModel *proxyModel = new FilteringFileSystemModel(this);
-    proxyModel->setSourceModel(fileSystemModel);
+    filteringFileSystemModel = new FilteringFileSystemModel(this);
+    filteringFileSystemModel->setSourceModel(fileSystemModel);
 
     fileSystemView = new FileSystemFinderView(this);
     connect(fileSystemView, SIGNAL(activated(const QModelIndex &)), SLOT(folderActivated(const QModelIndex &)));
     connect(fileSystemView, SIGNAL(play(const QModelIndex &)), SLOT(folderPlayed(const QModelIndex &)));
     connect(fileSystemView, SIGNAL(entered(const QModelIndex &)), SLOT(folderEntered(const QModelIndex &)));
-    connect(fileSystemView, SIGNAL(viewportEntered()), fileSystemModel, SLOT(clearHover()));
-    fileSystemView->setModel(proxyModel);
+    connect(fileSystemView, SIGNAL(viewportEntered()), filteringFileSystemModel, SLOT(clearHover()));
+    fileSystemView->setModel(filteringFileSystemModel);
     fileSystemView->setFileSystemModel(fileSystemModel);
     stackedWidget->addWidget(fileSystemView);
 }
@@ -450,7 +449,7 @@ void FinderWidget::trackActivated ( const QModelIndex & index ) {
 }
 
 void FinderWidget::folderEntered ( const QModelIndex & index ) {
-    fileSystemModel->setHoveredRow(index.row());
+    filteringFileSystemModel->setHoveredRow(index.row());
 }
 
 void FinderWidget::folderActivated(const QModelIndex & index) {

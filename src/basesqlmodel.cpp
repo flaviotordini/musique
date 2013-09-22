@@ -21,6 +21,7 @@ $END_LICENSE */
 #include "basesqlmodel.h"
 #include "trackmimedata.h"
 #include "database.h"
+#include "model/item.h"
 
 BaseSqlModel::BaseSqlModel(QObject *parent) : QSqlQueryModel(parent) {
     hoveredRow = -1;
@@ -31,17 +32,31 @@ BaseSqlModel::BaseSqlModel(QObject *parent) : QSqlQueryModel(parent) {
     connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
 }
 
+void BaseSqlModel::setQuery(const QSqlQuery &query) {
+    lastQuery = query.lastQuery();
+    QSqlQueryModel::setQuery(query);
+}
+
+void BaseSqlModel::setQuery(const QString &query, const QSqlDatabase &db) {
+    lastQuery = query;
+    QSqlQueryModel::setQuery(query, db);
+}
+
+void BaseSqlModel::restoreQuery() {
+    if (!query().isValid())
+        setQuery(lastQuery, Database::instance().getConnection());
+}
+
 void BaseSqlModel::setHoveredRow(int row) {
     int oldRow = hoveredRow;
     hoveredRow = row;
-    emit dataChanged( createIndex( oldRow, 0 ), createIndex( oldRow, columnCount() - 1 ) );
-    emit dataChanged( createIndex( hoveredRow, 0 ), createIndex( hoveredRow, columnCount() - 1 ) );
+    emit dataChanged(index(oldRow, 0 ), index(oldRow, 0));
+    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
 }
 
 void BaseSqlModel::clearHover() {
-    emit dataChanged( createIndex( hoveredRow, 0 ), createIndex( hoveredRow, columnCount() - 1 ) );
+    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
     hoveredRow = -1;
-    // timeLine->stop();
 }
 
 void BaseSqlModel::enterPlayIconHover() {
@@ -65,7 +80,7 @@ void BaseSqlModel::exitPlayIconHover() {
 }
 
 void BaseSqlModel::updatePlayIcon() {
-    emit dataChanged( createIndex( hoveredRow, 0 ), createIndex( hoveredRow, columnCount() - 1 ) );
+    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
 }
 
 // --- Sturm und drang ---

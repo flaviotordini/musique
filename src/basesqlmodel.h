@@ -21,9 +21,9 @@ $END_LICENSE */
 #ifndef BASESQLMODEL_H
 #define BASESQLMODEL_H
 
-#include <QSqlQueryModel>
-#include <QSqlQuery>
-#include "model/item.h"
+#include <QtSql>
+
+class Item;
 
 class BaseSqlModel : public QSqlQueryModel {
 
@@ -31,6 +31,9 @@ class BaseSqlModel : public QSqlQueryModel {
 
 public:
     BaseSqlModel(QObject *parent = 0);
+    void setQuery(const QSqlQuery &query);
+    void setQuery(const QString &query, const QSqlDatabase &db);
+    void restoreQuery();
     void setHoveredRow(int row);
 
 public slots:
@@ -50,6 +53,7 @@ protected:
     int hoveredRow;
     QTimeLine * timeLine;
     bool playIconHovered;
+    QString lastQuery;
 
 private slots:
     void updatePlayIcon();

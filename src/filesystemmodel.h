@@ -31,6 +31,7 @@ class FileSystemModel : public QFileSystemModel {
 
 public:
     FileSystemModel(QObject *parent = 0);
+    int columnCount(const QModelIndex & = QModelIndex()) const { return 1; }
     QVariant data(const QModelIndex &item, int role) const;
     Item* itemAt(const QModelIndex &index) const {
         if (isDir(index)) {
@@ -47,12 +48,6 @@ public:
     void clear() {
         //reset();
     }
-    void setHoveredRow(int row);
-
-public slots:
-    void clearHover();
-    void enterPlayIconHover();
-    void exitPlayIconHover();
 
 protected:
     // drag and drop
@@ -60,13 +55,6 @@ protected:
     QStringList mimeTypes() const;
     Qt::DropActions supportedDropActions() const;
     QMimeData* mimeData( const QModelIndexList &indexes ) const;
-
-    int hoveredRow;
-    QTimeLine * timeLine;
-    bool playIconHovered;
-
-private slots:
-    void updatePlayIcon();
 
 };
 

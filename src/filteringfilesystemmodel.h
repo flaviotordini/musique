@@ -29,9 +29,23 @@ class FilteringFileSystemModel : public QSortFilterProxyModel {
 
 public:
     FilteringFileSystemModel(QObject *parent = 0);
+    void setHoveredRow(int row);
+
+public slots:
+    void clearHover();
+    void enterPlayIconHover();
+    void exitPlayIconHover();
 
 protected:
+    QVariant data(const QModelIndex &index, int role) const;
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+
+    int hoveredRow;
+    QTimeLine * timeLine;
+    bool playIconHovered;
+
+private slots:
+    void updatePlayIcon();
 
 };
 
