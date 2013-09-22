@@ -27,39 +27,35 @@ $END_LICENSE */
 
 BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
-    this->setItemDelegate(new FinderItemDelegate(this));
-    this->setSelectionMode(QAbstractItemView::ExtendedSelection);
+    setItemDelegate(new FinderItemDelegate(this));
+    setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // layout
-    this->setGridSize(QSize(151, 151));
-    // this->setViewMode(QListView::IconMode);
-    // this->setSpacing(1);
-    this->setFlow(QListView::LeftToRight);
-    this->setWrapping(true);
-    this->setResizeMode(QListView::Adjust);
-    this->setMovement(QListView::Static);
-    this->setUniformItemSizes(true);
+    setGridSize(QSize(151, 151));
+    setFlow(QListView::LeftToRight);
+    setWrapping(true);
+    setResizeMode(QListView::Adjust);
+    setMovement(QListView::Static);
+    setUniformItemSizes(true);
 
     // colors
     QPalette p = palette();
     p.setBrush(QPalette::Base, Qt::black);
     p.setBrush(QPalette::Text, Qt::white);
     p.setColor(QPalette::Background, Qt::transparent);
-    this->setPalette(p);
+    setPalette(p);
 
     // dragndrop
-    this->setDragEnabled(true);
-    this->setDragDropMode(QAbstractItemView::DragOnly);
+    setDragEnabled(true);
+    setDragDropMode(QAbstractItemView::DragOnly);
 
     // cosmetics
-    this->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
-    this->setFrameShape( QFrame::NoFrame );
-    this->setAttribute(Qt::WA_MacShowFocusRect, false);
-    // setStyleSheet("background:transparent");
+    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    setFrameShape(QFrame::NoFrame);
+    setAttribute(Qt::WA_MacShowFocusRect, false);
 
     verticalScrollBar()->setPageStep(3);
     verticalScrollBar()->setSingleStep(1);
-
 }
 
 void BaseFinderView::appear() {
@@ -67,25 +63,27 @@ void BaseFinderView::appear() {
     setMouseTracking(true);
     BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
     if (baseSqlModel) {
+        /*
         QSqlQuery query = baseSqlModel->query();
+        qDebug() << query.lastQuery();
         baseSqlModel->setQuery(QSqlQuery(query.lastQuery(), Database::instance().getConnection()));
-        while (baseSqlModel->canFetchMore())
-            baseSqlModel->fetchMore();
+        */
+
+        baseSqlModel->restoreQuery();
+        // while (baseSqlModel->canFetchMore())
+        //    baseSqlModel->fetchMore();
     }
 }
 
 void BaseFinderView::disappear() {
     setEnabled(false);
     setMouseTracking(false);
-    // BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
-    // if (baseSqlModel) baseSqlModel->clear();
+    BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
+    if (baseSqlModel) baseSqlModel->clear();
 }
 
 void BaseFinderView::leaveEvent(QEvent * /* event */) {
-    BaseSqlModel *baseModel = dynamic_cast<BaseSqlModel *>(model());
-    if (baseModel) {
-        baseModel->clearHover();
-    }
+    QMetaObject::invokeMethod(model(), "clearHover");
 }
 
 void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
@@ -94,10 +92,10 @@ void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
     // qDebug() << "BaseFinderView::mouseMoveEvent" << event->pos();
 
     if (isHoveringPlayIcon(event)) {
-        QMetaObject::invokeMethod(model(), "enterPlayIconHover", Qt::DirectConnection);
+        QMetaObject::invokeMethod(model(), "enterPlayIconHover");
         setCursor(Qt::PointingHandCursor);
     } else {
-        QMetaObject::invokeMethod(model(), "exitPlayIconHover", Qt::DirectConnection);
+        QMetaObject::invokeMethod(model(), "exitPlayIconHover");
         unsetCursor();
     }
 
