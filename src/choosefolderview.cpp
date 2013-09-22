@@ -1,3 +1,23 @@
+/* $BEGIN_LICENSE
+
+This file is part of Musique.
+Copyright 2013, Flavio Tordini <flavio.tordini@gmail.com>
+
+Musique is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Musique is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Musique.  If not, see <http://www.gnu.org/licenses/>.
+
+$END_LICENSE */
+
 #include "choosefolderview.h"
 #include "constants.h"
 #include "fontutils.h"
@@ -72,14 +92,14 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     connect(chooseDirButton, SIGNAL(clicked()), SLOT(chooseFolder()));
     buttonLayout->addWidget(chooseDirButton);
 
-#if !defined(APP_MAC) && !defined(Q_WS_WIN)
+#ifndef APP_EXTRA
     QLabel *privacyLabel =
             new QLabel(
                     tr("%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.")
                     .arg(Constants::NAME) + " " +
                     tr("If you have privacy concerns about this you can quit now.")
                     , this);
-    privacyLabel->setFont(FontUtils::small());
+    privacyLabel->setFont(FontUtils::smaller());
     privacyLabel->setOpenExternalLinks(true);
     privacyLabel->setWordWrap(true);
     vLayout->addWidget(privacyLabel);
