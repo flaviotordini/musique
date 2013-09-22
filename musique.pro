@@ -9,7 +9,7 @@ DEFINES += APP_NAME="$$APP_NAME"
 APP_UNIX_NAME = musique
 DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 
-# DEFINES *= QT_NO_DEBUG_OUTPUT
+DEFINES *= QT_NO_DEBUG_OUTPUT
 DEFINES *= QT_USE_QSTRINGBUILDER
 DEFINES += QT_STRICT_ITERATORS
 
@@ -27,7 +27,6 @@ HEADERS += src/mainwindow.h \
     src/urllineedit.h \
     src/spacer.h \
     src/constants.h \
-    src/faderwidget/faderwidget.h \
     src/networkaccess.h \
     src/global.h \
     src/updatechecker.h \
@@ -93,7 +92,6 @@ SOURCES += src/main.cpp \
     src/searchlineedit.cpp \
     src/urllineedit.cpp \
     src/spacer.cpp \
-    src/faderwidget/faderwidget.cpp \
     src/updatechecker.cpp \
     src/networkaccess.cpp \
     src/finderwidget.cpp \
