@@ -1,13 +1,13 @@
 [Desktop Entry]
 Name=Musique
 Comment=Listen to your music collection
-GenericName=Music Player
+GenericName=Musique Music Player
 Exec=musique
 Terminal=false
 Type=Application
 Icon=musique
-Categories=Qt;Audio;Music;Player;AudioVideo;
-StartupNotify=true
+Categories=AudioVideo;Player;Qt;
+StartupNotify=false
 Actions=TogglePlaying;Next;Previous;Info;
 
 [Desktop Action TogglePlaying]
