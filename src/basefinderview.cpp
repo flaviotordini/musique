@@ -63,12 +63,6 @@ void BaseFinderView::appear() {
     setMouseTracking(true);
     BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
     if (baseSqlModel) {
-        /*
-        QSqlQuery query = baseSqlModel->query();
-        qDebug() << query.lastQuery();
-        baseSqlModel->setQuery(QSqlQuery(query.lastQuery(), Database::instance().getConnection()));
-        */
-
         baseSqlModel->restoreQuery();
         // while (baseSqlModel->canFetchMore())
         //    baseSqlModel->fetchMore();
