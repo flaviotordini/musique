@@ -430,8 +430,8 @@ void Track::parseLyricsSearchResults(QByteArray bytes) {
 void Track::scrapeLyrics(QByteArray bytes) {
     QString lyrics = QString::fromUtf8(bytes);
 
-
     int pos = lyrics.indexOf( "'lyricbox'" );
+    if (pos == -1) return;
     int startPos = lyrics.indexOf( ">", pos ) + 1;
     int endPos = lyrics.indexOf( "</div>", startPos );
     int otherDivPos = lyrics.indexOf( "<div", startPos );
