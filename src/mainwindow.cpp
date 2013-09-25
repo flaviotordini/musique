@@ -154,7 +154,11 @@ void MainWindow::showInitialView() {
 
     } else {
         // no db, do the first scan dance
-        showChooseFolderView(false);
+        QString root = db.needsUpdate();
+        if (!root.isEmpty() && QDir().exists(root))
+            startFullScan(root);
+        else
+            showChooseFolderView(false);
     }
 }
 

@@ -412,9 +412,7 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
 }
 
 QString Artist::getBaseLocation() {
-    static const QString data = QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-            + QLatin1String("/data/");
-    return data + getHash();
+    return Database::getFilesLocation() + getHash();
 }
 
 QString Artist::getImageLocation() {

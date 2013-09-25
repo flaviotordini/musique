@@ -95,9 +95,8 @@ void CollectionScanner::run() {
 
     } else {
 
-        // drop the previous, if any
-        Database::instance().drop();
-        Database::instance().create();
+        // delete any existing data
+        Database::instance().clear();
 
         // invalidate caches
         Artist::clearCache();

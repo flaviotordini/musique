@@ -364,9 +364,7 @@ QString Track::getAbsolutePath() {
 }
 
 QString Track::getLyricsLocation() {
-    static const QString data = QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-            + QLatin1String("/data/");
-    QString l = data;
+    QString l = Database::getFilesLocation();
     if (artist) l += artist->getHash();
     l += QLatin1String("/_lyrics/") + getHash();
     return l;

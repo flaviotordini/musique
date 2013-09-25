@@ -52,7 +52,7 @@ public:
 class FileInfo {
 
 public:
-    FileInfo() : artist(0), album(0), tags(0) { };
+    FileInfo() : artist(0), album(0), tags(0) { }
     ~FileInfo() {
         if (artist) delete artist;
         if (album) delete album;

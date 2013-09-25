@@ -453,9 +453,7 @@ void Album::parseLastFmInfo(QByteArray bytes) {
 }
 
 QString Album::getBaseLocation() {
-    static const QString data = QDesktopServices::storageLocation(QDesktopServices::DataLocation)
-            + QLatin1String("/data/");
-    return data + getHash();
+    return Database::getFilesLocation() + getHash();
 }
 
 QString Album::getImageLocation() {

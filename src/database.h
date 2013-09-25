@@ -39,6 +39,7 @@ public:
     ~Database();
     void create();
     void drop();
+    void clear();
     int status();
     void setStatus(int status);
     uint lastUpdate();
@@ -47,18 +48,22 @@ public:
     void setCollectionRoot(QString dir);
     void closeConnections();
     void closeConnection();
+    const QString &needsUpdate() { return updateRoot; }
 
-    static QString getDataLocation();
-    static QString getDbLocation();
+    static const QString &getDataLocation();
+    static const QString &getFilesLocation();
+    static const QString &getDbLocation();
 
 private:
     Database();
+    void createAttributes();
     QVariant getAttribute(QString name);
     void setAttribute(QString name, QVariant value);
     bool removeRecursively(const QString & dirName);
 
     QMutex lock;
     QHash<QThread*, QSqlDatabase> connections;
+    QString updateRoot;
 
 };
 

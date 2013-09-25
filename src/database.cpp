@@ -36,6 +36,7 @@ Database::Database() {
         int databaseVersion = getAttribute("version").toInt();
         if (databaseVersion != Constants::DATABASE_VERSION) {
             qWarning("Updating database version: %d to %d", databaseVersion, Constants::DATABASE_VERSION);
+            updateRoot = collectionRoot();
             drop();
             removeRecursively(dataLocation);
             create();
@@ -48,13 +49,20 @@ Database::~Database() {
     closeConnections();
 }
 
-QString Database::getDataLocation() {
-    return QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+const QString &Database::getDataLocation() {
+    static const QString location = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    return location;
 }
 
-QString Database::getDbLocation() {
-    return getDataLocation() + QLatin1String("/") +
+const QString &Database::getFilesLocation() {
+    static const QString location = getDataLocation() + QLatin1String("/files/");
+    return location;
+}
+
+const QString &Database::getDbLocation() {
+    static const QString location = getDataLocation() + QLatin1String("/") +
             QLatin1String(Constants::UNIX_NAME) + QLatin1String(".db");
+    return location;
 }
 
 void Database::create() {
@@ -63,6 +71,8 @@ void Database::create() {
     QDir().mkpath(getDataLocation());
 
     const QSqlDatabase db = getConnection();
+
+    createAttributes();
 
     QSqlQuery("create table artists ("
               "id integer primary key autoincrement,"
@@ -107,17 +117,28 @@ void Database::create() {
               "errors integer,"
               "url varchar(255))", db);
 
+    /* TODO tags
     QSqlQuery("create table tags ("
               "id integer primary key autoincrement,"
               "name varchar,"
-              "usageCount integer)", db);
+              "artistCount integer,"
+              "albumCount integer)", db);
     QSqlQuery("create unique index unique_tags_name on tags(name)", db);
+
+    QSqlQuery("create table artisttags ("
+              "artist integer,"
+              "tag integer)", db);
+    QSqlQuery("create unique index unique_artisttags on artisttags(artist,tag)", db);
 
     QSqlQuery("create table albumtags ("
               "album integer,"
               "tag integer)", db);
-    QSqlQuery("create unique index unique_albumtags_mapping on albumtags(album,tag)", db);
+    QSqlQuery("create unique index unique_albumtags on albumtags(album,tag)", db);
+    */
+}
 
+void Database::createAttributes() {
+    const QSqlDatabase db = getConnection();
     QSqlQuery("create table attributes (name varchar(255), value)", db);
     QSqlQuery("insert into attributes (name, value) values ('version', " + QString::number(Constants::DATABASE_VERSION) + ")", db);
     QSqlQuery("insert into attributes (name, value) values ('status', " + QString::number(ScanIncomplete) + ")", db);
@@ -215,9 +236,14 @@ void Database::drop() {
             qWarning() << query.lastQuery() << query.lastError().text();
         }
 
+        QStringList tableNames;
         while (query.next()) {
             QString tableName = query.value(0).toString();
-            if (tableName.startsWith("sqlite_") || tableName == "attributes") continue;
+            if (tableName.startsWith("sqlite_")) continue;
+            tableNames << tableName;
+        }
+
+        foreach (QString tableName, tableNames) {
             QString dropSQL = "drop table " + tableName;
             QSqlQuery query2(db);
             if (!query2.exec(dropSQL)) {
@@ -230,6 +256,28 @@ void Database::drop() {
     }
 
     closeConnections();
+}
+
+void Database::clear() {
+    const QSqlDatabase db = getConnection();
+    QSqlQuery query(db);
+    if (!query.exec("select name from sqlite_master where type='table'")) {
+        qWarning() << query.lastQuery() << query.lastError().text();
+    }
+
+    while (query.next()) {
+        QString tableName = query.value(0).toString();
+        if (tableName.startsWith("sqlite_")) continue;
+        QString dropSQL = "delete from " + tableName;
+        QSqlQuery query2(db);
+        if (!query2.exec(dropSQL)) {
+            qWarning() << query2.lastQuery() << query2.lastError().text();
+        }
+    }
+
+    query.exec("delete from sqlite_sequence");
+    query.exec("vacuum");
+    createAttributes();
 }
 
 void Database::closeConnections() {
@@ -249,7 +297,7 @@ void Database::closeConnection() {
 }
 
 bool Database::removeRecursively(const QString & dirName) {
-    bool result;
+    bool result = false;
     QDir dir(dirName);
     if (dir.exists(dirName)) {
         Q_FOREACH(QFileInfo info, dir.entryInfoList(
