@@ -35,15 +35,15 @@ public:
     void paint( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
 
 private:
-    QPixmap createPlayIcon() const;
-    QPixmap getPlayIcon() const;
+    const QPixmap &getPlayIcon() const;
+    const QPixmap &getSelectedPlayIcon() const;
     void paintTrack(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void paintAlbumHeader(QPainter* painter, const QStyleOptionViewItem& option,
                           const QRect &line, Track* track) const;
     void paintTrackNumber(QPainter* painter, const QStyleOptionViewItem& option,
                           const QRect &line, Track* track) const;
     void paintTrackTitle(QPainter* painter, const QStyleOptionViewItem& option,
-                         const QRect &line, Track* track) const;
+                         const QRect &line, Track* track, bool isActive) const;
     void paintTrackLength(QPainter* painter, const QStyleOptionViewItem& option,
                           const QRect &line, Track* track) const;
     void paintActiveOverlay(QPainter *painter, const QStyleOptionViewItem& option,

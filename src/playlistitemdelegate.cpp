@@ -65,15 +65,20 @@ void PlaylistItemDelegate::paint(
     paintTrack(painter, option, index);
 }
 
-QPixmap PlaylistItemDelegate::createPlayIcon() const {
-    QIcon icon = Utils::icon("media-playback-start");
-    return icon.pixmap(16, 16);
-}
-
-QPixmap PlaylistItemDelegate::getPlayIcon() const {
+const QPixmap &PlaylistItemDelegate::getPlayIcon() const {
     static QPixmap playIcon;
     if (playIcon.isNull()) {
-        playIcon = createPlayIcon();
+        QIcon icon = Utils::icon("media-playback-start");
+        playIcon = icon.pixmap(16, 16);
+    }
+    return playIcon;
+}
+
+const QPixmap &PlaylistItemDelegate::getSelectedPlayIcon() const {
+    static QPixmap playIcon;
+    if (playIcon.isNull()) {
+        QIcon icon = Utils::tintedIcon("media-playback-start", Qt::white, QList<QSize>() << QSize(16, 16));
+        playIcon = icon.pixmap(16, 16);
     }
     return playIcon;
 }
@@ -125,17 +130,15 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
 
     if (isActive) {
         if (!isSelected) paintActiveOverlay(painter, option, line);
-        QFont boldFont = painter->font();
-        boldFont.setBold(true);
-        painter->setFont(boldFont);
         // play icon
-        painter->drawPixmap(PADDING*2, (ITEM_HEIGHT - 16) / 2, 16, 16, getPlayIcon());
+        QPixmap p = isSelected ? getSelectedPlayIcon() : getPlayIcon();
+        painter->drawPixmap(PADDING*2, (ITEM_HEIGHT - 16) / 2, 16, 16, p);
     } else {
         paintTrackNumber(painter, option, line, track);
     }
 
     // qDebug() << "painting" << track;
-    paintTrackTitle(painter, option, line, track);
+    paintTrackTitle(painter, option, line, track, isActive);
     paintTrackLength(painter, option, line, track);
 
     // separator
@@ -267,7 +270,14 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
 }
 
 void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOptionViewItem& option,
-                                           const QRect &line, Track* track) const {
+                                           const QRect &line, Track* track, bool isActive) const {
+
+    painter->save();
+    if (isActive) {
+        QFont boldFont = painter->font();
+        boldFont.setBold(true);
+        painter->setFont(boldFont);
+    }
 
     QFontMetrics fontMetrics = QFontMetrics(painter->font());
 
@@ -284,6 +294,7 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOption
     trackTitle = fontMetrics.elidedText(trackTitle, Qt::ElideRight, trackTextBox.width());
 
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, trackTitle);
+    painter->restore();
 }
 
 void PlaylistItemDelegate::paintTrackLength(QPainter* painter, const QStyleOptionViewItem& option,
