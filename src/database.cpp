@@ -140,6 +140,7 @@ void Database::create() {
 void Database::createAttributes() {
     const QSqlDatabase db = getConnection();
     QSqlQuery("create table attributes (name varchar(255), value)", db);
+    QSqlQuery("create unique index unique_attributes_name on attributes(name)", db);
     QSqlQuery("insert into attributes (name, value) values ('version', " + QString::number(Constants::DATABASE_VERSION) + ")", db);
     QSqlQuery("insert into attributes (name, value) values ('status', " + QString::number(ScanIncomplete) + ")", db);
     QSqlQuery("insert into attributes (name, value) values ('lastUpdate', 0)", db);
