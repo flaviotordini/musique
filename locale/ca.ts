@@ -48,22 +48,22 @@
     </message>
     <message>
         <source>Licensed to: %1</source>
-        <translation type="unfinished"/>
+        <translation>Llicenciat a: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation type="unfinished"/>
+        <translation>Entra els detalls de la teva llicència</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Email:</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Codi:</translation>
     </message>
 </context>
 <context>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Sense llicència, l&apos;aplicació caducarà en %1 dies</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -90,15 +90,15 @@
     </message>
     <message>
         <source>Enter License</source>
-        <translation type="unfinished"/>
+        <translation>Entra la lliçència </translation>
     </message>
     <message>
         <source>Buy License</source>
-        <translation type="unfinished"/>
+        <translation>Comprar llicència</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>La versió completa us permet afegir més de %1 pistes a la llista de reproducció i escoltar la vostra música sense interrupcions</translation>
     </message>
 </context>
 <context>
@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artista</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Títol</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Any</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularitat</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Ordre invers</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordena per</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Llegeix més</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Ordena per pista</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Ordena per àlbum</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Any</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularitat</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Ordre invers</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordena per</translation>
     </message>
 </context>
 <context>
@@ -214,7 +272,7 @@
     <name>DownloadWidget</name>
     <message>
         <source>Downloading update...</source>
-        <translation type="unfinished"/>
+        <translation>Descarregant actualitzacions...</translation>
     </message>
 </context>
 <context>
@@ -586,6 +644,14 @@
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Informa d&apos;un problema...</translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation>Cerca</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation>%1 acaba d&apos;escanejar la vostra col·lecció de música</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -618,34 +684,34 @@
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation type="unfinished"/>
+        <translation>Una nova versió de %1 està disponible</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation type="unfinished"/>
+        <translation>%1 %2 estan disponibles. Tu tens %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation type="unfinished"/>
+        <translation>T&apos;agradaria descarregar-ho ara?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
-        <translation type="unfinished"/>
+        <translation>Omet aquesta versió</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
-        <translation type="unfinished"/>
+        <translation>Recorda-m&apos;ho després</translation>
     </message>
     <message>
         <source>Install Update</source>
-        <translation type="unfinished"/>
+        <translation>Instal·la Actualització</translation>
     </message>
 </context>
 <context>
     <name>PasteLineEdit</name>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Enganxar</translation>
     </message>
 </context>
 <context>

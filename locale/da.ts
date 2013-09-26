@@ -8,11 +8,11 @@
     </message>
     <message>
         <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 er Free Software men dens udvikling tager værdifuld tid.</translation>
+        <translation>%1 er fri software, men udviklingen tager værdifuld tid.</translation>
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Venligst &lt;a href=&apos;%1&apos;&gt;doner&lt;/a&gt; for at støtte den fortsatte udvikling af %2. </translation>
+        <translation>&lt;a href=&apos;%1&apos;&gt;Doner&lt;/a&gt; venligst for at støtte den fortsatte udvikling af %2. </translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artist</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>År</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularitet</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Modsat rækkefølge</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Sorter efter</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Læs mere</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Antal nummere</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Antal album</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Navn</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>År</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularitet</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Modsat rækkefølge</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Sorter efter</translation>
     </message>
 </context>
 <context>
@@ -586,6 +644,14 @@
     <message>
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Rapporter et problem...</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Søg</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation>%1 er færdig med at scanne din musiksamling</translation>
     </message>
 </context>
 <context>

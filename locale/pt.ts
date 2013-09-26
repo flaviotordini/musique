@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Leia mais</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -584,6 +642,14 @@
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Pesquisar</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
         <translation type="unfinished"/>
     </message>
 </context>

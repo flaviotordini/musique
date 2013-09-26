@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Plná verzia ti umožní pridať viac ako %1 skladieb do playlistu a vychutnať si teda muziku bez prerušení.</translation>
     </message>
 </context>
 <context>
@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Zoradiť podľa</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Čítať viac</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Meno</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Zoradiť podľa</translation>
     </message>
 </context>
 <context>
@@ -321,7 +379,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"/>
+        <translation>Zrušiť</translation>
     </message>
 </context>
 <context>
@@ -585,6 +643,14 @@
     <message>
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Nahlásiť problém...</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Hľadať</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

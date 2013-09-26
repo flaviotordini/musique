@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordinar per</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Lege plus</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nomine</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordinar per</translation>
     </message>
 </context>
 <context>
@@ -214,7 +272,7 @@
     <name>DownloadWidget</name>
     <message>
         <source>Downloading update...</source>
-        <translation type="unfinished"/>
+        <translation>Discargante actualisation...</translation>
     </message>
 </context>
 <context>
@@ -586,6 +644,14 @@
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Reportar un problema...</translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation>Cercar</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -618,7 +684,7 @@
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation type="unfinished"/>
+        <translation>Un nove version de %1 es disponibile!</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>

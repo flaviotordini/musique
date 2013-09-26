@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artista</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titolo</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Anno</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popolarità</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Ordine invertito</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordina per</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Continua</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Contatore tracce</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Contatore Album</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Anno</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popolarità</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Ordine Invertito</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordina per</translation>
     </message>
 </context>
 <context>
@@ -585,6 +643,14 @@
     <message>
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Segnala un problema...</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Ricerca</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation>%1 ho finito di scannerizzare la tua collezione musicale</translation>
     </message>
 </context>
 <context>

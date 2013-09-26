@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artista</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Titulo</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Año</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularidad</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Orden Invertido</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordenar por</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Leer más</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Ordernar por pista</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Ordenar por album</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nombre</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Año</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularidad</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Orden Invertido</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordenar por</translation>
     </message>
 </context>
 <context>
@@ -154,7 +212,7 @@
     </message>
     <message>
         <source>Choose a folder...</source>
-        <translation>Escoge una carpeta...</translation>
+        <translation>Elige una carpeta</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
@@ -162,7 +220,7 @@
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Si tienes preocupaciones de privacía respecto a esto puedes salir ahora.</translation>
+        <translation>Si tienes preocupaciones de privacidad respecto a esto puedes salir ahora.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -221,7 +279,7 @@
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation>Déjalo caer aquí para añadirlo a la lista de reproducción</translation>
+        <translation>Arrástralo aquí para añadirlo a la lista de reproducción</translation>
     </message>
 </context>
 <context>
@@ -251,7 +309,7 @@
     </message>
     <message>
         <source>Play/Pause</source>
-        <translation>Reproducir/pausar</translation>
+        <translation>Reproducir/Pausar</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -376,7 +434,7 @@
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>Q&amp;uitar</translation>
+        <translation>&amp;Quitar</translation>
     </message>
     <message>
         <source>Remove the selected tracks from the playlist</source>
@@ -585,6 +643,14 @@
     <message>
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Informar de un problema...</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Buscar</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

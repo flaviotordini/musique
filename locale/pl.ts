@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Wszystko, co zawsze chcieliście wiedzieć o %1 , a baliście się zapytać</translation>
+        <translation>Wszystko, co zawsze chcieliście wiedzieć o %1, a baliście się zapytać</translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
@@ -48,14 +48,14 @@
     </message>
     <message>
         <source>Licensed to: %1</source>
-        <translation type="unfinished"/>
+        <translation>Licencjonowane dla: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation type="unfinished"/>
+        <translation>Wpisz szczegóły Twojej licencji</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Kod:</translation>
     </message>
 </context>
 <context>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation>Te demo wygasło.</translation>
+        <translation>To demo wygasło.</translation>
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Pełna wersja pozwala na dodanie więcej niż %1 utworów do playlisty oraz słuchanie muzyki bez przerw.</translation>
     </message>
 </context>
 <context>
@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artysta</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Tytuł</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Rok</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularność</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Odwrócona kolejność</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Sortuj według</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Czytaj więcej</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Ilość utworów</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Ilość albumów</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nazwa</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Rok</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularność</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Odwrócona kolejność</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Sortuj według</translation>
     </message>
 </context>
 <context>
@@ -336,7 +394,7 @@
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;informacje</translation>
+        <translation>&amp;Informacje</translation>
     </message>
     <message>
         <source>Show information about the current track</source>
@@ -488,7 +546,7 @@
     </message>
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation>Wciśnij %1 , aby zwiększyć głośność, %2, aby ją zmniejszyć</translation>
+        <translation>Wciśnij %1, aby zwiększyć głośność, %2, aby ją zmniejszyć</translation>
     </message>
     <message>
         <source>Opening %1</source>
@@ -584,7 +642,15 @@
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Zgłoś problem...</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Szukaj</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation>%1 zakończono przeszukiwanie twojej kolekcji muzyki</translation>
     </message>
 </context>
 <context>
@@ -618,11 +684,11 @@
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation type="unfinished"/>
+        <translation>Nowa wersja %1 jest dostępna!</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation type="unfinished"/>
+        <translation>%1 %2 jest już dostępny, Ty masz %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
@@ -638,7 +704,7 @@
     </message>
     <message>
         <source>Install Update</source>
-        <translation type="unfinished"/>
+        <translation>Zainstaluj aktualizację</translation>
     </message>
 </context>
 <context>

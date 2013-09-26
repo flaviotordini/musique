@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Umělec</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Název</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Rok</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Oblíbenost</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Obrácené pořadí</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Třídit podle</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Čtěte více</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Počet skladeb</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Počet alb</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Jméno</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Rok</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Oblíbenost</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Obrácené pořadí</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Třídit podle</translation>
     </message>
 </context>
 <context>
@@ -585,6 +643,14 @@
     <message>
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Nahlásit chybu...</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Hledat</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

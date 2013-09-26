@@ -48,22 +48,22 @@
     </message>
     <message>
         <source>Licensed to: %1</source>
-        <translation type="unfinished"/>
+        <translation>Licenciado a: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation type="unfinished"/>
+        <translation>Entre com seus Detalhes de Licença</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation type="unfinished"/>
+        <translation>E-mail:</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation type="unfinished"/>
+        <translation>Código:</translation>
     </message>
 </context>
 <context>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Sem licença, a aplicação irá expirar em %1 dias.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -90,11 +90,11 @@
     </message>
     <message>
         <source>Enter License</source>
-        <translation type="unfinished"/>
+        <translation>Entrar com a Licença.</translation>
     </message>
     <message>
         <source>Buy License</source>
-        <translation type="unfinished"/>
+        <translation>Comprar a Licença.</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artista</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Título</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Ano</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularidade</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Ordem Inversa</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordenar por</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Leia mais</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Contador De Faixa</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Contador De Álbum</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nome</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Ano</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Popularidade</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Ordem Inversa</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Ordenar por</translation>
     </message>
 </context>
 <context>
@@ -214,7 +272,7 @@
     <name>DownloadWidget</name>
     <message>
         <source>Downloading update...</source>
-        <translation type="unfinished"/>
+        <translation>Baixando atualização...</translation>
     </message>
 </context>
 <context>
@@ -586,6 +644,14 @@
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Relatar um problema...</translation>
     </message>
+    <message>
+        <source>Search</source>
+        <translation>Pesquisar</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation>%1 finalizou a busca de sua coleção de músicas</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -618,34 +684,34 @@
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation type="unfinished"/>
+        <translation>Uma nova versão do %1 está disponível!</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation type="unfinished"/>
+        <translation>%1 %2 está disponível. Você está usando %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation type="unfinished"/>
+        <translation>Gostaria de fazer o download agora?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
-        <translation type="unfinished"/>
+        <translation>Pular esta versão.</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
-        <translation type="unfinished"/>
+        <translation>Me lembre mais tarde.</translation>
     </message>
     <message>
         <source>Install Update</source>
-        <translation type="unfinished"/>
+        <translation>Instalar atualização.</translation>
     </message>
 </context>
 <context>
     <name>PasteLineEdit</name>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Colar.</translation>
     </message>
 </context>
 <context>

@@ -113,10 +113,68 @@
     </message>
 </context>
 <context>
+    <name>AlbumListView</name>
+    <message>
+        <source>Artist</source>
+        <translation>Artisti</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Vuosi</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Suosio</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Käänteinen järjestys</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Järjestysperuste</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
         <translation>Lue lisää</translation>
+    </message>
+</context>
+<context>
+    <name>ArtistListView</name>
+    <message>
+        <source>Track Count</source>
+        <translation>Kappalemäärä</translation>
+    </message>
+    <message>
+        <source>Album Count</source>
+        <translation>Levymäärä</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nimi</translation>
+    </message>
+    <message>
+        <source>Year</source>
+        <translation>Vuosi</translation>
+    </message>
+    <message>
+        <source>Popularity</source>
+        <translation>Suosio</translation>
+    </message>
+    <message>
+        <source>Reversed Order</source>
+        <translation>Käänteinen järjestys</translation>
+    </message>
+    <message>
+        <source>Sort by</source>
+        <translation>Järjestysperuste</translation>
     </message>
 </context>
 <context>
@@ -134,11 +192,11 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Tervetuloa sovellukseen &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Tervetuloa, käytössäsi on &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 haluaa skannata musiikkikokoelmasi.</translation>
+        <translation>%1 haluaa tutkia musiikkikokoelmasi.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -158,7 +216,7 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 yhdistää Last.fm -verkkopalveluihin ja välittää artistin ja albumin nimen noutaakseen kansitaiteen, biografian ja paljon muuta.</translation>
+        <translation>%1 yhdistää Last.fm-verkkopalveluihin ja välittää esittäjän sekä levyn nimen noutaakseen kansitaiteen, biografian ja paljon muuta.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
@@ -188,14 +246,14 @@
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>Skannaus on jo käynnissä</translation>
+        <translation>Tutkinta on jo käynnissä</translation>
     </message>
 </context>
 <context>
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 skannaa musiikkikirjastoasi.</translation>
+        <translation>%1 tutkii musiikkikirjastoasi.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
@@ -368,7 +426,7 @@
     </message>
     <message>
         <source>&amp;Full Screen</source>
-        <translation>&amp;Kokonäyttö</translation>
+        <translation>&amp;Koko näyttö</translation>
     </message>
     <message>
         <source>Go full screen</source>
@@ -585,6 +643,14 @@
     <message>
         <source>&amp;Report an Issue...</source>
         <translation>&amp;Ilmoita ongelmasta...</translation>
+    </message>
+    <message>
+        <source>Search</source>
+        <translation>Etsi</translation>
+    </message>
+    <message>
+        <source>%1 finished scanning your music collection</source>
+        <translation>%1 sai valmiiksi musiikkikokoelmasi tutkimisen</translation>
     </message>
 </context>
 <context>
