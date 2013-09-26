@@ -447,7 +447,7 @@ QList<Track*> Artist::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select t.id from tracks t, albums a"
-                  " where t.album=a.id and t.artist=?"
+                  " where (t.album=a.id or t.album=0) and t.artist=?"
                   " order by a.year desc, a.title collate nocase, t.track, t.path");
     query.bindValue(0, id);
     bool success = query.exec();
@@ -458,6 +458,7 @@ QList<Track*> Artist::getTracks() {
         Track* track = Track::forId(trackId);
         tracks << track;
     }
+
     return tracks;
 }
 

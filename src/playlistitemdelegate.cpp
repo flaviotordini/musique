@@ -47,7 +47,8 @@ QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
         if (previousTrack) {
             const TrackPointer trackPointer = index.data(Playlist::DataObjectRole).value<TrackPointer>();
             Track *track = trackPointer.data();
-            if (previousTrack->getAlbum() != track->getAlbum()) {
+            if (previousTrack->getAlbum() != track->getAlbum()
+                    || previousTrack->getArtist() != track->getArtist()) {
                 return QSize(ITEM_HEIGHT*2, ITEM_HEIGHT*2);
             }
         }
@@ -158,7 +159,10 @@ void PlaylistItemDelegate::paintAlbumHeader(
     Album *album = track->getAlbum();
     if (album) headerTitle = album->getTitle();
     Artist *artist = track->getArtist();
-    if (artist) headerTitle += " - " + artist->getName();
+    if (artist) {
+        if (!headerTitle.isEmpty()) headerTitle += " - ";
+        headerTitle += artist->getName();
+    }
 
     painter->save();
 
@@ -179,11 +183,20 @@ void PlaylistItemDelegate::paintAlbumHeader(
     painter->setPen(borderColor);
     painter->drawLine(0, line.height()-1, line.width(), line.height()-1);
 
-    QPixmap p = album->getThumb();
-    if (!p.isNull()) {
-        p = p.scaled(h, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        painter->drawPixmap(0, 0, p);
-        painter->drawLine(h, 0, h, h-1);
+    if (album) {
+        QPixmap p = album->getThumb();
+        if (!p.isNull()) {
+            p = p.scaled(h, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            painter->drawPixmap(0, 0, p);
+            painter->drawLine(h, 0, h, h-1);
+        }
+    } else if (artist) {
+        QPixmap p = artist->getPhoto();
+        if (!p.isNull()) {
+            p = p.scaled(h, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            painter->drawPixmap(0, 0, p);
+            painter->drawLine(h, 0, h, h-1);
+        }
     }
 
     // album length

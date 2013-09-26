@@ -24,7 +24,7 @@ $END_LICENSE */
 #include "model/album.h"
 #include "model/artist.h"
 #include "mainwindow.h"
-#ifdef APP_ACTIVATION
+#ifdef APP_ACTIVATION_NO
 #include "activation.h"
 static const int demoMaxTracks = 15;
 static const QString demoMessage =
@@ -371,7 +371,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
         } else insert = true;
         const int targetRow = beginRow + counter;
         tracks.insert(targetRow, track);
-#ifdef APP_ACTIVATION
+#ifdef APP_ACTIVATION_NO
         if (!Activation::instance().isActivated() && tracks.size() >= demoMaxTracks) {
             MainWindow::instance()->showDemoDialog(demoMessage);
             layoutChanged();
