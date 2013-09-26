@@ -65,10 +65,12 @@ void PlaylistItemDelegate::paint(
     paintTrack(painter, option, index);
 }
 
-const QPixmap &PlaylistItemDelegate::getPlayIcon() const {
+const QPixmap &PlaylistItemDelegate::getPlayIcon(const QStyleOptionViewItem& option) const {
     static QPixmap playIcon;
     if (playIcon.isNull()) {
-        QIcon icon = Utils::icon("media-playback-start");
+        QColor highlightColor = option.palette.color(QPalette::Highlight);
+        QColor color = QColor::fromHsv(highlightColor.hue(), 255, 96);
+        QIcon icon = Utils::tintedIcon("media-playback-start", color, QList<QSize>() << QSize(16, 16));
         playIcon = icon.pixmap(16, 16);
     }
     return playIcon;
@@ -131,8 +133,8 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     if (isActive) {
         if (!isSelected) paintActiveOverlay(painter, option, line);
         // play icon
-        QPixmap p = isSelected ? getSelectedPlayIcon() : getPlayIcon();
-        painter->drawPixmap(PADDING*2, (ITEM_HEIGHT - 16) / 2, 16, 16, p);
+        QPixmap p = isSelected ? getSelectedPlayIcon() : getPlayIcon(option);
+        painter->drawPixmap(PADDING*1.5, (ITEM_HEIGHT - 16) / 2, 16, 16, p);
     } else {
         paintTrackNumber(painter, option, line, track);
     }

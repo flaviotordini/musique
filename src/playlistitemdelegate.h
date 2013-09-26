@@ -35,7 +35,7 @@ public:
     void paint( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
 
 private:
-    const QPixmap &getPlayIcon() const;
+    const QPixmap &getPlayIcon(const QStyleOptionViewItem &option) const;
     const QPixmap &getSelectedPlayIcon() const;
     void paintTrack(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void paintAlbumHeader(QPainter* painter, const QStyleOptionViewItem& option,
