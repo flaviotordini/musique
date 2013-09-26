@@ -64,8 +64,8 @@ void BaseFinderView::appear() {
     BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
     if (baseSqlModel) {
         baseSqlModel->restoreQuery();
-        // while (baseSqlModel->canFetchMore())
-        //    baseSqlModel->fetchMore();
+        while (baseSqlModel->canFetchMore())
+            baseSqlModel->fetchMore();
     }
 }
 
