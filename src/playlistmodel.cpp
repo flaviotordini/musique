@@ -216,7 +216,7 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
 
     if (!tracks.empty()) {
 
-#ifdef APP_ACTIVATION
+#ifdef APP_ACTIVATION_NO
         bool activated = Activation::instance().isActivated();
         if (!activated && this->tracks.size() >= demoMaxTracks) {
             MainWindow::instance()->showDemoDialog(demoMessage);
@@ -228,7 +228,7 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
                         this->tracks.size() + tracks.size() - 1);
         foreach(Track* track, tracks) {
 
-#ifdef APP_ACTIVATION
+#ifdef APP_ACTIVATION_NO
             if (!activated && this->tracks.size() >= demoMaxTracks) {
                 endInsertRows();
                 MainWindow::instance()->showDemoDialog(demoMessage);
