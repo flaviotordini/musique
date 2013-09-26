@@ -84,8 +84,8 @@ MediaView::MediaView(QWidget *parent) : QWidget(parent) {
 
     finderWidget->setPlaylistView(playlistView);
 
-    splitter->setStretchFactor(0, 6);
-    splitter->setStretchFactor(1, 1);
+    splitter->setStretchFactor(0, 8);
+    splitter->setStretchFactor(1, 0);
 
     // restore splitter state
     QSettings settings;
