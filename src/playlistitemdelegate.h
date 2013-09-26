@@ -38,12 +38,17 @@ private:
     QPixmap createPlayIcon() const;
     QPixmap getPlayIcon() const;
     void paintTrack(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
-    void paintAlbumHeader(QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const;
-    void paintTrackNumber(QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const;
-    void paintTrackTitle(QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const;
-    void paintTrackLength(QPainter* painter, const QStyleOptionViewItem& option, QRect line, Track* track) const;
-    void paintActiveOverlay(QPainter *painter, const QStyleOptionViewItem& option, QRect line) const;
-    void paintSelectedOverlay( QPainter *painter, QRect line) const;
+    void paintAlbumHeader(QPainter* painter, const QStyleOptionViewItem& option,
+                          const QRect &line, Track* track) const;
+    void paintTrackNumber(QPainter* painter, const QStyleOptionViewItem& option,
+                          const QRect &line, Track* track) const;
+    void paintTrackTitle(QPainter* painter, const QStyleOptionViewItem& option,
+                         const QRect &line, Track* track) const;
+    void paintTrackLength(QPainter* painter, const QStyleOptionViewItem& option,
+                          const QRect &line, Track* track) const;
+    void paintActiveOverlay(QPainter *painter, const QStyleOptionViewItem& option,
+                            const QRect &line) const;
+    void paintSelectedOverlay(QPainter *painter, const QRect &line) const;
 
     static const int PADDING;
     static int ITEM_HEIGHT;
