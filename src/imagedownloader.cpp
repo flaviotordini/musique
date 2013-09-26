@@ -88,7 +88,7 @@ void ImageDownloader::popFromQueue() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select id, objectid, type, errors, url from downloads "
-                  "where errors<10 order by type, errors, id limit 1");
+                  "where errors<10 order by errors, type, id limit 1");
     if (!query.exec())
         qWarning() << query.lastQuery() << query.lastError().text();
     if (!query.next()) {
