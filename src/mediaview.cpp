@@ -269,6 +269,18 @@ void MediaView::playlistFinished() {
 }
 
 void MediaView::playbackFinished() {
+    trackFinished();
+    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
+    stopAfterThisAction->setChecked(false);
+    /*
+    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
+    if (stopAfterThisAction->isChecked()) {
+        stopAfterThisAction->setChecked(false);
+    } else playlistModel->skipForward();
+    */
+}
+
+void MediaView::trackFinished() {
 #ifdef APP_ACTIVATION
     if (!Activation::instance().isActivated()) {
         if (tracksPlayed > 1) demoMessage();
@@ -286,22 +298,20 @@ void MediaView::playbackFinished() {
         needScrobble = true;
     }
 
-    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
-    if (stopAfterThisAction->isChecked()) {
-        stopAfterThisAction->setChecked(false);
-    } else playlistModel->skipForward();
-
     if (needScrobble && track) LastFm::instance().scrobble(track);
-
 }
 
 void MediaView::aboutToFinish() {
-    Track *nextTrack = playlistModel->getNextTrack();
-    if (nextTrack) {
-        QString absolutePath = nextTrack->getAbsolutePath();
-        qWarning() << "Enqueuing" << absolutePath;
-        mediaObject->enqueue(absolutePath);
+    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
+    if (!stopAfterThisAction->isChecked()) {
+        Track *nextTrack = playlistModel->getNextTrack();
+        if (nextTrack) {
+            QString absolutePath = nextTrack->getAbsolutePath();
+            qWarning() << "Enqueuing" << absolutePath;
+            mediaObject->enqueue(absolutePath);
+        }
     }
+    trackFinished();
 }
 
 void MediaView::currentSourceChanged(Phonon::MediaSource mediaSource) {

@@ -56,6 +56,7 @@ private slots:
     void handleError(QString message);
     void playlistFinished();
     void playbackFinished();
+    void trackFinished();
     void aboutToFinish();
     void currentSourceChanged(Phonon::MediaSource mediaSource);
 #ifdef APP_ACTIVATION
