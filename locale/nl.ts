@@ -118,23 +118,23 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Artiest</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Jaar</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Populariteit</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Omgekeerde Volgorde</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -152,11 +152,11 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Aantal Liedjes</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Aantal Albums</translation>
     </message>
     <message>
         <source>Name</source>
@@ -164,15 +164,15 @@
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Jaar</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Populariteit</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Omgekeerde Volgorde</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -652,7 +652,7 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation type="unfinished"/>
+        <translation>#1 is klaar met het indexeren van uw muziek collectie</translation>
     </message>
 </context>
 <context>

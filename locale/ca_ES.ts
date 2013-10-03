@@ -1,160 +1,160 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ca_ES" version="2.0">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
-        <translation>Version %1</translation>
+        <translation>Versió %1</translation>
     </message>
     <message>
         <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 est un logiciel libre mais son développement prend du temps.</translation>
+        <translation>%1 és Software lliure, però el seu desenvolupament pren un temps preciós.</translation>
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>D&apos;avance merci pour vos &lt;a href=&apos;%1&apos;&gt;dons&lt;/a&gt; nécessaires à la poursuite du développement de %2.</translation>
+        <translation>Siusplau &lt;a href=&apos;%1&apos;&gt;dóna&lt;/a&gt; per ajudar al desenvolupament continuat del %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation>Publié sous licence &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
+        <translation>Alliberat sota la &lt;a href=&apos;%1&apos;&gt;Llicència Pública General de GNU&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Fermer</translation>
+        <translation>&amp;Tanca</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>À propos</translation>
+        <translation>Quant a</translation>
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Ce que vous avez toujours voulu savoir sur %1 sans jamais oser le demander</translation>
+        <translation>El que sempre havíeu volgut saber sobre el %1 i mai us havíeu atrevit a preguntar</translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation>Vous pouvez également essayer mes autres applications telles que:</translation>
+        <translation>És possible que també vulgueu provar altres aplicacions meves:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation>%1, une application Youtube</translation>
+        <translation>%1, una aplicació de YouTube</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation>%1, un lecteur de musique basé sur YouTube</translation>
+        <translation>%1, un reproductor de música de YouTube</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation>Traduisez %1 dans votre langue maternelle en utilisant %2</translation>
+        <translation>Tradueix %1 al teu idioma utilitzant %2</translation>
     </message>
     <message>
         <source>Licensed to: %1</source>
-        <translation>Licence accordée à : %1</translation>
+        <translation>Llicenciat a: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation>Entrez les details de votre licence</translation>
+        <translation>Entra els detalls de la teva llicència</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation>&amp;Email :</translation>
+        <translation>&amp;Email:</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation>&amp;Code :</translation>
+        <translation>&amp;Codi:</translation>
     </message>
 </context>
 <context>
     <name>ActivationView</name>
     <message>
         <source>Please license %1</source>
-        <translation>Veuillez obtenir une licence pour %1</translation>
+        <translation>Si us plau, llicencia el %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation>Cette version de démo a expiré.</translation>
+        <translation>Aquesta demo ha expirat.</translation>
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation>En l&apos;absence de licence, l&apos;application expirera dans %1 jours.</translation>
+        <translation>Sense llicència, l&apos;aplicació caducarà en %1 dies</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>En achetant la version complète, vous supporterai aussi le grand travail que j&apos;ai investi dans la création de %1.</translation>
+        <translation>Comprant la versió completa, també donarà suport al dur treball que he posat en la creació del %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>Utilisez la version de démo</translation>
+        <translation>Utilitza la demo</translation>
     </message>
     <message>
         <source>Enter License</source>
-        <translation>Entrer une licence</translation>
+        <translation>Entra la lliçència </translation>
     </message>
     <message>
         <source>Buy License</source>
-        <translation>Acheter une licence</translation>
+        <translation>Comprar llicència</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>La version complète vous permet d&apos;ajouter plus d&apos;un morceau à la playlist et d&apos;écouter votre musique sans interruptions.</translation>
+        <translation>La versió completa us permet afegir més de %1 pistes a la llista de reproducció i escoltar la vostra música sense interrupcions</translation>
     </message>
 </context>
 <context>
     <name>AlbumInfo</name>
     <message>
         <source>Buy on %1</source>
-        <translation>Acheter %1</translation>
+        <translation>Compra en %1</translation>
     </message>
     <message>
         <source>Read more</source>
-        <translation>En savoir plus</translation>
+        <translation>Llegeix més</translation>
     </message>
 </context>
 <context>
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation>Artista</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titre</translation>
+        <translation>Títol</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation>Any</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation>Popularité</translation>
+        <translation>Popularitat</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation>Ordre inversé</translation>
+        <translation>Ordre invers</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Trier par</translation>
+        <translation>Ordena per</translation>
     </message>
 </context>
 <context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
-        <translation>En savoir plus</translation>
+        <translation>Llegeix més</translation>
     </message>
 </context>
 <context>
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation>Nombre de morceaux</translation>
+        <translation>Ordena per pista</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation>Nombre d’albums</translation>
+        <translation>Ordena per àlbum</translation>
     </message>
     <message>
         <source>Name</source>
@@ -162,124 +162,124 @@
     </message>
     <message>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation>Any</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation>Popularité</translation>
+        <translation>Popularitat</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation>Ordre inversé</translation>
+        <translation>Ordre invers</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Trier par</translation>
+        <translation>Ordena per</translation>
     </message>
 </context>
 <context>
     <name>BreadcrumbWidget</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Retour</translation>
+        <translation>&amp;Enrere</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation>Retour</translation>
+        <translation>Ves enrere</translation>
     </message>
 </context>
 <context>
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Bienvenue dans &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Benvinguts a &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 doit scanner votre collection musicale.</translation>
+        <translation>El %1 necessita escanejar la vostra col·lecció de música.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancel·la</translation>
     </message>
     <message>
         <source>Use iTunes collection</source>
-        <translation>Utiliser la bibliothèque iTunes</translation>
+        <translation>Fes servir una col·lecció iTunes</translation>
     </message>
     <message>
         <source>Use %1</source>
-        <translation>Utiliser %1</translation>
+        <translation>Usa %1</translation>
     </message>
     <message>
         <source>Choose a folder...</source>
-        <translation>Choisir un répertoire...</translation>
+        <translation>Escull un directori...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 va se connecter à Last.fm et transmettre le nom des artistes et les titres d&apos;album pour récupérer la couverture, la biographie et bien plus</translation>
+        <translation>%1 es connectarà als serveis web de Last.fm i els passarà els noms dels artistes i títols dels àlbums per trobar les portades, biografies i molt més.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Si vous estimez qu&apos;il y a un risque pour votre vie privée, vous pouvez quitter maintenant.</translation>
+        <translation>Si li preocupa la privacitat d&apos;això pot sortir ara.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Où est stockée votre musique </translation>
+        <translation>On teniu la col·lecció de música?</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation>Sélectionnez l&apos;emplacement de votre collection musicale.</translation>
+        <translation>Seleccioneu la ubicació de la col·lecció de música.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
-        <translation>Localisez votre collection</translation>
+        <translation>Busqueu la vostra col·lecció</translation>
     </message>
 </context>
 <context>
     <name>ClearButton</name>
     <message>
         <source>Clear</source>
-        <translation>Effacer</translation>
+        <translation>Neteja</translation>
     </message>
 </context>
 <context>
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>Une analyse est déjà en cours</translation>
+        <translation>Ja s&apos;està executant un escaneig</translation>
     </message>
 </context>
 <context>
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 analyse votre collection musicale.</translation>
+        <translation>El %1 està escanejant la vostra col·lecció de música.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 utilise &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; pour cataloguer votre musique.</translation>
+        <translation>El %1 fa servir &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; per catalogar la vostra música.</translation>
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
-        <translation>La durée de l&apos;analyse dépend de la taille de votre collection et de la vitesse de connexion.</translation>
+        <translation>Això prendrà temps, depenent de la mida de la vostra col·lecció i la velocitat de xarxa.</translation>
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation>Prenez le temps d&apos;un café...</translation>
+        <translation>Aneu a fer un cafè</translation>
     </message>
 </context>
 <context>
     <name>DownloadWidget</name>
     <message>
         <source>Downloading update...</source>
-        <translation>Téléchargement de la mise à jour...</translation>
+        <translation>Descarregant actualitzacions...</translation>
     </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation>Déposer ici pour ajouter à la liste de lecture</translation>
+        <translation>Deixeu anar aquí per afegir a la llista de reproducció</translation>
     </message>
 </context>
 <context>
@@ -290,344 +290,343 @@
     </message>
     <message>
         <source>Albums</source>
-        <translation>Albums</translation>
+        <translation>Àlbums</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Répertoires</translation>
+        <translation>Carpetes</translation>
     </message>
 </context>
 <context>
     <name>GlobalShortcuts</name>
     <message>
         <source>Play</source>
-        <translation>Lecture</translation>
+        <translation>Reprodueix</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation>Pausa</translation>
     </message>
     <message>
         <source>Play/Pause</source>
-        <translation>Lecture/Pause</translation>
+        <translation>Reprodueix / Pausa</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Atura</translation>
     </message>
     <message>
         <source>Stop playing after current track</source>
-        <translation>Arrêter après la piste en cours</translation>
+        <translation>Atura després de la pista actual</translation>
     </message>
     <message>
         <source>Next track</source>
-        <translation>Piste suivante</translation>
+        <translation>Pista següent</translation>
     </message>
     <message>
         <source>Previous track</source>
-        <translation>Piste précédente</translation>
+        <translation>Pista anterior</translation>
     </message>
     <message>
         <source>Increase volume</source>
-        <translation>Augmenter le volume</translation>
+        <translation>Augmenta el volum</translation>
     </message>
     <message>
         <source>Decrease volume</source>
-        <translation>Baisser le volume</translation>
+        <translation>Disminueix el volum</translation>
     </message>
     <message>
         <source>Mute</source>
-        <translation>Silence</translation>
+        <translation>Silencia</translation>
     </message>
     <message>
         <source>Seek forward</source>
-        <translation>Recherche en avant</translation>
+        <translation>Cerca endavant</translation>
     </message>
     <message>
         <source>Seek backward</source>
-        <translation>Recherche en arrière</translation>
+        <translation>Cerca enrere</translation>
     </message>
 </context>
 <context>
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation>Échec de l&apos;autentification</translation>
+        <translation>Autentificació fallida</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation>Se connnecter à %1</translation>
+        <translation>Entra a %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation>&amp;Nom d&apos;utilisateur</translation>
+        <translation>Nom d&apos;&amp;Usuari:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation>&amp;Mot de passe</translation>
+        <translation>&amp;Contrassenya:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation>S&apos;enregistrer pour un compte %1</translation>
+        <translation>Crea un compte de %1</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation>Vous avez oublié votre &lt;a href=&apos;%1&apos;&gt;nom d&apos;utilisateur&lt;/a&gt; ou votre &lt;a href=&apos;%2&apos;&gt;mot de passe&lt;/a&gt;?
-</translation>
+        <translation>Heu oblidat el vostre &lt;a href=&apos;%1&apos;&gt;Nom d&apos;Usuari&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;Contrassenya&lt;/a&gt;?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Cancel·la</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Retour</translation>
+        <translation>&amp;Enrere</translation>
     </message>
     <message>
         <source>Go to the previous view</source>
-        <translation>Aller à la vue précédente</translation>
+        <translation>Ves a la vista anterior</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;Infos</translation>
+        <translation>&amp;Informació</translation>
     </message>
     <message>
         <source>Show information about the current track</source>
-        <translation>Voir les infos de la piste en cours</translation>
+        <translation>Mostra informació sobre la pista actual</translation>
     </message>
     <message>
         <source>P&amp;revious</source>
-        <translation>P&amp;récédent</translation>
+        <translation>&amp;Previ</translation>
     </message>
     <message>
         <source>Go back to the previous track</source>
-        <translation>Aller à la piste précédente</translation>
+        <translation>Torna a la pista prèvia</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation>Suiva&amp;nte</translation>
+        <translation>&amp;Següent</translation>
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation>Aller à la piste suivante</translation>
+        <translation>Salta a la pista següent</translation>
     </message>
     <message>
         <source>&amp;Play</source>
-        <translation>Lec&amp;ture</translation>
+        <translation>&amp;Reprodueix</translation>
     </message>
     <message>
         <source>Start playback</source>
-        <translation>Démarrer la lecture</translation>
+        <translation>Comença la reproducció</translation>
     </message>
     <message>
         <source>&amp;Full Screen</source>
-        <translation>&amp;Plein écran</translation>
+        <translation>Pantalla &amp;completa</translation>
     </message>
     <message>
         <source>Go full screen</source>
-        <translation>Mettre en plein écran</translation>
+        <translation>Ves a pantalla completa</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>&amp;Retirer</translation>
+        <translation>&amp;Esborra</translation>
     </message>
     <message>
         <source>Remove the selected tracks from the playlist</source>
-        <translation>Retirer les pistes sélectionnées de la liste de lecture</translation>
+        <translation>Esborra les pistes seleccionades de la llista de reproducció</translation>
     </message>
     <message>
         <source>Move &amp;Up</source>
-        <translation>Mo&amp;nter</translation>
+        <translation>Mou A&amp;munt</translation>
     </message>
     <message>
         <source>Move up the selected tracks in the playlist</source>
-        <translation>Monter les pistes sélectionnées dans la liste de lecture</translation>
+        <translation>Mou cap amunt les pistes seleccionades en la llista de reproducció</translation>
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation>&amp;Descendre</translation>
+        <translation>Mou A&amp;vall</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
-        <translation>Descendre les pistes sélectionnées dans la liste de lecture</translation>
+        <translation>Mou cap avall les pistes seleccionades en la llista de reproducció</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitter</translation>
+        <translation>&amp;Surt</translation>
     </message>
     <message>
         <source>Bye</source>
-        <translation>Au revoir</translation>
+        <translation>Adéu</translation>
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation>&amp;Changer le répertoire de la collection...</translation>
+        <translation>&amp;Canvia el directori de la col·lecció...</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
-        <translation>Sélectionner un autre répertoire de collection</translation>
+        <translation>Trieu una carpeta de col·lecció de música diferent</translation>
     </message>
     <message>
         <source>&amp;Website</source>
-        <translation>Site &amp;Web</translation>
+        <translation>Pàgina &amp;web</translation>
     </message>
     <message>
         <source>%1 on the Web</source>
-        <translation>%1 sur le Web</translation>
+        <translation>%1 en la web</translation>
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>Faire un &amp;don</translation>
+        <translation>Feu una &amp;donació</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
-        <translation>Merci de contribuer à la poursuite du développement de %1</translation>
+        <translation>Siusplau recolza el desenvolupament continuat del %1</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;À propos</translation>
+        <translation>&amp;Quant a</translation>
     </message>
     <message>
         <source>Info about %1</source>
-        <translation>Infos à propos de %1</translation>
+        <translation>Informació sobre el %1</translation>
     </message>
     <message>
         <source>&amp;Clear</source>
-        <translation>Effa&amp;cer</translation>
+        <translation>&amp;Neteja</translation>
     </message>
     <message>
         <source>Remove all tracks from the playlist</source>
-        <translation>Enlever toutes les pistes de la liste de lecture</translation>
+        <translation>Elimina totes les peces de la llista de reproducció</translation>
     </message>
     <message>
         <source>&amp;Shuffle</source>
-        <translation>A&amp;léatoire</translation>
+        <translation>&amp;Aleatori</translation>
     </message>
     <message>
         <source>Random playlist mode</source>
-        <translation>Lecture aléatoire de la liste de lecture</translation>
+        <translation>Mode aleatori de la llista de reproducció</translation>
     </message>
     <message>
         <source>&amp;Repeat</source>
-        <translation>&amp;Répéter</translation>
+        <translation>&amp;Repeteix</translation>
     </message>
     <message>
         <source>Play first song again after all songs are played</source>
-        <translation>Revient à la première piste lorsque la liste de lecture est finie</translation>
+        <translation>Torna a reproduir la primera cançó després que hagin sonat totes les cançons</translation>
     </message>
     <message>
         <source>Mute volume</source>
-        <translation>Silence</translation>
+        <translation>Silencia el volum</translation>
     </message>
     <message>
         <source>&amp;Application</source>
-        <translation>&amp;Application</translation>
+        <translation>&amp;Aplicació</translation>
     </message>
     <message>
         <source>&amp;Playback</source>
-        <translation>&amp;Lecture</translation>
+        <translation>&amp;Reproducció</translation>
     </message>
     <message>
         <source>Play&amp;list</source>
-        <translation>L&amp;iste de lecture</translation>
+        <translation>&amp;Llista de reproducció</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Vue</translation>
+        <translation>&amp;Vista</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>Ai&amp;de</translation>
+        <translation>A&amp;juda</translation>
     </message>
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation>Presser %1 pour monter le volume, %2 pour le baisser</translation>
+        <translation>Prem %1 per pujar el volum, %2 per baixar-lo</translation>
     </message>
     <message>
         <source>Opening %1</source>
-        <translation>Ouverture de %1</translation>
+        <translation>Obrint %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation>Mise à jour de la collection...</translation>
+        <translation>Actualitzant la col·lecció...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
-        <translation>Mise à jour de la collection - %1%</translation>
+        <translation>Actualitzant la col·lecció - %1%</translation>
     </message>
     <message>
         <source>Collection updated</source>
-        <translation>La collection est à jour</translation>
+        <translation>Col·lecció actualitzada</translation>
     </message>
     <message>
         <source>Fatal error: %1</source>
-        <translation>Erreur fatale: %1</translation>
+        <translation>Error fatal: %1</translation>
     </message>
     <message>
         <source>Error: %1</source>
-        <translation>Erreur: %1</translation>
+        <translation>Error: %1</translation>
     </message>
     <message>
         <source>Leave &amp;Full Screen</source>
-        <translation>Quitter le &amp;mode plein écran</translation>
+        <translation>Abandona la Pantalla &amp;completa</translation>
     </message>
     <message>
         <source>Remaining time: %1</source>
-        <translation>Durée restante: %1</translation>
+        <translation>Temps restant: %1</translation>
     </message>
     <message>
         <source>Volume at %1%</source>
-        <translation>Volume à %1%</translation>
+        <translation>Volum al %1%</translation>
     </message>
     <message>
         <source>Volume is muted</source>
-        <translation>Le volume est coupé</translation>
+        <translation>Volum silenciat</translation>
     </message>
     <message>
         <source>Volume is unmuted</source>
-        <translation>Le volume est restauré</translation>
+        <translation>Volum de-silenciat</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Obtenir la version complète</translation>
+        <translation>Aconsegueix la versió completa</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation>%1 version %2 est maintenant disponible.</translation>
+        <translation>%1 la versió %2 ja està disponible.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation>Me le rappeler plus tard</translation>
+        <translation>Recorda&apos;m-ho més tard</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Mettre à jour</translation>
+        <translation>Actualitza</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation>&amp;Fenêtre</translation>
+        <translation>&amp;Finestra</translation>
     </message>
     <message>
         <source>&amp;Minimize</source>
-        <translation>&amp;Réduire</translation>
+        <translation>&amp;Minimitza</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Fermer</translation>
+        <translation>&amp;Tanca</translation>
     </message>
     <message>
         <source>Buy %1...</source>
-        <translation>Acheter %1 …</translation>
+        <translation>Compra %1...</translation>
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation>&amp;Arrêter après ce morceau</translation>
+        <translation>&amp;Atura després d&apos;aquesta pista</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
@@ -635,116 +634,116 @@
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation>Envoyer les pistes jouées vers %1</translation>
+        <translation>Envia les pistes reproduïdes a %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation>&amp;Se déconnecter de %1</translation>
+        <translation>&amp;Surt de %1</translation>
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation>&amp;Signaler un problème...</translation>
+        <translation>&amp;Informa d&apos;un problema...</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Chercher</translation>
+        <translation>Cerca</translation>
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation>%1 a fini de parcourir votre collection musicale</translation>
+        <translation>%1 acaba d&apos;escanejar la vostra col·lecció de música</translation>
     </message>
 </context>
 <context>
     <name>MediaView</name>
     <message>
         <source>Drop items here</source>
-        <translation>Déposez des éléments ici</translation>
+        <translation>Deixa anar elements aquí</translation>
     </message>
     <message>
         <source>Playlist finished</source>
-        <translation>Liste de lecture terminée</translation>
+        <translation>Llista de reproducció finalitzada</translation>
     </message>
     <message>
         <source>This is just the demo version of %1.</source>
-        <translation>Ce n&apos;est que la version de démostration de %1.</translation>
+        <translation>Això és només la versió de demostració del %1.</translation>
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Elle ne permet que de jouer quelques chansons pour vous faire une idée de ses possibilités.</translation>
+        <translation>Li permet reproduir unes quantes pistes per provar l&apos;aplicació i veure si li va bé.</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Continuer</translation>
+        <translation>Continua</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Obtenir la version complète</translation>
+        <translation>Aconsegueix la versió completa</translation>
     </message>
 </context>
 <context>
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation>Une nouvelle version de %1 est disponible !</translation>
+        <translation>Una nova versió de %1 està disponible</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation>%1 %2 est maintenant disponible. Vous avez %3.</translation>
+        <translation>%1 %2 estan disponibles. Tu tens %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation>Voulez-vous la télécharger maintenant ?</translation>
+        <translation>T&apos;agradaria descarregar-ho ara?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
-        <translation>Sauter Cette Version</translation>
+        <translation>Omet aquesta versió</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
-        <translation>Me Le Rappeler Plus Tard</translation>
+        <translation>Recorda-m&apos;ho després</translation>
     </message>
     <message>
         <source>Install Update</source>
-        <translation>Installer La Mise à jour</translation>
+        <translation>Instal·la Actualització</translation>
     </message>
 </context>
 <context>
     <name>PasteLineEdit</name>
     <message>
         <source>Paste</source>
-        <translation>Coller</translation>
+        <translation>Enganxar</translation>
     </message>
 </context>
 <context>
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Cette version de démo limite le nombre de morceaux à %1 dans la liste de lecture.</translation>
+        <translation>Aquesta versió de prova és limitada a tan sols %1 pistes a la llista de reproducció.</translation>
     </message>
 </context>
 <context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
-        <translation>La liste de lecture est vide</translation>
+        <translation>Llista de reproducció buida</translation>
     </message>
     <message>
         <source>%1 tracks - Total length is %2</source>
-        <translation>%1 pistes, pour une durée totale de %2</translation>
+        <translation>%1 pistes - Longitud total de %2</translation>
     </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
     <message>
         <source>Search</source>
-        <translation>Recherche</translation>
+        <translation>Cerca</translation>
     </message>
 </context>
 <context>
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation>Votre recherche n&apos;a donné aucun résultat.</translation>
+        <translation>La seva cerca no ha donat resultats.</translation>
     </message>
 </context>
 <context>

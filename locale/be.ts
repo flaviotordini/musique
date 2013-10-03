@@ -1,757 +1,756 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="be" version="2.0">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
-        <translation>Version %1</translation>
+        <translation>Версія %1</translation>
     </message>
     <message>
         <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 est un logiciel libre mais son développement prend du temps.</translation>
+        <translation>%1 - гэта Свабоднае Праграмнае Забеспячэнне, але яго распрацоўка патрабуе каштоўнага часу.</translation>
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>D&apos;avance merci pour vos &lt;a href=&apos;%1&apos;&gt;dons&lt;/a&gt; nécessaires à la poursuite du développement de %2.</translation>
+        <translation>Калі ласка, &lt;a href=&apos;%1&apos;&gt;ахвяруйце&lt;/a&gt; для падтрымкі далейшага развіцця %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation>Publié sous licence &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
+        <translation>Зроблена пад &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Fermer</translation>
+        <translation>&amp;Зачыніць</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>À propos</translation>
+        <translation>Пра праграму</translation>
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Ce que vous avez toujours voulu savoir sur %1 sans jamais oser le demander</translation>
+        <translation>Тое, што Вы заўсёды хацелі ведаць пра %1 і ніколі не наважваліся спытаць</translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation>Vous pouvez également essayer mes autres applications telles que:</translation>
+        <translation>Вы можаце паспрабаваць мае іншыя праграмы:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation>%1, une application Youtube</translation>
+        <translation>%1, праграма для YouTube</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation>%1, un lecteur de musique basé sur YouTube</translation>
+        <translation>%1, музычны прайгравальнік для YouTube</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation>Traduisez %1 dans votre langue maternelle en utilisant %2</translation>
+        <translation>Перакладзіце %1 на Вашу родную мову, выкарыстоўваючы %2</translation>
     </message>
     <message>
         <source>Licensed to: %1</source>
-        <translation>Licence accordée à : %1</translation>
+        <translation>Ліцэнзія да: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation>Entrez les details de votre licence</translation>
+        <translation>Увядзіце дэталі Вашай ліцэнзіі</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation>&amp;Email :</translation>
+        <translation>&amp;Пошта:</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation>&amp;Code :</translation>
+        <translation>&amp;Код:</translation>
     </message>
 </context>
 <context>
     <name>ActivationView</name>
     <message>
         <source>Please license %1</source>
-        <translation>Veuillez obtenir une licence pour %1</translation>
+        <translation>Калі ласка, атрымайце ліцэнзію %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation>Cette version de démo a expiré.</translation>
+        <translation>Тэрмін дэманстрацыі скончыўся.</translation>
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation>En l&apos;absence de licence, l&apos;application expirera dans %1 jours.</translation>
+        <translation>Без ліцэнзіі праграма перастане працаваць праз %1 дзён.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>En achetant la version complète, vous supporterai aussi le grand travail que j&apos;ai investi dans la création de %1.</translation>
+        <translation>Набыўшы поўную версію, Вы падтрымаеце маю цяжкую працу па стварэнні %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>Utilisez la version de démo</translation>
+        <translation>Выкарыстаць дэманстрацыю</translation>
     </message>
     <message>
         <source>Enter License</source>
-        <translation>Entrer une licence</translation>
+        <translation>Увесці ліцэнзію</translation>
     </message>
     <message>
         <source>Buy License</source>
-        <translation>Acheter une licence</translation>
+        <translation>Набыць ліцэнзію</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>La version complète vous permet d&apos;ajouter plus d&apos;un morceau à la playlist et d&apos;écouter votre musique sans interruptions.</translation>
+        <translation>Поўная версія дазваляе Вам дадаваць болей за %1 песень у спіс прайграння і слухаць музыку без перапынкаў.</translation>
     </message>
 </context>
 <context>
     <name>AlbumInfo</name>
     <message>
         <source>Buy on %1</source>
-        <translation>Acheter %1</translation>
+        <translation>Набыць на %1</translation>
     </message>
     <message>
         <source>Read more</source>
-        <translation>En savoir plus</translation>
+        <translation>Чытаць яшчэ</translation>
     </message>
 </context>
 <context>
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation>Artiste</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Title</source>
-        <translation>Titre</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Popularity</source>
-        <translation>Popularité</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation>Ordre inversé</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Trier par</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
-        <translation>En savoir plus</translation>
+        <translation>Чытаць яшчэ</translation>
     </message>
 </context>
 <context>
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation>Nombre de morceaux</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Album Count</source>
-        <translation>Nombre d’albums</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Name</source>
-        <translation>Nom</translation>
+        <translation>Імя</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation>Année</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Popularity</source>
-        <translation>Popularité</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation>Ordre inversé</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Trier par</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>BreadcrumbWidget</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Retour</translation>
+        <translation>&amp;Назад</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation>Retour</translation>
+        <translation>Ісці назад</translation>
     </message>
 </context>
 <context>
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Bienvenue dans &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Запрашаем у &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 doit scanner votre collection musicale.</translation>
+        <translation>%1 патрабуе сканавання Вашай музычнай калекцыі</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Адмена</translation>
     </message>
     <message>
         <source>Use iTunes collection</source>
-        <translation>Utiliser la bibliothèque iTunes</translation>
+        <translation>Выкарыстаць калекцыю iTunes</translation>
     </message>
     <message>
         <source>Use %1</source>
-        <translation>Utiliser %1</translation>
+        <translation>Выкарыстаць %1</translation>
     </message>
     <message>
         <source>Choose a folder...</source>
-        <translation>Choisir un répertoire...</translation>
+        <translation>Абраць тэчку...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 va se connecter à Last.fm et transmettre le nom des artistes et les titres d&apos;album pour récupérer la couverture, la biographie et bien plus</translation>
+        <translation>%1 злучыцца з сэрвісам Last.fm і перадасць імёны выканаўцаў і назвы альбомаў дзеля таго, каб атрымаць вокладкі, біяграфіі і іншае.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Si vous estimez qu&apos;il y a un risque pour votre vie privée, vous pouvez quitter maintenant.</translation>
+        <translation>Калі Вы маеце прыватныя дадзеныя ў гэтым, можаце выйсці зараз.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Où est stockée votre musique </translation>
+        <translation>Дзе Ваша музычная калекцыя?</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation>Sélectionnez l&apos;emplacement de votre collection musicale.</translation>
+        <translation>Абраць месцазнаходжанне Вашай музычнай калекцыі.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
-        <translation>Localisez votre collection</translation>
+        <translation>Вызначыць месца Вашай калекцыі</translation>
     </message>
 </context>
 <context>
     <name>ClearButton</name>
     <message>
         <source>Clear</source>
-        <translation>Effacer</translation>
+        <translation>Ачысціць</translation>
     </message>
 </context>
 <context>
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>Une analyse est déjà en cours</translation>
+        <translation>Сканаванне ўжо ў працэсе</translation>
     </message>
 </context>
 <context>
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 analyse votre collection musicale.</translation>
+        <translation>%1 скануе Вашу музычную калекцыю.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 utilise &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; pour cataloguer votre musique.</translation>
+        <translation>%1 выкарыстоўвае &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt;, каб зрабіць каталог з Вашай музыкі.</translation>
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
-        <translation>La durée de l&apos;analyse dépend de la taille de votre collection et de la vitesse de connexion.</translation>
+        <translation>Гэта адыме пэўны час у залежнасці ад памеру Вашай калекцыі і хуткасці сеткі.</translation>
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation>Prenez le temps d&apos;un café...</translation>
+        <translation>Выпіце пакуль кавы</translation>
     </message>
 </context>
 <context>
     <name>DownloadWidget</name>
     <message>
         <source>Downloading update...</source>
-        <translation>Téléchargement de la mise à jour...</translation>
+        <translation>Запампоўваецца абнаўленне...</translation>
     </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation>Déposer ici pour ajouter à la liste de lecture</translation>
+        <translation>Перацягніце сюды, каб далучыць да спісу прайгравання</translation>
     </message>
 </context>
 <context>
     <name>FinderWidget</name>
     <message>
         <source>Artists</source>
-        <translation>Artistes</translation>
+        <translation>Выканаўцы</translation>
     </message>
     <message>
         <source>Albums</source>
-        <translation>Albums</translation>
+        <translation>Альбомы</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Répertoires</translation>
+        <translation>Тэчкі</translation>
     </message>
 </context>
 <context>
     <name>GlobalShortcuts</name>
     <message>
         <source>Play</source>
-        <translation>Lecture</translation>
+        <translation>Граць</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pause</translation>
+        <translation>Паўза</translation>
     </message>
     <message>
         <source>Play/Pause</source>
-        <translation>Lecture/Pause</translation>
+        <translation>Граць/Паўза</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Stop</translation>
+        <translation>Спыніць</translation>
     </message>
     <message>
         <source>Stop playing after current track</source>
-        <translation>Arrêter après la piste en cours</translation>
+        <translation>Спыніць гранне пасля бягучай песні</translation>
     </message>
     <message>
         <source>Next track</source>
-        <translation>Piste suivante</translation>
+        <translation>Наступная песня</translation>
     </message>
     <message>
         <source>Previous track</source>
-        <translation>Piste précédente</translation>
+        <translation>Папярэдняя песня</translation>
     </message>
     <message>
         <source>Increase volume</source>
-        <translation>Augmenter le volume</translation>
+        <translation>Гучней</translation>
     </message>
     <message>
         <source>Decrease volume</source>
-        <translation>Baisser le volume</translation>
+        <translation>Цішэй</translation>
     </message>
     <message>
         <source>Mute</source>
-        <translation>Silence</translation>
+        <translation>Бязгучна</translation>
     </message>
     <message>
         <source>Seek forward</source>
-        <translation>Recherche en avant</translation>
+        <translation>Праматаць наперад</translation>
     </message>
     <message>
         <source>Seek backward</source>
-        <translation>Recherche en arrière</translation>
+        <translation>Праматаць назад</translation>
     </message>
 </context>
 <context>
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation>Échec de l&apos;autentification</translation>
+        <translation>Ідэнтыфікацыя не атрымалася</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation>Se connnecter à %1</translation>
+        <translation>Увайсці ў %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation>&amp;Nom d&apos;utilisateur</translation>
+        <translation>&amp;Імя карыстальніка:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation>&amp;Mot de passe</translation>
+        <translation>&amp;Пароль:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation>S&apos;enregistrer pour un compte %1</translation>
+        <translation>Увайсці ў рахунак %1</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation>Vous avez oublié votre &lt;a href=&apos;%1&apos;&gt;nom d&apos;utilisateur&lt;/a&gt; ou votre &lt;a href=&apos;%2&apos;&gt;mot de passe&lt;/a&gt;?
-</translation>
+        <translation>Забылі Ваша &lt;a href=&apos;%1&apos;&gt;імя карыстальніка&lt;/a&gt; альбо &lt;a href=&apos;%2&apos;&gt;пароль&lt;/a&gt;?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Annuler</translation>
+        <translation>Адмена</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Retour</translation>
+        <translation>&amp;Назад</translation>
     </message>
     <message>
         <source>Go to the previous view</source>
-        <translation>Aller à la vue précédente</translation>
+        <translation>Ісці да папярэдняга выгляду</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;Infos</translation>
+        <translation>&amp;Інфармацыя</translation>
     </message>
     <message>
         <source>Show information about the current track</source>
-        <translation>Voir les infos de la piste en cours</translation>
+        <translation>Паказаць інфармацыю аб бягучай песні</translation>
     </message>
     <message>
         <source>P&amp;revious</source>
-        <translation>P&amp;récédent</translation>
+        <translation>П&amp;апярэдні</translation>
     </message>
     <message>
         <source>Go back to the previous track</source>
-        <translation>Aller à la piste précédente</translation>
+        <translation>Ісці назад да папярэдняй песні</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation>Suiva&amp;nte</translation>
+        <translation>&amp;Наступны</translation>
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation>Aller à la piste suivante</translation>
+        <translation>Перайсці да наступнай песні</translation>
     </message>
     <message>
         <source>&amp;Play</source>
-        <translation>Lec&amp;ture</translation>
+        <translation>&amp;Граць</translation>
     </message>
     <message>
         <source>Start playback</source>
-        <translation>Démarrer la lecture</translation>
+        <translation>Пачаць прайграванне</translation>
     </message>
     <message>
         <source>&amp;Full Screen</source>
-        <translation>&amp;Plein écran</translation>
+        <translation>&amp;Поўны экран</translation>
     </message>
     <message>
         <source>Go full screen</source>
-        <translation>Mettre en plein écran</translation>
+        <translation>Уключыць на ўвесь экран</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>&amp;Retirer</translation>
+        <translation>&amp;Выдаліць</translation>
     </message>
     <message>
         <source>Remove the selected tracks from the playlist</source>
-        <translation>Retirer les pistes sélectionnées de la liste de lecture</translation>
+        <translation>Выдаліць абраныя песні з спісу прайграння</translation>
     </message>
     <message>
         <source>Move &amp;Up</source>
-        <translation>Mo&amp;nter</translation>
+        <translation>&amp;Вышэй</translation>
     </message>
     <message>
         <source>Move up the selected tracks in the playlist</source>
-        <translation>Monter les pistes sélectionnées dans la liste de lecture</translation>
+        <translation>Пасунуць вышэй абраныя песні ў спісе прайграння</translation>
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation>&amp;Descendre</translation>
+        <translation>Ніжэй</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
-        <translation>Descendre les pistes sélectionnées dans la liste de lecture</translation>
+        <translation>Пасунуць ніжэй абраныя песні ў спісе прайграння</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Quitter</translation>
+        <translation>&amp;Выйсці</translation>
     </message>
     <message>
         <source>Bye</source>
-        <translation>Au revoir</translation>
+        <translation>Да сустрэчы!</translation>
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation>&amp;Changer le répertoire de la collection...</translation>
+        <translation>&amp;Змяніць тэчку калекцыі...</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
-        <translation>Sélectionner un autre répertoire de collection</translation>
+        <translation>Абраць іншую тэчку музычнай калекцыі</translation>
     </message>
     <message>
         <source>&amp;Website</source>
-        <translation>Site &amp;Web</translation>
+        <translation>&amp;Сайт праграмы</translation>
     </message>
     <message>
         <source>%1 on the Web</source>
-        <translation>%1 sur le Web</translation>
+        <translation>&amp;1 у Сеціве</translation>
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>Faire un &amp;don</translation>
+        <translation>А&amp;хвяраваць</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
-        <translation>Merci de contribuer à la poursuite du développement de %1</translation>
+        <translation>Калі ласка, падтрымайце для далейшага развіцця %1</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;À propos</translation>
+        <translation>&amp;Пра праграму</translation>
     </message>
     <message>
         <source>Info about %1</source>
-        <translation>Infos à propos de %1</translation>
+        <translation>Інфармацыя пра %1</translation>
     </message>
     <message>
         <source>&amp;Clear</source>
-        <translation>Effa&amp;cer</translation>
+        <translation>&amp;Ачысціць</translation>
     </message>
     <message>
         <source>Remove all tracks from the playlist</source>
-        <translation>Enlever toutes les pistes de la liste de lecture</translation>
+        <translation>Выдаліць усе песні з спісу прайграння</translation>
     </message>
     <message>
         <source>&amp;Shuffle</source>
-        <translation>A&amp;léatoire</translation>
+        <translation>&amp;Выпадкова</translation>
     </message>
     <message>
         <source>Random playlist mode</source>
-        <translation>Lecture aléatoire de la liste de lecture</translation>
+        <translation>Выпадковы рэжым прайграння</translation>
     </message>
     <message>
         <source>&amp;Repeat</source>
-        <translation>&amp;Répéter</translation>
+        <translation>&amp;Паўтарыць</translation>
     </message>
     <message>
         <source>Play first song again after all songs are played</source>
-        <translation>Revient à la première piste lorsque la liste de lecture est finie</translation>
+        <translation>Граць першую песню зноў пасля таго, як усе песні адыгралі</translation>
     </message>
     <message>
         <source>Mute volume</source>
-        <translation>Silence</translation>
+        <translation>Бязгучна</translation>
     </message>
     <message>
         <source>&amp;Application</source>
-        <translation>&amp;Application</translation>
+        <translation>&amp;Праграма</translation>
     </message>
     <message>
         <source>&amp;Playback</source>
-        <translation>&amp;Lecture</translation>
+        <translation>&amp;Прайграванне</translation>
     </message>
     <message>
         <source>Play&amp;list</source>
-        <translation>L&amp;iste de lecture</translation>
+        <translation>Спіс п&amp;райгравання</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Vue</translation>
+        <translation>&amp;Выгляд</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>Ai&amp;de</translation>
+        <translation>&amp;Дапамога</translation>
     </message>
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation>Presser %1 pour monter le volume, %2 pour le baisser</translation>
+        <translation>Націсніце %1 для павелічэння гуку, %2 для памяншэння</translation>
     </message>
     <message>
         <source>Opening %1</source>
-        <translation>Ouverture de %1</translation>
+        <translation>Адкрыццё %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation>Mise à jour de la collection...</translation>
+        <translation>Абнаўленне калекцыі...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
-        <translation>Mise à jour de la collection - %1%</translation>
+        <translation>Абнаўленне калекцыі - %1%</translation>
     </message>
     <message>
         <source>Collection updated</source>
-        <translation>La collection est à jour</translation>
+        <translation>Калекцыя абноўлена</translation>
     </message>
     <message>
         <source>Fatal error: %1</source>
-        <translation>Erreur fatale: %1</translation>
+        <translation>Фатальная памылка: %1</translation>
     </message>
     <message>
         <source>Error: %1</source>
-        <translation>Erreur: %1</translation>
+        <translation>Памылка: %1</translation>
     </message>
     <message>
         <source>Leave &amp;Full Screen</source>
-        <translation>Quitter le &amp;mode plein écran</translation>
+        <translation>&amp;Выйсці з поўнаэкраннага рэжыму</translation>
     </message>
     <message>
         <source>Remaining time: %1</source>
-        <translation>Durée restante: %1</translation>
+        <translation>Час, які застаўся: %1</translation>
     </message>
     <message>
         <source>Volume at %1%</source>
-        <translation>Volume à %1%</translation>
+        <translation>Гучнасць: %1%</translation>
     </message>
     <message>
         <source>Volume is muted</source>
-        <translation>Le volume est coupé</translation>
+        <translation>Гуку няма</translation>
     </message>
     <message>
         <source>Volume is unmuted</source>
-        <translation>Le volume est restauré</translation>
+        <translation>Гук ёсць</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Obtenir la version complète</translation>
+        <translation>Атрымаць поўную версію</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation>%1 version %2 est maintenant disponible.</translation>
+        <translation>%1 версія №2 даступная.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation>Me le rappeler plus tard</translation>
+        <translation>Нагадаць мне пазней</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Mettre à jour</translation>
+        <translation>Абнавіць</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation>&amp;Fenêtre</translation>
+        <translation>&amp;Акно</translation>
     </message>
     <message>
         <source>&amp;Minimize</source>
-        <translation>&amp;Réduire</translation>
+        <translation>&amp;Зменшыць</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Fermer</translation>
+        <translation>&amp;Зачыніць</translation>
     </message>
     <message>
         <source>Buy %1...</source>
-        <translation>Acheter %1 …</translation>
+        <translation>Купіць %1...</translation>
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation>&amp;Arrêter après ce morceau</translation>
+        <translation>&amp;Спыніць пасля гэтай песні</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation>&amp;Scrobbling</translation>
+        <translation>&amp;Музычны густ</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation>Envoyer les pistes jouées vers %1</translation>
+        <translation>Даслаць назвы адыграных песень да %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation>&amp;Se déconnecter de %1</translation>
+        <translation>&amp;Выйсці з %1</translation>
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation>&amp;Signaler un problème...</translation>
+        <translation>&amp;Паведаміць пра праблему...</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Chercher</translation>
+        <translation>Пошук</translation>
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation>%1 a fini de parcourir votre collection musicale</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>MediaView</name>
     <message>
         <source>Drop items here</source>
-        <translation>Déposez des éléments ici</translation>
+        <translation>Перацягніце элементы сюды</translation>
     </message>
     <message>
         <source>Playlist finished</source>
-        <translation>Liste de lecture terminée</translation>
+        <translation>Спіс прайгравання скончыўся</translation>
     </message>
     <message>
         <source>This is just the demo version of %1.</source>
-        <translation>Ce n&apos;est que la version de démostration de %1.</translation>
+        <translation>Гэта толькі дэманстратыўная версія %1.</translation>
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Elle ne permet que de jouer quelques chansons pour vous faire une idée de ses possibilités.</translation>
+        <translation>Гэта дазваляе прайграць некалькі песень, каб Вы маглі ацаніць праграму і зразумець, ці падыходзіць яна Вам.</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Continuer</translation>
+        <translation>Працягваць</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Obtenir la version complète</translation>
+        <translation>Атрымаць поўную версію</translation>
     </message>
 </context>
 <context>
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation>Une nouvelle version de %1 est disponible !</translation>
+        <translation>Новая версія %1 даступная!</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation>%1 %2 est maintenant disponible. Vous avez %3.</translation>
+        <translation>%1 %2 зараз даступна. Вы маеце %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation>Voulez-vous la télécharger maintenant ?</translation>
+        <translation>Ці хочаце Вы запампаваць гэта зараз?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
-        <translation>Sauter Cette Version</translation>
+        <translation>Прапусціць гэтую версію</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
-        <translation>Me Le Rappeler Plus Tard</translation>
+        <translation>Нагадаць пасля</translation>
     </message>
     <message>
         <source>Install Update</source>
-        <translation>Installer La Mise à jour</translation>
+        <translation>Усталяваць абнаўленне</translation>
     </message>
 </context>
 <context>
     <name>PasteLineEdit</name>
     <message>
         <source>Paste</source>
-        <translation>Coller</translation>
+        <translation>Уставіць</translation>
     </message>
 </context>
 <context>
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Cette version de démo limite le nombre de morceaux à %1 dans la liste de lecture.</translation>
+        <translation>Гэта дэманстрацыя абмяжоўвае спіс прайгравання на толькі %1 песень.</translation>
     </message>
 </context>
 <context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
-        <translation>La liste de lecture est vide</translation>
+        <translation>Спіс прайгравання пусты</translation>
     </message>
     <message>
         <source>%1 tracks - Total length is %2</source>
-        <translation>%1 pistes, pour une durée totale de %2</translation>
+        <translation>%1 песень - Усяго працягласць %2</translation>
     </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
     <message>
         <source>Search</source>
-        <translation>Recherche</translation>
+        <translation>Пошук</translation>
     </message>
 </context>
 <context>
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation>Votre recherche n&apos;a donné aucun résultat.</translation>
+        <translation>Ваш пошук не даў вынікаў.</translation>
     </message>
 </context>
 <context>
     <name>TrackListView</name>
     <message>
         <source>Tracks</source>
-        <translation>Pistes</translation>
+        <translation>Песні</translation>
     </message>
 </context>
 </TS>
