@@ -271,13 +271,9 @@ void MediaView::playlistFinished() {
 void MediaView::playbackFinished() {
     trackFinished();
     QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
-    stopAfterThisAction->setChecked(false);
-    /*
-    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
     if (stopAfterThisAction->isChecked()) {
         stopAfterThisAction->setChecked(false);
     } else playlistModel->skipForward();
-    */
 }
 
 void MediaView::trackFinished() {
