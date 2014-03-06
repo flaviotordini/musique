@@ -138,7 +138,9 @@ bool CoverUtils::coverFromXiphComment(TagLib::Ogg::XiphComment *xiphComment, Alb
 
     if (!xiphComment) return false;
 
-    TagLib::ByteVector byteVector = xiphComment->fieldListMap()["COVERART"].front().data(TagLib::String::Latin1);
+    const TagLib::StringList &stringList = xiphComment->fieldListMap()["COVERART"];
+    if (stringList.isEmpty()) return false;
+    TagLib::ByteVector byteVector = stringList.front().data(TagLib::String::Latin1);
 
     QByteArray encodedData;
     encodedData.setRawData(byteVector.data(), byteVector.size());
