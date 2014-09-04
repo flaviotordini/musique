@@ -40,10 +40,10 @@ $END_LICENSE */
 #include "updatechecker.h"
 #include "fontutils.h"
 #include "globalshortcuts.h"
-#ifdef Q_WS_X11
+#ifdef Q_OS_X11
 #include "gnomeglobalshortcutbackend.h"
 #endif
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #include "mac_startup.h"
 #include "macfullscreen.h"
 #include "macsupport.h"
@@ -128,7 +128,7 @@ MainWindow::~MainWindow() {
 void MainWindow::lazyInit() {
     // Global shortcuts
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
-#ifdef Q_WS_X11
+#ifdef Q_OS_X11
     if (GnomeGlobalShortcutBackend::IsGsdAvailable())
         shortcuts.setBackend(new GnomeGlobalShortcutBackend(&shortcuts));
 #endif
@@ -191,7 +191,7 @@ void MainWindow::createActions() {
     connect(backAct, SIGNAL(triggered()), SLOT(goBack()));
 
     QIcon icon = Utils::icon("gtk-info");
-#ifdef Q_WS_X11
+#ifdef Q_OS_X11
     if (icon.isNull()) {
         icon = Utils::icon("help-about");
     }
@@ -376,6 +376,12 @@ void MainWindow::createActions() {
     actions->insert("lastFmLogout", action);
     connect(action, SIGNAL(triggered()), SLOT(lastFmLogout()));
 
+#ifdef APP_MAC_STORE
+    action = new QAction(tr("&Love %1? Rate it!").arg(Constants::NAME), this);
+    actions->insert("app-store", action);
+    connect(action, SIGNAL(triggered()), SLOT(rateOnAppStore()));
+#endif
+
     // Invisible actions
 
     searchFocusAct = new QAction(this);
@@ -494,6 +500,11 @@ void MainWindow::createMenus() {
 #endif
     helpMenu->addAction(The::globalActions()->value("report-issue"));
     helpMenu->addAction(aboutAct);
+
+#ifdef APP_MAC_STORE
+    helpMenu->addSeparator();
+    helpMenu->addAction(The::globalActions()->value("app-store"));
+#endif
 }
 
 void MainWindow::createToolBars() {
@@ -583,7 +594,7 @@ void MainWindow::createStatusBar() {
     statusToolBar = new QToolBar(this);
     statusToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     statusToolBar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-#ifdef Q_WS_X11
+#ifdef Q_OS_X11
     int iconHeight = 16;
     int iconWidth = iconHeight;
 #else
@@ -676,7 +687,7 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
 
     setUpdatesEnabled(true);
 
-#ifndef Q_WS_X11
+#ifndef Q_OS_X11
     if (transition)
         Extra::fadeInWidget(oldWidget, widget);
 #endif
@@ -734,7 +745,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::showChooseFolderView(bool transition) {
     if (!chooseFolderView) {
-        chooseFolderView = new ChooseFolderView(this);
+        chooseFolderView = new StartView(this);
         connect(chooseFolderView, SIGNAL(locationChanged(QString)), SLOT(startFullScan(QString)));
         views->addWidget(chooseFolderView);
     }
@@ -1214,6 +1225,14 @@ void MainWindow::loadPlaylist() {
         qDebug() << "Cannot open file" << plsPath;
 }
 
+#ifdef APP_MAC_STORE
+void MainWindow::rateOnAppStore() {
+    QDesktopServices::openUrl(QUrl("macappstore://userpub.itunes.apple.com"
+                                   "/WebObjects/MZUserPublishing.woa/wa/addUserReview"
+                                   "?id=474190659&type=Purple+Software"));
+}
+#endif
+
 void MainWindow::search(QString query) {
     showMediaView();
     mediaView->search(query);
@@ -1309,6 +1328,9 @@ void MainWindow::messageReceived(const QString &message) {
     if (message == "--toggle-playing" && playAct->isEnabled()) playAct->trigger();
     else if (message == "--next" && skipForwardAct->isEnabled()) skipForwardAct->trigger();
     else if (message == "--previous" && skipBackwardAct->isEnabled()) skipBackwardAct->trigger();
+    else if (message == QLatin1String("--stop-after-this")) {
+        The::globalActions()->value("stopafterthis")->toggle();
+    }
     else if (message == "--info" && contextualAct->isEnabled()) contextualAct->trigger();
     else MainWindow::printHelp();
 }
