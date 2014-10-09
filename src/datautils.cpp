@@ -42,6 +42,12 @@ QString DataUtils::normalizeTag(QString s) {
     return s;
 }
 
+QString DataUtils::simplify(const QString &s) {
+    QString s2 = s;
+    s2.replace(QString::fromUtf8("’"), QLatin1String("'"));
+    return s2;
+}
+
 QString DataUtils::md5(const QString name) {
     return QString::fromAscii(QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
 }

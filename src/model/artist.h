@@ -101,7 +101,7 @@ private slots:
 
 private:
     void parseNameAndMbid(QByteArray bytes, QString preferredName);
-    static QString getHash(QString);
+    static QString getHash(const QString&);
 
     static QHash<int, Artist*> cache;
 

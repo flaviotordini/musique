@@ -22,6 +22,9 @@ $END_LICENSE */
 #define DROPAREA_H
 
 #include <QtGui>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#endif
 class PlaylistModel;
 
 class DropArea : public QLabel {

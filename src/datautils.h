@@ -28,6 +28,7 @@ class DataUtils {
 public:
     static QString cleanTag(QString tag);
     static QString normalizeTag(QString tag);
+    static QString simplify(const QString &s);
     static QString md5(QString);
     static QString getXMLElementText(QByteArray bytes, QString element);
     static QString getXMLAttributeText(QByteArray bytes, QString element, QString attribute);

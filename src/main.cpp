@@ -19,6 +19,9 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include <QtGui>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#endif
 #include <QNetworkReply>
 #include <qtsingleapplication.h>
 #include "constants.h"
@@ -27,13 +30,13 @@ $END_LICENSE */
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
 #include "mac_startup.h"
 #endif
 
 int main(int argc, char **argv) {
 
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     mac::MacMain();
     // https://bugreports.qt-project.org/browse/QTBUG-32789
     QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");

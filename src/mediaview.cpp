@@ -352,7 +352,7 @@ void MediaView::demoMessage() {
 
     if (msgBox.clickedButton() == buyButton) {
         QDesktopServices::openUrl(QUrl(QString(Constants::WEBSITE) + "#download"));
-    }
+    } else mediaObject->play();
 
     tracksPlayed = 0;
 

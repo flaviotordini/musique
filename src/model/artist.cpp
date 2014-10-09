@@ -21,6 +21,9 @@ $END_LICENSE */
 #include "artist.h"
 #include "../constants.h"
 #include <QtGui>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#endif
 
 #include <QtSql>
 #include "../database.h"
@@ -127,7 +130,7 @@ const QString &Artist::getHash() {
     return hash;
 }
 
-QString Artist::getHash(QString name) {
+QString Artist::getHash(const QString &name) {
     return DataUtils::normalizeTag(name);
 }
 

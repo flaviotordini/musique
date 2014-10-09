@@ -25,7 +25,7 @@ $END_LICENSE */
 
 static const int PADDING = 30;
 
-ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
+StartView::StartView( QWidget *parent ) : QWidget(parent) {
 
     QBoxLayout *layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
@@ -107,7 +107,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
 
 }
 
-void ChooseFolderView::chooseFolder() {
+void StartView::chooseFolder() {
 #ifdef APP_MAC
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setFileMode(QFileDialog::Directory);
@@ -122,21 +122,21 @@ void ChooseFolderView::chooseFolder() {
 #endif
 }
 
-void ChooseFolderView::folderChosen(const QString &folder) {
+void StartView::folderChosen(const QString &folder) {
     if (!folder.isEmpty()) emit locationChanged(folder);
 }
 
-void ChooseFolderView::systemDirChosen() {
+void StartView::systemDirChosen() {
     QString musicLocation = QDesktopServices::storageLocation(QDesktopServices::MusicLocation);
     emit locationChanged(musicLocation);
 }
 
-void ChooseFolderView::iTunesDirChosen() {
+void StartView::iTunesDirChosen() {
     QString musicLocation = QDesktopServices::storageLocation(QDesktopServices::MusicLocation) + "/iTunes/iTunes Music";
     emit locationChanged(musicLocation);
 }
 
-void ChooseFolderView::appear() {
+void StartView::appear() {
     Database &db = Database::instance();
     if (db.status() == ScanComplete) {
         tipLabel->setText(tr("Select the location of your music collection."));
@@ -149,7 +149,7 @@ void ChooseFolderView::appear() {
     }
 }
 
-void ChooseFolderView::paintEvent(QPaintEvent * /*event*/) {
+void StartView::paintEvent(QPaintEvent * /*event*/) {
 #if defined(APP_MAC) | defined(APP_WIN)
     QBrush brush;
     if (window()->isActiveWindow()) {

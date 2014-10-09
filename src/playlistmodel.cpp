@@ -498,6 +498,7 @@ bool PlaylistModel::loadFrom(QTextStream & stream)
             if ( !tag.isNull() && !tag.isEmpty() )
                 cur->setTitle(tag);
         }
+        qApp->processEvents();
     }
 
     addTracks(tracks);

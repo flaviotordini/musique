@@ -22,14 +22,17 @@ $END_LICENSE */
 #define CHOOSEFOLDERVIEW_H
 
 #include <QtGui>
+#if QT_VERSION >= 0x050000
+#include <QtWidgets>
+#endif
 #include "view.h"
 
-class ChooseFolderView : public QWidget, public View {
+class StartView : public QWidget, public View {
 
     Q_OBJECT
 
 public:
-    ChooseFolderView(QWidget *parent);
+    StartView(QWidget *parent);
     void appear();
     void disappear() {}
     QHash<QString, QVariant> metadata() {
