@@ -8,5 +8,8 @@
         <file>images/item/track.png</file>
         <file>style.css</file>
         <file>images/sort.png</file>
+        <file>images/album.png</file>
+        <file>images/artist.png</file>
+        <file>images/track.png</file>
     </qresource>
 </RCC>

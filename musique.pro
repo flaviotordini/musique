@@ -46,7 +46,6 @@ HEADERS += src/mainwindow.h \
     src/playlistmodel.h \
     src/trackmimedata.h \
     src/playlistview.h \
-    src/searchcompletion.h \
     src/mbnetworkaccess.h \
     src/collectionscannerthread.h \
     src/basefinderview.h \
@@ -108,7 +107,6 @@ SOURCES += src/main.cpp \
     src/playlistmodel.cpp \
     src/trackmimedata.cpp \
     src/playlistview.cpp \
-    src/searchcompletion.cpp \
     src/mbnetworkaccess.cpp \
     src/collectionscannerthread.cpp \
     src/basefinderview.cpp \

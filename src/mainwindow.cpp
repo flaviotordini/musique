@@ -577,7 +577,7 @@ void MainWindow::createToolBars() {
     toolbarSearch->setSuggester(new CollectionSuggester(this));
     connect(toolbarSearch, SIGNAL(search(const QString&)), SLOT(search(const QString&)));
     connect(toolbarSearch, SIGNAL(cleared()), SLOT(searchCleared()));
-    connect(toolbarSearch, SIGNAL(suggestionAccepted(const QString&)), SLOT(search(const QString&)));
+    connect(toolbarSearch, SIGNAL(suggestionAccepted(Suggestion*)), SLOT(suggestionAccepted(Suggestion*)));
     toolbarSearch->setStatusTip(searchFocusAct->statusTip());
 #ifdef APP_MAC
     mainToolBar->addWidget(searchWrapper);
@@ -1246,7 +1246,14 @@ void MainWindow::search(QString query) {
     toolbarSearch->setFocus();
 }
 
+void MainWindow::suggestionAccepted(Suggestion *suggestion) {
+    qWarning() << __PRETTY_FUNCTION__;
+    showMediaView();
+    mediaView->search(suggestion->value);
+}
+
 void MainWindow::searchCleared() {
+    qWarning() << __PRETTY_FUNCTION__;
     mediaView->search("");
 }
 

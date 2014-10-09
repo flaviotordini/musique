@@ -167,11 +167,9 @@ void SearchButton::paintEvent(QPaintEvent *event)
 SearchLineEdit::SearchLineEdit(QWidget *parent) : ExLineEdit(parent),
 m_searchButton(new SearchButton(this))
 {
-    connect(lineEdit(), SIGNAL(textChanged(const QString &)),
-            this, SIGNAL(textChanged(const QString &)));
-
-    connect(lineEdit(), SIGNAL(returnPressed()),
-            this, SLOT(returnPressed()));
+    connect(lineEdit(), SIGNAL(textChanged(const QString &)), SIGNAL(textChanged(const QString &)));
+    connect(lineEdit(), SIGNAL(textEdited(const QString &)), SIGNAL(textEdited(const QString &)));
+    connect(lineEdit(), SIGNAL(returnPressed()), SLOT(returnPressed()));
 
     setLeftWidget(m_searchButton);
     m_inactiveText = tr("Search");
@@ -181,8 +179,7 @@ m_searchButton(new SearchButton(this))
 
     // completion
     completion = new AutoComplete(this, m_lineEdit);
-    connect(completion, SIGNAL(suggestionAccepted(const QString &)), SIGNAL(suggestionAccepted(const QString &)));
-
+    connect(completion, SIGNAL(suggestionAccepted(Suggestion*)), SIGNAL(suggestionAccepted(Suggestion*)));
 }
 
 void SearchLineEdit::paintEvent(QPaintEvent *event)

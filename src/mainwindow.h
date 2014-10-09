@@ -36,6 +36,7 @@ class ContextualView;
 class SearchLineEdit;
 class Track;
 class UpdateChecker;
+class Suggestion;
 
 class MainWindow : public QMainWindow {
 
@@ -109,6 +110,7 @@ private slots:
     void startImageDownload();
     void imageDownloadFinished();
     void search(QString query);
+    void suggestionAccepted(Suggestion *suggestion);
     void searchCleared();
 
     void showActionInStatusBar(QAction*, bool show);

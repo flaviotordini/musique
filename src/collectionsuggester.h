@@ -29,10 +29,10 @@ class CollectionSuggester : public Suggester {
 
 public:
     CollectionSuggester(QObject *parent = 0);
-    void suggest(QString query);
+    void suggest(const QString &query);
 
 signals:
-    void ready(QStringList);
+    void ready(const QList<Suggestion*> &suggestions);
 
 };
 

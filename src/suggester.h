@@ -23,16 +23,46 @@ $END_LICENSE */
 
 #include <QtCore>
 
+class Suggestion {
+
+public:
+    Suggestion(QString value = QString(),
+               QString type = QString()) :
+        value(value), type(type) { }
+    QString value;
+    QString type;
+
+    bool operator==(const Suggestion &other) const {
+        return (value == other.value) && (type == other.type);
+    }
+
+    bool operator!=(const Suggestion &other) const {
+        return !(*this == other);
+    }
+
+    bool operator==(Suggestion *other) const {
+        qDebug() << "Comparing" << this << other;
+        return (value == other->value) && (type == other->type);
+    }
+
+    bool operator!=(Suggestion *other) const {
+        return !(this == other);
+    }
+
+};
+
 class Suggester : public QObject {
 
     Q_OBJECT
 
 public:
-    virtual void suggest(QString query) = 0;
+    Suggester(QObject *parent) : QObject(parent) { }
+    virtual void suggest(const QString &query) = 0;
 
 signals:
-    void ready(QStringList);
+    void ready(const QList<Suggestion*> &suggestions);
 
 };
 
 #endif // SUGGESTER_H
+

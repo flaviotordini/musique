@@ -23,15 +23,15 @@ $END_LICENSE */
 #include <QtSql>
 #include "database.h"
 
-CollectionSuggester::CollectionSuggester(QObject *parent) {
+CollectionSuggester::CollectionSuggester(QObject *parent) : Suggester(parent) {
 
 }
 
-void CollectionSuggester::suggest(QString q) {
-    q = q.simplified();
+void CollectionSuggester::suggest(const QString &query) {
+    QString q = query.simplified();
     if (q.isEmpty()) return;
 
-    QStringList suggestions;
+    QList<Suggestion*> suggestions;
 
     QString likeQuery;
     if (q.length() < 3) likeQuery = q + "%";
@@ -39,33 +39,31 @@ void CollectionSuggester::suggest(QString q) {
 
     QSqlDatabase db = Database::instance().getConnection();
 
-    QSqlQuery query(db);
-    query.prepare("select name from artists where name like ? and trackCount>1 order by trackCount desc limit 5");
-    query.bindValue(0, likeQuery);
-    bool success = query.exec();
-    if (!success) qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
-    while (query.next()) {
-        suggestions << query.value(0).toString();
+    QSqlQuery sqlQuery(db);
+    sqlQuery.prepare("select name from artists where name like ? and trackCount>1 order by trackCount desc limit 5");
+    sqlQuery.bindValue(0, likeQuery);
+    bool success = sqlQuery.exec();
+    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
+    while (sqlQuery.next()) {
+        suggestions << new Suggestion(sqlQuery.value(0).toString(), "artist");
     }
 
-    query.prepare("select title from albums where (title like ? or year=?) and trackCount>0 order by year desc, trackCount desc limit 5");
-    query.bindValue(0, likeQuery);
-    query.bindValue(1, q);
-    success = query.exec();
-    if (!success) qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
-    while (query.next()) {
-        suggestions << query.value(0).toString();
+    sqlQuery.prepare("select title from albums where (title like ? or year=?) and trackCount>0 order by year desc, trackCount desc limit 5");
+    sqlQuery.bindValue(0, likeQuery);
+    sqlQuery.bindValue(1, q);
+    success = sqlQuery.exec();
+    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
+    while (sqlQuery.next()) {
+        suggestions << new Suggestion(sqlQuery.value(0).toString(), "album");
     }
 
-    query.prepare("select title from tracks where title like ? order by track, path limit 5");
-    query.bindValue(0, likeQuery);
-    success = query.exec();
-    if (!success) qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
-    while (query.next()) {
-        suggestions << query.value(0).toString();
+    sqlQuery.prepare("select title from tracks where title like ? order by track, path limit 5");
+    sqlQuery.bindValue(0, likeQuery);
+    success = sqlQuery.exec();
+    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
+    while (sqlQuery.next()) {
+        suggestions << new Suggestion(sqlQuery.value(0).toString(), "track");
     }
-
-    suggestions.removeDuplicates();
 
     emit ready(suggestions);
 }
