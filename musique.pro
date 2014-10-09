@@ -1,6 +1,6 @@
 CONFIG += release
 TEMPLATE = app
-VERSION = 1.3
+VERSION = 1.4
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
@@ -11,13 +11,11 @@ DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 
 DEFINES *= QT_NO_DEBUG_OUTPUT
 DEFINES *= QT_USE_QSTRINGBUILDER
-DEFINES += QT_STRICT_ITERATORS
+DEFINES *= QT_STRICT_ITERATORS
 
 TARGET = $${APP_UNIX_NAME}
-unix:!mac {
-    LIBS += -ltag
-}
-QT += network xml phonon sql
+
+QT += network xml sql
 include(src/qtsingleapplication/qtsingleapplication.pri)
 
 HEADERS += src/mainwindow.h \
@@ -71,7 +69,6 @@ HEADERS += src/mainwindow.h \
     src/droparea.h \
     src/minisplitter.h \
     src/filteringfilesystemmodel.h \
-    src/gnomeglobalshortcutbackend.h \
     src/globalshortcuts.h \
     src/globalshortcutbackend.h \
     src/suggester.h \
@@ -135,7 +132,6 @@ SOURCES += src/main.cpp \
     src/minisplitter.cpp \
     src/filteringfilesystemmodel.cpp \
     src/constants.cpp \
-    src/gnomeglobalshortcutbackend.cpp \
     src/globalshortcuts.cpp \
     src/globalshortcutbackend.cpp \
     src/autocomplete.cpp \
@@ -163,9 +159,20 @@ include(locale/locale.pri)
 # deploy
 DISTFILES += CHANGES LICENSE
 unix:!mac {
-    QT += dbus
-    INCLUDEPATH += /usr/include/phonon
+    qt:greaterThan(QT_MAJOR_VERSION, 4) {
+        LIBS += -lphonon4qt5
+        INCLUDEPATH += /usr/include/phonon4qt5
+    } else {
+        QT += phonon
+        INCLUDEPATH += /usr/include/phonon
+    }
+
+    LIBS += -ltag
     INCLUDEPATH += /usr/include/taglib
+
+    QT += dbus
+    HEADERS += src/gnomeglobalshortcutbackend.h
+    SOURCES += src/gnomeglobalshortcutbackend.cpp
     isEmpty(PREFIX):PREFIX = /usr/local
     BINDIR = $$PREFIX/bin
     INSTALLS += target
