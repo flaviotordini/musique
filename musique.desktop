@@ -8,7 +8,7 @@ Type=Application
 Icon=musique
 Categories=AudioVideo;Player;Qt;
 StartupNotify=false
-Actions=TogglePlaying;Next;Previous;Info;
+Actions=TogglePlaying;Next;Previous;StopAfterThis;Info;
 
 [Desktop Action TogglePlaying]
 Name=Play/Pause
@@ -21,6 +21,10 @@ Exec=musique --next
 [Desktop Action Previous]
 Name=Previous
 Exec=musique --previous
+
+[Desktop Action StopAfterThis]
+Name=Stop After This Track
+Exec=musique --stop-after-this
 
 [Desktop Action Info]
 Name=Info

@@ -539,11 +539,12 @@ void MainWindow::createToolBars() {
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     mainToolBar->addWidget(seekSlider);
 
+    /*
     mainToolBar->addWidget(new Spacer());
-
     totalTime = new QLabel(mainToolBar);
     totalTime->setFont(smallerFont);
     mainToolBar->addWidget(totalTime);
+    */
 
     mainToolBar->addWidget(new Spacer());
 
@@ -664,7 +665,6 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
     setUpdatesEnabled(false);
 
     View* oldView = dynamic_cast<View *> (views->currentWidget());
-    if (oldView) oldView->disappear();
 
     View* newView = dynamic_cast<View *> (widget);
     if (newView) {
@@ -691,6 +691,8 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
     if (transition)
         Extra::fadeInWidget(oldWidget, widget);
 #endif
+
+    if (oldView) oldView->disappear();
 
     history->push(widget);
 
@@ -775,7 +777,10 @@ void MainWindow::toggleContextualView() {
         contextualView = new ContextualView(this);
         views->addWidget(contextualView);
     }
-    if (views->currentWidget() == contextualView) {
+
+    bool isShown = views->currentWidget() == contextualView;
+    statusBar()->setVisible(isShown);
+    if (isShown) {
         hideContextualView();
     } else {
         Track *track = mediaView->getActiveTrack();
@@ -915,7 +920,7 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
     case Phonon::LoadingState:
         // stopAct->setEnabled(true);
         currentTime->clear();
-        totalTime->clear();
+        // totalTime->clear();
         break;
     }
 }
@@ -923,7 +928,7 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
 void MainWindow::stop() {
     mediaObject->stop();
     currentTime->clear();
-    totalTime->clear();
+    // totalTime->clear();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event) {
@@ -1057,11 +1062,13 @@ void MainWindow::tick(qint64 time) {
 }
 
 void MainWindow::totalTimeChanged(qint64 time) {
+    /*
     if (time <= 0) {
         totalTime->clear();
         return;
     }
     totalTime->setText(formatTime(time));
+    */
 }
 
 QString MainWindow::formatTime(qint64 time) {

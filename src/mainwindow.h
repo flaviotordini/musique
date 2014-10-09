@@ -192,7 +192,7 @@ private:
     Phonon::MediaObject *mediaObject;
     Phonon::AudioOutput *audioOutput;
     QLabel *currentTime;
-    QLabel *totalTime;
+    // QLabel *totalTime;
 
     // fullscreen
     bool m_fullscreen;
