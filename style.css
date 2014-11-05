@@ -10,3 +10,11 @@ QStatusBar QToolBar {
 QStatusBar QToolButton::menu-indicator {
     image: none;
 }
+
+Phonon--VolumeSlider[zero="true"] QSlider::handle:horizontal {
+    background: qradialgradient(
+        cx: .5, cy: .5,
+        fx: .33, fy: .33,
+        radius: .5,
+        stop: 0 #f66, stop: 1 #c33);
+}

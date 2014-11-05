@@ -369,25 +369,14 @@ void FinderItemDelegate::paintPlayIcon(QPainter *painter, const QRect& rect, dou
 void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem &option, QString name, const QRect& rect, bool isSelected) const {
 
     QRect nameBox = rect;
-    // add padding
     nameBox.adjust(0, 0, 0, -ITEM_HEIGHT*2/3);
-    // move to the bottom
     nameBox.translate(0, ITEM_HEIGHT - nameBox.height());
 
     painter->save();
     painter->setPen(Qt::NoPen);
     if (isSelected) {
         painter->setOpacity(.9);
-#if defined(APP_MAC) | defined(APP_WIN)
-        QColor color1 = QColor::fromRgb(0x69, 0xa6, 0xd9);
-        QColor color2 = QColor::fromRgb(0x14, 0x6b, 0xd4);
-        QLinearGradient linearGradient(nameBox.x(), nameBox.y(), nameBox.x(), nameBox.y() + nameBox.height());
-        linearGradient.setColorAt(0.0, color1);
-        linearGradient.setColorAt(1.0, color2);
-        painter->setBrush(linearGradient);
-#else
         painter->setBrush(option.palette.highlight());
-#endif
     } else {
         painter->setBrush(QColor(0, 0, 0, 128));
     }
@@ -399,7 +388,7 @@ void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem 
 
     bool tooBig = false;
     QRect textBox = painter->boundingRect(nameBox, Qt::AlignCenter | Qt::TextWordWrap, name);
-    if (textBox.height() > nameBox.height()) {
+    if (textBox.height() >= nameBox.height()) {
         painter->setFont(FontUtils::smaller());
         textBox = painter->boundingRect(nameBox, Qt::AlignCenter | Qt::TextWordWrap, name);
         if (textBox.height() > nameBox.height()) {
