@@ -1,89 +1,58 @@
-/****************************************************************************
-**
-** Copyright (C) 2009 Nokia Corporation and/or its subsidiary(-ies).
-** Contact: Nokia Corporation (qt-info@nokia.com)
-**
-** This file is part of the demonstration applications of the Qt Toolkit.
-**
-** $QT_BEGIN_LICENSE:LGPL$
-** Commercial Usage
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Nokia.
-**
-** GNU Lesser General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU Lesser
-** General Public License version 2.1 as published by the Free Software
-** Foundation and appearing in the file LICENSE.LGPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU Lesser General Public License version 2.1 requirements
-** will be met: http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html.
-**
-** In addition, as a special exception, Nokia gives you certain
-** additional rights. These rights are described in the Nokia Qt LGPL
-** Exception version 1.0, included in the file LGPL_EXCEPTION.txt in this
-** package.
-**
-** GNU General Public License Usage
-** Alternatively, this file may be used under the terms of the GNU
-** General Public License version 3.0 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.  Please review the following information to
-** ensure the GNU General Public License version 3.0 requirements will be
-** met: http://www.gnu.org/copyleft/gpl.html.
-**
-** If you are unsure which license is appropriate for your use, please
-** contact the sales department at http://www.qtsoftware.com/contact.
-** $QT_END_LICENSE$
-**
-****************************************************************************/
-
 #include "searchlineedit.h"
 
-#include <QtGui/QPainter>
-#include <QtGui/QMouseEvent>
-#include <QtGui/QMenu>
-#include <QtGui/QStyle>
-#include <QtGui/QStyleOptionFrameV2>
+#include <QPainter>
+#include <QMouseEvent>
+#include <QMenu>
+#include <QStyle>
+#include <QStyleOptionFrameV2>
 
 #include "autocomplete.h"
+#include "iconutils.h"
 
-ClearButton::ClearButton(QWidget *parent)
-    : QAbstractButton(parent)
-{
+ClearButton::ClearButton(QWidget *parent) : QAbstractButton(parent), hovered(false), mousePressed(false) {
     setCursor(Qt::ArrowCursor);
     setToolTip(tr("Clear"));
     setVisible(false);
     setFocusPolicy(Qt::NoFocus);
 }
 
-void ClearButton::paintEvent(QPaintEvent *event)
-{
-    Q_UNUSED(event);
+void ClearButton::paintEvent(QPaintEvent *e) {
+    Q_UNUSED(e);
     QPainter painter(this);
-    int height = this->height();
-
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    // QColor color = palette().color(QPalette::Mid);
-    painter.setBrush(isDown()
-                     ? palette().color(QPalette::Dark)
-                         : palette().color(QPalette::Mid));
-    painter.setPen(painter.brush().color());
-    int size = width();
-    int offset = size / 3.5;
-    int radius = size - offset * 2;
-    painter.drawEllipse(offset, offset, radius, radius);
-
-    painter.setPen(QPen(palette().color(QPalette::Base),2));
-    int border = offset * 1.6;
-    painter.drawLine(border, border, width() - border, height - border);
-    painter.drawLine(border, height - border, width() - border, border);
+    const int h = height();
+    int iconSize = 16;
+    if (h > 30) iconSize = 22;
+    QIcon::Mode iconMode = QIcon::Normal;
+    if (mousePressed) iconMode = QIcon::Active;
+    QPixmap p = IconUtils::icon("edit-clear").pixmap(iconSize, iconSize, iconMode);
+    // QPixmap p = IconUtils::tintedIcon("edit-clear", Qt::black, QSize(iconSize, iconSize)).pixmap(iconSize, iconSize, iconMode);
+    int x = (width() - p.width()) / 2;
+    int y = (h - p.height()) / 2;
+    painter.drawPixmap(x, y, p);
 }
 
-void ClearButton::textChanged(const QString &text)
-{
+void ClearButton::textChanged(const QString &text) {
     setVisible(!text.isEmpty());
+}
+
+void ClearButton::enterEvent(QEvent *e) {
+    Q_UNUSED(e);
+    hovered = true;
+}
+
+void ClearButton::leaveEvent(QEvent *e) {
+    Q_UNUSED(e);
+    hovered = false;
+}
+
+void ClearButton::mousePressEvent(QEvent *e) {
+    Q_UNUSED(e);
+    mousePressed = true;
+}
+
+void ClearButton::mouseReleaseEvent(QEvent *e) {
+    Q_UNUSED(e);
+    mousePressed = false;
 }
 
 /*
@@ -102,15 +71,13 @@ protected:
 
 SearchButton::SearchButton(QWidget *parent)
     : QAbstractButton(parent),
-    m_menu(0)
-{
+    m_menu(0) {
     setObjectName(QLatin1String("SearchButton"));
     setCursor(Qt::ArrowCursor);
     setFocusPolicy(Qt::NoFocus);
 }
 
-void SearchButton::mousePressEvent(QMouseEvent *event)
-{
+void SearchButton::mousePressEvent(QMouseEvent *event) {
     if (m_menu && event->button() == Qt::LeftButton) {
         QWidget *p = parentWidget();
         if (p) {
@@ -122,40 +89,16 @@ void SearchButton::mousePressEvent(QMouseEvent *event)
     QAbstractButton::mousePressEvent(event);
 }
 
-void SearchButton::paintEvent(QPaintEvent *event)
-{
+void SearchButton::paintEvent(QPaintEvent *event) {
     Q_UNUSED(event);
-    QPainterPath myPath;
-
-    int radius = (height() / 5) * 2;
-    QRect circle(height() / 5.5, height() / 3.5, radius, radius);
-    myPath.addEllipse(circle);
-
-    myPath.arcMoveTo(circle, 315);
-    QPointF c = myPath.currentPosition();
-    int diff = height() / 6;
-    myPath.lineTo(qMin(width() - 2, (int)c.x() + diff), c.y() + diff);
-
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    painter.setPen(QPen(palette().color(QPalette::Mid), height() / 10));
-    painter.drawPath(myPath);
-
-    if (m_menu) {
-        QPainterPath dropPath;
-        dropPath.arcMoveTo(circle, 320);
-        QPointF c = dropPath.currentPosition();
-        c = QPointF(c.x() + 3.5, c.y() + 0.5);
-        dropPath.moveTo(c);
-        dropPath.lineTo(c.x() + 4, c.y());
-        dropPath.lineTo(c.x() + 2, c.y() + 2);
-        dropPath.closeSubpath();
-        painter.setPen(Qt::darkGray);
-        painter.setBrush(Qt::darkGray);
-        painter.setRenderHint(QPainter::Antialiasing, false);
-        painter.drawPath(dropPath);
-    }
-    painter.end();
+    const int h = height();
+    int iconSize = 16;
+    if (h > 30) iconSize = 22;
+    QPixmap p = IconUtils::icon("edit-find").pixmap(iconSize, iconSize);
+    int x = (width() - p.width()) / 2;
+    int y = (h - p.height()) / 2;
+    painter.drawPixmap(x, y, p);
 }
 
 /*
@@ -165,26 +108,24 @@ void SearchButton::paintEvent(QPaintEvent *event)
     - When there is text a clear button is displayed on the right hand side
  */
 SearchLineEdit::SearchLineEdit(QWidget *parent) : ExLineEdit(parent),
-m_searchButton(new SearchButton(this))
-{
+searchButton(new SearchButton(this)) {
     connect(lineEdit(), SIGNAL(textChanged(const QString &)), SIGNAL(textChanged(const QString &)));
     connect(lineEdit(), SIGNAL(textEdited(const QString &)), SIGNAL(textEdited(const QString &)));
     connect(lineEdit(), SIGNAL(returnPressed()), SLOT(returnPressed()));
 
-    setLeftWidget(m_searchButton);
-    m_inactiveText = tr("Search");
+    setLeftWidget(searchButton);
+    inactiveText = tr("Search");
 
     QSizePolicy policy = sizePolicy();
     setSizePolicy(QSizePolicy::Preferred, policy.verticalPolicy());
 
     // completion
-    completion = new AutoComplete(this, m_lineEdit);
-    connect(completion, SIGNAL(suggestionAccepted(Suggestion*)), SIGNAL(suggestionAccepted(Suggestion*)));
+    autoComplete = new AutoComplete(this, m_lineEdit);
+    connect(autoComplete, SIGNAL(suggestionAccepted(Suggestion*)), SIGNAL(suggestionAccepted(Suggestion*)));
 }
 
-void SearchLineEdit::paintEvent(QPaintEvent *event)
-{
-    if (lineEdit()->text().isEmpty() && !hasFocus() && !m_inactiveText.isEmpty()) {
+void SearchLineEdit::paintEvent(QPaintEvent *event) {
+    if (lineEdit()->text().isEmpty() && !hasFocus() && !inactiveText.isEmpty()) {
         ExLineEdit::paintEvent(event);
         QStyleOptionFrameV2 panel;
         initStyleOption(&panel);
@@ -195,69 +136,58 @@ void SearchLineEdit::paintEvent(QPaintEvent *event)
                        r.width() - 2 * horizontalMargin, fm.height());
         QPainter painter(this);
         painter.setPen(palette().brush(QPalette::Disabled, QPalette::Text).color());
-        painter.drawText(lineRect, Qt::AlignLeft|Qt::AlignVCenter, m_inactiveText);
+        painter.drawText(lineRect, Qt::AlignLeft|Qt::AlignVCenter, inactiveText);
     } else {
         ExLineEdit::paintEvent(event);
     }
 }
 
-void SearchLineEdit::resizeEvent(QResizeEvent *event)
-{
+void SearchLineEdit::resizeEvent(QResizeEvent *event) {
     updateGeometries();
     ExLineEdit::resizeEvent(event);
 }
 
-void SearchLineEdit::updateGeometries()
-{
+void SearchLineEdit::updateGeometries() {
     int menuHeight = height();
     int menuWidth = menuHeight + 1;
-    if (!m_searchButton->m_menu)
+    if (!searchButton->m_menu)
         menuWidth = (menuHeight / 5) * 4;
-    m_searchButton->resize(QSize(menuWidth, menuHeight));
+    searchButton->resize(QSize(menuWidth, menuHeight));
 }
 
-QString SearchLineEdit::inactiveText() const
-{
-    return m_inactiveText;
+void SearchLineEdit::setInactiveText(const QString &text) {
+    inactiveText = text;
 }
 
-void SearchLineEdit::setInactiveText(const QString &text)
-{
-    m_inactiveText = text;
-}
-
-void SearchLineEdit::setMenu(QMenu *menu)
-{
-    if (m_searchButton->m_menu)
-        m_searchButton->m_menu->deleteLater();
-    m_searchButton->m_menu = menu;
+void SearchLineEdit::setMenu(QMenu *menu) {
+    if (searchButton->m_menu)
+        searchButton->m_menu->deleteLater();
+    searchButton->m_menu = menu;
     updateGeometries();
 }
 
-QMenu *SearchLineEdit::menu() const
-{
-    if (!m_searchButton->m_menu) {
-        m_searchButton->m_menu = new QMenu(m_searchButton);
+QMenu *SearchLineEdit::menu() const {
+    if (!searchButton->m_menu) {
+        searchButton->m_menu = new QMenu(searchButton);
         if (isVisible())
             (const_cast<SearchLineEdit*>(this))->updateGeometries();
     }
-    return m_searchButton->m_menu;
+    return searchButton->m_menu;
 }
 
-void SearchLineEdit::returnPressed()
-{
+void SearchLineEdit::returnPressed() {
     if (!lineEdit()->text().isEmpty()) {
-        completion->preventSuggest();
+        autoComplete->preventSuggest();
         emit search(lineEdit()->text());
     }
 }
 
 void SearchLineEdit::enableSuggest() {
-    completion->enableSuggest();
+    autoComplete->enableSuggest();
 }
 
 void SearchLineEdit::preventSuggest() {
-    completion->preventSuggest();
+    autoComplete->preventSuggest();
 }
 
 void SearchLineEdit::focusInEvent(QFocusEvent *event) {

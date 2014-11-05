@@ -42,17 +42,17 @@
 #include "urllineedit.h"
 #include "searchlineedit.h"
 
-#include <QtCore/QEvent>
+#include <QEvent>
 
-#include <QtGui/QApplication>
-#include <QtGui/QCompleter>
-#include <QtGui/QFocusEvent>
-#include <QtGui/QHBoxLayout>
-#include <QtGui/QLabel>
-#include <QtGui/QLineEdit>
-#include <QtGui/QPainter>
-#include <QtGui/QStyle>
-#include <QtGui/QStyleOptionFrameV2>
+#include <QApplication>
+#include <QCompleter>
+#include <QFocusEvent>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPainter>
+#include <QStyle>
+#include <QStyleOptionFrameV2>
 
 #include <QtCore/QDebug>
 
@@ -80,8 +80,6 @@ ExLineEdit::ExLineEdit(QWidget *parent)
     QPalette clearPalette = m_lineEdit->palette();
     clearPalette.setBrush(QPalette::Base, QBrush(Qt::transparent));
     m_lineEdit->setPalette(clearPalette);
-    connect(m_lineEdit, SIGNAL(textChanged(const QString&)),
-            this, SLOT(textChanged(const QString&)));
 
     // clearButton
     m_clearButton = new ClearButton(this);
@@ -203,9 +201,4 @@ void ExLineEdit::paintEvent(QPaintEvent *)
     QStyleOptionFrameV2 panel;
     initStyleOption(&panel);
     style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
-}
-
-void ExLineEdit::textChanged(const QString &text)
-{
-    if (text.isEmpty()) emit cleared();
 }
