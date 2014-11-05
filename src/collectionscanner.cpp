@@ -72,14 +72,22 @@ void CollectionScanner::run() {
 
     if (incremental) {
 
-        // quickly check if anythingchanged since the last time
-        // by building a hash from filenames and mtimes
-        QString hash = directoryHash(rootDirectory);
-        QSettings settings;
-        QString previousHash = settings.value("collectionHash").toString();
-        // qDebug() << hash << previousHash;
-        if (hash == previousHash) {
-            // qDebug() << "Nothing changed since the last time";
+        // check wheter dir exists, is readable and isn't empty
+        // we don't want to wipe out a collection because of an unmounted disk or remote share
+        bool proceed = rootDirectory.exists() &&
+                rootDirectory.isReadable() &&
+                rootDirectory.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count();
+
+        if (proceed) {
+            // quickly check if anything changed since the last time
+            // by building a hash from filenames and mtimes
+            QString hash = directoryHash(rootDirectory);
+            QSettings settings;
+            QString previousHash = settings.value("collectionHash").toString();
+            proceed = hash != previousHash;
+        }
+
+        if (!proceed) {
             stopped = false;
             working = false;
             Database::instance().closeConnection();
