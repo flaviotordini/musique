@@ -81,7 +81,7 @@ HEADERS += src/mainwindow.h \
     src/lastfmlogindialog.h \
     src/lastfm.h \
     src/imagedownloader.h \
-    src/utils.h
+    src/iconutils.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -142,7 +142,7 @@ SOURCES += src/main.cpp \
     src/lastfmlogindialog.cpp \
     src/lastfm.cpp \
     src/imagedownloader.cpp \
-    src/utils.cpp
+    src/iconutils.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
@@ -164,10 +164,8 @@ unix:!mac {
         QT += phonon
         INCLUDEPATH += /usr/include/phonon
     }
-
     LIBS += -ltag
     INCLUDEPATH += /usr/include/taglib
-
     QT += dbus
     HEADERS += src/gnomeglobalshortcutbackend.h
     SOURCES += src/gnomeglobalshortcutbackend.cpp
