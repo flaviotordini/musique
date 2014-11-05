@@ -148,16 +148,3 @@ void StartView::appear() {
         welcomeLabel->show();
     }
 }
-
-void StartView::paintEvent(QPaintEvent * /*event*/) {
-#if defined(APP_MAC) | defined(APP_WIN)
-    QBrush brush;
-    if (window()->isActiveWindow()) {
-        brush = QBrush(QColor(0xdd, 0xe4, 0xeb));
-    } else {
-        brush = palette().window();
-    }
-    QPainter painter(this);
-    painter.fillRect(0, 0, width(), height(), brush);
-#endif
-}
