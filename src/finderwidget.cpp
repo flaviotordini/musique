@@ -104,20 +104,12 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
 }
 
-void FinderWidget::paintEvent(QPaintEvent*) {
+void FinderWidget::paintEvent(QPaintEvent *e) {
+    Q_UNUSED(e);
 
     QPainter painter(this);
     painter.translate(0, stackedWidget->y());
-
-    const int hCenter = width() * .5;
-    QRadialGradient gradient(hCenter, 0,
-                             width(),
-                             hCenter, 0);
-    gradient.setColorAt(1, QColor(0x00, 0x00, 0x00));
-    gradient.setColorAt(0, QColor(0x2c, 0x2c, 0x2c));
-
     QRect rect = visibleRegion().boundingRect();
-    painter.fillRect(rect, QBrush(gradient));
 
     QLinearGradient shadow;
     shadow.setColorAt(0, QColor(0x00, 0x00, 0x00, 64));
@@ -132,7 +124,6 @@ void FinderWidget::paintEvent(QPaintEvent*) {
     shadow.setStart(shadowRect.topRight());
     shadow.setFinalStop(shadowRect.topLeft());
     painter.fillRect(shadowRect, QBrush(shadow));
-
 }
 
 void FinderWidget::restoreSavedView() {

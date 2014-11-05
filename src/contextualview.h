@@ -44,7 +44,7 @@ public:
     TrackInfo *trackInfo;
 
 protected:
-    void paintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *e);
 
 };
 

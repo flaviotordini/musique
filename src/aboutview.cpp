@@ -105,14 +105,15 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
 
 void AboutView::paintEvent(QPaintEvent * /*event*/) {
 #if defined(APP_MAC) | defined(APP_WIN)
+    QPainter painter(this);
+
     QBrush brush;
     if (window()->isActiveWindow()) {
-        brush = QBrush(QColor(0xdd, 0xe4, 0xeb));
+        brush = QBrush(Qt::white);
     } else {
         brush = palette().window();
     }
-    QPainter painter(this);
-    painter.fillRect(0, 0, width(), height(), brush);
+    painter.fillRect(rect(), brush);
 #endif
 }
 

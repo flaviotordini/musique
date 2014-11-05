@@ -86,7 +86,7 @@ public:
     void trackActivated(Track *track);
 
 protected:
-    void paintEvent(QPaintEvent *);
+    void paintEvent(QPaintEvent *e);
 
 private slots:
     void goBack();

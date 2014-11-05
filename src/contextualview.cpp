@@ -80,23 +80,15 @@ ScrollingContextualView::ScrollingContextualView(QWidget *parent) :
 
 }
 
-void ScrollingContextualView::paintEvent(QPaintEvent * /*event*/) {
+void ScrollingContextualView::paintEvent(QPaintEvent *e) {
+    Q_UNUSED(e);
+
     QPainter painter(this);
-
-    const int hCenter = width() * .5;
-    QRadialGradient gradient(hCenter, 0,
-                             width(),
-                             hCenter, 0);
-    gradient.setColorAt(1, QColor(0x00, 0x00, 0x00));
-    gradient.setColorAt(0, QColor(0x4c, 0x4c, 0x4c));
-
     QRect rect = visibleRegion().boundingRect();
-    painter.fillRect(rect, QBrush(gradient));
 
     QLinearGradient shadow;
     shadow.setFinalStop(0, 20);
     shadow.setColorAt(0, QColor(0x00, 0x00, 0x00, 48));
     shadow.setColorAt(1, QColor(0x00, 0x00, 0x00, 0));
     painter.fillRect(rect.x(), rect.y(), rect.width(), 20, QBrush(shadow));
-
 }
