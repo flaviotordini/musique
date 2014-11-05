@@ -38,8 +38,7 @@ public:
     void paint( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
 
 private:
-    const QPixmap &getPlayIcon(const QStyleOptionViewItem &option) const;
-    const QPixmap &getSelectedPlayIcon() const;
+    QPixmap getPlayIcon(const QColor &color, const QStyleOptionViewItem &option) const;
     void paintTrack(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const;
     void paintAlbumHeader(QPainter* painter, const QStyleOptionViewItem& option,
                           const QRect &line, Track* track) const;
@@ -51,7 +50,6 @@ private:
                           const QRect &line, Track* track) const;
     void paintActiveOverlay(QPainter *painter, const QStyleOptionViewItem& option,
                             const QRect &line) const;
-    void paintSelectedOverlay(QPainter *painter, const QRect &line) const;
 
     static const int PADDING;
     static int ITEM_HEIGHT;

@@ -23,13 +23,13 @@ $END_LICENSE */
 #include "model/album.h"
 #include "model/artist.h"
 #include "playlistmodel.h"
-#include "utils.h"
+#include "iconutils.h"
 
 const int PlaylistItemDelegate::PADDING = 10;
 int PlaylistItemDelegate::ITEM_HEIGHT = 0;
 
 PlaylistItemDelegate::PlaylistItemDelegate(QObject *parent) :
-        QStyledItemDelegate(parent) {
+    QStyledItemDelegate(parent) {
 
 }
 
@@ -66,35 +66,22 @@ void PlaylistItemDelegate::paint(
     paintTrack(painter, option, index);
 }
 
-const QPixmap &PlaylistItemDelegate::getPlayIcon(const QStyleOptionViewItem& option) const {
-    static QPixmap playIcon;
-    if (playIcon.isNull()) {
-        QColor highlightColor = option.palette.color(QPalette::Highlight);
-        QColor color = QColor::fromHsv(highlightColor.hue(), 255, 96);
-        QIcon icon = Utils::tintedIcon("media-playback-start", color, QList<QSize>() << QSize(16, 16));
-        playIcon = icon.pixmap(16, 16);
-    }
-    return playIcon;
-}
-
-const QPixmap &PlaylistItemDelegate::getSelectedPlayIcon() const {
-    static QPixmap playIcon;
-    if (playIcon.isNull()) {
-        QIcon icon = Utils::tintedIcon("media-playback-start", Qt::white, QList<QSize>() << QSize(16, 16));
-        playIcon = icon.pixmap(16, 16);
-    }
-    return playIcon;
+QPixmap PlaylistItemDelegate::getPlayIcon(const QColor& color, const QStyleOptionViewItem &option) const {
+    static QHash<QString, QPixmap> cache;
+    const QString key = color.name();
+    if (cache.contains(key)) return cache.value(key);
+    const int iconSize = ITEM_HEIGHT / 2;
+    QIcon icon = IconUtils::tintedIcon("media-playback-start", color, QList<QSize>() << QSize(32, 32));
+    QPixmap pixmap = icon.pixmap(iconSize, iconSize);
+    cache.insert(key, pixmap);
+    return pixmap;
 }
 
 void PlaylistItemDelegate::paintTrack(QPainter *painter,
                                       const QStyleOptionViewItem &option,
                                       const QModelIndex &index) const {
 
-    // get the data object
-    const TrackPointer trackPointer = index.data(Playlist::DataObjectRole).value<TrackPointer>();
-    Track *track = trackPointer.data();
-
-    // const PlaylistModel* playlistModel = dynamic_cast<const PlaylistModel*>(index.model());
+    Track *track = index.data(Playlist::DataObjectRole).value<TrackPointer>().data();
 
     const bool isActive = index.data(Playlist::ActiveItemRole).toBool();
     // const bool isHovered = index.data(Playlist::HoveredItemRole).toBool();
@@ -107,12 +94,6 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
 
     painter->translate(option.rect.topLeft());
     QRect line(0, 0, option.rect.width(), option.rect.height());
-
-#if defined(APP_MAC) | defined(APP_WIN)
-    if (isSelected) {
-        paintSelectedOverlay(painter, line);
-    }
-#endif
 
     // text color
     if (isSelected)
@@ -134,8 +115,8 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     if (isActive) {
         if (!isSelected) paintActiveOverlay(painter, option, line);
         // play icon
-        QPixmap p = isSelected ? getSelectedPlayIcon() : getPlayIcon(option);
-        painter->drawPixmap(PADDING*1.5, (ITEM_HEIGHT - 16) / 2, 16, 16, p);
+        QPixmap p = getPlayIcon(painter->pen().color(), option);
+        painter->drawPixmap(PADDING*1.5, (ITEM_HEIGHT - p.height()) / 2, p);
     } else {
         paintTrackNumber(painter, option, line, track);
     }
@@ -145,7 +126,8 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     paintTrackLength(painter, option, line, track);
 
     // separator
-    painter->setPen(option.palette.color(QPalette::Midlight));
+    // painter->setPen(option.palette.color(QPalette::Midlight));
+    painter->setOpacity(.1);
     painter->drawLine(0, line.height()-1, line.width(), line.height()-1);
 
     painter->restore();
@@ -259,40 +241,25 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
     // track number
     QFont boldFont = painter->font();
     boldFont.setBold(true);
-    boldFont.setPointSize(boldFont.pointSize()*.9);
+    boldFont.setPointSize(boldFont.pointSize()-1);
     painter->setFont(boldFont);
     QString trackString = QString("%1").arg(trackNumber, 2, 10, QChar('0'));
     QSize trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
     QPoint textLoc(PADDING*1.5, 0);
     QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
 
-    // rounded rect
-    QRect trackRoundedRect = trackTextBox;
-    trackRoundedRect.setY((line.height() - trackStringSize.height()) / 2);
-    trackRoundedRect.setHeight(trackStringSize.height());
-    trackRoundedRect.adjust(-PADDING/2, -PADDING/3, PADDING/2, PADDING/3);
-    painter->setOpacity(.25);
-    painter->setRenderHints(QPainter::Antialiasing, true);
-    painter->setBrush(option.palette.window());
-    painter->setPen(option.palette.WindowText);
-
-    painter->drawRoundedRect(trackRoundedRect, PADDING/2, PADDING/2, Qt::AbsoluteSize);
     painter->setOpacity(.5);
     painter->drawText(trackTextBox, Qt::AlignCenter, trackString);
-
     painter->restore();
-
 }
 
 void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOptionViewItem& option,
                                            const QRect &line, Track* track, bool isActive) const {
 
+    Q_UNUSED(isActive);
+    Q_UNUSED(option);
+
     painter->save();
-    if (isActive) {
-        QFont boldFont = painter->font();
-        boldFont.setBold(true);
-        painter->setFont(boldFont);
-    }
 
     QFontMetrics fontMetrics = QFontMetrics(painter->font());
 
@@ -341,15 +308,15 @@ void PlaylistItemDelegate::paintActiveOverlay(
     const int gradientRange = 16;
 
     QColor color2 = QColor::fromHsv(
-            highlightColor.hue(),
-            (int) (backgroundColor.saturation() * (1.0f - animation) + highlightColor.saturation() * animation),
-            (int) (backgroundColor.value() * (1.0f - animation) + highlightColor.value() * animation)
-            );
+                highlightColor.hue(),
+                (int) (backgroundColor.saturation() * (1.0f - animation) + highlightColor.saturation() * animation),
+                (int) (backgroundColor.value() * (1.0f - animation) + highlightColor.value() * animation)
+                );
     QColor color1 = QColor::fromHsv(
-            color2.hue(),
-            qMax(color2.saturation() - gradientRange, 0),
-            qMin(color2.value() + gradientRange, 255)
-            );
+                color2.hue(),
+                qMax(color2.saturation() - gradientRange, 0),
+                qMin(color2.value() + gradientRange, 255)
+                );
 
     painter->save();
     painter->setPen(Qt::NoPen);
@@ -357,18 +324,5 @@ void PlaylistItemDelegate::paintActiveOverlay(
     linearGradient.setColorAt(0.0, color1);
     linearGradient.setColorAt(1.0, color2);
     painter->fillRect(line, linearGradient);
-    painter->restore();
-}
-
-void PlaylistItemDelegate::paintSelectedOverlay( QPainter *painter, const QRect &line) const {
-    QColor color1 = QColor::fromRgb(0x69, 0xa6, 0xd9);
-    QColor color2 = QColor::fromRgb(0x14, 0x6b, 0xd4);
-    painter->save();
-    painter->setPen(Qt::NoPen);
-    QLinearGradient linearGradient(0, 0, 0, line.height());
-    linearGradient.setColorAt(0.0, color1);
-    linearGradient.setColorAt(1.0, color2);
-    painter->setBrush(linearGradient);
-    painter->drawRect(line);
     painter->restore();
 }
