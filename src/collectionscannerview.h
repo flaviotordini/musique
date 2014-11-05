@@ -43,9 +43,6 @@ public:
         return metadata;
     }
 
-protected:
-    void paintEvent(QPaintEvent *);
-
 public slots:
     void setCollectionScannerThread(CollectionScannerThread *scannerThread);
 
