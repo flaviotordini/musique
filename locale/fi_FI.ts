@@ -12,7 +12,7 @@
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>&lt;a href=&apos;%1&apos;&gt;Lahjoita&lt;/a&gt; tukeaksesi sovelluksen %2 jatkokehitystä.</translation>
+        <translation>&lt;a href=&apos;%1&apos;&gt;Lahjoita&lt;/a&gt; tukeaksesi %2n jatkokehitystä.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -82,7 +82,7 @@
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Ostamalla täyden version tuet kovaa työtäni sovelluksen %1 parissa.</translation>
+        <translation>Ostamalla täyden version tuet työtäni %1n parissa.</translation>
     </message>
     <message>
         <source>Use Demo</source>
@@ -200,7 +200,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Peru</translation>
+        <translation>Peruuta</translation>
     </message>
     <message>
         <source>Use iTunes collection</source>
@@ -651,6 +651,10 @@
     <message>
         <source>%1 finished scanning your music collection</source>
         <translation>%1 sai valmiiksi musiikkikokoelmasi tutkimisen</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Pidätkö %1sta? Arvostele se!</translation>
     </message>
 </context>
 <context>

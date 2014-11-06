@@ -116,27 +116,27 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Artist</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Titel</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Jahr</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Beliebtheit</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Umgekehrte Reihenfolge</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation type="unfinished"/>
+        <translation>Sortieren nach</translation>
     </message>
 </context>
 <context>
@@ -150,31 +150,31 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Anzahl der Titel</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Anzahl der Alben</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Name</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Jahr</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Beliebheit</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Umgekehrte Reihenfolge</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation type="unfinished"/>
+        <translation>Sortieren nach</translation>
     </message>
 </context>
 <context>
@@ -650,6 +650,10 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
+        <translation>%1 hat die Musiksammlung vollständig eingelesen</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
         <translation type="unfinished"/>
     </message>
 </context>

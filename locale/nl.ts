@@ -654,6 +654,10 @@
         <source>%1 finished scanning your music collection</source>
         <translation>#1 is klaar met het indexeren van uw muziek collectie</translation>
     </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>Vindt u %1 te &amp;gek? Waardeer het!</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>

@@ -652,6 +652,10 @@
         <source>%1 finished scanning your music collection</source>
         <translation>%1 сканирано от вашата музикална колекция</translation>
     </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>

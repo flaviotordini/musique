@@ -16,7 +16,7 @@
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation>Lliberáu baxo la &lt;a href=&apos;%1&apos;&gt;Llicencia Pública Xeneral GNU&lt;/a&gt;</translation>
+        <translation>Asoleyáu baxo la &lt;a href=&apos;%1&apos;&gt;Llicencia Pública Xeneral GNU&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -90,7 +90,7 @@
     </message>
     <message>
         <source>Enter License</source>
-        <translation>Introduza la llicencia</translation>
+        <translation>Escriba la llicencia</translation>
     </message>
     <message>
         <source>Buy License</source>
@@ -116,23 +116,23 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Artista</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Títulu</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Añu</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popularidá</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Orde inversu</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -150,27 +150,27 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Númberu de pistes</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Númberu d&apos;álbumes</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Añu</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popularidá</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Orde inversu</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -216,7 +216,7 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 coneutará colos servicios web de Last.fm y pasará-y los nomes d&apos;artistes y títulos d&apos;álbumes pa baxar portaes d&apos;álbumes, biografíes y muncho más.</translation>
+        <translation>%1 coneutará colos servicios web de Last.fm y pasará-y los nomes d&apos;artistes y títulos d&apos;álbumes pa baxar imaxes de portaes, biografíes y muncho más.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
@@ -246,14 +246,14 @@
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>Yá ta executándose una xera d&apos;escanéu</translation>
+        <translation>Yá ta executándose una xera d&apos;analís</translation>
     </message>
 </context>
 <context>
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 ta escaneando la to coleición de música.</translation>
+        <translation>%1 ta analizando la coleición de música.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
@@ -367,7 +367,7 @@
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation>Conse&amp;ña:</translation>
+        <translation>Contrase&amp;ña:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
@@ -375,7 +375,7 @@
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation>¿Escaecisti&apos;l &lt;a href=&apos;%1&apos;&gt;nome d&apos;usuariu&lt;/a&gt; o la &lt;a href=&apos;%2&apos;&gt;conseña?</translation>
+        <translation>¿Escaecisti&apos;l &lt;a href=&apos;%1&apos;&gt;nome d&apos;usuariu&lt;/a&gt; o la &lt;a href=&apos;%2&apos;&gt;contraseña&lt;/a&gt;?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -482,7 +482,7 @@
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>Facer un &amp;donativu</translation>
+        <translation>Facer una &amp;donación</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
@@ -634,7 +634,7 @@
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation>Unviar títulos reproducíos a %1</translation>
+        <translation>Unviar los títulos reproducíos a %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
@@ -642,7 +642,7 @@
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation>&amp;Informar de un problema...</translation>
+        <translation>&amp;Informar d&apos;un problema...</translation>
     </message>
     <message>
         <source>Search</source>
@@ -650,6 +650,10 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
+        <translation>%1 acabó d&apos;analizar la coleición de música.</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -688,11 +692,11 @@
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation>%1 %2 yá ta disponible. Vusté tien %3.</translation>
+        <translation>%1 %2 yá ta disponible. Tienes %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation>¿Quier descargala agora?</translation>
+        <translation>¿Quies descargala agora?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
@@ -700,7 +704,7 @@
     </message>
     <message>
         <source>Remind Me Later</source>
-        <translation>Recordamelo más sero </translation>
+        <translation>Recordámelo más sero </translation>
     </message>
     <message>
         <source>Install Update</source>

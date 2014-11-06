@@ -652,6 +652,10 @@
         <source>%1 finished scanning your music collection</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>

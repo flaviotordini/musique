@@ -116,23 +116,23 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Artistas</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Ano</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popularidade</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Inverter a orde</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -150,11 +150,11 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Número de pistas</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Número de álbums</translation>
     </message>
     <message>
         <source>Name</source>
@@ -162,15 +162,15 @@
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Ano</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popularidade</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Inverter a orde</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -650,7 +650,11 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation type="unfinished"/>
+        <translation>%1 rematou de escanear a colección de música</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Gustoulle %1? Cualifíqueo!</translation>
     </message>
 </context>
 <context>

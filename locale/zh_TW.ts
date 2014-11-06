@@ -192,7 +192,7 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>歡迎使用 &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>歡迎使用 &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;，</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
@@ -651,6 +651,10 @@
     <message>
         <source>%1 finished scanning your music collection</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>喜歡 %1 ？為它評分！(&amp;L)</translation>
     </message>
 </context>
 <context>

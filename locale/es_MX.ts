@@ -70,7 +70,7 @@
     <name>ActivationView</name>
     <message>
         <source>Please license %1</source>
-        <translation type="unfinished"/>
+        <translation>Por favor licencia %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
@@ -158,7 +158,7 @@
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Year</source>
@@ -341,11 +341,11 @@
     </message>
     <message>
         <source>Seek forward</source>
-        <translation type="unfinished"/>
+        <translation>Buscar hacia adelante</translation>
     </message>
     <message>
         <source>Seek backward</source>
-        <translation type="unfinished"/>
+        <translation>Buscar hacia atrás</translation>
     </message>
 </context>
 <context>
@@ -402,7 +402,7 @@
     </message>
     <message>
         <source>P&amp;revious</source>
-        <translation type="unfinished"/>
+        <translation>Ante&amp;rior</translation>
     </message>
     <message>
         <source>Go back to the previous track</source>
@@ -450,7 +450,7 @@
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation type="unfinished"/>
+        <translation>Mover a&amp;bajo</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
@@ -530,7 +530,7 @@
     </message>
     <message>
         <source>&amp;Playback</source>
-        <translation type="unfinished"/>
+        <translation>Re&amp;producir</translation>
     </message>
     <message>
         <source>Play&amp;list</source>
@@ -590,7 +590,7 @@
     </message>
     <message>
         <source>Volume is unmuted</source>
-        <translation type="unfinished"/>
+        <translation>Audio sin silenciar</translation>
     </message>
     <message>
         <source>Get the full version</source>
@@ -651,6 +651,10 @@
     <message>
         <source>%1 finished scanning your music collection</source>
         <translation>%1 escaneo de tu colección de música terminado</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Amas %1? Calíficalo!</translation>
     </message>
 </context>
 <context>

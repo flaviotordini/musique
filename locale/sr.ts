@@ -4,7 +4,7 @@
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
-        <translation>Верзија: %1</translation>
+        <translation>Издање: %1</translation>
     </message>
     <message>
         <source>%1 is Free Software but its development takes precious time.</source>
@@ -32,11 +32,11 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Такође можете да пробате и моје остале програме:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, програм за Јутјуб</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
@@ -44,61 +44,61 @@
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation type="unfinished"/>
+        <translation>Преведите %1 на ваш језик користећи %2</translation>
     </message>
     <message>
         <source>Licensed to: %1</source>
-        <translation type="unfinished"/>
+        <translation>Лиценцирано на: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation type="unfinished"/>
+        <translation>Унесите детаље ваше лиценце</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Е-пошта:</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Кôд:</translation>
     </message>
 </context>
 <context>
     <name>ActivationView</name>
     <message>
         <source>Please license %1</source>
-        <translation>Молимо да купите %1</translation>
+        <translation>Лиценцирајте %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation>Показна верзија је истекла.</translation>
+        <translation>Пробно издање је истекло.</translation>
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation type="unfinished"/>
+        <translation>Без лиценце програм ће истећи за %1 дан(а).</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Куповином пуне верзије ћете уједно и подржати мој рад на програму %1.</translation>
+        <translation>Куповином пуног издања ћете уједно и подржати мој рад на програму %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>Користи показну верзију</translation>
+        <translation>Користи пробно издање</translation>
     </message>
     <message>
         <source>Enter License</source>
-        <translation type="unfinished"/>
+        <translation>Унесите лиценцу</translation>
     </message>
     <message>
         <source>Buy License</source>
-        <translation type="unfinished"/>
+        <translation>Купите лиценцу</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>Пуно издање вам дозвољава да додате више од %1 нумера у листу и да слушате вашу музику без прекида.</translation>
     </message>
 </context>
 <context>
@@ -116,27 +116,27 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>извођачу</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>наслову</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>години</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>популарности</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Обрнут редослед</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation type="unfinished"/>
+        <translation>Поређај по</translation>
     </message>
 </context>
 <context>
@@ -150,31 +150,31 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>броју нумера</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>броју албума</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>имену</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>години</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>популарности</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Обрнут редослед</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation type="unfinished"/>
+        <translation>Поређај по</translation>
     </message>
 </context>
 <context>
@@ -192,19 +192,19 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation type="unfinished"/>
+        <translation>Добро дошли на &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 треба да претражи вашу збирку музике.</translation>
+        <translation>%1 мора да скенира вашу збирку музике.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Откажи</translation>
+        <translation>Одустани</translation>
     </message>
     <message>
         <source>Use iTunes collection</source>
-        <translation>Користи ајТјунсову збирку</translation>
+        <translation>Користи Ајтјунсову збирку</translation>
     </message>
     <message>
         <source>Use %1</source>
@@ -216,11 +216,11 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation type="unfinished"/>
+        <translation>%1 ће да се повеже на Ласт.фм веб сервисе и да пошаље имена извођача и албума како би добавио слике омота, биографије и још много тога.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation type="unfinished"/>
+        <translation>Ако сте забринути због приватности можете одустати одмах.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>Locate your collection</source>
-        <translation>Лоцирајет вашу збирку</translation>
+        <translation>Лоцирајте вашу збирку</translation>
     </message>
 </context>
 <context>
@@ -246,18 +246,18 @@
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>Претраживање је већ покренуто</translation>
+        <translation>Скенирање је већ покренуто</translation>
     </message>
 </context>
 <context>
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 претражује вашу збирку музике.</translation>
+        <translation>%1 скенира вашу збирку музике.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation type="unfinished"/>
+        <translation>%1 користи &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; за каталогизацију ваше музике.</translation>
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
@@ -265,21 +265,21 @@
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation>Скувајте кафицу.</translation>
+        <translation>Скувајте кафицу</translation>
     </message>
 </context>
 <context>
     <name>DownloadWidget</name>
     <message>
         <source>Downloading update...</source>
-        <translation type="unfinished"/>
+        <translation>Преузимам надоградњу...</translation>
     </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation type="unfinished"/>
+        <translation>Испустите овде да додате на листу</translation>
     </message>
 </context>
 <context>
@@ -309,7 +309,7 @@
     </message>
     <message>
         <source>Play/Pause</source>
-        <translation>Пусти или паузирај</translation>
+        <translation>Пусти/паузирај</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -317,7 +317,7 @@
     </message>
     <message>
         <source>Stop playing after current track</source>
-        <translation>Зауставља пуштање након тренутне нумере</translation>
+        <translation>Заустави пуштање након текуће нумере</translation>
     </message>
     <message>
         <source>Next track</source>
@@ -337,49 +337,49 @@
     </message>
     <message>
         <source>Mute</source>
-        <translation>Искључи звук</translation>
+        <translation>Утишај звук</translation>
     </message>
     <message>
         <source>Seek forward</source>
-        <translation>Пемотај унапред</translation>
+        <translation>Тражи унапред</translation>
     </message>
     <message>
         <source>Seek backward</source>
-        <translation>Премотај уназад</translation>
+        <translation>Тражи уназад</translation>
     </message>
 </context>
 <context>
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Аутентификација није успела</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Пријави се на %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Корисничко име:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Лозинка:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Отвори %1 налог</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>Заборавили сте ваше &lt;a href=&apos;%1&apos;&gt;корисничко име&lt;/a&gt; или &lt;a href=&apos;%2&apos;&gt;лозинку&lt;/a&gt;?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Откажи</translation>
+        <translation>Одустани</translation>
     </message>
 </context>
 <context>
@@ -398,7 +398,7 @@
     </message>
     <message>
         <source>Show information about the current track</source>
-        <translation>Приказује податке о тренутној нумери</translation>
+        <translation>Приказује податке о текућој нумери</translation>
     </message>
     <message>
         <source>P&amp;revious</source>
@@ -438,7 +438,7 @@
     </message>
     <message>
         <source>Remove the selected tracks from the playlist</source>
-        <translation>Уклања означене нумере из плејлисте</translation>
+        <translation>Уклања означене нумере из листе</translation>
     </message>
     <message>
         <source>Move &amp;Up</source>
@@ -482,11 +482,11 @@
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>Дајте &amp;донацију</translation>
+        <translation>&amp;Донирај</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
-        <translation>Молимо да подржите даљи развој програма %1</translation>
+        <translation>Подржите даљи развој програма %1</translation>
     </message>
     <message>
         <source>&amp;About</source>
@@ -494,7 +494,7 @@
     </message>
     <message>
         <source>Info about %1</source>
-        <translation>Подаци о програму %1</translation>
+        <translation>Подаци о %1</translation>
     </message>
     <message>
         <source>&amp;Clear</source>
@@ -502,11 +502,11 @@
     </message>
     <message>
         <source>Remove all tracks from the playlist</source>
-        <translation>Уклања све нумере из листе</translation>
+        <translation>Уклони све нумере из листе</translation>
     </message>
     <message>
         <source>&amp;Shuffle</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Насумично</translation>
     </message>
     <message>
         <source>Random playlist mode</source>
@@ -522,7 +522,7 @@
     </message>
     <message>
         <source>Mute volume</source>
-        <translation>Угаси звук</translation>
+        <translation>Утишај звук</translation>
     </message>
     <message>
         <source>&amp;Application</source>
@@ -554,7 +554,7 @@
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation>Ажурирам збирку</translation>
+        <translation>Ажурирам збирку...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
@@ -566,15 +566,15 @@
     </message>
     <message>
         <source>Fatal error: %1</source>
-        <translation>тална грешка: %1</translation>
+        <translation>Фатална грешка: %1</translation>
     </message>
     <message>
         <source>Error: %1</source>
-        <translation type="unfinished"/>
+        <translation>Грешка: %1</translation>
     </message>
     <message>
         <source>Leave &amp;Full Screen</source>
-        <translation type="unfinished"/>
+        <translation>Напусти &amp;цео екран</translation>
     </message>
     <message>
         <source>Remaining time: %1</source>
@@ -582,31 +582,31 @@
     </message>
     <message>
         <source>Volume at %1%</source>
-        <translation type="unfinished"/>
+        <translation>Јачина на %1%</translation>
     </message>
     <message>
         <source>Volume is muted</source>
-        <translation>Звуке је искључен</translation>
+        <translation>Звук је утишан</translation>
     </message>
     <message>
         <source>Volume is unmuted</source>
-        <translation>Звук је поново укључен</translation>
+        <translation>Звук је укључен</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Преузмите пуну верзију</translation>
+        <translation>Преузмите пуно издање</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation type="unfinished"/>
+        <translation>%1 издање %2 је сада доступно.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation type="unfinished"/>
+        <translation>Подсети ме касније</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Ажурирај</translation>
+        <translation>Надогради</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -622,35 +622,39 @@
     </message>
     <message>
         <source>Buy %1...</source>
-        <translation>Купите %1....</translation>
+        <translation>Купи %1....</translation>
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Заустави након ове нумере</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Скробловање</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Шаљи наслове пуштаних нумера на %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Одјава са%1</translation>
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation type="unfinished"/>
+        <translation>Пријави &amp;грешку...</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Претрага</translation>
+        <translation>Тражи</translation>
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation type="unfinished"/>
+        <translation>%1 заврши скенирање ваше музичке збирке</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Обожавате %1? Оцените!</translation>
     </message>
 </context>
 <context>
@@ -661,15 +665,15 @@
     </message>
     <message>
         <source>Playlist finished</source>
-        <translation>Крај плејлисте</translation>
+        <translation>Крај листе нумера</translation>
     </message>
     <message>
         <source>This is just the demo version of %1.</source>
-        <translation>Ово је тек демо верзија програма %1.</translation>
+        <translation>Ово је само пробно издање програма %1.</translation>
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Дозвољава вам да пустите пар нумера како би испробали програм и оценили да ли вам одговара.</translation>
+        <translation>Дозвољава вам да пустите пар нумера како бисте испробали програм и оценили да ли вам одговара.</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -677,55 +681,55 @@
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Преузмите пуну верзију</translation>
+        <translation>Преузми пуно издање</translation>
     </message>
 </context>
 <context>
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation type="unfinished"/>
+        <translation>Ново издање %1 је доступно!</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation type="unfinished"/>
+        <translation>%1 %2 је доступан! Код вас је %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation type="unfinished"/>
+        <translation>Желите ли да га преузмете одмах?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
-        <translation type="unfinished"/>
+        <translation>Прескочи</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
-        <translation type="unfinished"/>
+        <translation>Касније</translation>
     </message>
     <message>
         <source>Install Update</source>
-        <translation type="unfinished"/>
+        <translation>Инсталирај</translation>
     </message>
 </context>
 <context>
     <name>PasteLineEdit</name>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Налепи</translation>
     </message>
 </context>
 <context>
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Пробно издање је ограничено само на %1 нумера у листи.</translation>
     </message>
 </context>
 <context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
-        <translation>Плејлиста је празна</translation>
+        <translation>Листа нумера је празна</translation>
     </message>
     <message>
         <source>%1 tracks - Total length is %2</source>
@@ -736,14 +740,14 @@
     <name>SearchLineEdit</name>
     <message>
         <source>Search</source>
-        <translation>Претражи</translation>
+        <translation>Тражи</translation>
     </message>
 </context>
 <context>
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>Нема резултата.</translation>
     </message>
 </context>
 <context>

@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation>Traduce %1 a tu idioma utilizando %2</translation>
+        <translation>Traduzca %1 a tu idioma utilizando %2</translation>
     </message>
     <message>
         <source>Licensed to: %1</source>
@@ -55,7 +55,7 @@
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation>Introducir detalles de la licencia</translation>
+        <translation>Introduzca la información de su licencia</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation>La aplicación caducará en %1 días si no tiene una licencia.</translation>
+        <translation>La aplicación caducará en %1 días si no dispone de una licencia.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>La versión completa permite añadir más de %1 pistas a la lista de reproducción y escuchar música sin interrupciones.</translation>
     </message>
 </context>
 <context>
@@ -109,30 +109,30 @@
     </message>
     <message>
         <source>Read more</source>
-        <translation>Leer más</translation>
+        <translation>Más información</translation>
     </message>
 </context>
 <context>
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Intérprete</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Título</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Año</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popularidad</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Orden inverso</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -143,38 +143,38 @@
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
-        <translation>Leer más</translation>
+        <translation>Más información</translation>
     </message>
 </context>
 <context>
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Número de pista</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Número de álbum</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Nombre</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Año</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popularidad</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Orden inverso</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Sortear por</translation>
+        <translation>Clasificar por</translation>
     </message>
 </context>
 <context>
@@ -192,7 +192,7 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Bienvenido a &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Bienvenidos a &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
@@ -239,7 +239,7 @@
     <name>ClearButton</name>
     <message>
         <source>Clear</source>
-        <translation>Limpiar</translation>
+        <translation>Borrar</translation>
     </message>
 </context>
 <context>
@@ -414,7 +414,7 @@
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation>Omitir pista y saltar a la siguiente</translation>
+        <translation>Pasar a la siguiente pista</translation>
     </message>
     <message>
         <source>&amp;Play</source>
@@ -598,11 +598,11 @@
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation>%1 versión %2 ya está disponible.</translation>
+        <translation>La versión %2 de %1 ya se encuentra disponible.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation>Recordarme después</translation>
+        <translation>Recordarme más tarde</translation>
     </message>
     <message>
         <source>Update</source>
@@ -642,7 +642,7 @@
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation>&amp;Reporte un inconveniente...</translation>
+        <translation>&amp;Informar de un problema...</translation>
     </message>
     <message>
         <source>Search</source>
@@ -650,6 +650,10 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
+        <translation>%1 ha terminado de analizar su colección de música</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -684,15 +688,15 @@
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation>¡Una nueva versión de %1 ya está disponible!</translation>
+        <translation>¡Una nueva versión de %1 ya se encuentra disponible!</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation>%1 %2 ya está disponible. Tienes la %3.</translation>
+        <translation>%1 %2 ya se encuentra disponible. Su versión es la %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation>¿Deseas descargarla ahora?</translation>
+        <translation>¿Desea descargarla ahora?</translation>
     </message>
     <message>
         <source>Skip This Version</source>

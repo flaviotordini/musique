@@ -192,7 +192,7 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Запрашаем у &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Ласкава запрашаем у &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
@@ -200,7 +200,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Адмена</translation>
+        <translation>Скасаваць</translation>
     </message>
     <message>
         <source>Use iTunes collection</source>
@@ -651,6 +651,10 @@
     <message>
         <source>%1 finished scanning your music collection</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Падабаецца %1? Ацані яго!</translation>
     </message>
 </context>
 <context>

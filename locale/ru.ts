@@ -87,7 +87,7 @@
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>Использовать демо</translation>
+        <translation>Использовать демо версию</translation>
     </message>
     <message>
         <source>Enter License</source>
@@ -117,23 +117,23 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Исполнитель</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Название</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Год</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Популярность</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Обратный порядок</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -151,11 +151,11 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Количество песен</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Количество альбомов</translation>
     </message>
     <message>
         <source>Name</source>
@@ -163,15 +163,15 @@
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Год</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Популярность</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Обратный порядок</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -193,7 +193,7 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Добро пожаловать на &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Добро пожаловать в &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
@@ -651,6 +651,10 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
+        <translation>%1 завершено сканирование Вашей музыкальной колекции</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
         <translation type="unfinished"/>
     </message>
 </context>

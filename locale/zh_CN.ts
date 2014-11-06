@@ -8,7 +8,7 @@
     </message>
     <message>
         <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 是自由软件，但它的开发需要的宝贵时间。</translation>
+        <translation>%1 是自由软件，但它的开发需要宝贵的时间。</translation>
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>关闭(_C)</translation>
+        <translation>关闭(_B)</translation>
     </message>
     <message>
         <source>About</source>
@@ -55,15 +55,15 @@
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation>输入您的许可协议详情</translation>
+        <translation>输入您的许可详情</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation>邮件(&amp;E)：</translation>
+        <translation>邮件(_E)：</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation>激活码(C)：</translation>
+        <translation>激活码(_C)：</translation>
     </message>
 </context>
 <context>
@@ -74,19 +74,19 @@
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation>该 Demo 已经过期。</translation>
+        <translation>该试用版已经过期。</translation>
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation>若无授权，该软件将会在 %1 天后过期。</translation>
+        <translation>若无许可证，该软件将会在 %1 天后过期。</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>通过购买完整版本，您也将支持我在创建 %1 时的辛苦工作。</translation>
+        <translation>购买完整版本的同时，您也能支持我在创建 %1 时付出的努力。</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>使用 Demo</translation>
+        <translation>使用试用版</translation>
     </message>
     <message>
         <source>Enter License</source>
@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>完整版本允许您添加超过 %1 首的曲目到播放列表且允许您不受打断的聆听音乐。</translation>
+        <translation>完整版本允许您将超过 %1 首曲目添加到播放列表中且聆听音乐时不会受到打扰。</translation>
     </message>
 </context>
 <context>
@@ -116,23 +116,23 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>艺术家</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>标题</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>年代</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>流行度</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>逆序</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -150,27 +150,27 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>曲目统计</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>专辑统计</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>姓名</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>年代</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>流行度</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>逆序</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -192,7 +192,7 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>欢迎来到 &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;，</translation>
+        <translation>欢迎使用&lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;！</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
@@ -216,7 +216,7 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 将连结至 Last.fm 网络服务器并提交艺术家名称和唱片标题来获取封面、传记及更多内容。</translation>
+        <translation>%1 将连结至 Last.fm 网络服务器并提交艺术家名称和唱片标题来获取封面、艺人介绍及更多内容。</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
@@ -246,7 +246,7 @@
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>一个扫描任务正在进行</translation>
+        <translation>一个扫描任务已在进行中</translation>
     </message>
 </context>
 <context>
@@ -257,11 +257,11 @@
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 正在用 &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; 去归类您的音乐。</translation>
+        <translation>%1 正在用 &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; 归类您的音乐。</translation>
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
-        <translation>这需要的时间依赖于您的音乐库大小和网路速度。</translation>
+        <translation>这会占用一定时间，时间长短取决于您的音乐库大小和网络速度。</translation>
     </message>
     <message>
         <source>Go grab a coffee</source>
@@ -414,7 +414,7 @@
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation>跳到下一首音轨</translation>
+        <translation>跳至下一首音轨</translation>
     </message>
     <message>
         <source>&amp;Play</source>
@@ -466,11 +466,11 @@
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation>变更收藏文件夹…</translation>
+        <translation>更改收藏文件夹…(_C)</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
-        <translation>选择一个不同的音乐收藏文件夹</translation>
+        <translation>另选一个音乐收藏文件夹</translation>
     </message>
     <message>
         <source>&amp;Website</source>
@@ -502,7 +502,7 @@
     </message>
     <message>
         <source>Remove all tracks from the playlist</source>
-        <translation>删除播放列表的所有音轨</translation>
+        <translation>删除播放列表中的所有音轨</translation>
     </message>
     <message>
         <source>&amp;Shuffle</source>
@@ -518,7 +518,7 @@
     </message>
     <message>
         <source>Play first song again after all songs are played</source>
-        <translation>当所有歌曲播放之后返回播放第一首</translation>
+        <translation>所有歌曲播放结束后返回播放第一首</translation>
     </message>
     <message>
         <source>Mute volume</source>
@@ -534,7 +534,7 @@
     </message>
     <message>
         <source>Play&amp;list</source>
-        <translation>播放列表(_)</translation>
+        <translation>播放列表(_L)</translation>
     </message>
     <message>
         <source>&amp;View</source>
@@ -546,7 +546,7 @@
     </message>
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation>点击 %1 来提高音量，%2 降低</translation>
+        <translation>点击 %1 来提高音量，%2 降低音量</translation>
     </message>
     <message>
         <source>Opening %1</source>
@@ -630,7 +630,7 @@
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation>抓取(_S)</translation>
+        <translation>同步(_S)</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -642,7 +642,7 @@
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation>报告问题&amp;R…</translation>
+        <translation>报告问题…(_R)</translation>
     </message>
     <message>
         <source>Search</source>
@@ -650,7 +650,11 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation type="unfinished"/>
+        <translation>%1 扫描乐收藏完毕</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>喜欢 %1? 为其评分！</translation>
     </message>
 </context>
 <context>
@@ -665,11 +669,11 @@
     </message>
     <message>
         <source>This is just the demo version of %1.</source>
-        <translation>这仅是适用版本 %1 。</translation>
+        <translation>这只是 %1 的试用版本。</translation>
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>它允许您播放一些音轨，方便您测试并了解该程序是否适合您。</translation>
+        <translation>它允许您播放一些音轨，以便您测试并了解该程序是否适合您。</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -718,7 +722,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>该试用版在播放列表中仅限于 %1 首音轨。</translation>
+        <translation>该试用版只能在播放列表中添加 %1 首音轨。</translation>
     </message>
 </context>
 <context>

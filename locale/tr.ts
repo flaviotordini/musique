@@ -116,23 +116,23 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Sanatçı</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Başlık</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Yıl</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popülerlik</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Ters Sırada</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -150,11 +150,11 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Parça Sayısı</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Albüm Sayısı</translation>
     </message>
     <message>
         <source>Name</source>
@@ -162,15 +162,15 @@
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Yıl</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Popülerlik</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Ters Sırada</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -192,7 +192,7 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>&lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;&apos;e Hoş geldiniz,</translation>
+        <translation>&lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;&apos;a Hoş Geldiniz,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
@@ -650,7 +650,11 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation type="unfinished"/>
+        <translation>%1, müzik koleksiyonunuzu taramayı bitirdi</translation>
+    </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>%1 &amp;seviyor musunuz? Değerlendirin!</translation>
     </message>
 </context>
 <context>

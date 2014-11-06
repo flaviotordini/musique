@@ -652,6 +652,10 @@
         <source>%1 finished scanning your music collection</source>
         <translation>%1 selesai mengimbas koleksi muzik anda</translation>
     </message>
+    <message>
+        <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Suka %1? Beri penarafan!</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
