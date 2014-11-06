@@ -35,7 +35,7 @@ const QString USER_AGENT = QString(Constants::NAME)
                            + " (" + Constants::WEBSITE + ")";
 */
 
-const QString USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.95 Safari/537.11";
+const QString USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.124 Safari/537.36";
 
 NetworkReply::NetworkReply(QNetworkReply *networkReply) :
     QObject(networkReply),
