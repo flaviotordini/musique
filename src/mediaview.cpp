@@ -163,7 +163,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
     Track *track = playlistModel->trackAt(row);
     if (!track) {
         activeTrack = 0;
-        // The::globalActions()->value("contextual")->setEnabled(false);
+        The::globalActions()->value("contextual")->setEnabled(false);
         return;
     }
 
@@ -174,7 +174,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
     // go!
     if (startPlayback) {
         QString path = track->getAbsolutePath();
-        qWarning() << "Playing" << path;
+        qDebug() << "Playing" << path;
         mediaObject->setCurrentSource(path);
         mediaObject->play();
     }
@@ -189,10 +189,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
         playlistView->scrollTo(index, QAbstractItemView::PositionAtCenter);
 
     // update info view
-    MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
-    if (mainWindow) {
-        mainWindow->updateContextualView(track);
-    }
+    MainWindow::instance()->updateContextualView(track);
 
     // track title as window title
     Artist *artist = track->getArtist();
@@ -264,8 +261,11 @@ void MediaView::trackRemoved() {
 }
 
 void MediaView::playlistFinished() {
-    MainWindow* mainWindow = dynamic_cast<MainWindow*>(window());
-    if (mainWindow) mainWindow->statusBar()->showMessage(tr("Playlist finished"));
+    MainWindow::instance()->showMessage(tr("Playlist finished"));
+
+    QAction *a = The::globalActions()->value("contextual");
+    if (a->isChecked()) MainWindow::instance()->hideContextualView();
+    a->setEnabled(false);
 }
 
 void MediaView::playbackFinished() {
