@@ -27,12 +27,12 @@ $END_LICENSE */
 #endif
 #include "view.h"
 
-class StartView : public QWidget, public View {
+class ChooseFolderView : public QWidget, public View {
 
     Q_OBJECT
 
 public:
-    StartView(QWidget *parent);
+    ChooseFolderView(QWidget *parent);
     void appear();
     void disappear() {}
     QHash<QString, QVariant> metadata() {
