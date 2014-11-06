@@ -21,7 +21,7 @@ $END_LICENSE */
 #include "mainwindow.h"
 #include "spacer.h"
 #include "constants.h"
-#include "utils.h"
+#include "iconutils.h"
 #include "global.h"
 #include "database.h"
 #include <QtSql>
@@ -190,12 +190,7 @@ void MainWindow::createActions() {
     actions->insert("back", backAct);
     connect(backAct, SIGNAL(triggered()), SLOT(goBack()));
 
-    QIcon icon = Utils::icon("gtk-info");
-#ifdef Q_OS_X11
-    if (icon.isNull()) {
-        icon = Utils::icon("help-about");
-    }
-#endif
+    QIcon icon = IconUtils::icon(QStringList() << "audio-headphones" << "gtk-info" << "help-about");
     contextualAct = new QAction(icon, tr("&Info"), this);
     contextualAct->setStatusTip(tr("Show information about the current track"));
     contextualAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
@@ -206,7 +201,7 @@ void MainWindow::createActions() {
 
     /*
     stopAct = new QAction(
-            Utils::icon("media-playback-stop"),
+            IconUtils::icon("media-playback-stop"),
             tr("&Stop"), this);
     stopAct->setStatusTip(tr("Stop playback and go back to the search view"));
     stopAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::Key_Escape) << QKeySequence(Qt::Key_MediaStop));
@@ -216,7 +211,7 @@ void MainWindow::createActions() {
     */
 
     skipBackwardAct = new QAction(
-                Utils::icon("media-skip-backward"),
+                IconUtils::icon("media-skip-backward"),
                 tr("P&revious"), this);
     skipBackwardAct->setStatusTip(tr("Go back to the previous track"));
     skipBackwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Left));
@@ -227,7 +222,7 @@ void MainWindow::createActions() {
     actions->insert("previous", skipBackwardAct);
 
     skipForwardAct = new QAction(
-                Utils::icon("media-skip-forward"),
+                IconUtils::icon("media-skip-forward"),
                 tr("&Next"), this);
     skipForwardAct->setStatusTip(tr("Skip to the next track"));
     skipForwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Right));
@@ -238,7 +233,7 @@ void MainWindow::createActions() {
     actions->insert("skip", skipForwardAct);
 
     playAct = new QAction(
-                Utils::icon("media-playback-start"),
+                IconUtils::icon("media-playback-start"),
                 tr("&Play"), this);
     playAct->setStatusTip(tr("Start playback"));
     playAct->setShortcuts(QList<QKeySequence>()
@@ -252,7 +247,7 @@ void MainWindow::createActions() {
     actions->insert("play", playAct);
 
     fullscreenAct = new QAction(
-                Utils::icon("view-restore"),
+                IconUtils::icon("view-fullscreen"),
                 tr("&Full Screen"), this);
     fullscreenAct->setStatusTip(tr("Go full screen"));
     QList<QKeySequence> fsShortcuts;
@@ -321,14 +316,14 @@ void MainWindow::createActions() {
     actions->insert("report-issue", action);
     connect(action, SIGNAL(triggered()), SLOT(reportIssue()));
 
-    action = new QAction(Utils::icon("edit-clear"), tr("&Clear"), this);
+    action = new QAction(IconUtils::icon("edit-clear"), tr("&Clear"), this);
     action->setShortcut(QKeySequence::New);
     action->setStatusTip(tr("Remove all tracks from the playlist"));
     action->setEnabled(false);
     actions->insert("clearPlaylist", action);
 
     action = new QAction(
-                Utils::icon("media-playlist-shuffle"), tr("&Shuffle"), this);
+                IconUtils::icon("media-playlist-shuffle"), tr("&Shuffle"), this);
     action->setStatusTip(tr("Random playlist mode"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     action->setCheckable(true);
@@ -336,7 +331,7 @@ void MainWindow::createActions() {
     actions->insert("shufflePlaylist", action);
 
     action = new QAction(
-                Utils::icon("media-playlist-repeat"),
+                IconUtils::icon("media-playlist-repeat"),
                 tr("&Repeat"), this);
     action->setStatusTip(tr("Play first song again after all songs are played"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
@@ -354,7 +349,7 @@ void MainWindow::createActions() {
     actions->insert("restore", action);
     connect(action, SIGNAL(triggered()), SLOT(restore()));
 
-    action = new QAction(Utils::icon("media-playback-stop"),
+    action = new QAction(IconUtils::icon("media-playback-stop"),
                          tr("&Stop After This Track"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Escape));
     action->setCheckable(true);
@@ -404,7 +399,7 @@ void MainWindow::createActions() {
     addAction(volumeDownAct);
 
     volumeMuteAct = new QAction(this);
-    volumeMuteAct->setIcon(Utils::icon("audio-volume-high"));
+    volumeMuteAct->setIcon(IconUtils::icon("audio-volume-high"));
     volumeMuteAct->setStatusTip(tr("Mute volume"));
     volumeMuteAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_E));
     actions->insert("volume-mute", volumeMuteAct);
@@ -549,6 +544,10 @@ void MainWindow::createToolBars() {
     mainToolBar->addWidget(new Spacer());
 
     mainToolBar->addAction(volumeMuteAct);
+#ifdef Q_WS_X11
+    QToolButton *volumeMuteButton = qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
+    volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
+#endif
 
     volumeSlider = new Phonon::VolumeSlider(this);
     volumeSlider->setMuteVisible(false);
@@ -645,8 +644,9 @@ void MainWindow::writeSettings() {
         settings.setValue("geometry", saveGeometry());
 
     if (mediaView) {
-        settings.setValue("volume", audioOutput->volume());
-        settings.setValue("volumeMute", audioOutput->isMuted());
+        if (audioOutput->volume() > 0.1)
+            settings.setValue("volume", audioOutput->volume());
+        // settings.setValue("volumeMute", audioOutput->isMuted());
         mediaView->saveSplitterState();
     }
 
@@ -747,7 +747,7 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 
 void MainWindow::showChooseFolderView(bool transition) {
     if (!chooseFolderView) {
-        chooseFolderView = new StartView(this);
+        chooseFolderView = new ChooseFolderView(this);
         connect(chooseFolderView, SIGNAL(locationChanged(QString)), SLOT(startFullScan(QString)));
         views->addWidget(chooseFolderView);
     }
@@ -779,7 +779,6 @@ void MainWindow::toggleContextualView() {
     }
 
     bool isShown = views->currentWidget() == contextualView;
-    statusBar()->setVisible(isShown);
     if (isShown) {
         hideContextualView();
     } else {
@@ -792,6 +791,10 @@ void MainWindow::toggleContextualView() {
             QList<QKeySequence> shortcuts;
             shortcuts << contextualAct->shortcuts() << QKeySequence(Qt::Key_Escape);
             contextualAct->setShortcuts(shortcuts);
+            statusBar()->hide();
+#ifndef APP_MAC
+            if (!m_fullscreen) mainToolBar->addAction(fullscreenAct);
+#endif
         } else contextualAct->setChecked(false);
     }
 }
@@ -803,6 +806,11 @@ void MainWindow::hideContextualView() {
     QList<QKeySequence> shortcuts;
     shortcuts << QKeySequence(Qt::CTRL + Qt::Key_I);
     contextualAct->setShortcuts(shortcuts);
+
+    statusBar()->show();
+#ifndef APP_MAC
+    if (!m_fullscreen) mainToolBar->removeAction(fullscreenAct);
+#endif
 }
 
 void MainWindow::updateContextualView(Track *track) {
@@ -1001,9 +1009,11 @@ void MainWindow::updateUIForFullscreen() {
         fullscreenAct->setShortcuts(QList<QKeySequence>(fsShortcuts)
                                     << QKeySequence(Qt::Key_Escape));
         fullscreenAct->setText(tr("Leave &Full Screen"));
+        fullscreenAct->setIcon(IconUtils::icon("view-restore"));
     } else {
         fullscreenAct->setShortcuts(fsShortcuts);
         fullscreenAct->setText(fsText);
+        fullscreenAct->setIcon(IconUtils::icon("view-fullscreen"));
     }
 
 #ifndef APP_MAC
@@ -1041,8 +1051,9 @@ void MainWindow::initPhonon() {
     volumeSlider->setAudioOutput(audioOutput);
 
     QSettings settings;
-    audioOutput->setVolume(settings.value("volume", 1).toDouble());
-    audioOutput->setMuted(settings.value("volumeMute").toBool());
+    volume = settings.value("volume", 1.).toReal();
+    audioOutput->setVolume(volume);
+    // audioOutput->setMuted(settings.value("volumeMute").toBool());
 }
 
 void MainWindow::tick(qint64 time) {
@@ -1098,27 +1109,55 @@ void MainWindow::volumeDown() {
 }
 
 void MainWindow::volumeMute() {
-    if (volumeSlider->audioOutput()) {
-        volumeSlider->audioOutput()->setMuted(!volumeSlider->audioOutput()->isMuted());
+    bool isMuted = volumeSlider->audioOutput()->isMuted();
+    if (isMuted) {
+        // unmuting
+        volumeSlider->audioOutput()->setMuted(!isMuted);
+        volumeSlider->audioOutput()->setVolume(volume);
+    } else {
+        // muting
+        volume = volumeSlider->audioOutput()->volume();
+        volumeSlider->audioOutput()->setMuted(!isMuted);
     }
 }
 
 void MainWindow::volumeChanged(qreal newVolume) {
-    if (volumeSlider->audioOutput())
-        // automatically unmute when volume changes
-        if (volumeSlider->audioOutput()->isMuted())
-            volumeSlider->audioOutput()->setMuted(false);
-    statusBar()->showMessage(tr("Volume at %1%").arg(newVolume*100));
+    // automatically unmute when volume changes
+    if (volumeSlider->audioOutput()->isMuted())
+        volumeSlider->audioOutput()->setMuted(false);
+
+    bool isZero = volumeSlider->property("zero").toBool();
+    bool styleChanged = false;
+    if (newVolume == 0. && !isZero) {
+        volumeSlider->setProperty("zero", true);
+        styleChanged = true;
+    } else if (newVolume > 0. && isZero) {
+        volumeSlider->setProperty("zero", false);
+        styleChanged = true;
+    }
+    if (styleChanged) {
+        QSlider* volumeQSlider = volumeSlider->findChild<QSlider*>();
+        style()->unpolish(volumeQSlider);
+        style()->polish(volumeQSlider);
+    }
+
+    volume = volumeSlider->audioOutput()->volume();
+
+    showMessage(tr("Volume at %1%").arg((int)(newVolume*100)));
 }
 
 void MainWindow::volumeMutedChanged(bool muted) {
     if (muted) {
-        volumeMuteAct->setIcon(Utils::icon("audio-volume-muted"));
+        volumeMuteAct->setIcon(IconUtils::icon("audio-volume-muted"));
         statusBar()->showMessage(tr("Volume is muted"));
     } else {
-        volumeMuteAct->setIcon(Utils::icon("audio-volume-high"));
+        volumeMuteAct->setIcon(IconUtils::icon("audio-volume-high"));
         statusBar()->showMessage(tr("Volume is unmuted"));
     }
+#ifdef Q_WS_X11
+    QToolButton *volumeMuteButton = qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
+    volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
+#endif
 }
 
 void MainWindow::setShuffle(bool enabled) {
@@ -1247,13 +1286,11 @@ void MainWindow::search(QString query) {
 }
 
 void MainWindow::suggestionAccepted(Suggestion *suggestion) {
-    qWarning() << __PRETTY_FUNCTION__;
     showMediaView();
     mediaView->search(suggestion->value);
 }
 
 void MainWindow::searchCleared() {
-    qWarning() << __PRETTY_FUNCTION__;
     mediaView->search("");
 }
 
