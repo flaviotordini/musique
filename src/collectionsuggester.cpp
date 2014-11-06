@@ -32,6 +32,7 @@ void CollectionSuggester::suggest(const QString &query) {
     if (q.isEmpty()) return;
 
     QList<Suggestion*> suggestions;
+    QStringList strings;
 
     QString likeQuery;
     if (q.length() < 3) likeQuery = q + "%";
@@ -45,24 +46,34 @@ void CollectionSuggester::suggest(const QString &query) {
     bool success = sqlQuery.exec();
     if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
     while (sqlQuery.next()) {
-        suggestions << new Suggestion(sqlQuery.value(0).toString(), "artist");
+        QString value = sqlQuery.value(0).toString();
+        suggestions << new Suggestion(value, "artist");
+        strings << value;
     }
 
-    sqlQuery.prepare("select title from albums where (title like ? or year=?) and trackCount>0 order by year desc, trackCount desc limit 5");
+    QString likeDate;
+    if (q.length() == 3) likeDate = q + "%";
+    else if (q.length() == 4) likeDate = q;
+    sqlQuery.prepare("select title from albums where (title like ? or year like ?) and trackCount>0 order by year desc, trackCount desc limit 5");
     sqlQuery.bindValue(0, likeQuery);
-    sqlQuery.bindValue(1, q);
+    sqlQuery.bindValue(1, likeDate);
     success = sqlQuery.exec();
     if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
     while (sqlQuery.next()) {
-        suggestions << new Suggestion(sqlQuery.value(0).toString(), "album");
+        QString value = sqlQuery.value(0).toString();
+        suggestions << new Suggestion(value, "album");
+        strings << value;
     }
 
-    sqlQuery.prepare("select title from tracks where title like ? order by track, path limit 5");
+    sqlQuery.prepare("select title from tracks where title like ? order by track, path limit 10");
     sqlQuery.bindValue(0, likeQuery);
     success = sqlQuery.exec();
     if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
     while (sqlQuery.next()) {
-        suggestions << new Suggestion(sqlQuery.value(0).toString(), "track");
+        QString value = sqlQuery.value(0).toString();
+        if (strings.contains(value)) continue;
+        suggestions << new Suggestion(value, "track");
+        strings << value;
     }
 
     emit ready(suggestions);
