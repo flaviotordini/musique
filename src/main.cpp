@@ -26,7 +26,7 @@ $END_LICENSE */
 #include <qtsingleapplication.h>
 #include "constants.h"
 #include "mainwindow.h"
-#include "utils.h"
+#include "iconutils.h"
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -38,8 +38,7 @@ int main(int argc, char **argv) {
 
 #ifdef Q_OS_MAC
     mac::MacMain();
-    // https://bugreports.qt-project.org/browse/QTBUG-32789
-    QFont::insertSubstitution(".Lucida Grande UI", "Lucida Grande");
+    QFont::insertSubstitution(".Helvetica Neue DeskInterface", "Helvetica Neue");
 #endif
 
     QtSingleApplication app(argc, argv);
@@ -54,10 +53,11 @@ int main(int argc, char **argv) {
     app.setApplicationName(Constants::NAME);
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
+    app.setApplicationVersion(Constants::VERSION);
+    app.setAttribute(Qt::AA_DontShowIconsInMenus);
 #ifndef APP_WIN
     app.setWheelScrollLines(1);
 #endif
-    app.setAttribute(Qt::AA_DontShowIconsInMenus);
 
 #ifdef APP_EXTRA
     Extra::appSetup(&app);
@@ -80,7 +80,11 @@ int main(int argc, char **argv) {
 #else
     QString dataDir = "";
 #endif
+#ifdef APP_MAC
+    QString localeDir = qApp->applicationDirPath() + "/../Resources/locale";
+#else
     QString localeDir = qApp->applicationDirPath() + "/locale";
+#endif
     if (!QDir(localeDir).exists()) {
         localeDir = dataDir + "/locale";
     }
@@ -96,7 +100,7 @@ int main(int argc, char **argv) {
 #ifndef APP_MAC
     QIcon appIcon;
     if (QDir(dataDir).exists()) {
-        appIcon = Utils::icon(Constants::UNIX_NAME);
+        appIcon = IconUtils::icon(Constants::UNIX_NAME);
     } else {
         dataDir = qApp->applicationDirPath() + "/data";
         const int iconSizes [] = { 16, 22, 32, 48, 64, 128, 256, 512 };
