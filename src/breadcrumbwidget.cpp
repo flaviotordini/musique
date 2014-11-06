@@ -19,12 +19,12 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "breadcrumbwidget.h"
-#include "utils.h"
+#include "iconutils.h"
 
 BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
 
     backAction = new QAction(
-            Utils::icon("go-previous"),
+            IconUtils::icon("go-previous"),
             tr("&Back"), this);
     QKeySequence keySequence(Qt::ALT + Qt::Key_Left);
     backAction->setShortcut(keySequence);

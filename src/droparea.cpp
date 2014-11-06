@@ -23,7 +23,7 @@ $END_LICENSE */
 #include <QtWidgets>
 #endif
 #include "droparea.h"
-#include "utils.h"
+#include "iconutils.h"
 #include "trackmimedata.h"
 #include "model/track.h"
 #include "playlistmodel.h"
@@ -65,7 +65,7 @@ void DropArea::dragLeaveEvent(QDragLeaveEvent *event) {
 
 void DropArea::clear() {
     setText("<b>" + tr("Drop here to append to the playlist") + "</b>");
-    setPixmap(Utils::icon("list-add").pixmap(24, 24));
+    setPixmap(IconUtils::icon("list-add").pixmap(24, 24));
     setBackgroundRole(QPalette::Base);
     setForegroundRole(QPalette::Text);
 

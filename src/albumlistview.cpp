@@ -20,7 +20,7 @@ $END_LICENSE */
 
 #include "albumlistview.h"
 #include "mainwindow.h"
-#include "utils.h"
+#include "iconutils.h"
 #include "artistsqlmodel.h"
 #include "database.h"
 #ifdef APP_EXTRA
@@ -114,7 +114,7 @@ void AlbumListView::setupToolbar() {
 
     QToolButton *sortButton = new QToolButton(this);
     sortButton->setText(tr("Sort by"));
-    sortButton->setIcon(Utils::icon("sort"));
+    sortButton->setIcon(IconUtils::icon("sort"));
     sortButton->setIconSize(QSize(16, 16));
     sortButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     sortButton->setPopupMode(QToolButton::InstantPopup);
