@@ -1,3 +1,19 @@
+1.4
+- Added out of the box support on Mac OS X for many audio formats thanks to the new VLC-based engine:
+    FLAC, OGG Vorbis, Monkey's Audio (APE), Musepack (MPC), WavPack (WV), True Audio (TTA) and others
+- Style refresh to make Musique feel at home on OS X Yosemite and Windows 8
+- Enhancements to the search suggestions
+- Make the volume handle red when volume is zero
+- Hide the status bar when in the Info View
+- Remote collections: do not update collection if dir does not exist or is empty
+- Added --stop-after-this command line switch
+- Fixed duplicate tracks when playing an artist
+- The Mac version is now 64bit and works on 10.6 or later
+- The Windows version has been updated to the latest VLC
+- Linux: Added Stop After This Video Unity & Gnome 3 action
+- Goodbye Ubuntu Software Center!
+- New and updated translations
+
 1.3
 - Album and artist sorting
 - Album covers in the playlist
