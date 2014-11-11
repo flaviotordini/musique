@@ -34,6 +34,8 @@ public:
 SegmentedControl::SegmentedControl (QWidget *parent)
     : QWidget(parent), d(new SegmentedControl::Private) {
 
+    setAttribute(Qt::WA_OpaquePaintEvent);
+
     setMouseTracking(true);
 
     d->hoveredAction = 0;
