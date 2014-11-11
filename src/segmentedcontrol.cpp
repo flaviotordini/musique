@@ -79,8 +79,8 @@ QSize SegmentedControl::minimumSizeHint (void) const {
 }
 
 void SegmentedControl::paintEvent (QPaintEvent *event) {
-    int height = event->rect().height();
-    int width = event->rect().width();
+    int height = this->height();
+    int width = this->width();
 
     QPainter p(this);
 
