@@ -654,7 +654,7 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
-        <translation>%1 &amp;seviyor musunuz? Değerlendirin!</translation>
+        <translation>%1&apos;i &amp;seviyor musunuz? Değerlendirin!</translation>
     </message>
 </context>
 <context>
