@@ -670,10 +670,6 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
     if (newView) {
         newView->appear();
         QHash<QString,QVariant> metadata = newView->metadata();
-        QString title = metadata.value("title").toString();
-        if (title.isEmpty()) title = Constants::NAME;
-        else title += QLatin1String(" - ") + Constants::NAME;
-        setWindowTitle(title);
         QString desc = metadata.value("description").toString();
         if (!desc.isEmpty()) showMessage(desc);
     }
