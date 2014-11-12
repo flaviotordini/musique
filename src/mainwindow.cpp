@@ -76,6 +76,8 @@ MainWindow::MainWindow() : updateChecker(0) {
 
     singleton = this;
 
+    setWindowTitle(Constants::NAME);
+
     // lazily initialized views
     mediaView = 0;
     collectionScannerView = 0;
@@ -1199,7 +1201,7 @@ void MainWindow::gotNewVersion(QString version) {
 
 #ifdef APP_SIMPLEUPDATE
     simpleUpdateDialog(version);
-#elif defined(APP_ACTIVATION) && !defined(APP_MAC)
+#elif !defined(APP_MAC)
     UpdateDialog *dialog = new UpdateDialog(version, this);
     dialog->show();
 #endif
