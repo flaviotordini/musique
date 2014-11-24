@@ -685,7 +685,7 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
 
     setUpdatesEnabled(true);
 
-#ifndef Q_OS_X11
+#ifdef APP_EXTRA
     if (transition)
         Extra::fadeInWidget(oldWidget, widget);
 #endif
