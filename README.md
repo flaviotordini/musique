@@ -10,22 +10,18 @@ To compile Musique you need at least Qt 4.8. The following Qt modules are needed
 core, gui, network, sql (using the Sqlite plugin), dbus, phonon.
 You also need TagLib: http://taglib.github.io
 
-On a Debian or Ubuntu system type:
+To be able to build on a Debian (or derivative) system:
 
 	$ sudo apt-get install build-essential qt4-dev-tools libphonon-dev libtag1-dev libqt4-sql-sqlite
 
 ### Compiling
-Run:
 
     $ qmake
-
-and then:
-
     $ make
 
 ### Running
 
-	$ ./build/target/musique
+	$ build/target/musique
 
 ### Installing on Linux
     
