@@ -505,8 +505,6 @@ void MainWindow::createMenus() {
 }
 
 void MainWindow::createToolBars() {
-
-    setUnifiedTitleAndToolBarOnMac(true);
     mainToolBar = new QToolBar(this);
     mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     mainToolBar->setFloatable(false);
