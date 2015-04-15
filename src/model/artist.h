@@ -22,7 +22,6 @@ $END_LICENSE */
 #define ARTIST_H
 
 #include <QtCore>
-#include <QImage>
 #include <QDesktopServices>
 #include "item.h"
 #include "track.h"
