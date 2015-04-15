@@ -1,8 +1,12 @@
 # Musique
-Musique is a music player built for speed, simplicity and style.
+Musique is a music player built for speed, simplicity and style. It is written in C++ using the Qt framework. Contributing is welcome, especially in the Linux desktop integration area.
+
+## Translating Musique to your language
+Translations are done at https://www.transifex.com/projects/p/musique/
+Just register and apply for a language team. Please don't request translation merges on GitHub.
 
 ## Build instructions
-To compile Minitube you need at least Qt 4.8. The following Qt modules are needed:
+To compile Musique you need at least Qt 4.8. The following Qt modules are needed:
 core, gui, network, sql (using the Sqlite plugin), dbus, phonon.
 You also need TagLib: http://taglib.github.io
 
@@ -24,7 +28,6 @@ and then:
 	$ ./build/target/musique
 
 ### Installing on Linux
-Run:
     
     $ sudo make install
 
