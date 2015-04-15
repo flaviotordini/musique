@@ -14,16 +14,16 @@ To be able to build on a Debian (or derivative) system:
 
 	$ sudo apt-get install build-essential qt4-dev-tools libphonon-dev libtag1-dev libqt4-sql-sqlite
 
-### Compiling
+Compiling:
 
     $ qmake
     $ make
 
-### Running
+Running:
 
 	$ build/target/musique
 
-### Installing on Linux
+Installing on Linux:
     
     $ sudo make install
 
