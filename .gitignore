@@ -1,6 +1,6 @@
 build/
 Makefile*
-*.pro.user
+*.user
 .settings/
 .DS_Store
 .cproject
@@ -9,3 +9,4 @@ stuff
 *.sh
 local/
 .tx/
+debian
