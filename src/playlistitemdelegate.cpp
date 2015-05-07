@@ -201,12 +201,7 @@ void PlaylistItemDelegate::paintAlbumHeader(
     }
     */
 
-    // font
-    QFont boldFont = painter->font();
-    boldFont.setBold(true);
-    painter->setFont(boldFont);
-
-    const QFontMetrics fontMetrics = QFontMetrics(boldFont);
+    const QFontMetrics fontMetrics = QFontMetrics(painter->font());
     static const int textLeft = h + fontMetrics.height()/2;
 
     // text size
