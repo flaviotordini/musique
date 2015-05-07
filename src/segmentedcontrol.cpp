@@ -19,7 +19,7 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "segmentedcontrol.h"
-#include "fontutils.h"
+#include "mainwindow.h"
 
 static const QColor borderColor = QColor(0x26, 0x26, 0x26);
 
@@ -33,8 +33,6 @@ public:
 
 SegmentedControl::SegmentedControl (QWidget *parent)
     : QWidget(parent), d(new SegmentedControl::Private) {
-
-    setAttribute(Qt::WA_OpaquePaintEvent);
 
     setMouseTracking(true);
 
@@ -80,9 +78,9 @@ QSize SegmentedControl::minimumSizeHint (void) const {
     return(QSize(itemsWidth, QFontMetrics(font()).height() * 1.9));
 }
 
-void SegmentedControl::paintEvent (QPaintEvent *event) {
-    int height = this->height();
-    int width = this->width();
+void SegmentedControl::paintEvent (QPaintEvent * /*event*/) {
+    int height = rect().height();
+    int width = rect().width();
 
     QPainter p(this);
 
@@ -126,8 +124,7 @@ void SegmentedControl::mouseMoveEvent (QMouseEvent *event) {
         update();
 
         // status tip
-        QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
-        if (mainWindow) mainWindow->statusBar()->showMessage(action->statusTip());
+        MainWindow::instance()->statusBar()->showMessage(action->statusTip());
     }
 }
 
@@ -151,8 +148,7 @@ void SegmentedControl::mouseReleaseEvent(QMouseEvent *event) {
 void SegmentedControl::leaveEvent(QEvent *event) {
     QWidget::leaveEvent(event);
     // status tip
-    QMainWindow* mainWindow = dynamic_cast<QMainWindow*>(window());
-    if (mainWindow) mainWindow->statusBar()->clearMessage();
+    MainWindow::instance()->statusBar()->clearMessage();
     d->hoveredAction = 0;
     d->pressedAction = 0;
     update();
@@ -177,8 +173,7 @@ QAction *SegmentedControl::hoveredAction(const QPoint& pos) const {
 }
 
 int SegmentedControl::calculateButtonWidth (void) const {
-    QFont smallerBoldFont = FontUtils::smallerBold();
-    QFontMetrics fontMetrics(smallerBoldFont);
+    QFontMetrics fontMetrics(font());
     int tmpItemWidth, itemWidth = 0;
     foreach (QAction *action, d->actionList) {
         tmpItemWidth = fontMetrics.width(action->text());
@@ -254,15 +249,14 @@ void SegmentedControl::paintButton(QPainter *painter, const QRect& rect, const Q
     painter->drawRect(0, 0, width, height - 1);
 #endif
 
-    painter->setFont(FontUtils::smallerBold());
+    const QString text = action->text();
 
     // text shadow
     painter->setPen(QColor(0, 0, 0, 128));
-    painter->drawText(0, -1, width, height, Qt::AlignCenter, action->text());
+    painter->drawText(0, -1, width, height, Qt::AlignCenter, text);
 
     painter->setPen(QPen(Qt::white, 1));
-    painter->drawText(0, 0, width, height, Qt::AlignCenter, action->text());
+    painter->drawText(0, 0, width, height, Qt::AlignCenter, text);
 
     painter->restore();
 }
-
