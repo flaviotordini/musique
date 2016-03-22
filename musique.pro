@@ -1,6 +1,6 @@
 CONFIG += release
 TEMPLATE = app
-VERSION = 1.4
+VERSION = 1.5
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
@@ -15,7 +15,7 @@ DEFINES *= QT_STRICT_ITERATORS
 
 TARGET = $${APP_UNIX_NAME}
 
-QT += network xml sql
+QT += network sql
 include(src/qtsingleapplication/qtsingleapplication.pri)
 
 HEADERS += src/mainwindow.h \
