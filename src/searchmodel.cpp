@@ -96,8 +96,9 @@ QVariant SearchModel::data(const QModelIndex &index, int role) const {
 }
 
 void SearchModel::search(QString query) {
-    QString likeQuery = "%" + query + "%";
+    beginResetModel();
 
+    QString likeQuery = "%" + query + "%";
 
     QSqlQuery q(Database::instance().getConnection());
     q.prepare("select id from artists where name like ? and trackCount>0 order by trackCount desc");
@@ -122,8 +123,7 @@ void SearchModel::search(QString query) {
     if (trackListModel->lastError().isValid())
         qDebug() << trackListModel->lastError();
 
-    reset();
-
+    endResetModel();
 }
 
 Item* SearchModel::itemAt(const QModelIndex &index) const {

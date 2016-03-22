@@ -247,13 +247,14 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
 }
 
 void PlaylistModel::clear() {
+    beginResetModel();
     playedTracks.clear();
     tracks.clear();
     activeTrack = 0;
     activeRow = -1;
     emit layoutChanged();
-    emit reset();
     emit activeRowChanged(-1, false, false);
+    endResetModel();
 }
 
 // --- item removal
