@@ -91,7 +91,6 @@ int main(int argc, char **argv) {
     QTranslator translator;
     translator.load(QLocale::system(), QString(), QString(), localeDir);
     app.installTranslator(&translator);
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("utf8"));
 
     MainWindow* mainWin = MainWindow::instance();
     mainWin->show();
