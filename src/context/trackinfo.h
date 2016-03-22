@@ -21,10 +21,7 @@ $END_LICENSE */
 #ifndef TRACKINFO_H
 #define TRACKINFO_H
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 
 class Track;
 

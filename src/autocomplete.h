@@ -20,7 +20,7 @@ $END_LICENSE */
 #ifndef AUTOCOMPLETE_H
 #define AUTOCOMPLETE_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 class Suggester;
 class Suggestion;

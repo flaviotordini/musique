@@ -21,10 +21,7 @@ $END_LICENSE */
 #ifndef ARTISTINFO_H
 #define ARTISTINFO_H
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 
 class Artist;
 

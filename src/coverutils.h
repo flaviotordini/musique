@@ -21,10 +21,7 @@ $END_LICENSE */
 #ifndef COVERUTILS_H
 #define COVERUTILS_H
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 
 // TagLib
 #include <id3v2tag.h>

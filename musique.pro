@@ -15,7 +15,7 @@ DEFINES *= QT_STRICT_ITERATORS
 
 TARGET = $${APP_UNIX_NAME}
 
-QT += network sql
+QT += network sql widgets
 include(src/qtsingleapplication/qtsingleapplication.pri)
 
 HEADERS += src/mainwindow.h \

@@ -21,10 +21,7 @@ $END_LICENSE */
 #ifndef CONTEXTUALVIEW_H
 #define CONTEXTUALVIEW_H
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 #include "view.h"
 
 class Track;

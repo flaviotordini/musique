@@ -21,10 +21,7 @@ $END_LICENSE */
 #ifndef PLAYLISTWIDGET_H
 #define PLAYLISTWIDGET_H
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 
 class PlaylistView;
 class DropArea;

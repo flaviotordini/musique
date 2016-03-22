@@ -20,10 +20,7 @@ $END_LICENSE */
 
 #include "networkaccess.h"
 #include "constants.h"
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 
 namespace The {
 NetworkAccess* http();

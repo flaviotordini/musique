@@ -21,10 +21,7 @@ $END_LICENSE */
 #ifndef ARTISTLISTVIEW_H
 #define ARTISTLISTVIEW_H
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 #include <QtSql>
 #include "basefinderview.h"
 #include "artistsqlmodel.h"

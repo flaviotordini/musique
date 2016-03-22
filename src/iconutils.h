@@ -21,7 +21,7 @@ $END_LICENSE */
 #ifndef ICONUTILS_H
 #define ICONUTILS_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 class IconUtils {
 

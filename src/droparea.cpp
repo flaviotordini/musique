@@ -18,10 +18,7 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 #include "droparea.h"
 #include "iconutils.h"
 #include "trackmimedata.h"

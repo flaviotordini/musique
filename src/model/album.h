@@ -21,10 +21,7 @@ $END_LICENSE */
 #ifndef ALBUM_H
 #define ALBUM_H
 
-#include <QtGui>
-#if QT_VERSION >= 0x050000
 #include <QtWidgets>
-#endif
 #include "item.h"
 #include "artist.h"
 #include "track.h"
