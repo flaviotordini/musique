@@ -162,13 +162,15 @@ void AlbumInfo::amazonClicked() {
 
     // http://www.amazon.com/gp/search?ie=UTF8&keywords=Metallica+-+Master-of-puppets&tag=flavtord-20&index=music&linkCode=ur2&camp=1789&creative=9325
     QUrl url("http://www.amazon.com/gp/search");
-    url.addQueryItem("ie", "UTF8");
-    url.addQueryItem("keywords", query);
-    url.addQueryItem("tag", "flavtord-20");
-    url.addQueryItem("index", "music");
-    url.addQueryItem("linkCode", "ur2");
-    url.addQueryItem("camp", "1789");
-    url.addQueryItem("creative", "9325");
+    QUrlQuery q;
+    q.addQueryItem("ie", "UTF8");
+    q.addQueryItem("keywords", query);
+    q.addQueryItem("tag", "flavtord-20");
+    q.addQueryItem("index", "music");
+    q.addQueryItem("linkCode", "ur2");
+    q.addQueryItem("camp", "1789");
+    q.addQueryItem("creative", "9325");
+    url.setQuery(q);
     QDesktopServices::openUrl(url);
 }
 #endif

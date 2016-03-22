@@ -34,26 +34,27 @@ UpdateChecker::UpdateChecker() {
 }
 
 void UpdateChecker::checkForUpdate() {
-    QUrl updateUrl(QString(Constants::WEBSITE) + "-ws/release.xml");
-    updateUrl.addQueryItem("v", Constants::VERSION);
+    QUrl url(QString(Constants::WEBSITE) + "-ws/release.xml");
+    QUrlQuery q;
+    q.addQueryItem("v", Constants::VERSION);
 
 #ifdef APP_MAC
-    updateUrl.addQueryItem("os", "mac");
+    q.addQueryItem("os", "mac");
 #endif
 #ifdef APP_WIN
-    updateUrl.addQueryItem("os", "win");
+    q.addQueryItem("os", "win");
 #endif
 #ifdef APP_ACTIVATION
     QString t = "demo";
     if (Activation::instance().isActivated()) t = "active";
-    updateUrl.addQueryItem("t", t);
+    q.addQueryItem("t", t);
 #endif
 #ifdef APP_MAC_STORE
-    updateUrl.addQueryItem("store", "mac");
+    q.addQueryItem("store", "mac");
 #endif
+    url.setQuery(q);
 
-
-    QObject *reply = The::http()->get(updateUrl);
+    QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(requestFinished(QByteArray)));
 }
 

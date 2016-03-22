@@ -256,11 +256,13 @@ const QPixmap &Album::getThumb() {
 void Album::fetchLastFmSearch() {
 
     QUrl url("http://ws.audioscrobbler.com/2.0/");
-    url.addQueryItem("method", "album.search");
-    url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
-    url.addQueryItem("artist", artist->getName());
-    url.addQueryItem("album", name);
-    url.addQueryItem("limit", "5");
+    QUrlQuery q;
+    q.addQueryItem("method", "album.search");
+    q.addQueryItem("api_key", Constants::LASTFM_API_KEY);
+    q.addQueryItem("artist", artist->getName());
+    q.addQueryItem("album", name);
+    q.addQueryItem("limit", "5");
+    url.setQuery(q);
 
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
@@ -340,15 +342,17 @@ void Album::fetchLastFmInfo() {
     }
 
     QUrl url("http://ws.audioscrobbler.com/2.0/");
-    url.addQueryItem("method", "album.getinfo");
-    url.addQueryItem("api_key", Constants::LASTFM_API_KEY);
-    url.addQueryItem("autocorrect", "1");
+    QUrlQuery q;
+    q.addQueryItem("method", "album.getinfo");
+    q.addQueryItem("api_key", Constants::LASTFM_API_KEY);
+    q.addQueryItem("autocorrect", "1");
     if (mbid.isEmpty()) {
-        url.addQueryItem("artist", artist->getName());
-        url.addQueryItem("album", name);
+        q.addQueryItem("artist", artist->getName());
+        q.addQueryItem("album", name);
     } else {
-        url.addQueryItem("mbid", mbid);
+        q.addQueryItem("mbid", mbid);
     }
+    url.setQuery(q);
     QObject *reply = The::http()->get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmInfo(QByteArray)));
     connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
