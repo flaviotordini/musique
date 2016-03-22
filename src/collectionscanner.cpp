@@ -349,9 +349,6 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
 
     if (incremental) {
 
-        // give a break to our poor CPU
-        // thread()->msleep(1);
-
         if (stopped) return;
 
         const uint lastModified = fileInfo.lastModified().toTime_t();
@@ -733,7 +730,7 @@ void CollectionScanner::cleanStaleTracks() {
     QSqlQuery query(db);
     query.prepare("select path from tracks");
     bool success = query.exec();
-    if (!success) qDebug() << query.lastError().text();
+    if (!success) qWarning() << query.lastError().text();
     while (query.next()) {
         QString path = query.value(0).toString();
         if (!QFile::exists(collectionRoot + path)) {
@@ -749,7 +746,7 @@ bool CollectionScanner::isNonTrack(QString path) {
     query.prepare("select count(*) from nontracks where path=?");
     query.bindValue(0, path);
     bool success = query.exec();
-    if (!success) qDebug() << query.lastError().text();
+    if (!success) qWarning() << query.lastError().text();
     uint tstamp = 0;
     if (query.next())
         return query.value(0).toBool();
