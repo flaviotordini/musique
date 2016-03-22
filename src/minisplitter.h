@@ -30,7 +30,7 @@
 #ifndef MINISPLITTER_H
 #define MINISPLITTER_H
 
-#include <QtGui/QSplitter>
+#include <QtWidgets>
 
 QT_BEGIN_NAMESPACE
 class QSplitterHandle;
