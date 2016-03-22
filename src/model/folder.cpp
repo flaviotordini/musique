@@ -20,7 +20,6 @@ $END_LICENSE */
 
 #include "folder.h"
 
-#include <QDesktopServices>
 #include "album.h"
 #include "artist.h"
 
@@ -94,7 +93,7 @@ QImage Folder::getPhoto() {
     }
 
     QString imageLocation;
-    QString dataLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    QString dataLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     if (album) {
         imageLocation = dataLocation + "/albums/" + album->getHash();
     } else if (artist) {

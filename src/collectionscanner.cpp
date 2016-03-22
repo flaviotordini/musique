@@ -34,7 +34,7 @@ CollectionScanner::CollectionScanner(QObject *parent) :
     maxQueueSize(0) {
 
 #ifdef APP_MAC
-    QString iTunesAlbumArtwork = QDesktopServices::storageLocation(QDesktopServices::MusicLocation) + "/iTunes/Album Artwork";
+    QString iTunesAlbumArtwork = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/Album Artwork";
     directoryBlacklist.append(iTunesAlbumArtwork);
 #endif
 

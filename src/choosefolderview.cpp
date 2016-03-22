@@ -76,8 +76,8 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
     buttonLayout->addWidget(useiTunesDirButton);
 #endif
 
-    QString musicLocation = QDesktopServices::storageLocation(QDesktopServices::MusicLocation);
-    QString homeLocation = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+    QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
+    QString homeLocation = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     if (QFile::exists(musicLocation) && musicLocation != homeLocation + "/") {
         QPushButton *useSystemDirButton = new QPushButton(tr("Use %1").arg(musicLocation));
         connect(useSystemDirButton, SIGNAL(clicked()), SLOT(systemDirChosen()));
@@ -112,11 +112,11 @@ void ChooseFolderView::chooseFolder() {
     QFileDialog* dialog = new QFileDialog(this);
     dialog->setFileMode(QFileDialog::Directory);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
-    dialog->setDirectory(QDesktopServices::storageLocation(QDesktopServices::HomeLocation));
+    dialog->setDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
     dialog->open(this, SLOT(folderChosen(const QString &)));
 #else
     QString folder = QFileDialog::getExistingDirectory(window(), tr("Where's your music collection?"),
-                                                    QDesktopServices::storageLocation(QDesktopServices::HomeLocation),
+                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
                                                     QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
     if (!folder.isEmpty()) emit locationChanged(folder);
 #endif
@@ -127,12 +127,12 @@ void ChooseFolderView::folderChosen(const QString &folder) {
 }
 
 void ChooseFolderView::systemDirChosen() {
-    QString musicLocation = QDesktopServices::storageLocation(QDesktopServices::MusicLocation);
+    QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
     emit locationChanged(musicLocation);
 }
 
 void ChooseFolderView::iTunesDirChosen() {
-    QString musicLocation = QDesktopServices::storageLocation(QDesktopServices::MusicLocation) + "/iTunes/iTunes Music";
+    QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/iTunes Music";
     emit locationChanged(musicLocation);
 }
 

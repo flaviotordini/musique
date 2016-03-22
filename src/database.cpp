@@ -20,7 +20,6 @@ $END_LICENSE */
 
 #include "database.h"
 #include "constants.h"
-#include <QDesktopServices>
 
 static Database *databaseInstance = 0;
 
@@ -50,7 +49,7 @@ Database::~Database() {
 }
 
 const QString &Database::getDataLocation() {
-    static const QString location = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+    static const QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     return location;
 }
 

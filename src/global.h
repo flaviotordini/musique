@@ -150,7 +150,7 @@ namespace The {
 
         // A simple disk based cache
         QNetworkDiskCache *cache = new DiskCache();
-        QString cacheLocation = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+        QString cacheLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
         qDebug() << cacheLocation;
         cache->setCacheDirectory(cacheLocation);
         nam->setCache(cache);

@@ -331,7 +331,7 @@ void Album::parseLastFmRedirectedName(QNetworkReply *reply) {
 void Album::fetchLastFmInfo() {
 
     /*
-    if (QFile::exists(QDesktopServices::storageLocation(QDesktopServices::DataLocation) + "/albums/" + getHash())) {
+    if (QFile::exists(QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/albums/" + getHash())) {
         qDebug() << "Album" << name << "has a photo";
         emit gotInfo();
         return;

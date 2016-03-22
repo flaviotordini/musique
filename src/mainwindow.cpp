@@ -685,7 +685,7 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
 
     setUpdatesEnabled(true);
 
-#ifndef Q_OS_X11
+#ifdef APP_EXTRA
     if (transition)
         Extra::fadeInWidget(oldWidget, widget);
 #endif
@@ -1230,7 +1230,7 @@ void MainWindow::simpleUpdateDialog(QString version) {
 
 QString MainWindow::playlistPath() {
     const QString storageLocation =
-            QDesktopServices::storageLocation(QDesktopServices::DataLocation);
+            QStandardPaths::writableLocation(QStandardPaths::DataLocation);
     // We need to use a default name, so why not the application one?
     return QString("%1/%2.pls").arg(storageLocation).arg(Constants::UNIX_NAME);
 }

@@ -23,7 +23,6 @@ $END_LICENSE */
 
 #include <QtCore>
 #include <QImage>
-#include <QDesktopServices>
 #include "item.h"
 #include "track.h"
 #include <QtNetwork>
