@@ -9,3 +9,4 @@ stuff
 *.sh
 local/
 .tx/
+debian/
