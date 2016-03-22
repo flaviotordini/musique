@@ -49,7 +49,7 @@ QString DataUtils::simplify(const QString &s) {
 }
 
 QString DataUtils::md5(const QString name) {
-    return QString::fromAscii(QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
+    return QString::fromLatin1(QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
 }
 
 QString DataUtils::getXMLElementText(QByteArray bytes, QString elementName) {
