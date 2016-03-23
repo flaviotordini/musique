@@ -33,6 +33,7 @@ public:
     static QString getXMLElementText(QByteArray bytes, QString element);
     static QString getXMLAttributeText(QByteArray bytes, QString element, QString attribute);
     static QString getSystemLanguageCode();
+    static QString formatDuration(uint secs);
 
 private:
     DataUtils();

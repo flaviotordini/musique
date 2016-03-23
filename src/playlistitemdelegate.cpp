@@ -24,6 +24,7 @@ $END_LICENSE */
 #include "model/artist.h"
 #include "playlistmodel.h"
 #include "iconutils.h"
+#include "datautils.h"
 
 const int PlaylistItemDelegate::PADDING = 10;
 int PlaylistItemDelegate::ITEM_HEIGHT = 0;
@@ -282,12 +283,7 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOption
 
 void PlaylistItemDelegate::paintTrackLength(QPainter* painter, const QStyleOptionViewItem& option,
                                             const QRect &line, Track* track) const {
-
-    QString trackLength;
-    if (track->getLength() > 3600)
-        trackLength =  QTime().addSecs(track->getLength()).toString("h:mm:ss");
-    else if (track->getLength() > 0)
-        trackLength = QTime().addSecs(track->getLength()).toString("m:ss");
+    const QString trackLength = DataUtils::formatDuration(track->getLength());
 
     // QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackLength));
     QPoint textLoc(PADDING*10, 0);
