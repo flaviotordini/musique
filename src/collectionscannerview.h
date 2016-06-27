@@ -25,7 +25,7 @@ $END_LICENSE */
 #include "view.h"
 #include "collectionscannerthread.h"
 
-class CollectionScannerView : public QWidget, public View {
+class CollectionScannerView : public View {
 
     Q_OBJECT
 

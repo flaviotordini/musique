@@ -61,7 +61,7 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 void BaseFinderView::appear() {
     setEnabled(true);
     setMouseTracking(true);
-    BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
+    BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel*>(model());
     if (baseSqlModel) {
         baseSqlModel->restoreQuery();
         while (baseSqlModel->canFetchMore())
@@ -72,7 +72,7 @@ void BaseFinderView::appear() {
 void BaseFinderView::disappear() {
     setEnabled(false);
     setMouseTracking(false);
-    BaseSqlModel *baseSqlModel = dynamic_cast<BaseSqlModel*>(model());
+    BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel*>(model());
     if (baseSqlModel) baseSqlModel->clear();
 }
 

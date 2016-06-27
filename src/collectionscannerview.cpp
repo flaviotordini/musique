@@ -25,7 +25,7 @@ $END_LICENSE */
 
 static const int PADDING = 30;
 
-CollectionScannerView::CollectionScannerView( QWidget *parent ) : QWidget(parent) {
+CollectionScannerView::CollectionScannerView( QWidget *parent ) : View(parent) {
 
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);

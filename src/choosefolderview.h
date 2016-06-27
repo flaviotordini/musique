@@ -24,7 +24,7 @@ $END_LICENSE */
 #include <QtWidgets>
 #include "view.h"
 
-class ChooseFolderView : public QWidget, public View {
+class ChooseFolderView : public View {
 
     Q_OBJECT
 

@@ -28,7 +28,7 @@ $END_LICENSE */
 #include "mac_startup.h"
 #endif
 
-AboutView::AboutView(QWidget *parent) : QWidget(parent) {
+AboutView::AboutView(QWidget *parent) : View(parent) {
     
     QBoxLayout *aboutlayout = new QHBoxLayout(this);
     aboutlayout->setAlignment(Qt::AlignCenter);

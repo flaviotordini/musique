@@ -24,13 +24,17 @@ $END_LICENSE */
 #include "context/trackinfo.h"
 #include "model/track.h"
 
-ContextualView::ContextualView(QWidget *parent) :
-        QScrollArea(parent) {
-    setPalette(parent->palette());
+ContextualView::ContextualView(QWidget *parent) : View(parent) {
+    QBoxLayout *layout = new QVBoxLayout(this);
+    layout->setMargin(0);
+
+    scrollArea = new QScrollArea();
+    scrollArea->setPalette(parent->palette());
+    scrollArea->setFrameShape(QFrame::NoFrame);
+    scrollArea->setWidgetResizable(true);
     scrollingContextualView = new ScrollingContextualView(this);
-    setFrameShape(QFrame::NoFrame);
-    setWidgetResizable(true);
-    setWidget(scrollingContextualView);
+    scrollArea->setWidget(scrollingContextualView);
+    layout->addWidget(scrollArea);
 }
 
 void ContextualView::setTrack(Track *track) {
@@ -39,7 +43,7 @@ void ContextualView::setTrack(Track *track) {
     scrollingContextualView->albumInfo->setAlbum(track->getAlbum());
     scrollingContextualView->trackInfo->setTrack(track);
     scrollingContextualView->adjustSize();
-    ensureVisible(0, 0, 1, 1);
+    scrollArea->ensureVisible(0, 0, 1, 1);
     setUpdatesEnabled(true);
 }
 

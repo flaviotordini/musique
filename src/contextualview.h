@@ -46,7 +46,7 @@ protected:
 };
 
 
-class ContextualView : public QScrollArea, public View {
+class ContextualView : public View {
 
     Q_OBJECT
 
@@ -59,6 +59,7 @@ public:
     void setTrack(Track* track);
 
 private:
+    QScrollArea *scrollArea;
     ScrollingContextualView *scrollingContextualView;
 
 };

@@ -352,7 +352,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
     else if (parent.isValid()) beginRow = parent.row();
     else beginRow = rowCount();
 
-    const TrackMimeData* trackMimeData = dynamic_cast<const TrackMimeData*>(data);
+    const TrackMimeData* trackMimeData = qobject_cast<const TrackMimeData*>(data);
     if (!trackMimeData) return false;
 
     QList<Track*> droppedTracks = trackMimeData->tracks();

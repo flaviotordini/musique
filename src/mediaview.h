@@ -32,7 +32,7 @@ $END_LICENSE */
 
 class DropArea;
 
-class MediaView : public QWidget, public View {
+class MediaView : public View {
 
     Q_OBJECT
 

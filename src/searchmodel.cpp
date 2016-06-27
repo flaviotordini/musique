@@ -36,7 +36,7 @@ $END_LICENSE */
 
 SearchModel::SearchModel(QObject *parent) : QAbstractListModel(parent) {
 
-    finder = dynamic_cast<FinderWidget*>(parent);
+    finder = qobject_cast<FinderWidget*>(parent);
 
     artistListModel = new ArtistSqlModel(this);
     albumListModel = new AlbumSqlModel(this);

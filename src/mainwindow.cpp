@@ -664,9 +664,9 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
 
     setUpdatesEnabled(false);
 
-    View* oldView = dynamic_cast<View *> (views->currentWidget());
+    View* oldView = qobject_cast<View *> (views->currentWidget());
 
-    View* newView = dynamic_cast<View *> (widget);
+    View* newView = qobject_cast<View *> (widget);
     if (newView) {
         newView->appear();
         QHash<QString,QVariant> metadata = newView->metadata();

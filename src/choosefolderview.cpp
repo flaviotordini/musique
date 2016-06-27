@@ -25,7 +25,7 @@ $END_LICENSE */
 
 static const int PADDING = 30;
 
-ChooseFolderView::ChooseFolderView( QWidget *parent ) : QWidget(parent) {
+ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
 
     QBoxLayout *layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);

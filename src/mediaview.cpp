@@ -40,7 +40,7 @@ QHash<QString, QAction*>* globalActions();
 QHash<QString, QMenu*>* globalMenus();
 }
 
-MediaView::MediaView(QWidget *parent) : QWidget(parent) {
+MediaView::MediaView(QWidget *parent) : View(parent) {
 
     activeTrack = 0;
 

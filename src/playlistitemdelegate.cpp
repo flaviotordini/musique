@@ -203,7 +203,7 @@ void PlaylistItemDelegate::paintAlbumHeader(
     */
 
     const QFontMetrics fontMetrics = QFontMetrics(painter->font());
-    static const int textLeft = h + fontMetrics.height()/2;
+    const int textLeft = h + fontMetrics.height()/2;
 
     // text size
     QSize trackStringSize(fontMetrics.size(Qt::TextSingleLine, headerTitle));

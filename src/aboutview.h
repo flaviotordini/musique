@@ -26,7 +26,7 @@ $END_LICENSE */
 #include "view.h"
 #include "constants.h"
 
-class AboutView : public QWidget, public View {
+class AboutView : public View {
 
     Q_OBJECT
 

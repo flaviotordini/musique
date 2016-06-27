@@ -47,7 +47,7 @@ void DropArea::dragMoveEvent(QDragMoveEvent *event) {
 
 void DropArea::dropEvent(QDropEvent *event) {
     const QMimeData *mimeData = event->mimeData();
-    const TrackMimeData* trackMimeData = dynamic_cast<const TrackMimeData*>(mimeData);
+    const TrackMimeData* trackMimeData = qobject_cast<const TrackMimeData*>(mimeData);
     if (trackMimeData) {
         QList<Track*> tracks = trackMimeData->tracks();
         playlistModel->addTracks(tracks);

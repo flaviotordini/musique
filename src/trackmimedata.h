@@ -29,6 +29,8 @@ static const QString TRACK_MIME = "application/x-" + QLatin1String(Constants::UN
 
 class TrackMimeData : public QMimeData {
 
+    Q_OBJECT
+
 public:
     TrackMimeData();
 
