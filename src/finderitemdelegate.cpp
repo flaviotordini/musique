@@ -389,7 +389,7 @@ void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem 
     bool tooBig = false;
     QRect textBox = painter->boundingRect(nameBox, Qt::AlignCenter | Qt::TextWordWrap, name);
     if (textBox.height() >= nameBox.height()) {
-        painter->setFont(FontUtils::smaller());
+        painter->setFont(FontUtils::small());
         textBox = painter->boundingRect(nameBox, Qt::AlignCenter | Qt::TextWordWrap, name);
         if (textBox.height() > nameBox.height()) {
             // it's still too big
@@ -413,7 +413,7 @@ void FinderItemDelegate::drawBadge(QPainter *painter, QString text,  const QRect
     static const int PADDING = 4;
 
     painter->save();
-    painter->setFont(FontUtils::smaller());
+    painter->setFont(FontUtils::small());
     QRectF textBox = painter->boundingRect(rect, Qt::AlignLeft | Qt::AlignTop, text);
     textBox.adjust(0, 0, PADDING, 0);
 
@@ -430,7 +430,7 @@ void FinderItemDelegate::drawCentralLabel(QPainter *painter, QString text,  cons
     static const int PADDING = 10;
 
     painter->save();
-    painter->setFont(FontUtils::smallerBold());
+    painter->setFont(FontUtils::small());
     QSizeF textSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, text));
     QRect textBox((rect.width() - textSize.width()) / 2 , (rect.height() - textSize.height()) / 3 + 4, textSize.width(), textSize.height());
 

@@ -22,10 +22,6 @@ $END_LICENSE */
 #include "fontutils.h"
 #include "lastfm.h"
 
-namespace The {
-QHash<QString, QAction*>* globalActions();
-}
-
 LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
     setWindowModality(Qt::WindowModal);
 
@@ -76,7 +72,7 @@ LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
                                      tr("Signup for a %1 account").arg("Last.fm") +
                                      "</a>");
     signupLabel->setOpenExternalLinks(true);
-    signupLabel->setFont(FontUtils::smaller());
+    signupLabel->setFont(FontUtils::small());
     connect(signupLabel, SIGNAL(linkActivated(QString)), SLOT(close()));
     layout->addWidget(signupLabel);
 
@@ -88,7 +84,7 @@ LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
                 );
     forgotLabel->hide();
     forgotLabel->setOpenExternalLinks(true);
-    forgotLabel->setFont(FontUtils::smaller());
+    forgotLabel->setFont(FontUtils::small());
     connect(forgotLabel, SIGNAL(linkActivated(QString)), SLOT(close()));
     layout->addWidget(forgotLabel);
 

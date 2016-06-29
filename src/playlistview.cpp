@@ -27,11 +27,6 @@ $END_LICENSE */
 #include "fontutils.h"
 #include "mainwindow.h"
 
-namespace The {
-    QHash<QString, QAction*>* globalActions();
-    QHash<QString, QMenu*>* globalMenus();
-}
-
 PlaylistView::PlaylistView(QWidget *parent) :
         QListView(parent),
         playlistModel(0), overlayLabel(0) {
@@ -53,9 +48,9 @@ PlaylistView::PlaylistView(QWidget *parent) :
     setDragDropMode(QAbstractItemView::DragDrop);
 
     // actions
-    connect(The::globalActions()->value("remove"), SIGNAL(triggered()), SLOT(removeSelected()));
-    connect(The::globalActions()->value("moveUp"), SIGNAL(triggered()), SLOT(moveUpSelected()));
-    connect(The::globalActions()->value("moveDown"), SIGNAL(triggered()), SLOT(moveDownSelected()));
+    connect(MainWindow::instance()->getActionMap().value("remove"), SIGNAL(triggered()), SLOT(removeSelected()));
+    connect(MainWindow::instance()->getActionMap().value("moveUp"), SIGNAL(triggered()), SLOT(moveUpSelected()));
+    connect(MainWindow::instance()->getActionMap().value("moveDown"), SIGNAL(triggered()), SLOT(moveDownSelected()));
 
     // respond to the user doubleclicking a playlist item
     connect(this, SIGNAL(activated(const QModelIndex &)), SLOT(itemActivated(const QModelIndex &)));
@@ -76,13 +71,13 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
     connect(playlistModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
     connect(playlistModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
     connect(playlistModel, SIGNAL(modelReset()), SLOT(updatePlaylistActions()));
-    connect(The::globalActions()->value("clearPlaylist"), SIGNAL(triggered()), playlistModel, SLOT(clear()));
-    connect(The::globalActions()->value("skip"), SIGNAL(triggered()), playlistModel, SLOT(skipForward()));
-    connect(The::globalActions()->value("previous"), SIGNAL(triggered()), playlistModel, SLOT(skipBackward()));
+    connect(MainWindow::instance()->getActionMap().value("clearPlaylist"), SIGNAL(triggered()), playlistModel, SLOT(clear()));
+    connect(MainWindow::instance()->getActionMap().value("skip"), SIGNAL(triggered()), playlistModel, SLOT(skipForward()));
+    connect(MainWindow::instance()->getActionMap().value("previous"), SIGNAL(triggered()), playlistModel, SLOT(skipBackward()));
 
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
-    connect(&shortcuts, SIGNAL(Next()), The::globalActions()->value("skip"), SLOT(trigger()));
-    connect(&shortcuts, SIGNAL(Previous()), The::globalActions()->value("previous"), SLOT(trigger()));
+    connect(&shortcuts, SIGNAL(Next()), MainWindow::instance()->getActionMap().value("skip"), SLOT(trigger()));
+    connect(&shortcuts, SIGNAL(Previous()), MainWindow::instance()->getActionMap().value("previous"), SLOT(trigger()));
 }
 
 void PlaylistView::itemActivated(const QModelIndex &index) {
@@ -110,22 +105,22 @@ void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemS
     QListView::selectionChanged(selected, deselected);
 
     const bool gotSelection = this->selectionModel()->hasSelection();
-    The::globalActions()->value("remove")->setEnabled(gotSelection);
-    The::globalActions()->value("moveUp")->setEnabled(gotSelection);
-    The::globalActions()->value("moveDown")->setEnabled(gotSelection);
+    MainWindow::instance()->getActionMap().value("remove")->setEnabled(gotSelection);
+    MainWindow::instance()->getActionMap().value("moveUp")->setEnabled(gotSelection);
+    MainWindow::instance()->getActionMap().value("moveDown")->setEnabled(gotSelection);
 }
 
 void PlaylistView::updatePlaylistActions() {
 
     const int rowCount = playlistModel->rowCount(QModelIndex());
     const bool isPlaylistEmpty = rowCount < 1;
-    The::globalActions()->value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
+    MainWindow::instance()->getActionMap().value("clearPlaylist")->setEnabled(!isPlaylistEmpty);
     if (!isPlaylistEmpty)
-        The::globalActions()->value("play")->setEnabled(true);
+        MainWindow::instance()->getActionMap().value("play")->setEnabled(true);
 
     // TODO also check if we're on first/last track
-    The::globalActions()->value("skip")->setEnabled(rowCount > 1);
-    The::globalActions()->value("previous")->setEnabled(rowCount > 1);
+    MainWindow::instance()->getActionMap().value("skip")->setEnabled(rowCount > 1);
+    MainWindow::instance()->getActionMap().value("previous")->setEnabled(rowCount > 1);
 
     if (isPlaylistEmpty) {
         setStatusTip(tr("Playlist is empty"));

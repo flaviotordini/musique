@@ -32,10 +32,6 @@ static const QString demoMessage =
         .arg(QString::number(demoMaxTracks));
 #endif
 
-namespace The {
-QHash<QString, QAction*>* globalActions();
-}
-
 PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
     activeTrack = 0;
     activeRow = -1;

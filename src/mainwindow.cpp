@@ -26,10 +26,13 @@ $END_LICENSE */
 #include "database.h"
 #include <QtSql>
 #include "contextualview.h"
-#ifdef APP_MAC
+#if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
 #include "searchlineedit_mac.h"
 #else
 #include "searchlineedit.h"
+#endif
+#ifdef APP_MAC_QMACTOOLBAR
+#include "mactoolbar.h"
 #endif
 #include "view.h"
 #include "mediaview.h"
@@ -182,14 +185,11 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
 }
 
 void MainWindow::createActions() {
-
-    QHash<QString, QAction*> *actions = The::globalActions();
-
     backAct = new QAction(tr("&Back"), this);
     backAct->setEnabled(false);
     backAct->setShortcut(QKeySequence(Qt::ALT + Qt::Key_Left));
     backAct->setStatusTip(tr("Go to the previous view"));
-    actions->insert("back", backAct);
+    actionMap.insert("back", backAct);
     connect(backAct, SIGNAL(triggered()), SLOT(goBack()));
 
     QIcon icon = IconUtils::icon(QStringList() << "audio-headphones" << "gtk-info" << "help-about");
@@ -198,7 +198,7 @@ void MainWindow::createActions() {
     contextualAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
     contextualAct->setEnabled(false);
     contextualAct->setCheckable(true);
-    actions->insert("contextual", contextualAct);
+    actionMap.insert("contextual", contextualAct);
     connect(contextualAct, SIGNAL(triggered()), SLOT(toggleContextualView()));
 
     /*
@@ -221,7 +221,7 @@ void MainWindow::createActions() {
     skipBackwardAct->setPriority(QAction::LowPriority);
 #endif
     skipBackwardAct->setEnabled(false);
-    actions->insert("previous", skipBackwardAct);
+    actionMap.insert("previous", skipBackwardAct);
 
     skipForwardAct = new QAction(
                 IconUtils::icon("media-skip-forward"),
@@ -232,7 +232,7 @@ void MainWindow::createActions() {
     skipForwardAct->setPriority(QAction::LowPriority);
 #endif
     skipForwardAct->setEnabled(false);
-    actions->insert("skip", skipForwardAct);
+    actionMap.insert("skip", skipForwardAct);
 
     playAct = new QAction(
                 IconUtils::icon("media-playback-start"),
@@ -246,7 +246,7 @@ void MainWindow::createActions() {
 #ifdef APP_MAC
     playAct->setPriority(QAction::LowPriority);
 #endif
-    actions->insert("play", playAct);
+    actionMap.insert("play", playAct);
 
     fullscreenAct = new QAction(
                 IconUtils::icon("view-fullscreen"),
@@ -260,69 +260,69 @@ void MainWindow::createActions() {
 #endif
     fullscreenAct->setShortcuts(fsShortcuts);
     fullscreenAct->setShortcutContext(Qt::ApplicationShortcut);
-    actions->insert("fullscreen", fullscreenAct);
+    actionMap.insert("fullscreen", fullscreenAct);
     connect(fullscreenAct, SIGNAL(triggered()), SLOT(toggleFullscreen()));
 
     removeAct = new QAction(tr("&Remove"), this);
     removeAct->setStatusTip(tr("Remove the selected tracks from the playlist"));
     removeAct->setShortcuts(QList<QKeySequence>() << QKeySequence("Del") << QKeySequence("Backspace"));
     removeAct->setEnabled(false);
-    actions->insert("remove", removeAct);
+    actionMap.insert("remove", removeAct);
 
     moveUpAct = new QAction(tr("Move &Up"), this);
     moveUpAct->setStatusTip(tr("Move up the selected tracks in the playlist"));
     moveUpAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Up));
     moveUpAct->setEnabled(false);
-    actions->insert("moveUp", moveUpAct);
+    actionMap.insert("moveUp", moveUpAct);
 
     moveDownAct = new QAction(tr("Move &Down"), this);
     moveDownAct->setStatusTip(tr("Move down the selected tracks in the playlist"));
     moveDownAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Down));
     moveDownAct->setEnabled(false);
-    actions->insert("moveDown", moveDownAct);
+    actionMap.insert("moveDown", moveDownAct);
 
     quitAct = new QAction(tr("&Quit"), this);
     quitAct->setMenuRole(QAction::QuitRole);
     quitAct->setShortcut(QKeySequence(QKeySequence::Quit));
     quitAct->setStatusTip(tr("Bye"));
-    actions->insert("quit", quitAct);
+    actionMap.insert("quit", quitAct);
     connect(quitAct, SIGNAL(triggered()), SLOT(quit()));
 
     chooseFolderAct = new QAction(tr("&Change collection folder..."), this);
     chooseFolderAct->setStatusTip(tr("Choose a different music collection folder"));
     chooseFolderAct->setMenuRole(QAction::ApplicationSpecificRole);
-    actions->insert("chooseFolder", chooseFolderAct);
+    actionMap.insert("chooseFolder", chooseFolderAct);
     connect(chooseFolderAct, SIGNAL(triggered()), SLOT(showChooseFolderView()));
 
     siteAct = new QAction(tr("&Website"), this);
     siteAct->setShortcut(QKeySequence::HelpContents);
     siteAct->setStatusTip(tr("%1 on the Web").arg(Constants::NAME));
-    actions->insert("site", siteAct);
+    actionMap.insert("site", siteAct);
     connect(siteAct, SIGNAL(triggered()), SLOT(visitSite()));
 
     donateAct = new QAction(tr("Make a &donation"), this);
     donateAct->setStatusTip(tr("Please support the continued development of %1").arg(Constants::NAME));
-    actions->insert("donate", donateAct);
+    actionMap.insert("donate", donateAct);
     connect(donateAct, SIGNAL(triggered()), SLOT(donate()));
 
     aboutAct = new QAction(tr("&About"), this);
     aboutAct->setMenuRole(QAction::AboutRole);
     aboutAct->setStatusTip(tr("Info about %1").arg(Constants::NAME));
-    actions->insert("about", aboutAct);
+    actionMap.insert("about", aboutAct);
     connect(aboutAct, SIGNAL(triggered()), SLOT(about()));
 
     // Anon
     QAction *action;
 
     action = new QAction(tr("&Report an Issue..."), this);
-    actions->insert("report-issue", action);
+    actionMap.insert("report-issue", action);
     connect(action, SIGNAL(triggered()), SLOT(reportIssue()));
 
     action = new QAction(IconUtils::icon("edit-clear"), tr("&Clear"), this);
     action->setShortcut(QKeySequence::New);
     action->setStatusTip(tr("Remove all tracks from the playlist"));
     action->setEnabled(false);
-    actions->insert("clearPlaylist", action);
+    actionMap.insert("clearPlaylist", action);
 
     action = new QAction(
                 IconUtils::icon("media-playlist-shuffle"), tr("&Shuffle"), this);
@@ -330,7 +330,7 @@ void MainWindow::createActions() {
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), SLOT(setShuffle(bool)));
-    actions->insert("shufflePlaylist", action);
+    actionMap.insert("shufflePlaylist", action);
 
     action = new QAction(
                 IconUtils::icon("media-playlist-repeat"),
@@ -339,16 +339,16 @@ void MainWindow::createActions() {
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), SLOT(setRepeat(bool)));
-    actions->insert("repeatPlaylist", action);
+    actionMap.insert("repeatPlaylist", action);
 
     action = new QAction(tr("&Close"), this);
     action->setShortcut(QKeySequence(QKeySequence::Close));
-    actions->insert("close", action);
+    actionMap.insert("close", action);
     connect(action, SIGNAL(triggered()), SLOT(close()));
 
     action = new QAction(Constants::NAME, this);
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::ALT + Qt::Key_1));
-    actions->insert("restore", action);
+    actionMap.insert("restore", action);
     connect(action, SIGNAL(triggered()), SLOT(restore()));
 
     action = new QAction(IconUtils::icon("media-playback-stop"),
@@ -356,21 +356,21 @@ void MainWindow::createActions() {
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Escape));
     action->setCheckable(true);
     action->setEnabled(false);
-    actions->insert("stopafterthis", action);
+    actionMap.insert("stopafterthis", action);
     connect(action, SIGNAL(toggled(bool)), SLOT(showStopAfterThisInStatusBar(bool)));
 
     action = new QAction(QIcon(":/images/audioscrobbler.png"), tr("&Scrobbling"), this);
     action->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
     action->setCheckable(true);
-    actions->insert("scrobbling", action);
+    actionMap.insert("scrobbling", action);
     connect(action, SIGNAL(toggled(bool)), SLOT(toggleScrobbling(bool)));
 
     action = new QAction(tr("&Log Out from %1").arg("Last.fm"), this);
     action->setMenuRole(QAction::ApplicationSpecificRole);
     action->setEnabled(false);
     action->setVisible(false);
-    actions->insert("lastFmLogout", action);
+    actionMap.insert("lastFmLogout", action);
     connect(action, SIGNAL(triggered()), SLOT(lastFmLogout()));
 
 #ifdef APP_MAC_STORE
@@ -384,19 +384,19 @@ void MainWindow::createActions() {
     searchFocusAct = new QAction(this);
     searchFocusAct->setShortcut(QKeySequence::Find);
     searchFocusAct->setStatusTip(tr("Search"));
-    actions->insert("search", searchFocusAct);
+    actionMap.insert("search", searchFocusAct);
     connect(searchFocusAct, SIGNAL(triggered()), SLOT(searchFocus()));
     addAction(searchFocusAct);
 
     volumeUpAct = new QAction(this);
     volumeUpAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Plus));
-    actions->insert("volume-up", volumeUpAct);
+    actionMap.insert("volume-up", volumeUpAct);
     connect(volumeUpAct, SIGNAL(triggered()), SLOT(volumeUp()));
     addAction(volumeUpAct);
 
     volumeDownAct = new QAction(this);
     volumeDownAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Minus));
-    actions->insert("volume-down", volumeDownAct);
+    actionMap.insert("volume-down", volumeDownAct);
     connect(volumeDownAct, SIGNAL(triggered()), SLOT(volumeDown()));
     addAction(volumeDownAct);
 
@@ -404,7 +404,7 @@ void MainWindow::createActions() {
     volumeMuteAct->setIcon(IconUtils::icon("audio-volume-high"));
     volumeMuteAct->setStatusTip(tr("Mute volume"));
     volumeMuteAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_E));
-    actions->insert("volume-mute", volumeMuteAct);
+    actionMap.insert("volume-mute", volumeMuteAct);
     connect(volumeMuteAct, SIGNAL(triggered()), SLOT(volumeMute()));
     addAction(volumeMuteAct);
 
@@ -413,7 +413,7 @@ void MainWindow::createActions() {
 #endif
 
     // common action properties
-    foreach (QAction *action, actions->values()) {
+    foreach (QAction *action, actionMap.values()) {
 
         // add actions to the MainWindow so that they work
         // when the menu is hidden
@@ -438,44 +438,41 @@ void MainWindow::createActions() {
 }
 
 void MainWindow::createMenus() {
-
-    QHash<QString, QMenu*> *menus = The::globalMenus();
-
     fileMenu = menuBar()->addMenu(tr("&Application"));
 #ifdef APP_ACTIVATION
-    QAction *buyAction = The::globalActions()->value("buy");
+    QAction *buyAction = actionMap.value("buy");
     if (buyAction) fileMenu->addAction(buyAction);
 #ifndef APP_MAC
     fileMenu->addSeparator();
 #endif
 #endif
     fileMenu->addAction(chooseFolderAct);
-    fileMenu->addAction(The::globalActions()->value("lastFmLogout"));
+    fileMenu->addAction(actionMap.value("lastFmLogout"));
 #ifndef APP_MAC
     fileMenu->addSeparator();
 #endif
     fileMenu->addAction(quitAct);
 
     playbackMenu = menuBar()->addMenu(tr("&Playback"));
-    menus->insert("playback", playbackMenu);
+    menuMap.insert("playback", playbackMenu);
     // playbackMenu->addAction(stopAct);
     playbackMenu->addAction(playAct);
-    playbackMenu->addAction(The::globalActions()->value("stopafterthis"));
+    playbackMenu->addAction(actionMap.value("stopafterthis"));
     playbackMenu->addSeparator();
     playbackMenu->addAction(skipForwardAct);
     playbackMenu->addAction(skipBackwardAct);
     playbackMenu->addSeparator();
-    playbackMenu->addAction(The::globalActions()->value("scrobbling"));
+    playbackMenu->addAction(actionMap.value("scrobbling"));
 #ifdef APP_MAC
     MacSupport::dockMenu(playbackMenu);
 #endif
 
     playlistMenu = menuBar()->addMenu(tr("Play&list"));
-    menus->insert("playlist", playlistMenu);
-    playlistMenu->addAction(The::globalActions()->value("clearPlaylist"));
+    menuMap.insert("playlist", playlistMenu);
+    playlistMenu->addAction(actionMap.value("clearPlaylist"));
     playlistMenu->addSeparator();
-    playlistMenu->addAction(The::globalActions()->value("shufflePlaylist"));
-    playlistMenu->addAction(The::globalActions()->value("repeatPlaylist"));
+    playlistMenu->addAction(actionMap.value("shufflePlaylist"));
+    playlistMenu->addAction(actionMap.value("repeatPlaylist"));
     playlistMenu->addSeparator();
     playlistMenu->addAction(removeAct);
     playlistMenu->addAction(moveUpAct);
@@ -495,41 +492,70 @@ void MainWindow::createMenus() {
 #if !defined(APP_MAC) && !defined(APP_WIN)
     helpMenu->addAction(donateAct);
 #endif
-    helpMenu->addAction(The::globalActions()->value("report-issue"));
+    helpMenu->addAction(actionMap.value("report-issue"));
     helpMenu->addAction(aboutAct);
 
 #ifdef APP_MAC_STORE
     helpMenu->addSeparator();
-    helpMenu->addAction(The::globalActions()->value("app-store"));
+    helpMenu->addAction(actionMap.value("app-store"));
 #endif
 }
 
 void MainWindow::createToolBars() {
+
+    // Create widgets
+    currentTime = new QLabel("00:00", this);
+    seekSlider = new Phonon::SeekSlider(this);
+    volumeSlider = new Phonon::VolumeSlider(this);
+
+#if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
+    SearchWrapper* searchWrapper = new SearchWrapper(this);
+    toolbarSearch = searchWrapper->getSearchLineEdit();
+#else
+    toolbarSearch = new SearchLineEdit(this);
+#endif
+    toolbarSearch->setMinimumWidth(toolbarSearch->fontInfo().pixelSize()*15);
+    toolbarSearch->setSuggester(new CollectionSuggester(this));
+    connect(toolbarSearch, SIGNAL(search(const QString&)), SLOT(search(const QString&)));
+    connect(toolbarSearch, SIGNAL(suggestionAccepted(Suggestion*)), SLOT(suggestionAccepted(Suggestion*)));
+    toolbarSearch->setStatusTip(searchFocusAct->statusTip());
+
+    // Add widgets to toolbar
+
+#ifdef APP_MAC_QMACTOOLBAR
+    currentTime->hide();
+    toolbarSearch->hide();
+    volumeSlider->hide();
+    seekSlider->hide();
+    MacToolbar::instance().createToolbar(this);
+    return;
+#endif
+
     mainToolBar = new QToolBar(this);
+    addToolBar(mainToolBar);
+
     mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     mainToolBar->setFloatable(false);
     mainToolBar->setMovable(false);
-
-#if defined(APP_MAC) | defined(APP_WIN)
     mainToolBar->setIconSize(QSize(32, 32));
-#endif
+
+    /*
+    QPalette p = mainToolBar->palette();
+    p.setBrush(QPalette::Background, menuBar()->palette().background());
+    mainToolBar->setPalette(p);
+    */
 
     mainToolBar->addAction(skipBackwardAct);
     mainToolBar->addAction(playAct);
     mainToolBar->addAction(skipForwardAct);
 
-    mainToolBar->addAction(contextualAct);
-
     mainToolBar->addWidget(new Spacer());
 
-    QFont smallerFont = FontUtils::smaller();
-    currentTime = new QLabel(mainToolBar);
-    currentTime->setFont(smallerFont);
+    currentTime->setFont(FontUtils::small());
     mainToolBar->addWidget(currentTime);
 
     mainToolBar->addWidget(new Spacer());
 
-    seekSlider = new Phonon::SeekSlider(this);
     seekSlider->setIconVisible(false);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     mainToolBar->addWidget(seekSlider);
@@ -544,50 +570,28 @@ void MainWindow::createToolBars() {
     mainToolBar->addWidget(new Spacer());
 
     mainToolBar->addAction(volumeMuteAct);
-#ifdef Q_WS_X11
+#ifdef APP_UBUNTU_NO
     QToolButton *volumeMuteButton = qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
     volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
 #endif
 
-    volumeSlider = new Phonon::VolumeSlider(this);
     volumeSlider->setMuteVisible(false);
-
     // qDebug() << volumeSlider->children();
     // status tip for the volume slider
     QSlider* volumeQSlider = volumeSlider->findChild<QSlider*>();
     if (volumeQSlider)
         volumeQSlider->setStatusTip(tr("Press %1 to raise the volume, %2 to lower it").arg(
-                                        volumeUpAct->shortcut().toString(QKeySequence::NativeText),
-                                        volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
-
+                                        volumeUpAct->shortcut().toString(QKeySequence::NativeText), volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
     // this makes the volume slider smaller
-    volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+    volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     mainToolBar->addWidget(volumeSlider);
 
     mainToolBar->addWidget(new Spacer());
 
-#ifdef APP_MAC
-    SearchWrapper* searchWrapper = new SearchWrapper(this);
-    toolbarSearch = searchWrapper->getSearchLineEdit();
-#else
-    toolbarSearch = new SearchLineEdit(this);
-#endif
-    toolbarSearch->setMinimumWidth(toolbarSearch->fontInfo().pixelSize()*15);
-    toolbarSearch->setSuggester(new CollectionSuggester(this));
-    connect(toolbarSearch, SIGNAL(search(const QString&)), SLOT(search(const QString&)));
-    connect(toolbarSearch, SIGNAL(cleared()), SLOT(searchCleared()));
-    connect(toolbarSearch, SIGNAL(suggestionAccepted(Suggestion*)), SLOT(suggestionAccepted(Suggestion*)));
-    toolbarSearch->setStatusTip(searchFocusAct->statusTip());
-#ifdef APP_MAC
-    mainToolBar->addWidget(searchWrapper);
-#else
     mainToolBar->addWidget(toolbarSearch);
     Spacer* spacer = new Spacer();
-    // spacer->setWidth(4);
+    spacer->setWidth(4);
     mainToolBar->addWidget(spacer);
-#endif
-
-    addToolBar(mainToolBar);
 }
 
 void MainWindow::createStatusBar() {
@@ -607,9 +611,9 @@ void MainWindow::createStatusBar() {
     spring->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     statusToolBar->addWidget(spring);
 
-    statusToolBar->addAction(The::globalActions()->value("shufflePlaylist"));
-    statusToolBar->addAction(The::globalActions()->value("repeatPlaylist"));
-    statusToolBar->addAction(The::globalActions()->value("clearPlaylist"));
+    statusToolBar->addAction(actionMap.value("shufflePlaylist"));
+    statusToolBar->addAction(actionMap.value("repeatPlaylist"));
+    statusToolBar->addAction(actionMap.value("clearPlaylist"));
     statusBar()->addPermanentWidget(statusToolBar);
 
     statusBar()->show();
@@ -618,20 +622,13 @@ void MainWindow::createStatusBar() {
 void MainWindow::readSettings() {
     QSettings settings;
     restoreGeometry(settings.value("geometry").toByteArray());
-#ifdef APP_MAC
-    if (!isMaximized())
-#ifdef QT_MAC_USE_COCOA
-        move(x(), y() + 10);
-#else
-        move(x(), y() + mainToolBar->height() + 8);
-#endif
-#endif
+
     m_maximized = isMaximized();
-    The::globalActions()->value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
-    The::globalActions()->value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
+    actionMap.value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
+    actionMap.value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
 
     bool scrobbling = settings.value("scrobbling").toBool();
-    The::globalActions()->value("scrobbling")->setChecked(scrobbling);
+    actionMap.value("scrobbling")->setChecked(scrobbling);
     toggleScrobbling(scrobbling);
 }
 
@@ -1293,7 +1290,7 @@ void MainWindow::searchCleared() {
 }
 
 void MainWindow::showStopAfterThisInStatusBar(bool show) {
-    QAction* action = The::globalActions()->value("stopafterthis");
+    QAction* action = actionMap.value("stopafterthis");
     showActionInStatusBar(action, show);
 }
 
@@ -1326,7 +1323,7 @@ void MainWindow::toggleScrobbling(bool enable) {
     // show in status bar
     const bool isAuthorized = LastFm::instance().isAuthorized();
     const bool showInStatusBar = enable || isAuthorized;
-    showActionInStatusBar(The::globalActions()->value("scrobbling"), showInStatusBar);
+    showActionInStatusBar(actionMap.value("scrobbling"), showInStatusBar);
 
     // need login?
     if (enable && !isAuthorized) {
@@ -1339,7 +1336,7 @@ void MainWindow::toggleScrobbling(bool enable) {
 
     // enable logout
     if (isAuthorized) {
-        QAction* action = The::globalActions()->value("lastFmLogout");
+        QAction* action = actionMap.value("lastFmLogout");
         action->setEnabled(true);
         action->setVisible(true);
     }
@@ -1347,20 +1344,20 @@ void MainWindow::toggleScrobbling(bool enable) {
 }
 
 void MainWindow::enableScrobbling() {
-    QAction* action = The::globalActions()->value("lastFmLogout");
+    QAction* action = actionMap.value("lastFmLogout");
     action->setEnabled(true);
     action->setVisible(true);
 }
 
 void MainWindow::disableScrobbling() {
-    The::globalActions()->value("scrobbling")->setChecked(false);
+    actionMap.value("scrobbling")->setChecked(false);
     toggleScrobbling(false);
 }
 
 void MainWindow::lastFmLogout() {
     LastFm::instance().logout();
     disableScrobbling();
-    QAction* action = The::globalActions()->value("lastFmLogout");
+    QAction* action = actionMap.value("lastFmLogout");
     action->setEnabled(false);
     action->setVisible(false);
 }
@@ -1378,7 +1375,7 @@ void MainWindow::messageReceived(const QString &message) {
     else if (message == "--next" && skipForwardAct->isEnabled()) skipForwardAct->trigger();
     else if (message == "--previous" && skipBackwardAct->isEnabled()) skipBackwardAct->trigger();
     else if (message == QLatin1String("--stop-after-this")) {
-        The::globalActions()->value("stopafterthis")->toggle();
+        actionMap.value("stopafterthis")->toggle();
     }
     else if (message == "--info" && contextualAct->isEnabled()) contextualAct->trigger();
     else MainWindow::printHelp();
@@ -1419,7 +1416,7 @@ void MainWindow::buy() {
 }
 
 void MainWindow::hideBuyAction() {
-    QAction *action = The::globalActions()->value("buy");
+    QAction *action = actionMap.value("buy");
     action->setVisible(false);
     action->setEnabled(false);
 }

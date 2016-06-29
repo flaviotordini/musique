@@ -1,49 +1,39 @@
 #ifndef SEARCHLINEEDIT_H
 #define SEARCHLINEEDIT_H
 
-#include "urllineedit.h"
-#include "autocomplete.h"
+#include <QtWidgets>
 
-#include <QLineEdit>
-#include <QAbstractButton>
-
-QT_BEGIN_NAMESPACE
-class QMenu;
-QT_END_NAMESPACE
+#include "exlineedit.h"
+#include "searchwidget.h"
 
 class SearchButton;
 class Suggester;
+class AutoComplete;
 
-/*
-    Clear button on the right hand side of the search widget.
-    Hidden by default
- */
-class ClearButton : public QAbstractButton {
+class SearchLineEdit : public ExLineEdit, public SearchWidget {
 
     Q_OBJECT
 
 public:
-    ClearButton(QWidget *parent = 0);
-    void paintEvent(QPaintEvent *e);
+    SearchLineEdit(QWidget *parent = 0);
+    QMenu *menu() const;
+    void setMenu(QMenu *menu);
+    void enableSuggest();
+    void preventSuggest();
+    void selectAll();
+    void setSuggester(Suggester *suggester);
+    void setInactiveText(const QString &text);
+    void setText(const QString &text);
+    AutoComplete *getAutoComplete();
+    void emitTextChanged(const QString &text);
+    QString text();
+    QLineEdit *getLineEdit();
+    QWidget *toWidget() { return qobject_cast<QWidget*>(this); }
+
+    void setEnabled(bool enabled);
 
 public slots:
-    void textChanged(const QString &text);
-
-protected:
-    void enterEvent(QEvent *e);
-    void leaveEvent(QEvent *e);
-
-    void mousePressEvent(QEvent *e);
-    void mouseReleaseEvent(QEvent *e);
-
-private:
-    bool hovered;
-    bool mousePressed;
-};
-
-class SearchLineEdit : public ExLineEdit {
-
-    Q_OBJECT
+    void returnPressed();
 
 signals:
     void textChanged(const QString &text);
@@ -51,27 +41,13 @@ signals:
     void search(const QString &text);
     void suggestionAccepted(Suggestion *suggestion);
 
-public:
-    SearchLineEdit(QWidget *parent = 0);
-
-    void setInactiveText(const QString &text);
-
-    QMenu *menu() const;
-    void setMenu(QMenu *menu);
-    void updateGeometries();
-    void enableSuggest();
-    void preventSuggest();
-    void selectAll() { lineEdit()->selectAll(); }
-    void setSuggester(Suggester *suggester) { autoComplete->setSuggester(suggester); }
-    void setText(const QString &text) { lineEdit()->setText(text); }
+    void enabledChanged(bool enabled);
 
 protected:
-    void resizeEvent(QResizeEvent *event);
-    void paintEvent(QPaintEvent *event);
-    void focusInEvent(QFocusEvent *event);
-
-private slots:
-    void returnPressed();
+    void updateGeometries();
+    void resizeEvent(QResizeEvent *e);
+    void paintEvent(QPaintEvent *e);
+    void focusInEvent(QFocusEvent *e);
 
 private:
     SearchButton *searchButton;

@@ -24,7 +24,7 @@ HEADERS += src/mainwindow.h \
     src/aboutview.h \
     src/view.h \
     src/searchlineedit.h \
-    src/urllineedit.h \
+    src/exlineedit.h \
     src/spacer.h \
     src/constants.h \
     src/networkaccess.h \
@@ -88,7 +88,7 @@ SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
     src/searchlineedit.cpp \
-    src/urllineedit.cpp \
+    src/exlineedit.cpp \
     src/spacer.cpp \
     src/updatechecker.cpp \
     src/networkaccess.cpp \

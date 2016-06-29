@@ -42,7 +42,17 @@ class MainWindow : public QMainWindow {
 public:
     static MainWindow* instance();
     ~MainWindow();
+    Phonon::SeekSlider* getSeekSlider() { return seekSlider; }
+    Phonon::AudioOutput *getAudioOutput() { return audioOutput; }
+    Phonon::VolumeSlider *getVolumeSlider() { return volumeSlider; }
+    Phonon::MediaObject *getMediaObject() { return mediaObject; }
+    void readSettings();
+    SearchLineEdit *getToolbarSearch() { return toolbarSearch; }
     QToolBar* getStatusToolbar() { return statusToolBar; }
+
+    QHash<QString, QAction*> &getActionMap() { return actionMap; }
+    QHash<QString, QMenu*> &getMenuMap() { return menuMap; }
+
     static void printHelp();
 
 public slots:
@@ -132,7 +142,6 @@ private:
     void createMenus();
     void createToolBars();
     void createStatusBar();
-    void readSettings();
     void writeSettings();
     void initPhonon();
     static QString formatTime(qint64 time);
@@ -149,6 +158,9 @@ private:
     MediaView *mediaView;
     ContextualView *contextualView;
     QWidget *aboutView;
+
+    QHash<QString, QAction*> actionMap;
+    QHash<QString, QMenu*> menuMap;
 
     // actions
     QAction *contextualAct;

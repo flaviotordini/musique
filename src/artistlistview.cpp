@@ -27,12 +27,10 @@ $END_LICENSE */
 #include "extra.h"
 #endif
 
-namespace The {
-QHash<QString, QAction*>* globalActions();
-}
-
+namespace {
 static const char *sortByKey = "artistSortBy";
 static const char *reverseOrderKey = "artistReverseOrder";
+}
 
 ArtistListView::ArtistListView(QWidget *parent) : BaseFinderView(parent) {
     setupToolbar();

@@ -35,11 +35,6 @@ $END_LICENSE */
 #include "extra.h"
 #endif
 
-namespace The {
-QHash<QString, QAction*>* globalActions();
-QHash<QString, QMenu*>* globalMenus();
-}
-
 MediaView::MediaView(QWidget *parent) : View(parent) {
 
     activeTrack = 0;
@@ -163,13 +158,13 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
     Track *track = playlistModel->trackAt(row);
     if (!track) {
         activeTrack = 0;
-        The::globalActions()->value("contextual")->setEnabled(false);
+        MainWindow::instance()->getActionMap().value("contextual")->setEnabled(false);
         return;
     }
 
     connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
     activeTrack = track;
-    The::globalActions()->value("contextual")->setEnabled(true);
+    MainWindow::instance()->getActionMap().value("contextual")->setEnabled(true);
 
     // go!
     if (startPlayback) {
@@ -200,7 +195,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
     window()->setWindowTitle(windowTitle);
 
     // enable/disable actions
-    The::globalActions()->value("stopafterthis")->setEnabled(true);
+    MainWindow::instance()->getActionMap().value("stopafterthis")->setEnabled(true);
 
 #ifdef APP_EXTRA
     QString artistName = track->getArtist() ? track->getArtist()->getName() : "";
@@ -263,14 +258,14 @@ void MediaView::trackRemoved() {
 void MediaView::playlistFinished() {
     MainWindow::instance()->showMessage(tr("Playlist finished"));
 
-    QAction *a = The::globalActions()->value("contextual");
+    QAction *a = MainWindow::instance()->getActionMap().value("contextual");
     if (a->isChecked()) MainWindow::instance()->hideContextualView();
     a->setEnabled(false);
 }
 
 void MediaView::playbackFinished() {
     trackFinished();
-    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
+    QAction* stopAfterThisAction = MainWindow::instance()->getActionMap().value("stopafterthis");
     if (stopAfterThisAction->isChecked()) {
         stopAfterThisAction->setChecked(false);
     } else playlistModel->skipForward();
@@ -298,7 +293,7 @@ void MediaView::trackFinished() {
 }
 
 void MediaView::aboutToFinish() {
-    QAction* stopAfterThisAction = The::globalActions()->value("stopafterthis");
+    QAction* stopAfterThisAction = MainWindow::instance()->getActionMap().value("stopafterthis");
     if (!stopAfterThisAction->isChecked()) {
         Track *nextTrack = playlistModel->getNextTrack();
         if (nextTrack) {

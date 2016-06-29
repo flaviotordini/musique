@@ -35,7 +35,7 @@ TrackInfo::TrackInfo(QWidget *parent) :
     titleLabel = new QLabel(this);
     titleLabel->setPalette(palette());
     titleLabel->setWordWrap(true);
-    titleLabel->setFont(FontUtils::biggerBold());
+    titleLabel->setFont(FontUtils::big());
     titleLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     layout->addWidget(titleLabel);
 

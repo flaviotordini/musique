@@ -20,18 +20,22 @@ $END_LICENSE */
 #ifndef AUTOCOMPLETE_H
 #define AUTOCOMPLETE_H
 
-#include <QtWidgets>
+#include <QtGui>
 
 class Suggester;
 class Suggestion;
-class SearchLineEdit;
+class SearchWidget;
+
+QT_FORWARD_DECLARE_CLASS(QListWidget)
+QT_FORWARD_DECLARE_CLASS(QListWidgetItem)
+QT_FORWARD_DECLARE_CLASS(QLineEdit)
 
 class AutoComplete : public QObject {
 
     Q_OBJECT
 
 public:
-    AutoComplete(SearchLineEdit *buddy, QLineEdit *lineEdit);
+    AutoComplete(SearchWidget *buddy, QLineEdit *lineEdit);
     void setSuggester(Suggester* suggester);
     QListWidget* getPopup() { return popup; }
     void preventSuggest();
@@ -57,7 +61,7 @@ private:
     void showSuggestions(const QList<Suggestion*> &suggestions);
     void hideSuggestions();
 
-    SearchLineEdit *buddy;
+    SearchWidget *buddy;
     QLineEdit *lineEdit;
     QString originalText;
     QListWidget *popup;
