@@ -1,27 +1,32 @@
 /* $BEGIN_LICENSE
 
-This file is part of Musique.
-Copyright 2013, Flavio Tordini <flavio.tordini@gmail.com>
+This file is part of Minitube.
+Copyright 2009, Flavio Tordini <flavio.tordini@gmail.com>
 
-Musique is free software: you can redistribute it and/or modify
+Minitube is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-Musique is distributed in the hope that it will be useful,
+Minitube is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with Musique.  If not, see <http://www.gnu.org/licenses/>.
+along with Minitube.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
 #include "segmentedcontrol.h"
 #include "mainwindow.h"
+#include "fontutils.h"
 
-static const QColor borderColor = QColor(0x26, 0x26, 0x26);
+namespace {
+static const QColor borderColor = QColor(160, 160, 160);
+static const QColor backgroundColor = QColor(183, 183, 183);
+static const QColor selectedColor = QColor(212, 212, 212);
+}
 
 class SegmentedControl::Private {
 public:
@@ -33,6 +38,10 @@ public:
 
 SegmentedControl::SegmentedControl (QWidget *parent)
     : QWidget(parent), d(new SegmentedControl::Private) {
+
+#ifdef APP_MAC
+    setFont(FontUtils::small());
+#endif
 
     setMouseTracking(true);
 
@@ -75,19 +84,15 @@ bool SegmentedControl::setCheckedAction(QAction *action) {
 
 QSize SegmentedControl::minimumSizeHint (void) const {
     int itemsWidth = calculateButtonWidth() * d->actionList.size() * 1.2;
-    return(QSize(itemsWidth, QFontMetrics(font()).height() * 1.9));
+    return(QSize(itemsWidth, QFontMetrics(font()).height() * 1.8));
 }
 
 void SegmentedControl::paintEvent (QPaintEvent * /*event*/) {
-    int height = rect().height();
-    int width = rect().width();
+    const int height = rect().height();
+    const int width = rect().width();
 
     QPainter p(this);
-
-    QLinearGradient linearGrad(rect().topLeft(), rect().bottomLeft());
-    linearGrad.setColorAt(0, borderColor);
-    linearGrad.setColorAt(1, QColor(0x3c, 0x3c, 0x3c));
-    p.fillRect(rect(), QBrush(linearGrad));
+    p.fillRect(rect(), backgroundColor);
 
     // Calculate Buttons Size & Location
     const int buttonWidth = width / d->actionList.size();
@@ -97,17 +102,20 @@ void SegmentedControl::paintEvent (QPaintEvent * /*event*/) {
     const int actionCount = d->actionList.size();
     for (int i = 0; i < actionCount; i++) {
         QAction *action = d->actionList.at(i);
-
         if (i + 1 == actionCount) {
+            // last button
             rect.setWidth(width - buttonWidth * (actionCount-1));
             drawButton(&p, rect, action);
         } else {
             drawButton(&p, rect, action);
+            p.setPen(borderColor);
+            int w = rect.x() + rect.width() -1;
+            p.drawLine(w, 0, w, height);
             rect.moveLeft(rect.x() + rect.width());
         }
-
     }
-
+    p.setPen(borderColor);
+    p.drawLine(0, height-1, width, height-1);
 }
 
 void SegmentedControl::mouseMoveEvent (QMouseEvent *event) {
@@ -172,7 +180,7 @@ QAction *SegmentedControl::hoveredAction(const QPoint& pos) const {
     return(d->actionList[buttonIndex]);
 }
 
-int SegmentedControl::calculateButtonWidth (void) const {
+int SegmentedControl::calculateButtonWidth() const {
     QFontMetrics fontMetrics(font());
     int tmpItemWidth, itemWidth = 0;
     foreach (QAction *action, d->actionList) {
@@ -205,13 +213,7 @@ void SegmentedControl::drawSelectedButton (QPainter *painter,
 
     const int width = rect.width();
     const int height = rect.height();
-    const int hCenter = width * .5;
-    QRadialGradient gradient(hCenter, 0,
-                             width,
-                             hCenter, 0);
-    gradient.setColorAt(1, Qt::black);
-    gradient.setColorAt(0, QColor(0x33, 0x33, 0x33));
-    painter->fillRect(0, 0, width, height, QBrush(gradient));
+    painter->fillRect(0, 0, width, height, selectedColor);
 
     painter->restore();
     paintButton(painter, rect, action);
@@ -224,39 +226,22 @@ void SegmentedControl::paintButton(QPainter *painter, const QRect& rect, const Q
     const int height = rect.height();
     const int width = rect.width();
 
-    if (action == d->pressedAction && action != d->checkedAction) {
-        const int hCenter = width * .5;
-        QRadialGradient gradient(hCenter, 0,
-                                 width,
-                                 hCenter, 0);
-        gradient.setColorAt(1, QColor(0x00, 0x00, 0x00, 0));
-        gradient.setColorAt(0, QColor(0x00, 0x00, 0x00, 16));
-        painter->fillRect(0, 0, width, height, QBrush(gradient));
-    } else if (action == d->hoveredAction && action != d->checkedAction) {
-        const int hCenter = width * .5;
-        QRadialGradient gradient(hCenter, 0,
-                                 width,
-                                 hCenter, 0);
-        gradient.setColorAt(1, QColor(0xff, 0xff, 0xff, 0));
-        gradient.setColorAt(0, QColor(0xff, 0xff, 0xff, 16));
-        painter->fillRect(0, 0, width, height, QBrush(gradient));
-    }
+    painter->save();
+    painter->setPen(Qt::NoPen);
 
-    painter->setPen(borderColor);
-#if defined(APP_MAC) | defined(APP_WIN)
-    painter->drawRect(-1, -1, width, height);
-#else
-    painter->drawRect(0, 0, width, height - 1);
-#endif
+    painter->drawRect(0, 0, width, height);
+    painter->restore();
 
     const QString text = action->text();
 
-    // text shadow
-    painter->setPen(QColor(0, 0, 0, 128));
-    painter->drawText(0, -1, width, height, Qt::AlignCenter, text);
-
-    painter->setPen(QPen(Qt::white, 1));
+    painter->setPen(palette().windowText().color());
     painter->drawText(0, 0, width, height, Qt::AlignCenter, text);
+
+    if (action == d->pressedAction && action != d->checkedAction) {
+        painter->fillRect(0, 0, width, height, QColor(0x00, 0x00, 0x00, 32));
+    } else if (action == d->hoveredAction && action != d->checkedAction) {
+        painter->fillRect(0, 0, width, height, QColor(0x00, 0x00, 0x00, 16));
+    }
 
     painter->restore();
 }
