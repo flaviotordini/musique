@@ -28,7 +28,7 @@ LastFmLoginDialog::LastFmLoginDialog(QWidget *parent) : QDialog(parent) {
     QFormLayout* layout = new QFormLayout(this);
 
     QLabel *label = new QLabel(tr("Log in to %1").arg("<b>Last.fm</b>"));
-    label->setFont(FontUtils::bigger());
+    label->setFont(FontUtils::big());
     layout->addWidget(label);
 
     // hack around https://bugreports.qt-project.org/browse/QTBUG-18308

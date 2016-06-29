@@ -35,7 +35,7 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : View(parent) {
     QLabel *tipLabel = new QLabel(
             tr("%1 is scanning your music collection.").arg(Constants::NAME)
             , this);
-    tipLabel->setFont(FontUtils::bigger());
+    tipLabel->setFont(FontUtils::big());
     layout->addWidget(tipLabel);
 
     progressBar = new QProgressBar(this);

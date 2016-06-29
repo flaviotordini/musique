@@ -45,9 +45,9 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
     // hLayout->addSpacing(PADDING);
 
     welcomeLabel =
-            new QLabel("<h1 style='font-weight:normal'>" +
+            new QLabel("<h1 style='font-weight:100'>" +
                        tr("Welcome to <a href='%1'>%2</a>,")
-                       .replace("<a href", "<a style='text-decoration:none; color:palette(text); font-weight:bold' href")
+                       .replace("<a href", "<a style='text-decoration:none; color:palette(text); font-weight:normal' href")
                        .arg(Constants::WEBSITE, Constants::NAME)
                        + "</h1>", this);
     welcomeLabel->setOpenExternalLinks(true);
@@ -58,7 +58,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
     tipLabel = new QLabel(
             tr("%1 needs to scan your music collection.").arg(Constants::NAME)
             , this);
-    tipLabel->setFont(FontUtils::bigger());
+    tipLabel->setFont(FontUtils::big());
     vLayout->addWidget(tipLabel);
 
     QBoxLayout *buttonLayout = new QHBoxLayout();

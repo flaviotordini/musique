@@ -236,10 +236,9 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
     painter->save();
 
     // track number
-    QFont boldFont = painter->font();
-    boldFont.setBold(true);
-    boldFont.setPointSize(boldFont.pointSize()-1);
-    painter->setFont(boldFont);
+    QFont font = painter->font();
+    font.setPointSize(font.pointSize()-1);
+    painter->setFont(font);
     QString trackString = QString("%1").arg(trackNumber, 2, 10, QChar('0'));
     QSize trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
     QPoint textLoc(PADDING*1.5, 0);

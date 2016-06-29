@@ -71,9 +71,6 @@ void TrackItemDelegate::paintTrack(QPainter* painter,
     // track number
     if (track->getNumber() > 0) {
         painter->save();
-        QFont boldFont = painter->font();
-        boldFont.setBold(true);
-        painter->setFont(boldFont);
         QString trackString = QString("%1").arg(track->getNumber(), 2, 10, QChar('0'));
         QSizeF trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
         QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
