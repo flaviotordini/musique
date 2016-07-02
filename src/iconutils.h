@@ -21,7 +21,7 @@ $END_LICENSE */
 #ifndef ICONUTILS_H
 #define ICONUTILS_H
 
-#include <QtWidgets>
+#include <QtGui>
 
 class IconUtils {
 
@@ -34,6 +34,11 @@ public:
                             QList<QSize> sizes = QList<QSize>());
     static QIcon tintedIcon(const QString &name, const QColor &color, const QSize &size);
     static void setupAction(QAction *action);
+
+    // HiDPI stuff
+    static QPixmap pixmap(const QString &name);
+    static qreal maxSupportedPixelRatio() { return 2.0; }
+    static qreal pixelRatio();
 
 private:
     IconUtils() { }
