@@ -942,6 +942,9 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
         }
     }
 #endif
+#ifdef APP_MAC_QMACTOOLBAR
+    toolbarSearch->move(width() - toolbarSearch->width() - 7, -38);
+#endif
 }
 
 void MainWindow::toggleFullscreen() {
