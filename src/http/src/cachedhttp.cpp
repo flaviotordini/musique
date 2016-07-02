@@ -1,0 +1,94 @@
+#include "cachedhttp.h"
+#include "localcache.h"
+
+namespace {
+
+QString requestHash(const HttpRequest &req) {
+    const char sep = '|';
+
+    QString s;
+
+    switch (req.operation) {
+
+    case QNetworkAccessManager::GetOperation:
+        s = "GET";
+        break;
+
+    case QNetworkAccessManager::HeadOperation:
+        s = "HEAD";
+        break;
+
+    case QNetworkAccessManager::PostOperation:
+        s = "POST";
+        break;
+
+    default:
+        qWarning() << "Unknown operation:" << req.operation;
+    }
+
+    s += sep + req.url.toString()
+            + sep + req.body
+            + sep + QString::number(req.offset);
+    return LocalCache::hash(s);
+}
+
+}
+
+CachedHttpReply::CachedHttpReply(LocalCache *cache, const QString &key, const HttpRequest &req) :
+    cache(cache),
+    key(key),
+    req(req) {
+    QTimer::singleShot(0, this, SLOT(emitSignals()));
+}
+
+QByteArray CachedHttpReply::body() const {
+    return cache->value(key);
+}
+
+void CachedHttpReply::emitSignals() {
+    emit data(body());
+    emit finished(*this);
+    deleteLater();
+}
+
+WrappedHttpReply::WrappedHttpReply(LocalCache *cache, const QString &key, QObject *httpReply) :
+    QObject(httpReply),
+    cache(cache),
+    key(key),
+    httpReply(httpReply) {
+    connect(httpReply, SIGNAL(data(QByteArray)), SIGNAL(data(QByteArray)));
+    connect(httpReply, SIGNAL(error(QString)), SIGNAL(error(QString)));
+    connect(httpReply, SIGNAL(finished(HttpReply)), SLOT(originFinished(HttpReply)));
+}
+
+void WrappedHttpReply::originFinished(const HttpReply &reply) {
+    if (reply.isSuccessful())
+        cache->insert(key, reply.body());
+    emit finished(reply);
+}
+
+CachedHttp::CachedHttp(Http &http, const QString &name) :
+    http(http),
+    cache(LocalCache::instance(name)) { }
+
+CachedHttp::~CachedHttp() {
+    delete cache;
+}
+
+void CachedHttp::setMaxSeconds(uint seconds) {
+    cache->setMaxSeconds(seconds);
+}
+
+void CachedHttp::setMaxSize(uint maxSize) {
+    cache->setMaxSize(maxSize);
+}
+
+QObject *CachedHttp::request(const HttpRequest &req) {
+    const QString key = requestHash(req);
+    if (cache->isCached(key)) {
+        // qDebug() << "CachedHttp HIT" << req.url;
+        return new CachedHttpReply(cache, key, req);
+    }
+    qDebug() << "CachedHttp MISS" << req.url.toString();
+    return new WrappedHttpReply(cache, key, http.request(req));
+}
