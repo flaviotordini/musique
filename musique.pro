@@ -19,6 +19,7 @@ TARGET = $${APP_UNIX_NAME}
 QT += network sql widgets
 
 include(src/qtsingleapplication/qtsingleapplication.pri)
+include(src/http/http.pri)
 
 HEADERS += src/mainwindow.h \
     src/aboutview.h \
@@ -83,7 +84,8 @@ HEADERS += src/mainwindow.h \
     src/lastfmlogindialog.h \
     src/lastfm.h \
     src/imagedownloader.h \
-    src/iconutils.h
+    src/iconutils.h \
+    src/appwidget.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -144,7 +146,8 @@ SOURCES += src/main.cpp \
     src/lastfmlogindialog.cpp \
     src/lastfm.cpp \
     src/imagedownloader.cpp \
-    src/iconutils.cpp
+    src/iconutils.cpp \
+    src/appwidget.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

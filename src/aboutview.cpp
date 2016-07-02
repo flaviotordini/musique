@@ -19,6 +19,7 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "aboutview.h"
+#include "iconutils.h"
 #include "constants.h"
 #ifdef APP_ACTIVATION
 #include "activation.h"
@@ -27,80 +28,75 @@ $END_LICENSE */
 #include "macutils.h"
 #include "mac_startup.h"
 #endif
+#include "appwidget.h"
 
 AboutView::AboutView(QWidget *parent) : View(parent) {
-    
-    QBoxLayout *aboutlayout = new QHBoxLayout(this);
+
+    const int padding = 30;
+
+    connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), SLOT(screenChanged()));
+
+    QBoxLayout *verticalLayout = new QVBoxLayout(this);
+    verticalLayout->setMargin(0);
+    verticalLayout->setSpacing(0);
+
+    QBoxLayout *aboutlayout = new QHBoxLayout();
+    verticalLayout->addLayout(aboutlayout, 1);
     aboutlayout->setAlignment(Qt::AlignCenter);
-    aboutlayout->setMargin(30);
-    aboutlayout->setSpacing(30);
-    
-    QLabel *logo = new QLabel(this);
-    logo->setPixmap(QPixmap(":/images/app.png"));
+    aboutlayout->setMargin(padding);
+    aboutlayout->setSpacing(padding);
+
+    logo = new QLabel();
+    logo->setPixmap(IconUtils::pixmap(":/images/app.png"));
     aboutlayout->addWidget(logo, 0, Qt::AlignTop);
-    
+
     QBoxLayout *layout = new QVBoxLayout();
     layout->setAlignment(Qt::AlignCenter);
-    layout->setSpacing(30);
+    layout->setSpacing(padding);
     aboutlayout->addLayout(layout);
 
-    QString info = "<html><style>a { color: palette(text); text-decoration: none; font-weight: bold }</style><body>"
-                   "<h1 style='font-weight:normal'>" + QString(Constants::NAME) + "</h1>"
-                   "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>"
-            + QString("<p><a href=\"%1/\">%1</a></p>").arg(Constants::WEBSITE);
+    QString info = "<html><style>a { color: palette(text); text-decoration: none; font-weight: bold }</style><body>";
+
+    info += "<h1 style='font-weight:100'>" + QString(Constants::NAME) + "</h1>";
+
+    info += "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>";
+
+    info += QString("<p><a href='%1/'>%1</a></p>").arg(Constants::WEBSITE);
 
 #ifdef APP_ACTIVATION
-    if (Activation::instance().isActivated())
-        info += "<p>" + tr("Licensed to: %1").arg("<b>" + Activation::instance().getEmail() + "</b>");
+    if (Activation::instance().isActivated()) {
+        info += "<p>" + tr("Licensed to: %1").arg("<b>" + Activation::instance().getEmail() + "</b>") + "</p>";
+    }
 #endif
+
+    info += "<p>" + tr("Translate %1 to your native language using %2").arg(Constants::NAME)
+            .arg("<a href='http://www.transifex.net/projects/p/" + QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>") + "</p>";
 
 #ifndef APP_EXTRA
-    info += "<p>" +  tr("%1 is Free Software but its development takes precious time.").arg(Constants::NAME) + "<br/>"
-            + tr("Please <a href='%1'>donate</a> to support the continued development of %2.")
-            .arg(QString(Constants::WEBSITE).append("#donate"), Constants::NAME) + "</p>";
+    "<p>" + tr("Released under the <a href='%1'>GNU General Public License</a>")
+    .arg("http://www.gnu.org/licenses/gpl.html") + "</p>"
 #endif
 
-    info += "<p>" + tr("You may want to try my other apps as well:") + "</p>"
-            + "<ul>"
+    info += "<p>&copy; 2016 " + QLatin1String(Constants::ORG_NAME) + "</p></body></html>";
 
-            + "<li>" + tr("%1, a YouTube app")
-            .arg("<a href='http://flavio.tordini.org/minitube'>Minitube</a>")
-            + "</li>"
-
-            + "<li>" + tr("%1, a YouTube music player")
-            .arg("<a href='http://flavio.tordini.org/musictube'>Musictube</a>")
-            + "</li>"
-
-            + "</ul>"
-
-              "<p>" + tr("Translate %1 to your native language using %2").arg(Constants::NAME)
-            .arg("<a href='http://www.transifex.net/projects/p/" + QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>")
-            + "</p>"
-
-        #ifndef APP_EXTRA
-            "<p>" + tr("Released under the <a href='%1'>GNU General Public License</a>")
-            .arg("http://www.gnu.org/licenses/gpl.html") + "</p>"
-        #endif
-
-        "<p>&copy; 2010-2014 " + Constants::ORG_NAME + "</p>"
-                                                                                                                                     "</body></html>";
     QLabel *infoLabel = new QLabel(info, this);
     infoLabel->setOpenExternalLinks(true);
     infoLabel->setWordWrap(true);
     layout->addWidget(infoLabel);
-    
+
     QLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->setAlignment(Qt::AlignLeft);
     QPushButton *closeButton = new QPushButton(tr("&Close"), this);
     closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    
+
     closeButton->setDefault(true);
-    closeButton->setFocus(Qt::OtherFocusReason);
+    closeButton->setFocus();
     connect(closeButton, SIGNAL(clicked()), parent, SLOT(goBack()));
     buttonLayout->addWidget(closeButton);
-    
+
     layout->addLayout(buttonLayout);
-    
+
+    verticalLayout->addWidget(new AppsWidget());
 }
 
 void AboutView::paintEvent(QPaintEvent * /*event*/) {
@@ -124,4 +120,8 @@ void AboutView::appear() {
     mac::CheckForUpdates();
 #endif
 #endif
+}
+
+void AboutView::screenChanged() {
+    logo->setPixmap(IconUtils::pixmap(":/images/app.png"));
 }

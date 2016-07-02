@@ -22,7 +22,6 @@ $END_LICENSE */
 #define ABOUTVIEW_H
 
 #include <QtWidgets>
-
 #include "view.h"
 #include "constants.h"
 
@@ -44,6 +43,12 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *);
+
+private slots:
+    void screenChanged();
+
+private:
+    QLabel *logo;
 
 };
 #endif
