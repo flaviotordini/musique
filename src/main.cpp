@@ -19,7 +19,8 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include <QtWidgets>
-#include <QNetworkReply>
+#include <QtNetwork>
+
 #include <qtsingleapplication.h>
 #include "constants.h"
 #include "mainwindow.h"
@@ -122,6 +123,8 @@ int main(int argc, char **argv) {
 
     // Seed random number generator
     qsrand(QDateTime::currentDateTime().toTime_t());
+
+    QNetworkProxyFactory::setUseSystemConfiguration(true);
 
     return app.exec();
 }
