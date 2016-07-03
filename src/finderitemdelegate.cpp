@@ -25,6 +25,7 @@ $END_LICENSE */
 #include "model/album.h"
 #include "model/folder.h"
 #include "fontutils.h"
+#include "iconutils.h"
 
 const int FinderItemDelegate::ITEM_HEIGHT = 150;
 const int FinderItemDelegate::ITEM_WIDTH = 150;
@@ -32,11 +33,13 @@ const int FinderItemDelegate::PADDING = 10;
 
 FinderItemDelegate::FinderItemDelegate(QObject* parent) : QStyledItemDelegate(parent) { }
 
-QPixmap FinderItemDelegate::createPlayIcon(bool hovered) const {
-    static const int iconHeight = 24;
-    static const int iconWidth = 24;
-    static const int PADDING = 4;
-    QPixmap playIcon = QPixmap(iconWidth*2, iconHeight*2);
+QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
+    const int iconHeight = 24;
+    const int iconWidth = 24;
+    const int PADDING = 4;
+
+    QPixmap playIcon = QPixmap(iconWidth*2*pixelRatio, iconHeight*2*pixelRatio);
+    playIcon.setDevicePixelRatio(pixelRatio);
     playIcon.fill(Qt::transparent);
     QPainter painter(&playIcon);
     painter.setRenderHints(QPainter::Antialiasing, true);
@@ -61,7 +64,7 @@ QPixmap FinderItemDelegate::createPlayIcon(bool hovered) const {
             << QPoint(PADDING*2, iconHeight - PADDING);
     painter.setBrush(white);
     pen.setColor(white);
-    pen.setWidth(7);
+    pen.setWidth(3);
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
     painter.setPen(pen);
@@ -70,80 +73,73 @@ QPixmap FinderItemDelegate::createPlayIcon(bool hovered) const {
     return playIcon;
 }
 
-QPixmap FinderItemDelegate::createMissingItemBackground() const {
+QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) {
+    const int w = ITEM_WIDTH * pixelRatio;
+    const int h = ITEM_HEIGHT * pixelRatio;
 
-    QPixmap missingItemBackground = QPixmap(ITEM_WIDTH, ITEM_HEIGHT);
-    QPainter painter(&missingItemBackground);
+    QPixmap pixmap = QPixmap(w, h);
 
-    QRadialGradient radialGrad(QPoint(ITEM_WIDTH/2, ITEM_HEIGHT/3), ITEM_WIDTH);
+    QPainter painter(&pixmap);
+
+    QRadialGradient radialGrad(QPoint(w/2, h/3), w);
     radialGrad.setColorAt(0, QColor(48, 48, 48));
     radialGrad.setColorAt(1, Qt::black);
     painter.setBrush(radialGrad);
     painter.setPen(Qt::NoPen);
-    painter.drawRect(QRect(0, 0, ITEM_WIDTH, ITEM_HEIGHT));
+    painter.drawRect(QRect(0, 0, w, h));
 
-    return missingItemBackground;
+    pixmap.setDevicePixelRatio(pixelRatio);
+    return pixmap;
 }
 
-QPixmap FinderItemDelegate::createMissingItemPixmap(QString type) const {
+const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) {
+    static QHash<QString, QPixmap> cache;
+    const qreal pixelRatio = IconUtils::pixelRatio();
+    const QString key = type + QString::number(pixelRatio);
+    QHash<QString, QPixmap>::const_iterator i = cache.constFind(key);
+    if (i != cache.constEnd()) return i.value();
 
-    QPixmap missingItemPixmap = QPixmap(getMissingItemBackground());
-    QPainter painter(&missingItemPixmap);
+    QPixmap pixmap = QPixmap(getMissingItemBackground(pixelRatio));
+    pixmap.setDevicePixelRatio(pixelRatio);
+    QPainter painter(&pixmap);
 
-    QPixmap missingIcon = QPixmap::fromImage(QImage(":/images/item/" + type + ".png"));
+    QPixmap symbol = IconUtils::pixmap(":/images/item/" + type + ".png");
     painter.setOpacity(.1);
-    painter.drawPixmap((ITEM_WIDTH - missingIcon.width()) / 2, (ITEM_HEIGHT - missingIcon.height()) / 3, missingIcon);
+    painter.drawPixmap(((ITEM_WIDTH - symbol.width()) / 2) * pixelRatio,
+                       ((ITEM_HEIGHT - symbol.height()) / 3) * pixelRatio, symbol);
 
-    return missingItemPixmap;
-
+    return cache.insert(key, pixmap).value();
 }
 
-QPixmap FinderItemDelegate::getPlayIcon(bool hovered) const {
-    static QPixmap playIcon;
-    static QPixmap hoveredPlayIcon;
-    if (hovered) {
-        if (hoveredPlayIcon.isNull()) {
-            hoveredPlayIcon = createPlayIcon(true);
-        }
-        return hoveredPlayIcon;
-    } else {
-        if (playIcon.isNull()) {
-            playIcon = createPlayIcon(false);
-        }
-        return playIcon;
-    }
+const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered) {
+    static QHash<QString, QPixmap> cache;
+    const qreal pixelRatio = IconUtils::pixelRatio();
+    const QString key = (hovered ? "1|" : "0|") + QString::number(pixelRatio);
+    QHash<QString, QPixmap>::const_iterator i = cache.constFind(key);
+    if (i != cache.constEnd()) return i.value();
+    QPixmap pixmap = createPlayIcon(hovered, pixelRatio);
+    return cache.insert(key, pixmap).value();
 }
 
-QPixmap FinderItemDelegate::getMissingItemBackground() const {
-    static QPixmap missingItemBackground;
-    if (missingItemBackground.isNull()) {
-        missingItemBackground = createMissingItemBackground();
-    }
-    return missingItemBackground;
+const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) {
+    static QHash<QString, QPixmap> cache;
+    const QString key = QString::number(pixelRatio);
+    QHash<QString, QPixmap>::const_iterator i = cache.constFind(key);
+    if (i != cache.constEnd()) return i.value();
+    QPixmap pixmap = createMissingItemBackground(pixelRatio);
+    return cache.insert(key, pixmap).value();
 }
 
-QPixmap FinderItemDelegate::getMissingArtistPixmap() const {
-    static QPixmap missingItemPixmap;
-    if (missingItemPixmap.isNull()) {
-        missingItemPixmap = createMissingItemPixmap("artist");
-    }
-    return missingItemPixmap;
+const QPixmap &FinderItemDelegate::getMissingArtistPixmap() {
+    return getMissingItemPixmap("artist");
 }
 
-QPixmap FinderItemDelegate::getMissingAlbumPixmap() const {
-    static QPixmap missingItemPixmap;
-    if (missingItemPixmap.isNull()) {
-        missingItemPixmap = createMissingItemPixmap("album");
-    }
-    return missingItemPixmap;
+const QPixmap &FinderItemDelegate::getMissingAlbumPixmap() {
+    return getMissingItemPixmap("album");
 }
 
-QPixmap FinderItemDelegate::getMissingTrackPixmap() const {
-    static QPixmap missingItemPixmap;
-    if (missingItemPixmap.isNull()) {
-        missingItemPixmap = createMissingItemPixmap("track");
-    }
-    return missingItemPixmap;
+const QPixmap &FinderItemDelegate::getMissingTrackPixmap() {
+    return getMissingItemPixmap("track");
 }
 
 QSize FinderItemDelegate::sizeHint( const QStyleOptionViewItem& /*option*/, const QModelIndex& /*index*/ ) const {
@@ -269,7 +265,7 @@ void FinderItemDelegate::paintFolder(QPainter* painter,
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
     // thumb
-    painter->drawPixmap(0, 0, getMissingItemBackground());
+    painter->drawPixmap(0, 0, getMissingItemBackground(IconUtils::pixelRatio()));
     QIcon fileIcon = index.data(QFileSystemModel::FileIconRole).value<QIcon>();
     if (!fileIcon.isNull())
         painter->drawPixmap(ITEM_WIDTH/2-32, ITEM_HEIGHT/3-32, fileIcon.pixmap(QSize(64, 64)));
@@ -318,7 +314,7 @@ void FinderItemDelegate::paintTrack(QPainter* painter,
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
     // thumb
-    painter->drawPixmap(0, 0, getMissingItemBackground());
+    painter->drawPixmap(0, 0, getMissingItemBackground(IconUtils::pixelRatio()));
 
     // play icon overlayed on the thumb
     if (isHovered) {

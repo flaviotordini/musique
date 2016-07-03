@@ -37,14 +37,14 @@ public:
     void paint( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
 
 private:
-    QPixmap createPlayIcon(bool hovered) const;
-    QPixmap createMissingItemBackground() const;
-    QPixmap createMissingItemPixmap(QString type) const;
-    QPixmap getPlayIcon(bool hovered) const;
-    QPixmap getMissingItemBackground() const;
-    QPixmap getMissingArtistPixmap() const;
-    QPixmap getMissingAlbumPixmap() const;
-    QPixmap getMissingTrackPixmap() const;
+    static QPixmap createPlayIcon(bool hovered, qreal pixelRatio);
+    static QPixmap createMissingItemBackground(qreal pixelRatio);
+    static const QPixmap &getMissingItemPixmap(const QString &type);
+    static const QPixmap &getPlayIcon(bool hovered);
+    static const QPixmap &getMissingItemBackground(qreal pixelRatio);
+    static const QPixmap &getMissingArtistPixmap();
+    static const QPixmap &getMissingAlbumPixmap();
+    static const QPixmap &getMissingTrackPixmap();
     void paintArtist( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintAlbum( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintFolder( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
