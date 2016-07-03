@@ -34,7 +34,7 @@ public:
     QVariant data(const QModelIndex &item, int role) const;
     Item* itemAt(const QModelIndex &index) const {
         const TrackPointer itemPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
-        return dynamic_cast<Item*>(itemPointer.data());
+        return qobject_cast<Item*>(itemPointer.data());
     }
 };
 

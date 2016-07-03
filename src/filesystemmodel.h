@@ -37,11 +37,11 @@ public:
         if (isDir(index)) {
             const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
             Folder *folder = folderPointer.data();
-            return dynamic_cast<Item*>(folder);
+            return qobject_cast<Item*>(folder);
         } else {
             const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
             Track *track = trackPointer.data();
-            return dynamic_cast<Item*>(track);
+            return qobject_cast<Item*>(track);
         }
     }
 

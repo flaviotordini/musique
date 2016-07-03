@@ -132,15 +132,15 @@ Item* SearchModel::itemAt(const QModelIndex &index) const {
     int itemType = index.data(Finder::ItemTypeRole).toInt();
     if (itemType == Finder::ItemTypeArtist) {
         const ArtistPointer pointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
-        item = dynamic_cast<Item*>(pointer.data());
+        item = qobject_cast<Item*>(pointer.data());
     } else if (itemType == Finder::ItemTypeAlbum) {
         const AlbumPointer pointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
-        item = dynamic_cast<Item*>(pointer.data());
+        item = qobject_cast<Item*>(pointer.data());
     } else if (itemType == Finder::ItemTypeFolder) {
 
     } else if (itemType == Finder::ItemTypeTrack) {
         const TrackPointer pointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
-        item = dynamic_cast<Item*>(pointer.data());
+        item = qobject_cast<Item*>(pointer.data());
     }
 
     return item;
