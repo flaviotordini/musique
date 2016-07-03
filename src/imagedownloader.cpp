@@ -23,13 +23,9 @@ $END_LICENSE */
 #include <QtSql>
 #include "database.h"
 
-#include "networkaccess.h"
 #include "model/artist.h"
 #include "model/album.h"
-
-namespace The {
-NetworkAccess* http();
-}
+#include "http.h"
 
 class ImageDownload {
 
@@ -106,9 +102,9 @@ void ImageDownloader::popFromQueue() {
 
     // start download
     QUrl url(imageDownload->url);
-    QObject *reply = The::http()->get(url);
+    QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(imageDownloaded(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SLOT(imageDownloadError(QNetworkReply*)));
+    connect(reply, SIGNAL(error(QString)), SLOT(imageDownloadError()));
 }
 
 void ImageDownloader::imageDownloaded(QByteArray bytes) {
@@ -139,7 +135,7 @@ void ImageDownloader::imageDownloaded(QByteArray bytes) {
     popFromQueue();
 }
 
-void ImageDownloader::imageDownloadError(QNetworkReply *reply) {
+void ImageDownloader::imageDownloadError() {
     // Increase errorcount
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query = QSqlQuery(db);

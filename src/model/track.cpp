@@ -26,17 +26,12 @@ $END_LICENSE */
 #include "../datautils.h"
 #include <QtSql>
 
-#include "../networkaccess.h"
-#include <QtNetwork>
-#include "../mbnetworkaccess.h"
+#include "http.h"
+#include "httputils.h"
 
 #include <mpegfile.h>
 #include <id3v2tag.h>
 #include <unsynchronizedlyricsframe.h>
-
-namespace The {
-    NetworkAccess* http();
-}
 
 Track::Track() {
     album = 0;
@@ -341,10 +336,9 @@ void Track::fetchMusicBrainzTrack() {
     };
 
     QUrl url(s);
-    MBNetworkAccess *http = new MBNetworkAccess();
-    QObject *reply = http->get(url);
+    QObject *reply = HttpUtils::musicBrainz().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzTrack(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
 void Track::parseMusicBrainzTrack(QByteArray bytes) {
@@ -398,9 +392,9 @@ void Track::getLyrics() {
             .arg(QString::fromUtf8(QUrl::toPercentEncoding(artistName)))
             .arg(QString::fromUtf8(QUrl::toPercentEncoding(title)));
 
-    QObject *reply = The::http()->get(url);
+    QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLyricsSearchResults(QByteArray)));
-    // connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotLyrics()));
+    // connect(reply, SIGNAL(error(QString)), SIGNAL(gotLyrics()));
 }
 
 void Track::parseLyricsSearchResults(QByteArray bytes) {
@@ -419,9 +413,9 @@ void Track::parseLyricsSearchResults(QByteArray bytes) {
     } else {
         // Lyrics found, get them
         QUrl url = QUrl::fromEncoded(lyricsUrl.toUtf8());
-        QObject *reply = The::http()->get(url);
+        QObject *reply = Http::instance().get(url);
         connect(reply, SIGNAL(data(QByteArray)), SLOT(scrapeLyrics(QByteArray)));
-        // connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotLyrics()));
+        // connect(reply, SIGNAL(error(QString)), SIGNAL(gotLyrics()));
     }
 }
 

@@ -25,13 +25,8 @@ $END_LICENSE */
 #include "../database.h"
 #include "../datautils.h"
 
-#include <QtNetwork>
-#include "../networkaccess.h"
-#include "../mbnetworkaccess.h"
-
-namespace The {
-NetworkAccess* http();
-}
+#include "http.h"
+#include "httputils.h"
 
 static QHash<QString, QByteArray> artistAlbums;
 
@@ -193,10 +188,9 @@ void Album::fetchMusicBrainzRelease() {
     };
 
     QUrl url(s);
-    MBNetworkAccess *http = new MBNetworkAccess();
-    QObject *reply = http->get(url);
+    QObject *reply = HttpUtils::musicBrainz().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzRelease(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
 void Album::parseMusicBrainzRelease(QByteArray bytes) {
@@ -224,10 +218,9 @@ void Album::fetchMusicBrainzReleaseDetails() {
     };
 
     QUrl url(s);
-    MBNetworkAccess *http = new MBNetworkAccess();
-    QObject *reply = http->get(url);
+    QObject *reply = HttpUtils::musicBrainz().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzReleaseDetails(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
 void Album::parseMusicBrainzReleaseDetails(QByteArray bytes) {
@@ -264,9 +257,9 @@ void Album::fetchLastFmSearch() {
     q.addQueryItem("limit", "5");
     url.setQuery(q);
 
-    QObject *reply = The::http()->get(url);
+    QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
 void Album::parseLastFmSearch(QByteArray bytes) {
@@ -353,9 +346,9 @@ void Album::fetchLastFmInfo() {
         q.addQueryItem("mbid", mbid);
     }
     url.setQuery(q);
-    QObject *reply = The::http()->get(url);
+    QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmInfo(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 
 }
 

@@ -20,17 +20,13 @@ $END_LICENSE */
 
 #include "lastfm.h"
 #include "datautils.h"
-#include "networkaccess.h"
+#include "http.h"
 #include "lastfmlogindialog.h"
 #include "mainwindow.h"
 #include "constants.h"
 #include "model/track.h"
 #include "model/artist.h"
 #include "model/album.h"
-
-namespace The {
-NetworkAccess* http();
-}
 
 static const QString WS = "http://ws.audioscrobbler.com/2.0/";
 
@@ -74,9 +70,9 @@ void LastFm::authenticate(const QString &username, const QString &password) {
     sign(params);
 
     QUrl url(WS);
-    QObject* reply = The::http()->post(url, params);
+    QObject* reply = Http::instance().post(url, params);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(authenticationResponse(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SLOT(authenticationError(QNetworkReply*)));
+    connect(reply, SIGNAL(error(QString)), SLOT(authenticationError(QString)));
 }
 
 void LastFm::authenticationResponse(QByteArray bytes) {
@@ -110,28 +106,8 @@ void LastFm::authenticationResponse(QByteArray bytes) {
 
 }
 
-void LastFm::authenticationError(QNetworkReply * /*reply*/) {
-
-    /*
-    QXmlStreamReader xml(reply->readAll());
-
-    QString errorMessage;
-
-    while(!xml.atEnd() && !xml.hasError()) {
-        QXmlStreamReader::TokenType token = xml.readNext();
-
-        if(token == QXmlStreamReader::StartElement && xml.name() == "error") {
-            errorMessage = xml.readElementText();
-        }
-
-    }
-
-    if(xml.hasError()) {
-        qWarning() << xml.errorString();
-        emit error(xml.errorString());
-    }
-    */
-
+void LastFm::authenticationError(const QString &message) {
+    qDebug() << message;
     emit error(tr("Authentication failed"));
 }
 
@@ -173,7 +149,7 @@ void LastFm::scrobble(Track* track) {
 
     sign(params);
 
-    The::http()->post(url, params);
+    Http::instance().post(url, params);
 
 }
 
@@ -212,7 +188,7 @@ void LastFm::nowPlaying(Track* track) {
 
     sign(params);
 
-    The::http()->post(url, params);
+    Http::instance().post(url, params);
 }
 
 void LastFm::logout() {

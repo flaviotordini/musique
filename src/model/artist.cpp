@@ -26,12 +26,8 @@ $END_LICENSE */
 #include "../database.h"
 #include "../datautils.h"
 
-#include "../networkaccess.h"
-#include "../mbnetworkaccess.h"
-
-namespace The {
-NetworkAccess* http();
-}
+#include "http.h"
+#include "httputils.h"
 
 Artist::Artist(QObject *parent) : Item(parent),
     trackCount(0),
@@ -146,8 +142,7 @@ void Artist::fetchMusicBrainzArtist() {
     QUrl url = QString("http://musicbrainz.org/ws/1/artist/?type=xml&name=%1&limit=1")
             .arg(name);
 
-    MBNetworkAccess *http = new MBNetworkAccess();
-    QObject *reply = http->get(url);
+    QObject *reply = HttpUtils::musicBrainz().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzArtist(QByteArray)));
 }
 
@@ -187,9 +182,9 @@ void Artist::fetchLastFmSearch() {
 
     lastFmSearches << name;
 
-    QObject *reply = The::http()->get(url);
+    QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
 void Artist::parseNameAndMbid(QByteArray bytes, QString preferredValue) {
@@ -281,7 +276,7 @@ void Artist::parseLastFmSearch(QByteArray bytes) {
             // get it and parse the Location header
             qDebug() << "Redirected artist" << name << urlString << url;
 
-            QObject *reply = The::http()->head(url);
+            QObject *reply = Http::instance().head(url);
             connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(parseLastFmRedirectedName(QNetworkReply*)));
             connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
             return;
@@ -318,14 +313,18 @@ void Artist::fetchLastFmInfo() {
     q.addQueryItem("method", "artist.getinfo");
     q.addQueryItem("api_key", Constants::LASTFM_API_KEY);
     if (mbid.isEmpty()) {
+        if (name.isEmpty()) {
+            emit gotInfo();
+            return;
+        }
         q.addQueryItem("autocorrect", "1");
         q.addQueryItem("artist", name);
     } else q.addQueryItem("mbid", mbid);
     url.setQuery(q);
 
-    QObject *reply = The::http()->get(url);
+    QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmInfo(QByteArray)));
-    connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
+    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
 void Artist::parseLastFmInfo(QByteArray bytes) {

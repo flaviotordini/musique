@@ -22,7 +22,6 @@ $END_LICENSE */
 #include "spacer.h"
 #include "constants.h"
 #include "iconutils.h"
-#include "global.h"
 #include "database.h"
 #include <QtSql>
 #include "contextualview.h"

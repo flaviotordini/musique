@@ -28,8 +28,6 @@ HEADERS += src/mainwindow.h \
     src/exlineedit.h \
     src/spacer.h \
     src/constants.h \
-    src/networkaccess.h \
-    src/global.h \
     src/updatechecker.h \
     src/finderwidget.h \
     src/collectionscannerview.h \
@@ -49,7 +47,6 @@ HEADERS += src/mainwindow.h \
     src/playlistmodel.h \
     src/trackmimedata.h \
     src/playlistview.h \
-    src/mbnetworkaccess.h \
     src/collectionscannerthread.h \
     src/basefinderview.h \
     src/playlistwidget.h \
@@ -85,7 +82,8 @@ HEADERS += src/mainwindow.h \
     src/lastfm.h \
     src/imagedownloader.h \
     src/iconutils.h \
-    src/appwidget.h
+    src/appwidget.h \
+    src/httputils.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -93,7 +91,6 @@ SOURCES += src/main.cpp \
     src/exlineedit.cpp \
     src/spacer.cpp \
     src/updatechecker.cpp \
-    src/networkaccess.cpp \
     src/finderwidget.cpp \
     src/collectionscannerview.cpp \
     src/collectionscanner.cpp \
@@ -111,7 +108,6 @@ SOURCES += src/main.cpp \
     src/playlistmodel.cpp \
     src/trackmimedata.cpp \
     src/playlistview.cpp \
-    src/mbnetworkaccess.cpp \
     src/collectionscannerthread.cpp \
     src/basefinderview.cpp \
     src/playlistwidget.cpp \
@@ -147,7 +143,8 @@ SOURCES += src/main.cpp \
     src/lastfm.cpp \
     src/imagedownloader.cpp \
     src/iconutils.cpp \
-    src/appwidget.cpp
+    src/appwidget.cpp \
+    src/httputils.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

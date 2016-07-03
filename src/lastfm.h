@@ -47,7 +47,7 @@ signals:
 
 private slots:
     void authenticationResponse(QByteArray bytes);
-    void authenticationError(QNetworkReply* reply);
+    void authenticationError(const QString &message);
 
 private:
     void sign(QMap<QString, QString>& params);

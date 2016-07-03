@@ -43,7 +43,7 @@ public:
 
 public slots:
     void imageDownloaded(QByteArray bytes);
-    void imageDownloadError(QNetworkReply *reply);
+    void imageDownloadError();
 
 private:
     void popFromQueue();
