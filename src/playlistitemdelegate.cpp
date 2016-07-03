@@ -38,7 +38,7 @@ QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 
     // determine item height based on font metrics
     if (ITEM_HEIGHT == 0) {
-        ITEM_HEIGHT = option.fontMetrics.height() * 2;
+        ITEM_HEIGHT = option.fontMetrics.height() * 1.8;
     }
 
     QModelIndex previousIndex = index.sibling(index.row()-1, index.column());
@@ -216,10 +216,6 @@ void PlaylistItemDelegate::paintAlbumHeader(
     QRect trackTextBox(textLoc.x(), textLoc.y(), width, line.height());
     headerTitle = fontMetrics.elidedText(headerTitle, Qt::ElideRight, trackTextBox.width());
 
-    // text shadow
-    painter->setPen(QColor(0, 0, 0, 96));
-    painter->drawText(trackTextBox.translated(0, -1), Qt::AlignLeft | Qt::AlignVCenter, headerTitle);
-
     // text
     painter->setPen(Qt::white);
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, headerTitle);
@@ -283,8 +279,15 @@ void PlaylistItemDelegate::paintTrackLength(QPainter* painter, const QStyleOptio
     QPoint textLoc(PADDING*10, 0);
     QRect trackTextBox(textLoc.x(), textLoc.y(), line.width() - textLoc.x() - PADDING, line.height());
 
+    const bool isSelected = option.state & QStyle::State_Selected;
     painter->save();
-    painter->setOpacity(.5);
+    QFont font = painter->font();
+    font.setPointSize(font.pointSize()-1);
+    painter->setFont(font);
+    if (isSelected)
+        painter->setPen(option.palette.highlightedText().color());
+    else
+        painter->setOpacity(.5);
     painter->drawText(trackTextBox, Qt::AlignRight | Qt::AlignVCenter, trackLength);
     painter->restore();
 

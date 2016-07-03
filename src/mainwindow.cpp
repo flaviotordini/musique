@@ -551,6 +551,10 @@ void MainWindow::createToolBars() {
 
     mainToolBar->addWidget(new Spacer());
 
+    mainToolBar->addAction(contextualAct);
+
+    mainToolBar->addWidget(new Spacer());
+
     currentTime->setFont(FontUtils::small());
     mainToolBar->addWidget(currentTime);
 
@@ -598,14 +602,7 @@ void MainWindow::createStatusBar() {
     statusToolBar = new QToolBar(this);
     statusToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     statusToolBar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
-#ifdef Q_OS_X11
-    int iconHeight = 16;
-    int iconWidth = iconHeight;
-#else
-    int iconHeight = 17;
-    int iconWidth = iconHeight * 3 / 2;
-#endif
-    statusToolBar->setIconSize(QSize(iconWidth, iconHeight));
+    statusToolBar->setIconSize(QSize(16, 16));
 
     QWidget *spring = new QWidget();
     spring->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);

@@ -100,9 +100,7 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
 }
 
 void AboutView::paintEvent(QPaintEvent * /*event*/) {
-#if defined(APP_MAC) | defined(APP_WIN)
     QPainter painter(this);
-
     QBrush brush;
     if (window()->isActiveWindow()) {
         brush = QBrush(Qt::white);
@@ -110,7 +108,6 @@ void AboutView::paintEvent(QPaintEvent * /*event*/) {
         brush = palette().window();
     }
     painter.fillRect(rect(), brush);
-#endif
 }
 
 void AboutView::appear() {

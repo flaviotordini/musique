@@ -1,15 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>images/app.png</file>
-        <file>images/missing.png</file>
         <file>images/audioscrobbler.png</file>
         <file>images/item/album.png</file>
         <file>images/item/artist.png</file>
         <file>images/item/track.png</file>
         <file>style.css</file>
         <file>images/sort.png</file>
-        <file>images/album.png</file>
-        <file>images/artist.png</file>
-        <file>images/track.png</file>
+        <file>images/audioscrobbler@2x.png</file>
     </qresource>
 </RCC>

@@ -29,6 +29,8 @@
 
 #include "minisplitter.h"
 
+#include <QtWidgets>
+
 class MiniSplitterHandle : public QSplitterHandle
 {
 public:
@@ -37,6 +39,7 @@ public:
     {
         setMask(QRegion(contentsRect()));
         setAttribute(Qt::WA_MouseNoMask, true);
+        setCursor (Qt::SizeHorCursor);
     }
 protected:
     void resizeEvent(QResizeEvent *event);
@@ -56,7 +59,7 @@ void MiniSplitterHandle::resizeEvent(QResizeEvent *event)
 void MiniSplitterHandle::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    painter.fillRect(event->rect(), Qt::black);
+    painter.fillRect(event->rect(), Qt::darkGray);
 }
 
 QSplitterHandle *MiniSplitter::createHandle()
@@ -69,7 +72,7 @@ MiniSplitter::MiniSplitter(QWidget *parent)
 {
     setHandleWidth(1);
     setChildrenCollapsible(false);
-    setProperty("minisplitter", true);
+    // setProperty("minisplitter", true);
 }
 
 MiniSplitter::MiniSplitter(Qt::Orientation orientation)
@@ -77,5 +80,5 @@ MiniSplitter::MiniSplitter(Qt::Orientation orientation)
 {
     setHandleWidth(1);
     setChildrenCollapsible(false);
-    setProperty("minisplitter", true);
+    // setProperty("minisplitter", true);
 }
