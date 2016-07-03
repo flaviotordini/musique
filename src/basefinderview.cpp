@@ -55,7 +55,6 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     setAttribute(Qt::WA_MacShowFocusRect, false);
 
     verticalScrollBar()->setPageStep(3);
-    verticalScrollBar()->setSingleStep(1);
 }
 
 void BaseFinderView::appear() {
