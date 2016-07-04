@@ -166,7 +166,7 @@ void AutoComplete::showSuggestions(const QList<Suggestion *> &suggestions) {
         Suggestion *s = suggestions[i];
         item->setText(s->value);
         if (!s->type.isEmpty())
-            item->setIcon(QIcon(":/images/" + s->type + ".png"));
+            item->setIcon(QIcon(":/images/item/" + s->type + ".png"));
     }
     popup->setCurrentItem(0);
     int h = popup->frameWidth() * 2;
