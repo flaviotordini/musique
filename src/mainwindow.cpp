@@ -65,6 +65,8 @@ $END_LICENSE */
 #include "activationview.h"
 #include "activationdialog.h"
 #endif
+#include "http.h"
+#include "httputils.h"
 
 static MainWindow *singleton = 0;
 
@@ -120,6 +122,8 @@ MainWindow::MainWindow() : updateChecker(0) {
 
     // event filter to block ugly toolbar tooltips
     qApp->installEventFilter(this);
+
+    Http::instance().addRequestHeader("User-Agent", HttpUtils::stealthUserAgent());
 
     qApp->processEvents();
     QTimer::singleShot(50, this, SLOT(lazyInit()));
