@@ -68,7 +68,9 @@ $END_LICENSE */
 #include "http.h"
 #include "httputils.h"
 
+namespace {
 static MainWindow *singleton = 0;
+}
 
 MainWindow* MainWindow::instance() {
     if (!singleton) singleton = new MainWindow();
