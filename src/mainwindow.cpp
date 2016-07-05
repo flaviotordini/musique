@@ -380,7 +380,7 @@ void MainWindow::createActions() {
 
 #ifdef APP_MAC_STORE
     action = new QAction(tr("&Love %1? Rate it!").arg(Constants::NAME), this);
-    actions->insert("app-store", action);
+    actionMap.insert("app-store", action);
     connect(action, SIGNAL(triggered()), SLOT(rateOnAppStore()));
 #endif
 
@@ -1055,19 +1055,15 @@ void MainWindow::initPhonon() {
 }
 
 void MainWindow::tick(qint64 time) {
-    if (time <= 0) {
-        // the "if" is important because tick is continually called
-        // and we don't want to paint the toolbar every 100ms
-        if (!currentTime->text().isEmpty()) currentTime->clear();
-        return;
+    const QString s = formatTime(time);
+    if (s != currentTime->text()) {
+        currentTime->setText(s);
+        emit currentTimeChanged(s);
+
+        // remaining time
+        const qint64 remainingTime = mediaObject->remainingTime();
+        currentTime->setStatusTip(tr("Remaining time: %1").arg(formatTime(remainingTime)));
     }
-
-    currentTime->setText(formatTime(time));
-
-    // remaining time
-    const qint64 remainingTime = mediaObject->remainingTime();
-    currentTime->setStatusTip(tr("Remaining time: %1").arg(formatTime(remainingTime)));
-
 }
 
 void MainWindow::totalTimeChanged(qint64 time) {
@@ -1080,16 +1076,17 @@ void MainWindow::totalTimeChanged(qint64 time) {
     */
 }
 
-QString MainWindow::formatTime(qint64 time) {
-    QTime displayTime;
-    displayTime = displayTime.addMSecs(time);
-    QString timeString;
-    // 60 * 60 * 1000 = 3600000
-    if (time > 3600000)
-        timeString = displayTime.toString("h:mm:ss");
-    else
-        timeString = displayTime.toString("m:ss");
-    return timeString;
+QString MainWindow::formatTime(qint64 duration) {
+    duration /= 1000;
+    QString res;
+    int seconds = (int) (duration % 60);
+    duration /= 60;
+    int minutes = (int) (duration % 60);
+    duration /= 60;
+    int hours = (int) (duration % 24);
+    if (hours == 0)
+        return res.sprintf("%02d:%02d", minutes, seconds);
+    return res.sprintf("%02d:%02d:%02d", hours, minutes, seconds);
 }
 
 void MainWindow::volumeUp() {

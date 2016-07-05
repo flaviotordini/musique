@@ -76,6 +76,9 @@ public slots:
     void showDemoDialog(QString message);
 #endif
 
+signals:
+    void currentTimeChanged(const QString &s);
+
 protected:
     void closeEvent(QCloseEvent *);
     bool eventFilter(QObject *obj, QEvent *event);
@@ -144,7 +147,7 @@ private:
     void createStatusBar();
     void writeSettings();
     void initPhonon();
-    static QString formatTime(qint64 time);
+    static QString formatTime(qint64 duration);
     QString playlistPath();
     void simpleUpdateDialog(QString version);
 

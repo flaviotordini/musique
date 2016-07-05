@@ -26,6 +26,7 @@ $END_LICENSE */
 #include "globalshortcuts.h"
 #include "fontutils.h"
 #include "mainwindow.h"
+#include "datautils.h"
 
 PlaylistView::PlaylistView(QWidget *parent) :
         QListView(parent),
@@ -126,11 +127,7 @@ void PlaylistView::updatePlaylistActions() {
         setStatusTip(tr("Playlist is empty"));
     } else {
         const int totalLength = playlistModel->getTotalLength();
-        QString playlistLength;
-        if (totalLength > 3600)
-            playlistLength =  QTime().addSecs(totalLength).toString("h:mm:ss");
-        else
-            playlistLength = QTime().addSecs(totalLength).toString("m:ss");
+        QString playlistLength = DataUtils::formatDuration(totalLength);
         setStatusTip(tr("%1 tracks - Total length is %2")
                      .arg(QString::number(rowCount), playlistLength));
     }

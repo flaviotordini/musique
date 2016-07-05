@@ -28,16 +28,20 @@ QString DataUtils::cleanTag(QString s) {
 }
 
 QString DataUtils::normalizeTag(QString s) {
-    static const QRegExp nonWordExpression("\\W+");
-    // static const QRegExp nonWordExpression("[^\\p{L}]+");
-
     s = s.simplified().toLower();
 
     // The Beatles => Beatles
-    s.replace(QRegExp("^the "), "");
+    if (s.length() > 4 && s.startsWith(QStringLiteral("the "))) s = s.remove(0, 4);
 
     // remove anything that is not a "letter"
-    s.remove(nonWordExpression);
+    QString n;
+    const int l = s.length();
+    for (int i = 0; i < l; ++i) {
+        const QChar c = s.at(i);
+        if (c.isLetterOrNumber()) n.append(c);
+        // else qDebug() << "Dropping char" << c;
+    }
+    s = n;
 
     return s;
 }
