@@ -31,7 +31,7 @@ TrackItemDelegate::TrackItemDelegate(QObject *parent) :
 
 QSize TrackItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex& /*index*/) const {
     // determine item height based on font metrics
-    int itemHeight = option.fontMetrics.height() * 2;
+    int itemHeight = option.fontMetrics.height() * 1.8;
     return QSize(itemHeight, itemHeight);
 }
 
@@ -71,6 +71,11 @@ void TrackItemDelegate::paintTrack(QPainter* painter,
     // track number
     if (track->getNumber() > 0) {
         painter->save();
+
+        QFont font = painter->font();
+        font.setPointSize(font.pointSize()-1);
+        painter->setFont(font);
+
         QString trackString = QString("%1").arg(track->getNumber(), 2, 10, QChar('0'));
         QSizeF trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
         QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
