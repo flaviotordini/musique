@@ -553,9 +553,6 @@ void MainWindow::createToolBars() {
     mainToolBar->addAction(skipBackwardAct);
     mainToolBar->addAction(playAct);
     mainToolBar->addAction(skipForwardAct);
-
-    mainToolBar->addWidget(new Spacer());
-
     mainToolBar->addAction(contextualAct);
 
     mainToolBar->addWidget(new Spacer());
