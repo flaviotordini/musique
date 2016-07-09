@@ -1163,7 +1163,7 @@ void MainWindow::setRepeat(bool enabled) {
 }
 
 void MainWindow::checkForUpdate() {
-    static const QString updateCheckKey = "updateCheck";
+    const QString updateCheckKey = "updateCheck";
 
     // check every 24h
     QSettings settings;
@@ -1176,11 +1176,9 @@ void MainWindow::checkForUpdate() {
     // check it out
     if (updateChecker) delete updateChecker;
     updateChecker = new UpdateChecker();
-    connect(updateChecker, SIGNAL(newVersion(QString)),
-            this, SLOT(gotNewVersion(QString)));
+    connect(updateChecker, SIGNAL(newVersion(QString)), SLOT(gotNewVersion(QString)));
     updateChecker->checkForUpdate();
     settings.setValue(updateCheckKey, unixTime);
-
 }
 
 void MainWindow::gotNewVersion(QString version) {
@@ -1193,13 +1191,11 @@ void MainWindow::gotNewVersion(QString version) {
     QString checkedVersion = settings.value("checkedVersion").toString();
     if (checkedVersion == version) return;
 
-#ifdef APP_EXTRA
-#ifndef APP_MAC
+#ifdef APP_SIMPLEUPDATE
+    simpleUpdateDialog(version);
+#elif defined(APP_EXTRA) && !defined(APP_MAC)
     UpdateDialog *dialog = new UpdateDialog(version, this);
     dialog->show();
-#endif
-#else
-    simpleUpdateDialog(version);
 #endif
 }
 
