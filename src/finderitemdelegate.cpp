@@ -225,7 +225,7 @@ void FinderItemDelegate::paintAlbum(QPainter* painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
-    QPixmap pixmap = album->getThumb();
+    QPixmap pixmap = getAlbumPixmap(album);
     if (pixmap.isNull()) pixmap = getMissingAlbumPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
@@ -339,24 +339,22 @@ void FinderItemDelegate::paintTrack(QPainter* painter,
 }
 
 void FinderItemDelegate::paintPlayIcon(QPainter *painter, const QRect& rect, double opacity, bool isHovered) const {
-    // qDebug() << opacity << isHovered;
-    static const int PADDING = 10;
+    const QPixmap &playIcon = getPlayIcon(isHovered);
+
     painter->save();
-
-
-    QPixmap playIcon = getPlayIcon(isHovered);
-    painter->translate(rect.width() - playIcon.width() - PADDING, PADDING);
+    const qreal pixelRatio = IconUtils::pixelRatio();
+    painter->translate((rect.width() - playIcon.width() - PADDING) * pixelRatio, PADDING * pixelRatio);
 
     if (isHovered)
         painter->setOpacity(opacity * .75);
     else
         painter->setOpacity(.75);
 
-    painter->drawPixmap(playIcon.rect(), playIcon);
+    painter->drawPixmap(0, 0, playIcon);
 
     if (isHovered) {
         painter->setOpacity(.9 - opacity * .9);
-        painter->drawPixmap(playIcon.rect(), playIcon);
+        painter->drawPixmap(0, 0, playIcon);
     }
 
     painter->restore();
@@ -443,18 +441,43 @@ void FinderItemDelegate::drawCentralLabel(QPainter *painter, QString text,  cons
 }
 
 QPixmap FinderItemDelegate::getArtistPixmap(Artist *artist) const {
-    QPixmap pixmap = artist->property("pixmap").value<QPixmap>();
+    const qreal pixelRatio = IconUtils::pixelRatio();
+    QByteArray cacheKeyArray = QString("p" + QString::number(pixelRatio)).toLocal8Bit();
+    const char* cacheKey = cacheKeyArray.constData();
+
+    QPixmap pixmap = artist->property(cacheKey).value<QPixmap>();
     if (pixmap.isNull()) {
         // qDebug() << "Creating pixmap for" << artist;
         QPixmap p = artist->getPhoto();
         int xOffset = 0;
-        int wDiff = p.width() - ITEM_WIDTH;
+        int wDiff = p.width() - ITEM_WIDTH * pixelRatio;
         if (wDiff > 0) xOffset = wDiff / 2;
         int yOffset = 0;
-        int hDiff = p.height() - ITEM_HEIGHT;
+        int hDiff = p.height() - ITEM_HEIGHT * pixelRatio;
         if (hDiff > 0) yOffset = hDiff / 4;
-        pixmap = p.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT);
-        artist->setProperty("pixmap", pixmap);
+        pixmap = p.copy(xOffset, yOffset, ITEM_WIDTH * pixelRatio, ITEM_HEIGHT * pixelRatio);
+        pixmap.setDevicePixelRatio(pixelRatio);
+        artist->setProperty(cacheKey, pixmap);
+    }
+    return pixmap;
+}
+
+QPixmap FinderItemDelegate::getAlbumPixmap(Album *album) const {
+    const qreal pixelRatio = IconUtils::pixelRatio();
+    QByteArray cacheKeyArray = QString("p" + QString::number(pixelRatio)).toLocal8Bit();
+    const char* cacheKey = cacheKeyArray.constData();
+
+    QPixmap pixmap = album->property(cacheKey).value<QPixmap>();
+    if (pixmap.isNull()) {
+        // qDebug() << "Creating pixmap for" << album->getTitle();
+        QPixmap p = album->getPhoto();
+        if (p.isNull()) {
+            // qWarning() << "Missing photo for" << album->getTitle();
+            return pixmap;
+        }
+        pixmap = p.scaled(ITEM_WIDTH * pixelRatio, ITEM_HEIGHT * pixelRatio);
+        pixmap.setDevicePixelRatio(pixelRatio);
+        album->setProperty(cacheKey, pixmap);
     }
     return pixmap;
 }

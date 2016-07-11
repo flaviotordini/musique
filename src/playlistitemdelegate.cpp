@@ -115,9 +115,10 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
 
     if (isActive) {
         if (!isSelected) paintActiveOverlay(painter, option, line);
-        // play icon
-        QPixmap p = getPlayIcon(painter->pen().color(), option);
-        painter->drawPixmap(PADDING*1.5, (ITEM_HEIGHT - p.height()) / 2, p);
+        static const QIcon icon = IconUtils::icon("media-playback-start");
+        QPixmap p = icon.pixmap(16, 16);
+        if (isSelected) painter->setCompositionMode(QPainter::CompositionMode_Plus);
+        painter->drawPixmap(PADDING*1.5, (ITEM_HEIGHT - (p.height() / p.devicePixelRatio())) / 2, p);
     } else {
         paintTrackNumber(painter, option, line, track);
     }
@@ -162,24 +163,23 @@ void PlaylistItemDelegate::paintAlbumHeader(
     linearGradient.setColorAt(1.0, bottomColor);
     painter->fillRect(line, linearGradient);
 
-    // border
-    QColor borderColor = QColor::fromHsv(topColor.hue(), saturation, value - 32);
-    painter->setPen(borderColor);
-    painter->drawLine(0, line.height()-1, line.width(), line.height()-1);
+    const qreal pixelRatio = IconUtils::pixelRatio();
 
     if (album) {
         QPixmap p = album->getThumb();
         if (!p.isNull()) {
-            p = p.scaled(h, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            const int ph = h * pixelRatio;
+            p = p.scaled(ph, ph, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            p.setDevicePixelRatio(pixelRatio);
             painter->drawPixmap(0, 0, p);
-            painter->drawLine(h, 0, h, h-1);
         }
     } else if (artist) {
         QPixmap p = artist->getPhoto();
         if (!p.isNull()) {
-            p = p.scaled(h, h, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            const int ph = h * pixelRatio;
+            p = p.scaled(ph, ph, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+            p.setDevicePixelRatio(pixelRatio);
             painter->drawPixmap(0, 0, p);
-            painter->drawLine(h, 0, h, h-1);
         }
     }
 
@@ -192,10 +192,6 @@ void PlaylistItemDelegate::paintAlbumHeader(
         normalFont.setBold(false);
         // normalFont.setPointSize(boldFont.pointSize()*.9);
         painter->setFont(normalFont);
-
-        // text shadow
-        painter->setPen(QColor(0, 0, 0, 96));
-        painter->drawText(line.translated(-PADDING, -1), Qt::AlignRight | Qt::AlignVCenter, albumLength);
 
         painter->setPen(Qt::white);
         painter->drawText(line.translated(-PADDING, 0), Qt::AlignRight | Qt::AlignVCenter, albumLength);
@@ -231,9 +227,11 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
 
     painter->save();
 
+    const qreal pixelRatio = IconUtils::pixelRatio();
+
     // track number
     QFont font = painter->font();
-    font.setPointSize(font.pointSize()-1);
+    font.setPointSize(font.pointSize()-pixelRatio);
     painter->setFont(font);
     QString trackString = QString("%1").arg(trackNumber, 2, 10, QChar('0'));
     QSize trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
@@ -281,8 +279,9 @@ void PlaylistItemDelegate::paintTrackLength(QPainter* painter, const QStyleOptio
 
     const bool isSelected = option.state & QStyle::State_Selected;
     painter->save();
+    const qreal pixelRatio = IconUtils::pixelRatio();
     QFont font = painter->font();
-    font.setPointSize(font.pointSize()-1);
+    font.setPointSize(font.pointSize()-pixelRatio);
     painter->setFont(font);
     if (isSelected)
         painter->setPen(option.palette.highlightedText().color());

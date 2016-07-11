@@ -85,8 +85,15 @@ void ArtistInfo::setArtist(Artist *artist) {
     htmlBio += "</body></html>";
     bioLabel->setText(htmlBio);
 
-    photoLabel->setPixmap(artist->getPhoto());
-
+    QPixmap photo = artist->getPhoto();
+    if (photo.isNull()) {
+        photoLabel->clear();
+        photoLabel->hide();
+    } else {
+        photo.setDevicePixelRatio(devicePixelRatio());
+        photoLabel->setPixmap(photo);
+        photoLabel->show();
+    }
 }
 
 void ArtistInfo::clear() {

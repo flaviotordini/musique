@@ -100,7 +100,6 @@ MainWindow::MainWindow() : updateChecker(0) {
     // views mechanism
     history = new QStack<QWidget*>();
     views = new QStackedWidget(this);
-    views->hide();
     setCentralWidget(views);
 
     // remove that useless menu/toolbar context menu
@@ -119,8 +118,6 @@ MainWindow::MainWindow() : updateChecker(0) {
     if (!Activation::instance().isActivated())
         showActivationView(false);
 #endif
-
-    views->show();
 
     // event filter to block ugly toolbar tooltips
     qApp->installEventFilter(this);
@@ -486,7 +483,9 @@ void MainWindow::createMenus() {
     QMenu *viewMenu = menuBar()->addMenu(tr("&View"));
     viewMenu->addAction(contextualAct);
     viewMenu->addSeparator();
+#ifndef APP_MAC
     viewMenu->addAction(fullscreenAct);
+#endif
 
 #ifdef APP_MAC
     MacSupport::windowMenu(this);
@@ -1201,8 +1200,7 @@ void MainWindow::gotNewVersion(QString version) {
 
 void MainWindow::simpleUpdateDialog(QString version) {
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(
-                QPixmap(":/images/app.png")
+    msgBox.setIconPixmap(IconUtils::pixmap(":/images/app.png")
                 .scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     msgBox.setText(tr("%1 version %2 is now available.").arg(Constants::NAME, version));
     msgBox.setModal(true);
@@ -1418,7 +1416,7 @@ void MainWindow::hideBuyAction() {
 
 void MainWindow::showDemoDialog(QString message) {
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(QPixmap(":/images/app.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    msgBox.setIconPixmap(IconUtils::pixmap(":/images/app.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     msgBox.setText(message);
     msgBox.setModal(true);
     // make it a "sheet" on the Mac

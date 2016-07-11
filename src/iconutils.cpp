@@ -36,10 +36,12 @@ QIcon IconUtils::fromResources(const QString &name) {
         icon.addPixmap(QPixmap(QString(":/images/%1_active.png").arg(name)), QIcon::Active);
         icon.addPixmap(QPixmap(QString(":/images/%1_selected.png").arg(name)), QIcon::Selected);
         icon.addPixmap(QPixmap(QString(":/images/%1_disabled.png").arg(name)), QIcon::Disabled);
+        icon.addPixmap(QPixmap(QString(":/images/%1_checked.png").arg(name)), QIcon::Normal, QIcon::On);
 
         icon.addPixmap(QPixmap(QString(":/images/%1_active@2x.png").arg(name)), QIcon::Active);
         icon.addPixmap(QPixmap(QString(":/images/%1_selected@2x.png").arg(name)), QIcon::Selected);
         icon.addPixmap(QPixmap(QString(":/images/%1_disabled@2x.png").arg(name)), QIcon::Disabled);
+        icon.addPixmap(QPixmap(QString(":/images/%1_checked@2x.png").arg(name)), QIcon::Normal, QIcon::On);
     }
     return icon;
 }

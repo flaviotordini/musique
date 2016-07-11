@@ -21,24 +21,24 @@ $END_LICENSE */
 #include "choosefolderview.h"
 #include "constants.h"
 #include "fontutils.h"
+#include "iconutils.h"
 #include "database.h"
 
-static const int PADDING = 30;
-
 ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
+    const int padding = 30;
 
     QBoxLayout *layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
-    layout->setSpacing(PADDING);
-    layout->setMargin(PADDING);
+    layout->setSpacing(padding);
+    layout->setMargin(padding);
 
     QLabel *logo = new QLabel(this);
-    logo->setPixmap(QPixmap(":/images/app.png"));
+    logo->setPixmap(IconUtils::pixmap(":/images/app.png"));
     layout->addWidget(logo, 0, Qt::AlignTop);
 
     QBoxLayout *vLayout = new QVBoxLayout();
     vLayout->setAlignment(Qt::AlignCenter);
-    vLayout->setSpacing(PADDING);
+    vLayout->setSpacing(padding);
     vLayout->setMargin(0);
     layout->addLayout(vLayout);
 

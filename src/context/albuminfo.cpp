@@ -119,6 +119,7 @@ void AlbumInfo::setAlbum(Album *album) {
         photoLabel->clear();
         photoLabel->hide();
     } else {
+        photo.setDevicePixelRatio(devicePixelRatio());
         photoLabel->setPixmap(photo);
         photoLabel->show();
     }

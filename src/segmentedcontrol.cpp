@@ -21,6 +21,7 @@ $END_LICENSE */
 #include "segmentedcontrol.h"
 #include "mainwindow.h"
 #include "fontutils.h"
+#include "iconutils.h"
 
 namespace {
 static const QColor borderColor = QColor(160, 160, 160);
@@ -97,6 +98,13 @@ void SegmentedControl::paintEvent (QPaintEvent * /*event*/) {
     // Calculate Buttons Size & Location
     const int buttonWidth = width / d->actionList.size();
 
+    const qreal pixelRatio = IconUtils::pixelRatio();
+
+    QPen pen(borderColor);
+    const qreal penWidth = 1. / pixelRatio;
+    pen.setWidthF(penWidth);
+    p.setPen(pen);
+
     // Draw Buttons
     QRect rect(0, 0, buttonWidth, height);
     const int actionCount = d->actionList.size();
@@ -108,14 +116,13 @@ void SegmentedControl::paintEvent (QPaintEvent * /*event*/) {
             drawButton(&p, rect, action);
         } else {
             drawButton(&p, rect, action);
-            p.setPen(borderColor);
-            int w = rect.x() + rect.width() -1;
-            p.drawLine(w, 0, w, height);
+            qreal w = rect.x() + rect.width() - penWidth;
+            p.drawLine(QPointF(w, 0), QPointF(w, height));
             rect.moveLeft(rect.x() + rect.width());
         }
     }
-    p.setPen(borderColor);
-    p.drawLine(0, height-1, width, height-1);
+    const qreal y = height - penWidth;
+    p.drawLine(QPointF(0, y), QPointF(width, y));
 }
 
 void SegmentedControl::mouseMoveEvent (QMouseEvent *event) {

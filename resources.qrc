@@ -8,5 +8,8 @@
         <file>style.css</file>
         <file>images/sort.png</file>
         <file>images/audioscrobbler@2x.png</file>
+        <file>images/app@2x.png</file>
+        <file>images/sort@2x.png</file>
+        <file>images/item/album@2x.png</file>
     </qresource>
 </RCC>
