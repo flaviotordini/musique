@@ -2,11 +2,11 @@
 
 LocalCache *LocalCache::instance(const QString &name) {
     static QHash<QString, LocalCache*> instances;
-    if (instances.contains(name))
-        return instances.value(name);
-    LocalCache *i = new LocalCache(name);
-    instances.insert(name, i);
-    return i;
+    QHash<QString, LocalCache*>::const_iterator i = instances.constFind(name);
+    if (i != instances.constEnd()) return i.value();
+    LocalCache *instance = new LocalCache(name);
+    instances.insert(name, instance);
+    return instance;
 }
 
 LocalCache::LocalCache(const QString &name) : name(name),

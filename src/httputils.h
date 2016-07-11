@@ -9,8 +9,9 @@ class HttpUtils {
 
 public:
     static Http &musicBrainz();
+    static Http &lastFm();
+    static Http &cached();
     static const QByteArray &userAgent();
-    static const QByteArray &stealthUserAgent();
 
 private:
     HttpUtils() { }

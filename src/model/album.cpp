@@ -257,7 +257,7 @@ void Album::fetchLastFmSearch() {
     q.addQueryItem("limit", "5");
     url.setQuery(q);
 
-    QObject *reply = Http::instance().get(url);
+    QObject *reply = HttpUtils::lastFm().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
@@ -346,7 +346,7 @@ void Album::fetchLastFmInfo() {
         q.addQueryItem("mbid", mbid);
     }
     url.setQuery(q);
-    QObject *reply = Http::instance().get(url);
+    QObject *reply = HttpUtils::lastFm().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmInfo(QByteArray)));
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 

@@ -5,28 +5,7 @@ namespace {
 
 QString requestHash(const HttpRequest &req) {
     const char sep = '|';
-
-    QString s;
-
-    switch (req.operation) {
-
-    case QNetworkAccessManager::GetOperation:
-        s = "GET";
-        break;
-
-    case QNetworkAccessManager::HeadOperation:
-        s = "HEAD";
-        break;
-
-    case QNetworkAccessManager::PostOperation:
-        s = "POST";
-        break;
-
-    default:
-        qWarning() << "Unknown operation:" << req.operation;
-    }
-
-    s += sep + req.url.toString()
+    QString s = req.url.toString()
             + sep + req.body
             + sep + QString::number(req.offset);
     return LocalCache::hash(s);
@@ -71,10 +50,6 @@ CachedHttp::CachedHttp(Http &http, const QString &name) :
     http(http),
     cache(LocalCache::instance(name)) { }
 
-CachedHttp::~CachedHttp() {
-    delete cache;
-}
-
 void CachedHttp::setMaxSeconds(uint seconds) {
     cache->setMaxSeconds(seconds);
 }
@@ -84,6 +59,10 @@ void CachedHttp::setMaxSize(uint maxSize) {
 }
 
 QObject *CachedHttp::request(const HttpRequest &req) {
+    // cache only GET requests
+    if (req.operation != QNetworkAccessManager::GetOperation) {
+        return new WrappedHttpReply(cache, key, http.request(req));
+    }
     const QString key = requestHash(req);
     if (cache->isCached(key)) {
         // qDebug() << "CachedHttp HIT" << req.url;

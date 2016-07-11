@@ -9,7 +9,6 @@ class CachedHttp : public Http {
 
 public:
     CachedHttp(Http &http = Http::instance(), const QString &name = "http");
-    ~CachedHttp();
     void setMaxSeconds(uint seconds);
     void setMaxSize(uint maxSize);
     QObject *request(const HttpRequest &req);

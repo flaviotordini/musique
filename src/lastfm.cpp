@@ -21,6 +21,7 @@ $END_LICENSE */
 #include "lastfm.h"
 #include "datautils.h"
 #include "http.h"
+#include "httputils.h"
 #include "lastfmlogindialog.h"
 #include "mainwindow.h"
 #include "constants.h"
@@ -28,12 +29,14 @@ $END_LICENSE */
 #include "model/artist.h"
 #include "model/album.h"
 
+namespace {
+
 static const QString WS = "http://ws.audioscrobbler.com/2.0/";
 
-static LastFm* i = 0;
+}
 
 LastFm& LastFm::instance() {
-    if (!i) i = new LastFm();
+    static LastFm* i = new LastFm();
     return *i;
 }
 
@@ -70,7 +73,7 @@ void LastFm::authenticate(const QString &username, const QString &password) {
     sign(params);
 
     QUrl url(WS);
-    QObject* reply = Http::instance().post(url, params);
+    QObject* reply = HttpUtils::lastFm().post(url, params);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(authenticationResponse(QByteArray)));
     connect(reply, SIGNAL(error(QString)), SLOT(authenticationError(QString)));
 }
@@ -149,7 +152,7 @@ void LastFm::scrobble(Track* track) {
 
     sign(params);
 
-    Http::instance().post(url, params);
+    HttpUtils::lastFm().post(url, params);
 
 }
 
@@ -188,7 +191,7 @@ void LastFm::nowPlaying(Track* track) {
 
     sign(params);
 
-    Http::instance().post(url, params);
+    HttpUtils::lastFm().post(url, params);
 }
 
 void LastFm::logout() {

@@ -25,6 +25,8 @@ $END_LICENSE */
 #include "constants.h"
 #include "mainwindow.h"
 #include "iconutils.h"
+#include "http.h"
+#include "httputils.h"
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -118,11 +120,10 @@ int main(int argc, char **argv) {
                      mainWin, SLOT(messageReceived(const QString &)));
     app.setActivationWindow(mainWin, true);
 
-    // all string literals are UTF-8
-    // QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
-
     // This is required in order to use QNetworkReply::NetworkError in QueuedConnetions
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
+
+    Http::instance().addRequestHeader("User-Agent", HttpUtils::userAgent());
 
     // Seed random number generator
     qsrand(QDateTime::currentDateTime().toTime_t());

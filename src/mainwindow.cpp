@@ -122,9 +122,6 @@ MainWindow::MainWindow() : updateChecker(0) {
     // event filter to block ugly toolbar tooltips
     qApp->installEventFilter(this);
 
-    Http::instance().addRequestHeader("User-Agent", HttpUtils::stealthUserAgent());
-
-    qApp->processEvents();
     QTimer::singleShot(50, this, SLOT(lazyInit()));
 }
 
