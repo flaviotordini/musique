@@ -28,8 +28,6 @@ $END_LICENSE */
 #include "http.h"
 #include "httputils.h"
 
-static QHash<QString, QByteArray> artistAlbums;
-
 Album::Album() : year(0), artist(0), listeners(0), photo(0), thumb(0) {
 
 }
