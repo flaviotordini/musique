@@ -24,6 +24,7 @@ $END_LICENSE */
 #include "datautils.h"
 #include "coverutils.h"
 #include "imagedownloader.h"
+#include "tagutils.h"
 
 CollectionScanner::CollectionScanner(QObject *parent) :
     QObject(parent),
@@ -177,6 +178,9 @@ void CollectionScanner::popFromQueue() {
 
     // Copy TagLib::FileRef in our Tags class.
     // TagLib::FileRef keeps files open and we would quickly reach the max open files limit
+
+
+    /*
     Tags *tags = new Tags();
     TagLib::Tag *tag = fileref.tag();
     if (tag) {
@@ -189,6 +193,8 @@ void CollectionScanner::popFromQueue() {
         if (audioProperties)
             tags->length = audioProperties->length();
     }
+    */
+    Tags *tags = TagUtils::load(fileInfo.absoluteFilePath());
     file->setTags(tags);
 
     // get data from the internet
@@ -395,7 +401,7 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
 
 void CollectionScanner::giveThisFileAnArtist(FileInfo *file) {
 
-    const QString artistTag = file->getTags()->artist;
+    const QString artistTag = file->getTags()->getArtistString();
 
     // try to normalize the artist name to a simpler form
     const QString artistHash = DataUtils::normalizeTag(DataUtils::cleanTag(artistTag));
@@ -426,7 +432,7 @@ void CollectionScanner::giveThisFileAnArtist(FileInfo *file) {
 void CollectionScanner::processArtist(FileInfo *file) {
 
     Artist *artist = new Artist();
-    const QString artistTag = file->getTags()->artist;
+    const QString artistTag = file->getTags()->getArtistString();
     artist->setName(DataUtils::cleanTag(artistTag));
     artist->setProperty("originalHash", artist->getHash());
 
@@ -500,7 +506,7 @@ void CollectionScanner::gotArtistInfo() {
 
 void CollectionScanner::giveThisFileAnAlbum(FileInfo *file) {
 
-    const QString albumTag = DataUtils::cleanTag(file->getTags()->album);
+    const QString albumTag = DataUtils::cleanTag(file->getTags()->getAlbumString());
 
     // try to normalize the album title to a simpler form
     const QString albumHash = Album::getHash(albumTag, file->getArtist());
@@ -533,9 +539,9 @@ void CollectionScanner::giveThisFileAnAlbum(FileInfo *file) {
 void CollectionScanner::processAlbum(FileInfo *file) {
 
     Album *album = new Album();
-    const QString albumTag = file->getTags()->album;
+    const QString albumTag = file->getTags()->getAlbumString();
     album->setTitle(DataUtils::cleanTag(albumTag));
-    album->setYear(file->getTags()->year);
+    album->setYear(file->getTags()->getYear());
 
     Artist *artist = file->getArtist();
     if (artist) album->setArtist(artist); // && artist->getId() > 0
@@ -631,7 +637,7 @@ void CollectionScanner::gotAlbumInfo() {
 
 void CollectionScanner::processTrack(FileInfo *file) {
     Track *track = new Track();
-    QString titleTag = file->getTags()->title;
+    QString titleTag = file->getTags()->getTitle();
     // qDebug() << "we have a fresh track:" << titleTag;
     if (titleTag.isEmpty()) {
         titleTag = file->getFileInfo().baseName();
@@ -660,16 +666,18 @@ void CollectionScanner::processTrack(FileInfo *file) {
     path.remove(this->rootDirectory.absolutePath() + "/");
     track->setPath(path);
 
-    track->setNumber(file->getTags()->track);
+    track->setNumber(file->getTags()->getTrackNumber());
+    track->setDiskNumber(file->getTags()->getDiskNumber());
+    track->setDiskCount(file->getTags()->getDiskCount());
 
     // prefer embedded year tag, since Last.fm release dates are often wrong
-    int year = file->getTags()->year;
+    int year = file->getTags()->getYear();
     if (album && year < 1)
         year = album->getYear();
     if (year < 0) year = 0;
     track->setYear(year);
 
-    track->setLength(file->getTags()->length);
+    track->setLength(file->getTags()->getDuration());
 
     // if (artist && artist->getId() > 0) {
     // artist = album->getArtist();

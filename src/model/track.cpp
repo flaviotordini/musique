@@ -33,34 +33,27 @@ $END_LICENSE */
 #include <id3v2tag.h>
 #include <unsynchronizedlyricsframe.h>
 
-Track::Track() {
-    album = 0;
-    artist = 0;
-    number = 0;
-    year = 0;
-    length = 0;
-    /*
-    start = 0;
-    end = 0;
-    */
-    played = false;
-    startTime = 0;
-}
+Track::Track() :
+    number(0),
+    diskNumber(1),
+    diskCount(1),
+    year(0),
+    length(0),
+    album(0),
+    artist(0),
+    played(false),
+    startTime(0) { }
 
 QHash<int, Track*> Track::cache;
 QHash<QString, Track*> Track::pathCache;
 
 Track* Track::forId(int trackId) {
-
-    if (cache.contains(trackId)) {
-        // get from cache
-        // qDebug() << "Track was cached" << trackId;
-        return cache.value(trackId);
-    }
+    QHash<int, Track*>::const_iterator i = cache.constFind(trackId);
+    if (i != cache.constEnd()) return i.value();
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select path, title, duration, track, artist, album from tracks where id=?");
+    query.prepare("select path,title,duration,track,disk,diskCount,artist,album from tracks where id=?");
     query.bindValue(0, trackId);
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
@@ -74,12 +67,14 @@ Track* Track::forId(int trackId) {
 
         track->setLength(query.value(2).toInt());
         track->setNumber(query.value(3).toInt());
+        track->setDiskNumber(query.value(4).toInt());
+        track->setDiskCount(query.value(5).toInt());
 
         // relations
         // TODO this could be made lazy
-        int artistId = query.value(4).toInt();
+        int artistId = query.value(6).toInt();
         track->setArtist(Artist::forId(artistId));
-        int albumId = query.value(5).toInt();
+        int albumId = query.value(7).toInt();
         track->setAlbum(Album::forId(albumId));
 
         // put into cache
@@ -152,17 +147,21 @@ void Track::insert() {
     // qDebug() << "Track::insert";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("insert into tracks (path, title, track, year, album, artist, tstamp, duration) values (?,?,?,?,?,?,?,?)");
+    query.prepare("insert into tracks "
+                  "(path,title,track,disk,diskCount,year,album,artist,tstamp,duration) "
+                  "values (?,?,?,?,?,?,?,?,?,?)");
     query.bindValue(0, path);
     query.bindValue(1, title);
     query.bindValue(2, number);
-    query.bindValue(3, year);
+    query.bindValue(3, diskNumber);
+    query.bindValue(4, diskCount);
+    query.bindValue(5, year);
     int albumId = album ? album->getId() : 0;
-    query.bindValue(4, albumId);
+    query.bindValue(6, albumId);
     int artistId = artist ? artist->getId() : 0;
-    query.bindValue(5, artistId);
-    query.bindValue(6, QDateTime::currentDateTime().toTime_t());
-    query.bindValue(7, length);
+    query.bindValue(7, artistId);
+    query.bindValue(8, QDateTime::currentDateTime().toTime_t());
+    query.bindValue(9, length);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 
@@ -230,18 +229,19 @@ void Track::update() {
 
     // qDebug() << "Track::update";
 
-    query.prepare("update tracks set title=?, track=?, year=?, album=?, artist=?, tstamp=?, duration=? where path=?");
+    query.prepare("update tracks set title=?, track=?, disk=?, year=?, album=?, artist=?, tstamp=?, duration=? where path=?");
 
     query.bindValue(0, title);
     query.bindValue(1, number);
-    query.bindValue(2, year);
+    query.bindValue(2, diskNumber);
+    query.bindValue(3, year);
     int albumId = album ? album->getId() : 0;
-    query.bindValue(3, albumId);
+    query.bindValue(4, albumId);
     int artistId = artist ? artist->getId() : 0;
-    query.bindValue(4, artistId);
-    query.bindValue(5, QDateTime().toTime_t());
-    query.bindValue(6, length);
-    query.bindValue(7, path);
+    query.bindValue(5, artistId);
+    query.bindValue(6, QDateTime().toTime_t());
+    query.bindValue(7, length);
+    query.bindValue(8, path);
     success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 }

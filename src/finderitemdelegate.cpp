@@ -403,7 +403,7 @@ void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem 
     painter->restore();
 }
 
-void FinderItemDelegate::drawBadge(QPainter *painter, QString text,  const QRect& rect) const {
+void FinderItemDelegate::drawBadge(QPainter *painter, const QString &text,  const QRect& rect) const {
     static const int PADDING = 4;
 
     painter->save();
@@ -420,7 +420,7 @@ void FinderItemDelegate::drawBadge(QPainter *painter, QString text,  const QRect
     painter->restore();
 }
 
-void FinderItemDelegate::drawCentralLabel(QPainter *painter, QString text,  const QRect& rect) const {
+void FinderItemDelegate::drawCentralLabel(QPainter *painter, const QString &text,  const QRect& rect) const {
     static const int PADDING = 10;
 
     painter->save();

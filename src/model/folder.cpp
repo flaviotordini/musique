@@ -116,7 +116,7 @@ QList<Track*> Folder::getTracks() {
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select id from tracks where path like ? order by artist, album, track, path");
+    query.prepare("select id from tracks where path like ? order by artist, album, disk, track, path");
     query.bindValue(0, QString(relativePath + "/%"));
     bool success = query.exec();
     if (!success)

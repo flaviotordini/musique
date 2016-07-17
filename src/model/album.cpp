@@ -35,12 +35,8 @@ Album::Album() : year(0), artist(0), listeners(0), photo(0), thumb(0) {
 QHash<int, Album*> Album::cache;
 
 Album* Album::forId(int albumId) {
-
-    if (cache.contains(albumId)) {
-        // get from cache
-        // qDebug() << "Album was cached" << albumId;
-        return cache.value(albumId);
-    }
+    QHash<int, Album*>::const_iterator i = cache.constFind(albumId);
+    if (i != cache.constEnd()) return i.value();
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
@@ -503,9 +499,9 @@ QList<Track*> Album::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     if (artist) {
-        query.prepare("select id from tracks where album=? and artist=? order by track, path");
+        query.prepare("select id from tracks where album=? and artist=? order by disk, track, path");
     } else {
-        query.prepare("select id from tracks where album=? order by track, path");
+        query.prepare("select id from tracks where album=? order by disk, track, path");
     }
     query.bindValue(0, id);
     if (artist)

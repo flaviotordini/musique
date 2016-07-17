@@ -38,12 +38,8 @@ Artist::Artist(QObject *parent) : Item(parent),
 QHash<int, Artist*> Artist::cache;
 
 Artist* Artist::forId(int artistId) {
-
-    if (cache.contains(artistId)) {
-        // get from cache
-        // qDebug() << "Artist was cached" << artistId;
-        return cache.value(artistId);
-    }
+    QHash<int, Artist*>::const_iterator i = cache.constFind(artistId);
+    if (i != cache.constEnd()) return i.value();
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
@@ -449,7 +445,7 @@ QList<Track*> Artist::getTracks() {
     QSqlQuery query(db);
     query.prepare("select distinct t.id from tracks t, albums a"
                   " where (t.album=a.id or t.album=0) and t.artist=?"
-                  " order by a.year desc, a.title collate nocase, t.track, t.path");
+                  " order by a.year desc, a.title collate nocase, t.disk, t.track, t.path");
     query.bindValue(0, id);
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();

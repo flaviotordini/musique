@@ -21,8 +21,6 @@ $END_LICENSE */
 #include "database.h"
 #include "constants.h"
 
-static Database *databaseInstance = 0;
-
 Database::Database() {
     QMutexLocker locker(&lock);
 
@@ -99,6 +97,8 @@ void Database::create() {
               // TODO "start integer, end integer," // cue files
               "duration integer,"
               "track integer,"
+              "disk integer,"
+              "diskCount integer,"
               "year integer,"
               "artist integer,"
               "album integer,"
@@ -149,7 +149,7 @@ void Database::createAttributes() {
 Database& Database::instance() {
     static QMutex mutex;
     QMutexLocker locker(&mutex);
-    if (!databaseInstance) databaseInstance = new Database();
+    static Database *databaseInstance = new Database();
     return *databaseInstance;
 }
 

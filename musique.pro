@@ -20,6 +20,7 @@ QT += network sql widgets
 
 include(src/qtsingleapplication/qtsingleapplication.pri)
 include(src/http/http.pri)
+include(src/tags/tags.pri)
 
 HEADERS += src/mainwindow.h \
     src/aboutview.h \

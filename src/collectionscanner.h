@@ -29,25 +29,7 @@ $END_LICENSE */
 #include "fileref.h"
 #include "tag.h"
 
-class Tags {
-
-public:
-    Tags() : track(0), year(0), length(0) { }
-    QString title;
-    QString artist;
-    QString album;
-    int track;
-    int year;
-    int length;
-
-    static QString toQString(TagLib::String tstring) {
-        if (!tstring.isEmpty()) {
-            // return QString::fromStdString(tstring.to8Bit(true));
-            return QString::fromUtf8(tstring.toCString(true));
-        } else return QString();
-    }
-
-};
+#include "tags.h"
 
 class FileInfo {
 

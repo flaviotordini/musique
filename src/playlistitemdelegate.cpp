@@ -234,6 +234,11 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
     font.setPointSize(font.pointSize()-pixelRatio);
     painter->setFont(font);
     QString trackString = QString("%1").arg(trackNumber, 2, 10, QChar('0'));
+
+    if (track->getDiskCount() > 1) {
+        trackString = QString::number(track->getDiskNumber()) + "-" + trackString;
+    }
+
     QSize trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
     QPoint textLoc(PADDING*1.5, 0);
     QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());

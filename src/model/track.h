@@ -50,6 +50,10 @@ public:
     void setPath(QString path) { this->path = path; }
     int getNumber() { return number; }
     void setNumber(int number) { this->number = number; }
+    int getDiskNumber() { return diskNumber; }
+    void setDiskNumber(int number) { diskNumber = number; }
+    int getDiskCount() { return diskCount; }
+    void setDiskCount(int value) { diskCount = value; }
     int getLength() { return length; }
     void setLength(int length) { this->length = length; }
     int getYear() { return year; }
@@ -121,6 +125,8 @@ private:
     QString title;
     QString path;
     int number;
+    int diskNumber;
+    int diskCount;
     int year;
     int length;
 
