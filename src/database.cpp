@@ -296,11 +296,11 @@ void Database::closeConnection() {
     connection.close();
 }
 
-bool Database::removeRecursively(const QString & dirName) {
+bool Database::removeRecursively(const QString &dirName) {
     bool result = false;
     QDir dir(dirName);
     if (dir.exists(dirName)) {
-        Q_FOREACH(QFileInfo info, dir.entryInfoList(
+        foreach (const QFileInfo &info, dir.entryInfoList(
                       QDir::NoDotAndDotDot | QDir::System | QDir::Hidden |
                       QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
             if (info.isDir())
