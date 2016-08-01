@@ -23,7 +23,7 @@ $END_LICENSE */
 DataUtils::DataUtils() { }
 
 QString DataUtils::cleanTag(QString s) {
-    s.replace("_", " ");
+    s.replace('_', ' ');
     return s.simplified();
 }
 
