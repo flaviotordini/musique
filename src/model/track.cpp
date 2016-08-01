@@ -148,8 +148,8 @@ void Track::insert() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("insert into tracks "
-                  "(path,title,track,disk,diskCount,year,album,artist,tstamp,duration) "
-                  "values (?,?,?,?,?,?,?,?,?,?)");
+                  "(path,title,track,disk,diskCount,year,album,artist,albumArtist,tstamp,duration) "
+                  "values (?,?,?,?,?,?,?,?,?,?,?)");
     query.bindValue(0, path);
     query.bindValue(1, title);
     query.bindValue(2, number);
@@ -160,8 +160,10 @@ void Track::insert() {
     query.bindValue(6, albumId);
     int artistId = artist ? artist->getId() : 0;
     query.bindValue(7, artistId);
-    query.bindValue(8, QDateTime::currentDateTime().toTime_t());
-    query.bindValue(9, length);
+    artistId = album && album->getArtist() ? album->getArtist()->getId() : 0;
+    query.bindValue(8, artistId);
+    query.bindValue(9, QDateTime::currentDateTime().toTime_t());
+    query.bindValue(10, length);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 
@@ -229,7 +231,7 @@ void Track::update() {
 
     // qDebug() << "Track::update";
 
-    query.prepare("update tracks set title=?, track=?, disk=?, year=?, album=?, artist=?, tstamp=?, duration=? where path=?");
+    query.prepare("update tracks set title=?, track=?, disk=?, year=?, album=?, artist=?, albumArtist=?, tstamp=?, duration=? where path=?");
 
     query.bindValue(0, title);
     query.bindValue(1, number);
@@ -239,9 +241,11 @@ void Track::update() {
     query.bindValue(4, albumId);
     int artistId = artist ? artist->getId() : 0;
     query.bindValue(5, artistId);
-    query.bindValue(6, QDateTime().toTime_t());
-    query.bindValue(7, length);
-    query.bindValue(8, path);
+    artistId = album && album->getArtist() ? album->getArtist()->getId() : 0;
+    query.bindValue(6, artistId);
+    query.bindValue(7, QDateTime().toTime_t());
+    query.bindValue(8, length);
+    query.bindValue(9, path);
     success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 }

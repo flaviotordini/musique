@@ -34,7 +34,7 @@ $END_LICENSE */
 class FileInfo {
 
 public:
-    FileInfo() : artist(0), album(0), tags(0) { }
+    FileInfo() : artist(0), albumArtist(0), album(0), tags(0) { }
     ~FileInfo() {
         if (artist) delete artist;
         if (album) delete album;
@@ -44,6 +44,8 @@ public:
     void setTags(Tags* tags) { this->tags = tags; }
     Artist* getArtist()  { return artist; }
     void setArtist(Artist *artist) { this->artist = artist; }
+    Artist* getAlbumArtist()  { return albumArtist; }
+    void setAlbumArtist(Artist *artist) { albumArtist = artist; }
     Album* getAlbum()  { return album; }
     void setAlbum(Album *album) { this->album = album; }
     QFileInfo getFileInfo()  { return fileInfo; }
@@ -51,6 +53,7 @@ public:
 
 private:
     Artist *artist;
+    Artist *albumArtist;
     Album *album;
     Tags *tags;
     QFileInfo fileInfo;
@@ -79,6 +82,8 @@ private slots:
     void giveThisFileAnArtist(FileInfo *file);
     void processArtist(FileInfo *file);
     void gotArtistInfo();
+    void giveThisFileAnAlbumArtist(FileInfo *file);
+    void processAlbumArtist(FileInfo *file);
     void giveThisFileAnAlbum(FileInfo *file);
     void processAlbum(FileInfo *file);
     void gotAlbumInfo();
@@ -107,6 +112,7 @@ private:
     int maxQueueSize;
     QHash<QString, Artist*> loadedArtists;
     QHash<QString, QList<FileInfo *> > filesWaitingForArtists;
+    QHash<QString, QList<FileInfo *> > filesWaitingForAlbumArtists;
     QHash<QString, Album*> loadedAlbums;
     QHash<QString, QList<FileInfo *> > filesWaitingForAlbums;
     QStringList trackPaths;

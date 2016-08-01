@@ -498,14 +498,8 @@ void Album::setPhoto(QByteArray bytes) {
 QList<Track*> Album::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    if (artist) {
-        query.prepare("select id from tracks where album=? and artist=? order by disk, track, path");
-    } else {
-        query.prepare("select id from tracks where album=? order by disk, track, path");
-    }
+    query.prepare("select id from tracks where album=? order by disk, track, path");
     query.bindValue(0, id);
-    if (artist)
-        query.bindValue(1, artist->getId());
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
     QList<Track*> tracks;

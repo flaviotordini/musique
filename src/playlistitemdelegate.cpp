@@ -29,6 +29,15 @@ $END_LICENSE */
 const int PlaylistItemDelegate::PADDING = 10;
 int PlaylistItemDelegate::ITEM_HEIGHT = 0;
 
+namespace {
+
+void drawElidedText(QPainter *painter, const QRect &textBox, const int flags, const QString &text) {
+    QString elidedText = QFontMetrics(painter->font()).elidedText(text, Qt::ElideRight, textBox.width(), flags);
+    painter->drawText(textBox, 0, elidedText);
+}
+
+}
+
 PlaylistItemDelegate::PlaylistItemDelegate(QObject *parent) :
     QStyledItemDelegate(parent) {
 
@@ -48,8 +57,7 @@ QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
         if (previousTrack) {
             const TrackPointer trackPointer = index.data(Playlist::DataObjectRole).value<TrackPointer>();
             Track *track = trackPointer.data();
-            if (previousTrack->getAlbum() != track->getAlbum()
-                    || previousTrack->getArtist() != track->getArtist()) {
+            if (previousTrack->getAlbum() != track->getAlbum()) {
                 return QSize(ITEM_HEIGHT*2, ITEM_HEIGHT*2);
             }
         }
@@ -271,6 +279,30 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOption
     trackTitle = fontMetrics.elidedText(trackTitle, Qt::ElideRight, trackTextBox.width());
 
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, trackTitle);
+
+    // track artist
+    Artist *albumArtist = track->getAlbum()->getArtist();
+    const int albumArtistId = albumArtist->getId();
+    if (albumArtistId != track->getArtist()->getId()) {
+        static const QString by = "—";
+        const int x = trackTextBox.right();
+        QRect textBox(x, line.height(), 0, 0);
+        const int flags = Qt::AlignVCenter | Qt::AlignLeft;
+        QString artistName = track->getArtist()->getName();
+
+        painter->save();
+
+        textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, by);
+        if (textBox.right() > line.width()) textBox.setRight(line.width());
+        drawElidedText(painter, textBox, flags, by);
+
+        textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, artistName);
+        if (textBox.right() > line.width()) textBox.setRight(line.width());
+        drawElidedText(painter, textBox, flags, artistName);
+        painter->restore();
+    }
+
+
     painter->restore();
 }
 

@@ -101,6 +101,7 @@ void Database::create() {
               "diskCount integer,"
               "year integer,"
               "artist integer,"
+              "albumArtist integer,"
               "album integer,"
               "tstamp integer)", db);
 

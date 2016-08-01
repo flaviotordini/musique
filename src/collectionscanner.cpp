@@ -400,6 +400,7 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
 /*** Artist ***/
 
 void CollectionScanner::giveThisFileAnArtist(FileInfo *file) {
+    // qDebug() << __PRETTY_FUNCTION__ << file->getTags()->getFilename();
 
     const QString artistTag = file->getTags()->getArtistString();
 
@@ -408,9 +409,12 @@ void CollectionScanner::giveThisFileAnArtist(FileInfo *file) {
 
     if (loadedArtists.contains(artistHash)) {
         // this artist was already encountered
-        file->setArtist(loadedArtists.value(artistHash));
+        Artist *artist = loadedArtists.value(artistHash);
+        file->setArtist(artist);
+        file->setAlbumArtist(artist);
+
         // qDebug() << "artist loaded giveThisFileAnAlbum" << file->getFileInfo().baseName();
-        giveThisFileAnAlbum(file);
+        giveThisFileAnAlbumArtist(file);
 
     } else if (filesWaitingForArtists.contains(artistHash)) {
         // this artist is already being processed
@@ -486,20 +490,89 @@ void CollectionScanner::gotArtistInfo() {
         ImageDownloader::enqueue(artistId, ImageDownloader::ArtistType, imageUrl);
 
     const QString hash = artist->property("originalHash").toString();
-    QList<FileInfo *> files = filesWaitingForArtists.value(hash);
-    filesWaitingForArtists.remove(hash);
     loadedArtists.insert(hash, artist);
     // if (hash != artist->getHash())
     loadedArtists.insert(artist->getHash(), artist);
 
     // continue the processing of blocked files
-    // qDebug() << files.size() << "files were waiting for artist" << artist->getName();
+    QList<FileInfo *> files = filesWaitingForArtists.take(hash);
+    qDebug() << files.size() << "files were waiting for artist" << artist->getName();
     foreach (FileInfo *file, files) {
         file->setArtist(artist);
+        file->setAlbumArtist(artist);
+        // qDebug() << "ready for album" << file->getFileInfo().baseName();
+        giveThisFileAnAlbumArtist(file);
+    }
+
+    files = filesWaitingForAlbumArtists.take(hash);
+    qDebug() << files.size() << "files were waiting for album artist" << artist->getName();
+    foreach (FileInfo *file, files) {
+        file->setAlbumArtist(artist);
         // qDebug() << "ready for album" << file->getFileInfo().baseName();
         giveThisFileAnAlbum(file);
     }
 
+}
+
+/*** Album Artist ***/
+
+void CollectionScanner::giveThisFileAnAlbumArtist(FileInfo *file) {
+    // qDebug() << __PRETTY_FUNCTION__ << file->getTags()->getFilename();
+
+    const QString albumArtistTag = DataUtils::cleanTag(file->getTags()->getAlbumArtist());
+    if (albumArtistTag.isEmpty()) {
+        giveThisFileAnAlbum(file);
+        return;
+    }
+
+    const QString artistHash = DataUtils::normalizeTag(albumArtistTag);
+    if (loadedArtists.contains(artistHash)) {
+        // this artist was already encountered
+        file->setAlbumArtist(loadedArtists.value(artistHash));
+        giveThisFileAnAlbum(file);
+
+    } else if (filesWaitingForArtists.contains(artistHash) || filesWaitingForAlbumArtists.contains(artistHash)) {
+        // this artist is already being processed
+        // so we need to add ourselves to the list of waiting files
+        // qDebug() << "artist being processed" << artistHash << file->getFileInfo().baseName();
+        QList<FileInfo *> files = filesWaitingForAlbumArtists.value(artistHash);
+        files.append(file);
+        filesWaitingForAlbumArtists.insert(artistHash, files);
+        // qDebug() << "FILES WAITING 4 ARTISTS" <<  artistHash << files << files.count();
+
+    } else {
+        // this artist name was never encountered
+        // start processing it
+        // qDebug() << "new artist processArtsist" << file->getFileInfo().baseName();
+        processAlbumArtist(file);
+    }
+}
+
+void CollectionScanner::processAlbumArtist(FileInfo *file) {
+    Artist *artist = new Artist();
+    const QString artistTag = file->getTags()->getAlbumArtist();
+    artist->setName(DataUtils::cleanTag(artistTag));
+    artist->setProperty("originalHash", artist->getHash());
+
+    // qDebug() << "Processing artist:" << artist->getName() << artist->getHash();
+
+    if (filesWaitingForAlbumArtists.contains(artist->getHash())) {
+        qDebug() << "ERROR Processing artist multiple times!" << artist->getName();
+    }
+
+    if (loadedArtists.contains(artist->getHash())) {
+        qDebug() << "ERROR Artist already processed!" << artist->getName();
+    }
+
+    // add this file to filesWaitingForArtists
+    // this also acts as a lock for other files
+    // when the info is ready, all waiting files will be processed
+    QList<FileInfo *> files;
+    files.append(file);
+    filesWaitingForAlbumArtists.insert(artist->getHash(), files);
+
+    connect(artist, SIGNAL(gotInfo()), SLOT(gotArtistInfo()));
+    artist->fetchInfo();
 }
 
 /*** Album ***/
@@ -509,7 +582,9 @@ void CollectionScanner::giveThisFileAnAlbum(FileInfo *file) {
     const QString albumTag = DataUtils::cleanTag(file->getTags()->getAlbumString());
 
     // try to normalize the album title to a simpler form
-    const QString albumHash = Album::getHash(albumTag, file->getArtist());
+    Artist *artist = file->getAlbumArtist();
+    const QString albumHash = Album::getHash(albumTag, artist);
+    // qDebug() << __PRETTY_FUNCTION__ << file->getTags()->getFilename() << albumHash;
 
     if (albumTag.isEmpty()) {
         processTrack(file);
@@ -537,13 +612,15 @@ void CollectionScanner::giveThisFileAnAlbum(FileInfo *file) {
 }
 
 void CollectionScanner::processAlbum(FileInfo *file) {
+    // qDebug() << __PRETTY_FUNCTION__ << file->getTags()->getFilename();
 
     Album *album = new Album();
     const QString albumTag = file->getTags()->getAlbumString();
     album->setTitle(DataUtils::cleanTag(albumTag));
     album->setYear(file->getTags()->getYear());
 
-    Artist *artist = file->getArtist();
+    Artist *artist = artist = file->getAlbumArtist();
+    if (!artist) artist = file->getArtist();
     if (artist) album->setArtist(artist); // && artist->getId() > 0
     else qDebug() << "Album" << album->getTitle() << "lacks an artist";
 
@@ -600,8 +677,7 @@ void CollectionScanner::gotAlbumInfo() {
     const QString hash = album->property("originalHash").toString();
     // qDebug() << "got info for album" << album->getTitle() << hash << album->getHash();
 
-    QList<FileInfo *> files = filesWaitingForAlbums.value(hash);
-    filesWaitingForAlbums.remove(hash);
+    QList<FileInfo *> files = filesWaitingForAlbums.take(hash);
     loadedAlbums.insert(hash, album);
     // if (hash != album->getHash())
     loadedAlbums.insert(album->getHash(), album);
@@ -625,7 +701,7 @@ void CollectionScanner::gotAlbumInfo() {
         ImageDownloader::enqueue(albumId, ImageDownloader::AlbumType, imageUrl);
 
     // continue the processing of blocked files
-    // qDebug() << files.size() << "files were waiting for album" << album->getTitle();
+    qDebug() << files.size() << "files were waiting for album" << album->getTitle();
     foreach (FileInfo *file, files) {
         file->setAlbum(album);
         processTrack(file);
