@@ -281,27 +281,28 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOption
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, trackTitle);
 
     // track artist
-    Artist *albumArtist = track->getAlbum()->getArtist();
-    const int albumArtistId = albumArtist->getId();
-    if (albumArtistId != track->getArtist()->getId()) {
-        static const QString by = "—";
-        const int x = trackTextBox.right();
-        QRect textBox(x, line.height(), 0, 0);
-        const int flags = Qt::AlignVCenter | Qt::AlignLeft;
-        QString artistName = track->getArtist()->getName();
+    Album *album = track->getAlbum();
+    if (album && album->getArtist()) {
+        Artist *albumArtist = album->getArtist();
+        if (albumArtist && albumArtist->getId() != track->getArtist()->getId()) {
+            static const QString by = "—";
+            const int x = trackTextBox.right();
+            QRect textBox(x, line.height(), 0, 0);
+            const int flags = Qt::AlignVCenter | Qt::AlignLeft;
+            QString artistName = track->getArtist()->getName();
 
-        painter->save();
+            painter->save();
 
-        textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, by);
-        if (textBox.right() > line.width()) textBox.setRight(line.width());
-        drawElidedText(painter, textBox, flags, by);
+            textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, by);
+            if (textBox.right() > line.width()) textBox.setRight(line.width());
+            drawElidedText(painter, textBox, flags, by);
 
-        textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, artistName);
-        if (textBox.right() > line.width()) textBox.setRight(line.width());
-        drawElidedText(painter, textBox, flags, artistName);
-        painter->restore();
+            textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, artistName);
+            if (textBox.right() > line.width()) textBox.setRight(line.width());
+            drawElidedText(painter, textBox, flags, artistName);
+            painter->restore();
+        }
     }
-
 
     painter->restore();
 }
