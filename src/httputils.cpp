@@ -10,7 +10,7 @@ Http &HttpUtils::musicBrainz() {
         http->addRequestHeader("User-Agent", userAgent());
 
         ThrottledHttp *throttledHttp = new ThrottledHttp(*http);
-        throttledHttp->setMilliseconds(1100);
+        throttledHttp->setMilliseconds(1000);
 
         CachedHttp *cachedHttp = new CachedHttp(*throttledHttp, "mb");
         cachedHttp->setMaxSeconds(86400 * 30);
@@ -44,8 +44,6 @@ Http &HttpUtils::cached() {
         http->addRequestHeader("User-Agent", userAgent());
 
         CachedHttp *cachedHttp = new CachedHttp(*http, "http");
-        cachedHttp->setMaxSeconds(86400 * 30);
-        cachedHttp->setMaxSize(0);
 
         return cachedHttp;
     }();
