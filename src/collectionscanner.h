@@ -73,7 +73,7 @@ public:
 
 signals:
     void progress(int);
-    void finished();
+    void finished(const QVariantMap &stats);
     void error(QString message);
 
 private slots:
@@ -120,6 +120,9 @@ private:
 
     QStringList directoryBlacklist;
     QStringList fileExtensionsBlacklist;
+
+    quint64 trackCount;
+    QStringList tracksNeedingFix;
 
 };
 

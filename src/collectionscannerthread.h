@@ -36,9 +36,10 @@ public:
 signals:
     void progress(int);
     void error(QString message);
+    void finished(const QVariantMap &stats);
 
 private slots:
-    void finish();
+    void finish(const QVariantMap &stats);
     void cleanup();
 
 private:

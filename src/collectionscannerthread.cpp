@@ -34,7 +34,7 @@ void CollectionScannerThread::run() {
     scanner->setDirectory(rootDirectory);
     connect(scanner, SIGNAL(progress(int)), SIGNAL(progress(int)), Qt::QueuedConnection);
     connect(scanner, SIGNAL(error(QString)), SIGNAL(error(QString)), Qt::QueuedConnection);
-    connect(scanner, SIGNAL(finished()), SLOT(finish()), Qt::QueuedConnection);
+    connect(scanner, SIGNAL(finished(QVariantMap)), SLOT(finish(QVariantMap)), Qt::QueuedConnection);
     // connect(scanner, SIGNAL(finished()), SIGNAL(finished()), Qt::QueuedConnection);
     scanner->run();
 
@@ -56,7 +56,8 @@ void CollectionScannerThread::cleanup() {
     exit();
 }
 
-void CollectionScannerThread::finish() {
+void CollectionScannerThread::finish(const QVariantMap &stats) {
     // qDebug() << "Finish";
+    emit finished(stats);
     QTimer::singleShot(0, this, SLOT(cleanup()));
 }

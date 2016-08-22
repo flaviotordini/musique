@@ -113,10 +113,10 @@ private slots:
 
     // app logic
     void startFullScan(QString dir);
-    void fullScanFinished();
+    void fullScanFinished(const QVariantMap &stats);
     void startIncrementalScan();
     void incrementalScanProgress(int percent);
-    void incrementalScanFinished();
+    void incrementalScanFinished(const QVariantMap &stats);
     void startImageDownload();
     void imageDownloadFinished();
     void search(QString query);
@@ -150,6 +150,8 @@ private:
     static QString formatTime(qint64 duration);
     QString playlistPath();
     void simpleUpdateDialog(QString version);
+    void showFinetuneDialog(const QVariantMap &stats);
+    void runFinetune(const QVariantMap &stats);
 
     // view mechanism
     QStackedWidget *views;
@@ -215,7 +217,6 @@ private:
 
     // update checker
     UpdateChecker *updateChecker;
-
 };
 
 #endif

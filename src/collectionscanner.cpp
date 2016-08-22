@@ -25,6 +25,7 @@ $END_LICENSE */
 #include "coverutils.h"
 #include "imagedownloader.h"
 #include "tagutils.h"
+#include "tagchecker.h"
 
 CollectionScanner::CollectionScanner(QObject *parent) :
     QObject(parent),
@@ -32,7 +33,8 @@ CollectionScanner::CollectionScanner(QObject *parent) :
     stopped(false),
     incremental(false),
     lastUpdate(0),
-    maxQueueSize(0) {
+    maxQueueSize(0),
+    trackCount(0) {
 
 #ifdef APP_MAC
     QString iTunesAlbumArtwork = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/Album Artwork";
@@ -56,6 +58,8 @@ void CollectionScanner::reset() {
     filesWaitingForArtists.clear();
     loadedAlbums.clear();
     filesWaitingForAlbums.clear();
+    trackCount = 0;
+    tracksNeedingFix.clear();
 }
 
 void CollectionScanner::run() {
@@ -251,7 +255,10 @@ void CollectionScanner::complete() {
 }
 
 void CollectionScanner::emitFinished() {
-    emit finished();
+    QVariantMap stats;
+    stats.insert("trackCount", trackCount);
+    stats.insert("tracksNeedingFix", tracksNeedingFix);
+    emit finished(stats);
 }
 
 void CollectionScanner::setDirectory(QString directory) {
@@ -496,7 +503,7 @@ void CollectionScanner::gotArtistInfo() {
 
     // continue the processing of blocked files
     QList<FileInfo *> files = filesWaitingForArtists.take(hash);
-    qDebug() << files.size() << "files were waiting for artist" << artist->getName();
+    // qDebug() << files.size() << "files were waiting for artist" << artist->getName();
     foreach (FileInfo *file, files) {
         file->setArtist(artist);
         file->setAlbumArtist(artist);
@@ -505,7 +512,7 @@ void CollectionScanner::gotArtistInfo() {
     }
 
     files = filesWaitingForAlbumArtists.take(hash);
-    qDebug() << files.size() << "files were waiting for album artist" << artist->getName();
+    // qDebug() << files.size() << "files were waiting for album artist" << artist->getName();
     foreach (FileInfo *file, files) {
         file->setAlbumArtist(artist);
         // qDebug() << "ready for album" << file->getFileInfo().baseName();
@@ -701,7 +708,7 @@ void CollectionScanner::gotAlbumInfo() {
         ImageDownloader::enqueue(albumId, ImageDownloader::AlbumType, imageUrl);
 
     // continue the processing of blocked files
-    qDebug() << files.size() << "files were waiting for album" << album->getTitle();
+    // qDebug() << files.size() << "files were waiting for album" << album->getTitle();
     foreach (FileInfo *file, files) {
         file->setAlbum(album);
         processTrack(file);
@@ -783,6 +790,10 @@ void CollectionScanner::processTrack(FileInfo *file) {
             << "albums:" << filesWaitingForAlbums.size()
             << "artists:" << filesWaitingForArtists.size();
             */
+
+    trackCount++;
+    if (TagChecker::checkTags(file->getTags()))
+        tracksNeedingFix << file->getFileInfo().absoluteFilePath();
 
     int percent = (maxQueueSize - fileQueue.size()) * 100 / maxQueueSize;
     emit progress(percent);

@@ -63,17 +63,10 @@ void CollectionScannerView::setCollectionScannerThread(CollectionScannerThread *
 
     connect(scannerThread, SIGNAL(progress(int)), SLOT(progress(int)), Qt::QueuedConnection);
     connect(scannerThread, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)), Qt::QueuedConnection);
-    connect(scannerThread, SIGNAL(finished()), window(), SLOT(showMediaView()), Qt::QueuedConnection);
-    connect(scannerThread, SIGNAL(finished()), SLOT(scanFinished()), Qt::QueuedConnection);
-
-}
-
-void CollectionScannerView::scanFinished() {
-    window()->activateWindow();
 }
 
 void CollectionScannerView::scanError(QString message) {
-    qDebug() << message;
+    qWarning() << message;
 }
 
 void CollectionScannerView::progress(int value) {

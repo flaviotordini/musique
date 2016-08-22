@@ -45,7 +45,6 @@ public slots:
 
 private slots:
     void progress(int value);
-    void scanFinished();
     void scanError(QString message);
 
 private:

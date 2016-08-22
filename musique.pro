@@ -84,7 +84,8 @@ HEADERS += src/mainwindow.h \
     src/imagedownloader.h \
     src/iconutils.h \
     src/appwidget.h \
-    src/httputils.h
+    src/httputils.h \
+    src/tagchecker.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -145,7 +146,8 @@ SOURCES += src/main.cpp \
     src/imagedownloader.cpp \
     src/iconutils.cpp \
     src/appwidget.cpp \
-    src/httputils.cpp
+    src/httputils.cpp \
+    src/tagchecker.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

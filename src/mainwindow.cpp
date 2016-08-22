@@ -685,7 +685,7 @@ void MainWindow::showWidget(QWidget* widget, bool transition) {
     history->push(widget);
 
 #ifdef APP_MAC
-        mac::uncloseWindow(window()->winId());
+    mac::uncloseWindow(window()->winId());
 #endif
 
 }
@@ -819,7 +819,7 @@ void MainWindow::startFullScan(QString directory) {
     CollectionScannerThread *scannerThread = new CollectionScannerThread();
     collectionScannerView->setCollectionScannerThread(scannerThread);
     scannerThread->setDirectory(directory);
-    connect(scannerThread, SIGNAL(finished()), SLOT(fullScanFinished()), Qt::UniqueConnection);
+    connect(scannerThread, SIGNAL(finished(QVariantMap)), SLOT(fullScanFinished(QVariantMap)), Qt::UniqueConnection);
     scannerThread->start();
 
     if (mediaView) {
@@ -831,7 +831,9 @@ void MainWindow::startFullScan(QString directory) {
     }
 }
 
-void MainWindow::fullScanFinished() {
+void MainWindow::fullScanFinished(const QVariantMap &stats) {
+    showMediaView();
+    activateWindow();
 #ifdef APP_EXTRA
     Extra::notify(tr("%1 finished scanning your music collection").arg(Constants::NAME), "", "");
 #else
@@ -841,6 +843,7 @@ void MainWindow::fullScanFinished() {
     QApplication::alert(this, 0);
 #endif
     startImageDownload();
+    showFinetuneDialog(stats);
 }
 
 void MainWindow::startIncrementalScan() {
@@ -850,7 +853,7 @@ void MainWindow::startIncrementalScan() {
     // incremental!
     scannerThread->setDirectory(QString());
     connect(scannerThread, SIGNAL(progress(int)), SLOT(incrementalScanProgress(int)), Qt::UniqueConnection);
-    connect(scannerThread, SIGNAL(finished()), SLOT(incrementalScanFinished()), Qt::UniqueConnection);
+    connect(scannerThread, SIGNAL(finished(QVariantMap)), SLOT(incrementalScanFinished(QVariantMap)), Qt::UniqueConnection);
     scannerThread->start();
 }
 
@@ -858,12 +861,13 @@ void MainWindow::incrementalScanProgress(int percent) {
     showMessage(tr("Updating collection - %1%").arg(QString::number(percent)));
 }
 
-void MainWindow::incrementalScanFinished() {
+void MainWindow::incrementalScanFinished(const QVariantMap &stats) {
     if (views->currentWidget() == mediaView ||
             views->currentWidget() == contextualView)
         chooseFolderAct->setEnabled(true);
     showMessage(tr("Collection updated"));
     startImageDownload();
+    showFinetuneDialog(stats);
 }
 
 void MainWindow::startImageDownload() {
@@ -876,7 +880,7 @@ void MainWindow::startImageDownload() {
 void MainWindow::imageDownloadFinished() {
     if (views->currentWidget() == mediaView ||
             views->currentWidget() == contextualView)
-    chooseFolderAct->setEnabled(true);
+        chooseFolderAct->setEnabled(true);
 }
 
 void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState */) {
@@ -1197,8 +1201,7 @@ void MainWindow::gotNewVersion(QString version) {
 
 void MainWindow::simpleUpdateDialog(QString version) {
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/images/app.png")
-                .scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png"));
     msgBox.setText(tr("%1 version %2 is now available.").arg(Constants::NAME, version));
     msgBox.setModal(true);
     msgBox.setWindowModality(Qt::WindowModal);
@@ -1211,6 +1214,74 @@ void MainWindow::simpleUpdateDialog(QString version) {
         settings.setValue("checkedVersion", version);
     }
     if (msgBox.clickedButton() == updateButton) visitSite();
+}
+
+void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
+    uint trackCount = stats.value("trackCount").toUInt();
+    int tracksNeedingFixCount = stats.value("tracksNeedingFix").toStringList().size();
+
+    if (trackCount <= 0 && tracksNeedingFixCount <= 0) return;
+
+    int percent = (tracksNeedingFixCount * 100) / trackCount;
+    if (percent <= 5) return;
+
+    QString message = tr("%1 added %2 tracks to your music library. "
+                         "%3 tracks (%4%) have incomplete tags.")
+            .arg(QLatin1String(Constants::NAME),
+                 QString::number(trackCount),
+                 QString::number(tracksNeedingFixCount),
+                 QString::number(percent));
+    QString infoText = tr("Do you want to fix them now with %1?").arg("Finetune");
+
+    QMessageBox msgBox(this);
+    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/finetune.png"));
+    msgBox.setText(message);
+    msgBox.setInformativeText(infoText);
+    msgBox.setModal(true);
+    msgBox.setWindowModality(Qt::WindowModal);
+    msgBox.addButton(QMessageBox::Close);
+    QPushButton* acceptButton = msgBox.addButton(tr("Fix my music"), QMessageBox::AcceptRole);
+    msgBox.exec();
+    if (msgBox.clickedButton() == acceptButton) runFinetune(stats);
+}
+
+void MainWindow::runFinetune(const QVariantMap &stats) {
+    QStringList files = stats.value("filesNeedingFix").toStringList();
+
+    const QString filename = QStandardPaths::TempLocation + "/finetune.txt";
+    QFile file(filename);
+    if (!file.open(QIODevice::WriteOnly))
+        qWarning() << "Error opening file for writing" << file.fileName();
+    QTextStream stream(&file);
+    foreach (const QString &s, files) {
+        stream << s << '\n';
+    }
+    file.close();
+
+#if defined APP_MAC || defined APP_WIN
+    if (Extra::runFinetune(filename)) return;
+#else
+    QStringList files = stats.value("filesNeedingFix").toStringList();
+    QProcess process;
+    if (process.startDetached("finetune", QStringList(filename)))
+        return;
+#endif
+
+    const QString baseUrl = QLatin1String("http://") + Constants::ORG_DOMAIN;
+    const QString filesUrl = baseUrl + QLatin1String("/files/");
+    QString url = filesUrl + "finetune/finetune.";
+#ifdef APP_MAC
+    const QString ext = "dmg";
+#elif defined APP_WIN
+    const QString ext = "exe";
+#else
+    const QString ext = "deb";
+#endif
+    url += ext;
+    QPixmap pixmap = IconUtils::pixmap(":/images/64x64/finetune.png");
+    UpdateDialog *dialog = new UpdateDialog(&pixmap, "Finetune", QString(), url, this);
+    dialog->downloadUpdate();
+    dialog->show();
 }
 
 QString MainWindow::playlistPath() {
@@ -1413,7 +1484,7 @@ void MainWindow::hideBuyAction() {
 
 void MainWindow::showDemoDialog(QString message) {
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/images/app.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png"));
     msgBox.setText(message);
     msgBox.setModal(true);
     // make it a "sheet" on the Mac
