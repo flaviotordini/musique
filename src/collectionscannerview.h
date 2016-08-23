@@ -43,11 +43,16 @@ public:
 public slots:
     void setCollectionScannerThread(CollectionScannerThread *scannerThread);
 
+protected:
+    void paintEvent(QPaintEvent *e);
+
 private slots:
     void progress(int value);
     void scanError(QString message);
+    void screenChanged();
 
 private:
+    QLabel *logo;
     QProgressBar *progressBar;
 
 };

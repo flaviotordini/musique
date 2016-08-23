@@ -99,14 +99,10 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     verticalLayout->addWidget(new AppsWidget());
 }
 
-void AboutView::paintEvent(QPaintEvent * /*event*/) {
+void AboutView::paintEvent(QPaintEvent *e) {
+    Q_UNUSED(e);
     QPainter painter(this);
-    QBrush brush;
-    if (window()->isActiveWindow()) {
-        brush = QBrush(Qt::white);
-    } else {
-        brush = palette().window();
-    }
+    QBrush brush = window()->isActiveWindow() ? palette().base() : palette().window();
     painter.fillRect(rect(), brush);
 }
 

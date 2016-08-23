@@ -41,6 +41,9 @@ public:
 signals:
     void locationChanged(QString dir);
 
+protected:
+    void paintEvent(QPaintEvent *e);
+
 private slots:
     void chooseFolder();
     void systemDirChosen();

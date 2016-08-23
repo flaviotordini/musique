@@ -21,16 +21,34 @@ $END_LICENSE */
 #include "collectionscannerview.h"
 #include "constants.h"
 #include "fontutils.h"
+#include "iconutils.h"
 #include "database.h"
-
-static const int PADDING = 30;
 
 CollectionScannerView::CollectionScannerView( QWidget *parent ) : View(parent) {
 
-    QBoxLayout *layout = new QVBoxLayout(this);
+    const int padding = 30;
+
+    connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), SLOT(screenChanged()));
+
+    QBoxLayout *vLayout = new QVBoxLayout(this);
+    vLayout->setAlignment(Qt::AlignCenter);
+    vLayout->setSpacing(padding);
+    vLayout->setMargin(padding);
+
+    QBoxLayout *hLayout = new QHBoxLayout();
+    vLayout->addLayout(hLayout);
+    hLayout->setAlignment(Qt::AlignCenter);
+    hLayout->setMargin(padding);
+    hLayout->setSpacing(padding);
+
+    logo = new QLabel();
+    logo->setPixmap(IconUtils::pixmap(":/images/app.png"));
+    hLayout->addWidget(logo, 0, Qt::AlignTop);
+
+    QBoxLayout *layout = new QVBoxLayout();
     layout->setAlignment(Qt::AlignCenter);
-    layout->setSpacing(PADDING);
-    layout->setMargin(PADDING);
+    layout->setSpacing(padding);
+    hLayout->addLayout(layout);
 
     QLabel *tipLabel = new QLabel(
             tr("%1 is scanning your music collection.").arg(Constants::NAME)
@@ -39,6 +57,7 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : View(parent) {
     layout->addWidget(tipLabel);
 
     progressBar = new QProgressBar(this);
+    progressBar->setValue(0);
     progressBar->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     layout->addWidget(progressBar);
 
@@ -71,4 +90,15 @@ void CollectionScannerView::scanError(QString message) {
 
 void CollectionScannerView::progress(int value) {
     if (value > 0 && progressBar->maximum() != 100) progressBar->setMaximum(100);
+}
+
+void CollectionScannerView::screenChanged() {
+    logo->setPixmap(IconUtils::pixmap(":/images/app.png"));
+}
+
+void CollectionScannerView::paintEvent(QPaintEvent *e) {
+    Q_UNUSED(e);
+    QPainter painter(this);
+    QBrush brush = window()->isActiveWindow() ? palette().base() : palette().window();
+    painter.fillRect(rect(), brush);
 }

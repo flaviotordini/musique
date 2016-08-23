@@ -148,3 +148,10 @@ void ChooseFolderView::appear() {
         welcomeLabel->show();
     }
 }
+
+void ChooseFolderView::paintEvent(QPaintEvent *e) {
+    Q_UNUSED(e);
+    QPainter painter(this);
+    QBrush brush = window()->isActiveWindow() ? palette().base() : palette().window();
+    painter.fillRect(rect(), brush);
+}
