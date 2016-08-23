@@ -336,9 +336,12 @@ void Artist::parseLastFmInfo(QByteArray bytes) {
                 if(n == QLatin1String("name")) {
                     QString artistName = xml.readElementText();
                     if (name != artistName) {
-                        qDebug() << "Fixed artist name" << name << "->" << artistName;
-                        name = artistName;
-                        hash.clear();
+                        QString newHash = getHash(artistName);
+                        if (getHash() != newHash) {
+                            qDebug() << "Fixed artist name" << name << "->" << artistName << hash << newHash;
+                            name = artistName;
+                            hash.clear();
+                        }
                     }
                 }
 

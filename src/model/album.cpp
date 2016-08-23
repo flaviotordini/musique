@@ -128,9 +128,9 @@ void Album::update() {
     if (!success) qDebug() << query.lastError().text();
 }
 
-QString Album::getHash(QString name, Artist *artist) {
+QString Album::getHash(const QString &name, Artist *artist) {
     QString h;
-    if (artist) h = artist->getHash() + "/";
+    if (artist) h = artist->getHash() + QLatin1Char('/');
     else h = "_unknown/";
     h += DataUtils::normalizeTag(name);
     return h;
@@ -374,9 +374,12 @@ void Album::parseLastFmInfo(QByteArray bytes) {
                 else if(n == QLatin1String("name")) {
                     QString albumTitle = xml.readElementText();
                     if (name != albumTitle) {
-                        qDebug() << "Fixed album name" << name << "->" << albumTitle;
-                        name = albumTitle;
-                        hash.clear();
+                        QString newHash = getHash(albumTitle, artist);
+                        if (getHash() != newHash) {
+                            qDebug() << "Fixed album name" << name << "->" << albumTitle;
+                            name = albumTitle;
+                            hash.clear();
+                        }
                     }
                 }
 

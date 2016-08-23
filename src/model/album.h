@@ -43,7 +43,7 @@ public:
     void setTitle(QString title) { this->name = title; }
     int getYear() { return year; }
     void setYear(int year) { this->year = year; }
-    static QString getHash(QString name, Artist *artist);
+    static QString getHash(const QString &name, Artist *artist);
     const QString &getHash();
     QString getWikiLocation();
     QString getWiki();
