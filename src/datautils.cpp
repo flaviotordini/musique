@@ -27,23 +27,26 @@ QString DataUtils::cleanTag(QString s) {
     return s.simplified();
 }
 
-QString DataUtils::normalizeTag(QString s) {
-    s = s.simplified().toLower();
+QString DataUtils::normalizeTag(const QString &tag) {
+    QString s = tag.simplified().toLower();
 
     // The Beatles => Beatles
     if (s.length() > 4 && s.startsWith(QStringLiteral("the "))) s = s.remove(0, 4);
 
+    // Wendy & Lisa => Wendy and Lisa
+    s.replace(QStringLiteral(" & "), QStringLiteral("and"));
+
     // remove anything that is not a "letter"
-    QString n;
     const int l = s.length();
+    QString n;
+    n.reserve(l);
     for (int i = 0; i < l; ++i) {
         const QChar c = s.at(i);
         if (c.isLetterOrNumber()) n.append(c);
         // else qDebug() << "Dropping char" << c;
     }
-    s = n;
 
-    return s;
+    return n;
 }
 
 QString DataUtils::simplify(const QString &s) {
