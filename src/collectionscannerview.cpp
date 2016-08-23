@@ -78,7 +78,7 @@ void CollectionScannerView::setCollectionScannerThread(CollectionScannerThread *
 
     // qDebug() << "CollectionScannerView::startScan" << directory;
 
-    progressBar->setMaximum(0);
+    progressBar->setMaximum(1);
 
     connect(scannerThread, SIGNAL(progress(int)), SLOT(progress(int)), Qt::QueuedConnection);
     connect(scannerThread, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)), Qt::QueuedConnection);
