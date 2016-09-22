@@ -6,18 +6,18 @@ Translations are done at https://www.transifex.com/projects/p/musique/
 Just register and apply for a language team. Please don't request translation merges on GitHub.
 
 ## Build instructions
-To compile Musique you need at least Qt 4.8. The following Qt modules are needed:
-core, gui, network, sql (using the Sqlite plugin), dbus, phonon.
-You also need TagLib: http://taglib.github.io
+To compile Musique you need at least Qt 5.0. The following Qt modules are needed: core, gui, widgets, network, sql (using the Sqlite plugin), script, dbus. You also need TagLib: http://taglib.github.io
 
 To be able to build on a Debian (or derivative) system:
 
-	$ sudo apt-get install build-essential qt4-dev-tools libphonon-dev libtag1-dev libqt4-sql-sqlite
+	$ sudo apt-get install build-essential qttools5-dev-tools qt5-qmake libphonon4qt5-dev libqt5sql5-sqlite qt5-default libtag1-dev
 
 Compiling:
 
     $ qmake
     $ make
+
+Beware of the Qt 4 version of qmake!
 
 Running:
 
