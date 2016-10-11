@@ -299,7 +299,7 @@ void MediaView::aboutToFinish() {
         Track *nextTrack = playlistModel->getNextTrack();
         if (nextTrack) {
             QString absolutePath = nextTrack->getAbsolutePath();
-            qWarning() << "Enqueuing" << absolutePath;
+            qDebug() << "Enqueuing" << absolutePath;
             mediaObject->enqueue(absolutePath);
         }
     }
@@ -310,7 +310,6 @@ void MediaView::currentSourceChanged(Phonon::MediaSource mediaSource) {
     QString path = mediaSource.fileName();
     QString collectionRoot = Database::instance().collectionRoot();
     path = path.mid(collectionRoot.length() + 1);
-    qWarning() << path;
     Track* track = Track::forPath(path);
     if (track) {
         int row = playlistModel->rowForTrack(track);
