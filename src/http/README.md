@@ -1,6 +1,6 @@
 # A wrapper for the Qt Network Access API
 
-This is just a wrapper around Qt's QNetworkAccessManager and friends. I use in my Qt apps. It allows me to add missing functionality as needed, e.g.:
+This is just a wrapper around Qt's QNetworkAccessManager and friends. I use it in my Qt apps at http://flavio.tordini.org . It allows me to add missing functionality as needed, e.g.:
 
 - Throttling (as required by many web APIs nowadays)
 - Read timeouts (don't let your requests get stuck forever)
@@ -38,9 +38,8 @@ Http &myHttp() {
         ThrottledHttp *throttledHttp = new ThrottledHttp(*http);
         throttledHttp->setMilliseconds(1000);
 
-        CachedHttp *cachedHttp = new CachedHttp(*throttledHttp, "mb");
+        CachedHttp *cachedHttp = new CachedHttp(*throttledHttp, "mycache");
         cachedHttp->setMaxSeconds(86400 * 30);
-        cachedHttp->setMaxSize(0);
 
         return cachedHttp;
     }();

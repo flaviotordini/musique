@@ -11,11 +11,13 @@ public:
     CachedHttp(Http &http = Http::instance(), const QString &name = "http");
     void setMaxSeconds(uint seconds);
     void setMaxSize(uint maxSize);
+    void setCachePostRequests(bool value) { cachePostRequests = value; }
     QObject *request(const HttpRequest &req);
 
 private:
     Http &http;
     LocalCache *cache;
+    bool cachePostRequests;
 };
 
 class CachedHttpReply : public HttpReply {

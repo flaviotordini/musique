@@ -8,6 +8,10 @@ QString requestHash(const HttpRequest &req) {
     QString s = req.url.toString()
             + sep + req.body
             + sep + QString::number(req.offset);
+    if (req.operation == QNetworkAccessManager::PostOperation) {
+        s += sep;
+        s += QLatin1String("POST");
+    }
     return LocalCache::hash(s);
 }
 
@@ -48,7 +52,8 @@ void WrappedHttpReply::originFinished(const HttpReply &reply) {
 
 CachedHttp::CachedHttp(Http &http, const QString &name) :
     http(http),
-    cache(LocalCache::instance(name)) { }
+    cache(LocalCache::instance(name)),
+    cachePostRequests(false) { }
 
 void CachedHttp::setMaxSeconds(uint seconds) {
     cache->setMaxSeconds(seconds);
@@ -59,8 +64,10 @@ void CachedHttp::setMaxSize(uint maxSize) {
 }
 
 QObject *CachedHttp::request(const HttpRequest &req) {
-    // cache only GET requests
-    if (req.operation != QNetworkAccessManager::GetOperation) {
+    bool cacheable = req.operation == QNetworkAccessManager::GetOperation ||
+            (cachePostRequests && req.operation == QNetworkAccessManager::PostOperation);
+    if (!cacheable) {
+        qDebug() << "Not cacheable" << req.url;
         return http.request(req);
     }
     const QString key = requestHash(req);
