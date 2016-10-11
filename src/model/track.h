@@ -65,8 +65,6 @@ public:
     int getStartTime() { return startTime; }
     void setStartTime(int startTime) { this->startTime = startTime; }
 
-
-
     // relations
     Album* getAlbum() { return album; }
     void setAlbum(Album *album) { this->album = album; }
@@ -85,11 +83,11 @@ public:
 
     // data access    
     static Track* forId(int trackId);
-    static Track* forPath(QString path);
-    static int idForPath(QString path);
-    static bool exists(QString path);
-    static bool isModified(QString path, uint lastModified);
-    static void remove(QString path);
+    static Track* forPath(const QString &path);
+    static int idForPath(const QString &path);
+    static bool exists(const QString &path);
+    static bool isModified(const QString &path, uint lastModified);
+    static void remove(const QString &path);
     void insert();
     void update();
 

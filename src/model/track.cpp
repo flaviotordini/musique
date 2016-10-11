@@ -90,19 +90,17 @@ Track* Track::forId(int trackId) {
     return 0;
 }
 
-Track* Track::forPath(QString path) {
+Track* Track::forPath(const QString &path) {
     // qDebug() << "Track::forPath" << path;
+    QHash<QString, Track*>::const_iterator i = pathCache.constFind(path);
+    if (i != pathCache.constEnd()) return i.value();
     Track *track = 0;
-    if (pathCache.contains(path)) {
-        track = pathCache.value(path);
-    } else {
-        int id = Track::idForPath(path);
-        if (id != -1) track = Track::forId(id);
-    }
+    int id = Track::idForPath(path);
+    if (id != -1) track = Track::forId(id);
     return track;
 }
 
-int Track::idForPath(QString path) {
+int Track::idForPath(const QString &path) {
     int id = -1;
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
@@ -116,7 +114,7 @@ int Track::idForPath(QString path) {
     return id;
 }
 
-bool Track::exists(QString path) {
+bool Track::exists(const QString &path) {
     // qDebug() << "Track::exists";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
@@ -130,7 +128,7 @@ bool Track::exists(QString path) {
     return false;
 }
 
-bool Track::isModified(QString path, uint lastModified) {
+bool Track::isModified(const QString &path, uint lastModified) {
     // qDebug() << "Track::isModified";
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
@@ -250,7 +248,7 @@ void Track::update() {
     if (!success) qDebug() << query.lastError().text();
 }
 
-void Track::remove(QString path) {
+void Track::remove(const QString &path) {
     // qDebug() << "Track::remove";
 
     QSqlDatabase db = Database::instance().getConnection();
@@ -393,8 +391,8 @@ void Track::getLyrics() {
     // http://lyrics.wikia.com/LyricWiki:REST
     QUrl url = QString(
             "http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
-            .arg(QString::fromUtf8(QUrl::toPercentEncoding(artistName)))
-            .arg(QString::fromUtf8(QUrl::toPercentEncoding(title)));
+            .arg(QString::fromUtf8(QUrl::toPercentEncoding(DataUtils::simplify(artistName))))
+            .arg(QString::fromUtf8(QUrl::toPercentEncoding(DataUtils::simplify(title))));
 
     QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLyricsSearchResults(QByteArray)));
