@@ -98,7 +98,7 @@ void PlaylistView::selectTracks(QList<Track*> tracks) {
         QModelIndex index = playlistModel->indexForTrack(track);
         if (index.isValid())
             selectionModel()->select(index, QItemSelectionModel::Select);
-        else qWarning() << __PRETTY_FUNCTION__ << "Invalid index";
+        else qDebug() << __PRETTY_FUNCTION__ << "Invalid index";
     }
 }
 
