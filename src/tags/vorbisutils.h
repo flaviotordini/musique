@@ -17,6 +17,7 @@ QHash<QString, const char*> initReadVorbisMap() {
     map.insert("ALBUM ARTIST", "albumArtist");
     map.insert("ARTISTSORT", "artistSort");
     map.insert("ALBUMARTISTSORT", "albumArtistSort");
+    map.insert("COMPOSERSORT", "composerSort");
 
     return map;
 }
