@@ -1,7 +1,9 @@
 #include "appwidget.h"
 #include "constants.h"
 #include "http.h"
+#ifdef APP_EXTRA
 #include "updatedialog.h"
+#endif
 
 AppsWidget::AppsWidget(QWidget *parent) : QWidget(parent) {
     const int padding = 30;
@@ -15,7 +17,7 @@ AppsWidget::AppsWidget(QWidget *parent) : QWidget(parent) {
     const QString ext = "dmg";
 #elif defined APP_WIN
     const QString ext = "exe";
-#elif defined APP_UBUNTU
+#else
     const QString ext = "deb";
 #endif
 
@@ -58,6 +60,7 @@ AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent) 
     appTitle->setAlignment(Qt::AlignHCenter);
     layout->addWidget(appTitle);
 
+#ifdef APP_EXTRA
 #if !defined(APP_UBUNTU) && !defined(APP_MAC_STORE)
     downloadButton = new QPushButton(tr("Download"));
     downloadButton->setAttribute(Qt::WA_MacSmallSize);
@@ -70,6 +73,7 @@ AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent) 
     layout->addWidget(downloadButton, Qt::AlignHCenter);
     layout->setAlignment(downloadButton, Qt::AlignHCenter);
     downloadButton->hide();
+#endif
 #endif
 
     setCursor(Qt::PointingHandCursor);
@@ -102,7 +106,9 @@ void AppWidget::iconDownloaded(const QByteArray &bytes) {
 }
 
 void AppWidget::downloadApp() {
+#ifdef APP_EXTRA
     UpdateDialog *dialog = new UpdateDialog(icon->pixmap(), name, QString(), url, this);
     dialog->downloadUpdate();
     dialog->show();
+#endif
 }

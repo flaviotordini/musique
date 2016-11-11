@@ -47,13 +47,9 @@ QIcon IconUtils::fromResources(const QString &name) {
 }
 
 QIcon IconUtils::icon(const QString &name) {
-#if defined(APP_MAC) || defined(APP_WIN) || defined(APP_UBUNTU)
-    return fromResources(name);
-#else
-    QIcon icon = fromTheme(name);
-    if (icon.isNull()) icon = fromResources(name);
+    QIcon icon = fromResources(name);
+    if (icon.isNull()) icon = fromTheme(name);
     return icon;
-#endif
 }
 
 QIcon IconUtils::icon(const QStringList &names) {
@@ -126,11 +122,12 @@ QPixmap IconUtils::pixmap(const QString &name) {
         if (dotIndex != -1) {
             QString at2xfileName = fileName;
             at2xfileName.insert(dotIndex, QStringLiteral("@2x"));
-            if (QFile::exists(at2xfileName))
+            if (QFile::exists(at2xfileName)) {
                 fileName = at2xfileName;
                 QPixmap pixmap(fileName);
                 pixmap.setDevicePixelRatio(pixelRatio);
                 return pixmap;
+            }
         }
     }
 

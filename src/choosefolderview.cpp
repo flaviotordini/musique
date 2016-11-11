@@ -68,7 +68,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
     connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
     buttonLayout->addWidget(cancelButton);
 
-#ifdef APP_MAC_NO
+#ifdef APP_MAC
     QPushButton *useiTunesDirButton = new QPushButton(tr("Use iTunes collection"));
     connect(useiTunesDirButton, SIGNAL(clicked()), SLOT(iTunesDirChosen()));
     useiTunesDirButton->setDefault(true);
@@ -79,9 +79,10 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
     QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
     QString homeLocation = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
     if (QFile::exists(musicLocation) && musicLocation != homeLocation + "/") {
-        QPushButton *useSystemDirButton = new QPushButton(tr("Use %1").arg(musicLocation));
+        QString musicFolderName = QStandardPaths::displayName(QStandardPaths::MusicLocation);
+        QPushButton *useSystemDirButton = new QPushButton(tr("Use %1 folder").arg(musicFolderName));
         connect(useSystemDirButton, SIGNAL(clicked()), SLOT(systemDirChosen()));
-#ifndef APP_MAC_NO
+#ifndef APP_MAC
         useSystemDirButton->setDefault(true);
         useSystemDirButton->setFocus(Qt::NoFocusReason);
 #endif
@@ -99,7 +100,7 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
                     .arg(Constants::NAME) + " " +
                     tr("If you have privacy concerns about this you can quit now.")
                     , this);
-    privacyLabel->setFont(FontUtils::smaller());
+    privacyLabel->setFont(FontUtils::small());
     privacyLabel->setOpenExternalLinks(true);
     privacyLabel->setWordWrap(true);
     vLayout->addWidget(privacyLabel);
@@ -132,7 +133,7 @@ void ChooseFolderView::systemDirChosen() {
 }
 
 void ChooseFolderView::iTunesDirChosen() {
-    QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/iTunes Music";
+    QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/";
     emit locationChanged(musicLocation);
 }
 

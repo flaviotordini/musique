@@ -74,7 +74,7 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
 
 #ifndef APP_EXTRA
     "<p>" + tr("Released under the <a href='%1'>GNU General Public License</a>")
-    .arg("http://www.gnu.org/licenses/gpl.html") + "</p>"
+    .arg("http://www.gnu.org/licenses/gpl.html") + "</p>";
 #endif
 
     info += "<p>&copy; 2016 " + QLatin1String(Constants::ORG_NAME) + "</p></body></html>";
