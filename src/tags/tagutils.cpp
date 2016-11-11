@@ -1,5 +1,4 @@
 #include "tagutils.h"
-#include "collectionscanner.h"
 
 #include <tstring.h>
 #include <fileref.h>

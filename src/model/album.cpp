@@ -26,7 +26,7 @@ $END_LICENSE */
 #include "../datautils.h"
 
 #include "http.h"
-#include "httputils.h"
+#include "../httputils.h"
 
 Album::Album() : year(0), artist(0), listeners(0), photo(0), thumb(0) {
 

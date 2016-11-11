@@ -27,7 +27,7 @@ $END_LICENSE */
 #include "../datautils.h"
 
 #include "http.h"
-#include "httputils.h"
+#include "../httputils.h"
 
 Artist::Artist(QObject *parent) : Item(parent),
     trackCount(0),
