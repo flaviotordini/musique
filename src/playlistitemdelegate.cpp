@@ -50,6 +50,8 @@ QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
         ITEM_HEIGHT = option.fontMetrics.height() * 1.8;
     }
 
+    static const QSize headerSize = QSize(ITEM_HEIGHT*2, ITEM_HEIGHT*2);
+
     QModelIndex previousIndex = index.sibling(index.row()-1, index.column());
     if (previousIndex.isValid()) {
         const TrackPointer previousTrackPointer = previousIndex.data(Playlist::DataObjectRole).value<TrackPointer>();
@@ -57,12 +59,16 @@ QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
         if (previousTrack) {
             const TrackPointer trackPointer = index.data(Playlist::DataObjectRole).value<TrackPointer>();
             Track *track = trackPointer.data();
-            if (previousTrack->getAlbum() != track->getAlbum()) {
-                return QSize(ITEM_HEIGHT*2, ITEM_HEIGHT*2);
+            Album *previousAlbum = previousTrack->getAlbum();
+            if (!previousAlbum && previousTrack->getArtist() != track->getArtist()) {
+                return headerSize;
+            }
+            if (previousAlbum != track->getAlbum()) {
+                return headerSize;
             }
         }
     } else {
-        return QSize(ITEM_HEIGHT*2, ITEM_HEIGHT*2);
+        return headerSize;
     }
 
     return QSize(ITEM_HEIGHT, ITEM_HEIGHT);
