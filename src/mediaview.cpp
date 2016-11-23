@@ -171,7 +171,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
     if (startPlayback) {
         QString path = track->getAbsolutePath();
         qDebug() << "Playing" << path;
-        mediaObject->setCurrentSource(path);
+        mediaObject->setCurrentSource(QUrl::fromLocalFile(path));
         mediaObject->play();
     }
 
@@ -300,7 +300,7 @@ void MediaView::aboutToFinish() {
         if (nextTrack) {
             QString absolutePath = nextTrack->getAbsolutePath();
             qDebug() << "Enqueuing" << absolutePath;
-            mediaObject->enqueue(absolutePath);
+            mediaObject->enqueue(QUrl::fromLocalFile(absolutePath));
         }
     }
     trackFinished();
