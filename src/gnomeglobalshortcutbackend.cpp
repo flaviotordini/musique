@@ -20,6 +20,7 @@ $END_LICENSE */
 
 #include "gnomeglobalshortcutbackend.h"
 #include "globalshortcuts.h"
+#include "constants.h"
 
 #include <QAction>
 #include <QtDebug>
@@ -34,12 +35,12 @@ const char* GnomeGlobalShortcutBackend::kGsdInterface = "org.gnome.SettingsDaemo
 
 GnomeGlobalShortcutBackend::GnomeGlobalShortcutBackend(GlobalShortcuts* parent)
     : GlobalShortcutBackend(parent),
-    interface_(NULL) { }
+      interface_(NULL) { }
 
 bool GnomeGlobalShortcutBackend::IsGsdAvailable() {
 #ifdef QT_DBUS_LIB
     return QDBusConnection::sessionBus().interface()->isServiceRegistered(
-            GnomeGlobalShortcutBackend::kGsdService);
+                GnomeGlobalShortcutBackend::kGsdService);
 #else // QT_DBUS_LIB
     return false;
 #endif
@@ -54,7 +55,12 @@ bool GnomeGlobalShortcutBackend::DoRegister() {
 
     if (!interface_) {
         interface_ = new QDBusInterface(
-                kGsdService, kGsdPath, kGsdInterface, QDBusConnection::sessionBus(), this);
+                    kGsdService, kGsdPath, kGsdInterface, QDBusConnection::sessionBus(), this);
+    }
+
+    QDBusMessage reply = interface_->call("GrabMediaPlayerKeys", Constants::NAME, (unsigned int) 0);
+    if (reply.type() == QDBusMessage::ErrorMessage) {
+        qWarning() << "Failed to grab media player keys. Error:" << reply.errorMessage();
     }
 
     connect(interface_, SIGNAL(MediaPlayerKeyPressed(QString,QString)),
@@ -77,6 +83,8 @@ void GnomeGlobalShortcutBackend::DoUnregister() {
 
     disconnect(interface_, SIGNAL(MediaPlayerKeyPressed(QString,QString)),
                this, SLOT(GnomeMediaKeyPressed(QString,QString)));
+
+    interface_->call("ReleaseMediaPlayerKeys", Constants::NAME);
 #endif
 }
 
