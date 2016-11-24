@@ -32,7 +32,7 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation>Μπορεί, επίσης, να θέλετε να δοκιμάσετε και τις άλλες μου εφαρμογές:</translation>
+        <translation>Μπορεί, επίσης, να θέλετε να δοκιμάσετε και τις άλλες εφαρμογές μου:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
@@ -70,7 +70,7 @@
     <name>ActivationView</name>
     <message>
         <source>Please license %1</source>
-        <translation>Παρακαλώ αποκτήστε την άδεια χρήσης του %1</translation>
+        <translation>Παρακαλώ αποκτήστε μια άδεια χρήσης του %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Η πλήρη έκδοση σας επιτρέπη να προσθέσετε περισσότερα απο %1 κομμάτια στην λίστα αναπαραγωγής και να ακούτε την μουσική σας χωρίς διακοπές.</translation>
+        <translation>Η πλήρη έκδοση σας επιτρέπει να προσθέσετε περισσότερα από %1 κομμάτια στην λίστα αναπαραγωγής και να ακούτε την μουσική σας χωρίς διακοπές.</translation>
     </message>
 </context>
 <context>
@@ -136,7 +136,7 @@
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Ταξινόμηση κατά ...</translation>
+        <translation>Ταξινόμηση κατά</translation>
     </message>
 </context>
 <context>
@@ -150,15 +150,15 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation>Αριθμός Κομματιών</translation>
+        <translation>Μετρητής Κομματιών</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation>Αριθμός Άλμπουμ</translation>
+        <translation>Μετρητής Άλμπουμ</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>όνομα</translation>
+        <translation>Όνομα</translation>
     </message>
     <message>
         <source>Year</source>
@@ -174,7 +174,7 @@
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Ταξινόμηση κατά ...</translation>
+        <translation>Ταξινόμηση κατά</translation>
     </message>
 </context>
 <context>
@@ -204,7 +204,7 @@
     </message>
     <message>
         <source>Use iTunes collection</source>
-        <translation>Κάντε χρήση της συλλογή iTunes</translation>
+        <translation>Κάντε χρήση της συλλογής iTunes</translation>
     </message>
     <message>
         <source>Use %1</source>
@@ -253,7 +253,7 @@
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>Το %1 ανιχνεύη την μουσική σας συλλογή</translation>
+        <translation>Το %1 ανιχνεύει την μουσική σας συλλογή</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
@@ -290,7 +290,7 @@
     </message>
     <message>
         <source>Albums</source>
-        <translation>Δίσκοι</translation>
+        <translation>Άλμπουμ</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -371,7 +371,7 @@
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation>Κάντε εγγραφή στο %1 για ένα λογαριασμό</translation>
+        <translation>Κάντε εγγραφή για ένα λογαριασμό %1</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
@@ -398,7 +398,7 @@
     </message>
     <message>
         <source>Show information about the current track</source>
-        <translation>Εφμάνιση πληροφοριών για το τρέχον κομμάτι</translation>
+        <translation>Εμφάνιση πληροφοριών για το τρέχον κομμάτι</translation>
     </message>
     <message>
         <source>P&amp;revious</source>
@@ -414,7 +414,7 @@
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation>Μετάβαση στο επόμενο κομμάτι</translation>
+        <translation>Παράλειψη προς το επόμενο κομμάτι</translation>
     </message>
     <message>
         <source>&amp;Play</source>
@@ -450,7 +450,7 @@
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation>Μετακίνση &amp;κάτω</translation>
+        <translation>Μετακίνηση &amp;κάτω</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
@@ -486,7 +486,7 @@
     </message>
     <message>
         <source>Please support the continued development of %1</source>
-        <translation>Παρακαλώ υποστηρίξτε την διαρκεί βελτιώση του %1</translation>
+        <translation>Παρακαλώ υποστηρίξτε την διαρκεί βελτίωση του %1</translation>
     </message>
     <message>
         <source>&amp;About</source>
@@ -550,7 +550,7 @@
     </message>
     <message>
         <source>Opening %1</source>
-        <translation>Ανοιγμα του %1</translation>
+        <translation>Άνοιγμα του %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -558,7 +558,7 @@
     </message>
     <message>
         <source>Updating collection - %1%</source>
-        <translation>Ενημέρωση της συλλογήε - %1%</translation>
+        <translation>Ενημέρωση της συλλογής - %1%</translation>
     </message>
     <message>
         <source>Collection updated</source>
@@ -602,7 +602,7 @@
     </message>
     <message>
         <source>Remind me later</source>
-        <translation>Υπενθήμηση αργότερα</translation>
+        <translation>Υπενθύμιση αργότερα</translation>
     </message>
     <message>
         <source>Update</source>
@@ -654,14 +654,14 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Λατρεύετε το %1? Βαθμολογήστε το!</translation>
     </message>
 </context>
 <context>
     <name>MediaView</name>
     <message>
         <source>Drop items here</source>
-        <translation>Σύρτε αντικείμενα εδώ</translation>
+        <translation>Σύρετε αντικείμενα εδώ</translation>
     </message>
     <message>
         <source>Playlist finished</source>
@@ -669,11 +669,11 @@
     </message>
     <message>
         <source>This is just the demo version of %1.</source>
-        <translation>Αυτή είναι μια δοκιμαστίκη έκδοση του %1</translation>
+        <translation>Αυτή είναι μια δοκιμαστική έκδοση του %1</translation>
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Επιτρέπει να αναπαράγεται ορισμένα κομμάτια για να δοκιμάσετε άν αυτή η εφαρμογή δουλεύει για σας.</translation>
+        <translation>Επιτρέπει να αναπαράγεται ορισμένα κομμάτια για να δοκιμάσετε αν αυτή η εφαρμογή δουλεύει για σας.</translation>
     </message>
     <message>
         <source>Continue</source>

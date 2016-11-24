@@ -32,15 +32,15 @@
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation type="unfinished"/>
+        <translation>Du vil kanskje prøve mine andre programmer også:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation type="unfinished"/>
+        <translation>%1, et YouTube program</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation type="unfinished"/>
+        <translation>%1, en musikkspiller for YouTube</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -116,15 +116,15 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Artist</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Tittel</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>År</translation>
     </message>
     <message>
         <source>Popularity</source>
@@ -162,7 +162,7 @@
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>År</translation>
     </message>
     <message>
         <source>Popularity</source>
@@ -352,30 +352,30 @@
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation type="unfinished"/>
+        <translation>Godkjenning mislyktes</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation type="unfinished"/>
+        <translation>Logg inn til %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Brukernavn:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Passord:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Registrer for en %1 konto</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation type="unfinished"/>
+        <translation>Glemt ditt &lt;a href=&apos;%1&apos;&gt;brukernavn&lt;/a&gt; eller &lt;a href=&apos;%2&apos;&gt;passord&lt;/a&gt;?</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -626,7 +626,7 @@
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Stopp etter dette sporet</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
@@ -634,11 +634,11 @@
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation type="unfinished"/>
+        <translation>Send spillte sportittler til %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Logg ut fra %1</translation>
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
@@ -654,7 +654,7 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Liker %1? Ranger den!</translation>
     </message>
 </context>
 <context>
@@ -722,7 +722,7 @@
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation type="unfinished"/>
+        <translation>Denne demoversjonen er begrenset til kun %1 spor i spillelisten.</translation>
     </message>
 </context>
 <context>
@@ -747,7 +747,7 @@
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation type="unfinished"/>
+        <translation>Ditt søk ga ingen resultater.</translation>
     </message>
 </context>
 <context>

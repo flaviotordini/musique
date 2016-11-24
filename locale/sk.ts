@@ -654,7 +654,7 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
-        <translation type="unfinished"/>
+        <translation>%Páči sa vám %1? ohodnoťte ho!</translation>
     </message>
 </context>
 <context>

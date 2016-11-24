@@ -1,760 +1,760 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.0">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt_LT" version="2.0">
 <defaultcodec>UTF-8</defaultcodec>
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
-        <translation>Verze %1</translation>
+        <translation>Versija %1</translation>
     </message>
     <message>
         <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 je distribuován jako svobodný program, avšak vývoj zabírá značné množství času.</translation>
+        <translation>%1 yra laisva programinė įranga, bet jos kurimas užima daug laiko.</translation>
     </message>
     <message>
         <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Prosím &lt;a href=&apos;%1&apos;&gt;přispějte&lt;/a&gt; kvůli podpoře pokračování ve vývoji %2.</translation>
+        <translation>Prašome &lt;a href=&apos;%1&apos;&gt;paaukoti&lt;/a&gt;, kad palaikytumėte tęstinį %2 kūrimą.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation>Vydáno pod licencií &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
+        <translation>Išleista pagal &lt;a href=&apos;%1&apos;&gt;GNU Bendrąją Viešąją Licenciją&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Zavřít</translation>
+        <translation>&amp;Užverti</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>O aplikaci</translation>
+        <translation>Apie</translation>
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Vše jste kdy chtěli vědět o %1 a nikdy jste se neodvážili se zeptat</translation>
+        <translation>Tai, ką jūs visuomet žinojote apie %1, bet niekada nedrįsote paklausti</translation>
     </message>
     <message>
         <source>You may want to try my other apps as well:</source>
-        <translation>Je možné, že vás zaujmou i moje ostatní programy:</translation>
+        <translation>Galbūt, norėtumėte išbandyti ir kitas mano programas:</translation>
     </message>
     <message>
         <source>%1, a YouTube app</source>
-        <translation>%1, aplikace pro YouTube</translation>
+        <translation>%1, YouTube programa</translation>
     </message>
     <message>
         <source>%1, a YouTube music player</source>
-        <translation>%1, přehrávač hudby z YouTube</translation>
+        <translation>%1, YouTube muzikos grotuvas</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
-        <translation>Přeložte %1 do vašeho mateřského jazyka pomocí %2</translation>
+        <translation>Išverskite %1 į savo gimtąją kalbą, naudodami %2</translation>
     </message>
     <message>
         <source>Licensed to: %1</source>
-        <translation>Licence k: %1</translation>
+        <translation>Licencijuota: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation>Vložte detaily vaší licence</translation>
+        <translation>Įrašykite išsamesnę savo licencijos informaciją</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation>&amp;Email:</translation>
+        <translation>&amp;El. paštas:</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation>&amp;Kód</translation>
+        <translation>&amp;Kodas:</translation>
     </message>
 </context>
 <context>
     <name>ActivationView</name>
     <message>
         <source>Please license %1</source>
-        <translation>Sežeňte si, prosím, licenci %1</translation>
+        <translation>Prašome licencijuoti %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation>Platnost demoverze vypršela.</translation>
+        <translation>Šios demonstracinės versijos galiojimo laikas baigėsi.</translation>
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
-        <translation>Bez licence žádost vyprší za %1 dnů</translation>
+        <translation>Be licencijos, programa baigs galioti po %1 dienų.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Zakoupením plné verze také podpoříte práci, která byla vložená do tvorby %1.</translation>
+        <translation>Įsigiję pilną versiją, jūs taip pat prisidėsite prie mano sunkaus darbo, kuriant %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>Použít demoverzi</translation>
+        <translation>Naudoti demonstracinę versiją</translation>
     </message>
     <message>
         <source>Enter License</source>
-        <translation>Vložit licenci</translation>
+        <translation>Įrašyti licenciją</translation>
     </message>
     <message>
         <source>Buy License</source>
-        <translation>Koupit licenci</translation>
+        <translation>Pirkti licenciją</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Plná verze vám do seznamu skladeb umožňuje přidat více než %1 skladeb a poslouchat hudbu bez přerušení.</translation>
+        <translation>Pilna versija leidžia jums į grojaraštį pridėti daugiau nei %1 takelių ir klausytis savo muzikos be pertraukimų.</translation>
     </message>
 </context>
 <context>
     <name>AlbumInfo</name>
     <message>
         <source>Buy on %1</source>
-        <translation>Kupte na %1</translation>
+        <translation>Pirkti per %1</translation>
     </message>
     <message>
         <source>Read more</source>
-        <translation>Čtěte více</translation>
+        <translation>Skaityti daugiau</translation>
     </message>
 </context>
 <context>
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation>Umělec</translation>
+        <translation>Atlikėjas</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation>Název</translation>
+        <translation>Antraštė</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation>Rok</translation>
+        <translation>Metai</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation>Oblíbenost</translation>
+        <translation>Populiarumas</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation>Obrácené pořadí</translation>
+        <translation>Atvirkštinė tvarka</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Třídit podle</translation>
+        <translation>Rikiuoti pagal</translation>
     </message>
 </context>
 <context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
-        <translation>Čtěte více</translation>
+        <translation>Skaityti daugiau</translation>
     </message>
 </context>
 <context>
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation>Počet skladeb</translation>
+        <translation>Takelių skaičius</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation>Počet alb</translation>
+        <translation>Albumų skaičius</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Jméno</translation>
+        <translation>Pavadinimas</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation>Rok</translation>
+        <translation>Metai</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation>Oblíbenost</translation>
+        <translation>Populiarumas</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation>Obrácené pořadí</translation>
+        <translation>Atvirkštinė tvarka</translation>
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Třídit podle</translation>
+        <translation>Rikiuoti pagal</translation>
     </message>
 </context>
 <context>
     <name>BreadcrumbWidget</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Zpět</translation>
+        <translation>&amp;Atgal</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation>Jít zpět</translation>
+        <translation>Grįžti atgal</translation>
     </message>
 </context>
 <context>
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Vítejte v &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;</translation>
+        <translation>Sveiki atvykę į &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 potřebuje prohledat vaši hudební sbírku.</translation>
+        <translation>%1 turi peržiūrėti jūsų muzikinę kolekciją.</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Atsisakyti</translation>
     </message>
     <message>
         <source>Use iTunes collection</source>
-        <translation>Použít sbírku iTunes</translation>
+        <translation>Naudoti iTunes kolekciją</translation>
     </message>
     <message>
         <source>Use %1</source>
-        <translation>Použít %1</translation>
+        <translation>Naudoti %1</translation>
     </message>
     <message>
         <source>Choose a folder...</source>
-        <translation>Vyberte složku...</translation>
+        <translation>Pasirinkti aplanką...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 se připojí k internetové službě Last.fm a projde jména autorů a názvy alb, aby natáhl obaly, biografie a mnohem víc.</translation>
+        <translation>%1 prisijungs prie Last.fm saityno paslaugos ir perduos atlikėjų vardus bei albumų pavadinimus tam, kad gautų albumų viršelius, biografijas ir daug daugiau.</translation>
     </message>
     <message>
         <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Pokud máte obavy týkající se soukromí, můžete to okamžitě vypnout.</translation>
+        <translation>Jeigu jums tai kelia nerimą dėl privatumo, galite išeiti dabar.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Kde je vaše hudební sbírka?</translation>
+        <translation>Kur yra jūsų muzikinė kolekcija?</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation>Vyberte umístění vaší hudební sbírky.</translation>
+        <translation>Pasirinkite savo muzikinės kolekcijos vietą.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
-        <translation>Najděte svoji sbírku</translation>
+        <translation>Raskite savo kolekcijos vietą</translation>
     </message>
 </context>
 <context>
     <name>ClearButton</name>
     <message>
         <source>Clear</source>
-        <translation>Vyprázdnit</translation>
+        <translation>Išvalyti</translation>
     </message>
 </context>
 <context>
     <name>CollectionScanner</name>
     <message>
         <source>A scanning task is already running</source>
-        <translation>Prohledávání je už spuštěno</translation>
+        <translation>Peržiūrėjimo užduotis jau yra vykdoma</translation>
     </message>
 </context>
 <context>
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 prohledává vaši hudební sbírku.</translation>
+        <translation>%1 peržiūri jūsų muzikinę kolekciją.</translation>
     </message>
     <message>
         <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 používá &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; na roztřídění vaší hudby.</translation>
+        <translation>%1 naudoja &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt;, kad sudarytų jūsų muzikos katalogą.</translation>
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
-        <translation>Potrvá to jistou dobu v závislosti na velikosti sbírky a rychlosti připojení.</translation>
+        <translation>Tai užims kažkiek laiko, priklausomai nuo jūsų kolekcijos dydžio ir tinklo spartos.</translation>
     </message>
     <message>
         <source>Go grab a coffee</source>
-        <translation>Dejte si kávu</translation>
+        <translation>Eikite užsivirkite kavos</translation>
     </message>
 </context>
 <context>
     <name>DownloadWidget</name>
     <message>
         <source>Downloading update...</source>
-        <translation>Stahování aktualizace...</translation>
+        <translation>Atsiunčiamas atnaujinimas...</translation>
     </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
-        <translation>Upusťte zde pro přidání do seznamu skladeb</translation>
+        <translation>Tempkite čia, kad pridėtumėte į grojaraštį</translation>
     </message>
 </context>
 <context>
     <name>FinderWidget</name>
     <message>
         <source>Artists</source>
-        <translation>Umělci</translation>
+        <translation>Atlikėjai</translation>
     </message>
     <message>
         <source>Albums</source>
-        <translation>Alba</translation>
+        <translation>Albumai</translation>
     </message>
     <message>
         <source>Folders</source>
-        <translation>Složky</translation>
+        <translation>Aplankai</translation>
     </message>
 </context>
 <context>
     <name>GlobalShortcuts</name>
     <message>
         <source>Play</source>
-        <translation>Přehrát</translation>
+        <translation>Groti</translation>
     </message>
     <message>
         <source>Pause</source>
-        <translation>Pozastavit</translation>
+        <translation>Pristabdyti</translation>
     </message>
     <message>
         <source>Play/Pause</source>
-        <translation>Přehrát/Pozastavit</translation>
+        <translation>Groti/Pristabdyti</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Zastavit</translation>
+        <translation>Stabdyti</translation>
     </message>
     <message>
         <source>Stop playing after current track</source>
-        <translation>Zastavit přehrávání po této skladbě</translation>
+        <translation>Stabdyti po esamo takelio</translation>
     </message>
     <message>
         <source>Next track</source>
-        <translation>Další skladba</translation>
+        <translation>Kitas takelis</translation>
     </message>
     <message>
         <source>Previous track</source>
-        <translation>Předchozí skladba</translation>
+        <translation>Ankstesnis takelis</translation>
     </message>
     <message>
         <source>Increase volume</source>
-        <translation>Zvýšit hlasitost</translation>
+        <translation>Pagarsinti</translation>
     </message>
     <message>
         <source>Decrease volume</source>
-        <translation>Snížit hlasitost</translation>
+        <translation>Tildyti</translation>
     </message>
     <message>
         <source>Mute</source>
-        <translation>Ztlumit</translation>
+        <translation>Nutildyti</translation>
     </message>
     <message>
         <source>Seek forward</source>
-        <translation>Přetočit vpřed</translation>
+        <translation>Pereiti takelyje pirmyn</translation>
     </message>
     <message>
         <source>Seek backward</source>
-        <translation>Přetočit zpět</translation>
+        <translation>Pereiti takelyje atgal</translation>
     </message>
 </context>
 <context>
     <name>LastFm</name>
     <message>
         <source>Authentication failed</source>
-        <translation>Ověření selhalo</translation>
+        <translation>Atpažinimas nepavyko</translation>
     </message>
 </context>
 <context>
     <name>LastFmLoginDialog</name>
     <message>
         <source>Log in to %1</source>
-        <translation>Přihlásit se do %1</translation>
+        <translation>Prisijungti prie %1</translation>
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation>&amp;Uživatelské jméno:</translation>
+        <translation>Na&amp;udotojo vardas:</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation>&amp;Heslo:</translation>
+        <translation>Sla&amp;ptažodis:</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation>Přihlásit %1 účet</translation>
+        <translation>Registruoti %1 paskyrą</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
-        <translation>Zapomněl jste &lt;a href=&apos;%1&apos;&gt;uživatelské jméno&lt;/a&gt; nebo &lt;a href=&apos;%2&apos;&gt;heslo&lt;/a&gt;?</translation>
+        <translation>Pamiršote savo &lt;a href=&apos;%1&apos;&gt;naudotojo vardą&lt;/a&gt; ar &lt;a href=&apos;%2&apos;&gt;slaptažodį&lt;/a&gt;?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Zrušit</translation>
+        <translation>Atsisakyti</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Zpět</translation>
+        <translation>&amp;Atgal</translation>
     </message>
     <message>
         <source>Go to the previous view</source>
-        <translation>Jít na předchozí zobrazení</translation>
+        <translation>Eiti į ankstesnį rodinį</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>&amp;Informace</translation>
+        <translation>&amp;Informacija</translation>
     </message>
     <message>
         <source>Show information about the current track</source>
-        <translation>Zobrazit informace o této skladbě</translation>
+        <translation>Rodyti informaciją apie esamą takelį</translation>
     </message>
     <message>
         <source>P&amp;revious</source>
-        <translation>&amp;Předchozí</translation>
+        <translation>A&amp;nkstesnis</translation>
     </message>
     <message>
         <source>Go back to the previous track</source>
-        <translation>Jít zpět na předchozí skladbu</translation>
+        <translation>Grįžti prie ankstesnio takelio</translation>
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation>&amp;Další</translation>
+        <translation>&amp;Kitas</translation>
     </message>
     <message>
         <source>Skip to the next track</source>
-        <translation>Přeskočit na další skladbu</translation>
+        <translation>Pereiti prie kito takelio</translation>
     </message>
     <message>
         <source>&amp;Play</source>
-        <translation>&amp;Přehrát</translation>
+        <translation>&amp;Groti</translation>
     </message>
     <message>
         <source>Start playback</source>
-        <translation>Začít přehrávat</translation>
+        <translation>Pradėti atkūrimą</translation>
     </message>
     <message>
         <source>&amp;Full Screen</source>
-        <translation>&amp;Celá obrazovka</translation>
+        <translation>&amp;Visas ekranas</translation>
     </message>
     <message>
         <source>Go full screen</source>
-        <translation>Zobrazit na celou obrazovku</translation>
+        <translation>Pereiti į visą ekraną</translation>
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>&amp;Odstranit</translation>
+        <translation>Ša&amp;linti</translation>
     </message>
     <message>
         <source>Remove the selected tracks from the playlist</source>
-        <translation>Odstranit vybrané skladby ze seznamu skladeb</translation>
+        <translation>Šalinti pasirinktus takelius iš grojaraščio</translation>
     </message>
     <message>
         <source>Move &amp;Up</source>
-        <translation>Přesunout &amp;nahoru</translation>
+        <translation>Perkelti A&amp;ukštyn</translation>
     </message>
     <message>
         <source>Move up the selected tracks in the playlist</source>
-        <translation>Posunout nahoru vybrané skladby v seznamu skladeb</translation>
+        <translation>Perkelti pasirinktus takelius grojaraštyje aukštyn</translation>
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation>Přesunout &amp;dolů</translation>
+        <translation>Nuleisti ž&amp;emyn</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
-        <translation>Posunout dolů vybrané skladby v seznamu skladeb</translation>
+        <translation>Nuleisti pasirinktus takelius grojaraštyje žemyn</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>&amp;Ukončit</translation>
+        <translation>&amp;Išeiti</translation>
     </message>
     <message>
         <source>Bye</source>
-        <translation>Nashledanou</translation>
+        <translation>Viso gero</translation>
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation>&amp;Změnit složku s hudební sbírkou...</translation>
+        <translation>&amp;Keisti kolekcijos aplanką...</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
-        <translation>Vyberte odlišný adresář s hudební sbírkou</translation>
+        <translation>Pasirinkti kitą muzikinės kolekcijos aplanką</translation>
     </message>
     <message>
         <source>&amp;Website</source>
-        <translation>&amp;Internetová stránka</translation>
+        <translation>&amp;Tinklalapis</translation>
     </message>
     <message>
         <source>%1 on the Web</source>
-        <translation>%1 na webu</translation>
+        <translation>%1 saityne</translation>
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>Dát autorovi &amp;příspěvek</translation>
+        <translation>&amp;Paaukoti</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
-        <translation>Podpořte, prosím, probíhající vývoj %1</translation>
+        <translation>Prašome palaikyti tęstinį %1 kūrimą</translation>
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>&amp;O programu</translation>
+        <translation>&amp;Apie</translation>
     </message>
     <message>
         <source>Info about %1</source>
-        <translation>Informace o %1</translation>
+        <translation>Informacija apie %1</translation>
     </message>
     <message>
         <source>&amp;Clear</source>
-        <translation>&amp;Smazat</translation>
+        <translation>&amp;Išvalyti</translation>
     </message>
     <message>
         <source>Remove all tracks from the playlist</source>
-        <translation>Vyprázdnit seznam skladeb</translation>
+        <translation>Šalinti visus takelius iš grojaraščio</translation>
     </message>
     <message>
         <source>&amp;Shuffle</source>
-        <translation>&amp;Zamíchat</translation>
+        <translation>&amp;Maišyti</translation>
     </message>
     <message>
         <source>Random playlist mode</source>
-        <translation>&amp;Náhodný režim</translation>
+        <translation>Atsitiktinė grojaraščio veiksena</translation>
     </message>
     <message>
         <source>&amp;Repeat</source>
-        <translation>&amp;Opakovat</translation>
+        <translation>&amp;Kartoti</translation>
     </message>
     <message>
         <source>Play first song again after all songs are played</source>
-        <translation>Přehrát první skladbu poté, co byly odehrány všechny skladby</translation>
+        <translation>Pragrojus visas dainas, vėl groti pirmą dainą</translation>
     </message>
     <message>
         <source>Mute volume</source>
-        <translation>Ztlumit hlasitost</translation>
+        <translation>Nutildyti garsį</translation>
     </message>
     <message>
         <source>&amp;Application</source>
-        <translation>&amp;Program</translation>
+        <translation>&amp;Programa</translation>
     </message>
     <message>
         <source>&amp;Playback</source>
-        <translation>&amp;Přehrávání</translation>
+        <translation>&amp;Atkūrimas</translation>
     </message>
     <message>
         <source>Play&amp;list</source>
-        <translation>&amp;Seznam skladeb</translation>
+        <translation>&amp;Grojaraštis</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>&amp;Pohled</translation>
+        <translation>&amp;Rodinys</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>&amp;Nápověda</translation>
+        <translation>Paga&amp;lba</translation>
     </message>
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
-        <translation>Stiskněte %1 pro zvýšení hlasitosti, %2 pro snížení.</translation>
+        <translation>Paspauskite %1, kad padidintumėte garsį arba %2, kad jį sumažintumėte</translation>
     </message>
     <message>
         <source>Opening %1</source>
-        <translation>Otevírám %1</translation>
+        <translation>Atveriama %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation>Obnovuji sbírku...</translation>
+        <translation>Atnaujinama kolekcija...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
-        <translation>Obnovuji sbírku - %1%</translation>
+        <translation>Atnaujinama kolekcija - %1%</translation>
     </message>
     <message>
         <source>Collection updated</source>
-        <translation>Sbírka obnovena</translation>
+        <translation>Kolekcija atnaujinta</translation>
     </message>
     <message>
         <source>Fatal error: %1</source>
-        <translation>Kritická chyba: %1</translation>
+        <translation>Lemtinga klaida: %1</translation>
     </message>
     <message>
         <source>Error: %1</source>
-        <translation>Chyba: %1</translation>
+        <translation>Klaida: %1</translation>
     </message>
     <message>
         <source>Leave &amp;Full Screen</source>
-        <translation>Opustit zobrazení na &amp;celou obrazovku</translation>
+        <translation>Išeiti iš &amp;viso ekrano</translation>
     </message>
     <message>
         <source>Remaining time: %1</source>
-        <translation>Zbývající čas: %1</translation>
+        <translation>Likęs laikas: %1</translation>
     </message>
     <message>
         <source>Volume at %1%</source>
-        <translation>Hlasitost na %1%</translation>
+        <translation>Garsis ties %1%</translation>
     </message>
     <message>
         <source>Volume is muted</source>
-        <translation>Hlasitost je ztlumena</translation>
+        <translation>Garsis nutildytas</translation>
     </message>
     <message>
         <source>Volume is unmuted</source>
-        <translation>Hlasitost není ztlumená</translation>
+        <translation>Garsis įjungtas</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Dostat plnou verzi</translation>
+        <translation>Gauti pilną versiją</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
-        <translation>%1 verze %2 je nyní dostupná.</translation>
+        <translation>Dabar yra prieinama %1 versija %2.</translation>
     </message>
     <message>
         <source>Remind me later</source>
-        <translation>Připomenout později</translation>
+        <translation>Priminti vėliau</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Aktualizovat</translation>
+        <translation>Atnaujinti</translation>
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation>&amp;Okno</translation>
+        <translation>&amp;Langas</translation>
     </message>
     <message>
         <source>&amp;Minimize</source>
-        <translation>&amp;Zmenšit</translation>
+        <translation>&amp;Suskleisti</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>&amp;Zavřít</translation>
+        <translation>&amp;Užverti</translation>
     </message>
     <message>
         <source>Buy %1...</source>
-        <translation>Koupit %1...</translation>
+        <translation>Pirkti %1...</translation>
     </message>
     <message>
         <source>&amp;Stop After This Track</source>
-        <translation>&amp;Zastavit po této skladbě</translation>
+        <translation>&amp;Stabdyti po šio takelio</translation>
     </message>
     <message>
         <source>&amp;Scrobbling</source>
-        <translation>&amp;Odesílání informací</translation>
+        <translation>&amp;Naudoti Scrobble paslaugą</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
-        <translation>Poslat názvy přehrávaných skladeb %1</translation>
+        <translation>Siųsti atkuriamų takelių pavadinimus į %1</translation>
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation>&amp;Odhlásit se z %1</translation>
+        <translation>&amp;Atsijungti iš %1</translation>
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation>&amp;Nahlásit chybu...</translation>
+        <translation>P&amp;ranešti apie klaidą...</translation>
     </message>
     <message>
         <source>Search</source>
-        <translation>Hledat</translation>
+        <translation>Ieškoti</translation>
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation>%1 dokončil prohledávání vaší hudební sbírky.</translation>
+        <translation>%1 užbaigė jūsų muzikinės kolekcijos peržiūrėjimą</translation>
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
-        <translation>&amp;Líbí se %1? Ohodnotit!</translation>
+        <translation>&amp;Patiko %1? Įvertinkite!</translation>
     </message>
 </context>
 <context>
     <name>MediaView</name>
     <message>
         <source>Drop items here</source>
-        <translation>Položky upusťte zde</translation>
+        <translation>Tempkite elementus čia</translation>
     </message>
     <message>
         <source>Playlist finished</source>
-        <translation>Seznam skladeb dokončen</translation>
+        <translation>Grojaraštis užbaigtas</translation>
     </message>
     <message>
         <source>This is just the demo version of %1.</source>
-        <translation>Toto je pouze demoverze %1.</translation>
+        <translation>Tai yra tik demonstracinė %1 versija.</translation>
     </message>
     <message>
         <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Umožňuje vám prehrát několik skladeb, takže můžete program vyzkoušet a vidět, jestli pracuje tak, jak má.</translation>
+        <translation>Ji leidžia groti tik kelis takelius ir taip suteikia galimybę išbandyti ar ši programa jums tinka.</translation>
     </message>
     <message>
         <source>Continue</source>
-        <translation>Pokračovat</translation>
+        <translation>Tęsti</translation>
     </message>
     <message>
         <source>Get the full version</source>
-        <translation>Získejte plnou verzi</translation>
+        <translation>Gauti pilną versiją</translation>
     </message>
 </context>
 <context>
     <name>MessageWidget</name>
     <message>
         <source>A new version of %1 is available!</source>
-        <translation>Nová verze %1 je k dispozici!</translation>
+        <translation>Yra prieinama nauja %1 versija!</translation>
     </message>
     <message>
         <source>%1 %2 is now available. You have %3.</source>
-        <translation>%1 %2 je nyní k dispozici. Vy máte %3.</translation>
+        <translation>Dabar yra prieinama %1 %2. Jūs turite %3.</translation>
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation>Chcete ji nyní stáhnout?</translation>
+        <translation>Ar norėtumėte ją atsisiųsti dabar?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
-        <translation>Přeskočit tuto verzi</translation>
+        <translation>Praleisti šią versiją</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
-        <translation>Připomenout později</translation>
+        <translation>Priminti vėliau</translation>
     </message>
     <message>
         <source>Install Update</source>
-        <translation>Nainstalovat aktualizaci</translation>
+        <translation>Įdiegti atnaujinimą</translation>
     </message>
 </context>
 <context>
     <name>PasteLineEdit</name>
     <message>
         <source>Paste</source>
-        <translation>Vložit</translation>
+        <translation>Įdėti</translation>
     </message>
 </context>
 <context>
     <name>PlaylistModel</name>
     <message>
         <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Demoverze je omezena pouze na %1 skladeb v seznamu skladeb.</translation>
+        <translation>Ši demonstracinė versija yra apribota iki %1 takelių grojaraštyje.</translation>
     </message>
 </context>
 <context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
-        <translation>Seznam skladeb je prázdný</translation>
+        <translation>Grojaraštis tuščias</translation>
     </message>
     <message>
         <source>%1 tracks - Total length is %2</source>
-        <translation>%1 skladeb - Celková  délka je %2</translation>
+        <translation>%1 takelių - Viso trukmė yra %2</translation>
     </message>
 </context>
 <context>
     <name>SearchLineEdit</name>
     <message>
         <source>Search</source>
-        <translation>Hledat</translation>
+        <translation>Ieškoti</translation>
     </message>
 </context>
 <context>
     <name>SearchView</name>
     <message>
         <source>Your search had no results.</source>
-        <translation>Vaše hledání nepřineslo žádné výsledky.</translation>
+        <translation>Jūsų paieška nepateikė jokių rezultatų.</translation>
     </message>
 </context>
 <context>
     <name>TrackListView</name>
     <message>
         <source>Tracks</source>
-        <translation>Skladby</translation>
+        <translation>Takeliai</translation>
     </message>
 </context>
 </TS>
