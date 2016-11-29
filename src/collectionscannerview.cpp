@@ -62,9 +62,9 @@ CollectionScannerView::CollectionScannerView( QWidget *parent ) : View(parent) {
     layout->addWidget(progressBar);
 
     tipLabel = new QLabel("<html><style>a { color: palette(text); }</style><body>" +
-            tr("%1 is using <a href='%2'>%3</a> to catalog your music.")
-            .arg(Constants::NAME, "http://last.fm", "Last.fm")
-            + " " +
+            // tr("%1 is using <a href='%2'>%3</a> to catalog your music.")
+            // .arg(Constants::NAME, "http://last.fm", "Last.fm")
+            // + " " +
             tr("This will take time depending on your collection size and network speed.")
             + "</body></html>"
             , this);
