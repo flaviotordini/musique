@@ -33,8 +33,7 @@ CollectionScanner::CollectionScanner(QObject *parent) :
     stopped(false),
     incremental(false),
     lastUpdate(0),
-    maxQueueSize(0),
-    trackCount(0) {
+    maxQueueSize(0) {
 
 #ifdef APP_MAC
     QString iTunesAlbumArtwork = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/Album Artwork";
@@ -58,7 +57,7 @@ void CollectionScanner::reset() {
     filesWaitingForArtists.clear();
     loadedAlbums.clear();
     filesWaitingForAlbums.clear();
-    trackCount = 0;
+    processedTrackPaths.clear();
     tracksNeedingFix.clear();
 }
 
@@ -151,16 +150,10 @@ void CollectionScanner::popFromQueue() {
 
     // parse metadata with TagLib
     QString filename = fileInfo.absoluteFilePath();
-#ifdef Q_OS_WIN
-    const wchar_t * encodedName = reinterpret_cast<const wchar_t*>(filename.utf16());
-    TagLib::FileRef fileref(encodedName);
-#else
-    // const char * encodedName = QFile::encodeName(filename).constData();
-    TagLib::FileRef fileref((TagLib::FileName)filename.toUtf8());
-#endif
+    Tags *tags = TagUtils::load(filename);
 
     // if taglib cannot parse the file, drop it
-    if (fileref.isNull()) {
+    if (!tags) {
         // qDebug() << "Taglib cannot parse" << fileInfo.absoluteFilePath();
         fileQueue.removeAll(fileInfo);
 
@@ -198,7 +191,6 @@ void CollectionScanner::popFromQueue() {
             tags->length = audioProperties->length();
     }
     */
-    Tags *tags = TagUtils::load(fileInfo.absoluteFilePath());
     file->setTags(tags);
 
     // get data from the internet
@@ -256,7 +248,8 @@ void CollectionScanner::complete() {
 
 void CollectionScanner::emitFinished() {
     QVariantMap stats;
-    stats.insert("trackCount", trackCount);
+    stats.insert("trackCount", processedTrackPaths.size());
+    stats.insert("trackPaths", processedTrackPaths);
     stats.insert("tracksNeedingFix", tracksNeedingFix);
     emit finished(stats);
 }
@@ -507,7 +500,7 @@ void CollectionScanner::gotArtistInfo() {
     foreach (FileInfo *file, files) {
         file->setArtist(artist);
         file->setAlbumArtist(artist);
-        // qDebug() << "ready for album" << file->getFileInfo().baseName();
+        // qDebug() << "ready for album artist" << file->getFileInfo().baseName();
         giveThisFileAnAlbumArtist(file);
     }
 
@@ -626,7 +619,7 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     album->setTitle(DataUtils::cleanTag(albumTag));
     album->setYear(file->getTags()->getYear());
 
-    Artist *artist = artist = file->getAlbumArtist();
+    Artist *artist = file->getAlbumArtist();
     if (!artist) artist = file->getArtist();
     if (artist) album->setArtist(artist); // && artist->getId() > 0
     else qDebug() << "Album" << album->getTitle() << "lacks an artist";
@@ -775,6 +768,11 @@ void CollectionScanner::processTrack(FileInfo *file) {
         qDebug() << "Cannot remove file from queue";
     }
 
+    path = file->getFileInfo().absoluteFilePath();
+    processedTrackPaths << path;
+    const bool needsFix = TagChecker::checkTags(file->getTags());
+    if (needsFix) tracksNeedingFix << path;
+
     if (incremental && Track::exists(track->getPath())) {
         qDebug() << "Updating track:" << track->getTitle();
         // qDebug() << "with album" << track->getAlbum() << track->getAlbum()->getId();
@@ -790,10 +788,6 @@ void CollectionScanner::processTrack(FileInfo *file) {
             << "albums:" << filesWaitingForAlbums.size()
             << "artists:" << filesWaitingForArtists.size();
             */
-
-    trackCount++;
-    if (TagChecker::checkTags(file->getTags()))
-        tracksNeedingFix << file->getFileInfo().absoluteFilePath();
 
     int percent = (maxQueueSize - fileQueue.size()) * 100 / maxQueueSize;
     emit progress(percent);

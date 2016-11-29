@@ -138,6 +138,10 @@ private slots:
     void rateOnAppStore();
 #endif
 
+    void runFinetune();
+    void runFinetune(const QVariantMap &stats);
+    void runFinetune(const QString &filename);
+
 private:
     MainWindow();
     void showWidget(QWidget*, bool transition = false);
@@ -151,7 +155,6 @@ private:
     QString playlistPath();
     void simpleUpdateDialog(QString version);
     void showFinetuneDialog(const QVariantMap &stats);
-    void runFinetune(const QVariantMap &stats);
 
     // view mechanism
     QStackedWidget *views;

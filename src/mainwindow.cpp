@@ -42,14 +42,13 @@ $END_LICENSE */
 #include "updatechecker.h"
 #include "fontutils.h"
 #include "globalshortcuts.h"
-#ifdef Q_OS_X11
-#include "gnomeglobalshortcutbackend.h"
-#endif
 #ifdef Q_OS_MAC
 #include "mac_startup.h"
 #include "macfullscreen.h"
 #include "macsupport.h"
 #include "macutils.h"
+#elif defined Q_OS_UNIX
+#include "gnomeglobalshortcutbackend.h"
 #endif
 #include "collectionsuggester.h"
 #include "lastfm.h"
@@ -130,14 +129,12 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::lazyInit() {
-    // Global shortcuts
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
-#ifdef Q_OS_X11
-    if (GnomeGlobalShortcutBackend::IsGsdAvailable())
-        shortcuts.setBackend(new GnomeGlobalShortcutBackend(&shortcuts));
-#endif
 #ifdef APP_MAC
     mac::MacSetup();
+#elif defined Q_OS_UNIX
+    if (GnomeGlobalShortcutBackend::IsGsdAvailable())
+        shortcuts.setBackend(new GnomeGlobalShortcutBackend(&shortcuts));
 #endif
     connect(&shortcuts, SIGNAL(PlayPause()), playAct, SLOT(trigger()));
     connect(&shortcuts, SIGNAL(Stop()), this, SLOT(stop()));
@@ -150,6 +147,8 @@ void MainWindow::showInitialView() {
 
         showMediaView(false);
         QTimer::singleShot(0, this, SLOT(loadPlaylist()));
+
+        actionMap["finetune"]->setVisible(true);
 
         // update the collection when idle
         QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
@@ -313,6 +312,12 @@ void MainWindow::createActions() {
     // Anon
     QAction *action;
 
+    action = new QAction(tr("&Fix Library with %1...").arg("Finetune"), this);
+    action->setMenuRole(QAction::ApplicationSpecificRole);
+    action->setVisible(false);
+    actionMap.insert("finetune", action);
+    connect(action, SIGNAL(triggered()), SLOT(runFinetune()));
+
     action = new QAction(tr("&Report an Issue..."), this);
     actionMap.insert("report-issue", action);
     connect(action, SIGNAL(triggered()), SLOT(reportIssue()));
@@ -443,12 +448,17 @@ void MainWindow::createMenus() {
     if (buyAction) fileMenu->addAction(buyAction);
 #ifndef APP_MAC
     fileMenu->addSeparator();
+#else
+    // fileMenu->addSeparator()->setMenuRole(QAction::ApplicationSpecificRole);
 #endif
 #endif
+    fileMenu->addAction(actionMap.value("finetune"));
     fileMenu->addAction(chooseFolderAct);
     fileMenu->addAction(actionMap.value("lastFmLogout"));
 #ifndef APP_MAC
     fileMenu->addSeparator();
+#else
+    // fileMenu->addSeparator()->setMenuRole(QAction::ApplicationSpecificRole);
 #endif
     fileMenu->addAction(quitAct);
 
@@ -490,9 +500,7 @@ void MainWindow::createMenus() {
 
     helpMenu = menuBar()->addMenu(tr("&Help"));
     helpMenu->addAction(siteAct);
-#if !defined(APP_MAC) && !defined(APP_WIN)
     helpMenu->addAction(donateAct);
-#endif
     helpMenu->addAction(actionMap.value("report-issue"));
     helpMenu->addAction(aboutAct);
 
@@ -713,13 +721,6 @@ void MainWindow::donate() {
 void MainWindow::quit() {
     savePlaylist();
     writeSettings();
-    /*
-    CollectionScanner *scanner = CollectionScanner::instance();
-    scanner->stop();
-    if (scanner->thread() != thread()) {
-        // scanner->thread()->wait();
-    }*/
-    delete &Database::instance();
     qApp->quit();
 }
 
@@ -844,6 +845,7 @@ void MainWindow::fullScanFinished(const QVariantMap &stats) {
 #endif
     startImageDownload();
     showFinetuneDialog(stats);
+    actionMap["finetune"]->setVisible(true);
 }
 
 void MainWindow::startIncrementalScan() {
@@ -1217,6 +1219,7 @@ void MainWindow::simpleUpdateDialog(QString version) {
 }
 
 void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
+
     uint trackCount = stats.value("trackCount").toUInt();
     int tracksNeedingFixCount = stats.value("tracksNeedingFix").toStringList().size();
 
@@ -1225,12 +1228,13 @@ void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
     int percent = (tracksNeedingFixCount * 100) / trackCount;
     if (percent <= 5) return;
 
-    QString message = tr("%1 added %2 tracks to your music library. "
-                         "%3 tracks (%4%) have incomplete tags.")
+    QString message = tr("%1 added %2 tracks to your music library."
+                         " %3 tracks (%4%) have incomplete tags.")
             .arg(QLatin1String(Constants::NAME),
                  QString::number(trackCount),
                  QString::number(tracksNeedingFixCount),
                  QString::number(percent));
+
     QString infoText = tr("Do you want to fix them now with %1?").arg("Finetune");
 
     QMessageBox msgBox(this);
@@ -1245,31 +1249,49 @@ void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
     if (msgBox.clickedButton() == acceptButton) runFinetune(stats);
 }
 
-void MainWindow::runFinetune(const QVariantMap &stats) {
-    QStringList files = stats.value("filesNeedingFix").toStringList();
+void MainWindow::runFinetune() {
+    const QString collectionRoot = Database::instance().collectionRoot();
+    runFinetune(collectionRoot);
+}
 
-    const QString filename = QStandardPaths::TempLocation + "/finetune.txt";
+void MainWindow::runFinetune(const QVariantMap &stats) {
+    QStringList files = stats.value("trackPaths").toStringList();
+    const QString filename = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + QLatin1String("/finetune.txt");
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly))
         qWarning() << "Error opening file for writing" << file.fileName();
     QTextStream stream(&file);
     foreach (const QString &s, files) {
-        stream << s << '\n';
+        stream << s << endl;
     }
+    stream.flush();
     file.close();
+    runFinetune(filename);
+}
 
+void MainWindow::runFinetune(const QString &filename) {
 #if defined APP_MAC || defined APP_WIN
-    if (Extra::runFinetune(filename)) return;
+    if (Extra::runFinetune(filename))
+        return;
 #else
-    QStringList files = stats.value("filesNeedingFix").toStringList();
     QProcess process;
     if (process.startDetached("finetune", QStringList(filename)))
         return;
 #endif
 
     const QString baseUrl = QLatin1String("http://") + Constants::ORG_DOMAIN;
+
+#ifdef APP_MAC_STORE
+    QString pageUrl = baseUrl + QLatin1String("/finetune");
+    QDesktopServices::openUrl(pageUrl);
+    return;
+#endif
+
+#ifdef APP_EXTRA
+
     const QString filesUrl = baseUrl + QLatin1String("/files/");
     QString url = filesUrl + "finetune/finetune.";
+
 #ifdef APP_MAC
     const QString ext = "dmg";
 #elif defined APP_WIN
@@ -1278,10 +1300,16 @@ void MainWindow::runFinetune(const QVariantMap &stats) {
     const QString ext = "deb";
 #endif
     url += ext;
+
     QPixmap pixmap = IconUtils::pixmap(":/images/64x64/finetune.png");
     UpdateDialog *dialog = new UpdateDialog(&pixmap, "Finetune", QString(), url, this);
     dialog->downloadUpdate();
     dialog->show();
+
+#else
+    QString url = baseUrl + QLatin1String("/finetune");
+    QDesktopServices::openUrl(url);
+#endif
 }
 
 QString MainWindow::playlistPath() {

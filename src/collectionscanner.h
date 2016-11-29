@@ -121,7 +121,7 @@ private:
     QStringList directoryBlacklist;
     QStringList fileExtensionsBlacklist;
 
-    quint64 trackCount;
+    QStringList processedTrackPaths;
     QStringList tracksNeedingFix;
 
 };
