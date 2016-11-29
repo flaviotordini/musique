@@ -39,7 +39,7 @@ void AppsWidget::paintEvent(QPaintEvent *e) {
     style()->drawPrimitive(QStyle::PE_Widget, &o, &p, this);
 }
 
-AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent) : QWidget(parent), name(name) {
+AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent) : QWidget(parent), icon(0), name(name) {
     const QString unixName = code.left(code.lastIndexOf('.'));
     const QString baseUrl = QLatin1String("http://") + Constants::ORG_DOMAIN;
     const QString filesUrl = baseUrl + QLatin1String("/files/");
@@ -107,6 +107,7 @@ void AppWidget::iconDownloaded(const QByteArray &bytes) {
 
 void AppWidget::downloadApp() {
 #ifdef APP_EXTRA
+    if (!icon) return;
     UpdateDialog *dialog = new UpdateDialog(icon->pixmap(), name, QString(), url, this);
     dialog->downloadUpdate();
     dialog->show();
