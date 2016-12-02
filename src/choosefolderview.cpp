@@ -68,11 +68,9 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
     connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
     buttonLayout->addWidget(cancelButton);
 
-#ifdef APP_MAC
+#if defined APP_MAC && !defined APP_MAC_STORE
     QPushButton *useiTunesDirButton = new QPushButton(tr("Use iTunes collection"));
     connect(useiTunesDirButton, SIGNAL(clicked()), SLOT(iTunesDirChosen()));
-    useiTunesDirButton->setDefault(true);
-    useiTunesDirButton->setFocus(Qt::NoFocusReason);
     buttonLayout->addWidget(useiTunesDirButton);
 #endif
 
@@ -82,10 +80,8 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
         QString musicFolderName = QStandardPaths::displayName(QStandardPaths::MusicLocation);
         QPushButton *useSystemDirButton = new QPushButton(tr("Use %1 folder").arg(musicFolderName));
         connect(useSystemDirButton, SIGNAL(clicked()), SLOT(systemDirChosen()));
-#ifndef APP_MAC
         useSystemDirButton->setDefault(true);
         useSystemDirButton->setFocus(Qt::NoFocusReason);
-#endif
         buttonLayout->addWidget(useSystemDirButton);
     }
 
