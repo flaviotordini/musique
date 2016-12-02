@@ -67,6 +67,18 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
+Item *FileSystemModel::itemAt(const QModelIndex &index) const {
+    if (isDir(index)) {
+        const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
+        Folder *folder = folderPointer.data();
+        return qobject_cast<Item*>(folder);
+    } else {
+        const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
+        Track *track = trackPointer.data();
+        return qobject_cast<Item*>(track);
+    }
+}
+
 // --- Sturm und drang ---
 
 Qt::DropActions FileSystemModel::supportedDropActions() const {

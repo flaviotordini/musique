@@ -33,21 +33,7 @@ public:
     FileSystemModel(QObject *parent = 0);
     int columnCount(const QModelIndex & = QModelIndex()) const { return 1; }
     QVariant data(const QModelIndex &item, int role) const;
-    Item* itemAt(const QModelIndex &index) const {
-        if (isDir(index)) {
-            const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
-            Folder *folder = folderPointer.data();
-            return qobject_cast<Item*>(folder);
-        } else {
-            const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
-            Track *track = trackPointer.data();
-            return qobject_cast<Item*>(track);
-        }
-    }
-
-    void clear() {
-        //reset();
-    }
+    Item* itemAt(const QModelIndex &index) const;
 
 protected:
     // drag and drop
