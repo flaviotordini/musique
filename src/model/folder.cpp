@@ -36,7 +36,7 @@ Folder::Folder(QString path, QObject *parent)
     dir.setPath(path);
 }
 
-Folder* Folder::forPath(QString path) {
+Folder* Folder::forPath(const QString &path) {
 
     // qDebug() << "Folder::forPath" << path;
 
