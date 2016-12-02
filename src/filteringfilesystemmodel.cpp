@@ -37,7 +37,6 @@ bool FilteringFileSystemModel::filterAcceptsRow(
         const QModelIndex &sourceParent) const {
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-    const QVariant dataObject = sourceModel()->data(index, Finder::DataObjectRole);
     int itemType = sourceModel()->data(index, Finder::ItemTypeRole).toInt();
     if (itemType == Finder::ItemTypeFolder) {
         return true;
@@ -50,6 +49,7 @@ bool FilteringFileSystemModel::filterAcceptsRow(
         */
     }
 
+    const QVariant dataObject = sourceModel()->data(index, Finder::DataObjectRole);
     const TrackPointer trackPointer = dataObject.value<TrackPointer>();
     Track *track = trackPointer.data();
     if (track) return true;
