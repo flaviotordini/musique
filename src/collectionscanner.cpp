@@ -76,11 +76,22 @@ void CollectionScanner::run() {
 
     if (incremental) {
 
-        // check wheter dir exists, is readable and isn't empty
+        // check whether dir exists, is readable and isn't empty
         // we don't want to wipe out a collection because of an unmounted disk or remote share
-        bool proceed = rootDirectory.exists() &&
-                rootDirectory.isReadable() &&
-                rootDirectory.entryInfoList(QDir::NoDotAndDotDot|QDir::AllEntries).count();
+        bool proceed = rootDirectory.exists();
+        qDebug() << rootDirectory.absolutePath() << "exists" << proceed;
+
+#ifndef APP_MAC_STORE // For some reason this does not work in the sandbox
+        // but the dir could be empty
+        if (proceed && !QFileInfo(rootDirectory.absolutePath()).isSymLink()) {
+            proceed = rootDirectory.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count() > 0;
+            qDebug() << "not empty" << proceed;
+            if (proceed) {
+                proceed = rootDirectory.isReadable();
+                qDebug() << "readable" << proceed;
+            }
+        }
+#endif
 
         if (proceed) {
             // quickly check if anything changed since the last time
@@ -92,6 +103,7 @@ void CollectionScanner::run() {
         }
 
         if (!proceed) {
+            qDebug() << "Not updating collection";
             stopped = false;
             working = false;
             Database::instance().closeConnection();
@@ -274,9 +286,9 @@ QString CollectionScanner::directoryHash(QDir directory) {
 }
 
 QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
-    // qDebug() << "Hashing" << directory.absolutePath();
+    qDebug() << "Hashing dir" << directory.absolutePath();
     directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
-    QFileInfoList list = directory.entryInfoList();
+    const QFileInfoList list = directory.entryInfoList();
     for (int i = 0; i < list.size(); ++i) {
         QFileInfo fileInfo = list.at(i);
         if (fileInfo.isDir()) {
@@ -284,13 +296,14 @@ QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
             QString subDirPath = fileInfo.absoluteFilePath();
 #ifdef APP_MAC
             if (directoryBlacklist.contains(subDirPath)) {
-                // qDebug() << "Skipping directory" << subDirPath;
+                qDebug() << "Skipping directory" << subDirPath;
                 continue;
             }
 #endif
             hash += DataUtils::md5(treeFingerprint(QDir(subDirPath), hash));
         } else {
             // this is a file, add to hash
+            qDebug() << "Hashing file" << fileInfo.absolutePath();
             const uint lastModified = fileInfo.lastModified().toTime_t();
             hash += QString::number(lastModified);
             hash += fileInfo.absoluteFilePath();
