@@ -1,18 +1,7 @@
 # Musique TODO list
 
-## 1.5
-- ready for app store: runFinetune
-
-+ test GPL build
-+ fixed iTunes
-+ Finetune integration
-+ test HiDPI
-+ play button highlight
-+ don't fix tags
-+ disk number
-+ album artist
-
 ## 1.6
+- tracks with # in filename don't play
 - prevent sleep
 - Support external files "Open…" and drag and drop
 - multiple track and album artists

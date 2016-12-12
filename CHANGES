@@ -1,3 +1,13 @@
+1.5
+- Reworked icon
+- Now supports multiple disk and multiple artists albums
+- New Mac toolbar and icons
+- Retina display support
+- Fixed media keys on GNOME
+- Fixed collection updating on Mac App Store version
+- Fixed playlist header not displaying on tracks without album
+- New and updated translations
+
 1.4
 - Added out of the box support on Mac OS X for many audio formats thanks to the new VLC-based engine:
     FLAC, OGG Vorbis, Monkey's Audio (APE), Musepack (MPC), WavPack (WV), True Audio (TTA) and others
