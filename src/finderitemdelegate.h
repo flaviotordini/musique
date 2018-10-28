@@ -50,7 +50,7 @@ private:
     void paintFolder( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintTrack( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
     void paintPlayIcon(QPainter *painter, const QRect& rect, double animation = 0., bool hoverAnimation = false) const;
-    void drawName(QPainter *painter, const QStyleOptionViewItem &option, QString time, const QRect&, bool selected) const;
+    void drawName(QPainter *painter, const QStyleOptionViewItem &option, const QString& time, const QRect&, bool selected) const;
     void drawBadge(QPainter *painter, const QString &text, const QRect&) const;
     void drawCentralLabel(QPainter *painter, const QString &text, const QRect&) const;
     QPixmap getArtistPixmap(Artist*) const;

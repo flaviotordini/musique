@@ -62,10 +62,10 @@ Artist* Artist::forId(int artistId) {
         return artist;
     }
     cache.insert(artistId, 0);
-    return 0;
+    return nullptr;
 }
 
-int Artist::idForName(QString name) {
+int Artist::idForName(const QString& name) {
     int id = -1;
     const QString hash = Artist::getHash(name);
     QSqlDatabase db = Database::instance().getConnection();
@@ -183,7 +183,7 @@ void Artist::fetchLastFmSearch() {
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
-void Artist::parseNameAndMbid(QByteArray bytes, QString preferredValue) {
+void Artist::parseNameAndMbid(const QByteArray& bytes, const QString& preferredValue) {
     QXmlStreamReader xml(bytes);
 
     const QString preferredValueLower = preferredValue.toLower();
@@ -323,7 +323,7 @@ void Artist::fetchLastFmInfo() {
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
-void Artist::parseLastFmInfo(QByteArray bytes) {
+void Artist::parseLastFmInfo(const QByteArray& bytes) {
     QXmlStreamReader xml(bytes);
 
     while(xml.readNextStartElement()) {
@@ -427,7 +427,7 @@ QPixmap Artist::getPhoto() {
     return QPixmap(getImageLocation());
 }
 
-void Artist::setPhoto(QByteArray bytes) {
+void Artist::setPhoto(const QByteArray& bytes) {
     qDebug() << "Storing photo for" << name;
 
     // store photo

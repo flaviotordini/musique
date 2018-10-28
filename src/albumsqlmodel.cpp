@@ -27,7 +27,7 @@ AlbumSqlModel::AlbumSqlModel(QObject *parent) : BaseSqlModel(parent) {
 
 QVariant AlbumSqlModel::data(const QModelIndex &index, int role) const {
 
-    Album* album = 0;
+    Album* album = nullptr;
 
     switch (role) {
 

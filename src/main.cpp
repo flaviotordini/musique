@@ -106,11 +106,11 @@ int main(int argc, char **argv) {
     } else {
         dataDir = qApp->applicationDirPath() + "/data";
         const int iconSizes [] = { 16, 22, 32, 48, 64, 128, 256, 512 };
-        for (int i = 0; i < 8; i++) {
-            QString size = QString::number(iconSizes[i]);
+        for (int iconSize : iconSizes) {
+            QString size = QString::number(iconSize);
             QString png = dataDir + "/" + size + "x" + size + "/" +
                     Constants::UNIX_NAME + ".png";
-            appIcon.addFile(png, QSize(iconSizes[i], iconSizes[i]));
+            appIcon.addFile(png, QSize(iconSize, iconSize));
         }
     }
     if (appIcon.isNull()) {
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
     Http::instance().addRequestHeader("User-Agent", HttpUtils::userAgent());
 
     // Seed random number generator
-    qsrand(QDateTime::currentDateTime().toTime_t());
+    qsrand(QDateTime::currentDateTimeUtc().toTime_t());
 
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 

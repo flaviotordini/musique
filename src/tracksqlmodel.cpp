@@ -26,7 +26,7 @@ TrackSqlModel::TrackSqlModel(QObject *parent) : BaseSqlModel(parent) {
 
 QVariant TrackSqlModel::data(const QModelIndex &index, int role) const {
 
-    Track *track = 0;
+    Track *track = nullptr;
     int trackId = 0;
 
     switch (role) {

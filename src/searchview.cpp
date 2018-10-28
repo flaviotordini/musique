@@ -40,7 +40,7 @@ SearchView::SearchView(QWidget *parent) : BaseFinderView(parent) {
     // itemDelegate()->set
 }
 
-void SearchView::search(QString query) {
+void SearchView::search(const QString& query) {
     // label->setText(tr("Search results for '%1'").arg("<b>" + query + "</b>"));
 }
 

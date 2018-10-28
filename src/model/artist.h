@@ -56,7 +56,7 @@ public:
         cache.clear();
     }
     static Artist* forId(int artistId);
-    static int idForName(QString name);
+    static int idForName(const QString& name);
     void insert();
     void update();
 
@@ -82,7 +82,7 @@ public:
     }*/
 
 public slots:
-    void setPhoto(QByteArray bytes);
+    void setPhoto(const QByteArray& bytes);
 
 signals:
     void gotInfo();
@@ -95,11 +95,11 @@ private slots:
     void fetchLastFmSearch();
     void parseLastFmSearch(QByteArray bytes);
     void fetchLastFmInfo();
-    void parseLastFmInfo(QByteArray bytes);
+    void parseLastFmInfo(const QByteArray& bytes);
     void parseLastFmRedirectedName(QNetworkReply *reply);
 
 private:
-    void parseNameAndMbid(QByteArray bytes, QString preferredName);
+    void parseNameAndMbid(const QByteArray& bytes, const QString& preferredName);
     static QString getHash(const QString&);
 
     static QHash<int, Artist*> cache;

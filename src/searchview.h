@@ -30,7 +30,7 @@ class SearchView : public BaseFinderView {
 
 public:
     SearchView(QWidget *parent);
-    void search(QString query);
+    void search(const QString& query);
 
 protected:
     void paintEvent(QPaintEvent *event);

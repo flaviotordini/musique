@@ -100,7 +100,7 @@ void LastFmLoginDialog::login() {
     LastFm::instance().authenticate(userEdit->text(), passwordEdit->text());
 }
 
-void LastFmLoginDialog::authenticationError(QString message) {
+void LastFmLoginDialog::authenticationError(const QString& message) {
     errorLabel->setText(message);
     errorLabel->show();
 #ifdef APP_MAC

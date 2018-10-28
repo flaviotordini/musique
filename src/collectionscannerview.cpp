@@ -84,7 +84,7 @@ void CollectionScannerView::setCollectionScannerThread(CollectionScannerThread *
     connect(scannerThread, SIGNAL(progress(int)), progressBar, SLOT(setValue(int)), Qt::QueuedConnection);
 }
 
-void CollectionScannerView::scanError(QString message) {
+void CollectionScannerView::scanError(const QString& message) {
     qWarning() << message;
 }
 

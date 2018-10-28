@@ -30,7 +30,7 @@ $END_LICENSE */
 
 PlaylistView::PlaylistView(QWidget *parent) :
         QListView(parent),
-        playlistModel(0), overlayLabel(0) {
+        playlistModel(nullptr), overlayLabel(nullptr) {
 
     // delegate
     setItemDelegate(new PlaylistItemDelegate(this));

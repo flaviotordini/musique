@@ -66,7 +66,7 @@ class CollectionScanner : public QObject {
 
 public:
     CollectionScanner(QObject *parent);
-    void setDirectory(QString directory);
+    void setDirectory(const QString& directory);
     void run();
     void stop();
     void complete();
@@ -77,7 +77,7 @@ signals:
     void error(QString message);
 
 private slots:
-    void scanDirectory(QDir directory);
+    void scanDirectory(const QDir& directory);
     void popFromQueue();
     void giveThisFileAnArtist(FileInfo *file);
     void processArtist(FileInfo *file);
@@ -92,12 +92,12 @@ private slots:
 
 private:
     void reset();
-    void processFile(QFileInfo fileInfo);
+    void processFile(const QFileInfo& fileInfo);
     void cleanStaleTracks();
     static bool isNonTrack(QString path);
-    static bool isModifiedNonTrack(QString path, uint lastModified);
-    static bool insertOrUpdateNonTrack(QString path, uint lastModified);
-    QString directoryHash(QDir directory);
+    static bool isModifiedNonTrack(const QString& path, uint lastModified);
+    static bool insertOrUpdateNonTrack(const QString& path, uint lastModified);
+    QString directoryHash(const QDir& directory);
     QString treeFingerprint(QDir directory, QString hash);
     QStringList getTrackPaths();
     QStringList getNonTrackPaths();

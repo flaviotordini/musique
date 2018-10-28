@@ -19,34 +19,61 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "collectionscanner.h"
-#include "database.h"
-#include "model/track.h"
-#include "datautils.h"
 #include "coverutils.h"
+#include "database.h"
+#include "datautils.h"
 #include "imagedownloader.h"
-#include "tagutils.h"
+#include "model/track.h"
 #include "tagchecker.h"
+#include "tagutils.h"
 
-CollectionScanner::CollectionScanner(QObject *parent) :
-    QObject(parent),
-    working(false),
-    stopped(false),
-    incremental(false),
-    lastUpdate(0),
-    maxQueueSize(0) {
-
+CollectionScanner::CollectionScanner(QObject *parent)
+    : QObject(parent), working(false), stopped(false), incremental(false), lastUpdate(0),
+      maxQueueSize(0) {
 #ifdef APP_MAC
-    QString iTunesAlbumArtwork = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/Album Artwork";
+    QString iTunesAlbumArtwork = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) +
+                                 "/iTunes/Album Artwork";
     directoryBlacklist.append(iTunesAlbumArtwork);
 #endif
 
-    fileExtensionsBlacklist
-            << "jpg" << "jpeg" << "png" << "gif" << "bmp" << "tif" << "tiff"
-            << "txt" << "doc" << "rtf" << "pdf" << "html" << "htm" << "ps" << "xls" << "js" << "css"
-            << "db" << "log" << "url" << "nfo" << "ini" << "dat" << "md5" << "sfv" << "DS_Store"
-            << "zip" << "rar" << "dmg" << "iso"
-            << "m3u" << "pls" << "cue"
-            << "avi" << "flv" << "mpg" << "wmv" << "swf";
+    fileExtensionsBlacklist << "jpg"
+                            << "jpeg"
+                            << "png"
+                            << "gif"
+                            << "bmp"
+                            << "tif"
+                            << "tiff"
+                            << "txt"
+                            << "doc"
+                            << "rtf"
+                            << "pdf"
+                            << "html"
+                            << "htm"
+                            << "ps"
+                            << "xls"
+                            << "js"
+                            << "css"
+                            << "db"
+                            << "log"
+                            << "url"
+                            << "nfo"
+                            << "ini"
+                            << "dat"
+                            << "md5"
+                            << "sfv"
+                            << "DS_Store"
+                            << "zip"
+                            << "rar"
+                            << "dmg"
+                            << "iso"
+                            << "m3u"
+                            << "pls"
+                            << "cue"
+                            << "avi"
+                            << "flv"
+                            << "mpg"
+                            << "wmv"
+                            << "swf";
 }
 
 void CollectionScanner::reset() {
@@ -62,7 +89,6 @@ void CollectionScanner::reset() {
 }
 
 void CollectionScanner::run() {
-
     // qDebug() << "CollectionScanner::run()" << rootDirectory << incremental;
 
     if (working) {
@@ -75,7 +101,6 @@ void CollectionScanner::run() {
     reset();
 
     if (incremental) {
-
         // check whether dir exists, is readable and isn't empty
         // we don't want to wipe out a collection because of an unmounted disk or remote share
         bool proceed = rootDirectory.exists();
@@ -84,7 +109,8 @@ void CollectionScanner::run() {
 #ifndef APP_MAC_STORE // For some reason this does not work in the sandbox
         // but the dir could be empty
         if (proceed && !QFileInfo(rootDirectory.absolutePath()).isSymLink()) {
-            proceed = rootDirectory.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count() > 0;
+            proceed = rootDirectory.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).count() >
+                      0;
             qDebug() << "not empty" << proceed;
             if (proceed) {
                 proceed = rootDirectory.isReadable();
@@ -118,7 +144,6 @@ void CollectionScanner::run() {
         nontrackPaths = getNonTrackPaths();
 
     } else {
-
         // delete any existing data
         Database::instance().clear();
 
@@ -146,7 +171,6 @@ void CollectionScanner::run() {
     popFromQueue();
 
     // qDebug() << "CollectionScanner::run() exited";
-
 }
 
 void CollectionScanner::popFromQueue() {
@@ -172,7 +196,7 @@ void CollectionScanner::popFromQueue() {
         // add to nontracks table
         QString path = fileInfo.absoluteFilePath();
         path.remove(this->rootDirectory.absolutePath() + "/");
-        insertOrUpdateNonTrack(path, QDateTime::currentDateTime().toTime_t());
+        insertOrUpdateNonTrack(path, QDateTime::currentDateTimeUtc().toTime_t());
 
         QTimer::singleShot(0, this, SLOT(popFromQueue()));
         return;
@@ -187,7 +211,6 @@ void CollectionScanner::popFromQueue() {
 
     // Copy TagLib::FileRef in our Tags class.
     // TagLib::FileRef keeps files open and we would quickly reach the max open files limit
-
 
     /*
     Tags *tags = new Tags();
@@ -222,7 +245,6 @@ void CollectionScanner::stop() {
 }
 
 void CollectionScanner::complete() {
-
     if (incremental) {
         // clean db from stale data: non-existing files
         cleanStaleTracks();
@@ -230,7 +252,7 @@ void CollectionScanner::complete() {
 
     Database::instance().setCollectionRoot(rootDirectory.absolutePath());
     Database::instance().setStatus(ScanComplete);
-    Database::instance().setLastUpdate(QDateTime::currentDateTime().toTime_t());
+    Database::instance().setLastUpdate(QDateTime::currentDateTimeUtc().toTime_t());
 
     if (!incremental) {
         if (!Database::instance().getConnection().commit()) {
@@ -266,7 +288,7 @@ void CollectionScanner::emitFinished() {
     emit finished(stats);
 }
 
-void CollectionScanner::setDirectory(QString directory) {
+void CollectionScanner::setDirectory(const QString &directory) {
     if (working) {
         emit error("A scanning task is already running");
         return;
@@ -280,7 +302,7 @@ void CollectionScanner::setDirectory(QString directory) {
     }
 }
 
-QString CollectionScanner::directoryHash(QDir directory) {
+QString CollectionScanner::directoryHash(const QDir &directory) {
     QString fingerPrint = treeFingerprint(directory, QString());
     return DataUtils::md5(fingerPrint);
 }
@@ -289,8 +311,7 @@ QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
     qDebug() << "Hashing dir" << directory.absolutePath();
     directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
     const QFileInfoList list = directory.entryInfoList();
-    for (int i = 0; i < list.size(); ++i) {
-        QFileInfo fileInfo = list.at(i);
+    for (auto &fileInfo : list) {
         if (fileInfo.isDir()) {
             // this is a directory, recurse
             QString subDirPath = fileInfo.absoluteFilePath();
@@ -313,21 +334,17 @@ QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
     return hash;
 }
 
-void CollectionScanner::scanDirectory(QDir directory) {
-
+void CollectionScanner::scanDirectory(const QDir &directory) {
     QStack<QDir> stack;
     stack.push(directory);
-    while(!stack.empty()) {
-
+    while (!stack.empty()) {
         const QDir dir = stack.pop();
-        const QFileInfoList flist = dir.entryInfoList(
-                    QDir::NoDotAndDotDot |
-                    QDir::Dirs | QDir::Files | QDir::Readable
-                    );
+        const QFileInfoList flist =
+                dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Readable);
 
         QFileInfo fileInfo;
-        Q_FOREACH(fileInfo, flist) {
-            if(fileInfo.isFile() ) {
+        Q_FOREACH (fileInfo, flist) {
+            if (fileInfo.isFile()) {
                 processFile(fileInfo);
             } else if (fileInfo.isDir()) {
                 QString subDirPath = fileInfo.absoluteFilePath();
@@ -342,10 +359,9 @@ void CollectionScanner::scanDirectory(QDir directory) {
             }
         }
     }
-
 }
 
-void CollectionScanner::processFile(QFileInfo fileInfo) {
+void CollectionScanner::processFile(const QFileInfo &fileInfo) {
     // qDebug() << "FILE:" << fileInfo.absoluteFilePath();
 
     // 1GB limit
@@ -359,7 +375,7 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
     // skip UNIX hidden files
     // blacklist image files and other common file extensions
     if (fileInfo.baseName().isEmpty() ||
-            fileExtensionsBlacklist.contains(fileInfo.suffix().toLower())) {
+        fileExtensionsBlacklist.contains(fileInfo.suffix().toLower())) {
         // qDebug() << "Skipping file:" << fileInfo.absoluteFilePath();
         return;
     }
@@ -367,7 +383,6 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
     // TODO check for .cue file
 
     if (incremental) {
-
         if (stopped) return;
 
         const uint lastModified = fileInfo.lastModified().toTime_t();
@@ -377,7 +392,6 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
             fileQueue << fileInfo;
             return;
         }
-
 
         /*
         if (Track::isModified(path, lastModified)) {
@@ -407,7 +421,6 @@ void CollectionScanner::processFile(QFileInfo fileInfo) {
         // non-incremental scan, i.e. first scan: scan every file
         fileQueue << fileInfo;
     }
-
 }
 
 /*** Artist ***/
@@ -447,7 +460,6 @@ void CollectionScanner::giveThisFileAnArtist(FileInfo *file) {
 }
 
 void CollectionScanner::processArtist(FileInfo *file) {
-
     Artist *artist = new Artist();
     const QString artistTag = file->getTags()->getArtistString();
     artist->setName(DataUtils::cleanTag(artistTag));
@@ -472,11 +484,9 @@ void CollectionScanner::processArtist(FileInfo *file) {
 
     connect(artist, SIGNAL(gotInfo()), SLOT(gotArtistInfo()));
     artist->fetchInfo();
-
 }
 
 void CollectionScanner::gotArtistInfo() {
-
     // get the Artist that sent the signal
     Artist *artist = static_cast<Artist *>(sender());
     if (!artist) {
@@ -524,7 +534,6 @@ void CollectionScanner::gotArtistInfo() {
         // qDebug() << "ready for album" << file->getFileInfo().baseName();
         giveThisFileAnAlbum(file);
     }
-
 }
 
 /*** Album Artist ***/
@@ -544,7 +553,8 @@ void CollectionScanner::giveThisFileAnAlbumArtist(FileInfo *file) {
         file->setAlbumArtist(loadedArtists.value(artistHash));
         giveThisFileAnAlbum(file);
 
-    } else if (filesWaitingForArtists.contains(artistHash) || filesWaitingForAlbumArtists.contains(artistHash)) {
+    } else if (filesWaitingForArtists.contains(artistHash) ||
+               filesWaitingForAlbumArtists.contains(artistHash)) {
         // this artist is already being processed
         // so we need to add ourselves to the list of waiting files
         // qDebug() << "artist being processed" << artistHash << file->getFileInfo().baseName();
@@ -591,7 +601,6 @@ void CollectionScanner::processAlbumArtist(FileInfo *file) {
 /*** Album ***/
 
 void CollectionScanner::giveThisFileAnAlbum(FileInfo *file) {
-
     const QString albumTag = DataUtils::cleanTag(file->getTags()->getAlbumString());
 
     // try to normalize the album title to a simpler form
@@ -634,10 +643,13 @@ void CollectionScanner::processAlbum(FileInfo *file) {
 
     Artist *artist = file->getAlbumArtist();
     if (!artist) artist = file->getArtist();
-    if (artist) album->setArtist(artist); // && artist->getId() > 0
-    else qDebug() << "Album" << album->getTitle() << "lacks an artist";
+    if (artist)
+        album->setArtist(artist); // && artist->getId() > 0
+    else
+        qDebug() << "Album" << album->getTitle() << "lacks an artist";
 
-    if (artist && artist->getId() <= 0) qWarning() << "artist id" << artist->getId() << artist->getName();
+    if (artist && artist->getId() <= 0)
+        qWarning() << "artist id" << artist->getId() << artist->getName();
 
     // qDebug() << "Processing album:" << album->getTitle() << album->getHash();
 
@@ -651,8 +663,7 @@ void CollectionScanner::processAlbum(FileInfo *file) {
         localCover = CoverUtils::coverFromFile(filePath, album);
         if (!localCover) {
             localCover = CoverUtils::coverFromTags(filePath, album);
-            if (localCover)
-                qDebug() << "Found embedded cover for" << filePath;
+            if (localCover) qDebug() << "Found embedded cover for" << filePath;
         }
         if (localCover) album->setProperty("localCover", true);
     }
@@ -662,8 +673,8 @@ void CollectionScanner::processAlbum(FileInfo *file) {
         return;
     }
     if (filesWaitingForAlbums.contains(album->getHash())) {
-        qDebug() << "ERROR Processing album multiple times!"
-                 << album->getTitle() << album->getHash() << file->getFileInfo().baseName();
+        qDebug() << "ERROR Processing album multiple times!" << album->getTitle()
+                 << album->getHash() << file->getFileInfo().baseName();
         return;
     }
 
@@ -676,7 +687,6 @@ void CollectionScanner::processAlbum(FileInfo *file) {
 
     connect(album, SIGNAL(gotInfo()), SLOT(gotAlbumInfo()));
     album->fetchInfo();
-
 }
 
 void CollectionScanner::gotAlbumInfo() {
@@ -719,7 +729,6 @@ void CollectionScanner::gotAlbumInfo() {
         file->setAlbum(album);
         processTrack(file);
     }
-
 }
 
 /*** Track ***/
@@ -743,7 +752,7 @@ void CollectionScanner::processTrack(FileInfo *file) {
     if (album) {
         if (album->getId() > 0) track->setAlbum(album);
         // else qDebug() << "track"<< track->getTitle() << "has no album";
-        if  (!album->getArtist()) {
+        if (!album->getArtist()) {
             album->setArtist(artist);
         }
     }
@@ -761,8 +770,7 @@ void CollectionScanner::processTrack(FileInfo *file) {
 
     // prefer embedded year tag, since Last.fm release dates are often wrong
     int year = file->getTags()->getYear();
-    if (album && year < 1)
-        year = album->getYear();
+    if (album && year < 1) year = album->getYear();
     if (year < 0) year = 0;
     track->setYear(year);
 
@@ -773,8 +781,7 @@ void CollectionScanner::processTrack(FileInfo *file) {
     track->setArtist(artist);
     // }
 
-    if (album)
-        album->fixTrackTitle(track);
+    if (album) album->fixTrackTitle(track);
 
     // qDebug() << "Removing" << file->getFileInfo().baseName() << "from queue";
     if (!fileQueue.removeAll(file->getFileInfo())) {
@@ -823,7 +830,6 @@ void CollectionScanner::processTrack(FileInfo *file) {
             qDebug() << hash;
         }
     }*/
-
 }
 
 void CollectionScanner::cleanStaleTracks() {
@@ -850,12 +856,11 @@ bool CollectionScanner::isNonTrack(QString path) {
     bool success = query.exec();
     if (!success) qWarning() << query.lastError().text();
     uint tstamp = 0;
-    if (query.next())
-        return query.value(0).toBool();
+    if (query.next()) return query.value(0).toBool();
     return tstamp;
 }
 
-bool CollectionScanner::isModifiedNonTrack(QString path, uint lastModified) {
+bool CollectionScanner::isModifiedNonTrack(const QString &path, uint lastModified) {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select tstamp from nontracks where path=? and tstamp<?");
@@ -868,7 +873,7 @@ bool CollectionScanner::isModifiedNonTrack(QString path, uint lastModified) {
     return query.next();
 }
 
-bool CollectionScanner::insertOrUpdateNonTrack(QString path, uint lastModified) {
+bool CollectionScanner::insertOrUpdateNonTrack(const QString &path, uint lastModified) {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("insert or replace into nontracks (path, tstamp) values (?, ?)");

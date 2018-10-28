@@ -39,10 +39,10 @@ public:
         AlbumType
     };
 
-    static void enqueue(int objectId, int objectType, QString url);
+    static void enqueue(int objectId, int objectType, const QString& url);
 
 public slots:
-    void imageDownloaded(QByteArray bytes);
+    void imageDownloaded(const QByteArray& bytes);
     void imageDownloadError();
 
 private:

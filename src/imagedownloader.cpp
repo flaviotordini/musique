@@ -62,7 +62,7 @@ ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent), imageDownlo
 
 }
 
-void ImageDownloader::enqueue(int objectId, int objectType, QString url) {
+void ImageDownloader::enqueue(int objectId, int objectType, const QString& url) {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("insert into downloads (objectid, type, errors, url) values (?,?,0,?)");
@@ -107,7 +107,7 @@ void ImageDownloader::popFromQueue() {
     connect(reply, SIGNAL(error(QString)), SLOT(imageDownloadError()));
 }
 
-void ImageDownloader::imageDownloaded(QByteArray bytes) {
+void ImageDownloader::imageDownloaded(const QByteArray& bytes) {
     // save image and notify
     if (imageDownload->type == ImageDownloader::ArtistType) {
         Artist* artist = Artist::forId(imageDownload->objectId);
@@ -130,7 +130,7 @@ void ImageDownloader::imageDownloaded(QByteArray bytes) {
         qWarning() << query.lastQuery() << query.lastError().text();
 
     delete imageDownload;
-    imageDownload = 0;
+    imageDownload = nullptr;
 
     popFromQueue();
 }
@@ -145,6 +145,6 @@ void ImageDownloader::imageDownloadError() {
         qWarning() << query.lastQuery() << query.lastError().text();
 
     delete imageDownload;
-    imageDownload = 0;
+    imageDownload = nullptr;
     popFromQueue();
 }

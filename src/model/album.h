@@ -58,7 +58,7 @@ public:
         cache.clear();
     }
     static Album* forId(int albumId);
-    static int idForHash(QString name);
+    static int idForHash(const QString& name);
     void insert();
     void update();
 
@@ -80,7 +80,7 @@ public:
     void fixTrackTitle(Track* track);
 
 public slots:
-    void setPhoto(QByteArray bytes);
+    void setPhoto(const QByteArray& bytes);
 
 signals:
     void gotInfo();
@@ -88,14 +88,14 @@ signals:
 
 private slots:
     void fetchMusicBrainzRelease();
-    void parseMusicBrainzRelease(QByteArray bytes);
+    void parseMusicBrainzRelease(const QByteArray& bytes);
     void fetchMusicBrainzReleaseDetails();
     void parseMusicBrainzReleaseDetails(QByteArray bytes);
 
     void fetchLastFmSearch();
-    void parseLastFmSearch(QByteArray bytes);
+    void parseLastFmSearch(const QByteArray& bytes);
     void fetchLastFmInfo();
-    void parseLastFmInfo(QByteArray bytes);
+    void parseLastFmInfo(const QByteArray& bytes);
     void parseLastFmRedirectedName(QNetworkReply *reply);
 
 private:

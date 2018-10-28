@@ -55,17 +55,17 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
     history = new QStack<QWidget*>();
 
-    fileSystemView = 0;
-    artistListView = 0;
+    fileSystemView = nullptr;
+    artistListView = nullptr;
     albumListView = 0;
-    trackListView = 0;
+    trackListView = nullptr;
 
-    fileSystemModel = 0;
-    artistListModel = 0;
-    albumListModel = 0;
-    trackListModel = 0;
+    fileSystemModel = nullptr;
+    artistListModel = nullptr;
+    albumListModel = nullptr;
+    trackListModel = nullptr;
 
-    searchView = 0;
+    searchView = nullptr;
 
     // colors
     QPalette p = palette();
@@ -268,7 +268,7 @@ void FinderWidget::showFolders() {
     settings.setValue(FINDER_VIEW_KEY, "folders");
 }
 
-void FinderWidget::showSearch(QString query) {
+void FinderWidget::showSearch(const QString& query) {
     if (query.isEmpty()) {
         if (stackedWidget->currentWidget() == searchView) restoreSavedView();
         return;
@@ -478,7 +478,7 @@ void FinderWidget::addTracksAndPlay(QList<Track *>tracks) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
 
-    Track* trackToPlay = 0;
+    Track* trackToPlay = nullptr;
 
     QSettings settings;
     const bool shuffle = settings.value("shuffle").toBool();

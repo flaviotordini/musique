@@ -37,7 +37,7 @@ BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
     setStyleSheet("QToolButton { color:white } QToolBar { background: black; border:0 }");
 }
 
-void BreadcrumbWidget::addItem(QString title) {
+void BreadcrumbWidget::addItem(const QString& title) {
 
     QAction *action = addAction(title);
     action->setEnabled(false);

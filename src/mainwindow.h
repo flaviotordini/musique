@@ -63,8 +63,8 @@ public slots:
     void updateContextualView(Track *track);
     void showInitialView();
     void quit();
-    void showMessage(QString message);
-    void handleError(QString message);
+    void showMessage(const QString& message);
+    void handleError(const QString& message);
     void restore();
     void messageReceived(const QString &message);
     void goBack();
@@ -95,7 +95,7 @@ private slots:
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
     void checkForUpdate();
-    void gotNewVersion(QString version);
+    void gotNewVersion(const QString& version);
 
     // Phonon related logic
     void stop();
@@ -157,7 +157,7 @@ private:
     void initPhonon();
     static QString formatTime(qint64 duration);
     QString playlistPath();
-    void simpleUpdateDialog(QString version);
+    void simpleUpdateDialog(const QString& version);
     void showFinetuneDialog(const QVariantMap &stats);
 
     // view mechanism

@@ -33,7 +33,7 @@ static const QString demoMessage =
 #endif
 
 PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
-    activeTrack = 0;
+    activeTrack = nullptr;
     activeRow = -1;
 }
 
@@ -86,7 +86,7 @@ void PlaylistModel::skipBackward() {
     QSettings settings;
     const bool shuffle = settings.value("shuffle").toBool();
 
-    Track *previousTrack = 0;
+    Track *previousTrack = nullptr;
 
     if (shuffle) {
         if (playedTracks.size() > 1) previousTrack = playedTracks.at(playedTracks.size() - 2);
@@ -115,7 +115,7 @@ void PlaylistModel::skipForward() {
         setActiveRow(nextRow);
     } else {
         activeRow = -1;
-        activeTrack = 0;
+        activeTrack = nullptr;
         foreach (Track *track, playedTracks)
             track->setPlayed(false);
         playedTracks.clear();
@@ -128,12 +128,12 @@ Track *PlaylistModel::getNextTrack() {
     const bool shuffle = settings.value("shuffle").toBool();
     const bool repeat = settings.value("repeat").toBool();
 
-    Track *nextTrack = 0;
+    Track *nextTrack = nullptr;
 
     if (shuffle) {
         // get a random non-played non-active track
         if (playedTracks.size() < tracks.size()) {
-            while (nextTrack == 0) {
+            while (nextTrack == nullptr) {
                 int nextRow = (int)((float)qrand() / (float)RAND_MAX * tracks.size());
                 Track *candidateTrack = tracks.at(nextRow);
                 if (!candidateTrack->isPlayed() && candidateTrack != activeTrack) {
@@ -143,11 +143,11 @@ Track *PlaylistModel::getNextTrack() {
         }
 
         // repeat
-        if (repeat && nextTrack == 0 && !tracks.empty()) {
+        if (repeat && nextTrack == nullptr && !tracks.empty()) {
             playedTracks.clear();
             foreach (Track *track, tracks) { track->setPlayed(false); }
             // get a random non-active track
-            while (nextTrack == 0) {
+            while (nextTrack == nullptr) {
                 int nextRow = (int)((float)qrand() / (float)RAND_MAX * (tracks.size() - 1));
                 Track *candidateTrack = tracks.at(nextRow);
                 if (candidateTrack != activeTrack) {
@@ -171,7 +171,7 @@ Track *PlaylistModel::getNextTrack() {
 
 Track *PlaylistModel::trackAt(int row) const {
     if (rowExists(row)) return tracks.at(row);
-    return 0;
+    return nullptr;
 }
 
 Track *PlaylistModel::getActiveTrack() const {
@@ -229,7 +229,7 @@ void PlaylistModel::clear() {
     beginResetModel();
     playedTracks.clear();
     tracks.clear();
-    activeTrack = 0;
+    activeTrack = nullptr;
     activeRow = -1;
     emit layoutChanged();
     emit activeRowChanged(-1, false, false);
@@ -455,7 +455,7 @@ bool PlaylistModel::loadFrom(QTextStream &stream) {
     stream.setCodec("UTF-8");
     QString header;
     QString tag;
-    Track *cur = 0;
+    Track *cur = nullptr;
     stream >> header;
     QString line;
     while (!stream.atEnd()) {
@@ -464,7 +464,7 @@ bool PlaylistModel::loadFrom(QTextStream &stream) {
             QString path = line.section('=', -1);
             cur = Track::forPath(path);
             if (cur) tracks << cur;
-        } else if (line.startsWith(QLatin1String("Title")) && cur != NULL) {
+        } else if (line.startsWith(QLatin1String("Title")) && cur != nullptr) {
             tag = line.right(line.size() - line.indexOf('=') - 1);
             if (!tag.isNull() && !tag.isEmpty()) cur->setTitle(tag);
         }

@@ -76,7 +76,7 @@ public:
     }
     void appear();
     void disappear();
-    void showSearch(QString query);
+    void showSearch(const QString& query);
     void addTracksAndPlay(QList<Track*> tracks);
     void artistActivated(Artist *artist);
     void albumActivated(Album *album);

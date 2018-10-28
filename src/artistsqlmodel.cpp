@@ -27,7 +27,7 @@ ArtistSqlModel::ArtistSqlModel(QObject *parent) : BaseSqlModel(parent) {
 
 QVariant ArtistSqlModel::data(const QModelIndex &index, int role) const {
 
-    Artist *artist = 0;
+    Artist *artist = nullptr;
     int artistId = 0;
 
     switch (role) {

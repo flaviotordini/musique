@@ -39,7 +39,7 @@ Track::Track() :
     diskCount(1),
     year(0),
     length(0),
-    album(0),
+    album(nullptr),
     artist(0),
     played(false),
     startTime(0) { }
@@ -87,14 +87,14 @@ Track* Track::forId(int trackId) {
 
     // id not found
     cache.insert(trackId, 0);
-    return 0;
+    return nullptr;
 }
 
 Track* Track::forPath(const QString &path) {
     // qDebug() << "Track::forPath" << path;
     QHash<QString, Track*>::const_iterator i = pathCache.constFind(path);
     if (i != pathCache.constEnd()) return i.value();
-    Track *track = 0;
+    Track *track = nullptr;
     int id = Track::idForPath(path);
     if (id != -1) track = Track::forId(id);
     return track;
@@ -160,7 +160,7 @@ void Track::insert() {
     query.bindValue(7, artistId);
     artistId = album && album->getArtist() ? album->getArtist()->getId() : 0;
     query.bindValue(8, artistId);
-    query.bindValue(9, QDateTime::currentDateTime().toTime_t());
+    query.bindValue(9, QDateTime::currentDateTimeUtc().toTime_t());
     query.bindValue(10, length);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
@@ -305,7 +305,7 @@ QString Track::getHash() {
     return Track::getHash(title);
 }
 
-QString Track::getHash(QString name) {
+QString Track::getHash(const QString& name) {
     // return DataUtils::calculateHash(DataUtils::normalizeTag(name));
     return DataUtils::normalizeTag(name);
 }
@@ -399,7 +399,7 @@ void Track::getLyrics() {
     // connect(reply, SIGNAL(error(QString)), SIGNAL(gotLyrics()));
 }
 
-void Track::parseLyricsSearchResults(QByteArray bytes) {
+void Track::parseLyricsSearchResults(const QByteArray& bytes) {
     QString lyricsText = DataUtils::getXMLElementText(bytes, "lyrics");
     if (lyricsText == "Instrumental") {
         emit gotLyrics(lyricsText);
@@ -421,7 +421,7 @@ void Track::parseLyricsSearchResults(QByteArray bytes) {
     }
 }
 
-void Track::scrapeLyrics(QByteArray bytes) {
+void Track::scrapeLyrics(const QByteArray& bytes) {
     QString lyrics = QString::fromUtf8(bytes);
 
     int pos = lyrics.indexOf( "'lyricbox'" );

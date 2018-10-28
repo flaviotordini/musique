@@ -3,20 +3,16 @@
 #include "iconutils.h"
 
 class SearchButton : public QAbstractButton {
-
 public:
-    SearchButton(QWidget *parent = 0);
+    SearchButton(QWidget *parent = nullptr);
     QMenu *m_menu;
 
 protected:
     void paintEvent(QPaintEvent *e);
     void mousePressEvent(QMouseEvent *e);
-
 };
 
-SearchButton::SearchButton(QWidget *parent)
-    : QAbstractButton(parent),
-    m_menu(0) {
+SearchButton::SearchButton(QWidget *parent) : QAbstractButton(parent), m_menu(nullptr) {
     setObjectName(QLatin1String("SearchButton"));
     setCursor(Qt::ArrowCursor);
     setFocusPolicy(Qt::NoFocus);
@@ -46,7 +42,8 @@ void SearchButton::paintEvent(QPaintEvent *e) {
     painter.drawPixmap(x, y, p);
 }
 
-SearchLineEdit::SearchLineEdit(QWidget *parent) : ExLineEdit(parent), searchButton(new SearchButton(this)) {
+SearchLineEdit::SearchLineEdit(QWidget *parent)
+    : ExLineEdit(parent), searchButton(new SearchButton(this)) {
     connect(m_lineEdit, SIGNAL(textChanged(const QString &)), SIGNAL(textChanged(const QString &)));
     connect(m_lineEdit, SIGNAL(textEdited(const QString &)), SIGNAL(textEdited(const QString &)));
     connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(returnPressed()));
@@ -59,7 +56,8 @@ SearchLineEdit::SearchLineEdit(QWidget *parent) : ExLineEdit(parent), searchButt
 
     // completion
     autoComplete = new AutoComplete(this, m_lineEdit);
-    connect(autoComplete, SIGNAL(suggestionAccepted(Suggestion*)), SIGNAL(suggestionAccepted(Suggestion*)));
+    connect(autoComplete, SIGNAL(suggestionAccepted(Suggestion *)),
+            SIGNAL(suggestionAccepted(Suggestion *)));
 }
 
 void SearchLineEdit::paintEvent(QPaintEvent *e) {
@@ -86,8 +84,7 @@ void SearchLineEdit::resizeEvent(QResizeEvent *e) {
 void SearchLineEdit::updateGeometries() {
     int menuHeight = height();
     int menuWidth = menuHeight + 1;
-    if (!searchButton->m_menu)
-        menuWidth = (menuHeight / 5) * 4;
+    if (!searchButton->m_menu) menuWidth = (menuHeight / 5) * 4;
     searchButton->resize(QSize(menuWidth, menuHeight));
 }
 
@@ -104,8 +101,7 @@ AutoComplete *SearchLineEdit::getAutoComplete() {
 }
 
 void SearchLineEdit::setMenu(QMenu *menu) {
-    if (searchButton->m_menu)
-        searchButton->m_menu->deleteLater();
+    if (searchButton->m_menu) searchButton->m_menu->deleteLater();
     searchButton->m_menu = menu;
     updateGeometries();
 }
@@ -113,8 +109,7 @@ void SearchLineEdit::setMenu(QMenu *menu) {
 QMenu *SearchLineEdit::menu() const {
     if (!searchButton->m_menu) {
         searchButton->m_menu = new QMenu(searchButton);
-        if (isVisible())
-            (const_cast<SearchLineEdit*>(this))->updateGeometries();
+        if (isVisible()) (const_cast<SearchLineEdit *>(this))->updateGeometries();
     }
     return searchButton->m_menu;
 }

@@ -30,7 +30,7 @@ void CollectionScannerThread::run() {
 
     // qDebug() << "CollectionScannerThread::run()";
 
-    scanner = new CollectionScanner(0);
+    scanner = new CollectionScanner(nullptr);
     scanner->setDirectory(rootDirectory);
     connect(scanner, SIGNAL(progress(int)), SIGNAL(progress(int)), Qt::QueuedConnection);
     connect(scanner, SIGNAL(error(QString)), SIGNAL(error(QString)), Qt::QueuedConnection);

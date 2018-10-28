@@ -28,7 +28,7 @@ $END_LICENSE */
 
 static QHash<QString, Folder*> folderCache;
 
-Folder::Folder(QString path, QObject *parent)
+Folder::Folder(const QString& path, QObject *parent)
     : Item(parent),
     path(path),
     trackCount(-1),
@@ -63,7 +63,7 @@ Album* Folder::getAlbum() {
     if (query.next()) {
         return Album::forId(query.value(0).toInt());
     }
-    return 0;
+    return nullptr;
 }
 
 Artist* Folder::getArtist() {
@@ -76,7 +76,7 @@ Artist* Folder::getArtist() {
     if (query.next()) {
         return Artist::forId(query.value(0).toInt());
     }
-    return 0;
+    return nullptr;
 }
 
 QImage Folder::getPhoto() {
@@ -87,7 +87,7 @@ QImage Folder::getPhoto() {
     Album *album = getAlbum();
 
     // If there's no album, try to get a relevant Artist
-    Artist *artist = 0;
+    Artist *artist = nullptr;
     if (!album) {
         artist = getArtist();
     }

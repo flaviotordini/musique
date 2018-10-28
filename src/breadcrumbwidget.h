@@ -29,7 +29,7 @@ class BreadcrumbWidget : public QToolBar {
 
 public:
     BreadcrumbWidget(QWidget *parent);
-    void addItem(QString title);
+    void addItem(const QString& title);
     void clear();
     void goBack();
 

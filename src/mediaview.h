@@ -58,7 +58,7 @@ private slots:
     void playbackFinished();
     void trackFinished();
     void aboutToFinish();
-    void currentSourceChanged(Phonon::MediaSource mediaSource);
+    void currentSourceChanged(const Phonon::MediaSource& mediaSource);
 #ifdef APP_ACTIVATION
     void updateContinueButton(int);
 #endif

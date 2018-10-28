@@ -46,7 +46,7 @@ signals:
     void error(QString message);
 
 private slots:
-    void authenticationResponse(QByteArray bytes);
+    void authenticationResponse(const QByteArray& bytes);
     void authenticationError(const QString &message);
 
 private:

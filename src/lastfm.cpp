@@ -31,7 +31,7 @@ $END_LICENSE */
 
 namespace {
 
-static const QString WS = "http://ws.audioscrobbler.com/2.0/";
+const QString WS = "http://ws.audioscrobbler.com/2.0/";
 
 }
 
@@ -40,7 +40,7 @@ LastFm& LastFm::instance() {
     return *i;
 }
 
-LastFm::LastFm(QObject *parent) : QObject(parent), dialog(0) {
+LastFm::LastFm(QObject *parent) : QObject(parent), dialog(nullptr) {
     QSettings settings;
     username = settings.value("lastFmUsername").toString();
     sessionKey = settings.value("lastFmSessionKey").toString();
@@ -78,7 +78,7 @@ void LastFm::authenticate(const QString &username, const QString &password) {
     connect(reply, SIGNAL(error(QString)), SLOT(authenticationError(QString)));
 }
 
-void LastFm::authenticationResponse(QByteArray bytes) {
+void LastFm::authenticationResponse(const QByteArray& bytes) {
     QXmlStreamReader xml(bytes);
 
     while(!xml.atEnd() && !xml.hasError()) {

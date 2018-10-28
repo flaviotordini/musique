@@ -29,9 +29,9 @@ public:
     static QString cleanTag(QString tag);
     static QString normalizeTag(const QString &tag);
     static QString simplify(const QString &s);
-    static QString md5(QString);
-    static QString getXMLElementText(QByteArray bytes, QString element);
-    static QString getXMLAttributeText(QByteArray bytes, QString element, QString attribute);
+    static QString md5(const QString&);
+    static QString getXMLElementText(const QByteArray& bytes, const QString& element);
+    static QString getXMLAttributeText(const QByteArray& bytes, const QString& element, const QString& attribute);
     static QString getSystemLanguageCode();
     static QString formatDuration(uint secs);
 

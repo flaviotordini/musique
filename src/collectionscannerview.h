@@ -48,7 +48,7 @@ protected:
 
 private slots:
     void progress(int value);
-    void scanError(QString message);
+    void scanError(const QString& message);
     void screenChanged();
 
 private:

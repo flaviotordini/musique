@@ -37,7 +37,7 @@ $END_LICENSE */
 #endif
 
 MediaView::MediaView(QWidget *parent) : View(parent) {
-    activeTrack = 0;
+    activeTrack = nullptr;
 
 #ifdef APP_ACTIVATION
     tracksPlayed = 0;
@@ -152,7 +152,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
 
     Track *track = playlistModel->trackAt(row);
     if (!track) {
-        activeTrack = 0;
+        activeTrack = nullptr;
         MainWindow::instance()->getAction("contextual")->setEnabled(false);
         return;
     }
@@ -169,7 +169,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
         mediaObject->play();
     }
 
-    track->setStartTime(QDateTime::currentDateTime().toTime_t());
+    track->setStartTime(QDateTime::currentDateTimeUtc().toTime_t());
 
     // ensure active item is visible
     QModelIndex index = playlistModel->indexForTrack(track);
@@ -299,7 +299,7 @@ void MediaView::aboutToFinish() {
     trackFinished();
 }
 
-void MediaView::currentSourceChanged(Phonon::MediaSource mediaSource) {
+void MediaView::currentSourceChanged(const Phonon::MediaSource& mediaSource) {
     QString path = mediaSource.fileName();
     QString collectionRoot = Database::instance().collectionRoot();
     path = path.mid(collectionRoot.length() + 1);

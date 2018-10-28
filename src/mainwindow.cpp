@@ -55,6 +55,7 @@ $END_LICENSE */
 #include "lastfm.h"
 #include "lastfmlogindialog.h"
 #include <iostream>
+#include <utility>
 #ifdef APP_EXTRA
 #include "extra.h"
 #include "updatedialog.h"
@@ -69,7 +70,7 @@ $END_LICENSE */
 #include "toolbarmenu.h"
 
 namespace {
-static MainWindow *singleton = 0;
+MainWindow *singleton = nullptr;
 }
 
 MainWindow *MainWindow::instance() {
@@ -77,7 +78,7 @@ MainWindow *MainWindow::instance() {
     return singleton;
 }
 
-MainWindow::MainWindow() : updateChecker(0), toolbarMenu(0) {
+MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr) {
     m_fullscreen = false;
 
     singleton = this;
@@ -85,11 +86,11 @@ MainWindow::MainWindow() : updateChecker(0), toolbarMenu(0) {
     setWindowTitle(Constants::NAME);
 
     // lazily initialized views
-    mediaView = 0;
-    collectionScannerView = 0;
-    chooseFolderView = 0;
-    aboutView = 0;
-    contextualView = 0;
+    mediaView = nullptr;
+    collectionScannerView = nullptr;
+    chooseFolderView = nullptr;
+    aboutView = nullptr;
+    contextualView = nullptr;
 
     // build ui
     createActions();
@@ -870,7 +871,7 @@ void MainWindow::startFullScan(QString directory) {
 
     CollectionScannerThread *scannerThread = new CollectionScannerThread();
     collectionScannerView->setCollectionScannerThread(scannerThread);
-    scannerThread->setDirectory(directory);
+    scannerThread->setDirectory(std::move(directory));
     connect(scannerThread, SIGNAL(finished(QVariantMap)), SLOT(fullScanFinished(QVariantMap)),
             Qt::UniqueConnection);
     scannerThread->start();
@@ -1222,7 +1223,7 @@ void MainWindow::checkForUpdate() {
 
     // check every 24h
     QSettings settings;
-    uint unixTime = QDateTime::currentDateTime().toTime_t();
+    uint unixTime = QDateTime::currentDateTimeUtc().toTime_t();
     int lastCheck = settings.value(updateCheckKey).toInt();
     int secondsSinceLastCheck = unixTime - lastCheck;
     // qDebug() << "secondsSinceLastCheck" << unixTime << lastCheck << secondsSinceLastCheck;
@@ -1236,10 +1237,10 @@ void MainWindow::checkForUpdate() {
     settings.setValue(updateCheckKey, unixTime);
 }
 
-void MainWindow::gotNewVersion(QString version) {
+void MainWindow::gotNewVersion(const QString& version) {
     if (updateChecker) {
         delete updateChecker;
-        updateChecker = 0;
+        updateChecker = nullptr;
     }
 
     QSettings settings;
@@ -1254,7 +1255,7 @@ void MainWindow::gotNewVersion(QString version) {
 #endif
 }
 
-void MainWindow::simpleUpdateDialog(QString version) {
+void MainWindow::simpleUpdateDialog(const QString& version) {
     QMessageBox msgBox(this);
     msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png"));
     msgBox.setText(tr("%1 version %2 is now available.").arg(Constants::NAME, version));
@@ -1324,7 +1325,7 @@ void MainWindow::runFinetune(const QString &filename) {
     if (Extra::runFinetune(filename)) return;
 #else
     QProcess process;
-    if (process.startDetached("finetune", QStringList(filename))) return;
+    if (QProcess::startDetached("finetune", QStringList(filename))) return;
 #endif
 
     const QString baseUrl = QLatin1String("http://") + Constants::ORG_DOMAIN;
@@ -1389,7 +1390,7 @@ void MainWindow::loadPlaylist() {
     QString plsPath = playlistPath();
     if (!QFile::exists(plsPath)) return;
     PlaylistModel *playlistModel = mediaView->getPlaylistModel();
-    if (playlistModel == 0) return;
+    if (playlistModel == nullptr) return;
     // qDebug() << "Loading playlist: " << plsPath;
     QFile plsFile(plsPath);
     QTextStream plsStream(&plsFile);
@@ -1465,12 +1466,12 @@ void MainWindow::showActionInStatusBar(QAction *action, bool show) {
     }
 }
 
-void MainWindow::handleError(QString message) {
+void MainWindow::handleError(const QString& message) {
     qWarning() << message;
     showMessage(message);
 }
 
-void MainWindow::showMessage(QString message) {
+void MainWindow::showMessage(const QString& message) {
     statusBar()->showMessage(message, 5000);
 }
 

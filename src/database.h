@@ -45,7 +45,7 @@ public:
     uint lastUpdate();
     void setLastUpdate(uint date);
     QString collectionRoot();
-    void setCollectionRoot(QString dir);
+    void setCollectionRoot(const QString& dir);
     void closeConnections();
     void closeConnection();
     const QString &needsUpdate() { return updateRoot; }
@@ -57,8 +57,8 @@ public:
 private:
     Database();
     void createAttributes();
-    QVariant getAttribute(QString name);
-    void setAttribute(QString name, QVariant value);
+    QVariant getAttribute(const QString& name);
+    void setAttribute(const QString& name, const QVariant& value);
     bool removeRecursively(const QString & dirName);
 
     QMutex lock;

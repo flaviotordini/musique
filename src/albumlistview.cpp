@@ -28,8 +28,8 @@ $END_LICENSE */
 #endif
 
 namespace {
-static const char *sortByKey = "albumSortBy";
-static const char *reverseOrderKey = "albumReverseOrder";
+const char *sortByKey = "albumSortBy";
+const char *reverseOrderKey = "albumReverseOrder";
 }
 
 AlbumListView::AlbumListView(QWidget *parent) : BaseFinderView(parent),

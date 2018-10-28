@@ -36,7 +36,7 @@ class SearchModel : public QAbstractListModel {
 
 public:
     SearchModel(QObject *parent = 0);
-    void search(QString query);
+    void search(const QString& query);
     void setHoveredRow(int row);
 
 public slots:

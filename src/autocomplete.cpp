@@ -47,7 +47,7 @@ QDebug operator<<(QDebug str, const QEvent * ev) {
 #endif
 
 AutoComplete::AutoComplete(SearchWidget *buddy, QLineEdit *lineEdit):
-    QObject(lineEdit), buddy(buddy), lineEdit(lineEdit), enabled(true), suggester(0), itemHovering(false) {
+    QObject(lineEdit), buddy(buddy), lineEdit(lineEdit), enabled(true), suggester(nullptr), itemHovering(false) {
 
     popup = new QListWidget();
     popup->setWindowFlags(Qt::Popup);
@@ -91,7 +91,7 @@ bool AutoComplete::eventFilter(QObject *obj, QEvent *ev) {
     // qDebug() << ev;
 
     if (ev->type() == QEvent::Leave) {
-        popup->setCurrentItem(0);
+        popup->setCurrentItem(nullptr);
         popup->clearSelection();
         if (!originalText.isEmpty()) buddy->setText(originalText);
         return true;
@@ -125,7 +125,7 @@ bool AutoComplete::eventFilter(QObject *obj, QEvent *ev) {
 
         case Qt::Key_Up:
             if (popup->currentRow() == 0) {
-                popup->setCurrentItem(0);
+                popup->setCurrentItem(nullptr);
                 popup->clearSelection();
                 buddy->setText(originalText);
                 buddy->toWidget()->setFocus();
@@ -168,7 +168,7 @@ void AutoComplete::showSuggestions(const QList<Suggestion *> &suggestions) {
         if (!s->type.isEmpty())
             item->setIcon(QIcon(":/images/item/" + s->type + ".png"));
     }
-    popup->setCurrentItem(0);
+    popup->setCurrentItem(nullptr);
     int h = popup->frameWidth() * 2;
     for (int i = 0; i < suggestions.count(); ++i)
         h += popup->sizeHintForRow(i);
@@ -215,7 +215,7 @@ void AutoComplete::setSuggester(Suggester* suggester) {
 void AutoComplete::suggest() {
     if (!enabled) return;
 
-    popup->setCurrentItem(0);
+    popup->setCurrentItem(nullptr);
     popup->clearSelection();
 
     originalText = buddy->text();

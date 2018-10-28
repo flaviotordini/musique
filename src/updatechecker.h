@@ -29,7 +29,7 @@ private:
 class UpdateCheckerStreamReader : public QXmlStreamReader {
 
 public:
-    bool read(QByteArray data);
+    bool read(const QByteArray& data);
     QString remoteVersion();
     bool needUpdate() { return m_needUpdate; }
 

@@ -59,7 +59,7 @@ bool CoverUtils::saveImage(const QImage &image, Album *album) {
     return true;
 }
 
-bool CoverUtils::coverFromFile(QString dir, Album *album) {
+bool CoverUtils::coverFromFile(const QString& dir, Album *album) {
     static QList<QRegExp> coverREs;
     if (coverREs.isEmpty()) {
         QLatin1String ext(".(jpe?g|gif|png|bmp)");
@@ -88,7 +88,7 @@ bool CoverUtils::coverFromFile(QString dir, Album *album) {
     return false;
 }
 
-bool CoverUtils::coverFromTags(QString filename, Album *album) {
+bool CoverUtils::coverFromTags(const QString& filename, Album *album) {
     const QString suffix = QFileInfo(filename).suffix().toLower();
     if (suffix == "mp3") {
         TagLib::MPEG::File f((TagLib::FileName)filename.toUtf8());
@@ -156,7 +156,7 @@ bool CoverUtils::coverFromXiphComment(TagLib::Ogg::XiphComment *xiphComment, Alb
     return saveImage(image, album);
 }
 
-bool CoverUtils::coverFromMP4(QString filename, Album *album) {
+bool CoverUtils::coverFromMP4(const QString& filename, Album *album) {
 
     TagLib::MP4::File f((TagLib::FileName)filename.toUtf8());
     if (!f.isValid()) return false;

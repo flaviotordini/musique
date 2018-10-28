@@ -95,7 +95,7 @@ QVariant SearchModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 }
 
-void SearchModel::search(QString query) {
+void SearchModel::search(const QString& query) {
     beginResetModel();
 
     QString likeQuery = "%" + query + "%";
@@ -127,7 +127,7 @@ void SearchModel::search(QString query) {
 }
 
 Item* SearchModel::itemAt(const QModelIndex &index) const {
-    Item *item = 0;
+    Item *item = nullptr;
 
     int itemType = index.data(Finder::ItemTypeRole).toInt();
     if (itemType == Finder::ItemTypeArtist) {

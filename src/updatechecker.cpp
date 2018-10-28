@@ -53,7 +53,7 @@ QString UpdateChecker::remoteVersion() {
 
 // --- Reader ---
 
-bool UpdateCheckerStreamReader::read(QByteArray data) {
+bool UpdateCheckerStreamReader::read(const QByteArray& data) {
     addData(data);
 
     while (!atEnd()) {

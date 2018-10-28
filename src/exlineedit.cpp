@@ -48,7 +48,7 @@ void ClearButton::mouseReleaseEvent(QMouseEvent *e) {
 
 ExLineEdit::ExLineEdit(QWidget *parent)
     : QWidget(parent)
-    , m_leftWidget(0)
+    , m_leftWidget(nullptr)
     , m_lineEdit(new QLineEdit(this))
     , m_clearButton(new ClearButton(this)) {
     setFocusPolicy(m_lineEdit->focusPolicy());

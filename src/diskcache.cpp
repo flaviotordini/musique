@@ -41,5 +41,5 @@ QIODevice* DiskCache::prepare(const QNetworkCacheMetaData &metaData) {
         return QNetworkDiskCache::prepare(metaData);
     }
 
-    return 0;
+    return nullptr;
 }

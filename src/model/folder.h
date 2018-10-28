@@ -34,7 +34,7 @@ class Folder : public Item {
     Q_OBJECT
 
 public:
-    Folder(QString path, QObject *parent = 0);
+    Folder(const QString& path, QObject *parent = 0);
     static Folder* forPath(const QString &path);
     QImage getPhoto();
 

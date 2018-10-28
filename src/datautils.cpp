@@ -58,11 +58,11 @@ QString DataUtils::simplify(const QString &s) {
     return s2;
 }
 
-QString DataUtils::md5(const QString name) {
+QString DataUtils::md5(const QString& name) {
     return QString::fromLatin1(QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
 }
 
-QString DataUtils::getXMLElementText(QByteArray bytes, QString elementName) {
+QString DataUtils::getXMLElementText(const QByteArray& bytes, const QString& elementName) {
     QXmlStreamReader xml(bytes);
 
     /* We'll parse the XML until we reach end of it.*/
@@ -96,7 +96,7 @@ QString DataUtils::getXMLElementText(QByteArray bytes, QString elementName) {
 
 }
 
-QString DataUtils::getXMLAttributeText(QByteArray bytes, QString element, QString attribute) {
+QString DataUtils::getXMLAttributeText(const QByteArray& bytes, const QString& element, const QString& attribute) {
     QXmlStreamReader xml(bytes);
     while(!xml.atEnd() && !xml.hasError()) {
         QXmlStreamReader::TokenType token = xml.readNext();

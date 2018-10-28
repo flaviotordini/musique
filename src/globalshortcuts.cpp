@@ -21,7 +21,7 @@ $END_LICENSE */
 #include "globalshortcuts.h"
 #include "globalshortcutbackend.h"
 
-static GlobalShortcuts *singleton = 0;
+static GlobalShortcuts *singleton = nullptr;
 
 GlobalShortcuts& GlobalShortcuts::instance() {
     if (!singleton) singleton = new GlobalShortcuts();
@@ -30,7 +30,7 @@ GlobalShortcuts& GlobalShortcuts::instance() {
 
 GlobalShortcuts::GlobalShortcuts(QObject *parent)
     : QObject(parent),
-    backend(0) {
+    backend(nullptr) {
 
     // Create actions
     AddShortcut("play", tr("Play"), SIGNAL(Play()));

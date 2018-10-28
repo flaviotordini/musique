@@ -26,8 +26,8 @@ FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent) { }
 
 QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
 
-    Folder *folder = 0;
-    Track *track = 0;
+    Folder *folder = nullptr;
+    Track *track = nullptr;
     QString path;
 
     switch (role) {

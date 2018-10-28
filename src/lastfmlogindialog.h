@@ -37,7 +37,7 @@ signals:
 
 private slots:
     void login();
-    void authenticationError(QString);
+    void authenticationError(const QString&);
     void checkFields();
 
 private:

@@ -106,13 +106,13 @@ signals:
 private slots:
     void fetchMusicBrainzTrack();
     void parseMusicBrainzTrack(QByteArray bytes);
-    void parseLyricsSearchResults(QByteArray bytes);
-    void scrapeLyrics(QByteArray bytes);
+    void parseLyricsSearchResults(const QByteArray& bytes);
+    void scrapeLyrics(const QByteArray& bytes);
     void readLyricsFromTags();
 
 private:
     QString getLyricsLocation();
-    static QString getHash(QString);
+    static QString getHash(const QString&);
 
     static QHash<int, Track*> cache;
     static QHash<QString, Track*> pathCache;

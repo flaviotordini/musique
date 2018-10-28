@@ -360,7 +360,7 @@ void FinderItemDelegate::paintPlayIcon(QPainter *painter, const QRect& rect, dou
     painter->restore();
 }
 
-void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem &option, QString name, const QRect& rect, bool isSelected) const {
+void FinderItemDelegate::drawName(QPainter *painter, const QStyleOptionViewItem &option, const QString& name, const QRect& rect, bool isSelected) const {
 
     QRect nameBox = rect;
     nameBox.adjust(0, 0, 0, -ITEM_HEIGHT*2/3);

@@ -35,7 +35,7 @@ const char* GnomeGlobalShortcutBackend::kGsdInterface = "org.gnome.SettingsDaemo
 
 GnomeGlobalShortcutBackend::GnomeGlobalShortcutBackend(GlobalShortcuts* parent)
     : GlobalShortcutBackend(parent),
-      interface_(NULL) { }
+      interface_(nullptr) { }
 
 bool GnomeGlobalShortcutBackend::IsGsdAvailable() {
 #ifdef QT_DBUS_LIB

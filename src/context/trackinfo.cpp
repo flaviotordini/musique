@@ -70,7 +70,7 @@ void TrackInfo::setTrack(Track *track) {
 
 }
 
-void TrackInfo::showLyrics(QString lyrics) {
+void TrackInfo::showLyrics(const QString& lyrics) {
     lyricsLabel->setText(lyrics);
 }
 
