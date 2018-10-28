@@ -597,6 +597,7 @@ void MainWindow::createToolBars() {
 
     seekSlider->setIconVisible(false);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    seekSlider->setFocusPolicy(Qt::NoFocus);
     mainToolBar->addWidget(seekSlider);
 
     /*
@@ -626,6 +627,7 @@ void MainWindow::createToolBars() {
                              volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    volumeSlider->setFocusPolicy(Qt::NoFocus);
     mainToolBar->addWidget(volumeSlider);
 
     mainToolBar->addWidget(new Spacer());
