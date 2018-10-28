@@ -253,8 +253,8 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
         trackString = QString::number(track->getDiskNumber()) + "-" + trackString;
     }
 
-    QSize trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
-    QPoint textLoc(PADDING*1.5, 0);
+    QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackString));
+    QPoint textLoc(PADDING, 0);
     QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
 
     painter->setOpacity(.5);
@@ -275,7 +275,8 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOption
     QString trackTitle = track->getTitle();
 
     QSize trackStringSize(fontMetrics.size(Qt::TextSingleLine, trackTitle));
-    QPoint textLoc(PADDING*4.5, 0);
+    const int textLeft = line.height() + fontMetrics.height() / 2;
+    QPoint textLoc(textLeft, 0);
 
     int width = trackStringSize.width();
     const int maxWidth = line.width() - 110;
