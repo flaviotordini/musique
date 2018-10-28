@@ -19,22 +19,21 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "aboutview.h"
-#include "iconutils.h"
 #include "constants.h"
+#include "iconutils.h"
 #ifdef APP_ACTIVATION
 #include "activation.h"
 #endif
 #ifdef APP_MAC
-#include "macutils.h"
 #include "mac_startup.h"
+#include "macutils.h"
 #endif
 #include "appwidget.h"
 
 AboutView::AboutView(QWidget *parent) : View(parent) {
-
     const int padding = 30;
 
-    connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen*)), SLOT(screenChanged()));
+    connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen *)), SLOT(screenChanged()));
 
     QBoxLayout *verticalLayout = new QVBoxLayout(this);
     verticalLayout->setMargin(0);
@@ -55,7 +54,8 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     layout->setSpacing(padding);
     aboutlayout->addLayout(layout);
 
-    QString info = "<html><style>a { color: palette(text); text-decoration: none; font-weight: bold }</style><body>";
+    QString info = "<html><style>a { color: palette(text); text-decoration: none; font-weight: "
+                   "bold }</style><body>";
 
     info += "<h1 style='font-weight:100'>" + QString(Constants::NAME) + "</h1>";
 
@@ -65,19 +65,29 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
 
 #ifdef APP_ACTIVATION
     if (Activation::instance().isActivated()) {
-        info += "<p>" + tr("Licensed to: %1").arg("<b>" + Activation::instance().getEmail() + "</b>") + "</p>";
+        info += "<p>" +
+                tr("Licensed to: %1").arg("<b>" + Activation::instance().getEmail() + "</b>") +
+                "</p>";
     }
 #endif
 
-    info += "<p>" + tr("Translate %1 to your native language using %2").arg(Constants::NAME)
-            .arg("<a href='http://www.transifex.net/projects/p/" + QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>") + "</p>";
+    info += "<p>" +
+            tr("Translate %1 to your native language using %2")
+                    .arg(Constants::NAME)
+                    .arg("<a href='http://www.transifex.net/projects/p/" +
+                         QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>") +
+            "</p>";
 
 #ifndef APP_EXTRA
-    "<p>" + tr("Released under the <a href='%1'>GNU General Public License</a>")
-    .arg("http://www.gnu.org/licenses/gpl.html") + "</p>";
+    "<p>" +
+            tr("Released under the <a href='%1'>GNU General Public License</a>")
+                    .arg("http://www.gnu.org/licenses/gpl.html") +
+            "</p>";
 #endif
 
-    info += "<p>&copy; 2016 " + QLatin1String(Constants::ORG_NAME) + "</p></body></html>";
+    const char *buildYear = __DATE__ + 7;
+    info += "<p>&copy; " + QLatin1String(buildYear) + " " + QLatin1String(Constants::ORG_NAME) +
+            "</p></body></html>";
 
     QLabel *infoLabel = new QLabel(info, this);
     infoLabel->setOpenExternalLinks(true);
