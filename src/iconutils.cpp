@@ -19,8 +19,8 @@ along with Minitube.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "iconutils.h"
-#include <QAction>
 #include "mainwindow.h"
+#include <QAction>
 
 QIcon IconUtils::fromTheme(const QString &name) {
     const QLatin1String symbolic("-symbolic");
@@ -31,30 +31,44 @@ QIcon IconUtils::fromTheme(const QString &name) {
 }
 
 QIcon IconUtils::fromResources(const QString &name) {
-    QIcon icon = QIcon(QString(":/images/%1.png").arg(name));
+    QLatin1String path(":/images/");
+    QLatin1String ext(".png");
+    const QString pathAndName = path + name;
+    QIcon icon = QIcon(pathAndName + ext);
     if (!icon.isNull()) {
-        icon.addPixmap(QPixmap(QString(":/images/%1_active.png").arg(name)), QIcon::Active);
-        icon.addPixmap(QPixmap(QString(":/images/%1_selected.png").arg(name)), QIcon::Selected);
-        icon.addPixmap(QPixmap(QString(":/images/%1_disabled.png").arg(name)), QIcon::Disabled);
-        icon.addPixmap(QPixmap(QString(":/images/%1_checked.png").arg(name)), QIcon::Normal, QIcon::On);
+        QLatin1String active("_active");
+        QLatin1String selected("_selected");
+        QLatin1String disabled("_disabled");
+        QLatin1String checked("_checked");
+        QLatin1String twoX("@2x");
 
-        icon.addPixmap(QPixmap(QString(":/images/%1_active@2x.png").arg(name)), QIcon::Active);
-        icon.addPixmap(QPixmap(QString(":/images/%1_selected@2x.png").arg(name)), QIcon::Selected);
-        icon.addPixmap(QPixmap(QString(":/images/%1_disabled@2x.png").arg(name)), QIcon::Disabled);
-        icon.addPixmap(QPixmap(QString(":/images/%1_checked@2x.png").arg(name)), QIcon::Normal, QIcon::On);
+        icon.addPixmap(QPixmap(pathAndName + active + ext), QIcon::Active);
+        icon.addPixmap(QPixmap(pathAndName + selected + ext), QIcon::Selected);
+        icon.addPixmap(QPixmap(pathAndName + disabled + ext), QIcon::Disabled);
+        icon.addPixmap(QPixmap(pathAndName + checked + ext), QIcon::Normal, QIcon::On);
+
+        const QString twoXAndExt = twoX + ext;
+        icon.addPixmap(QPixmap(pathAndName + active + twoXAndExt), QIcon::Active);
+        icon.addPixmap(QPixmap(pathAndName + selected + twoXAndExt), QIcon::Selected);
+        icon.addPixmap(QPixmap(pathAndName + disabled + twoXAndExt), QIcon::Disabled);
+        icon.addPixmap(QPixmap(pathAndName + checked + twoXAndExt), QIcon::Normal, QIcon::On);
     }
     return icon;
 }
 
 QIcon IconUtils::icon(const QString &name) {
-    QIcon icon = fromResources(name);
-    if (icon.isNull()) icon = fromTheme(name);
+#ifdef APP_LINUX
+    QIcon icon = fromTheme(name);
+    if (icon.isNull()) icon = fromResources(name);
     return icon;
+#else
+    return fromResources(name);
+#endif
 }
 
 QIcon IconUtils::icon(const QStringList &names) {
     QIcon icon;
-    foreach (const QString &name, names) {
+    for (const QString &name : names) {
         icon = IconUtils::icon(name);
         if (!icon.availableSizes().isEmpty()) break;
     }
@@ -65,7 +79,7 @@ QIcon IconUtils::tintedIcon(const QString &name, const QColor &color, QList<QSiz
     QIcon i = IconUtils::icon(name);
     QIcon t;
     if (sizes.isEmpty()) sizes = i.availableSizes();
-    foreach (const QSize &size, sizes) {
+    for (const QSize &size : sizes) {
         QPixmap pixmap = i.pixmap(size);
         QImage tintedImage = tinted(pixmap.toImage(), color);
         t.addPixmap(QPixmap::fromImage(tintedImage));
@@ -88,8 +102,7 @@ QImage IconUtils::grayscaled(const QImage &image) {
     return img;
 }
 
-QImage IconUtils::tinted(const QImage &image, const QColor &color,
-                         QPainter::CompositionMode mode) {
+QImage IconUtils::tinted(const QImage &image, const QColor &color, QPainter::CompositionMode mode) {
     QImage img(image.size(), QImage::Format_ARGB32_Premultiplied);
     QPainter painter(&img);
     painter.drawImage(0, 0, grayscaled(image));
@@ -107,31 +120,27 @@ void IconUtils::setupAction(QAction *action) {
 
     // show keyboard shortcuts in the status bar
     if (!action->shortcut().isEmpty())
-        action->setStatusTip(action->statusTip() +
-                             " (" +
+        action->setStatusTip(action->statusTip() + QLatin1String(" (") +
                              action->shortcut().toString(QKeySequence::NativeText) +
-                             ")");
+                             QLatin1String(")"));
 }
 
 QPixmap IconUtils::pixmap(const QString &name) {
     // Check if a "@2x" file exists
     const qreal pixelRatio = IconUtils::pixelRatio();
-    QString fileName = name;
     if (pixelRatio > 1.0) {
-        int dotIndex = fileName.lastIndexOf(QLatin1Char('.'));
+        int dotIndex = name.lastIndexOf(QLatin1Char('.'));
         if (dotIndex != -1) {
-            QString at2xfileName = fileName;
-            at2xfileName.insert(dotIndex, QStringLiteral("@2x"));
+            QString at2xfileName = name;
+            at2xfileName.insert(dotIndex, QLatin1String("@2x"));
             if (QFile::exists(at2xfileName)) {
-                fileName = at2xfileName;
-                QPixmap pixmap(fileName);
+                QPixmap pixmap(at2xfileName);
                 pixmap.setDevicePixelRatio(pixelRatio);
                 return pixmap;
             }
         }
     }
-
-    return QPixmap(fileName);
+    return QPixmap(name);
 }
 
 qreal IconUtils::pixelRatio() {

@@ -164,6 +164,7 @@ include(locale/locale.pri)
 # deploy
 DISTFILES += CHANGES LICENSE
 unix:!mac {
+    DEFINES += APP_LINUX
     qt:greaterThan(QT_MAJOR_VERSION, 4) {
         LIBS += -lphonon4qt5
         INCLUDEPATH += /usr/include/phonon4qt5

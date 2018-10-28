@@ -402,7 +402,7 @@ void MainWindow::createActions() {
     connect(action, SIGNAL(triggered()), SLOT(toggleMenuVisibilityWithMessage()));
     actionMap.insert("toggleMenu", action);
 
-    action = new QAction(IconUtils::icon("view-more"), tr("Menu"), this);
+    action = new QAction(IconUtils::icon("open-menu"), tr("Menu"), this);
     connect(action, SIGNAL(triggered()), SLOT(toggleToolbarMenu()));
     actionMap.insert("toolbarMenu", action);
 
@@ -610,7 +610,7 @@ void MainWindow::createToolBars() {
     mainToolBar->addWidget(new Spacer());
 
     mainToolBar->addAction(volumeMuteAct);
-#ifdef APP_UBUNTU_NO
+#ifdef APP_LINUX
     QToolButton *volumeMuteButton =
             qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
     volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
