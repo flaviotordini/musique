@@ -31,10 +31,10 @@ QString DataUtils::normalizeTag(const QString &tag) {
     QString s = tag.simplified().toLower();
 
     // The Beatles => Beatles
-    if (s.length() > 4 && s.startsWith(QStringLiteral("the "))) s = s.remove(0, 4);
+    if (s.length() > 4 && s.startsWith(QLatin1String("the "))) s = s.remove(0, 4);
 
     // Wendy & Lisa => Wendy and Lisa
-    s.replace(QStringLiteral(" & "), QStringLiteral("and"));
+    s.replace(QLatin1String(" & "), QLatin1String("and"));
 
     // remove anything that is not a "letter"
     const int l = s.length();
@@ -52,6 +52,9 @@ QString DataUtils::normalizeTag(const QString &tag) {
 QString DataUtils::simplify(const QString &s) {
     QString s2 = s;
     s2.replace(QString::fromUtf8("’"), QLatin1String("'"));
+    s2.replace(QString::fromUtf8("…"), QLatin1String("..."));
+    // Praise/Love => Praise / Love
+    s2.replace(QRegExp("(\\S)/(\\S)"), QLatin1String("\\1 / \\2"));
     return s2;
 }
 
