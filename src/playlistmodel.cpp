@@ -18,18 +18,18 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
-#include <algorithm>
 #include "playlistmodel.h"
-#include "trackmimedata.h"
+#include "mainwindow.h"
 #include "model/album.h"
 #include "model/artist.h"
-#include "mainwindow.h"
+#include "trackmimedata.h"
+#include <algorithm>
 #ifdef APP_ACTIVATION_NO
 #include "activation.h"
 static const int demoMaxTracks = 15;
 static const QString demoMessage =
         PlaylistModel::tr("This demo is limited to only %1 tracks in the playlist.")
-        .arg(QString::number(demoMaxTracks));
+                .arg(QString::number(demoMaxTracks));
 #endif
 
 PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
@@ -38,27 +38,25 @@ PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
 }
 
 int PlaylistModel::rowCount(const QModelIndex &parent) const {
-    if (parent.isValid()) return 0;
-    else return tracks.size();
+    if (parent.isValid())
+        return 0;
+    else
+        return tracks.size();
 }
 
 QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
-
     const int row = index.row();
-    if (row < 0 || row >= tracks.size())
-        return QVariant();
+    if (row < 0 || row >= tracks.size()) return QVariant();
 
     Track *track = tracks.at(row);
     if (!track) return QVariant();
 
     switch (role) {
-
     case Playlist::DataObjectRole:
         return QVariant::fromValue(QPointer<Track>(track));
 
     case Playlist::ActiveItemRole:
         return track == activeTrack;
-
     }
 
     return QVariant();
@@ -82,7 +80,6 @@ void PlaylistModel::setActiveRow(int row, bool manual, bool startPlayback) {
     emit dataChanged(newIndex, newIndex);
 
     emit activeRowChanged(row, manual, startPlayback);
-
 }
 
 void PlaylistModel::skipBackward() {
@@ -92,17 +89,13 @@ void PlaylistModel::skipBackward() {
     Track *previousTrack = 0;
 
     if (shuffle) {
-
-        if (playedTracks.size() > 1)
-            previousTrack = playedTracks.at(playedTracks.size() - 2);
+        if (playedTracks.size() > 1) previousTrack = playedTracks.at(playedTracks.size() - 2);
 
     } else {
-
         int prevRow = activeRow - 1;
         if (rowExists(prevRow)) {
             previousTrack = tracks.at(prevRow);
         }
-
     }
 
     if (previousTrack) {
@@ -123,14 +116,14 @@ void PlaylistModel::skipForward() {
     } else {
         activeRow = -1;
         activeTrack = 0;
-        foreach(Track *track, playedTracks)
+        foreach (Track *track, playedTracks)
             track->setPlayed(false);
         playedTracks.clear();
         emit playlistFinished();
     }
 }
 
-Track* PlaylistModel::getNextTrack() {
+Track *PlaylistModel::getNextTrack() {
     QSettings settings;
     const bool shuffle = settings.value("shuffle").toBool();
     const bool repeat = settings.value("repeat").toBool();
@@ -138,11 +131,10 @@ Track* PlaylistModel::getNextTrack() {
     Track *nextTrack = 0;
 
     if (shuffle) {
-
         // get a random non-played non-active track
         if (playedTracks.size() < tracks.size()) {
             while (nextTrack == 0) {
-                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
+                int nextRow = (int)((float)qrand() / (float)RAND_MAX * tracks.size());
                 Track *candidateTrack = tracks.at(nextRow);
                 if (!candidateTrack->isPlayed() && candidateTrack != activeTrack) {
                     nextTrack = candidateTrack;
@@ -153,12 +145,10 @@ Track* PlaylistModel::getNextTrack() {
         // repeat
         if (repeat && nextTrack == 0 && !tracks.empty()) {
             playedTracks.clear();
-            foreach (Track *track, tracks) {
-                track->setPlayed(false);
-            }
+            foreach (Track *track, tracks) { track->setPlayed(false); }
             // get a random non-active track
             while (nextTrack == 0) {
-                int nextRow = (int) ((float) qrand() / (float) RAND_MAX * (tracks.size() - 1));
+                int nextRow = (int)((float)qrand() / (float)RAND_MAX * (tracks.size() - 1));
                 Track *candidateTrack = tracks.at(nextRow);
                 if (candidateTrack != activeTrack) {
                     nextTrack = candidateTrack;
@@ -167,7 +157,6 @@ Track* PlaylistModel::getNextTrack() {
         }
 
     } else {
-
         // normal non-shuffle mode
         int nextRow = activeRow + 1;
         if (rowExists(nextRow)) {
@@ -175,43 +164,40 @@ Track* PlaylistModel::getNextTrack() {
         } else if (repeat && !tracks.empty()) {
             nextTrack = tracks.first();
         }
-
     }
 
     return nextTrack;
 }
 
-Track* PlaylistModel::trackAt(int row) const {
-    if (rowExists(row))
-        return tracks.at(row);
+Track *PlaylistModel::trackAt(int row) const {
+    if (rowExists(row)) return tracks.at(row);
     return 0;
 }
 
-Track* PlaylistModel::getActiveTrack() const {
+Track *PlaylistModel::getActiveTrack() const {
     return activeTrack;
 }
 
-void PlaylistModel::addShuffledTrack(Track* track) {
+void PlaylistModel::addShuffledTrack(Track *track) {
     int activeTrackIndex = playedTracks.indexOf(activeTrack);
     if (activeTrackIndex == -1) activeTrackIndex = 0;
     int randomRange = playedTracks.size() - activeTrackIndex;
-    int randomRow = activeTrackIndex + (int) ((float) qrand() / (float) RAND_MAX * randomRange);
+    int randomRow = activeTrackIndex + (int)((float)qrand() / (float)RAND_MAX * randomRange);
     playedTracks.insert(randomRow, track);
 }
 
-void PlaylistModel::addTrack(Track* track) {
-    addTracks(QList<Track*>() << track);
+void PlaylistModel::addTrack(Track *track) {
+    addTracks(QList<Track *>() << track);
 }
 
-void PlaylistModel::addTracks(QList<Track*> tracks) {
+void PlaylistModel::addTracks(QList<Track *> tracks) {
     if (tracks.empty()) return;
 
     // remove duplicates
-    foreach(Track* track, this->tracks)
+    foreach (Track *track, this->tracks)
         tracks.removeAll(track);
 
     if (!tracks.empty()) {
-
 #ifdef APP_ACTIVATION_NO
         bool activated = Activation::instance().isActivated();
         if (!activated && this->tracks.size() >= demoMaxTracks) {
@@ -222,8 +208,7 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
 
         beginInsertRows(QModelIndex(), this->tracks.size(),
                         this->tracks.size() + tracks.size() - 1);
-        foreach(Track* track, tracks) {
-
+        foreach (Track *track, tracks) {
 #ifdef APP_ACTIVATION_NO
             if (!activated && this->tracks.size() >= demoMaxTracks) {
                 endInsertRows();
@@ -237,9 +222,7 @@ void PlaylistModel::addTracks(QList<Track*> tracks) {
             connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
         }
         endInsertRows();
-
     }
-
 }
 
 void PlaylistModel::clear() {
@@ -261,7 +244,7 @@ bool PlaylistModel::removeRows(int position, int rows, const QModelIndex &parent
     // return false;
 
     if (position < 0 || position >= tracks.size() || position + rows > tracks.size()) {
-      return false;
+        return false;
     }
 
     if (parent.isValid()) return false;
@@ -285,10 +268,10 @@ bool PlaylistModel::removeRows(int position, int rows, const QModelIndex &parent
 }
 
 void PlaylistModel::removeIndexes(QModelIndexList &indexes) {
-    QList<Track*> originalList(tracks);
-    QList<Track*> delitems;
+    QList<Track *> originalList(tracks);
+    QList<Track *> delitems;
     foreach (QModelIndex index, indexes) {
-        Track* track = originalList.at(index.row());
+        Track *track = originalList.at(index.row());
         int idx = tracks.indexOf(track);
         if (idx != -1) {
             beginRemoveRows(QModelIndex(), idx, idx);
@@ -307,14 +290,12 @@ Qt::DropActions PlaylistModel::supportedDropActions() const {
     return Qt::MoveAction | Qt::CopyAction;
 }
 
-
 Qt::DropActions PlaylistModel::supportedDragActions() const {
     return Qt::CopyAction;
 }
 
 Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const {
-    if (index.isValid())
-        return (Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
+    if (index.isValid()) return (Qt::ItemIsEnabled | Qt::ItemIsSelectable | Qt::ItemIsDragEnabled);
     return Qt::ItemIsDropEnabled;
 }
 
@@ -324,48 +305,53 @@ QStringList PlaylistModel::mimeTypes() const {
     return types;
 }
 
-QMimeData* PlaylistModel::mimeData( const QModelIndexList &indexes ) const {
-    TrackMimeData* mime = new TrackMimeData();
+QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const {
+    TrackMimeData *mime = new TrackMimeData();
 
-    foreach( const QModelIndex &it, indexes ) {
+    foreach (const QModelIndex &it, indexes) {
         int row = it.row();
-        if (row >= 0 && row < tracks.size())
-            mime->addTrack( tracks.at( it.row() ) );
+        if (row >= 0 && row < tracks.size()) mime->addTrack(tracks.at(it.row()));
     }
 
     return mime;
 }
 
 bool PlaylistModel::dropMimeData(const QMimeData *data,
-                                 Qt::DropAction action, int row, int column,
+                                 Qt::DropAction action,
+                                 int row,
+                                 int column,
                                  const QModelIndex &parent) {
     if (action == Qt::IgnoreAction) return true;
     if (!data->hasFormat(TRACK_MIME)) return false;
     if (column > 0) return false;
 
     int beginRow;
-    if (row != -1) beginRow = row;
-    else if (parent.isValid()) beginRow = parent.row();
-    else beginRow = rowCount();
+    if (row != -1)
+        beginRow = row;
+    else if (parent.isValid())
+        beginRow = parent.row();
+    else
+        beginRow = rowCount();
 
-    const TrackMimeData* trackMimeData = qobject_cast<const TrackMimeData*>(data);
+    const TrackMimeData *trackMimeData = qobject_cast<const TrackMimeData *>(data);
     if (!trackMimeData) return false;
 
-    QList<Track*> droppedTracks = trackMimeData->tracks();
+    QList<Track *> droppedTracks = trackMimeData->tracks();
 
     layoutAboutToBeChanged();
 
     bool insert = false;
-    QList<Track*> movedTracks;
+    QList<Track *> movedTracks;
     int counter = 0;
-    foreach(Track *track, droppedTracks) {
+    foreach (Track *track, droppedTracks) {
         // if preset, remove track and maybe fix beginRow
         int originalRow = tracks.indexOf(track);
         if (originalRow != -1) {
             Track *movedTrack = tracks.takeAt(originalRow);
             movedTracks << movedTrack;
             if (originalRow < beginRow) beginRow--;
-        } else insert = true;
+        } else
+            insert = true;
         const int targetRow = beginRow + counter;
         tracks.insert(targetRow, track);
 #ifdef APP_ACTIVATION_NO
@@ -383,41 +369,39 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
 
     layoutChanged();
 
-    if (!insert)
-        emit needSelectionFor(movedTracks);
+    if (!insert) emit needSelectionFor(movedTracks);
 
     return true;
 }
 
-int PlaylistModel::rowForTrack(Track* track) {
+int PlaylistModel::rowForTrack(Track *track) {
     return tracks.indexOf(track);
 }
 
-QModelIndex PlaylistModel::indexForTrack(Track* track) {
+QModelIndex PlaylistModel::indexForTrack(Track *track) {
     return createIndex(tracks.indexOf(track), 0);
 }
 
 void PlaylistModel::move(QModelIndexList &indexes, bool up) {
-
-    QList<Track*> movedTracks;
+    QList<Track *> movedTracks;
 
     foreach (QModelIndex index, indexes) {
         int row = index.row();
         // qDebug() << "index row" << row;
         Track *track = trackAt(row);
-        if (track)
-            movedTracks << track;
+        if (track) movedTracks << track;
     }
 
     int counter = 1;
     foreach (Track *track, movedTracks) {
-
         int row = rowForTrack(track);
         // qDebug() << "track row" << row;
         removeRows(row, 1, QModelIndex());
 
-        if (up) row--;
-        else row++;
+        if (up)
+            row--;
+        else
+            row++;
 
         beginInsertRows(QModelIndex(), row, row);
         tracks.insert(row, track);
@@ -427,13 +411,11 @@ void PlaylistModel::move(QModelIndexList &indexes, bool up) {
     }
 
     emit needSelectionFor(movedTracks);
-
 }
 
 void PlaylistModel::trackRemoved() {
-
     // get the Track that sent the signal
-    Track *track = static_cast<Track*>(sender());
+    Track *track = static_cast<Track *>(sender());
     if (!track) {
         qDebug() << "Cannot get sender track";
         return;
@@ -446,17 +428,14 @@ void PlaylistModel::trackRemoved() {
     }
 }
 
-bool PlaylistModel::saveTo(QTextStream & stream) const
-{
+bool PlaylistModel::saveTo(QTextStream &stream) const {
     // stream not opened or not writable
-    if ( !stream.device()->isOpen() || !stream.device()->isWritable() )
-        return false;
+    if (!stream.device()->isOpen() || !stream.device()->isWritable()) return false;
 
     stream.setCodec("UTF-8");
     stream << "[playlist]" << endl;
     int idx = 1;
-    foreach(Track* tr, tracks)
-    {
+    foreach (Track *tr, tracks) {
         stream << "File" << idx << "=" << tr->getPath() << endl;
         stream << "Title" << idx << "=" << tr->getTitle() << endl;
         stream << "Length" << idx++ << "=" << tr->getLength() << endl;
@@ -467,33 +446,27 @@ bool PlaylistModel::saveTo(QTextStream & stream) const
     return true;
 }
 
-bool PlaylistModel::loadFrom(QTextStream & stream)
-{
+bool PlaylistModel::loadFrom(QTextStream &stream) {
     // stream not opened or not writable
-    if ( !stream.device()->isOpen() || !stream.device()->isReadable() )
-        return false;
+    if (!stream.device()->isOpen() || !stream.device()->isReadable()) return false;
 
-    QList<Track*> tracks;
+    QList<Track *> tracks;
 
     stream.setCodec("UTF-8");
     QString header;
     QString tag;
-    Track* cur = 0;
+    Track *cur = 0;
     stream >> header;
-    while ( !stream.atEnd() )
-    {
-        QString line = stream.readLine(1024);
-        if ( line.startsWith("File") )
-        {
-            QString path = line.section("=", -1);
+    QString line;
+    while (!stream.atEnd()) {
+        stream.readLineInto(&line, 1024);
+        if (line.startsWith(QLatin1String("File"))) {
+            QString path = line.section('=', -1);
             cur = Track::forPath(path);
             if (cur) tracks << cur;
-        }
-        else if ( line.startsWith("Title") && cur != NULL )
-        {
-            tag = line.right(line.size()-line.indexOf("=")-1);
-            if ( !tag.isNull() && !tag.isEmpty() )
-                cur->setTitle(tag);
+        } else if (line.startsWith(QLatin1String("Title")) && cur != NULL) {
+            tag = line.right(line.size() - line.indexOf('=') - 1);
+            if (!tag.isNull() && !tag.isEmpty()) cur->setTitle(tag);
         }
         qApp->processEvents();
     }
