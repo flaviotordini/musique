@@ -1,7 +1,7 @@
-CONFIG += release c++11 exceptions_off rtti_off
+CONFIG += c++14 exceptions_off rtti_off optimize_full
 QMAKE_CXXFLAGS *= -fno-exceptions -fno-rtti
 TEMPLATE = app
-VERSION = 1.5
+VERSION = 1.6
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
@@ -85,7 +85,8 @@ HEADERS += src/mainwindow.h \
     src/iconutils.h \
     src/appwidget.h \
     src/httputils.h \
-    src/tagchecker.h
+    src/tagchecker.h \
+    src/toolbarmenu.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -147,7 +148,8 @@ SOURCES += src/main.cpp \
     src/iconutils.cpp \
     src/appwidget.cpp \
     src/httputils.cpp \
-    src/tagchecker.cpp
+    src/tagchecker.cpp \
+    src/toolbarmenu.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

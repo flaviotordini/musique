@@ -19,15 +19,15 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "mediaview.h"
-#include "model/track.h"
-#include "model/artist.h"
-#include "mainwindow.h"
-#include "droparea.h"
-#include "minisplitter.h"
 #include "constants.h"
+#include "droparea.h"
 #include "iconutils.h"
 #include "lastfm.h"
+#include "mainwindow.h"
+#include "minisplitter.h"
 #include "model/album.h"
+#include "model/artist.h"
+#include "model/track.h"
 #ifdef APP_ACTIVATION
 #include "activation.h"
 #endif
@@ -37,7 +37,6 @@ $END_LICENSE */
 #endif
 
 MediaView::MediaView(QWidget *parent) : View(parent) {
-
     activeTrack = 0;
 
 #ifdef APP_ACTIVATION
@@ -96,7 +95,6 @@ MediaView::MediaView(QWidget *parent) : View(parent) {
     errorTimer->setSingleShot(true);
     errorTimer->setInterval(3000);
     connect(errorTimer, SIGNAL(timeout()), playlistModel, SLOT(skipForward()));
-
 }
 
 void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
@@ -109,7 +107,7 @@ void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
             SLOT(stateChanged(Phonon::State, Phonon::State)));
     connect(mediaObject, SIGNAL(aboutToFinish()), SLOT(aboutToFinish()));
     connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)),
-        SLOT(currentSourceChanged(Phonon::MediaSource)));
+            SLOT(currentSourceChanged(Phonon::MediaSource)));
 }
 
 void MediaView::saveSplitterState() {
@@ -118,18 +116,16 @@ void MediaView::saveSplitterState() {
 }
 
 void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/) {
-
     // qDebug() << "Phonon state: " << newState << oldState;
 
     switch (newState) {
-
     case Phonon::ErrorState:
         qDebug() << "Phonon error:" << mediaObject->errorString() << mediaObject->errorType();
         handleError(mediaObject->errorString());
         break;
 
     case Phonon::PlayingState:
-        //qDebug("playing");
+        // qDebug("playing");
         break;
 
     case Phonon::StoppedState:
@@ -138,34 +134,32 @@ void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/)
         break;
 
     case Phonon::PausedState:
-        //qDebug("paused");
+        // qDebug("paused");
         break;
 
     case Phonon::BufferingState:
-        //qDebug("buffering");
+        // qDebug("buffering");
         break;
 
     case Phonon::LoadingState:
-        //qDebug("loading");
+        // qDebug("loading");
         break;
-
     }
 }
 
 void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
-
     errorTimer->stop();
 
     Track *track = playlistModel->trackAt(row);
     if (!track) {
         activeTrack = 0;
-        MainWindow::instance()->getActionMap().value("contextual")->setEnabled(false);
+        MainWindow::instance()->getAction("contextual")->setEnabled(false);
         return;
     }
 
     connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
     activeTrack = track;
-    MainWindow::instance()->getActionMap().value("contextual")->setEnabled(true);
+    MainWindow::instance()->getAction("contextual")->setEnabled(true);
 
     // go!
     if (startPlayback) {
@@ -196,7 +190,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
     window()->setWindowTitle(windowTitle);
 
     // enable/disable actions
-    MainWindow::instance()->getActionMap().value("stopafterthis")->setEnabled(true);
+    MainWindow::instance()->getAction("stopafterthis")->setEnabled(true);
 
 #ifdef APP_EXTRA
     QString artistName = track->getArtist() ? track->getArtist()->getName() : "";
@@ -206,11 +200,9 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
 
     // scrobbling
     QSettings settings;
-    if (settings.value("scrobbling").toBool() &&
-            LastFm::instance().isAuthorized()) {
+    if (settings.value("scrobbling").toBool() && LastFm::instance().isAuthorized()) {
         LastFm::instance().nowPlaying(track);
     }
-
 }
 
 void MediaView::handleError(QString message) {
@@ -242,41 +234,43 @@ void MediaView::playPause() {
         // qDebug() << "Not playing";
         playlistModel->skipForward();
     }
-
 }
 
 void MediaView::trackRemoved() {
     // get the Track that sent the signal
-    Track *track = static_cast<Track*>(sender());
+    Track *track = static_cast<Track *>(sender());
     if (!track) {
-        qDebug() << "MediaView::trackRemoved()" << "Cannot get sender track";
+        qDebug() << "MediaView::trackRemoved()"
+                 << "Cannot get sender track";
         return;
     }
-    if (track == activeTrack)
-        activeTrack = 0;
+    if (track == activeTrack) activeTrack = 0;
 }
 
 void MediaView::playlistFinished() {
     MainWindow::instance()->showMessage(tr("Playlist finished"));
 
-    QAction *a = MainWindow::instance()->getActionMap().value("contextual");
+    QAction *a = MainWindow::instance()->getAction("contextual");
     if (a->isChecked()) MainWindow::instance()->hideContextualView();
     a->setEnabled(false);
 }
 
 void MediaView::playbackFinished() {
     trackFinished();
-    QAction* stopAfterThisAction = MainWindow::instance()->getActionMap().value("stopafterthis");
+    QAction *stopAfterThisAction = MainWindow::instance()->getAction("stopafterthis");
     if (stopAfterThisAction->isChecked()) {
         stopAfterThisAction->setChecked(false);
-    } else playlistModel->skipForward();
+    } else
+        playlistModel->skipForward();
 }
 
 void MediaView::trackFinished() {
 #ifdef APP_ACTIVATION
     if (!Activation::instance().isActivated()) {
-        if (tracksPlayed > 1) demoMessage();
-        else tracksPlayed++;
+        if (tracksPlayed > 1)
+            demoMessage();
+        else
+            tracksPlayed++;
     }
 #endif
 
@@ -284,8 +278,7 @@ void MediaView::trackFinished() {
     bool needScrobble = false;
     Track *track = 0;
     QSettings settings;
-    if (settings.value("scrobbling").toBool() &&
-            LastFm::instance().isAuthorized()) {
+    if (settings.value("scrobbling").toBool() && LastFm::instance().isAuthorized()) {
         track = playlistModel->getActiveTrack();
         needScrobble = true;
     }
@@ -294,7 +287,7 @@ void MediaView::trackFinished() {
 }
 
 void MediaView::aboutToFinish() {
-    QAction* stopAfterThisAction = MainWindow::instance()->getActionMap().value("stopafterthis");
+    QAction *stopAfterThisAction = MainWindow::instance()->getAction("stopafterthis");
     if (!stopAfterThisAction->isChecked()) {
         Track *nextTrack = playlistModel->getNextTrack();
         if (nextTrack) {
@@ -310,11 +303,10 @@ void MediaView::currentSourceChanged(Phonon::MediaSource mediaSource) {
     QString path = mediaSource.fileName();
     QString collectionRoot = Database::instance().collectionRoot();
     path = path.mid(collectionRoot.length() + 1);
-    Track* track = Track::forPath(path);
+    Track *track = Track::forPath(path);
     if (track) {
         int row = playlistModel->rowForTrack(track);
-        if (row >= 0)
-            playlistModel->setActiveRow(row, false, false);
+        if (row >= 0) playlistModel->setActiveRow(row, false, false);
     }
 }
 
@@ -326,9 +318,11 @@ void MediaView::demoMessage() {
     mediaObject->pause();
 
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/data/app.png").scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    msgBox.setIconPixmap(IconUtils::pixmap(":/data/app.png")
+                                 .scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     msgBox.setText(tr("This is just the demo version of %1.").arg(Constants::NAME));
-    msgBox.setInformativeText(tr("It allows you to play a few tracks so you can test the application and see if it works for you."));
+    msgBox.setInformativeText(tr("It allows you to play a few tracks so you can test the "
+                                 "application and see if it works for you."));
     msgBox.setModal(true);
     // make it a "sheet" on the Mac
     msgBox.setWindowModality(Qt::WindowModal);
@@ -347,12 +341,12 @@ void MediaView::demoMessage() {
 
     if (msgBox.clickedButton() == buyButton) {
         QDesktopServices::openUrl(QUrl(QString(Constants::WEBSITE) + "#download"));
-    } else mediaObject->play();
+    } else
+        mediaObject->play();
 
     tracksPlayed = 0;
 
     delete timeLine;
-
 }
 
 void MediaView::updateContinueButton(int value) {

@@ -23,9 +23,9 @@ $END_LICENSE */
 
 #include <QtWidgets>
 #include <phonon/audiooutput.h>
-#include <phonon/volumeslider.h>
 #include <phonon/mediaobject.h>
 #include <phonon/seekslider.h>
+#include <phonon/volumeslider.h>
 
 class MediaView;
 class CollectionScannerView;
@@ -34,24 +34,24 @@ class SearchLineEdit;
 class Track;
 class UpdateChecker;
 class Suggestion;
+class ToolbarMenu;
 
 class MainWindow : public QMainWindow {
-
     Q_OBJECT
 
 public:
-    static MainWindow* instance();
+    static MainWindow *instance();
     ~MainWindow();
-    Phonon::SeekSlider* getSeekSlider() { return seekSlider; }
+    Phonon::SeekSlider *getSeekSlider() { return seekSlider; }
     Phonon::AudioOutput *getAudioOutput() { return audioOutput; }
     Phonon::VolumeSlider *getVolumeSlider() { return volumeSlider; }
     Phonon::MediaObject *getMediaObject() { return mediaObject; }
     void readSettings();
     SearchLineEdit *getToolbarSearch() { return toolbarSearch; }
-    QToolBar* getStatusToolbar() { return statusToolBar; }
+    QToolBar *getStatusToolbar() { return statusToolBar; }
 
-    QHash<QString, QAction*> &getActionMap() { return actionMap; }
-    QHash<QString, QMenu*> &getMenuMap() { return menuMap; }
+    QAction *getAction(const char *name);
+    QMenu *getMenu(const char *name);
 
     static void printHelp();
 
@@ -80,9 +80,9 @@ signals:
     void currentTimeChanged(const QString &s);
 
 protected:
-    void closeEvent(QCloseEvent *);
-    bool eventFilter(QObject *obj, QEvent *event);
-    void resizeEvent(QResizeEvent *);
+    void closeEvent(QCloseEvent *e);
+    bool eventFilter(QObject *obj, QEvent *e);
+    void resizeEvent(QResizeEvent *e);
 
 private slots:
     void lazyInit();
@@ -123,7 +123,7 @@ private slots:
     void suggestionAccepted(Suggestion *suggestion);
     void searchCleared();
 
-    void showActionInStatusBar(QAction*, bool show);
+    void showActionInStatusBar(QAction *, bool show);
     void showStopAfterThisInStatusBar(bool show);
 
     void toggleScrobbling(bool enable);
@@ -133,6 +133,10 @@ private slots:
 
     void savePlaylist();
     void loadPlaylist();
+
+    void toggleMenuVisibility();
+    void toggleMenuVisibilityWithMessage();
+    void toggleToolbarMenu();
 
 #ifdef APP_MAC_STORE
     void rateOnAppStore();
@@ -144,7 +148,7 @@ private slots:
 
 private:
     MainWindow();
-    void showWidget(QWidget*, bool transition = false);
+    void showWidget(QWidget *, bool transition = false);
     void createActions();
     void createMenus();
     void createToolBars();
@@ -158,7 +162,7 @@ private:
 
     // view mechanism
     QStackedWidget *views;
-    QStack<QWidget*> *history;
+    QStack<QWidget *> *history;
 
     // view widgets
     QWidget *chooseFolderView;
@@ -167,8 +171,8 @@ private:
     ContextualView *contextualView;
     QWidget *aboutView;
 
-    QHash<QString, QAction*> actionMap;
-    QHash<QString, QMenu*> menuMap;
+    QHash<QByteArray, QAction *> actionMap;
+    QHash<QByteArray, QMenu *> menuMap;
 
     // actions
     QAction *contextualAct;
@@ -199,6 +203,9 @@ private:
     QMenu *playlistMenu;
     QMenu *playbackMenu;
     QMenu *helpMenu;
+
+    ToolbarMenu *toolbarMenu;
+    QToolButton *toolbarMenuButton;
 
     // toolbar
     QToolBar *mainToolBar;
