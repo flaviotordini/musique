@@ -1,6 +1,6 @@
 build/
 Makefile*
-*.user
+*.pro.user*
 .settings/
 .DS_Store
 .cproject
