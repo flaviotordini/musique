@@ -34,7 +34,7 @@ Album::Album() : year(0), artist(nullptr), listeners(0), photo(nullptr), thumb(n
 QHash<int, Album *> Album::cache;
 
 Album *Album::forId(int albumId) {
-    QHash<int, Album *>::const_iterator i = cache.constFind(albumId);
+    auto i = cache.constFind(albumId);
     if (i != cache.constEnd()) return i.value();
 
     QSqlDatabase db = Database::instance().getConnection();

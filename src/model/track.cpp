@@ -26,39 +26,33 @@ $END_LICENSE */
 #include "../datautils.h"
 #include <QtSql>
 
-#include "http.h"
 #include "../httputils.h"
+#include "http.h"
 
-#include <mpegfile.h>
 #include <id3v2tag.h>
+#include <mpegfile.h>
 #include <unsynchronizedlyricsframe.h>
 
-Track::Track() :
-    number(0),
-    diskNumber(1),
-    diskCount(1),
-    year(0),
-    length(0),
-    album(nullptr),
-    artist(0),
-    played(false),
-    startTime(0) { }
+Track::Track()
+    : number(0), diskNumber(1), diskCount(1), year(0), length(0), album(nullptr), artist(0),
+      played(false), startTime(0) {}
 
-QHash<int, Track*> Track::cache;
-QHash<QString, Track*> Track::pathCache;
+QHash<int, Track *> Track::cache;
+QHash<QString, Track *> Track::pathCache;
 
-Track* Track::forId(int trackId) {
-    QHash<int, Track*>::const_iterator i = cache.constFind(trackId);
+Track *Track::forId(int trackId) {
+    auto i = cache.constFind(trackId);
     if (i != cache.constEnd()) return i.value();
 
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select path,title,duration,track,disk,diskCount,artist,album from tracks where id=?");
+    query.prepare(
+            "select path,title,duration,track,disk,diskCount,artist,album from tracks where id=?");
     query.bindValue(0, trackId);
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
     if (query.next()) {
-        Track* track = new Track();
+        Track *track = new Track();
         track->setId(trackId);
         track->setPath(query.value(0).toString());
         track->setTitle(query.value(1).toString());
@@ -79,8 +73,7 @@ Track* Track::forId(int trackId) {
 
         // put into cache
         cache.insert(trackId, track);
-        if (!pathCache.contains(track->getPath()))
-            pathCache.insert(track->getPath(), track);
+        if (!pathCache.contains(track->getPath())) pathCache.insert(track->getPath(), track);
 
         return track;
     }
@@ -90,9 +83,9 @@ Track* Track::forId(int trackId) {
     return nullptr;
 }
 
-Track* Track::forPath(const QString &path) {
+Track *Track::forPath(const QString &path) {
     // qDebug() << "Track::forPath" << path;
-    QHash<QString, Track*>::const_iterator i = pathCache.constFind(path);
+    auto i = pathCache.constFind(path);
     if (i != pathCache.constEnd()) return i.value();
     Track *track = nullptr;
     int id = Track::idForPath(path);
@@ -185,7 +178,6 @@ void Track::insert() {
 }
 
 void Track::update() {
-
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
 
@@ -224,12 +216,12 @@ void Track::update() {
                 if (!success) qDebug() << query.lastError().text();
             }
         }
-
     }
 
     // qDebug() << "Track::update";
 
-    query.prepare("update tracks set title=?, track=?, disk=?, year=?, album=?, artist=?, albumArtist=?, tstamp=?, duration=? where path=?");
+    query.prepare("update tracks set title=?, track=?, disk=?, year=?, album=?, artist=?, "
+                  "albumArtist=?, tstamp=?, duration=? where path=?");
 
     query.bindValue(0, title);
     query.bindValue(1, number);
@@ -261,7 +253,6 @@ void Track::remove(const QString &path) {
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     if (query.next()) {
-
         int albumId = query.value(0).toInt();
         int artistId = query.value(1).toInt();
 
@@ -274,7 +265,6 @@ void Track::remove(const QString &path) {
         query.bindValue(0, artistId);
         success = query.exec();
         if (!success) qDebug() << query.lastError().text();
-
     }
 
     // and then actually delete the track
@@ -288,13 +278,12 @@ void Track::remove(const QString &path) {
     int trackId = Track::idForPath(path);
     if (trackId != -1) {
         if (cache.contains(trackId)) {
-            Track* track = cache.value(trackId);
+            Track *track = cache.value(trackId);
             track->emitRemovedSignal();
             cache.remove(trackId);
             track->deleteLater();
         }
     }
-
 }
 
 void Track::emitRemovedSignal() {
@@ -305,16 +294,16 @@ QString Track::getHash() {
     return Track::getHash(title);
 }
 
-QString Track::getHash(const QString& name) {
+QString Track::getHash(const QString &name) {
     // return DataUtils::calculateHash(DataUtils::normalizeTag(name));
     return DataUtils::normalizeTag(name);
 }
 
 QString Track::getStatusTip() {
     QString tip = QString::fromUtf8("♫ ");
-    Artist* artist = getArtist();
+    Artist *artist = getArtist();
     if (artist) tip += artist->getName() + " - ";
-    Album* album = getAlbum();
+    Album *album = getAlbum();
     if (album) tip += album->getName() + " - ";
     tip += getTitle();
     int duration = getLength();
@@ -330,7 +319,6 @@ void Track::fetchInfo() {
 // *** MusicBrainz ***
 
 void Track::fetchMusicBrainzTrack() {
-
     QString s = "http://musicbrainz.org/ws/1/track/?type=xml&title=%1&limit=1";
     s = s.arg(title);
     if (artist) {
@@ -389,17 +377,17 @@ void Track::getLyrics() {
     if (artist) artistName = artist->getName();
 
     // http://lyrics.wikia.com/LyricWiki:REST
-    QUrl url = QString(
-            "http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
-            .arg(QString::fromUtf8(QUrl::toPercentEncoding(DataUtils::simplify(artistName))))
-            .arg(QString::fromUtf8(QUrl::toPercentEncoding(DataUtils::simplify(title))));
+    QUrl url = QString("http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
+                       .arg(QString::fromUtf8(
+                               QUrl::toPercentEncoding(DataUtils::simplify(artistName))))
+                       .arg(QString::fromUtf8(QUrl::toPercentEncoding(DataUtils::simplify(title))));
 
     QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLyricsSearchResults(QByteArray)));
     // connect(reply, SIGNAL(error(QString)), SIGNAL(gotLyrics()));
 }
 
-void Track::parseLyricsSearchResults(const QByteArray& bytes) {
+void Track::parseLyricsSearchResults(const QByteArray &bytes) {
     QString lyricsText = DataUtils::getXMLElementText(bytes, "lyrics");
     if (lyricsText == "Instrumental") {
         emit gotLyrics(lyricsText);
@@ -421,25 +409,25 @@ void Track::parseLyricsSearchResults(const QByteArray& bytes) {
     }
 }
 
-void Track::scrapeLyrics(const QByteArray& bytes) {
+void Track::scrapeLyrics(const QByteArray &bytes) {
     QString lyrics = QString::fromUtf8(bytes);
 
-    int pos = lyrics.indexOf( "'lyricbox'" );
+    int pos = lyrics.indexOf("'lyricbox'");
     if (pos == -1) return;
-    int startPos = lyrics.indexOf( ">", pos ) + 1;
-    int endPos = lyrics.indexOf( "</div>", startPos );
-    int otherDivPos = lyrics.indexOf( "<div", startPos );
-    while ( otherDivPos != -1 && otherDivPos < endPos ) {
-        endPos = lyrics.indexOf( "</div>", endPos + 1 );
-        otherDivPos = lyrics.indexOf( "<div", otherDivPos + 1 );
+    int startPos = lyrics.indexOf(">", pos) + 1;
+    int endPos = lyrics.indexOf("</div>", startPos);
+    int otherDivPos = lyrics.indexOf("<div", startPos);
+    while (otherDivPos != -1 && otherDivPos < endPos) {
+        endPos = lyrics.indexOf("</div>", endPos + 1);
+        otherDivPos = lyrics.indexOf("<div", otherDivPos + 1);
     }
-    lyrics = lyrics.mid(startPos, endPos-startPos);
+    lyrics = lyrics.mid(startPos, endPos - startPos);
 
     // strip adverts
     pos = lyrics.indexOf("<div");
-    while( pos != -1 ) {
-        startPos = lyrics.lastIndexOf( "<div", pos);
-        endPos = lyrics.indexOf( "</div>", pos);
+    while (pos != -1) {
+        startPos = lyrics.lastIndexOf("<div", pos);
+        endPos = lyrics.indexOf("</div>", pos);
         // qDebug() << "<div" << startPos << endPos << lyrics;
         lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 6);
         pos = lyrics.indexOf("<div");
@@ -447,9 +435,9 @@ void Track::scrapeLyrics(const QByteArray& bytes) {
 
     // strip comments
     pos = lyrics.indexOf("<!--");
-    while( pos != -1 ) {
-        startPos = lyrics.lastIndexOf( "<!--", pos);
-        endPos = lyrics.indexOf( "-->", pos);
+    while (pos != -1) {
+        startPos = lyrics.lastIndexOf("<!--", pos);
+        endPos = lyrics.indexOf("-->", pos);
         // qDebug() << "<!--:" << startPos << endPos << lyrics;
         lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 3);
         pos = lyrics.indexOf("<!--");
@@ -479,13 +467,12 @@ void Track::scrapeLyrics(const QByteArray& bytes) {
 }
 
 void Track::readLyricsFromTags() {
-
     const QString absolutePath = getAbsolutePath();
 
     const QString suffix = QFileInfo(absolutePath).suffix().toLower();
     if (suffix != "mp3") return;
 
-    TagLib::MPEG::File f((TagLib::FileName) absolutePath.toUtf8());
+    TagLib::MPEG::File f((TagLib::FileName)absolutePath.toUtf8());
     if (!f.isValid()) return;
 
     TagLib::ID3v2::Tag *tag = f.ID3v2Tag();
@@ -500,12 +487,11 @@ void Track::readLyricsFromTags() {
 
     QString lyrics = QString::fromUtf8(frame->text().toCString(true));
     emit gotLyrics(lyrics);
-
 }
 
-int Track::getTotalLength(QList<Track *>tracks) {
+int Track::getTotalLength(const QList<Track *> &tracks) {
     int length = 0;
-    foreach (Track* track, tracks) {
+    for (Track *track : tracks) {
         length += track->getLength();
     }
     return length;

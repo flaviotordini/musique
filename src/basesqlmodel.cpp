@@ -19,9 +19,9 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "basesqlmodel.h"
-#include "trackmimedata.h"
 #include "database.h"
 #include "model/item.h"
+#include "trackmimedata.h"
 
 BaseSqlModel::BaseSqlModel(QObject *parent) : QSqlQueryModel(parent) {
     hoveredRow = -1;
@@ -43,14 +43,13 @@ void BaseSqlModel::setQuery(const QString &query, const QSqlDatabase &db) {
 }
 
 void BaseSqlModel::restoreQuery() {
-    if (!query().isValid())
-        setQuery(lastQuery, Database::instance().getConnection());
+    if (!query().isValid()) setQuery(lastQuery, Database::instance().getConnection());
 }
 
 void BaseSqlModel::setHoveredRow(int row) {
     int oldRow = hoveredRow;
     hoveredRow = row;
-    emit dataChanged(index(oldRow, 0 ), index(oldRow, 0));
+    emit dataChanged(index(oldRow, 0), index(oldRow, 0));
     emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
 }
 
@@ -92,7 +91,7 @@ Qt::DropActions BaseSqlModel::supportedDropActions() const {
 Qt::ItemFlags BaseSqlModel::flags(const QModelIndex &index) const {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
     if (index.isValid()) {
-        return ( defaultFlags | Qt::ItemIsDragEnabled );
+        return (defaultFlags | Qt::ItemIsDragEnabled);
     } else
         return defaultFlags;
 }
@@ -103,11 +102,10 @@ QStringList BaseSqlModel::mimeTypes() const {
     return types;
 }
 
-QMimeData* BaseSqlModel::mimeData( const QModelIndexList &indexes ) const {
+QMimeData *BaseSqlModel::mimeData(const QModelIndexList &indexes) const {
+    TrackMimeData *mime = new TrackMimeData();
 
-    TrackMimeData* mime = new TrackMimeData();
-
-    foreach( const QModelIndex &index, indexes ) {
+    for (const QModelIndex &index : indexes) {
         Item *item = itemAt(index);
         if (item) {
             // qDebug() << item->getTracks();

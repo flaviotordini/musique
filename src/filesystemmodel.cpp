@@ -19,19 +19,17 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "filesystemmodel.h"
-#include "trackmimedata.h"
 #include "database.h"
+#include "trackmimedata.h"
 
-FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent) { }
+FileSystemModel::FileSystemModel(QObject *parent) : QFileSystemModel(parent) {}
 
 QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
-
     Folder *folder = nullptr;
     Track *track = nullptr;
     QString path;
 
     switch (role) {
-
     case Finder::ItemTypeRole:
         if (isDir(index))
             return Finder::ItemTypeFolder;
@@ -61,7 +59,6 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
 
     default:
         return QFileSystemModel::data(index, role);
-
     }
 
     return QVariant();
@@ -69,13 +66,14 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
 
 Item *FileSystemModel::itemAt(const QModelIndex &index) const {
     if (isDir(index)) {
-        const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
+        const FolderPointer folderPointer =
+                index.data(Finder::DataObjectRole).value<FolderPointer>();
         Folder *folder = folderPointer.data();
-        return qobject_cast<Item*>(folder);
+        return qobject_cast<Item *>(folder);
     } else {
         const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
         Track *track = trackPointer.data();
-        return qobject_cast<Item*>(track);
+        return qobject_cast<Item *>(track);
     }
 }
 
@@ -88,7 +86,7 @@ Qt::DropActions FileSystemModel::supportedDropActions() const {
 Qt::ItemFlags FileSystemModel::flags(const QModelIndex &index) const {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
     if (index.isValid()) {
-        return ( defaultFlags | Qt::ItemIsDragEnabled );
+        return (defaultFlags | Qt::ItemIsDragEnabled);
     } else
         return defaultFlags;
 }
@@ -99,11 +97,10 @@ QStringList FileSystemModel::mimeTypes() const {
     return types;
 }
 
-QMimeData* FileSystemModel::mimeData( const QModelIndexList &indexes ) const {
+QMimeData *FileSystemModel::mimeData(const QModelIndexList &indexes) const {
+    TrackMimeData *mime = new TrackMimeData();
 
-    TrackMimeData* mime = new TrackMimeData();
-
-    foreach( const QModelIndex &index, indexes ) {
+    for (const QModelIndex &index : indexes) {
         Item *item = itemAt(index);
         if (item) {
             // qDebug() << item->getTracks();

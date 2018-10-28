@@ -31,7 +31,7 @@ bool CoverUtils::isAcceptableImage(const QImage &image) {
         return false;
     }
 
-    float aspectRatio = (float) width / (float) height;
+    float aspectRatio = (float)width / (float)height;
     if (aspectRatio > 1.2 || aspectRatio < 0.8) {
         qDebug() << "Local cover not square enough" << image.size();
         return false;
@@ -46,7 +46,8 @@ QImage CoverUtils::maybeScaleImage(const QImage &image) {
     const int height = image.size().height();
     if (width > maximumSize || height > maximumSize) {
         qDebug() << "Scaling local cover" << image.size();
-        return image.scaled(maximumSize, maximumSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        return image.scaled(maximumSize, maximumSize, Qt::KeepAspectRatio,
+                            Qt::SmoothTransformation);
     }
     return image;
 }
@@ -59,27 +60,26 @@ bool CoverUtils::saveImage(const QImage &image, Album *album) {
     return true;
 }
 
-bool CoverUtils::coverFromFile(const QString& dir, Album *album) {
-    static QList<QRegExp> coverREs;
-    if (coverREs.isEmpty()) {
+bool CoverUtils::coverFromFile(const QString &dir, Album *album) {
+    static const QList<QRegExp> coverREs = [] {
         QLatin1String ext(".(jpe?g|gif|png|bmp)");
-        coverREs << QRegExp(".*cover.*" + ext, Qt::CaseInsensitive)
-                 << QRegExp(".*front.*" + ext, Qt::CaseInsensitive)
-                 << QRegExp(".*folder.*" + ext, Qt::CaseInsensitive);
-    }
+        QList<QRegExp> res;
+        res << QRegExp(".*cover.*" + ext, Qt::CaseInsensitive)
+            << QRegExp(".*front.*" + ext, Qt::CaseInsensitive)
+            << QRegExp(".*folder.*" + ext, Qt::CaseInsensitive);
+        return res;
+    }();
 
-    const QFileInfoList flist = QDir(dir).entryInfoList(
-                QDir::NoDotAndDotDot | QDir::Files | QDir::Readable
-                );
+    const QFileInfoList flist =
+            QDir(dir).entryInfoList(QDir::NoDotAndDotDot | QDir::Files | QDir::Readable);
 
-    foreach (QFileInfo fileInfo, flist) {
+    for (const QFileInfo &fileInfo : flist) {
         const QString filename = fileInfo.fileName();
-        foreach (QRegExp re, coverREs) {
+        for (const QRegExp &re : coverREs) {
             if (filename.contains(re)) {
                 qDebug() << "Found local cover" << filename;
                 QImage image(fileInfo.absoluteFilePath());
-                if (isAcceptableImage(image))
-                    return saveImage(image, album);
+                if (isAcceptableImage(image)) return saveImage(image, album);
                 break;
             }
         }
@@ -88,7 +88,7 @@ bool CoverUtils::coverFromFile(const QString& dir, Album *album) {
     return false;
 }
 
-bool CoverUtils::coverFromTags(const QString& filename, Album *album) {
+bool CoverUtils::coverFromTags(const QString &filename, Album *album) {
     const QString suffix = QFileInfo(filename).suffix().toLower();
     if (suffix == "mp3") {
         TagLib::MPEG::File f((TagLib::FileName)filename.toUtf8());
@@ -104,10 +104,7 @@ bool CoverUtils::coverFromTags(const QString& filename, Album *album) {
         if (f.isValid()) res = coverFromMPEGTags(f.ID3v2Tag(), album);
         if (!res) res = coverFromXiphComment(f.xiphComment(), album);
         return res;
-    } else if (suffix == "aac" ||
-               suffix == "m4a" ||
-               suffix == "m4b" ||
-               suffix == "m4p" ||
+    } else if (suffix == "aac" || suffix == "m4a" || suffix == "m4b" || suffix == "m4p" ||
                suffix == "mp4") {
         return coverFromMP4(filename, album);
     }
@@ -115,7 +112,6 @@ bool CoverUtils::coverFromTags(const QString& filename, Album *album) {
 }
 
 bool CoverUtils::coverFromMPEGTags(TagLib::ID3v2::Tag *tag, Album *album) {
-
     if (!tag) return false;
 
     TagLib::ID3v2::FrameList list = tag->frameList("APIC");
@@ -128,14 +124,13 @@ bool CoverUtils::coverFromMPEGTags(TagLib::ID3v2::Tag *tag, Album *album) {
     if (frameSize <= 0) return false;
 
     QImage image;
-    image.loadFromData((const uchar *) frame->picture().data(), frame->picture().size());
+    image.loadFromData((const uchar *)frame->picture().data(), frame->picture().size());
     if (!isAcceptableImage(image)) return false;
 
     return saveImage(image, album);
 }
 
 bool CoverUtils::coverFromXiphComment(TagLib::Ogg::XiphComment *xiphComment, Album *album) {
-
     if (!xiphComment) return false;
 
     const TagLib::StringList &stringList = xiphComment->fieldListMap()["COVERART"];
@@ -156,8 +151,7 @@ bool CoverUtils::coverFromXiphComment(TagLib::Ogg::XiphComment *xiphComment, Alb
     return saveImage(image, album);
 }
 
-bool CoverUtils::coverFromMP4(const QString& filename, Album *album) {
-
+bool CoverUtils::coverFromMP4(const QString &filename, Album *album) {
     TagLib::MP4::File f((TagLib::FileName)filename.toUtf8());
     if (!f.isValid()) return false;
 
@@ -170,7 +164,7 @@ bool CoverUtils::coverFromMP4(const QString& filename, Album *album) {
     TagLib::MP4::CoverArt coverArt = coverArtList.front();
 
     QImage image;
-    image.loadFromData((const uchar *) coverArt.data().data(), coverArt.data().size());
+    image.loadFromData((const uchar *)coverArt.data().data(), coverArt.data().size());
     if (!isAcceptableImage(image)) return false;
 
     qDebug() << "Cover from MP4!";

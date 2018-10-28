@@ -520,7 +520,7 @@ void CollectionScanner::gotArtistInfo() {
     // continue the processing of blocked files
     QList<FileInfo *> files = filesWaitingForArtists.take(hash);
     // qDebug() << files.size() << "files were waiting for artist" << artist->getName();
-    foreach (FileInfo *file, files) {
+    for (FileInfo *file : qAsConst(files)) {
         file->setArtist(artist);
         file->setAlbumArtist(artist);
         // qDebug() << "ready for album artist" << file->getFileInfo().baseName();
@@ -529,7 +529,7 @@ void CollectionScanner::gotArtistInfo() {
 
     files = filesWaitingForAlbumArtists.take(hash);
     // qDebug() << files.size() << "files were waiting for album artist" << artist->getName();
-    foreach (FileInfo *file, files) {
+    for (FileInfo *file : qAsConst(files)) {
         file->setAlbumArtist(artist);
         // qDebug() << "ready for album" << file->getFileInfo().baseName();
         giveThisFileAnAlbum(file);
@@ -700,7 +700,7 @@ void CollectionScanner::gotAlbumInfo() {
     const QString hash = album->property("originalHash").toString();
     // qDebug() << "got info for album" << album->getTitle() << hash << album->getHash();
 
-    QList<FileInfo *> files = filesWaitingForAlbums.take(hash);
+    const QList<FileInfo *> files = filesWaitingForAlbums.take(hash);
     loadedAlbums.insert(hash, album);
     // if (hash != album->getHash())
     loadedAlbums.insert(album->getHash(), album);
@@ -725,7 +725,7 @@ void CollectionScanner::gotAlbumInfo() {
 
     // continue the processing of blocked files
     // qDebug() << files.size() << "files were waiting for album" << album->getTitle();
-    foreach (FileInfo *file, files) {
+    for (FileInfo *file : files) {
         file->setAlbum(album);
         processTrack(file);
     }
@@ -848,7 +848,7 @@ void CollectionScanner::cleanStaleTracks() {
     }
 }
 
-bool CollectionScanner::isNonTrack(QString path) {
+bool CollectionScanner::isNonTrack(const QString &path) {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select count(*) from nontracks where path=?");
@@ -891,6 +891,7 @@ QStringList CollectionScanner::getTrackPaths() {
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     QStringList paths;
+    paths.reserve(query.size());
     while (query.next()) {
         paths << query.value(0).toString();
     }
@@ -904,6 +905,7 @@ QStringList CollectionScanner::getNonTrackPaths() {
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     QStringList paths;
+    paths.reserve(query.size());
     while (query.next()) {
         paths << query.value(0).toString();
     }

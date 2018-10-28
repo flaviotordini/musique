@@ -27,8 +27,8 @@ $END_LICENSE */
 #include "playlistmodel.h"
 #include "playlistview.h"
 
-#include "model/artist.h"
 #include "model/album.h"
+#include "model/artist.h"
 
 #include "artistlistview.h"
 #include "artistsqlmodel.h"
@@ -49,11 +49,10 @@ $END_LICENSE */
 #include "database.h"
 #include <QtSql>
 
-static const char* FINDER_VIEW_KEY = "finderView";
+static const char *FINDER_VIEW_KEY = "finderView";
 
 FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
-
-    history = new QStack<QWidget*>();
+    history = new QStack<QWidget *>();
 
     fileSystemView = nullptr;
     artistListView = nullptr;
@@ -101,7 +100,6 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     setMinimumHeight(150 + finderBar->minimumHeight());
 
     restoreSavedView();
-
 }
 
 void FinderWidget::paintEvent(QPaintEvent *e) {
@@ -130,9 +128,12 @@ void FinderWidget::restoreSavedView() {
     QSettings settings;
     QString currentViewName = settings.value(FINDER_VIEW_KEY).toString();
 
-    if (currentViewName == "folders") QTimer::singleShot(0, this, SLOT(showFolders()));
-    else if (currentViewName == "albums") QTimer::singleShot(0, this, SLOT(showAlbums()));
-    else QTimer::singleShot(0, this, SLOT(showArtists()));
+    if (currentViewName == "folders")
+        QTimer::singleShot(0, this, SLOT(showFolders()));
+    else if (currentViewName == "albums")
+        QTimer::singleShot(0, this, SLOT(showAlbums()));
+    else
+        QTimer::singleShot(0, this, SLOT(showArtists()));
 
     /*
     if (currentViewName == "folders") QTimer::singleShot(0, foldersAction, SLOT(trigger()));
@@ -159,24 +160,27 @@ void FinderWidget::setupBar() {
     connect(foldersAction, SIGNAL(triggered()), SLOT(showFolders()));
     finderBar->addAction(foldersAction);
 
-    foreach (QAction* action, finderBar->actions()) {
+    for (QAction *action : finderBar->actions()) {
         addAction(action);
         action->setAutoRepeat(false);
         if (!action->shortcut().isEmpty())
-            action->setStatusTip(action->text() + " (" + action->shortcut().toString(QKeySequence::NativeText) + ")");
+            action->setStatusTip(action->text() + " (" +
+                                 action->shortcut().toString(QKeySequence::NativeText) + ")");
     }
 
     finderBar->setCheckedAction(0);
-
 }
 
 void FinderWidget::setupArtists() {
     artistListModel = new ArtistSqlModel(this);
     artistListView = new ArtistListView(this);
     artistListView->setEnabled(false);
-    connect(artistListView, SIGNAL(activated(const QModelIndex &)), SLOT(artistActivated(const QModelIndex &)));
-    connect(artistListView, SIGNAL(play(const QModelIndex &)), SLOT(artistPlayed(const QModelIndex &)));
-    connect(artistListView, SIGNAL(entered(const QModelIndex &)), SLOT(artistEntered(const QModelIndex &)));
+    connect(artistListView, SIGNAL(activated(const QModelIndex &)),
+            SLOT(artistActivated(const QModelIndex &)));
+    connect(artistListView, SIGNAL(play(const QModelIndex &)),
+            SLOT(artistPlayed(const QModelIndex &)));
+    connect(artistListView, SIGNAL(entered(const QModelIndex &)),
+            SLOT(artistEntered(const QModelIndex &)));
     connect(artistListView, SIGNAL(viewportEntered()), artistListModel, SLOT(clearHover()));
     artistListView->setModel(artistListModel);
     stackedWidget->addWidget(artistListView);
@@ -186,9 +190,12 @@ void FinderWidget::setupAlbums() {
     albumListModel = new AlbumSqlModel(this);
     albumListView = new AlbumListView(this);
     albumListView->setEnabled(false);
-    connect(albumListView, SIGNAL(activated(const QModelIndex &)), SLOT(albumActivated(const QModelIndex &)));
-    connect(albumListView, SIGNAL(play(const QModelIndex &)), SLOT(albumPlayed(const QModelIndex &)));
-    connect(albumListView, SIGNAL(entered(const QModelIndex &)), SLOT(albumEntered(const QModelIndex &)));
+    connect(albumListView, SIGNAL(activated(const QModelIndex &)),
+            SLOT(albumActivated(const QModelIndex &)));
+    connect(albumListView, SIGNAL(play(const QModelIndex &)),
+            SLOT(albumPlayed(const QModelIndex &)));
+    connect(albumListView, SIGNAL(entered(const QModelIndex &)),
+            SLOT(albumEntered(const QModelIndex &)));
     connect(albumListView, SIGNAL(viewportEntered()), albumListModel, SLOT(clearHover()));
     albumListView->setModel(albumListModel);
     stackedWidget->addWidget(albumListView);
@@ -197,8 +204,10 @@ void FinderWidget::setupAlbums() {
 void FinderWidget::setupTracks() {
     trackListModel = new TrackSqlModel(this);
     trackListView = new TrackListView(this);
-    connect(trackListView, SIGNAL(activated(const QModelIndex &)), SLOT(trackActivated(const QModelIndex &)));
-    connect(trackListView, SIGNAL(entered(const QModelIndex &)), SLOT(trackEntered(const QModelIndex &)));
+    connect(trackListView, SIGNAL(activated(const QModelIndex &)),
+            SLOT(trackActivated(const QModelIndex &)));
+    connect(trackListView, SIGNAL(entered(const QModelIndex &)),
+            SLOT(trackEntered(const QModelIndex &)));
     connect(trackListView, SIGNAL(viewportEntered()), trackListModel, SLOT(clearHover()));
     trackListView->setModel(trackListModel);
     stackedWidget->addWidget(trackListView);
@@ -212,10 +221,14 @@ void FinderWidget::setupFolders() {
     filteringFileSystemModel->setSourceModel(fileSystemModel);
 
     fileSystemView = new FileSystemFinderView(this);
-    connect(fileSystemView, SIGNAL(activated(const QModelIndex &)), SLOT(folderActivated(const QModelIndex &)));
-    connect(fileSystemView, SIGNAL(play(const QModelIndex &)), SLOT(folderPlayed(const QModelIndex &)));
-    connect(fileSystemView, SIGNAL(entered(const QModelIndex &)), SLOT(folderEntered(const QModelIndex &)));
-    connect(fileSystemView, SIGNAL(viewportEntered()), filteringFileSystemModel, SLOT(clearHover()));
+    connect(fileSystemView, SIGNAL(activated(const QModelIndex &)),
+            SLOT(folderActivated(const QModelIndex &)));
+    connect(fileSystemView, SIGNAL(play(const QModelIndex &)),
+            SLOT(folderPlayed(const QModelIndex &)));
+    connect(fileSystemView, SIGNAL(entered(const QModelIndex &)),
+            SLOT(folderEntered(const QModelIndex &)));
+    connect(fileSystemView, SIGNAL(viewportEntered()), filteringFileSystemModel,
+            SLOT(clearHover()));
     fileSystemView->setModel(filteringFileSystemModel);
     fileSystemView->setFileSystemModel(fileSystemModel);
     stackedWidget->addWidget(fileSystemView);
@@ -225,9 +238,12 @@ void FinderWidget::setupSearch() {
     searchModel = new SearchModel(this);
     searchView = new SearchView(this);
 
-    connect(searchView, SIGNAL(activated(const QModelIndex &)), searchModel, SLOT(itemActivated(const QModelIndex &)));
-    connect(searchView, SIGNAL(play(const QModelIndex &)), searchModel, SLOT(itemPlayed(const QModelIndex &)));
-    connect(searchView, SIGNAL(entered(const QModelIndex &)), searchModel, SLOT(itemEntered(const QModelIndex &)));
+    connect(searchView, SIGNAL(activated(const QModelIndex &)), searchModel,
+            SLOT(itemActivated(const QModelIndex &)));
+    connect(searchView, SIGNAL(play(const QModelIndex &)), searchModel,
+            SLOT(itemPlayed(const QModelIndex &)));
+    connect(searchView, SIGNAL(entered(const QModelIndex &)), searchModel,
+            SLOT(itemEntered(const QModelIndex &)));
     connect(searchView, SIGNAL(viewportEntered()), searchModel, SLOT(clearHover()));
 
     searchView->setEnabled(false);
@@ -259,7 +275,8 @@ void FinderWidget::showFolders() {
 
     const QString path = Database::instance().collectionRoot();
     fileSystemModel->setRootPath(path);
-    QSortFilterProxyModel *proxyModel = static_cast<QSortFilterProxyModel*>(fileSystemView->model());
+    QSortFilterProxyModel *proxyModel =
+            static_cast<QSortFilterProxyModel *>(fileSystemView->model());
     fileSystemView->setRootIndex(proxyModel->mapFromSource(fileSystemModel->index(path)));
 
     showWidget(fileSystemView, true);
@@ -268,7 +285,7 @@ void FinderWidget::showFolders() {
     settings.setValue(FINDER_VIEW_KEY, "folders");
 }
 
-void FinderWidget::showSearch(const QString& query) {
+void FinderWidget::showSearch(const QString &query) {
     if (query.isEmpty()) {
         if (stackedWidget->currentWidget() == searchView) restoreSavedView();
         return;
@@ -279,7 +296,6 @@ void FinderWidget::showSearch(const QString& query) {
     showWidget(searchView, true);
     finderBar->setCheckedAction(-1);
     searchModel->search(query);
-
 }
 
 void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
@@ -295,7 +311,7 @@ void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
     breadcrumb->setVisible(!isRoot);
 
     // call disappear() on previous widget
-    QWidget* currentWidget = stackedWidget->currentWidget();
+    QWidget *currentWidget = stackedWidget->currentWidget();
     if (currentWidget) {
         bool ret = QMetaObject::invokeMethod(currentWidget, "disappear", Qt::DirectConnection);
         if (!ret) qDebug() << "FinderWidget::showWidget invokeMethod failed for" << currentWidget;
@@ -323,7 +339,8 @@ void FinderWidget::goBack() {
 void FinderWidget::folderGoBack() {
     folderBreadcrumb->goBack();
     QModelIndex index = fileSystemView->rootIndex();
-    QSortFilterProxyModel *proxyModel = static_cast<QSortFilterProxyModel*>(fileSystemView->model());
+    QSortFilterProxyModel *proxyModel =
+            static_cast<QSortFilterProxyModel *>(fileSystemView->model());
     if (proxyModel) {
         index = proxyModel->mapToSource(index);
         QString path = fileSystemModel->filePath(index);
@@ -344,7 +361,8 @@ void FinderWidget::folderGoBack() {
 void FinderWidget::appear() {
     QWidget *currentWidget = stackedWidget->currentWidget();
     if (currentWidget) {
-        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "appear", Qt::DirectConnection);
+        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "appear",
+                                                 Qt::DirectConnection);
         if (!success) qDebug() << "Error invoking appear() on" << stackedWidget->currentWidget();
     }
 }
@@ -352,16 +370,17 @@ void FinderWidget::appear() {
 void FinderWidget::disappear() {
     QWidget *currentWidget = stackedWidget->currentWidget();
     if (currentWidget) {
-        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "disappear", Qt::DirectConnection);
+        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "disappear",
+                                                 Qt::DirectConnection);
         if (!success) qDebug() << "Error invoking disappear() on" << stackedWidget->currentWidget();
     }
 }
 
-void FinderWidget::artistEntered ( const QModelIndex & index ) {
+void FinderWidget::artistEntered(const QModelIndex &index) {
     artistListModel->setHoveredRow(index.row());
 }
 
-void FinderWidget::artistActivated ( const QModelIndex & index ) {
+void FinderWidget::artistActivated(const QModelIndex &index) {
     // get the data object
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
     Artist *artist = artistPointer.data();
@@ -371,12 +390,12 @@ void FinderWidget::artistActivated ( const QModelIndex & index ) {
 void FinderWidget::artistActivated(Artist *artist) {
     if (!albumListView) setupAlbums();
 
-    QString qry("select id from albums where artist=%1 and trackCount>0 order by year desc, trackCount desc");
+    QString qry("select id from albums where artist=%1 and trackCount>0 order by year desc, "
+                "trackCount desc");
     qry = qry.arg(artist->getId());
     qDebug() << qry;
     albumListModel->setQuery(qry, Database::instance().getConnection());
-    if (albumListModel->lastError().isValid())
-        qDebug() << albumListModel->lastError();
+    if (albumListModel->lastError().isValid()) qDebug() << albumListModel->lastError();
 
     albumListView->setWindowTitle(artist->getName());
     albumListView->scrollToTop();
@@ -384,73 +403,72 @@ void FinderWidget::artistActivated(Artist *artist) {
     showWidget(albumListView, false);
 }
 
-void FinderWidget::artistPlayed ( const QModelIndex & index ) {
+void FinderWidget::artistPlayed(const QModelIndex &index) {
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
     Artist *artist = artistPointer.data();
-    QList<Track*> tracks = artist->getTracks();
+    QList<Track *> tracks = artist->getTracks();
     addTracksAndPlay(tracks);
 }
 
-void FinderWidget::albumEntered ( const QModelIndex & index ) {
+void FinderWidget::albumEntered(const QModelIndex &index) {
     albumListModel->setHoveredRow(index.row());
 }
 
-void FinderWidget::albumActivated ( Album* album) {
+void FinderWidget::albumActivated(Album *album) {
     if (!trackListView) setupTracks();
 
     QString qry("select id from tracks where album=%1 order by track, path");
     qry = qry.arg(album->getId());
     qDebug() << qry;
     trackListModel->setQuery(qry, Database::instance().getConnection());
-    if (trackListModel->lastError().isValid())
-        qDebug() << trackListModel->lastError();
+    if (trackListModel->lastError().isValid()) qDebug() << trackListModel->lastError();
 
     trackListView->setWindowTitle(album->getName());
     trackListView->scrollToTop();
     showWidget(trackListView, false);
-
 }
 
-void FinderWidget::albumActivated ( const QModelIndex & index ) {
+void FinderWidget::albumActivated(const QModelIndex &index) {
     const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
     Album *album = albumPointer.data();
     albumActivated(album);
 }
 
-void FinderWidget::albumPlayed ( const QModelIndex & index ) {
+void FinderWidget::albumPlayed(const QModelIndex &index) {
     const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
     Album *album = albumPointer.data();
-    QList<Track*> tracks = album->getTracks();
+    QList<Track *> tracks = album->getTracks();
     addTracksAndPlay(tracks);
 }
 
-void FinderWidget::trackEntered ( const QModelIndex & index ) {
+void FinderWidget::trackEntered(const QModelIndex &index) {
     trackListModel->setHoveredRow(index.row());
 }
 
-void FinderWidget::trackActivated ( Track *track ) {
+void FinderWidget::trackActivated(Track *track) {
     playlistModel->addTrack(track);
     playlistModel->setActiveRow(playlistModel->rowForTrack(track));
 }
 
-void FinderWidget::trackActivated ( const QModelIndex & index ) {
+void FinderWidget::trackActivated(const QModelIndex &index) {
     const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
     Track *track = trackPointer.data();
     trackActivated(track);
 }
 
-void FinderWidget::folderEntered ( const QModelIndex & index ) {
+void FinderWidget::folderEntered(const QModelIndex &index) {
     filteringFileSystemModel->setHoveredRow(index.row());
 }
 
-void FinderWidget::folderActivated(const QModelIndex & index) {
+void FinderWidget::folderActivated(const QModelIndex &index) {
     const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
     Track *track = trackPointer.data();
     if (track) {
         addTracksAndPlay(track->getTracks());
     } else {
         fileSystemView->setRootIndex(index);
-        const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
+        const FolderPointer folderPointer =
+                index.data(Finder::DataObjectRole).value<FolderPointer>();
         Folder *folder = folderPointer.data();
         if (folder) {
             folderBreadcrumb->addItem(folder->getName());
@@ -459,11 +477,11 @@ void FinderWidget::folderActivated(const QModelIndex & index) {
     }
 }
 
-void FinderWidget::folderPlayed(const QModelIndex & index) {
+void FinderWidget::folderPlayed(const QModelIndex &index) {
     const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
     Folder *folder = folderPointer.data();
     if (folder) {
-        QList<Track*> tracks = folder->getTracks();
+        QList<Track *> tracks = folder->getTracks();
         addTracksAndPlay(tracks);
     } else {
         const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
@@ -474,20 +492,21 @@ void FinderWidget::folderPlayed(const QModelIndex & index) {
     }
 }
 
-void FinderWidget::addTracksAndPlay(QList<Track *>tracks) {
+void FinderWidget::addTracksAndPlay(QList<Track *> tracks) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
 
-    Track* trackToPlay = nullptr;
+    Track *trackToPlay = nullptr;
 
     QSettings settings;
     const bool shuffle = settings.value("shuffle").toBool();
     if (shuffle) {
-        int nextRow = (int) ((float) qrand() / (float) RAND_MAX * tracks.size());
+        int nextRow = (int)((float)qrand() / (float)RAND_MAX * tracks.size());
         trackToPlay = tracks.at(nextRow);
     } else {
         trackToPlay = tracks.first();
     }
     playlistModel->setActiveRow(playlistModel->rowForTrack(trackToPlay));
-    playlistView->scrollTo(playlistModel->indexForTrack(trackToPlay), QAbstractItemView::PositionAtCenter);
+    playlistView->scrollTo(playlistModel->indexForTrack(trackToPlay),
+                           QAbstractItemView::PositionAtCenter);
 }

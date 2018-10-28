@@ -21,33 +21,31 @@ $END_LICENSE */
 #ifndef TRACK_H
 #define TRACK_H
 
-#include <QtCore>
 #include "item.h"
+#include <QtCore>
 
 class Album;
 class Artist;
 
 class Track : public Item {
-
     Q_OBJECT
 
 public:
     Track();
 
     // item
-    QList<Track*> getTracks() {
-        QList<Track*> tracks;
-        tracks << this;
+    QList<Track *> getTracks() {
+        QList<Track *> tracks = {this};
         return tracks;
     }
     QString getStatusTip();
 
     // properties
     QString getName() { return title; }
-    QString getTitle() { return title; }
-    void setTitle(QString title) { this->title = title; }
-    QString getPath() { return path; }
-    void setPath(QString path) { this->path = path; }
+    const QString &getTitle() { return title; }
+    void setTitle(const QString &title) { this->title = title; }
+    const QString &getPath() { return path; }
+    void setPath(const QString &path) { this->path = path; }
     int getNumber() { return number; }
     void setNumber(int number) { this->number = number; }
     int getDiskNumber() { return diskNumber; }
@@ -66,14 +64,14 @@ public:
     void setStartTime(int startTime) { this->startTime = startTime; }
 
     // relations
-    Album* getAlbum() { return album; }
+    Album *getAlbum() { return album; }
     void setAlbum(Album *album) { this->album = album; }
-    Artist* getArtist() { return artist; }
+    Artist *getArtist() { return artist; }
     void setArtist(Artist *artist) { this->artist = artist; }
 
     // cache
     static void clearCache() {
-        foreach (Track* track, cache.values())
+        for (Track *track : qAsConst(cache))
             track->emitRemovedSignal();
         qDeleteAll(cache);
         cache.clear();
@@ -81,9 +79,9 @@ public:
     }
     void emitRemovedSignal();
 
-    // data access    
-    static Track* forId(int trackId);
-    static Track* forPath(const QString &path);
+    // data access
+    static Track *forId(int trackId);
+    static Track *forPath(const QString &path);
     static int idForPath(const QString &path);
     static bool exists(const QString &path);
     static bool isModified(const QString &path, uint lastModified);
@@ -96,7 +94,7 @@ public:
     void getLyrics();
 
     // utils
-    static int getTotalLength(QList<Track*> tracks);
+    static int getTotalLength(const QList<Track *> &tracks);
 
 signals:
     void gotInfo();
@@ -106,16 +104,16 @@ signals:
 private slots:
     void fetchMusicBrainzTrack();
     void parseMusicBrainzTrack(QByteArray bytes);
-    void parseLyricsSearchResults(const QByteArray& bytes);
-    void scrapeLyrics(const QByteArray& bytes);
+    void parseLyricsSearchResults(const QByteArray &bytes);
+    void scrapeLyrics(const QByteArray &bytes);
     void readLyricsFromTags();
 
 private:
     QString getLyricsLocation();
-    static QString getHash(const QString&);
+    static QString getHash(const QString &);
 
-    static QHash<int, Track*> cache;
-    static QHash<QString, Track*> pathCache;
+    static QHash<int, Track *> cache;
+    static QHash<QString, Track *> pathCache;
 
     void reset();
 
@@ -143,7 +141,6 @@ private:
 
     // scrobbling
     uint startTime;
-
 };
 
 // This is required in order to use QPointer<Track> as a QVariant

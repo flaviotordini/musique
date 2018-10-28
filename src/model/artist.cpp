@@ -22,23 +22,20 @@ $END_LICENSE */
 #include "../constants.h"
 #include <QtWidgets>
 
-#include <QtSql>
 #include "../database.h"
 #include "../datautils.h"
+#include <QtSql>
 
-#include "http.h"
 #include "../httputils.h"
+#include "http.h"
 
-Artist::Artist(QObject *parent) : Item(parent),
-    trackCount(0),
-    yearFrom(0),
-    yearTo(0),
-    listeners(0) { }
+Artist::Artist(QObject *parent)
+    : Item(parent), trackCount(0), yearFrom(0), yearTo(0), listeners(0) {}
 
-QHash<int, Artist*> Artist::cache;
+QHash<int, Artist *> Artist::cache;
 
-Artist* Artist::forId(int artistId) {
-    QHash<int, Artist*>::const_iterator i = cache.constFind(artistId);
+Artist *Artist::forId(int artistId) {
+    auto i = cache.constFind(artistId);
     if (i != cache.constEnd()) return i.value();
 
     QSqlDatabase db = Database::instance().getConnection();
@@ -48,7 +45,7 @@ Artist* Artist::forId(int artistId) {
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError().text();
     if (query.next()) {
-        Artist* artist = new Artist();
+        Artist *artist = new Artist();
         artist->setId(artistId);
         artist->setName(query.value(0).toString());
         artist->trackCount = query.value(1).toInt();
@@ -61,11 +58,11 @@ Artist* Artist::forId(int artistId) {
         cache.insert(artistId, artist);
         return artist;
     }
-    cache.insert(artistId, 0);
+    cache.insert(artistId, nullptr);
     return nullptr;
 }
 
-int Artist::idForName(const QString& name) {
+int Artist::idForName(const QString &name) {
     int id = -1;
     const QString hash = Artist::getHash(name);
     QSqlDatabase db = Database::instance().getConnection();
@@ -82,7 +79,6 @@ int Artist::idForName(const QString& name) {
 }
 
 void Artist::insert() {
-
     const QString hash = getHash();
     if (hash.isEmpty() || hash.length() < 3) return;
 
@@ -114,8 +110,7 @@ void Artist::update() {
 }
 
 const QString &Artist::getHash() {
-    if (hash.isNull())
-        hash = getHash(name);
+    if (hash.isNull()) hash = getHash(name);
     return hash;
 }
 
@@ -135,8 +130,7 @@ void Artist::fetchInfo() {
 // *** MusicBrainz ***
 
 void Artist::fetchMusicBrainzArtist() {
-    QUrl url = QString("http://musicbrainz.org/ws/1/artist/?type=xml&name=%1&limit=1")
-            .arg(name);
+    QUrl url = QString("http://musicbrainz.org/ws/1/artist/?type=xml&name=%1&limit=1").arg(name);
 
     QObject *reply = HttpUtils::musicBrainz().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzArtist(QByteArray)));
@@ -183,7 +177,7 @@ void Artist::fetchLastFmSearch() {
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
-void Artist::parseNameAndMbid(const QByteArray& bytes, const QString& preferredValue) {
+void Artist::parseNameAndMbid(const QByteArray &bytes, const QString &preferredValue) {
     QXmlStreamReader xml(bytes);
 
     const QString preferredValueLower = preferredValue.toLower();
@@ -191,8 +185,7 @@ void Artist::parseNameAndMbid(const QByteArray& bytes, const QString& preferredV
     QString firstMbid;
 
     /* We'll parse the XML until we reach end of it.*/
-    while(!xml.atEnd() && !xml.hasError()) {
-
+    while (!xml.atEnd() && !xml.hasError()) {
         /* Read next element.*/
         QXmlStreamReader::TokenType token = xml.readNext();
 
@@ -203,8 +196,7 @@ void Artist::parseNameAndMbid(const QByteArray& bytes, const QString& preferredV
             */
 
         /* If token is StartElement, we'll see if we can read it.*/
-        if(token == QXmlStreamReader::StartElement
-                && xml.name() == "name") {
+        if (token == QXmlStreamReader::StartElement && xml.name() == "name") {
             QString text = xml.readElementText();
             // qDebug() << xml.name() << ":" << text;
 
@@ -215,11 +207,9 @@ void Artist::parseNameAndMbid(const QByteArray& bytes, const QString& preferredV
                 QXmlStreamReader::TokenType token = xml.readNext();
 
                 // stop at current artist to avoid getting the mbid of another one
-                if(token == QXmlStreamReader::EndElement
-                        && xml.name() == "artist") break;
+                if (token == QXmlStreamReader::EndElement && xml.name() == "artist") break;
 
-                if(token == QXmlStreamReader::StartElement
-                        && xml.name() == "mbid") {
+                if (token == QXmlStreamReader::StartElement && xml.name() == "mbid") {
                     artistMbid = xml.readElementText();
                     break;
                 }
@@ -236,24 +226,20 @@ void Artist::parseNameAndMbid(const QByteArray& bytes, const QString& preferredV
                 firstValue = text;
                 firstMbid = artistMbid;
             }
-
         }
-
     }
 
     /* Error handling. */
-    if(xml.hasError()) {
+    if (xml.hasError()) {
         qDebug() << xml.errorString();
     }
 
     name = firstValue;
     hash.clear();
     mbid = firstMbid;
-
 }
 
 void Artist::parseLastFmSearch(QByteArray bytes) {
-
     // static const QString redirectToken = "+noredirect/";
 
     // mbid = DataUtils::getXMLElementText(bytes, "mbid");
@@ -273,9 +259,9 @@ void Artist::parseLastFmSearch(QByteArray bytes) {
             qDebug() << "Redirected artist" << name << urlString << url;
 
             QObject *reply = HttpUtils::lastFm().head(url);
-            connect(reply, SIGNAL(finished(QNetworkReply*)), SLOT(parseLastFmRedirectedName(QNetworkReply*)));
-            connect(reply, SIGNAL(error(QNetworkReply*)), SIGNAL(gotInfo()));
-            return;
+            connect(reply, SIGNAL(finished(QNetworkReply*)),
+    SLOT(parseLastFmRedirectedName(QNetworkReply*))); connect(reply, SIGNAL(error(QNetworkReply*)),
+    SIGNAL(gotInfo())); return;
 
         }
 
@@ -283,7 +269,6 @@ void Artist::parseLastFmSearch(QByteArray bytes) {
     */
 
     fetchLastFmInfo();
-
 }
 
 void Artist::parseLastFmRedirectedName(QNetworkReply *reply) {
@@ -315,7 +300,8 @@ void Artist::fetchLastFmInfo() {
         }
         q.addQueryItem("autocorrect", "1");
         q.addQueryItem("artist", name);
-    } else q.addQueryItem("mbid", mbid);
+    } else
+        q.addQueryItem("mbid", mbid);
     url.setQuery(q);
 
     QObject *reply = HttpUtils::lastFm().get(url);
@@ -323,48 +309,48 @@ void Artist::fetchLastFmInfo() {
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
-void Artist::parseLastFmInfo(const QByteArray& bytes) {
+void Artist::parseLastFmInfo(const QByteArray &bytes) {
     QXmlStreamReader xml(bytes);
 
-    while(xml.readNextStartElement()) {
-
+    while (xml.readNextStartElement()) {
         if (xml.name() == "artist") {
-
             while (xml.readNextStartElement()) {
                 const QStringRef n = xml.name();
 
-                if(n == QLatin1String("name")) {
+                if (n == QLatin1String("name")) {
                     QString artistName = xml.readElementText();
                     if (name != artistName) {
                         QString newHash = getHash(artistName);
                         if (getHash() != newHash) {
-                            qDebug() << "Fixed artist name" << name << "->" << artistName << hash << newHash;
+                            qDebug() << "Fixed artist name" << name << "->" << artistName << hash
+                                     << newHash;
                             name = artistName;
                             hash.clear();
                         }
                     }
                 }
 
-                else if(n == QLatin1String("image") &&
-                        xml.attributes().value("size") == QLatin1String("extralarge")) {
+                else if (n == QLatin1String("image") &&
+                         xml.attributes().value("size") == QLatin1String("extralarge")) {
                     if (!QFile::exists(getImageLocation())) {
                         QString imageUrl = xml.readElementText();
-                        if (!imageUrl.isEmpty())
-                            setProperty("imageUrl", imageUrl);
-                    } else xml.skipCurrentElement();
+                        if (!imageUrl.isEmpty()) setProperty("imageUrl", imageUrl);
+                    } else
+                        xml.skipCurrentElement();
                 }
 
                 else if (n == QLatin1String("stats")) {
                     while (xml.readNextStartElement()) {
-                        if(xml.name() == "listeners") {
+                        if (xml.name() == "listeners") {
                             listeners = xml.readElementText().toUInt();
-                        } else xml.skipCurrentElement();
+                        } else
+                            xml.skipCurrentElement();
                     }
                 }
 
-                else if(n == QLatin1String("bio")) {
+                else if (n == QLatin1String("bio")) {
                     while (xml.readNextStartElement()) {
-                        if(xml.name() == "content") {
+                        if (xml.name() == "content") {
                             QString bio = xml.readElementText();
                             static const QRegExp licenseRE("User-contributed text is available.*");
                             bio.remove(licenseRE);
@@ -374,39 +360,40 @@ void Artist::parseLastFmInfo(const QByteArray& bytes) {
                                 QDir().mkpath(QFileInfo(bioLocation).absolutePath());
                                 QFile file(bioLocation);
                                 if (!file.open(QIODevice::WriteOnly))
-                                    qWarning() << "Error opening file for writing" << file.fileName();
+                                    qWarning()
+                                            << "Error opening file for writing" << file.fileName();
                                 QTextStream stream(&file);
                                 stream << bio;
                             }
 
                         } else if (xml.name() == "formationlist") {
                             while (xml.readNextStartElement()) {
-                                if(xml.name() == "formation") {
+                                if (xml.name() == "formation") {
                                     while (xml.readNextStartElement()) {
-                                        if(yearFrom == 0 && xml.name() == "yearfrom") {
+                                        if (yearFrom == 0 && xml.name() == "yearfrom") {
                                             yearFrom = xml.readElementText().toInt();
-                                        } else if(xml.name() == "yearto") {
+                                        } else if (xml.name() == "yearto") {
                                             yearTo = xml.readElementText().toInt();
-                                        } else xml.skipCurrentElement();
+                                        } else
+                                            xml.skipCurrentElement();
                                     }
-                                } else xml.skipCurrentElement();
+                                } else
+                                    xml.skipCurrentElement();
                             }
                         }
 
-                        else xml.skipCurrentElement();
+                        else
+                            xml.skipCurrentElement();
                     }
                 }
 
-                else xml.skipCurrentElement();
-
+                else
+                    xml.skipCurrentElement();
             }
-
         }
-
     }
 
-    if(xml.hasError())
-        qWarning() << xml.errorString();
+    if (xml.hasError()) qWarning() << xml.errorString();
 
     emit gotInfo();
 }
@@ -427,7 +414,7 @@ QPixmap Artist::getPhoto() {
     return QPixmap(getImageLocation());
 }
 
-void Artist::setPhoto(const QByteArray& bytes) {
+void Artist::setPhoto(const QByteArray &bytes) {
     qDebug() << "Storing photo for" << name;
 
     // store photo
@@ -437,13 +424,13 @@ void Artist::setPhoto(const QByteArray& bytes) {
     if (!file.open(QIODevice::WriteOnly)) {
         qDebug() << "Error opening file for writing" << file.fileName();
     }
-    QDataStream stream( &file ); // we will serialize the data into the file
+    QDataStream stream(&file); // we will serialize the data into the file
     stream.writeRawData(bytes.constData(), bytes.size());
 
     emit gotPhoto();
 }
 
-QList<Track*> Artist::getTracks() {
+QList<Track *> Artist::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select distinct t.id from tracks t, albums a"
@@ -451,11 +438,12 @@ QList<Track*> Artist::getTracks() {
                   " order by a.year desc, a.title collate nocase, t.disk, t.track, t.path");
     query.bindValue(0, id);
     bool success = query.exec();
-    if (!success) qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
-    QList<Track*> tracks;
+    if (!success)
+        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    QList<Track *> tracks;
     while (query.next()) {
         int trackId = query.value(0).toInt();
-        Track* track = Track::forId(trackId);
+        Track *track = Track::forId(trackId);
         tracks << track;
     }
 

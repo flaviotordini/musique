@@ -447,7 +447,7 @@ void MainWindow::createActions() {
 #endif
 
     // common action properties
-    foreach (QAction *action, actionMap.values()) {
+    for (QAction *action : qAsConst(actionMap)) {
         // add actions to the MainWindow so that they work
         // when the menu is hidden
         addAction(action);
@@ -1237,7 +1237,7 @@ void MainWindow::checkForUpdate() {
     settings.setValue(updateCheckKey, unixTime);
 }
 
-void MainWindow::gotNewVersion(const QString& version) {
+void MainWindow::gotNewVersion(const QString &version) {
     if (updateChecker) {
         delete updateChecker;
         updateChecker = nullptr;
@@ -1255,7 +1255,7 @@ void MainWindow::gotNewVersion(const QString& version) {
 #endif
 }
 
-void MainWindow::simpleUpdateDialog(const QString& version) {
+void MainWindow::simpleUpdateDialog(const QString &version) {
     QMessageBox msgBox(this);
     msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png"));
     msgBox.setText(tr("%1 version %2 is now available.").arg(Constants::NAME, version));
@@ -1307,14 +1307,16 @@ void MainWindow::runFinetune() {
 }
 
 void MainWindow::runFinetune(const QVariantMap &stats) {
-    QStringList files = stats.value("trackPaths").toStringList();
+    const QStringList files = stats.value("trackPaths").toStringList();
     const QString filename = QStandardPaths::writableLocation(QStandardPaths::TempLocation) +
                              QLatin1String("/finetune.txt");
     QFile file(filename);
     if (!file.open(QIODevice::WriteOnly))
         qWarning() << "Error opening file for writing" << file.fileName();
     QTextStream stream(&file);
-    foreach (const QString &s, files) { stream << s << endl; }
+    for (const QString &s : files) {
+        stream << s << endl;
+    }
     stream.flush();
     file.close();
     runFinetune(filename);
@@ -1466,12 +1468,12 @@ void MainWindow::showActionInStatusBar(QAction *action, bool show) {
     }
 }
 
-void MainWindow::handleError(const QString& message) {
+void MainWindow::handleError(const QString &message) {
     qWarning() << message;
     showMessage(message);
 }
 
-void MainWindow::showMessage(const QString& message) {
+void MainWindow::showMessage(const QString &message) {
     statusBar()->showMessage(message, 5000);
 }
 

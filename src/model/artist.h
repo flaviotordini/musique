@@ -21,26 +21,25 @@ $END_LICENSE */
 #ifndef ARTIST_H
 #define ARTIST_H
 
-#include <QtCore>
-#include <QImage>
 #include "item.h"
 #include "track.h"
+#include <QImage>
+#include <QtCore>
 #include <QtNetwork>
 
 class Artist : public Item {
-
     Q_OBJECT
 
 public:
     Artist(QObject *parent = 0);
 
     // item
-    QList<Track*> getTracks();
+    QList<Track *> getTracks();
     QString getStatusTip();
 
     // properties
-    QString getName()  { return name; }
-    void setName(QString name) { this->name = name; }
+    QString getName() { return name; }
+    void setName(const QString &name) { this->name = name; }
     const QString &getHash();
     int getTrackCount() { return trackCount; }
     QString getBaseLocation();
@@ -55,18 +54,18 @@ public:
         qDeleteAll(cache);
         cache.clear();
     }
-    static Artist* forId(int artistId);
-    static int idForName(const QString& name);
+    static Artist *forId(int artistId);
+    static int idForName(const QString &name);
     void insert();
     void update();
 
     // internet
 
     /**
-      * Fix artist data using Last.fm and MusicBrainz web services.
-      * Will emit gotInfo() when done.
-      * This will also emit gotPhoto() when the photo is ready.
-      */
+     * Fix artist data using Last.fm and MusicBrainz web services.
+     * Will emit gotInfo() when done.
+     * This will also emit gotPhoto() when the photo is ready.
+     */
     void fetchInfo();
 
     QString getImageLocation();
@@ -82,7 +81,7 @@ public:
     }*/
 
 public slots:
-    void setPhoto(const QByteArray& bytes);
+    void setPhoto(const QByteArray &bytes);
 
 signals:
     void gotInfo();
@@ -95,14 +94,14 @@ private slots:
     void fetchLastFmSearch();
     void parseLastFmSearch(QByteArray bytes);
     void fetchLastFmInfo();
-    void parseLastFmInfo(const QByteArray& bytes);
+    void parseLastFmInfo(const QByteArray &bytes);
     void parseLastFmRedirectedName(QNetworkReply *reply);
 
 private:
-    void parseNameAndMbid(const QByteArray& bytes, const QString& preferredName);
-    static QString getHash(const QString&);
+    void parseNameAndMbid(const QByteArray &bytes, const QString &preferredName);
+    static QString getHash(const QString &name);
 
-    static QHash<int, Artist*> cache;
+    static QHash<int, Artist *> cache;
 
     int trackCount;
 
@@ -117,7 +116,6 @@ private:
     QStringList lastFmSearches;
 
     QString hash;
-
 };
 
 // This is required in order to use QPointer<Artist> as a QVariant

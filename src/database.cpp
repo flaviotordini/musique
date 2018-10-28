@@ -27,19 +27,20 @@ Database::Database() {
     const QString dataLocation = getDataLocation();
     const QString dbLocation = getDbLocation();
 
-    if(QFile::exists(dbLocation)) {
-
+    if (QFile::exists(dbLocation)) {
         // check db version
         int databaseVersion = getAttribute("version").toInt();
         if (databaseVersion != Constants::DATABASE_VERSION) {
-            qWarning("Updating database version: %d to %d", databaseVersion, Constants::DATABASE_VERSION);
+            qWarning("Updating database version: %d to %d", databaseVersion,
+                     Constants::DATABASE_VERSION);
             updateRoot = collectionRoot();
             drop();
             removeRecursively(dataLocation);
             create();
         }
 
-    } else create();
+    } else
+        create();
 }
 
 Database::~Database() {
@@ -58,7 +59,7 @@ const QString &Database::getFilesLocation() {
 
 const QString &Database::getDbLocation() {
     static const QString location = getDataLocation() + QLatin1String("/") +
-            QLatin1String(Constants::UNIX_NAME) + QLatin1String(".db");
+                                    QLatin1String(Constants::UNIX_NAME) + QLatin1String(".db");
     return location;
 }
 
@@ -79,7 +80,8 @@ void Database::create() {
               "yearTo integer,"
               "listeners integer,"
               "albumCount integer,"
-              "trackCount integer)", db);
+              "trackCount integer)",
+              db);
 
     QSqlQuery("create table albums ("
               "id integer primary key autoincrement,"
@@ -88,7 +90,8 @@ void Database::create() {
               "year integer,"
               "artist integer,"
               "listeners integer,"
-              "trackCount integer)", db);
+              "trackCount integer)",
+              db);
 
     QSqlQuery("create table tracks ("
               "id integer primary key autoincrement,"
@@ -103,11 +106,13 @@ void Database::create() {
               "artist integer,"
               "albumArtist integer,"
               "album integer,"
-              "tstamp integer)", db);
+              "tstamp integer)",
+              db);
 
     QSqlQuery("create table nontracks ("
               "path varchar(255),"
-              "tstamp integer)", db);
+              "tstamp integer)",
+              db);
     QSqlQuery("create unique index unique_nontracks_path on nontracks(path)", db);
 
     QSqlQuery("create table downloads ("
@@ -115,7 +120,8 @@ void Database::create() {
               "objectid integer,"
               "type integer,"
               "errors integer,"
-              "url varchar(255))", db);
+              "url varchar(255))",
+              db);
 
     /* TODO tags
     QSqlQuery("create table tags ("
@@ -141,13 +147,17 @@ void Database::createAttributes() {
     const QSqlDatabase db = getConnection();
     QSqlQuery("create table attributes (name varchar(255), value)", db);
     QSqlQuery("create unique index unique_attributes_name on attributes(name)", db);
-    QSqlQuery("insert into attributes (name, value) values ('version', " + QString::number(Constants::DATABASE_VERSION) + ")", db);
-    QSqlQuery("insert into attributes (name, value) values ('status', " + QString::number(ScanIncomplete) + ")", db);
+    QSqlQuery("insert into attributes (name, value) values ('version', " +
+                      QString::number(Constants::DATABASE_VERSION) + ")",
+              db);
+    QSqlQuery("insert into attributes (name, value) values ('status', " +
+                      QString::number(ScanIncomplete) + ")",
+              db);
     QSqlQuery("insert into attributes (name, value) values ('lastUpdate', 0)", db);
     QSqlQuery("insert into attributes (name, value) values ('root', '')", db);
 }
 
-Database& Database::instance() {
+Database &Database::instance() {
     static QMutex mutex;
     QMutexLocker locker(&mutex);
     static Database *databaseInstance = new Database();
@@ -169,9 +179,9 @@ QSqlDatabase Database::getConnection() {
         qDebug() << "Creating db connection for" << threadName;
         QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", threadName);
         connection.setDatabaseName(getDbLocation());
-        if(!connection.open()) {
+        if (!connection.open()) {
             qWarning() << QString("Cannot connect to database %1 in thread %2")
-                          .arg(connection.databaseName(), threadName);
+                                  .arg(connection.databaseName(), threadName);
         }
         connections.insert(currentThread, connection);
         return connection;
@@ -180,8 +190,10 @@ QSqlDatabase Database::getConnection() {
 
 int Database::status() {
     QVariant status = getAttribute("status");
-    if (status.isValid()) return status.toInt();
-    else return ScanIncomplete;
+    if (status.isValid())
+        return status.toInt();
+    else
+        return ScanIncomplete;
 }
 
 void Database::setStatus(int status) {
@@ -200,22 +212,22 @@ QString Database::collectionRoot() {
     return getAttribute("root").toString();
 }
 
-void Database::setCollectionRoot(const QString& dir) {
+void Database::setCollectionRoot(const QString &dir) {
     setAttribute("root", QVariant(dir));
 }
 
-QVariant Database::getAttribute(const QString& name) {
+QVariant Database::getAttribute(const QString &name) {
     QSqlQuery query("select value from attributes where name=?", getConnection());
     query.bindValue(0, name);
 
     bool success = query.exec();
-    if (!success) qDebug() << query.lastQuery() << query.boundValues().values() << query.lastError().text();
-    if (query.next())
-        return query.value(0);
+    if (!success)
+        qDebug() << query.lastQuery() << query.boundValues().values() << query.lastError().text();
+    if (query.next()) return query.value(0);
     return QVariant();
 }
 
-void Database::setAttribute(const QString& name, const QVariant& value) {
+void Database::setAttribute(const QString &name, const QVariant &value) {
     QSqlQuery query(getConnection());
     query.prepare("update attributes set value=? where name=?");
     query.bindValue(0, value);
@@ -244,7 +256,7 @@ void Database::drop() {
             tableNames << tableName;
         }
 
-        foreach (QString tableName, tableNames) {
+        for (const QString &tableName : qAsConst(tableNames)) {
             QString dropSQL = "drop table " + tableName;
             QSqlQuery query2(db);
             if (!query2.exec(dropSQL)) {
@@ -282,7 +294,7 @@ void Database::clear() {
 }
 
 void Database::closeConnections() {
-    foreach(QSqlDatabase connection, connections.values()) {
+    for (QSqlDatabase connection : qAsConst(connections)) {
         qDebug() << "Closing connection" << connection;
         connection.close();
     }
@@ -301,16 +313,16 @@ bool Database::removeRecursively(const QString &dirName) {
     bool result = false;
     QDir dir(dirName);
     if (dir.exists(dirName)) {
-        foreach (const QFileInfo &info, dir.entryInfoList(
-                      QDir::NoDotAndDotDot | QDir::System | QDir::Hidden |
-                      QDir::AllDirs | QDir::Files, QDir::DirsFirst)) {
+        const QFileInfoList &files = dir.entryInfoList(
+                QDir::NoDotAndDotDot | QDir::System | QDir::Hidden | QDir::AllDirs | QDir::Files,
+                QDir::DirsFirst);
+        for (const QFileInfo &info : files) {
             if (info.isDir())
                 result = removeRecursively(info.absoluteFilePath());
             else
                 result = QFile::remove(info.absoluteFilePath());
 
-            if (!result)
-                return result;
+            if (!result) return result;
         }
         result = dir.rmdir(dirName);
     }

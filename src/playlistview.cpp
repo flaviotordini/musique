@@ -19,24 +19,22 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "playlistview.h"
-#include "model/track.h"
-#include "playlistmodel.h"
-#include "playlistitemdelegate.h"
-#include "droparea.h"
-#include "globalshortcuts.h"
-#include "fontutils.h"
-#include "mainwindow.h"
 #include "datautils.h"
+#include "droparea.h"
+#include "fontutils.h"
+#include "globalshortcuts.h"
+#include "mainwindow.h"
+#include "model/track.h"
+#include "playlistitemdelegate.h"
+#include "playlistmodel.h"
 
-PlaylistView::PlaylistView(QWidget *parent) :
-        QListView(parent),
-        playlistModel(nullptr), overlayLabel(nullptr) {
-
+PlaylistView::PlaylistView(QWidget *parent)
+    : QListView(parent), playlistModel(nullptr), overlayLabel(nullptr) {
     // delegate
     setItemDelegate(new PlaylistItemDelegate(this));
 
     // cosmetics
-    setMinimumWidth(fontInfo().pixelSize()*25);
+    setMinimumWidth(fontInfo().pixelSize() * 25);
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
@@ -49,41 +47,49 @@ PlaylistView::PlaylistView(QWidget *parent) :
     setDragDropMode(QAbstractItemView::DragDrop);
 
     // actions
-    connect(MainWindow::instance()->getAction("remove"), SIGNAL(triggered()), SLOT(removeSelected()));
-    connect(MainWindow::instance()->getAction("moveUp"), SIGNAL(triggered()), SLOT(moveUpSelected()));
-    connect(MainWindow::instance()->getAction("moveDown"), SIGNAL(triggered()), SLOT(moveDownSelected()));
+    connect(MainWindow::instance()->getAction("remove"), SIGNAL(triggered()),
+            SLOT(removeSelected()));
+    connect(MainWindow::instance()->getAction("moveUp"), SIGNAL(triggered()),
+            SLOT(moveUpSelected()));
+    connect(MainWindow::instance()->getAction("moveDown"), SIGNAL(triggered()),
+            SLOT(moveDownSelected()));
 
     // respond to the user doubleclicking a playlist item
     connect(this, SIGNAL(activated(const QModelIndex &)), SLOT(itemActivated(const QModelIndex &)));
 }
 
 void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
-
     this->playlistModel = playlistModel;
     setModel(playlistModel);
 
     // needed to restore the selection after dragndrop
-    connect(playlistModel, SIGNAL(needSelectionFor(QList<Track*>)), SLOT(selectTracks(QList<Track*>)));
+    connect(playlistModel, SIGNAL(needSelectionFor(QList<Track *>)),
+            SLOT(selectTracks(QList<Track *>)));
 
     connect(selectionModel(),
-            SIGNAL(selectionChanged ( const QItemSelection & , const QItemSelection & )),
-            SLOT(selectionChanged ( const QItemSelection & , const QItemSelection & )));
+            SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
+            SLOT(selectionChanged(const QItemSelection &, const QItemSelection &)));
     connect(playlistModel, SIGNAL(layoutChanged()), this, SLOT(updatePlaylistActions()));
-    connect(playlistModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
-    connect(playlistModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this, SLOT(updatePlaylistActions()));
+    connect(playlistModel, SIGNAL(rowsInserted(const QModelIndex &, int, int)), this,
+            SLOT(updatePlaylistActions()));
+    connect(playlistModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this,
+            SLOT(updatePlaylistActions()));
     connect(playlistModel, SIGNAL(modelReset()), SLOT(updatePlaylistActions()));
-    connect(MainWindow::instance()->getAction("clearPlaylist"), SIGNAL(triggered()), playlistModel, SLOT(clear()));
-    connect(MainWindow::instance()->getAction("skip"), SIGNAL(triggered()), playlistModel, SLOT(skipForward()));
-    connect(MainWindow::instance()->getAction("previous"), SIGNAL(triggered()), playlistModel, SLOT(skipBackward()));
+    connect(MainWindow::instance()->getAction("clearPlaylist"), SIGNAL(triggered()), playlistModel,
+            SLOT(clear()));
+    connect(MainWindow::instance()->getAction("skip"), SIGNAL(triggered()), playlistModel,
+            SLOT(skipForward()));
+    connect(MainWindow::instance()->getAction("previous"), SIGNAL(triggered()), playlistModel,
+            SLOT(skipBackward()));
 
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
     connect(&shortcuts, SIGNAL(Next()), MainWindow::instance()->getAction("skip"), SLOT(trigger()));
-    connect(&shortcuts, SIGNAL(Previous()), MainWindow::instance()->getAction("previous"), SLOT(trigger()));
+    connect(&shortcuts, SIGNAL(Previous()), MainWindow::instance()->getAction("previous"),
+            SLOT(trigger()));
 }
 
 void PlaylistView::itemActivated(const QModelIndex &index) {
-    if (playlistModel->rowExists(index.row()))
-        playlistModel->setActiveRow(index.row(), true);
+    if (playlistModel->rowExists(index.row())) playlistModel->setActiveRow(index.row(), true);
 }
 
 void PlaylistView::removeSelected() {
@@ -92,17 +98,19 @@ void PlaylistView::removeSelected() {
     playlistModel->removeIndexes(indexes);
 }
 
-void PlaylistView::selectTracks(QList<Track*> tracks) {
+void PlaylistView::selectTracks(const QList<Track *> &tracks) {
     selectionModel()->clear();
-    foreach (Track *track, tracks) {
+    for (Track *track : tracks) {
         QModelIndex index = playlistModel->indexForTrack(track);
         if (index.isValid())
             selectionModel()->select(index, QItemSelectionModel::Select);
-        else qDebug() << __PRETTY_FUNCTION__ << "Invalid index";
+        else
+            qDebug() << __PRETTY_FUNCTION__ << "Invalid index";
     }
 }
 
-void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) {
+void PlaylistView::selectionChanged(const QItemSelection &selected,
+                                    const QItemSelection &deselected) {
     QListView::selectionChanged(selected, deselected);
 
     const bool gotSelection = this->selectionModel()->hasSelection();
@@ -112,12 +120,10 @@ void PlaylistView::selectionChanged(const QItemSelection &selected, const QItemS
 }
 
 void PlaylistView::updatePlaylistActions() {
-
     const int rowCount = playlistModel->rowCount(QModelIndex());
     const bool isPlaylistEmpty = rowCount < 1;
     MainWindow::instance()->getAction("clearPlaylist")->setEnabled(!isPlaylistEmpty);
-    if (!isPlaylistEmpty)
-        MainWindow::instance()->getAction("play")->setEnabled(true);
+    if (!isPlaylistEmpty) MainWindow::instance()->getAction("play")->setEnabled(true);
 
     // TODO also check if we're on first/last track
     MainWindow::instance()->getAction("skip")->setEnabled(rowCount > 1);
@@ -129,7 +135,7 @@ void PlaylistView::updatePlaylistActions() {
         const int totalLength = playlistModel->getTotalLength();
         QString playlistLength = DataUtils::formatDuration(totalLength);
         setStatusTip(tr("%1 tracks - Total length is %2")
-                     .arg(QString::number(rowCount), playlistLength));
+                             .arg(QString::number(rowCount), playlistLength));
     }
 }
 
@@ -137,7 +143,6 @@ void PlaylistView::moveUpSelected() {
     if (!this->selectionModel()->hasSelection()) return;
     QModelIndexList indexes = this->selectionModel()->selectedIndexes();
     playlistModel->move(indexes, true);
-
 }
 
 void PlaylistView::moveDownSelected() {
@@ -170,12 +175,10 @@ void PlaylistView::dragLeaveEvent(QDragLeaveEvent *event) {
 }
 */
 
-void PlaylistView::paintEvent(QPaintEvent *event) {    
+void PlaylistView::paintEvent(QPaintEvent *event) {
     QListView::paintEvent(event);
 
-    if ( playlistModel->rowCount() == 0
-         && !emptyMessage.isEmpty()) {
-
+    if (playlistModel->rowCount() == 0 && !emptyMessage.isEmpty()) {
         event->accept();
 
         QPainter painter(this->viewport());
@@ -185,11 +188,10 @@ void PlaylistView::paintEvent(QPaintEvent *event) {
         painter.setFont(FontUtils::big());
 
         QSize textSize(QFontMetrics(painter.font()).size(Qt::TextSingleLine, emptyMessage));
-        QPoint centerPoint((this->width()-textSize.width())/2,
-                           ((this->height()-textSize.height())/2));
+        QPoint centerPoint((this->width() - textSize.width()) / 2,
+                           ((this->height() - textSize.height()) / 2));
         QRect centerRect(centerPoint, textSize);
         QRect boundRect;
         painter.drawText(centerRect, Qt::AlignCenter, emptyMessage, &boundRect);
     }
 }
-

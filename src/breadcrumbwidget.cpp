@@ -22,14 +22,11 @@ $END_LICENSE */
 #include "iconutils.h"
 
 BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
-
-    backAction = new QAction(
-            IconUtils::icon("go-previous"),
-            tr("&Back"), this);
+    backAction = new QAction(IconUtils::icon("go-previous"), tr("&Back"), this);
     QKeySequence keySequence(Qt::ALT + Qt::Key_Left);
     backAction->setShortcut(keySequence);
-    backAction->setStatusTip(tr("Go back") + " (" +
-                             keySequence.toString(QKeySequence::NativeText) + ")");
+    backAction->setStatusTip(tr("Go back") + " (" + keySequence.toString(QKeySequence::NativeText) +
+                             ")");
     connect(backAction, SIGNAL(triggered()), SIGNAL(goneBack()));
     addAction(backAction);
 
@@ -37,8 +34,7 @@ BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
     setStyleSheet("QToolButton { color:white } QToolBar { background: black; border:0 }");
 }
 
-void BreadcrumbWidget::addItem(const QString& title) {
-
+void BreadcrumbWidget::addItem(const QString &title) {
     QAction *action = addAction(title);
     action->setEnabled(false);
 
@@ -47,11 +43,9 @@ void BreadcrumbWidget::addItem(const QString& title) {
     foreach (QAction *a, actions())
         a->setEnabled(a != action);
         */
-
 }
 
 void BreadcrumbWidget::goBack() {
-
     if (actions().size() > 1) {
         QAction *action = actions().last();
         if (action) {
@@ -70,7 +64,7 @@ void BreadcrumbWidget::goBack() {
 
 void BreadcrumbWidget::clear() {
     // remove all but the backAction
-    foreach (QAction *action, actions()) {
+    for (QAction *action : actions()) {
         if (action != backAction) {
             removeAction(action);
             delete action;

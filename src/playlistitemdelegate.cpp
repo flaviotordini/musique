@@ -19,12 +19,12 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "playlistitemdelegate.h"
-#include "model/track.h"
+#include "datautils.h"
+#include "iconutils.h"
 #include "model/album.h"
 #include "model/artist.h"
+#include "model/track.h"
 #include "playlistmodel.h"
-#include "iconutils.h"
-#include "datautils.h"
 
 const int PlaylistItemDelegate::PADDING = 10;
 int PlaylistItemDelegate::ITEM_HEIGHT = 0;
@@ -32,32 +32,32 @@ int PlaylistItemDelegate::ITEM_HEIGHT = 0;
 namespace {
 
 void drawElidedText(QPainter *painter, const QRect &textBox, const int flags, const QString &text) {
-    QString elidedText = QFontMetrics(painter->font()).elidedText(text, Qt::ElideRight, textBox.width(), flags);
+    QString elidedText =
+            QFontMetrics(painter->font()).elidedText(text, Qt::ElideRight, textBox.width(), flags);
     painter->drawText(textBox, 0, elidedText);
 }
 
-}
+} // namespace
 
-PlaylistItemDelegate::PlaylistItemDelegate(QObject *parent) :
-    QStyledItemDelegate(parent) {
+PlaylistItemDelegate::PlaylistItemDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
 
-}
-
-QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const {
-
+QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                     const QModelIndex &index) const {
     // determine item height based on font metrics
     if (ITEM_HEIGHT == 0) {
         ITEM_HEIGHT = option.fontMetrics.height() * 1.8;
     }
 
-    static const QSize headerSize = QSize(ITEM_HEIGHT*2, ITEM_HEIGHT*2);
+    static const QSize headerSize = QSize(ITEM_HEIGHT * 2, ITEM_HEIGHT * 2);
 
-    QModelIndex previousIndex = index.sibling(index.row()-1, index.column());
+    QModelIndex previousIndex = index.sibling(index.row() - 1, index.column());
     if (previousIndex.isValid()) {
-        const TrackPointer previousTrackPointer = previousIndex.data(Playlist::DataObjectRole).value<TrackPointer>();
+        const TrackPointer previousTrackPointer =
+                previousIndex.data(Playlist::DataObjectRole).value<TrackPointer>();
         Track *previousTrack = previousTrackPointer.data();
         if (previousTrack) {
-            const TrackPointer trackPointer = index.data(Playlist::DataObjectRole).value<TrackPointer>();
+            const TrackPointer trackPointer =
+                    index.data(Playlist::DataObjectRole).value<TrackPointer>();
             Track *track = trackPointer.data();
             Album *previousAlbum = previousTrack->getAlbum();
             if (!previousAlbum && previousTrack->getArtist() != track->getArtist()) {
@@ -74,19 +74,20 @@ QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     return QSize(ITEM_HEIGHT, ITEM_HEIGHT);
 }
 
-void PlaylistItemDelegate::paint(
-        QPainter* painter,
-        const QStyleOptionViewItem& option,
-        const QModelIndex& index) const {
+void PlaylistItemDelegate::paint(QPainter *painter,
+                                 const QStyleOptionViewItem &option,
+                                 const QModelIndex &index) const {
     paintTrack(painter, option, index);
 }
 
-QPixmap PlaylistItemDelegate::getPlayIcon(const QColor& color, const QStyleOptionViewItem &option) const {
+QPixmap PlaylistItemDelegate::getPlayIcon(const QColor &color,
+                                          const QStyleOptionViewItem &option) const {
     static QHash<QString, QPixmap> cache;
     const QString key = color.name();
     if (cache.contains(key)) return cache.value(key);
     const int iconSize = ITEM_HEIGHT / 2;
-    QIcon icon = IconUtils::tintedIcon("media-playback-start", color, QList<QSize>() << QSize(32, 32));
+    QIcon icon =
+            IconUtils::tintedIcon("media-playback-start", color, QList<QSize>() << QSize(32, 32));
     QPixmap pixmap = icon.pixmap(iconSize, iconSize);
     cache.insert(key, pixmap);
     return pixmap;
@@ -95,7 +96,6 @@ QPixmap PlaylistItemDelegate::getPlayIcon(const QColor& color, const QStyleOptio
 void PlaylistItemDelegate::paintTrack(QPainter *painter,
                                       const QStyleOptionViewItem &option,
                                       const QModelIndex &index) const {
-
     Track *track = index.data(Playlist::DataObjectRole).value<TrackPointer>().data();
 
     const bool isActive = index.data(Playlist::ActiveItemRole).toBool();
@@ -132,7 +132,8 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
         static const QIcon icon = IconUtils::icon("media-playback-start");
         QPixmap p = icon.pixmap(16, 16);
         if (isSelected) painter->setCompositionMode(QPainter::CompositionMode_Plus);
-        painter->drawPixmap(PADDING*1.5, (ITEM_HEIGHT - (p.height() / p.devicePixelRatio())) / 2, p);
+        painter->drawPixmap(PADDING * 1.5, (ITEM_HEIGHT - (p.height() / p.devicePixelRatio())) / 2,
+                            p);
     } else {
         paintTrackNumber(painter, option, line, track);
     }
@@ -144,16 +145,16 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     // separator
     if (!isActive) {
         painter->setOpacity(.1);
-        painter->drawLine(0, line.height()-1, line.width(), line.height()-1);
+        painter->drawLine(0, line.height() - 1, line.width(), line.height() - 1);
     }
 
     painter->restore();
 }
 
-void PlaylistItemDelegate::paintAlbumHeader(
-        QPainter* painter, const QStyleOptionViewItem& option,
-        const QRect & line, Track* track) const {
-
+void PlaylistItemDelegate::paintAlbumHeader(QPainter *painter,
+                                            const QStyleOptionViewItem &option,
+                                            const QRect &line,
+                                            Track *track) const {
     QString headerTitle;
     Album *album = track->getAlbum();
     if (album) headerTitle = album->getTitle();
@@ -208,12 +209,13 @@ void PlaylistItemDelegate::paintAlbumHeader(
         painter->setFont(normalFont);
 
         painter->setPen(Qt::white);
-        painter->drawText(line.translated(-PADDING, 0), Qt::AlignRight | Qt::AlignVCenter, albumLength);
+        painter->drawText(line.translated(-PADDING, 0), Qt::AlignRight | Qt::AlignVCenter,
+    albumLength);
     }
     */
 
     const QFontMetrics fontMetrics = QFontMetrics(painter->font());
-    const int textLeft = h + fontMetrics.height()/2;
+    const int textLeft = h + fontMetrics.height() / 2;
 
     // text size
     QSize trackStringSize(fontMetrics.size(Qt::TextSingleLine, headerTitle));
@@ -233,9 +235,10 @@ void PlaylistItemDelegate::paintAlbumHeader(
     painter->restore();
 }
 
-void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptionViewItem& option,
-                                            const QRect &line, Track* track) const {
-
+void PlaylistItemDelegate::paintTrackNumber(QPainter *painter,
+                                            const QStyleOptionViewItem &option,
+                                            const QRect &line,
+                                            Track *track) const {
     const int trackNumber = track->getNumber();
     if (trackNumber < 1) return;
 
@@ -245,7 +248,7 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
 
     // track number
     QFont font = painter->font();
-    font.setPointSize(font.pointSize()-pixelRatio);
+    font.setPointSize(font.pointSize() - pixelRatio);
     painter->setFont(font);
     QString trackString = QString("%1").arg(trackNumber, 2, 10, QChar('0'));
 
@@ -262,9 +265,11 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter* painter, const QStyleOptio
     painter->restore();
 }
 
-void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOptionViewItem& option,
-                                           const QRect &line, Track* track, bool isActive) const {
-
+void PlaylistItemDelegate::paintTrackTitle(QPainter *painter,
+                                           const QStyleOptionViewItem &option,
+                                           const QRect &line,
+                                           Track *track,
+                                           bool isActive) const {
     Q_UNUSED(isActive);
     Q_UNUSED(option);
 
@@ -300,11 +305,14 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOption
 
             painter->save();
 
-            textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, by);
+            textBox = painter->boundingRect(
+                    line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, by);
             if (textBox.right() > line.width()) textBox.setRight(line.width());
             drawElidedText(painter, textBox, flags, by);
 
-            textBox = painter->boundingRect(line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, artistName);
+            textBox = painter->boundingRect(
+                    line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags,
+                    artistName);
             if (textBox.right() > line.width()) textBox.setRight(line.width());
             drawElidedText(painter, textBox, flags, artistName);
             painter->restore();
@@ -314,19 +322,22 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter* painter, const QStyleOption
     painter->restore();
 }
 
-void PlaylistItemDelegate::paintTrackLength(QPainter* painter, const QStyleOptionViewItem& option,
-                                            const QRect &line, Track* track) const {
+void PlaylistItemDelegate::paintTrackLength(QPainter *painter,
+                                            const QStyleOptionViewItem &option,
+                                            const QRect &line,
+                                            Track *track) const {
     const QString trackLength = DataUtils::formatDuration(track->getLength());
 
     // QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackLength));
-    QPoint textLoc(PADDING*10, 0);
-    QRect trackTextBox(textLoc.x(), textLoc.y(), line.width() - textLoc.x() - PADDING, line.height());
+    QPoint textLoc(PADDING * 10, 0);
+    QRect trackTextBox(textLoc.x(), textLoc.y(), line.width() - textLoc.x() - PADDING,
+                       line.height());
 
     const bool isSelected = option.state & QStyle::State_Selected;
     painter->save();
     const qreal pixelRatio = IconUtils::pixelRatio();
     QFont font = painter->font();
-    font.setPointSize(font.pointSize()-pixelRatio);
+    font.setPointSize(font.pointSize() - pixelRatio);
     painter->setFont(font);
     if (isSelected)
         painter->setPen(option.palette.highlightedText().color());
@@ -334,27 +345,23 @@ void PlaylistItemDelegate::paintTrackLength(QPainter* painter, const QStyleOptio
         painter->setOpacity(.5);
     painter->drawText(trackTextBox, Qt::AlignRight | Qt::AlignVCenter, trackLength);
     painter->restore();
-
 }
 
-void PlaylistItemDelegate::paintActiveOverlay(
-        QPainter *painter,const QStyleOptionViewItem& option, const QRect &line) const {
-
+void PlaylistItemDelegate::paintActiveOverlay(QPainter *painter,
+                                              const QStyleOptionViewItem &option,
+                                              const QRect &line) const {
     QColor highlightColor = option.palette.color(QPalette::Highlight);
     QColor backgroundColor = option.palette.color(QPalette::Base);
     const float animation = 0.25;
     const int gradientRange = 16;
 
-    QColor color2 = QColor::fromHsv(
-                highlightColor.hue(),
-                (int) (backgroundColor.saturation() * (1.0f - animation) + highlightColor.saturation() * animation),
-                (int) (backgroundColor.value() * (1.0f - animation) + highlightColor.value() * animation)
-                );
-    QColor color1 = QColor::fromHsv(
-                color2.hue(),
-                qMax(color2.saturation() - gradientRange, 0),
-                qMin(color2.value() + gradientRange, 255)
-                );
+    QColor color2 = QColor::fromHsv(highlightColor.hue(),
+                                    (int)(backgroundColor.saturation() * (1.0f - animation) +
+                                          highlightColor.saturation() * animation),
+                                    (int)(backgroundColor.value() * (1.0f - animation) +
+                                          highlightColor.value() * animation));
+    QColor color1 = QColor::fromHsv(color2.hue(), qMax(color2.saturation() - gradientRange, 0),
+                                    qMin(color2.value() + gradientRange, 255));
 
     painter->save();
     painter->setPen(Qt::NoPen);

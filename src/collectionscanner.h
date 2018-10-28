@@ -21,9 +21,9 @@ $END_LICENSE */
 #ifndef COLLECTIONSCANNER_H
 #define COLLECTIONSCANNER_H
 
-#include <QtCore>
-#include "model/artist.h"
 #include "model/album.h"
+#include "model/artist.h"
+#include <QtCore>
 
 // TagLib
 #include "fileref.h"
@@ -32,23 +32,22 @@ $END_LICENSE */
 #include "tags.h"
 
 class FileInfo {
-
 public:
-    FileInfo() : artist(0), albumArtist(0), album(0), tags(0) { }
+    FileInfo() : artist(0), albumArtist(0), album(0), tags(0) {}
     ~FileInfo() {
         if (artist) delete artist;
         if (album) delete album;
         if (tags) delete tags;
     }
-    Tags* getTags()  { return tags; }
-    void setTags(Tags* tags) { this->tags = tags; }
-    Artist* getArtist()  { return artist; }
+    Tags *getTags() { return tags; }
+    void setTags(Tags *tags) { this->tags = tags; }
+    Artist *getArtist() { return artist; }
     void setArtist(Artist *artist) { this->artist = artist; }
-    Artist* getAlbumArtist()  { return albumArtist; }
+    Artist *getAlbumArtist() { return albumArtist; }
     void setAlbumArtist(Artist *artist) { albumArtist = artist; }
-    Album* getAlbum()  { return album; }
+    Album *getAlbum() { return album; }
     void setAlbum(Album *album) { this->album = album; }
-    QFileInfo getFileInfo()  { return fileInfo; }
+    QFileInfo getFileInfo() { return fileInfo; }
     void setFileInfo(QFileInfo fileInfo) { this->fileInfo = fileInfo; }
 
 private:
@@ -57,16 +56,14 @@ private:
     Album *album;
     Tags *tags;
     QFileInfo fileInfo;
-
 };
 
 class CollectionScanner : public QObject {
-
     Q_OBJECT
 
 public:
     CollectionScanner(QObject *parent);
-    void setDirectory(const QString& directory);
+    void setDirectory(const QString &directory);
     void run();
     void stop();
     void complete();
@@ -77,7 +74,7 @@ signals:
     void error(QString message);
 
 private slots:
-    void scanDirectory(const QDir& directory);
+    void scanDirectory(const QDir &directory);
     void popFromQueue();
     void giveThisFileAnArtist(FileInfo *file);
     void processArtist(FileInfo *file);
@@ -92,12 +89,12 @@ private slots:
 
 private:
     void reset();
-    void processFile(const QFileInfo& fileInfo);
+    void processFile(const QFileInfo &fileInfo);
     void cleanStaleTracks();
-    static bool isNonTrack(QString path);
-    static bool isModifiedNonTrack(const QString& path, uint lastModified);
-    static bool insertOrUpdateNonTrack(const QString& path, uint lastModified);
-    QString directoryHash(const QDir& directory);
+    static bool isNonTrack(const QString &path);
+    static bool isModifiedNonTrack(const QString &path, uint lastModified);
+    static bool insertOrUpdateNonTrack(const QString &path, uint lastModified);
+    QString directoryHash(const QDir &directory);
     QString treeFingerprint(QDir directory, QString hash);
     QStringList getTrackPaths();
     QStringList getNonTrackPaths();
@@ -110,11 +107,11 @@ private:
 
     QList<QFileInfo> fileQueue;
     int maxQueueSize;
-    QHash<QString, Artist*> loadedArtists;
-    QHash<QString, QList<FileInfo *> > filesWaitingForArtists;
-    QHash<QString, QList<FileInfo *> > filesWaitingForAlbumArtists;
-    QHash<QString, Album*> loadedAlbums;
-    QHash<QString, QList<FileInfo *> > filesWaitingForAlbums;
+    QHash<QString, Artist *> loadedArtists;
+    QHash<QString, QList<FileInfo *>> filesWaitingForArtists;
+    QHash<QString, QList<FileInfo *>> filesWaitingForAlbumArtists;
+    QHash<QString, Album *> loadedAlbums;
+    QHash<QString, QList<FileInfo *>> filesWaitingForAlbums;
     QStringList trackPaths;
     QStringList nontrackPaths;
 
@@ -123,7 +120,6 @@ private:
 
     QStringList processedTrackPaths;
     QStringList tracksNeedingFix;
-
 };
 
 #endif // COLLECTIONSCANNER_H

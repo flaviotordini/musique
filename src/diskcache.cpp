@@ -21,23 +21,23 @@ $END_LICENSE */
 #include "diskcache.h"
 #include <QtNetwork>
 
-DiskCache::DiskCache(QObject *parent) : QNetworkDiskCache(parent) { }
+DiskCache::DiskCache(QObject *parent) : QNetworkDiskCache(parent) {}
 
-QIODevice* DiskCache::prepare(const QNetworkCacheMetaData &metaData) {
+QIODevice *DiskCache::prepare(const QNetworkCacheMetaData &metaData) {
     QString mime;
-    foreach (const QNetworkCacheMetaData::RawHeader &header, metaData.rawHeaders()) {
+    const auto &headers = metaData.rawHeaders();
+    for (const QNetworkCacheMetaData::RawHeader &header : headers) {
         // qDebug() << header.first << header.second;
-        if (header.first.constData() == "Content-Type") {
+        if (header.first == "Content-Type") {
             mime = header.second;
             break;
         }
     }
 
-    if (mime.startsWith(QLatin1String("text/"))
-            || mime.startsWith(QLatin1String("application/xml"))
-            || mime.startsWith(QLatin1String("application/json)"))
-            || mime.startsWith(QLatin1String("application/atom+xml"))
-            ) {
+    if (mime.startsWith(QLatin1String("text/")) ||
+        mime.startsWith(QLatin1String("application/xml")) ||
+        mime.startsWith(QLatin1String("application/json)")) ||
+        mime.startsWith(QLatin1String("application/atom+xml"))) {
         return QNetworkDiskCache::prepare(metaData);
     }
 
