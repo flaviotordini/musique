@@ -1054,15 +1054,22 @@ void MainWindow::updateUIForFullscreen() {
                                     << QKeySequence(Qt::Key_Escape));
         fullscreenAct->setText(tr("Leave &Full Screen"));
         fullscreenAct->setIcon(IconUtils::icon("view-restore"));
+
+#ifndef APP_MAC
+        menuVisibleBeforeFullScreen = menuBar()->isVisible();
+        menuBar()->hide();
+#endif
+
     } else {
         fullscreenAct->setShortcuts(fsShortcuts);
         fullscreenAct->setText(fsText);
         fullscreenAct->setIcon(IconUtils::icon("view-fullscreen"));
-    }
 
 #ifndef APP_MAC
-    menuBar()->setVisible(!m_fullscreen);
+        menuBar()->setVisible(menuVisibleBeforeFullScreen);
 #endif
+    }
+
     statusBar()->setVisible(!m_fullscreen);
 
 #ifndef APP_MAC

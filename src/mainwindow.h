@@ -224,6 +224,7 @@ private:
     // fullscreen
     bool m_fullscreen;
     bool m_maximized;
+    bool menuVisibleBeforeFullScreen;
 
     // update checker
     UpdateChecker *updateChecker;
