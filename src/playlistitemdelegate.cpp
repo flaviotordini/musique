@@ -132,8 +132,7 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
         static const QIcon icon = IconUtils::icon("media-playback-start");
         QPixmap p = icon.pixmap(16, 16);
         if (isSelected) painter->setCompositionMode(QPainter::CompositionMode_Plus);
-        painter->drawPixmap(PADDING * 1.5, (ITEM_HEIGHT - (p.height() / p.devicePixelRatio())) / 2,
-                            p);
+        painter->drawPixmap(PADDING, (ITEM_HEIGHT - (p.height() / p.devicePixelRatio())) / 2, p);
     } else {
         paintTrackNumber(painter, option, line, track);
     }
@@ -284,38 +283,41 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter *painter,
     QPoint textLoc(textLeft, 0);
 
     int width = trackStringSize.width();
-    const int maxWidth = line.width() - 110;
-    if (width > maxWidth) width = maxWidth;
+    const int maxX = line.width() - textLeft;
 
     QRect trackTextBox(textLoc.x(), textLoc.y(), width, line.height());
+    if (trackTextBox.right() > maxX) trackTextBox.setRight(maxX);
+
     trackTitle = fontMetrics.elidedText(trackTitle, Qt::ElideRight, trackTextBox.width());
 
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, trackTitle);
 
     // track artist
-    Album *album = track->getAlbum();
-    if (album && album->getArtist()) {
-        Artist *albumArtist = album->getArtist();
-        if (albumArtist && albumArtist->getId() != track->getArtist()->getId()) {
-            static const QString by = "—";
-            const int x = trackTextBox.right();
-            QRect textBox(x, line.height(), 0, 0);
-            const int flags = Qt::AlignVCenter | Qt::AlignLeft;
-            QString artistName = track->getArtist()->getName();
+    if (trackTextBox.right() < maxX) {
+        Album *album = track->getAlbum();
+        if (album && album->getArtist()) {
+            Artist *albumArtist = album->getArtist();
+            if (albumArtist && albumArtist->getId() != track->getArtist()->getId()) {
+                static const QString by = "—";
+                const int x = trackTextBox.right();
+                QRect textBox(x, line.height(), 0, 0);
+                const int flags = Qt::AlignVCenter | Qt::AlignLeft;
+                QString artistName = track->getArtist()->getName();
 
-            painter->save();
+                painter->save();
 
-            textBox = painter->boundingRect(
-                    line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, by);
-            if (textBox.right() > line.width()) textBox.setRight(line.width());
-            drawElidedText(painter, textBox, flags, by);
+                textBox = painter->boundingRect(
+                        line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags, by);
+                if (textBox.right() > maxX) textBox.setRight(maxX);
+                drawElidedText(painter, textBox, flags, by);
 
-            textBox = painter->boundingRect(
-                    line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags,
-                    artistName);
-            if (textBox.right() > line.width()) textBox.setRight(line.width());
-            drawElidedText(painter, textBox, flags, artistName);
-            painter->restore();
+                textBox = painter->boundingRect(
+                        line.adjusted(textBox.x() + textBox.width() + PADDING, 0, 0, 0), flags,
+                        artistName);
+                if (textBox.right() > maxX) textBox.setRight(maxX);
+                drawElidedText(painter, textBox, flags, artistName);
+                painter->restore();
+            }
         }
     }
 
