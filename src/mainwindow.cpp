@@ -1195,7 +1195,7 @@ void MainWindow::volumeMutedChanged(bool muted) {
         volumeMuteAct->setIcon(IconUtils::icon("audio-volume-high"));
         statusBar()->showMessage(tr("Volume is unmuted"));
     }
-#ifdef Q_WS_X11
+#ifdef APP_LINUX
     QToolButton *volumeMuteButton =
             qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
     volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
