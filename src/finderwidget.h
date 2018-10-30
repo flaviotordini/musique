@@ -43,41 +43,36 @@ class Album;
 
 namespace Finder {
 
-    enum FinderDataRoles {
-        ItemTypeRole = Qt::UserRole,
-        DataObjectRole,
-        ActiveItemRole,
-        HoveredItemRole,
-        PlayIconAnimationItemRole,
-        PlayIconHoveredRole
-    };
+enum FinderDataRoles {
+    ItemTypeRole = Qt::UserRole,
+    DataObjectRole,
+    ActiveItemRole,
+    HoveredItemRole,
+    PlayIconAnimationItemRole,
+    PlayIconHoveredRole
+};
 
-    enum FinderItemTypes {
-        ItemTypeGenre = 1,
-        ItemTypeArtist ,
-        ItemTypeAlbum,
-        ItemTypeTrack,
-        ItemTypeFolder
-    };
+enum FinderItemTypes {
+    ItemTypeGenre = 1,
+    ItemTypeArtist,
+    ItemTypeAlbum,
+    ItemTypeTrack,
+    ItemTypeFolder
+};
 
-}
+} // namespace Finder
 
 class FinderWidget : public QWidget {
-
     Q_OBJECT
 
 public:
     FinderWidget(QWidget *parent);
-    void setPlaylistModel(PlaylistModel *playlistModel) {
-        this->playlistModel = playlistModel;
-    }
-    void setPlaylistView(PlaylistView *playlistView) {
-        this->playlistView = playlistView;
-    }
+    void setPlaylistModel(PlaylistModel *playlistModel) { this->playlistModel = playlistModel; }
+    void setPlaylistView(PlaylistView *playlistView) { this->playlistView = playlistView; }
     void appear();
     void disappear();
-    void showSearch(const QString& query);
-    void addTracksAndPlay(QList<Track*> tracks);
+    void showSearch(const QString &query);
+    void addTracksAndPlay(QList<Track *> tracks);
     void artistActivated(Artist *artist);
     void albumActivated(Album *album);
     void trackActivated(Track *track);
@@ -122,7 +117,7 @@ private:
     QAction *albumsAction;
     QAction *foldersAction;
 
-    QStack<QWidget*> *history;
+    QStack<QWidget *> history;
     QStackedWidget *stackedWidget;
     BreadcrumbWidget *breadcrumb;
     BreadcrumbWidget *folderBreadcrumb;
@@ -145,7 +140,6 @@ private:
 
     SearchModel *searchModel;
     SearchView *searchView;
-
 };
 
 #endif // FINDERWIDGET_H

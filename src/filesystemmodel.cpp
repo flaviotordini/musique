@@ -60,8 +60,6 @@ QVariant FileSystemModel::data(const QModelIndex &index, int role) const {
     default:
         return QFileSystemModel::data(index, role);
     }
-
-    return QVariant();
 }
 
 Item *FileSystemModel::itemAt(const QModelIndex &index) const {

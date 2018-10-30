@@ -16,7 +16,7 @@ signals:
     void newVersion(QString);
 
 private slots:
-    void requestFinished(QByteArray);
+    void requestFinished(const QByteArray&);
 
 private:
 

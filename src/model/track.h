@@ -103,7 +103,7 @@ signals:
 
 private slots:
     void fetchMusicBrainzTrack();
-    void parseMusicBrainzTrack(QByteArray bytes);
+    void parseMusicBrainzTrack(const QByteArray& bytes);
     void parseLyricsSearchResults(const QByteArray &bytes);
     void scrapeLyrics(const QByteArray &bytes);
     void readLyricsFromTags();

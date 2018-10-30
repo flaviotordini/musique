@@ -308,7 +308,7 @@ QString CollectionScanner::directoryHash(const QDir &directory) {
 }
 
 QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
-    qDebug() << "Hashing dir" << directory.absolutePath();
+    // qDebug() << "Hashing dir" << directory.absolutePath();
     directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
     const QFileInfoList list = directory.entryInfoList();
     for (auto &fileInfo : list) {
@@ -324,7 +324,7 @@ QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
             hash += DataUtils::md5(treeFingerprint(QDir(subDirPath), hash));
         } else {
             // this is a file, add to hash
-            qDebug() << "Hashing file" << fileInfo.absolutePath();
+            // qDebug() << "Hashing file" << fileInfo.absolutePath();
             const uint lastModified = fileInfo.lastModified().toTime_t();
             hash += QString::number(lastModified);
             hash += fileInfo.absoluteFilePath();

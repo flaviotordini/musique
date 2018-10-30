@@ -20,17 +20,13 @@ $END_LICENSE */
 
 #include "tracksqlmodel.h"
 
-TrackSqlModel::TrackSqlModel(QObject *parent) : BaseSqlModel(parent) {
-
-}
+TrackSqlModel::TrackSqlModel(QObject *parent) : BaseSqlModel(parent) {}
 
 QVariant TrackSqlModel::data(const QModelIndex &index, int role) const {
-
     Track *track = nullptr;
     int trackId = 0;
 
     switch (role) {
-
     case Qt::DisplayRole:
         trackId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
         track = Track::forId(trackId);
@@ -57,9 +53,7 @@ QVariant TrackSqlModel::data(const QModelIndex &index, int role) const {
         trackId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
         track = Track::forId(trackId);
         return track->getStatusTip();
-
     }
 
     return QVariant();
 }
-

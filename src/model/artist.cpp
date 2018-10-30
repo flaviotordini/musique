@@ -136,7 +136,7 @@ void Artist::fetchMusicBrainzArtist() {
     connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzArtist(QByteArray)));
 }
 
-void Artist::parseMusicBrainzArtist(QByteArray bytes) {
+void Artist::parseMusicBrainzArtist(const QByteArray &bytes) {
     QString correctName = DataUtils::getXMLElementText(bytes, "name");
     qDebug() << name << "-> MusicBrainz ->" << correctName;
     if (!correctName.isEmpty()) {
@@ -239,7 +239,7 @@ void Artist::parseNameAndMbid(const QByteArray &bytes, const QString &preferredV
     mbid = firstMbid;
 }
 
-void Artist::parseLastFmSearch(QByteArray bytes) {
+void Artist::parseLastFmSearch(const QByteArray &bytes) {
     // static const QString redirectToken = "+noredirect/";
 
     // mbid = DataUtils::getXMLElementText(bytes, "mbid");

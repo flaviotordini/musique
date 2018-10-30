@@ -58,7 +58,7 @@ void ImageDownloaderThread::run() {
     qDebug() << "ImageDownloaderThread::run() exited";
 }
 
-ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent), imageDownload(0) {
+ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent), imageDownload(nullptr) {
 
 }
 

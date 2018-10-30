@@ -19,11 +19,11 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "artistlistview.h"
-#include "mainwindow.h"
-#include "iconutils.h"
 #include "artistsqlmodel.h"
 #include "database.h"
 #include "finderitemdelegate.h"
+#include "iconutils.h"
+#include "mainwindow.h"
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -31,7 +31,7 @@ $END_LICENSE */
 namespace {
 const char *sortByKey = "artistSortBy";
 const char *reverseOrderKey = "artistReverseOrder";
-}
+} // namespace
 
 ArtistListView::ArtistListView(QWidget *parent) : BaseFinderView(parent) {
     setupToolbar();
@@ -45,6 +45,8 @@ void ArtistListView::appear() {
     BaseFinderView::appear();
     statusBar->insertPermanentWidget(0, toolBar);
     toolBar->show();
+
+    // QTimer::singleShot(500, this, SLOT(preloadThumbs()));
 }
 
 void ArtistListView::disappear() {
@@ -52,6 +54,7 @@ void ArtistListView::disappear() {
 #ifdef APP_EXTRA
     Extra::fadeInWidget(statusBar, statusBar);
 #endif
+    // clearThumbs();
     BaseFinderView::disappear();
     statusBar->removeWidget(toolBar);
 }
@@ -157,16 +160,13 @@ void ArtistListView::updateQuery(bool transition) {
     }
 
 #ifdef APP_EXTRA
-    if (transition)
-        Extra::fadeInWidget(this, this);
+    if (transition) Extra::fadeInWidget(this, this);
 #endif
 
-    if (!sqlModel->query().isValid())
-        QTimer::singleShot(1000, this, SLOT(preloadThumbs()));
+    if (!sqlModel->query().isValid()) QTimer::singleShot(500, this, SLOT(preloadThumbs()));
 
     sqlModel->setQuery(sql, Database::instance().getConnection());
-    if (sqlModel->lastError().isValid())
-        qWarning() << sqlModel->lastError().text();
+    if (sqlModel->lastError().isValid()) qWarning() << sqlModel->lastError().text();
 
     scrollToTop();
 }
@@ -183,6 +183,8 @@ void ArtistListView::preloadThumbs() {
     while (query.next()) {
         int artistId = query.value(0).toInt();
         Artist *artist = Artist::forId(artistId);
+        artist->getPhotoForSize(FinderItemDelegate::ITEM_WIDTH, FinderItemDelegate::ITEM_HEIGHT,
+                                pixelRatio);
         qApp->processEvents();
     }
 }

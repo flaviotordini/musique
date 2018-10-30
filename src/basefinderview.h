@@ -24,7 +24,6 @@ $END_LICENSE */
 #include <QListView>
 
 class BaseFinderView : public QListView {
-
     Q_OBJECT
 
 public:
@@ -44,7 +43,6 @@ protected:
 
 private:
     bool isHoveringPlayIcon(QMouseEvent *event);
-
 };
 
 #endif // BASEFINDERVIEW_H

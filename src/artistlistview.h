@@ -21,18 +21,20 @@ $END_LICENSE */
 #ifndef ARTISTLISTVIEW_H
 #define ARTISTLISTVIEW_H
 
-#include <QtWidgets>
-#include <QtSql>
-#include "basefinderview.h"
 #include "artistsqlmodel.h"
+#include "basefinderview.h"
+#include <QtSql>
+#include <QtWidgets>
 
 class ArtistListView : public BaseFinderView {
-
     Q_OBJECT
 
 public:
     ArtistListView(QWidget *parent);
-    void setModel(ArtistSqlModel *model) { BaseFinderView::setModel(model); sqlModel = model; }
+    void setModel(ArtistSqlModel *model) {
+        BaseFinderView::setModel(model);
+        sqlModel = model;
+    }
     void updateQuery(bool transition = false);
 
     enum SortBy {
@@ -64,7 +66,6 @@ private:
     ArtistSqlModel *sqlModel;
     SortBy sortBy;
     bool reversedOrder;
-
 };
 
 #endif // ARTISTLISTVIEW_H

@@ -19,19 +19,18 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "basefinderview.h"
-#include "finderitemdelegate.h"
 #include "basesqlmodel.h"
-#include "model/item.h"
-#include "finderwidget.h"
 #include "database.h"
+#include "finderitemdelegate.h"
+#include "finderwidget.h"
+#include "model/item.h"
 
 BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
-
     setItemDelegate(new FinderItemDelegate(this));
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // layout
-    setGridSize(QSize(151, 151));
+    setGridSize(QSize(FinderItemDelegate::ITEM_WIDTH + 1, FinderItemDelegate::ITEM_HEIGHT + 1));
     setFlow(QListView::LeftToRight);
     setWrapping(true);
     setResizeMode(QListView::Adjust);
@@ -55,12 +54,14 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     setAttribute(Qt::WA_MacShowFocusRect, false);
 
     verticalScrollBar()->setPageStep(3);
+
+    setAttribute(Qt::WA_OpaquePaintEvent);
 }
 
 void BaseFinderView::appear() {
     setEnabled(true);
     setMouseTracking(true);
-    BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel*>(model());
+    BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel *>(model());
     if (baseSqlModel) {
         baseSqlModel->restoreQuery();
         while (baseSqlModel->canFetchMore())
@@ -71,7 +72,7 @@ void BaseFinderView::appear() {
 void BaseFinderView::disappear() {
     setEnabled(false);
     setMouseTracking(false);
-    BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel*>(model());
+    BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel *>(model());
     if (baseSqlModel) baseSqlModel->clear();
 }
 
@@ -98,12 +99,10 @@ void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
     if (item)
         qDebug() << item->getName();
         */
-
 }
 
 void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton
-        && isHoveringPlayIcon(event)) {
+    if (event->button() == Qt::LeftButton && isHoveringPlayIcon(event)) {
         emit play(indexAt(event->pos()));
     } else {
         QListView::mouseReleaseEvent(event);

@@ -22,32 +22,29 @@ $END_LICENSE */
 #include "finderwidget.h"
 #include "model/track.h"
 
-const int TrackItemDelegate::PADDING = 10;
-
-TrackItemDelegate::TrackItemDelegate(QObject *parent) :
-        QStyledItemDelegate(parent) {
-
+namespace {
+const int padding = 10;
 }
 
-QSize TrackItemDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex& /*index*/) const {
+TrackItemDelegate::TrackItemDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
+
+QSize TrackItemDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                  const QModelIndex & /*index*/) const {
     // determine item height based on font metrics
     int itemHeight = option.fontMetrics.height() * 1.8;
     return QSize(itemHeight, itemHeight);
 }
 
-void TrackItemDelegate::paint( QPainter* painter,
-                               const QStyleOptionViewItem& option,
-                               const QModelIndex& index ) const {
-
-    QApplication::style()->drawPrimitive( QStyle::PE_PanelItemViewItem, &option, painter );
+void TrackItemDelegate::paint(QPainter *painter,
+                              const QStyleOptionViewItem &option,
+                              const QModelIndex &index) const {
+    QApplication::style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter);
     paintTrack(painter, option, index);
-
 }
 
-void TrackItemDelegate::paintTrack(QPainter* painter,
-                                   const QStyleOptionViewItem& option,
-                                   const QModelIndex& index) const {
-
+void TrackItemDelegate::paintTrack(QPainter *painter,
+                                   const QStyleOptionViewItem &option,
+                                   const QModelIndex &index) const {
     // get the data object
     const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
     Track *track = trackPointer.data();
@@ -66,42 +63,42 @@ void TrackItemDelegate::paintTrack(QPainter* painter,
     painter->translate(option.rect.topLeft());
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
-    QPointF textLoc(PADDING * 2, 0);
+    QPointF textLoc(padding * 2, 0);
 
     // track number
     if (track->getNumber() > 0) {
         painter->save();
 
         QFont font = painter->font();
-        font.setPointSize(font.pointSize()-1);
+        font.setPointSize(font.pointSize() - 1);
         painter->setFont(font);
 
         QString trackString = QString("%1").arg(track->getNumber(), 2, 10, QChar('0'));
-        QSizeF trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, trackString));
+        QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackString));
         QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
         QRect trackRoundedRect = trackTextBox;
 
         trackRoundedRect.setY((line.height() - trackStringSize.height()) / 2);
         trackRoundedRect.setHeight(trackStringSize.height());
-        trackRoundedRect.adjust(-PADDING/2, -PADDING/3, PADDING/2, PADDING/3);
+        trackRoundedRect.adjust(-padding / 2, -padding / 3, padding / 2, padding / 3);
 
         painter->setOpacity(.75);
         painter->setRenderHints(QPainter::Antialiasing, true);
         painter->setBrush(Qt::white);
         painter->setPen(Qt::black);
-        painter->drawRoundedRect(trackRoundedRect, PADDING/2, PADDING/2, Qt::AbsoluteSize);
+        painter->drawRoundedRect(trackRoundedRect, padding / 2, padding / 2, Qt::AbsoluteSize);
         painter->drawText(trackTextBox, Qt::AlignCenter, trackString);
         painter->restore();
     }
 
     // title
     QString titleString = track->getTitle();
-    QSizeF titleStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, titleString));
-    QSizeF trackStringSize(QFontMetrics(painter->font()).size( Qt::TextSingleLine, "00"));
-    textLoc.setX(textLoc.x() + trackStringSize.width() + PADDING * 2);
+    QSize titleStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, titleString));
+    QSize trackStringSize(
+            QFontMetrics(painter->font()).size(Qt::TextSingleLine, QStringLiteral("00")));
+    textLoc.setX(textLoc.x() + trackStringSize.width() + padding * 2);
     QRect titleTextBox(textLoc.x(), textLoc.y(), titleStringSize.width(), line.height());
     painter->drawText(titleTextBox, Qt::AlignVCenter | Qt::AlignLeft, track->getTitle());
 
     painter->restore();
-
 }

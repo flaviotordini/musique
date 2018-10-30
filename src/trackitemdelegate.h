@@ -24,19 +24,15 @@ $END_LICENSE */
 #include <QtWidgets>
 
 class TrackItemDelegate : public QStyledItemDelegate {
-
     Q_OBJECT
 
 public:
-    TrackItemDelegate(QObject *parent = 0);
-    QSize sizeHint( const QStyleOptionViewItem&, const QModelIndex&) const;
-    void paint( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
+    TrackItemDelegate(QObject *parent = nullptr);
+    QSize sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const;
+    void paint(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
 
 private:
-    void paintTrack( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
-
-    static const int PADDING;
-
+    void paintTrack(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
 };
 
 #endif // TRACKITEMDELEGATE_H

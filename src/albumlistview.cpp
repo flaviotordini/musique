@@ -19,11 +19,11 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "albumlistview.h"
-#include "mainwindow.h"
-#include "iconutils.h"
 #include "artistsqlmodel.h"
 #include "database.h"
 #include "finderitemdelegate.h"
+#include "iconutils.h"
+#include "mainwindow.h"
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -31,10 +31,9 @@ $END_LICENSE */
 namespace {
 const char *sortByKey = "albumSortBy";
 const char *reverseOrderKey = "albumReverseOrder";
-}
+} // namespace
 
-AlbumListView::AlbumListView(QWidget *parent) : BaseFinderView(parent),
-    showToolBar(false) {
+AlbumListView::AlbumListView(QWidget *parent) : BaseFinderView(parent), showToolBar(false) {
     setupToolbar();
 }
 
@@ -130,8 +129,8 @@ void AlbumListView::updateQuery(bool transition) {
     switch (sortBy) {
     case SortByArtist:
         sql = "select b.id from albums b, artists a"
-                " where b.artist=a.id and b.trackCount>0"
-                " order by a.name collate nocase";
+              " where b.artist=a.id and b.trackCount>0"
+              " order by a.name collate nocase";
         if (reversedOrder) sql += " desc";
         sql += ", b.year";
         if (!reversedOrder) sql += " desc";
@@ -153,16 +152,13 @@ void AlbumListView::updateQuery(bool transition) {
     }
 
 #ifdef APP_EXTRA
-    if (transition)
-        Extra::fadeInWidget(this, this);
+    if (transition) Extra::fadeInWidget(this, this);
 #endif
 
-    if (!sqlModel->query().isValid())
-        QTimer::singleShot(1000, this, SLOT(preloadThumbs()));
+    if (!sqlModel->query().isValid()) QTimer::singleShot(500, this, SLOT(preloadThumbs()));
 
     sqlModel->setQuery(sql, Database::instance().getConnection());
-    if (sqlModel->lastError().isValid())
-        qWarning() << sqlModel->lastError().text();
+    if (sqlModel->lastError().isValid()) qWarning() << sqlModel->lastError().text();
 
     scrollToTop();
     showToolBar = true;

@@ -27,7 +27,6 @@ class PlaylistView;
 class DropArea;
 
 class PlaylistArea : public QWidget {
-
     Q_OBJECT
 
 public:
@@ -35,7 +34,6 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent *e);
-
 };
 
 #endif // PLAYLISTWIDGET_H

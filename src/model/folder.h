@@ -30,28 +30,27 @@ class Album;
 class Artist;
 
 class Folder : public Item {
-
     Q_OBJECT
 
 public:
-    Folder(const QString& path, QObject *parent = 0);
-    static Folder* forPath(const QString &path);
+    Folder(const QString &path, QObject *parent = nullptr);
+    static Folder *forPath(const QString &path);
 
     // item
-    QList<Track*> getTracks();
+    QList<Track *> getTracks();
 
     // properties
-    QString getName()  { return dir.dirName(); }
+    QString getName() { return dir.dirName(); }
     QString getPath() { return path; }
     QString getAbsolutePath() { return dir.absolutePath(); }
     int getTrackCount();
     int getTotalLength();
 
+private:
     QDir dir;
     QString path;
     int trackCount;
     int totalLength;
-
 };
 
 // This is required in order to use QPointer<Folder> as a QVariant

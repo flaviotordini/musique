@@ -1,6 +1,6 @@
 #include "updatechecker.h"
-#include "http.h"
 #include "constants.h"
+#include "http.h"
 #ifdef APP_ACTIVATION
 #include "activation.h"
 #endif
@@ -36,15 +36,14 @@ void UpdateChecker::checkForUpdate() {
 
     QObject *reply = Http::instance().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(requestFinished(QByteArray)));
-
 }
 
-void UpdateChecker::requestFinished(QByteArray data) {
-        UpdateCheckerStreamReader reader;
-        reader.read(data);
-        m_needUpdate = reader.needUpdate();
-        m_remoteVersion = reader.remoteVersion();
-        if (m_needUpdate && !m_remoteVersion.isEmpty()) emit newVersion(m_remoteVersion);
+void UpdateChecker::requestFinished(const QByteArray &data) {
+    UpdateCheckerStreamReader reader;
+    reader.read(data);
+    m_needUpdate = reader.needUpdate();
+    m_remoteVersion = reader.remoteVersion();
+    if (m_needUpdate && !m_remoteVersion.isEmpty()) emit newVersion(m_remoteVersion);
 }
 
 QString UpdateChecker::remoteVersion() {
@@ -53,7 +52,7 @@ QString UpdateChecker::remoteVersion() {
 
 // --- Reader ---
 
-bool UpdateCheckerStreamReader::read(const QByteArray& data) {
+bool UpdateCheckerStreamReader::read(const QByteArray &data) {
     addData(data);
 
     while (!atEnd()) {

@@ -62,19 +62,21 @@ MediaView::MediaView(QWidget *parent) : View(parent) {
     splitter->addWidget(finderWidget);
 
     // drop area
+    /*
     dropArea = new DropArea(this);
     dropArea->setPlaylistModel(playlistModel);
     dropArea->hide();
+    */
 
     // playlist view
     playlistView = new PlaylistView(this);
     playlistView->setEmptyPlaylistMessage(tr("Drop items here"));
-    playlistView->setDropArea(dropArea);
+    // playlistView->setDropArea(dropArea);
     playlistView->setPlaylistModel(playlistModel);
     // connect(playlistView, SIGNAL(needDropArea()), SLOT(showDropArea()));
 
     // playlist widget, handles the playlist/droparea layout
-    PlaylistArea *playlistWidget = new PlaylistArea(playlistView, dropArea, this);
+    PlaylistArea *playlistWidget = new PlaylistArea(playlistView, nullptr, this);
     splitter->addWidget(playlistWidget);
 
     finderWidget->setPlaylistView(playlistView);
@@ -244,7 +246,7 @@ void MediaView::trackRemoved() {
                  << "Cannot get sender track";
         return;
     }
-    if (track == activeTrack) activeTrack = 0;
+    if (track == activeTrack) activeTrack = nullptr;
 }
 
 void MediaView::playlistFinished() {
@@ -276,7 +278,7 @@ void MediaView::trackFinished() {
 
     // scrobbling
     bool needScrobble = false;
-    Track *track = 0;
+    Track *track = nullptr;
     QSettings settings;
     if (settings.value("scrobbling").toBool() && LastFm::instance().isAuthorized()) {
         track = playlistModel->getActiveTrack();
@@ -299,7 +301,7 @@ void MediaView::aboutToFinish() {
     trackFinished();
 }
 
-void MediaView::currentSourceChanged(const Phonon::MediaSource& mediaSource) {
+void MediaView::currentSourceChanged(const Phonon::MediaSource &mediaSource) {
     QString path = mediaSource.fileName();
     QString collectionRoot = Database::instance().collectionRoot();
     path = path.mid(collectionRoot.length() + 1);

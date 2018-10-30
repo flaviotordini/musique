@@ -34,7 +34,7 @@ $END_LICENSE */
 #include <unsynchronizedlyricsframe.h>
 
 Track::Track()
-    : number(0), diskNumber(1), diskCount(1), year(0), length(0), album(nullptr), artist(0),
+    : number(0), diskNumber(1), diskCount(1), year(0), length(0), album(nullptr), artist(nullptr),
       played(false), startTime(0) {}
 
 QHash<int, Track *> Track::cache;
@@ -331,7 +331,7 @@ void Track::fetchMusicBrainzTrack() {
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
-void Track::parseMusicBrainzTrack(QByteArray bytes) {
+void Track::parseMusicBrainzTrack(const QByteArray& bytes) {
     QString correctTitle = DataUtils::getXMLElementText(bytes, "title");
     qDebug() << title << "-> MusicBrainz ->" << correctTitle;
     if (!correctTitle.isEmpty()) {

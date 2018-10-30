@@ -33,7 +33,7 @@ class PlaylistView : public QListView {
 public:
     PlaylistView(QWidget *parent);
     void setPlaylistModel(PlaylistModel *model);
-    void setDropArea(DropArea *dropArea) { this->dropArea = dropArea; }
+    // void setDropArea(DropArea *dropArea) { this->dropArea = dropArea; }
     void setEmptyPlaylistMessage(QString emptyMessage) { this->emptyMessage = emptyMessage; }
 
 signals:
@@ -57,8 +57,8 @@ protected:
 
 private:
     PlaylistModel *playlistModel;
-    DropArea *dropArea;
-    bool willHideDropArea;
+    // DropArea *dropArea;
+    // bool willHideDropArea;
     QString emptyMessage;
     QLabel *overlayLabel;
 };

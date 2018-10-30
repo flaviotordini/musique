@@ -19,6 +19,7 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "finderwidget.h"
+#include "finderitemdelegate.h"
 
 #include "segmentedcontrol.h"
 
@@ -49,14 +50,14 @@ $END_LICENSE */
 #include "database.h"
 #include <QtSql>
 
-static const char *FINDER_VIEW_KEY = "finderView";
+namespace {
+const QString finderViewKey = QStringLiteral("finderView");
+}
 
 FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
-    history = new QStack<QWidget *>();
-
     fileSystemView = nullptr;
     artistListView = nullptr;
-    albumListView = 0;
+    albumListView = nullptr;
     trackListView = nullptr;
 
     fileSystemModel = nullptr;
@@ -65,6 +66,8 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     trackListModel = nullptr;
 
     searchView = nullptr;
+
+    setAttribute(Qt::WA_OpaquePaintEvent);
 
     // colors
     QPalette p = palette();
@@ -96,8 +99,9 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->addWidget(stackedWidget);
     setLayout(layout);
 
-    setMinimumWidth(150 * 3 + 4 + style()->pixelMetric(QStyle::PM_ScrollBarExtent));
-    setMinimumHeight(150 + finderBar->minimumHeight());
+    setMinimumWidth(FinderItemDelegate::ITEM_WIDTH * 3 + 4 +
+                    style()->pixelMetric(QStyle::PM_ScrollBarExtent));
+    setMinimumHeight(FinderItemDelegate::ITEM_HEIGHT + finderBar->minimumHeight());
 
     restoreSavedView();
 }
@@ -126,7 +130,7 @@ void FinderWidget::paintEvent(QPaintEvent *e) {
 
 void FinderWidget::restoreSavedView() {
     QSettings settings;
-    QString currentViewName = settings.value(FINDER_VIEW_KEY).toString();
+    QString currentViewName = settings.value(finderViewKey).toString();
 
     if (currentViewName == "folders")
         QTimer::singleShot(0, this, SLOT(showFolders()));
@@ -257,7 +261,7 @@ void FinderWidget::showArtists() {
     showWidget(artistListView, true);
     finderBar->setCheckedAction(artistsAction);
     QSettings settings;
-    settings.setValue(FINDER_VIEW_KEY, "artists");
+    settings.setValue(finderViewKey, "artists");
 }
 
 void FinderWidget::showAlbums() {
@@ -267,7 +271,7 @@ void FinderWidget::showAlbums() {
     showWidget(albumListView, true);
     finderBar->setCheckedAction(albumsAction);
     QSettings settings;
-    settings.setValue(FINDER_VIEW_KEY, "albums");
+    settings.setValue(finderViewKey, "albums");
 }
 
 void FinderWidget::showFolders() {
@@ -282,7 +286,7 @@ void FinderWidget::showFolders() {
     showWidget(fileSystemView, true);
     finderBar->setCheckedAction(foldersAction);
     QSettings settings;
-    settings.setValue(FINDER_VIEW_KEY, "folders");
+    settings.setValue(finderViewKey, "folders");
 }
 
 void FinderWidget::showSearch(const QString &query) {
@@ -301,7 +305,7 @@ void FinderWidget::showSearch(const QString &query) {
 void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
     // breadcrumb behaviour
     if (isRoot) {
-        history->clear();
+        history.clear();
         breadcrumb->clear();
         folderBreadcrumb->clear();
         folderBreadcrumb->hide();
@@ -312,7 +316,7 @@ void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
 
     // call disappear() on previous widget
     QWidget *currentWidget = stackedWidget->currentWidget();
-    if (currentWidget) {
+    if (currentWidget && currentWidget != widget) {
         bool ret = QMetaObject::invokeMethod(currentWidget, "disappear", Qt::DirectConnection);
         if (!ret) qDebug() << "FinderWidget::showWidget invokeMethod failed for" << currentWidget;
     }
@@ -322,16 +326,16 @@ void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
     if (!ret) qDebug() << "FinderWidget::showWidget invokeMethod failed for" << widget;
 
     stackedWidget->setCurrentWidget(widget);
-    history->push(widget);
+    history.push(widget);
 }
 
 void FinderWidget::goBack() {
-    if (history->size() > 1) {
+    if (history.size() > 1) {
         breadcrumb->goBack();
         breadcrumb->goBack();
-        history->pop();
-        QWidget *widget = history->pop();
-        bool isRoot = history->isEmpty();
+        history.pop();
+        QWidget *widget = history.pop();
+        bool isRoot = history.isEmpty();
         showWidget(widget, isRoot);
     }
 }

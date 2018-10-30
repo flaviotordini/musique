@@ -27,12 +27,7 @@ bool isInvalid(const QString &tag) {
 
     // number only. May be valid, but high probability of being invalid
     static const QRegularExpression numberRE("^[0-9]+$");
-    if (numberRE.match(tag).hasMatch()) {
-        // qDebug() << "Tag is number only" << tag;
-        return true;
-    }
-
-    return false;
+    return numberRE.match(tag).hasMatch();
 }
 
 bool isInvalidArtist(const QString &tag) {

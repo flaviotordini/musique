@@ -55,6 +55,7 @@ public:
     static void clearCache() {
         qDeleteAll(cache);
         cache.clear();
+        cache.squeeze();
     }
     static Album *forId(int albumId);
     static int idForHash(const QString &name);
@@ -92,7 +93,7 @@ private slots:
     void fetchMusicBrainzRelease();
     void parseMusicBrainzRelease(const QByteArray &bytes);
     void fetchMusicBrainzReleaseDetails();
-    void parseMusicBrainzReleaseDetails(QByteArray bytes);
+    void parseMusicBrainzReleaseDetails(const QByteArray &bytes);
 
     void fetchLastFmSearch();
     void parseLastFmSearch(const QByteArray &bytes);

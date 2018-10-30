@@ -93,9 +93,9 @@ signals:
 
 private slots:
     void fetchMusicBrainzArtist();
-    void parseMusicBrainzArtist(QByteArray bytes);
+    void parseMusicBrainzArtist(const QByteArray &bytes);
     void fetchLastFmSearch();
-    void parseLastFmSearch(QByteArray bytes);
+    void parseLastFmSearch(const QByteArray &bytes);
     void fetchLastFmInfo();
     void parseLastFmInfo(const QByteArray &bytes);
     void parseLastFmRedirectedName(QNetworkReply *reply);
@@ -119,6 +119,8 @@ private:
     QStringList lastFmSearches;
 
     QString hash;
+
+    QPixmap pixmap;
 };
 
 // This is required in order to use QPointer<Artist> as a QVariant

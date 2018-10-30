@@ -36,7 +36,7 @@ FinderItemDelegate::FinderItemDelegate(QObject *parent) : QStyledItemDelegate(pa
 QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
     const int iconHeight = 24;
     const int iconWidth = 24;
-    const int PADDING = 4;
+    const int padding = 4;
 
     QPixmap playIcon = QPixmap(iconWidth * 2 * pixelRatio, iconHeight * 2 * pixelRatio);
     playIcon.setDevicePixelRatio(pixelRatio);
@@ -59,8 +59,8 @@ QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
 
     painter.translate(iconWidth / 2, iconHeight / 2);
     QPolygon polygon;
-    polygon << QPoint(PADDING * 2, PADDING) << QPoint(iconWidth - PADDING, iconHeight / 2)
-            << QPoint(PADDING * 2, iconHeight - PADDING);
+    polygon << QPoint(padding * 2, padding) << QPoint(iconWidth - padding, iconHeight / 2)
+            << QPoint(padding * 2, iconHeight - padding);
     painter.setBrush(white);
     pen.setColor(white);
     pen.setWidth(3);
@@ -98,7 +98,7 @@ const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) {
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
 
-    QPixmap pixmap = QPixmap(getMissingItemBackground(pixelRatio));
+    QPixmap pixmap = getMissingItemBackground(pixelRatio);
     pixmap.setDevicePixelRatio(pixelRatio);
     QPainter painter(&pixmap);
 

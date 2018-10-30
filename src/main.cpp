@@ -18,15 +18,15 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
-#include <QtWidgets>
 #include <QtNetwork>
+#include <QtWidgets>
 
-#include <qtsingleapplication.h>
 #include "constants.h"
-#include "mainwindow.h"
-#include "iconutils.h"
 #include "http.h"
 #include "httputils.h"
+#include "iconutils.h"
+#include "mainwindow.h"
+#include <qtsingleapplication.h>
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -49,8 +49,7 @@ int main(int argc, char **argv) {
         MainWindow::printHelp();
         return 0;
     }
-    if (app.sendMessage(message))
-        return 0;
+    if (app.sendMessage(message)) return 0;
 
     app.setApplicationName(Constants::NAME);
     app.setOrganizationName(Constants::ORG_NAME);
@@ -96,7 +95,7 @@ int main(int argc, char **argv) {
     translator.load(QLocale::system(), QString(), QString(), localeDir);
     app.installTranslator(&translator);
 
-    MainWindow* mainWin = MainWindow::instance();
+    MainWindow *mainWin = MainWindow::instance();
     mainWin->show();
 
 #ifndef APP_MAC
@@ -105,11 +104,10 @@ int main(int argc, char **argv) {
         appIcon = IconUtils::icon(Constants::UNIX_NAME);
     } else {
         dataDir = qApp->applicationDirPath() + "/data";
-        const int iconSizes [] = { 16, 22, 32, 48, 64, 128, 256, 512 };
+        const int iconSizes[] = {16, 22, 32, 48, 64, 128, 256, 512};
         for (int iconSize : iconSizes) {
             QString size = QString::number(iconSize);
-            QString png = dataDir + "/" + size + "x" + size + "/" +
-                    Constants::UNIX_NAME + ".png";
+            QString png = dataDir + "/" + size + "x" + size + "/" + Constants::UNIX_NAME + ".png";
             appIcon.addFile(png, QSize(iconSize, iconSize));
         }
     }
@@ -119,8 +117,8 @@ int main(int argc, char **argv) {
     mainWin->setWindowIcon(appIcon);
 #endif
 
-    mainWin->connect(&app, SIGNAL(messageReceived(const QString &)),
-                     mainWin, SLOT(messageReceived(const QString &)));
+    mainWin->connect(&app, SIGNAL(messageReceived(const QString &)), mainWin,
+                     SLOT(messageReceived(const QString &)));
     app.setActivationWindow(mainWin, true);
 
     // This is required in order to use QNetworkReply::NetworkError in QueuedConnetions

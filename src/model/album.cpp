@@ -29,7 +29,9 @@ $END_LICENSE */
 #include "../httputils.h"
 #include "http.h"
 
-Album::Album() : year(0), artist(nullptr), listeners(0), photo(nullptr), thumb(nullptr) {}
+#include "../finderitemdelegate.h"
+
+Album::Album() : year(0), artist(nullptr), listeners(0) {}
 
 QHash<int, Album *> Album::cache;
 
@@ -58,8 +60,8 @@ Album *Album::forId(int albumId) {
         cache.insert(albumId, album);
         return album;
     }
-    cache.insert(albumId, 0);
-    return 0;
+    cache.insert(albumId, nullptr);
+    return nullptr;
 }
 
 int Album::idForHash(const QString &hash) {
@@ -216,7 +218,7 @@ void Album::fetchMusicBrainzReleaseDetails() {
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
-void Album::parseMusicBrainzReleaseDetails(QByteArray bytes) {
+void Album::parseMusicBrainzReleaseDetails(const QByteArray &bytes) {
     QString correctTitle = DataUtils::getXMLElementText(bytes, "title");
     qDebug() << name << "-> MusicBrainz ->" << correctTitle;
     if (!correctTitle.isEmpty()) {
