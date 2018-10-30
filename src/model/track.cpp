@@ -73,7 +73,7 @@ Track *Track::forId(int trackId) {
 
         // put into cache
         cache.insert(trackId, track);
-        if (!pathCache.contains(track->getPath())) pathCache.insert(track->getPath(), track);
+        pathCache.insert(track->getPath(), track);
 
         return track;
     }
@@ -331,7 +331,7 @@ void Track::fetchMusicBrainzTrack() {
     connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
 }
 
-void Track::parseMusicBrainzTrack(const QByteArray& bytes) {
+void Track::parseMusicBrainzTrack(const QByteArray &bytes) {
     QString correctTitle = DataUtils::getXMLElementText(bytes, "title");
     qDebug() << title << "-> MusicBrainz ->" << correctTitle;
     if (!correctTitle.isEmpty()) {

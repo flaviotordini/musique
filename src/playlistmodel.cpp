@@ -453,22 +453,21 @@ bool PlaylistModel::loadFrom(QTextStream &stream) {
     if (!stream.device()->isOpen() || !stream.device()->isReadable()) return false;
 
     QList<Track *> tracks;
+    tracks.reserve(1024);
 
     stream.setCodec("UTF-8");
-    QString header;
     QString tag;
-    Track *cur = nullptr;
-    stream >> header;
     QString line;
+    Track *track = nullptr;
     while (!stream.atEnd()) {
         stream.readLineInto(&line, 1024);
         if (line.startsWith(QLatin1String("File"))) {
             QString path = line.section('=', -1);
-            cur = Track::forPath(path);
-            if (cur) tracks << cur;
-        } else if (line.startsWith(QLatin1String("Title")) && cur != nullptr) {
+            track = Track::forPath(path);
+            if (track) tracks << track;
+        } else if (line.startsWith(QLatin1String("Title")) && track != nullptr) {
             tag = line.right(line.size() - line.indexOf('=') - 1);
-            if (!tag.isNull() && !tag.isEmpty()) cur->setTitle(tag);
+            if (!tag.isEmpty()) track->setTitle(tag);
         }
         qApp->processEvents();
     }
