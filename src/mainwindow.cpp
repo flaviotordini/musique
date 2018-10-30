@@ -832,9 +832,6 @@ void MainWindow::toggleContextualView() {
             shortcuts << contextualAct->shortcuts() << QKeySequence(Qt::Key_Escape);
             contextualAct->setShortcuts(shortcuts);
             statusBar()->hide();
-#ifndef APP_MAC
-            if (!m_fullscreen) mainToolBar->addAction(fullscreenAct);
-#endif
         } else
             contextualAct->setChecked(false);
     }
@@ -849,9 +846,6 @@ void MainWindow::hideContextualView() {
     contextualAct->setShortcuts(shortcuts);
 
     statusBar()->show();
-#ifndef APP_MAC
-    if (!m_fullscreen) mainToolBar->removeAction(fullscreenAct);
-#endif
 }
 
 void MainWindow::updateContextualView(Track *track) {
