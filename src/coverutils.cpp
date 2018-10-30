@@ -19,10 +19,11 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "coverutils.h"
+#include "finderitemdelegate.h"
 #include "model/album.h"
 
 bool CoverUtils::isAcceptableImage(const QImage &image) {
-    static const int minimumSize = 150;
+    const int minimumSize = FinderItemDelegate::ITEM_WIDTH;
     const int width = image.size().width();
     const int height = image.size().height();
 

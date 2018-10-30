@@ -35,6 +35,8 @@ public:
     FinderItemDelegate( QObject* parent = 0 );
     QSize sizeHint( const QStyleOptionViewItem&, const QModelIndex&) const;
     void paint( QPainter*, const QStyleOptionViewItem&, const QModelIndex&) const;
+    static const int ITEM_WIDTH;
+    static const int ITEM_HEIGHT;
 
 private:
     static QPixmap createPlayIcon(bool hovered, qreal pixelRatio);
@@ -53,12 +55,7 @@ private:
     void drawName(QPainter *painter, const QStyleOptionViewItem &option, const QString& time, const QRect&, bool selected) const;
     void drawBadge(QPainter *painter, const QString &text, const QRect&) const;
     void drawCentralLabel(QPainter *painter, const QString &text, const QRect&) const;
-    QPixmap getArtistPixmap(Artist*) const;
-    QPixmap getAlbumPixmap(Album *album) const;
-    QPixmap getFolderPixmap(Folder*) const;
 
-    static const int ITEM_WIDTH;
-    static const int ITEM_HEIGHT;
     static const int PADDING;
 
 };

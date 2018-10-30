@@ -23,6 +23,7 @@ $END_LICENSE */
 #include "iconutils.h"
 #include "artistsqlmodel.h"
 #include "database.h"
+#include "finderitemdelegate.h"
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -174,10 +175,14 @@ void AlbumListView::preloadThumbs() {
     bool success = query.exec();
     if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+
+    const qreal pixelRatio = IconUtils::pixelRatio();
+
     while (query.next()) {
         int albumId = query.value(0).toInt();
-        Album* album = Album::forId(albumId);
-        album->getThumb();
+        Album *album = Album::forId(albumId);
+        album->getPhotoForSize(FinderItemDelegate::ITEM_WIDTH, FinderItemDelegate::ITEM_HEIGHT,
+                               pixelRatio);
         qApp->processEvents();
     }
 }

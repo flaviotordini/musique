@@ -23,6 +23,7 @@ $END_LICENSE */
 #include "iconutils.h"
 #include "artistsqlmodel.h"
 #include "database.h"
+#include "finderitemdelegate.h"
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -171,17 +172,32 @@ void ArtistListView::updateQuery(bool transition) {
 }
 
 void ArtistListView::preloadThumbs() {
-    qApp->processEvents();
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(sqlModel->query().lastQuery(), db);
     bool success = query.exec();
     if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+
+    const qreal pixelRatio = IconUtils::pixelRatio();
+
     while (query.next()) {
         int artistId = query.value(0).toInt();
-        Artist* artist = Artist::forId(artistId);
-        artist->getPhoto();
+        Artist *artist = Artist::forId(artistId);
         qApp->processEvents();
+    }
+}
+
+void ArtistListView::clearThumbs() {
+    QSqlDatabase db = Database::instance().getConnection();
+    QSqlQuery query(sqlModel->query().lastQuery(), db);
+    bool success = query.exec();
+    if (!success)
+        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+
+    while (query.next()) {
+        int artistId = query.value(0).toInt();
+        Artist *artist = Artist::forId(artistId);
+        artist->clearPixmapCache();
     }
 }
 

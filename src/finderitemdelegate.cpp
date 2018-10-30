@@ -181,7 +181,8 @@ void FinderItemDelegate::paintArtist(QPainter *painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
-    QPixmap pixmap = getArtistPixmap(artist);
+    QPixmap pixmap = artist->getPhotoForSize(ITEM_WIDTH, ITEM_HEIGHT,
+                                             painter->device()->devicePixelRatioF());
     if (pixmap.isNull()) pixmap = getMissingArtistPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
@@ -220,7 +221,8 @@ void FinderItemDelegate::paintAlbum(QPainter *painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
-    QPixmap pixmap = getAlbumPixmap(album);
+    QPixmap pixmap =
+            album->getPhotoForSize(ITEM_WIDTH, ITEM_HEIGHT, painter->device()->devicePixelRatioF());
     if (pixmap.isNull()) pixmap = getMissingAlbumPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
@@ -259,7 +261,13 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
 
     // thumb
     painter->drawPixmap(0, 0, getMissingItemBackground(IconUtils::pixelRatio()));
+#ifdef APP_LINUX
+    static const QIcon fileIcon = IconUtils::icon("folder");
+#else
     QIcon fileIcon = index.data(QFileSystemModel::FileIconRole).value<QIcon>();
+
+#endif
+
     if (!fileIcon.isNull())
         painter->drawPixmap(ITEM_WIDTH / 2 - 32, ITEM_HEIGHT / 3 - 32,
                             fileIcon.pixmap(QSize(64, 64)));
@@ -434,67 +442,9 @@ void FinderItemDelegate::drawCentralLabel(QPainter *painter,
 
     painter->setRenderHints(QPainter::Antialiasing, true);
     painter->setBrush(QColor(0, 0, 0, 96));
-    painter->setPen(QColor(255, 255, 255, 224));
+    painter->setPen(Qt::NoPen);
     painter->drawRoundedRect(roundedRect, PADDING / 2, PADDING / 2, Qt::AbsoluteSize);
+    painter->setPen(QColor(255, 255, 255, 224));
     painter->drawText(textBox, Qt::AlignCenter, text);
     painter->restore();
-}
-
-QPixmap FinderItemDelegate::getArtistPixmap(Artist *artist) const {
-    const qreal pixelRatio = IconUtils::pixelRatio();
-    QByteArray cacheKeyArray = QByteArray::number(pixelRatio);
-    const char *cacheKey = cacheKeyArray.constData();
-
-    QPixmap pixmap = artist->property(cacheKey).value<QPixmap>();
-    if (pixmap.isNull()) {
-        // qDebug() << "Creating pixmap for" << artist;
-        QPixmap p = artist->getPhoto();
-        int xOffset = 0;
-        int wDiff = p.width() - ITEM_WIDTH * pixelRatio;
-        if (wDiff > 0) xOffset = wDiff / 2;
-        int yOffset = 0;
-        int hDiff = p.height() - ITEM_HEIGHT * pixelRatio;
-        if (hDiff > 0) yOffset = hDiff / 4;
-        pixmap = p.copy(xOffset, yOffset, ITEM_WIDTH * pixelRatio, ITEM_HEIGHT * pixelRatio);
-        pixmap.setDevicePixelRatio(pixelRatio);
-        artist->setProperty(cacheKey, pixmap);
-    }
-    return pixmap;
-}
-
-QPixmap FinderItemDelegate::getAlbumPixmap(Album *album) const {
-    const qreal pixelRatio = IconUtils::pixelRatio();
-    QByteArray cacheKeyArray = QByteArray::number(pixelRatio);
-    const char *cacheKey = cacheKeyArray.constData();
-
-    QPixmap pixmap = album->property(cacheKey).value<QPixmap>();
-    if (pixmap.isNull()) {
-        // qDebug() << "Creating pixmap for" << album->getTitle();
-        QPixmap p = album->getPhoto();
-        if (p.isNull()) {
-            // qWarning() << "Missing photo for" << album->getTitle();
-            return pixmap;
-        }
-        pixmap = p.scaled(ITEM_WIDTH * pixelRatio, ITEM_HEIGHT * pixelRatio);
-        pixmap.setDevicePixelRatio(pixelRatio);
-        album->setProperty(cacheKey, pixmap);
-    }
-    return pixmap;
-}
-
-QPixmap FinderItemDelegate::getFolderPixmap(Folder *folder) const {
-    QPixmap pixmap = folder->property("pixmap").value<QPixmap>();
-    if (pixmap.isNull()) {
-        // qDebug() << "Creating pixmap for" << folder;
-        QImage p = folder->getPhoto();
-        int xOffset = 0;
-        int wDiff = p.width() - ITEM_WIDTH;
-        if (wDiff > 0) xOffset = wDiff / 2;
-        int yOffset = 0;
-        int hDiff = p.height() - ITEM_HEIGHT;
-        if (hDiff > 0) yOffset = hDiff / 4;
-        pixmap = QPixmap::fromImage(p.copy(xOffset, yOffset, ITEM_WIDTH, ITEM_HEIGHT));
-        folder->setProperty("pixmap", pixmap);
-    }
-    return pixmap;
 }

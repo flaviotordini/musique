@@ -56,6 +56,7 @@ private slots:
     void setSortByPopularity() { setSortBy(SortByPopularity); }
     void setReversedOrder(bool reversedOrder);
     void preloadThumbs();
+    void clearThumbs();
 
 private:
     void setupToolbar();

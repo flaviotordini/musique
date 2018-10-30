@@ -24,6 +24,7 @@ $END_LICENSE */
 #include "item.h"
 #include "track.h"
 #include <QImage>
+#include <QPixmap>
 #include <QtCore>
 #include <QtNetwork>
 
@@ -70,6 +71,8 @@ public:
 
     QString getImageLocation();
     QPixmap getPhoto();
+    QPixmap getPhotoForSize(int width, int height, qreal pixelRatio);
+    void clearPixmapCache() { pixmap = QPixmap(); }
 
     // qhash
     /*

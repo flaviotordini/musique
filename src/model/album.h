@@ -70,8 +70,12 @@ public:
      * This will also emit gotPhoto() when the photo is ready.
      */
     void fetchInfo();
-    const QPixmap &getPhoto();
-    const QPixmap &getThumb();
+
+    QPixmap getPhoto();
+    QPixmap getThumb();
+    QPixmap getPhotoForSize(int width, int height, qreal pixelRatio);
+    void clearPixmapCache() { pixmap = QPixmap(); }
+
     QString getImageLocation();
     QString getThumbLocation();
 
@@ -108,8 +112,8 @@ private:
     QString mbid;
     QString hash;
     uint listeners;
-    QPixmap *photo;
-    QPixmap *thumb;
+
+    QPixmap pixmap;
 };
 
 // This is required in order to use QPointer<Album> as a QVariant

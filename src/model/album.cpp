@@ -227,14 +227,49 @@ void Album::parseMusicBrainzReleaseDetails(QByteArray bytes) {
 
 // *** Last.fm Photo ***
 
-const QPixmap &Album::getPhoto() {
-    if (!photo) photo = new QPixmap(getImageLocation());
-    return *photo;
+QPixmap Album::getPhoto() {
+    QPixmap p;
+    QFile file(getImageLocation());
+    if (file.open(QFile::ReadOnly)) {
+        p.loadFromData(file.readAll());
+        file.close();
+    }
+    return p;
 }
 
-const QPixmap &Album::getThumb() {
-    if (!thumb) thumb = new QPixmap(getThumbLocation());
-    return *thumb;
+QPixmap Album::getThumb() {
+    QPixmap p;
+    QFile file(getThumbLocation());
+    if (file.open(QFile::ReadOnly)) {
+        p.loadFromData(file.readAll());
+        file.close();
+    }
+    return p;
+}
+
+QPixmap Album::getPhotoForSize(int width, int height, qreal pixelRatio) {
+    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio) {
+        if (pixelRatio == 1.0 && FinderItemDelegate::ITEM_WIDTH <= 150) {
+            pixmap = getThumb();
+        } else {
+            pixmap = getPhoto();
+            if (pixmap.isNull()) return pixmap;
+
+            const int pixelWidth = width * pixelRatio;
+            const int pixelHeight = height * pixelRatio;
+            const int wDiff = pixmap.width() - pixelWidth;
+            const int hDiff = pixmap.height() - pixelHeight;
+            if (wDiff > 0 || hDiff > 0) {
+                int xOffset = 0;
+                int yOffset = 0;
+                if (hDiff > 0) yOffset = hDiff / 4;
+                if (wDiff > 0) xOffset = wDiff / 2;
+                pixmap = pixmap.copy(xOffset, yOffset, pixelWidth, pixelHeight);
+            }
+        }
+        pixmap.setDevicePixelRatio(pixelRatio);
+    }
+    return pixmap;
 }
 
 void Album::fetchLastFmSearch() {
@@ -465,22 +500,12 @@ void Album::setPhoto(const QByteArray &bytes) {
     QDataStream stream(&file);
     stream.writeRawData(bytes.constData(), bytes.size());
 
-    // prescale 150x150 thumb
-    static const int maximumSize = 150;
+    // prescale thumb
+    const int maximumSize = FinderItemDelegate::ITEM_WIDTH;
     QImage img = QImage::fromData(bytes);
     img = img.scaled(maximumSize, maximumSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     if (!img.save(getThumbLocation(), "JPG")) {
         qWarning() << "Error saving thumbnail" << file.fileName();
-    }
-
-    if (thumb) {
-        delete thumb;
-        thumb = 0;
-    }
-
-    if (photo) {
-        delete photo;
-        photo = 0;
     }
 
     emit gotPhoto();

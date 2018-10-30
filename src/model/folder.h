@@ -21,10 +21,10 @@ $END_LICENSE */
 #ifndef FOLDER_H
 #define FOLDER_H
 
-#include <QtCore>
-#include <QImage>
 #include "item.h"
 #include "track.h"
+#include <QPixmap>
+#include <QtCore>
 
 class Album;
 class Artist;
@@ -36,7 +36,6 @@ class Folder : public Item {
 public:
     Folder(const QString& path, QObject *parent = 0);
     static Folder* forPath(const QString &path);
-    QImage getPhoto();
 
     // item
     QList<Track*> getTracks();
@@ -47,10 +46,6 @@ public:
     QString getAbsolutePath() { return dir.absolutePath(); }
     int getTrackCount();
     int getTotalLength();
-    
-private:
-    Album* getAlbum();
-    Artist* getArtist();
 
     QDir dir;
     QString path;

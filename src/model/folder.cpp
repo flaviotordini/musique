@@ -52,59 +52,6 @@ Folder* Folder::forPath(const QString &path) {
     return folder;
 }
 
-Album* Folder::getAlbum() {
-    QSqlDatabase db = Database::instance().getConnection();
-
-    QSqlQuery query(db);
-    query.prepare("select id from albums where title like ? limit 1");
-    query.bindValue(0, QString("%" + dir.dirName() + "%"));
-    bool success = query.exec();
-    if (!success) qDebug() << query.lastQuery() << query.lastError().text();
-    if (query.next()) {
-        return Album::forId(query.value(0).toInt());
-    }
-    return nullptr;
-}
-
-Artist* Folder::getArtist() {
-    QSqlDatabase db = Database::instance().getConnection();
-    QSqlQuery query(db);
-    query.prepare("select artist from tracks where path like ? limit 1");
-    query.bindValue(0, QString(path + "/%"));
-    bool success = query.exec();
-    if (!success) qDebug() << query.lastQuery() << query.lastError().text();
-    if (query.next()) {
-        return Artist::forId(query.value(0).toInt());
-    }
-    return nullptr;
-}
-
-QImage Folder::getPhoto() {
-
-    QImage photo;
-
-    // Try to get a relevant Album
-    Album *album = getAlbum();
-
-    // If there's no album, try to get a relevant Artist
-    Artist *artist = nullptr;
-    if (!album) {
-        artist = getArtist();
-    }
-
-    QString imageLocation;
-    QString dataLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
-    if (album) {
-        imageLocation = dataLocation + "/albums/" + album->getHash();
-    } else if (artist) {
-        imageLocation = dataLocation + "/artists/" + artist->getHash();
-    }
-
-    if (!imageLocation.isEmpty())
-        photo = QImage(imageLocation);
-
-    return photo;
-}
 
 QList<Track*> Folder::getTracks() {
     QList<Track*> tracks;

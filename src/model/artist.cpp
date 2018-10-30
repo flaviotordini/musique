@@ -411,7 +411,34 @@ QString Artist::getBioLocation() {
 }
 
 QPixmap Artist::getPhoto() {
-    return QPixmap(getImageLocation());
+    QPixmap p;
+    QFile file(getImageLocation());
+    if (file.open(QFile::ReadOnly)) {
+        p.loadFromData(file.readAll());
+        file.close();
+    }
+    return p;
+}
+
+QPixmap Artist::getPhotoForSize(int width, int height, qreal pixelRatio) {
+    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio) {
+        pixmap = getPhoto();
+        if (pixmap.isNull()) return pixmap;
+
+        const int pixelWidth = width * pixelRatio;
+        const int pixelHeight = height * pixelRatio;
+        const int wDiff = pixmap.width() - pixelWidth;
+        const int hDiff = pixmap.height() - pixelHeight;
+        if (wDiff > 0 || hDiff > 0) {
+            int xOffset = 0;
+            int yOffset = 0;
+            if (hDiff > 0) yOffset = hDiff / 4;
+            if (wDiff > 0) xOffset = wDiff / 2;
+            pixmap = pixmap.copy(xOffset, yOffset, pixelWidth, pixelHeight);
+        }
+        pixmap.setDevicePixelRatio(pixelRatio);
+    }
+    return pixmap;
 }
 
 void Artist::setPhoto(const QByteArray &bytes) {
