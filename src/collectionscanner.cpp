@@ -126,6 +126,7 @@ void CollectionScanner::run() {
             QSettings settings;
             QString previousHash = settings.value("collectionHash").toString();
             proceed = hash != previousHash;
+            qDebug() << "Collection has changed" << proceed;
         }
 
         if (!proceed) {
@@ -303,35 +304,37 @@ void CollectionScanner::setDirectory(const QString &directory) {
 }
 
 QString CollectionScanner::directoryHash(const QDir &directory) {
-    QString fingerPrint = treeFingerprint(directory, QString());
-    return DataUtils::md5(fingerPrint);
+    return treeFingerprint(directory.absolutePath()).toHex();
 }
 
-QString CollectionScanner::treeFingerprint(QDir directory, QString hash) {
+QByteArray CollectionScanner::treeFingerprint(const QString &path) {
     // qDebug() << "Hashing dir" << directory.absolutePath();
+    QDir directory(path);
     directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot | QDir::Readable);
     const QFileInfoList list = directory.entryInfoList();
-    for (auto &fileInfo : list) {
+
+    QCryptographicHash hash(QCryptographicHash::Md5);
+
+    for (const auto &fileInfo : list) {
+        hash.addData(fileInfo.fileName().toUtf8());
         if (fileInfo.isDir()) {
             // this is a directory, recurse
-            QString subDirPath = fileInfo.absoluteFilePath();
+            const QString subDirPath = fileInfo.absoluteFilePath();
 #ifdef APP_MAC
             if (directoryBlacklist.contains(subDirPath)) {
                 qDebug() << "Skipping directory" << subDirPath;
                 continue;
             }
 #endif
-            hash += DataUtils::md5(treeFingerprint(QDir(subDirPath), hash));
+            hash.addData(treeFingerprint(subDirPath));
         } else {
             // this is a file, add to hash
             // qDebug() << "Hashing file" << fileInfo.absolutePath();
-            const uint lastModified = fileInfo.lastModified().toTime_t();
-            hash += QString::number(lastModified);
-            hash += fileInfo.absoluteFilePath();
+            const qint64 lastModified = fileInfo.lastModified().toMSecsSinceEpoch();
+            hash.addData(QByteArray::number(lastModified, 16));
         }
     }
-    // qDebug() << hash;
-    return hash;
+    return hash.result();
 }
 
 void CollectionScanner::scanDirectory(const QDir &directory) {

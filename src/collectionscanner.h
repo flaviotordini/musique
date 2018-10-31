@@ -95,7 +95,7 @@ private:
     static bool isModifiedNonTrack(const QString &path, uint lastModified);
     static bool insertOrUpdateNonTrack(const QString &path, uint lastModified);
     QString directoryHash(const QDir &directory);
-    QString treeFingerprint(QDir directory, QString hash);
+    QByteArray treeFingerprint(const QString &path);
     QStringList getTrackPaths();
     QStringList getNonTrackPaths();
 
