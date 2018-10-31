@@ -55,9 +55,7 @@ int main(int argc, char **argv) {
     app.setOrganizationName(Constants::ORG_NAME);
     app.setOrganizationDomain(Constants::ORG_DOMAIN);
     app.setApplicationVersion(Constants::VERSION);
-#ifndef APP_WIN
     app.setAttribute(Qt::AA_DontShowIconsInMenus);
-#endif
     app.setWheelScrollLines(1);
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
