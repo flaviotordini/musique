@@ -63,8 +63,8 @@ public slots:
     void updateContextualView(Track *track);
     void showInitialView();
     void quit();
-    void showMessage(const QString& message);
-    void handleError(const QString& message);
+    void showMessage(const QString &message);
+    void handleError(const QString &message);
     void restore();
     void messageReceived(const QString &message);
     void goBack();
@@ -95,14 +95,13 @@ private slots:
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
     void checkForUpdate();
-    void gotNewVersion(const QString& version);
+    void gotNewVersion(const QString &version);
 
     // Phonon related logic
     void stop();
     void stateChanged(Phonon::State newState, Phonon::State oldState);
     void searchFocus();
     void tick(qint64 time);
-    void totalTimeChanged(qint64 time);
 
     // volume shortcuts
     void volumeUp();
@@ -157,7 +156,7 @@ private:
     void initPhonon();
     static QString formatTime(qint64 duration);
     QString playlistPath();
-    void simpleUpdateDialog(const QString& version);
+    void simpleUpdateDialog(const QString &version);
     void showFinetuneDialog(const QVariantMap &stats);
 
     // view mechanism
@@ -218,7 +217,6 @@ private:
     Phonon::MediaObject *mediaObject;
     Phonon::AudioOutput *audioOutput;
     QLabel *currentTime;
-    // QLabel *totalTime;
     qreal volume;
 
     // fullscreen

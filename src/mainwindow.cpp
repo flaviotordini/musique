@@ -578,11 +578,6 @@ void MainWindow::createToolBars() {
 #ifndef APP_LINUX
     mainToolBar->setIconSize(QSize(32, 32));
 #endif
-    /*
-    QPalette p = mainToolBar->palette();
-    p.setBrush(QPalette::Background, menuBar()->palette().background());
-    mainToolBar->setPalette(p);
-    */
 
     mainToolBar->addAction(skipBackwardAct);
     mainToolBar->addAction(playAct);
@@ -600,13 +595,6 @@ void MainWindow::createToolBars() {
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     seekSlider->setFocusPolicy(Qt::NoFocus);
     mainToolBar->addWidget(seekSlider);
-
-    /*
-    mainToolBar->addWidget(new Spacer());
-    totalTime = new QLabel(mainToolBar);
-    totalTime->setFont(smallerFont);
-    mainToolBar->addWidget(totalTime);
-    */
 
     mainToolBar->addWidget(new Spacer());
 
@@ -952,22 +940,13 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
         break;
 
     case Phonon::PlayingState:
-        // stopAct->setEnabled(true);
-        break;
-
     case Phonon::StoppedState:
-        // stopAct->setEnabled(false);
-        break;
-
     case Phonon::PausedState:
-        // stopAct->setEnabled(true);
         break;
 
     case Phonon::BufferingState:
     case Phonon::LoadingState:
-        // stopAct->setEnabled(true);
         currentTime->clear();
-        // totalTime->clear();
         break;
     }
 }
@@ -975,7 +954,6 @@ void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState 
 void MainWindow::stop() {
     mediaObject->stop();
     currentTime->clear();
-    // totalTime->clear();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e) {
@@ -1088,7 +1066,6 @@ void MainWindow::initPhonon() {
     connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)), this,
             SLOT(stateChanged(Phonon::State, Phonon::State)));
     connect(mediaObject, SIGNAL(tick(qint64)), this, SLOT(tick(qint64)));
-    connect(mediaObject, SIGNAL(totalTimeChanged(qint64)), this, SLOT(totalTimeChanged(qint64)));
 
     audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     connect(audioOutput, SIGNAL(volumeChanged(qreal)), this, SLOT(volumeChanged(qreal)));
@@ -1114,16 +1091,6 @@ void MainWindow::tick(qint64 time) {
         const qint64 remainingTime = mediaObject->remainingTime();
         currentTime->setStatusTip(tr("Remaining time: %1").arg(formatTime(remainingTime)));
     }
-}
-
-void MainWindow::totalTimeChanged(qint64 time) {
-    /*
-    if (time <= 0) {
-        totalTime->clear();
-        return;
-    }
-    totalTime->setText(formatTime(time));
-    */
 }
 
 QString MainWindow::formatTime(qint64 duration) {
