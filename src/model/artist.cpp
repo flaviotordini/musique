@@ -421,7 +421,8 @@ QPixmap Artist::getPhoto() {
 }
 
 QPixmap Artist::getPhotoForSize(int width, int height, qreal pixelRatio) {
-    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio) {
+    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
+        pixmap.width() != width * pixelRatio) {
         pixmap = getPhoto();
         if (pixmap.isNull()) return pixmap;
 

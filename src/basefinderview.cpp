@@ -26,16 +26,17 @@ $END_LICENSE */
 #include "model/item.h"
 
 BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
-    setItemDelegate(new FinderItemDelegate(this));
+    delegate = new FinderItemDelegate(this);
+    setItemDelegate(delegate);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // layout
-    setGridSize(QSize(FinderItemDelegate::ITEM_WIDTH + 1, FinderItemDelegate::ITEM_HEIGHT + 1));
+    // setGridSize(QSize(FinderItemDelegate::ITEM_WIDTH + 1, FinderItemDelegate::ITEM_HEIGHT + 1));
     setFlow(QListView::LeftToRight);
     setWrapping(true);
     setResizeMode(QListView::Adjust);
     setMovement(QListView::Static);
-    setUniformItemSizes(true);
+    // setUniformItemSizes(true);
 
     // colors
     QPalette p = palette();
@@ -109,6 +110,13 @@ void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
+void BaseFinderView::resizeEvent(QResizeEvent *event) {
+    int width = contentsRect().width() - style()->pixelMetric(QStyle::PM_ScrollBarExtent) - 1;
+    int size = qFloor(width / qFloor(width / FinderItemDelegate::ITEM_WIDTH));
+    delegate->setItemSize(size - 1, size - 1);
+    setGridSize(QSize(size, size));
+}
+
 bool BaseFinderView::isHoveringPlayIcon(QMouseEvent *event) {
     const QModelIndex itemIndex = indexAt(event->pos());
     const QRect itemRect = visualRect(itemIndex);
@@ -117,5 +125,6 @@ bool BaseFinderView::isHoveringPlayIcon(QMouseEvent *event) {
 
     const int x = event->x() - itemRect.x();
     const int y = event->y() - itemRect.y();
-    return x > 90 && x < 140 && y > 10 && y < 60;
+    const int itemWidth = delegate->getItemWidth();
+    return x > itemWidth - 60 && y < 60;
 }

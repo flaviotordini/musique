@@ -27,8 +27,8 @@ $END_LICENSE */
 #include "model/artist.h"
 #include "model/folder.h"
 
-const int FinderItemDelegate::ITEM_HEIGHT = 150;
-const int FinderItemDelegate::ITEM_WIDTH = 150;
+const int FinderItemDelegate::ITEM_WIDTH = 180;
+const int FinderItemDelegate::ITEM_HEIGHT = 180;
 const int FinderItemDelegate::PADDING = 10;
 
 FinderItemDelegate::FinderItemDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
@@ -72,9 +72,9 @@ QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
     return playIcon;
 }
 
-QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) {
-    const int w = ITEM_WIDTH * pixelRatio;
-    const int h = ITEM_HEIGHT * pixelRatio;
+QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) const {
+    const int w = itemWidth * pixelRatio;
+    const int h = itemHeight * pixelRatio;
 
     QPixmap pixmap = QPixmap(w, h);
 
@@ -91,7 +91,7 @@ QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) {
     return pixmap;
 }
 
-const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) {
+const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) const {
     static QHash<QString, QPixmap> cache;
     const qreal pixelRatio = IconUtils::pixelRatio();
     const QString key = type + QString::number(pixelRatio);
@@ -104,8 +104,8 @@ const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) {
 
     QPixmap symbol = IconUtils::pixmap(":/images/item/" + type + ".png");
     painter.setOpacity(.1);
-    painter.drawPixmap(((ITEM_WIDTH - symbol.width()) / 2) * pixelRatio,
-                       ((ITEM_HEIGHT - symbol.height()) / 3) * pixelRatio, symbol);
+    painter.drawPixmap(((itemWidth - symbol.width()) / 2) * pixelRatio,
+                       ((itemHeight - symbol.height()) / 3) * pixelRatio, symbol);
 
     return cache.insert(key, pixmap).value();
 }
@@ -120,7 +120,7 @@ const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered) {
     return cache.insert(key, pixmap).value();
 }
 
-const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) {
+const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) const {
     static QHash<QString, QPixmap> cache;
     const QString key = QString::number(pixelRatio);
     auto i = cache.constFind(key);
@@ -129,21 +129,21 @@ const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) {
     return cache.insert(key, pixmap).value();
 }
 
-const QPixmap &FinderItemDelegate::getMissingArtistPixmap() {
+const QPixmap &FinderItemDelegate::getMissingArtistPixmap() const {
     return getMissingItemPixmap("artist");
 }
 
-const QPixmap &FinderItemDelegate::getMissingAlbumPixmap() {
+const QPixmap &FinderItemDelegate::getMissingAlbumPixmap() const {
     return getMissingItemPixmap("album");
 }
 
-const QPixmap &FinderItemDelegate::getMissingTrackPixmap() {
+const QPixmap &FinderItemDelegate::getMissingTrackPixmap() const {
     return getMissingItemPixmap("track");
 }
 
 QSize FinderItemDelegate::sizeHint(const QStyleOptionViewItem & /*option*/,
                                    const QModelIndex & /*index*/) const {
-    return QSize(ITEM_WIDTH, ITEM_HEIGHT);
+    return QSize(itemWidth, itemHeight);
 }
 
 void FinderItemDelegate::paint(QPainter *painter,
@@ -181,8 +181,8 @@ void FinderItemDelegate::paintArtist(QPainter *painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
-    QPixmap pixmap = artist->getPhotoForSize(ITEM_WIDTH, ITEM_HEIGHT,
-                                             painter->device()->devicePixelRatioF());
+    QPixmap pixmap =
+            artist->getPhotoForSize(itemWidth, itemHeight, painter->device()->devicePixelRatioF());
     if (pixmap.isNull()) pixmap = getMissingArtistPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
@@ -222,7 +222,7 @@ void FinderItemDelegate::paintAlbum(QPainter *painter,
 
     // thumb
     QPixmap pixmap =
-            album->getPhotoForSize(ITEM_WIDTH, ITEM_HEIGHT, painter->device()->devicePixelRatioF());
+            album->getPhotoForSize(itemWidth, itemHeight, painter->device()->devicePixelRatioF());
     if (pixmap.isNull()) pixmap = getMissingAlbumPixmap();
     painter->drawPixmap(0, 0, pixmap);
 
@@ -269,7 +269,7 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
 #endif
 
     if (!fileIcon.isNull())
-        painter->drawPixmap(ITEM_WIDTH / 2 - 32, ITEM_HEIGHT / 3 - 32,
+        painter->drawPixmap(itemWidth / 2 - 32, itemHeight / 3 - 32,
                             fileIcon.pixmap(QSize(64, 64)));
 
     // play icon overlayed on the thumb
@@ -368,8 +368,8 @@ void FinderItemDelegate::drawName(QPainter *painter,
                                   const QRect &rect,
                                   bool isSelected) const {
     QRect nameBox = rect;
-    nameBox.adjust(0, 0, 0, -ITEM_HEIGHT * 2 / 3);
-    nameBox.translate(0, ITEM_HEIGHT - nameBox.height());
+    nameBox.adjust(0, 0, 0, -itemHeight * 2 / 3);
+    nameBox.translate(0, itemHeight - nameBox.height());
 
     painter->save();
     painter->setPen(Qt::NoPen);
@@ -440,11 +440,13 @@ void FinderItemDelegate::drawCentralLabel(QPainter *painter,
     QRect roundedRect = textBox;
     roundedRect.adjust(-PADDING / 2, -PADDING / 3, PADDING / 2, PADDING / 3);
 
+    /*
     painter->setRenderHints(QPainter::Antialiasing, true);
     painter->setBrush(QColor(0, 0, 0, 96));
     painter->setPen(Qt::NoPen);
     painter->drawRoundedRect(roundedRect, PADDING / 2, PADDING / 2, Qt::AbsoluteSize);
-    painter->setPen(QColor(255, 255, 255, 224));
+    */
+    painter->setPen(QColor(255, 255, 255, 200));
     painter->drawText(textBox, Qt::AlignCenter, text);
     painter->restore();
 }

@@ -183,8 +183,7 @@ void ArtistListView::preloadThumbs() {
     while (query.next()) {
         int artistId = query.value(0).toInt();
         Artist *artist = Artist::forId(artistId);
-        artist->getPhotoForSize(FinderItemDelegate::ITEM_WIDTH, FinderItemDelegate::ITEM_HEIGHT,
-                                pixelRatio);
+        artist->getPhotoForSize(delegate->getItemWidth(), delegate->getItemHeight(), pixelRatio);
         qApp->processEvents();
     }
 }

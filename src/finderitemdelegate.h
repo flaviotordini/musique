@@ -38,15 +38,24 @@ public:
     static const int ITEM_WIDTH;
     static const int ITEM_HEIGHT;
 
+    void setItemSize(int width, int height) {
+        itemWidth = width;
+        itemHeight = height;
+    }
+    int getItemWidth() const { return itemWidth; }
+    int getItemHeight() const { return itemHeight; }
+
 private:
     static QPixmap createPlayIcon(bool hovered, qreal pixelRatio);
-    static QPixmap createMissingItemBackground(qreal pixelRatio);
-    static const QPixmap &getMissingItemPixmap(const QString &type);
     static const QPixmap &getPlayIcon(bool hovered);
-    static const QPixmap &getMissingItemBackground(qreal pixelRatio);
-    static const QPixmap &getMissingArtistPixmap();
-    static const QPixmap &getMissingAlbumPixmap();
-    static const QPixmap &getMissingTrackPixmap();
+
+    QPixmap createMissingItemBackground(qreal pixelRatio) const;
+    const QPixmap &getMissingItemPixmap(const QString &type) const;
+    const QPixmap &getMissingItemBackground(qreal pixelRatio) const;
+    const QPixmap &getMissingArtistPixmap() const;
+    const QPixmap &getMissingAlbumPixmap() const;
+    const QPixmap &getMissingTrackPixmap() const;
+
     void paintArtist(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
     void paintAlbum(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
     void paintFolder(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
@@ -64,6 +73,9 @@ private:
     void drawCentralLabel(QPainter *painter, const QString &text, const QRect &) const;
 
     static const int PADDING;
+
+    int itemWidth = ITEM_WIDTH;
+    int itemHeight = ITEM_HEIGHT;
 };
 
 #endif // ITEMDELEGATE_H

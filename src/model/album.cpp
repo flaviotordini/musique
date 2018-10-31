@@ -250,8 +250,9 @@ QPixmap Album::getThumb() {
 }
 
 QPixmap Album::getPhotoForSize(int width, int height, qreal pixelRatio) {
-    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio) {
-        if (pixelRatio == 1.0 && FinderItemDelegate::ITEM_WIDTH <= 150) {
+    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
+        pixmap.width() != width * pixelRatio) {
+        if (pixelRatio == 1.0 && width <= 150) {
             pixmap = getThumb();
         } else {
             pixmap = getPhoto();
@@ -261,12 +262,9 @@ QPixmap Album::getPhotoForSize(int width, int height, qreal pixelRatio) {
             const int pixelHeight = height * pixelRatio;
             const int wDiff = pixmap.width() - pixelWidth;
             const int hDiff = pixmap.height() - pixelHeight;
-            if (wDiff > 0 || hDiff > 0) {
-                int xOffset = 0;
-                int yOffset = 0;
-                if (hDiff > 0) yOffset = hDiff / 4;
-                if (wDiff > 0) xOffset = wDiff / 2;
-                pixmap = pixmap.copy(xOffset, yOffset, pixelWidth, pixelHeight);
+            if (wDiff || hDiff) {
+                pixmap = pixmap.scaled(pixelWidth, pixelHeight, Qt::KeepAspectRatio,
+                                       Qt::SmoothTransformation);
             }
         }
         pixmap.setDevicePixelRatio(pixelRatio);

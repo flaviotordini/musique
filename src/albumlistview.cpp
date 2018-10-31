@@ -165,7 +165,6 @@ void AlbumListView::updateQuery(bool transition) {
 }
 
 void AlbumListView::preloadThumbs() {
-    qApp->processEvents();
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(sqlModel->query().lastQuery(), db);
     bool success = query.exec();
@@ -177,8 +176,7 @@ void AlbumListView::preloadThumbs() {
     while (query.next()) {
         int albumId = query.value(0).toInt();
         Album *album = Album::forId(albumId);
-        album->getPhotoForSize(FinderItemDelegate::ITEM_WIDTH, FinderItemDelegate::ITEM_HEIGHT,
-                               pixelRatio);
+        album->getPhotoForSize(delegate->getItemWidth(), delegate->getItemHeight(), pixelRatio);
         qApp->processEvents();
     }
 }

@@ -23,6 +23,8 @@ $END_LICENSE */
 
 #include <QListView>
 
+class FinderItemDelegate;
+
 class BaseFinderView : public QListView {
     Q_OBJECT
 
@@ -40,6 +42,9 @@ protected:
     void leaveEvent(QEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent *event);
+
+    FinderItemDelegate *delegate;
 
 private:
     bool isHoveringPlayIcon(QMouseEvent *event);
