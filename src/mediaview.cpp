@@ -165,6 +165,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
 
     // go!
     if (startPlayback) {
+        if (manual) mediaObject->clearQueue();
         QString path = track->getAbsolutePath();
         qDebug() << "Playing" << path;
         mediaObject->setCurrentSource(QUrl::fromLocalFile(path));
@@ -262,8 +263,10 @@ void MediaView::playbackFinished() {
     QAction *stopAfterThisAction = MainWindow::instance()->getAction("stopafterthis");
     if (stopAfterThisAction->isChecked()) {
         stopAfterThisAction->setChecked(false);
-    } else
+    } else if (mediaObject->queue().isEmpty()) {
+        qDebug() << "Empty queue. Manually skipping forward";
         playlistModel->skipForward();
+    }
 }
 
 void MediaView::trackFinished() {
@@ -298,7 +301,6 @@ void MediaView::aboutToFinish() {
             mediaObject->enqueue(QUrl::fromLocalFile(absolutePath));
         }
     }
-    trackFinished();
 }
 
 void MediaView::currentSourceChanged(const Phonon::MediaSource &mediaSource) {
