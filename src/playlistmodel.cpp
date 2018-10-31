@@ -231,7 +231,9 @@ void PlaylistModel::addTracks(QVector<Track *> newTracks) {
 void PlaylistModel::clear() {
     beginResetModel();
     playedTracks.clear();
+    playedTracks.squeeze();
     tracks.clear();
+    tracks.squeeze();
     activeTrack = nullptr;
     activeRow = -1;
     emit layoutChanged();

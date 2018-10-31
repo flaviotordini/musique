@@ -54,6 +54,7 @@ public:
     static void clearCache() {
         qDeleteAll(cache);
         cache.clear();
+        cache.squeeze();
     }
     static Artist *forId(int artistId);
     static int idForName(const QString &name);

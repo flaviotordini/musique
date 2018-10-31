@@ -75,7 +75,9 @@ public:
             track->emitRemovedSignal();
         qDeleteAll(cache);
         cache.clear();
+        cache.squeeze();
         pathCache.clear();
+        pathCache.squeeze();
     }
     void emitRemovedSignal();
 
