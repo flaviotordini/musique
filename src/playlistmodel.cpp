@@ -63,21 +63,22 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
 }
 
 void PlaylistModel::setActiveRow(int row, bool manual, bool startPlayback) {
-    if (!rowExists(row)) return;
-
     const int oldActiveRow = activeRow;
-    activeRow = row;
-    activeTrack = trackAt(activeRow);
-    activeTrack->setPlayed(true);
-    playedTracks << activeTrack;
-
     if (rowExists(oldActiveRow)) {
         QModelIndex oldIndex = index(oldActiveRow, 0, QModelIndex());
         emit dataChanged(oldIndex, oldIndex);
     }
 
-    QModelIndex newIndex = index(activeRow, 0, QModelIndex());
-    emit dataChanged(newIndex, newIndex);
+    activeRow = row;
+    if (rowExists(activeRow)) {
+        activeTrack = trackAt(activeRow);
+        activeTrack->setPlayed(true);
+        playedTracks << activeTrack;
+
+        QModelIndex newIndex = index(activeRow, 0, QModelIndex());
+        emit dataChanged(newIndex, newIndex);
+    } else
+        activeTrack = nullptr;
 
     emit activeRowChanged(row, manual, startPlayback);
 }
@@ -114,11 +115,11 @@ void PlaylistModel::skipForward() {
         int nextRow = tracks.indexOf(nextTrack);
         setActiveRow(nextRow);
     } else {
-        activeRow = -1;
-        activeTrack = nullptr;
         for (Track *track : qAsConst(playedTracks))
             track->setPlayed(false);
         playedTracks.clear();
+        playedTracks.squeeze();
+        setActiveRow(-1, false, false);
         emit playlistFinished();
     }
 }
