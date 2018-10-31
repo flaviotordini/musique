@@ -79,7 +79,7 @@ MainWindow *MainWindow::instance() {
 }
 
 MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr) {
-    m_fullscreen = false;
+    fullScreenActive = false;
 
     singleton = this;
 
@@ -656,7 +656,7 @@ void MainWindow::readSettings() {
     QSettings settings;
     restoreGeometry(settings.value("geometry").toByteArray());
 
-    m_maximized = isMaximized();
+    maximizedBeforeFullScreen = isMaximized();
     actionMap.value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
     actionMap.value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
 
@@ -681,7 +681,7 @@ void MainWindow::writeSettings() {
     QSettings settings;
 
     // do not save geometry when in full screen
-    if (!m_fullscreen) settings.setValue("geometry", saveGeometry());
+    if (!fullScreenActive) settings.setValue("geometry", saveGeometry());
 
     if (mediaView) {
         if (audioOutput->volume() > 0.1) settings.setValue("volume", audioOutput->volume());
@@ -705,7 +705,8 @@ void MainWindow::goBack() {
 void MainWindow::showWidget(QWidget *widget, bool transition) {
     setUpdatesEnabled(false);
 
-    View *oldView = qobject_cast<View *>(views->currentWidget());
+    QWidget *oldWidget = views->currentWidget();
+    View *oldView = qobject_cast<View *>(oldWidget);
 
     View *newView = qobject_cast<View *>(widget);
     if (newView) {
@@ -719,8 +720,9 @@ void MainWindow::showWidget(QWidget *widget, bool transition) {
     chooseFolderAct->setEnabled(widget == mediaView || widget == contextualView);
     toolbarSearch->setEnabled(widget == mediaView || widget == contextualView);
 
-    QWidget *oldWidget = views->currentWidget();
     views->setCurrentWidget(widget);
+
+    statusBar()->setVisible(widget == mediaView);
 
     setUpdatesEnabled(true);
 
@@ -980,12 +982,12 @@ void MainWindow::toggleFullscreen() {
     }
 #endif
 
-    m_fullscreen = !m_fullscreen;
+    fullScreenActive = !fullScreenActive;
 
-    if (m_fullscreen) {
+    if (fullScreenActive) {
         // Enter fullscreen
 
-        m_maximized = isMaximized();
+        maximizedBeforeFullScreen = isMaximized();
 
         // save geometry now, if the user quits when in full screen
         // geometry won't be saved
@@ -1007,7 +1009,7 @@ void MainWindow::toggleFullscreen() {
         views->showNormal();
         show();
 #else
-        if (m_maximized)
+        if (maximizedBeforeFullScreen)
             showMaximized();
         else
             showNormal();
@@ -1022,7 +1024,7 @@ void MainWindow::updateUIForFullscreen() {
     static QList<QKeySequence> fsShortcuts;
     static QString fsText;
 
-    if (m_fullscreen) {
+    if (fullScreenActive) {
         fsShortcuts = fullscreenAct->shortcuts();
         fsText = fullscreenAct->text();
         fullscreenAct->setShortcuts(QList<QKeySequence>(fsShortcuts)
@@ -1045,10 +1047,10 @@ void MainWindow::updateUIForFullscreen() {
 #endif
     }
 
-    statusBar()->setVisible(!m_fullscreen);
+    statusBar()->setVisible(!fullScreenActive);
 
 #ifndef APP_MAC
-    if (m_fullscreen)
+    if (fullScreenActive)
         mainToolBar->addAction(fullscreenAct);
     else
         mainToolBar->removeAction(fullscreenAct);

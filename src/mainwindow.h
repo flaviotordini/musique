@@ -220,8 +220,8 @@ private:
     qreal volume;
 
     // fullscreen
-    bool m_fullscreen;
-    bool m_maximized;
+    bool fullScreenActive;
+    bool maximizedBeforeFullScreen;
     bool menuVisibleBeforeFullScreen;
 
     // update checker
