@@ -72,7 +72,7 @@ public:
     void appear();
     void disappear();
     void showSearch(const QString &query);
-    void addTracksAndPlay(QList<Track *> tracks);
+    void addTracksAndPlay(QVector<Track *> tracks);
     void artistActivated(Artist *artist);
     void albumActivated(Album *album);
     void trackActivated(Track *track);

@@ -71,7 +71,7 @@ public:
 
 public slots:
     void addTrack(Track *track);
-    void addTracks(QList<Track *> newTracks);
+    void addTracks(QVector<Track *> newTracks);
     void clear();
     void skipBackward();
     void skipForward();
@@ -80,15 +80,15 @@ public slots:
 
 signals:
     void activeRowChanged(int row, bool manual, bool startPlayback);
-    void needSelectionFor(QList<Track *>);
+    void needSelectionFor(QVector<Track *>);
     void itemChanged(int total);
     void playlistFinished();
 
 private:
     void addShuffledTrack(Track *track);
 
-    QList<Track *> tracks;
-    QList<Track *> playedTracks;
+    QVector<Track *> tracks;
+    QVector<Track *> playedTracks;
 
     int activeRow;
     Track *activeTrack;

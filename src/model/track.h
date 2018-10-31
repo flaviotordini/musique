@@ -34,8 +34,8 @@ public:
     Track();
 
     // item
-    QList<Track *> getTracks() {
-        QList<Track *> tracks = {this};
+    QVector<Track *> getTracks() {
+        QVector<Track *> tracks = {this};
         return tracks;
     }
     QString getStatusTip();
@@ -94,7 +94,7 @@ public:
     void getLyrics();
 
     // utils
-    static int getTotalLength(const QList<Track *> &tracks);
+    static int getTotalLength(const QVector<Track *> &tracks);
 
 signals:
     void gotInfo();

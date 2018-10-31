@@ -105,13 +105,13 @@ private:
     QDir rootDirectory;
     uint lastUpdate;
 
-    QList<QFileInfo> fileQueue;
+    QVector<QFileInfo> fileQueue;
     int maxQueueSize;
     QHash<QString, Artist *> loadedArtists;
-    QHash<QString, QList<FileInfo *>> filesWaitingForArtists;
-    QHash<QString, QList<FileInfo *>> filesWaitingForAlbumArtists;
+    QHash<QString, QVector<FileInfo *>> filesWaitingForArtists;
+    QHash<QString, QVector<FileInfo *>> filesWaitingForAlbumArtists;
     QHash<QString, Album *> loadedAlbums;
-    QHash<QString, QList<FileInfo *>> filesWaitingForAlbums;
+    QHash<QString, QVector<FileInfo *>> filesWaitingForAlbums;
     QStringList trackPaths;
     QStringList nontrackPaths;
 

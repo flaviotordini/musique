@@ -63,8 +63,8 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
     setModel(playlistModel);
 
     // needed to restore the selection after dragndrop
-    connect(playlistModel, SIGNAL(needSelectionFor(QList<Track *>)),
-            SLOT(selectTracks(QList<Track *>)));
+    connect(playlistModel, SIGNAL(needSelectionFor(QVector<Track *>)),
+            SLOT(selectTracks(QVector<Track *>)));
 
     connect(selectionModel(),
             SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)),
@@ -98,7 +98,7 @@ void PlaylistView::removeSelected() {
     playlistModel->removeIndexes(indexes);
 }
 
-void PlaylistView::selectTracks(const QList<Track *> &tracks) {
+void PlaylistView::selectTracks(const QVector<Track *> &tracks) {
     selectionModel()->clear();
     for (Track *track : tracks) {
         QModelIndex index = playlistModel->indexForTrack(track);

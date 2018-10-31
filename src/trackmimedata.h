@@ -37,18 +37,18 @@ public:
     virtual QStringList formats() const;
     virtual bool hasFormat( const QString &mimeType ) const;
 
-    QList<Track*> tracks() const { return m_tracks; }
+    QVector<Track*> tracks() const { return m_tracks; }
 
     void addTrack(Track *track) {
         m_tracks << track;
     }
 
-    void addTracks(QList<Track*> tracks) {
+    void addTracks(QVector<Track*> tracks) {
         m_tracks.append(tracks);
     }
 
 private:
-    QList<Track*> m_tracks;
+    QVector<Track*> m_tracks;
 
 };
 

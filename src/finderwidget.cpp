@@ -410,7 +410,7 @@ void FinderWidget::artistActivated(Artist *artist) {
 void FinderWidget::artistPlayed(const QModelIndex &index) {
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
     Artist *artist = artistPointer.data();
-    QList<Track *> tracks = artist->getTracks();
+    QVector<Track *> tracks = artist->getTracks();
     addTracksAndPlay(tracks);
 }
 
@@ -441,7 +441,7 @@ void FinderWidget::albumActivated(const QModelIndex &index) {
 void FinderWidget::albumPlayed(const QModelIndex &index) {
     const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
     Album *album = albumPointer.data();
-    QList<Track *> tracks = album->getTracks();
+    QVector<Track *> tracks = album->getTracks();
     addTracksAndPlay(tracks);
 }
 
@@ -485,7 +485,7 @@ void FinderWidget::folderPlayed(const QModelIndex &index) {
     const FolderPointer folderPointer = index.data(Finder::DataObjectRole).value<FolderPointer>();
     Folder *folder = folderPointer.data();
     if (folder) {
-        QList<Track *> tracks = folder->getTracks();
+        QVector<Track *> tracks = folder->getTracks();
         addTracksAndPlay(tracks);
     } else {
         const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
@@ -496,7 +496,7 @@ void FinderWidget::folderPlayed(const QModelIndex &index) {
     }
 }
 
-void FinderWidget::addTracksAndPlay(QList<Track *> tracks) {
+void FinderWidget::addTracksAndPlay(QVector<Track *> tracks) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
 

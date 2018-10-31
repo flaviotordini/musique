@@ -446,7 +446,7 @@ void CollectionScanner::giveThisFileAnArtist(FileInfo *file) {
         // this artist is already being processed
         // so we need to add ourselves to the list of waiting files
         // qDebug() << "artist being processed" << artistHash << file->getFileInfo().baseName();
-        QList<FileInfo *> files = filesWaitingForArtists.value(artistHash);
+        QVector<FileInfo *> files = filesWaitingForArtists.value(artistHash);
         files.append(file);
         filesWaitingForArtists.insert(artistHash, files);
         // qDebug() << "FILES WAITING 4 ARTISTS" <<  artistHash << files << files.count();
@@ -478,7 +478,7 @@ void CollectionScanner::processArtist(FileInfo *file) {
     // add this file to filesWaitingForArtists
     // this also acts as a lock for other files
     // when the info is ready, all waiting files will be processed
-    QList<FileInfo *> files;
+    QVector<FileInfo *> files;
     files.append(file);
     filesWaitingForArtists.insert(artist->getHash(), files);
 
@@ -518,7 +518,7 @@ void CollectionScanner::gotArtistInfo() {
     loadedArtists.insert(artist->getHash(), artist);
 
     // continue the processing of blocked files
-    QList<FileInfo *> files = filesWaitingForArtists.take(hash);
+    QVector<FileInfo *> files = filesWaitingForArtists.take(hash);
     // qDebug() << files.size() << "files were waiting for artist" << artist->getName();
     for (FileInfo *file : qAsConst(files)) {
         file->setArtist(artist);
@@ -558,7 +558,7 @@ void CollectionScanner::giveThisFileAnAlbumArtist(FileInfo *file) {
         // this artist is already being processed
         // so we need to add ourselves to the list of waiting files
         // qDebug() << "artist being processed" << artistHash << file->getFileInfo().baseName();
-        QList<FileInfo *> files = filesWaitingForAlbumArtists.value(artistHash);
+        QVector<FileInfo *> files = filesWaitingForAlbumArtists.value(artistHash);
         files.append(file);
         filesWaitingForAlbumArtists.insert(artistHash, files);
         // qDebug() << "FILES WAITING 4 ARTISTS" <<  artistHash << files << files.count();
@@ -590,7 +590,7 @@ void CollectionScanner::processAlbumArtist(FileInfo *file) {
     // add this file to filesWaitingForArtists
     // this also acts as a lock for other files
     // when the info is ready, all waiting files will be processed
-    QList<FileInfo *> files;
+    QVector<FileInfo *> files;
     files.append(file);
     filesWaitingForAlbumArtists.insert(artist->getHash(), files);
 
@@ -621,7 +621,7 @@ void CollectionScanner::giveThisFileAnAlbum(FileInfo *file) {
         // this album title is already being processed
         // so we need to add ourselves to the list of waiting files
         // qDebug() << "will wait for album" << albumHash;
-        QList<FileInfo *> files = filesWaitingForAlbums.value(albumHash);
+        QVector<FileInfo *> files = filesWaitingForAlbums.value(albumHash);
         files.append(file);
         filesWaitingForAlbums.insert(albumHash, files);
 
@@ -681,7 +681,7 @@ void CollectionScanner::processAlbum(FileInfo *file) {
     // add this file to filesWaitingForAlbums
     // this also acts as a lock for other files
     // when the info is ready, all waiting files will be processed
-    QList<FileInfo *> files;
+    QVector<FileInfo *> files;
     files.append(file);
     filesWaitingForAlbums.insert(album->getHash(), files);
 
@@ -700,7 +700,7 @@ void CollectionScanner::gotAlbumInfo() {
     const QString hash = album->property("originalHash").toString();
     // qDebug() << "got info for album" << album->getTitle() << hash << album->getHash();
 
-    const QList<FileInfo *> files = filesWaitingForAlbums.take(hash);
+    const QVector<FileInfo *> files = filesWaitingForAlbums.take(hash);
     loadedAlbums.insert(hash, album);
     // if (hash != album->getHash())
     loadedAlbums.insert(album->getHash(), album);

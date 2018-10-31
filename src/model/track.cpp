@@ -489,7 +489,7 @@ void Track::readLyricsFromTags() {
     emit gotLyrics(lyrics);
 }
 
-int Track::getTotalLength(const QList<Track *> &tracks) {
+int Track::getTotalLength(const QVector<Track *> &tracks) {
     int length = 0;
     for (Track *track : tracks) {
         length += track->getLength();

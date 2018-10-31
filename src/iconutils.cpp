@@ -75,10 +75,10 @@ QIcon IconUtils::icon(const QStringList &names) {
     return icon;
 }
 
-QIcon IconUtils::tintedIcon(const QString &name, const QColor &color, QList<QSize> sizes) {
+QIcon IconUtils::tintedIcon(const QString &name, const QColor &color, const QVector<QSize> &sizes) {
     QIcon i = IconUtils::icon(name);
     QIcon t;
-    if (sizes.isEmpty()) sizes = i.availableSizes();
+    // if (sizes.isEmpty()) sizes = i.availableSizes();
     for (const QSize &size : sizes) {
         QPixmap pixmap = i.pixmap(size);
         QImage tintedImage = tinted(pixmap.toImage(), color);
@@ -88,7 +88,7 @@ QIcon IconUtils::tintedIcon(const QString &name, const QColor &color, QList<QSiz
 }
 
 QIcon IconUtils::tintedIcon(const QString &name, const QColor &color, const QSize &size) {
-    return IconUtils::tintedIcon(name, color, QList<QSize>() << size);
+    return IconUtils::tintedIcon(name, color, QVector<QSize>() << size);
 }
 
 QImage IconUtils::grayscaled(const QImage &image) {

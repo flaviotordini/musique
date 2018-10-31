@@ -33,7 +33,7 @@ public:
     int getId() const { return id; }
     void setId(int id) { this->id = id; }
     virtual QString getName() = 0;
-    virtual QList<Track *> getTracks() = 0;
+    virtual QVector<Track *> getTracks() = 0;
 
 protected:
     int id;

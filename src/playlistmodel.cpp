@@ -189,10 +189,10 @@ void PlaylistModel::addShuffledTrack(Track *track) {
 }
 
 void PlaylistModel::addTrack(Track *track) {
-    addTracks(QList<Track *>() << track);
+    addTracks(QVector<Track *>() << track);
 }
 
-void PlaylistModel::addTracks(QList<Track *> newTracks) {
+void PlaylistModel::addTracks(QVector<Track *> newTracks) {
     if (newTracks.empty()) return;
 
     // remove duplicates
@@ -270,8 +270,8 @@ bool PlaylistModel::removeRows(int position, int rows, const QModelIndex &parent
 }
 
 void PlaylistModel::removeIndexes(const QModelIndexList &indexes) {
-    QList<Track *> originalList(tracks);
-    QList<Track *> delitems;
+    QVector<Track *> originalList(tracks);
+    QVector<Track *> delitems;
     for (QModelIndex index : indexes) {
         Track *track = originalList.at(index.row());
         int idx = tracks.indexOf(track);
@@ -338,12 +338,12 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
     const TrackMimeData *trackMimeData = qobject_cast<const TrackMimeData *>(data);
     if (!trackMimeData) return false;
 
-    const QList<Track *> droppedTracks = trackMimeData->tracks();
+    const QVector<Track *> droppedTracks = trackMimeData->tracks();
 
     layoutAboutToBeChanged();
 
     bool insert = false;
-    QList<Track *> movedTracks;
+    QVector<Track *> movedTracks;
     int counter = 0;
     for (Track *track : droppedTracks) {
         // if preset, remove track and maybe fix beginRow
@@ -385,7 +385,7 @@ QModelIndex PlaylistModel::indexForTrack(Track *track) {
 }
 
 void PlaylistModel::move(const QModelIndexList &indexes, bool up) {
-    QList<Track *> movedTracks;
+    QVector<Track *> movedTracks;
 
     for (QModelIndex index : indexes) {
         int row = index.row();
@@ -452,7 +452,7 @@ bool PlaylistModel::loadFrom(QTextStream &stream) {
     // stream not opened or not writable
     if (!stream.device()->isOpen() || !stream.device()->isReadable()) return false;
 
-    QList<Track *> tracks;
+    QVector<Track *> tracks;
     tracks.reserve(1024);
 
     stream.setCodec("UTF-8");

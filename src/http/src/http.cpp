@@ -2,29 +2,26 @@
 
 namespace {
 
-QNetworkAccessManager* createNetworkAccessManager() {
+QNetworkAccessManager *createNetworkAccessManager() {
     QNetworkAccessManager *nam = new QNetworkAccessManager();
     return nam;
 }
 
 QNetworkAccessManager *networkAccessManager() {
-    static QHash<QThread*, QNetworkAccessManager*> nams;
+    static QHash<QThread *, QNetworkAccessManager *> nams;
     QThread *t = QThread::currentThread();
-    QHash<QThread*, QNetworkAccessManager*>::const_iterator i = nams.constFind(t);
+    QHash<QThread *, QNetworkAccessManager *>::const_iterator i = nams.constFind(t);
     if (i != nams.constEnd()) return i.value();
-    QNetworkAccessManager* nam = createNetworkAccessManager();
+    QNetworkAccessManager *nam = createNetworkAccessManager();
     nams.insert(t, nam);
     return nam;
 }
 
 static int defaultReadTimeout = 10000;
 
-}
+} // namespace
 
-Http::Http() :
-    requestHeaders(getDefaultRequestHeaders()),
-    readTimeout(defaultReadTimeout) {
-}
+Http::Http() : requestHeaders(getDefaultRequestHeaders()), readTimeout(defaultReadTimeout) {}
 
 void Http::setRequestHeaders(const QHash<QByteArray, QByteArray> &headers) {
     requestHeaders = headers;
@@ -78,7 +75,6 @@ QNetworkReply *Http::networkReply(const HttpRequest &req) {
 
     QNetworkReply *networkReply = 0;
     switch (req.operation) {
-
     case QNetworkAccessManager::GetOperation:
         networkReply = manager->get(request);
         break;
@@ -98,13 +94,13 @@ QNetworkReply *Http::networkReply(const HttpRequest &req) {
     return networkReply;
 }
 
-QObject* Http::request(const HttpRequest &req) {
+QObject *Http::request(const HttpRequest &req) {
     return new NetworkHttpReply(req, *this);
 }
 
-QObject* Http::request(const QUrl &url,
+QObject *Http::request(const QUrl &url,
                        QNetworkAccessManager::Operation operation,
-                       const QByteArray& body,
+                       const QByteArray &body,
                        uint offset) {
     HttpRequest req;
     req.url = url;
@@ -114,23 +110,20 @@ QObject* Http::request(const QUrl &url,
     return request(req);
 }
 
-QObject* Http::get(const QUrl &url) {
+QObject *Http::get(const QUrl &url) {
     return request(url, QNetworkAccessManager::GetOperation);
 }
 
-QObject* Http::head(const QUrl &url) {
+QObject *Http::head(const QUrl &url) {
     return request(url, QNetworkAccessManager::HeadOperation);
 }
 
-QObject* Http::post(const QUrl &url, const QMap<QString, QString>& params) {
+QObject *Http::post(const QUrl &url, const QMap<QString, QString> &params) {
     QByteArray body;
     QMapIterator<QString, QString> i(params);
     while (i.hasNext()) {
         i.next();
-        body += QUrl::toPercentEncoding(i.key())
-                + '='
-                + QUrl::toPercentEncoding(i.value())
-                + '&';
+        body += QUrl::toPercentEncoding(i.key()) + '=' + QUrl::toPercentEncoding(i.value()) + '&';
     }
     HttpRequest req;
     req.url = url;
@@ -141,7 +134,7 @@ QObject* Http::post(const QUrl &url, const QMap<QString, QString>& params) {
     return request(req);
 }
 
-QObject* Http::post(const QUrl &url, QByteArray body, const QByteArray &contentType) {
+QObject *Http::post(const QUrl &url, QByteArray body, const QByteArray &contentType) {
     HttpRequest req;
     req.url = url;
     req.operation = QNetworkAccessManager::PostOperation;
@@ -153,10 +146,8 @@ QObject* Http::post(const QUrl &url, QByteArray body, const QByteArray &contentT
     return request(req);
 }
 
-NetworkHttpReply::NetworkHttpReply(const HttpRequest &req, Http &http) :
-    http(http), req(req),
-    retryCount(0) {
-
+NetworkHttpReply::NetworkHttpReply(const HttpRequest &req, Http &http)
+    : http(http), req(req), retryCount(0) {
     if (req.url.isEmpty()) {
         qWarning() << "Empty URL";
     }
@@ -175,14 +166,14 @@ NetworkHttpReply::NetworkHttpReply(const HttpRequest &req, Http &http) :
 void NetworkHttpReply::setupReply() {
     connect(networkReply, SIGNAL(error(QNetworkReply::NetworkError)),
             SLOT(replyError(QNetworkReply::NetworkError)), Qt::UniqueConnection);
-    connect(networkReply, SIGNAL(finished()),
-            SLOT(replyFinished()), Qt::UniqueConnection);
+    connect(networkReply, SIGNAL(finished()), SLOT(replyFinished()), Qt::UniqueConnection);
     connect(networkReply, SIGNAL(downloadProgress(qint64, qint64)),
             SLOT(downloadProgress(qint64, qint64)), Qt::UniqueConnection);
 }
 
 QString NetworkHttpReply::errorMessage() {
-    return url().toString() + QLatin1Char(' ') + QString::number(statusCode()) + QLatin1Char(' ') + reasonPhrase();
+    return url().toString() + QLatin1Char(' ') + QString::number(statusCode()) + QLatin1Char(' ') +
+           reasonPhrase();
 }
 
 void NetworkHttpReply::emitError() {
@@ -212,7 +203,6 @@ void NetworkHttpReply::replyFinished() {
     }
 
     if (isSuccessful()) {
-
         bytes = networkReply->readAll();
         emit data(bytes);
 
@@ -261,8 +251,8 @@ void NetworkHttpReply::downloadProgress(qint64 bytesReceived, qint64 /* bytesTot
     // qDebug() << "Downloading" << bytesReceived << bytesTotal << networkReply->url();
     if (bytesReceived > 0 && readTimeoutTimer->isActive()) {
         readTimeoutTimer->stop();
-        disconnect(networkReply, SIGNAL(downloadProgress(qint64,qint64)),
-                   this, SLOT(downloadProgress(qint64,qint64)));
+        disconnect(networkReply, SIGNAL(downloadProgress(qint64, qint64)), this,
+                   SLOT(downloadProgress(qint64, qint64)));
     }
 }
 
@@ -272,8 +262,8 @@ void NetworkHttpReply::readTimeout() {
     networkReply->abort();
     networkReply->deleteLater();
 
-    if (retryCount > 3 && (networkReply->operation() != QNetworkAccessManager::GetOperation
-                           && networkReply->operation() != QNetworkAccessManager::HeadOperation)) {
+    if (retryCount > 3 && (networkReply->operation() != QNetworkAccessManager::GetOperation &&
+                           networkReply->operation() != QNetworkAccessManager::HeadOperation)) {
         emitError();
         emit finished(*this);
         return;
@@ -308,6 +298,6 @@ QByteArray NetworkHttpReply::header(const QByteArray &headerName) const {
     return networkReply->rawHeader(headerName);
 }
 
-QByteArray NetworkHttpReply:: body() const {
+QByteArray NetworkHttpReply::body() const {
     return bytes;
 }

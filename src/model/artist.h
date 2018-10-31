@@ -35,7 +35,7 @@ public:
     Artist(QObject *parent = 0);
 
     // item
-    QList<Track *> getTracks();
+    QVector<Track *> getTracks();
     QString getStatusTip();
 
     // properties
@@ -48,7 +48,7 @@ public:
     QString getBio();
 
     // relations
-    // QList<Album*> getAlbums();
+    // QVector<Album*> getAlbums();
 
     // data access
     static void clearCache() {

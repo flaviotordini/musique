@@ -31,7 +31,7 @@ void CollectionSuggester::suggest(const QString &query) {
     QString q = query.simplified();
     if (q.isEmpty()) return;
 
-    QList<Suggestion*> suggestions;
+    QVector<Suggestion*> suggestions;
     QStringList strings;
 
     QString likeQuery;

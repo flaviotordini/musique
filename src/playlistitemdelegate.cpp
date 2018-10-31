@@ -86,8 +86,7 @@ QPixmap PlaylistItemDelegate::getPlayIcon(const QColor &color,
     const QString key = color.name();
     if (cache.contains(key)) return cache.value(key);
     const int iconSize = ITEM_HEIGHT / 2;
-    QIcon icon =
-            IconUtils::tintedIcon("media-playback-start", color, QList<QSize>() << QSize(32, 32));
+    QIcon icon = IconUtils::tintedIcon("media-playback-start", color, QSize(32, 32));
     QPixmap pixmap = icon.pixmap(iconSize, iconSize);
     cache.insert(key, pixmap);
     return pixmap;

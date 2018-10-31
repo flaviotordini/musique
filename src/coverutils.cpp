@@ -62,9 +62,9 @@ bool CoverUtils::saveImage(const QImage &image, Album *album) {
 }
 
 bool CoverUtils::coverFromFile(const QString &dir, Album *album) {
-    static const QList<QRegExp> coverREs = [] {
+    static const QVector<QRegExp> coverREs = [] {
         QLatin1String ext(".(jpe?g|gif|png|bmp)");
-        QList<QRegExp> res;
+        QVector<QRegExp> res;
         res << QRegExp(".*cover.*" + ext, Qt::CaseInsensitive)
             << QRegExp(".*front.*" + ext, Qt::CaseInsensitive)
             << QRegExp(".*folder.*" + ext, Qt::CaseInsensitive);

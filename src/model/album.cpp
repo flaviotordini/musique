@@ -511,7 +511,7 @@ void Album::setPhoto(const QByteArray &bytes) {
     emit gotPhoto();
 }
 
-QList<Track *> Album::getTracks() {
+QVector<Track *> Album::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select id from tracks where album=? order by disk, track, path");
@@ -519,7 +519,7 @@ QList<Track *> Album::getTracks() {
     bool success = query.exec();
     if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
-    QList<Track *> tracks;
+    QVector<Track *> tracks;
     while (query.next()) {
         int trackId = query.value(0).toInt();
         Track *track = Track::forId(trackId);
@@ -561,7 +561,7 @@ QString normalizeString(QString s) {
     s2.clear();
 
     // simplify accented chars èé=>e etc
-    static QList<QPair<QChar, QString>> charVariants;
+    static QVector<QPair<QChar, QString>> charVariants;
     static int charVariantsSize;
     if (charVariants.isEmpty()) {
         charVariants << QPair<QChar, QString>('a', "áàâäãåāăą")

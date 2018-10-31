@@ -423,13 +423,13 @@ void MainWindow::createActions() {
     addAction(searchFocusAct);
 
     volumeUpAct = new QAction(this);
-    volumeUpAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Plus));
+    volumeUpAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Plus));
     actionMap.insert("volume-up", volumeUpAct);
     connect(volumeUpAct, SIGNAL(triggered()), SLOT(volumeUp()));
     addAction(volumeUpAct);
 
     volumeDownAct = new QAction(this);
-    volumeDownAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_Minus));
+    volumeDownAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Minus));
     actionMap.insert("volume-down", volumeDownAct);
     connect(volumeDownAct, SIGNAL(triggered()), SLOT(volumeDown()));
     addAction(volumeDownAct);
@@ -437,7 +437,7 @@ void MainWindow::createActions() {
     volumeMuteAct = new QAction(this);
     volumeMuteAct->setIcon(IconUtils::icon("audio-volume-high"));
     volumeMuteAct->setStatusTip(tr("Mute volume"));
-    volumeMuteAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL + Qt::Key_E));
+    volumeMuteAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     actionMap.insert("volume-mute", volumeMuteAct);
     connect(volumeMuteAct, SIGNAL(triggered()), SLOT(volumeMute()));
     addAction(volumeMuteAct);
