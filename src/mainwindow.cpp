@@ -1356,12 +1356,11 @@ void MainWindow::loadPlaylist() {
     if (!QFile::exists(plsPath)) return;
     PlaylistModel *playlistModel = mediaView->getPlaylistModel();
     if (playlistModel == nullptr) return;
-    // qDebug() << "Loading playlist: " << plsPath;
     QFile plsFile(plsPath);
-    QTextStream plsStream(&plsFile);
-    if (plsFile.open(QFile::ReadOnly))
+    if (plsFile.open(QFile::ReadOnly)) {
+        QTextStream plsStream(&plsFile);
         playlistModel->loadFrom(plsStream);
-    else
+    } else
         qDebug() << "Cannot open file" << plsPath;
 }
 
