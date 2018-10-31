@@ -58,8 +58,8 @@ public:
     void setYear(int year) { this->year = year; }
     QString getHash();
     QString getAbsolutePath();
-    int isPlayed() { return played; }
-    void setPlayed(int played) { this->played = played; }
+    bool isPlayed() { return played; }
+    void setPlayed(bool played) { this->played = played; }
     int getStartTime() { return startTime; }
     void setStartTime(int startTime) { this->startTime = startTime; }
 
@@ -103,7 +103,7 @@ signals:
 
 private slots:
     void fetchMusicBrainzTrack();
-    void parseMusicBrainzTrack(const QByteArray& bytes);
+    void parseMusicBrainzTrack(const QByteArray &bytes);
     void parseLyricsSearchResults(const QByteArray &bytes);
     void scrapeLyrics(const QByteArray &bytes);
     void readLyricsFromTags();
