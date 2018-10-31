@@ -1568,6 +1568,6 @@ void MainWindow::showDemoDialog(QString message) {
 #endif
 
 void MainWindow::reportIssue() {
-    QUrl url("http://flavio.tordini.org/forums/forum/musique-forums/musique-troubleshooting");
+    QUrl url("https://flavio.tordini.org/forums/forum/musique-forums/musique-troubleshooting");
     QDesktopServices::openUrl(url);
 }
