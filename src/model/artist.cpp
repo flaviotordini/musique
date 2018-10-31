@@ -469,6 +469,7 @@ QVector<Track *> Artist::getTracks() {
     if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
     QVector<Track *> tracks;
+    tracks.reserve(query.size());
     while (query.next()) {
         int trackId = query.value(0).toInt();
         Track *track = Track::forId(trackId);
