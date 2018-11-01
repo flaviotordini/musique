@@ -18,10 +18,10 @@ TARGET = $${APP_UNIX_NAME}
 
 QT += network sql widgets
 
+include(lib/http/http.pri)
 include(lib/idle/idle.pri)
 
 include(src/qtsingleapplication/qtsingleapplication.pri)
-include(src/http/http.pri)
 include(src/tags/tags.pri)
 
 HEADERS += src/mainwindow.h \

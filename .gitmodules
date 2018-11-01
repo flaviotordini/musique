@@ -1,3 +1,6 @@
+[submodule "lib/http"]
+	path = lib/http
+	url = https://github.com/flaviotordini/http
 [submodule "lib/idle"]
 	path = lib/idle
 	url = https://github.com/flaviotordini/idle
