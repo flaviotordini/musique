@@ -345,8 +345,7 @@ void CollectionScanner::scanDirectory(const QDir &directory) {
         const QFileInfoList flist =
                 dir.entryInfoList(QDir::NoDotAndDotDot | QDir::Dirs | QDir::Files | QDir::Readable);
 
-        QFileInfo fileInfo;
-        Q_FOREACH (fileInfo, flist) {
+        for (const QFileInfo &fileInfo : flist) {
             if (fileInfo.isFile()) {
                 processFile(fileInfo);
             } else if (fileInfo.isDir()) {
