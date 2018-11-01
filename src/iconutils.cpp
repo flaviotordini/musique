@@ -81,8 +81,8 @@ QIcon IconUtils::tintedIcon(const QString &name, const QColor &color, const QVec
     // if (sizes.isEmpty()) sizes = i.availableSizes();
     for (const QSize &size : sizes) {
         QPixmap pixmap = i.pixmap(size);
-        QImage tintedImage = tinted(pixmap.toImage(), color);
-        t.addPixmap(QPixmap::fromImage(tintedImage));
+        tint(pixmap, color);
+        t.addPixmap(pixmap);
     }
     return t;
 }
@@ -111,6 +111,12 @@ QImage IconUtils::tinted(const QImage &image, const QColor &color, QPainter::Com
     painter.end();
     img.setAlphaChannel(image.alphaChannel());
     return img;
+}
+
+void IconUtils::tint(QPixmap &pixmap, const QColor &color, QPainter::CompositionMode mode) {
+    QPainter painter(&pixmap);
+    painter.setCompositionMode(mode);
+    painter.fillRect(pixmap.rect(), color);
 }
 
 void IconUtils::setupAction(QAction *action) {

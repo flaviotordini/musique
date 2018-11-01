@@ -38,6 +38,10 @@ public:
     static qreal maxSupportedPixelRatio() { return 2.0; }
     static qreal pixelRatio();
 
+    static void tint(QPixmap &pixmap,
+                     const QColor &color,
+                     QPainter::CompositionMode mode = QPainter::CompositionMode_SourceIn);
+
 private:
     IconUtils() {}
     static QImage grayscaled(const QImage &image);

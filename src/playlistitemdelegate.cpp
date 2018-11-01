@@ -127,11 +127,17 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     }
 
     if (isActive) {
-        if (!isSelected) paintActiveOverlay(painter, option, line);
-        static const QIcon icon = IconUtils::icon("media-playback-start");
-        QPixmap p = icon.pixmap(16, 16);
+        // if (!isSelected) paintActiveOverlay(painter, option, line);
+        static const QPixmap p = [] {
+            QIcon icon = IconUtils::icon("media-playback-start");
+            QPixmap p = icon.pixmap(16, 16);
+            IconUtils::tint(p, qApp->palette().highlight().color());
+            return p;
+        }();
+        painter->save();
         if (isSelected) painter->setCompositionMode(QPainter::CompositionMode_Plus);
         painter->drawPixmap(PADDING, (ITEM_HEIGHT - (p.height() / p.devicePixelRatio())) / 2, p);
+        painter->restore();
     } else {
         paintTrackNumber(painter, option, line, track);
     }
@@ -141,10 +147,8 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     paintTrackLength(painter, option, line, track);
 
     // separator
-    if (!isActive) {
-        painter->setOpacity(.1);
-        painter->drawLine(0, line.height() - 1, line.width(), line.height() - 1);
-    }
+    painter->setOpacity(.1);
+    painter->drawLine(0, line.height() - 1, line.width(), line.height() - 1);
 
     painter->restore();
 }
