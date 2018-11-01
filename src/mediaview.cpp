@@ -36,6 +36,8 @@ $END_LICENSE */
 #include "extra.h"
 #endif
 
+#include "idle.h"
+
 MediaView::MediaView(QWidget *parent) : View(parent) {
     activeTrack = nullptr;
 
@@ -117,7 +119,7 @@ void MediaView::saveSplitterState() {
     settings.setValue("splitter", splitter->saveState());
 }
 
-void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/) {
+void MediaView::stateChanged(Phonon::State newState, Phonon::State oldState) {
     // qDebug() << "Phonon state: " << newState << oldState;
 
     switch (newState) {
@@ -146,6 +148,14 @@ void MediaView::stateChanged(Phonon::State newState, Phonon::State /*oldState*/)
     case Phonon::LoadingState:
         // qDebug("loading");
         break;
+    }
+
+    if (newState == Phonon::PlayingState) {
+        bool res = Idle::preventDisplaySleep(QString("%1 is playing").arg(Constants::NAME));
+        if (!res) qWarning() << "Error disabling idle display sleep" << Idle::displayErrorMessage();
+    } else if (oldState == Phonon::PlayingState) {
+        bool res = Idle::allowDisplaySleep();
+        if (!res) qWarning() << "Error enabling idle display sleep" << Idle::displayErrorMessage();
     }
 }
 
