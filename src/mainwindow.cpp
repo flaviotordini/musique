@@ -754,7 +754,7 @@ void MainWindow::visitSite() {
 }
 
 void MainWindow::donate() {
-    QUrl url(QString(Constants::WEBSITE) + "#donate");
+    QUrl url("https://flavio.tordini.org/donate/");
     statusBar()->showMessage(QString(tr("Opening %1").arg(url.toString())));
     QDesktopServices::openUrl(url);
 }
