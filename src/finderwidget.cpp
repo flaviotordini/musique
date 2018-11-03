@@ -220,10 +220,6 @@ void FinderWidget::setupFolders() {
             SLOT(folderActivated(const QModelIndex &)));
     connect(fileSystemView, SIGNAL(play(const QModelIndex &)),
             SLOT(folderPlayed(const QModelIndex &)));
-    connect(fileSystemView, SIGNAL(entered(const QModelIndex &)),
-            SLOT(folderEntered(const QModelIndex &)));
-    connect(fileSystemView, SIGNAL(viewportEntered()), filteringFileSystemModel,
-            SLOT(clearHover()));
     fileSystemView->setModel(filteringFileSystemModel);
     fileSystemView->setFileSystemModel(fileSystemModel);
     stackedWidget->addWidget(fileSystemView);
@@ -237,9 +233,6 @@ void FinderWidget::setupSearch() {
             SLOT(itemActivated(const QModelIndex &)));
     connect(searchView, SIGNAL(play(const QModelIndex &)), searchModel,
             SLOT(itemPlayed(const QModelIndex &)));
-    connect(searchView, SIGNAL(entered(const QModelIndex &)), searchModel,
-            SLOT(itemEntered(const QModelIndex &)));
-    connect(searchView, SIGNAL(viewportEntered()), searchModel, SLOT(clearHover()));
 
     searchView->setEnabled(false);
     searchView->setModel(searchModel);
