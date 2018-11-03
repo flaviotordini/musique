@@ -31,18 +31,14 @@ class FinderWidget;
 class Item;
 
 class SearchModel : public QAbstractListModel {
-
     Q_OBJECT
 
 public:
-    SearchModel(QObject *parent = 0);
-    void search(const QString& query);
-    void setHoveredRow(int row);
+    SearchModel(QObject *parent = nullptr);
+    void search(const QString &query);
 
 public slots:
-    void clearHover();
-    void enterPlayIconHover();
-    void exitPlayIconHover();
+    void refreshIndex(const QModelIndex &index) { emit dataChanged(index, index); }
 
 protected:
     int rowCount(const QModelIndex & /* parent */) const;
@@ -50,14 +46,11 @@ protected:
     int columnCount(const QModelIndex &parent = QModelIndex()) const { return 1; }
 
 private slots:
-    void updatePlayIcon();
-
-    void itemEntered(const QModelIndex &index);
     void itemActivated(const QModelIndex &index);
     void itemPlayed(const QModelIndex &index);
 
 private:
-    Item* itemAt(const QModelIndex &index) const;
+    Item *itemAt(const QModelIndex &index) const;
 
     ArtistSqlModel *artistListModel;
     AlbumSqlModel *albumListModel;
@@ -68,14 +61,9 @@ private:
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QStringList mimeTypes() const;
     Qt::DropActions supportedDropActions() const;
-    QMimeData* mimeData( const QModelIndexList &indexes ) const;
-
-    int hoveredRow;
-    QTimeLine * timeLine;
-    bool playIconHovered;
+    QMimeData *mimeData(const QModelIndexList &indexes) const;
 
     FinderWidget *finder;
-
 };
 
 #endif // SEARCHMODEL_H

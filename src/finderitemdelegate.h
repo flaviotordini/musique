@@ -26,12 +26,13 @@ $END_LICENSE */
 class Artist;
 class Album;
 class Folder;
+class BaseFinderView;
 
 class FinderItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
 
 public:
-    FinderItemDelegate(QObject *parent = nullptr);
+    FinderItemDelegate(BaseFinderView *parent);
     QSize sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const;
     void paint(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
 
@@ -74,6 +75,7 @@ private:
 
     static const int PADDING;
 
+    BaseFinderView *view;
     int itemWidth = ITEM_WIDTH;
     int itemHeight = ITEM_HEIGHT;
 };

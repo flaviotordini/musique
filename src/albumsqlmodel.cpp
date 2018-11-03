@@ -19,39 +19,27 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "albumsqlmodel.h"
-#include "model/album.h"
 #include "mainwindow.h"
+#include "model/album.h"
 
-AlbumSqlModel::AlbumSqlModel(QObject *parent) : BaseSqlModel(parent) {
-}
+AlbumSqlModel::AlbumSqlModel(QObject *parent) : BaseSqlModel(parent) {}
 
 QVariant AlbumSqlModel::data(const QModelIndex &index, int role) const {
-
-    Album* album = nullptr;
+    Album *album = nullptr;
 
     switch (role) {
-
     case Finder::ItemTypeRole:
         return Finder::ItemTypeAlbum;
 
     case Finder::DataObjectRole:
         album = Album::forId(QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt());
-        connect(album, SIGNAL(gotPhoto()), MainWindow::instance(), SLOT(update()), Qt::UniqueConnection);
+        connect(album, SIGNAL(gotPhoto()), MainWindow::instance(), SLOT(update()),
+                Qt::UniqueConnection);
         return QVariant::fromValue(QPointer<Album>(album));
-
-    case Finder::HoveredItemRole:
-        return hoveredRow == index.row();
-
-    case Finder::PlayIconAnimationItemRole:
-        return timeLine->currentFrame() / 1000.;
-
-    case Finder::PlayIconHoveredRole:
-        return playIconHovered;
 
     case Qt::StatusTipRole:
         album = Album::forId(QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt());
         return album->getStatusTip();
-
     }
 
     return QVariant();

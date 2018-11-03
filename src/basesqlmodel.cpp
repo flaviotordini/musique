@@ -23,14 +23,7 @@ $END_LICENSE */
 #include "model/item.h"
 #include "trackmimedata.h"
 
-BaseSqlModel::BaseSqlModel(QObject *parent) : QSqlQueryModel(parent) {
-    hoveredRow = -1;
-    playIconHovered = false;
-
-    timeLine = new QTimeLine(250, this);
-    timeLine->setFrameRange(1000, 0);
-    connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
-}
+BaseSqlModel::BaseSqlModel(QObject *parent) : QSqlQueryModel(parent) {}
 
 void BaseSqlModel::setQuery(const QSqlQuery &query) {
     lastQuery = query.lastQuery();
@@ -44,42 +37,6 @@ void BaseSqlModel::setQuery(const QString &query, const QSqlDatabase &db) {
 
 void BaseSqlModel::restoreQuery() {
     if (!query().isValid()) setQuery(lastQuery, Database::instance().getConnection());
-}
-
-void BaseSqlModel::setHoveredRow(int row) {
-    int oldRow = hoveredRow;
-    hoveredRow = row;
-    emit dataChanged(index(oldRow, 0), index(oldRow, 0));
-    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
-}
-
-void BaseSqlModel::clearHover() {
-    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
-    hoveredRow = -1;
-}
-
-void BaseSqlModel::enterPlayIconHover() {
-    if (playIconHovered) return;
-    playIconHovered = true;
-    if (timeLine->state() != QTimeLine::Running) {
-        timeLine->setDirection(QTimeLine::Forward);
-        timeLine->start();
-    }
-}
-
-void BaseSqlModel::exitPlayIconHover() {
-    if (!playIconHovered) return;
-    playIconHovered = false;
-    if (timeLine->state() == QTimeLine::Running) {
-        timeLine->stop();
-        timeLine->setDirection(QTimeLine::Backward);
-        timeLine->start();
-    }
-    setHoveredRow(hoveredRow);
-}
-
-void BaseSqlModel::updatePlayIcon() {
-    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
 }
 
 // --- Sturm und drang ---

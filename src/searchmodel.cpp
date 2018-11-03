@@ -46,13 +46,6 @@ SearchModel::SearchModel(QObject *parent) : QAbstractListModel(parent) {
     fileSystemModel->setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
     FilteringFileSystemModel *proxyModel = new FilteringFileSystemModel(this);
     proxyModel->setSourceModel(fileSystemModel);
-
-    hoveredRow = -1;
-    playIconHovered = false;
-
-    timeLine = new QTimeLine(250, this);
-    timeLine->setFrameRange(1000, 0);
-    connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
 }
 
 int SearchModel::rowCount(const QModelIndex &parent) const {
@@ -67,15 +60,6 @@ QVariant SearchModel::data(const QModelIndex &index, int role) const {
     const int trackRowCount = trackListModel->rowCount(index.parent());
 
     switch (role) {
-    case Finder::HoveredItemRole:
-        return hoveredRow == row;
-
-    case Finder::PlayIconAnimationItemRole:
-        return timeLine->currentFrame() / 1000.;
-
-    case Finder::PlayIconHoveredRole:
-        return playIconHovered;
-
     default:
         if (row >= 0 && row < artistRowCount) {
             return artistListModel->data(index, role);
@@ -141,10 +125,6 @@ Item *SearchModel::itemAt(const QModelIndex &index) const {
 
 // --- Events ---
 
-void SearchModel::itemEntered(const QModelIndex &index) {
-    this->setHoveredRow(index.row());
-}
-
 void SearchModel::itemActivated(const QModelIndex &index) {
     int itemType = index.data(Finder::ItemTypeRole).toInt();
     if (itemType == Finder::ItemTypeArtist) {
@@ -165,45 +145,6 @@ void SearchModel::itemPlayed(const QModelIndex &index) {
     if (!item) return;
     QVector<Track *> tracks = item->getTracks();
     finder->addTracksAndPlay(tracks);
-}
-
-// --- Hover ---
-
-void SearchModel::setHoveredRow(int row) {
-    int oldRow = hoveredRow;
-    hoveredRow = row;
-    emit dataChanged(createIndex(oldRow, 0), createIndex(oldRow, columnCount() - 1));
-    emit dataChanged(createIndex(hoveredRow, 0), createIndex(hoveredRow, columnCount() - 1));
-}
-
-void SearchModel::clearHover() {
-    emit dataChanged(createIndex(hoveredRow, 0), createIndex(hoveredRow, columnCount() - 1));
-    hoveredRow = -1;
-    // timeLine->stop();
-}
-
-void SearchModel::enterPlayIconHover() {
-    if (playIconHovered) return;
-    playIconHovered = true;
-    if (timeLine->state() != QTimeLine::Running) {
-        timeLine->setDirection(QTimeLine::Forward);
-        timeLine->start();
-    }
-}
-
-void SearchModel::exitPlayIconHover() {
-    if (!playIconHovered) return;
-    playIconHovered = false;
-    if (timeLine->state() == QTimeLine::Running) {
-        timeLine->stop();
-        timeLine->setDirection(QTimeLine::Backward);
-        timeLine->start();
-    }
-    setHoveredRow(hoveredRow);
-}
-
-void SearchModel::updatePlayIcon() {
-    emit dataChanged(createIndex(hoveredRow, 0), createIndex(hoveredRow, columnCount() - 1));
 }
 
 // --- Sturm und drang ---

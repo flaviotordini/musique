@@ -26,39 +26,27 @@ $END_LICENSE */
 class Item;
 
 class BaseSqlModel : public QSqlQueryModel {
-
     Q_OBJECT
 
 public:
-    BaseSqlModel(QObject *parent = 0);
+    BaseSqlModel(QObject *parent = nullptr);
     void setQuery(const QSqlQuery &query);
     void setQuery(const QString &query, const QSqlDatabase &db);
     void restoreQuery();
-    void setHoveredRow(int row);
 
 public slots:
-    void clearHover();
-    void enterPlayIconHover();
-    void exitPlayIconHover();
+    void refreshIndex(const QModelIndex &index) { emit dataChanged(index, index); }
 
 protected:
     // drag and drop
     Qt::ItemFlags flags(const QModelIndex &index) const;
     QStringList mimeTypes() const;
     Qt::DropActions supportedDropActions() const;
-    QMimeData* mimeData( const QModelIndexList &indexes ) const;
+    QMimeData *mimeData(const QModelIndexList &indexes) const;
 
-    virtual Item* itemAt(const QModelIndex &index) const = 0;
+    virtual Item *itemAt(const QModelIndex &index) const = 0;
 
-    int hoveredRow;
-    QTimeLine * timeLine;
-    bool playIconHovered;
     QString lastQuery;
-
-private slots:
-    void updatePlayIcon();
-
-
 };
 
 #endif // BASESQLMODEL_H

@@ -24,29 +24,17 @@ $END_LICENSE */
 #include <QtWidgets>
 
 class FilteringFileSystemModel : public QSortFilterProxyModel {
-
     Q_OBJECT
 
 public:
-    FilteringFileSystemModel(QObject *parent = 0);
-    void setHoveredRow(int row);
+    FilteringFileSystemModel(QObject *parent = nullptr);
 
 public slots:
-    void clearHover();
-    void enterPlayIconHover();
-    void exitPlayIconHover();
+    void refreshIndex(const QModelIndex &index) { emit dataChanged(index, index); }
 
 protected:
     QVariant data(const QModelIndex &index, int role) const;
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
-
-    int hoveredRow;
-    QTimeLine * timeLine;
-    bool playIconHovered;
-
-private slots:
-    void updatePlayIcon();
-
 };
 
 #endif // FILTERINGFILESYSTEMMODEL_H

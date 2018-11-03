@@ -40,15 +40,6 @@ QVariant TrackSqlModel::data(const QModelIndex &index, int role) const {
         track = Track::forId(trackId);
         return QVariant::fromValue(QPointer<Track>(track));
 
-    case Finder::HoveredItemRole:
-        return hoveredRow == index.row();
-
-    case Finder::PlayIconAnimationItemRole:
-        return timeLine->currentFrame() / 1000.;
-
-    case Finder::PlayIconHoveredRole:
-        return playIconHovered;
-
     case Qt::StatusTipRole:
         trackId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
         track = Track::forId(trackId);

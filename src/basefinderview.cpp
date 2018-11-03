@@ -57,6 +57,14 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     verticalScrollBar()->setPageStep(3);
 
     setAttribute(Qt::WA_OpaquePaintEvent);
+
+    hoveredRow = -1;
+    playIconHovered = false;
+    timeLine = new QTimeLine(250, this);
+    timeLine->setFrameRange(1000, 0);
+    connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
+    connect(this, SIGNAL(entered(const QModelIndex &)), SLOT(setHoveredIndex(const QModelIndex &)));
+    connect(this, SIGNAL(viewportEntered()), SLOT(clearHover()));
 }
 
 void BaseFinderView::appear() {
@@ -77,29 +85,73 @@ void BaseFinderView::disappear() {
     if (baseSqlModel) baseSqlModel->clear();
 }
 
+void BaseFinderView::setHoveredIndex(const QModelIndex &index) {
+    setHoveredRow(index.row());
+}
+
+void BaseFinderView::setHoveredRow(int row) {
+    int oldRow = hoveredRow;
+    hoveredRow = row;
+    refreshRow(oldRow);
+    refreshRow(hoveredRow);
+}
+
+void BaseFinderView::clearHover() {
+    refreshRow(hoveredRow);
+    hoveredRow = -1;
+}
+
+void BaseFinderView::enterPlayIconHover() {
+    if (playIconHovered) return;
+    playIconHovered = true;
+    if (timeLine->state() != QTimeLine::Running) {
+        timeLine->setDirection(QTimeLine::Forward);
+        timeLine->start();
+    }
+}
+
+void BaseFinderView::exitPlayIconHover() {
+    if (!playIconHovered) return;
+    playIconHovered = false;
+    if (timeLine->state() == QTimeLine::Running) {
+        timeLine->stop();
+        timeLine->setDirection(QTimeLine::Backward);
+        timeLine->start();
+    }
+    setHoveredRow(hoveredRow);
+}
+
+void BaseFinderView::refreshIndex(const QModelIndex &index) {
+    bool res = QMetaObject::invokeMethod(model(), "refreshIndex", Qt::DirectConnection,
+                                         Q_ARG(QModelIndex, index));
+    if (!res) {
+        qDebug() << "Cannot invoke refreshIndex on " << model() << "for index" << index;
+    }
+}
+
+void BaseFinderView::refreshRow(int row) {
+    QModelIndex index = model()->index(row, 0);
+    refreshIndex(index);
+}
+
+void BaseFinderView::updatePlayIcon() {
+    refreshRow(hoveredRow);
+}
+
 void BaseFinderView::leaveEvent(QEvent * /* event */) {
-    QMetaObject::invokeMethod(model(), "clearHover");
+    clearHover();
 }
 
 void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
     QListView::mouseMoveEvent(event);
 
-    // qDebug() << "BaseFinderView::mouseMoveEvent" << event->pos();
-
     if (isHoveringPlayIcon(event)) {
-        QMetaObject::invokeMethod(model(), "enterPlayIconHover");
+        enterPlayIconHover();
         setCursor(Qt::PointingHandCursor);
     } else {
-        QMetaObject::invokeMethod(model(), "exitPlayIconHover");
+        exitPlayIconHover();
         unsetCursor();
     }
-
-    /*
-    const QModelIndex index = indexAt(event->pos());
-    Item *item = index.data(Finder::DataObjectRole).value<ItemPointer>();
-    if (item)
-        qDebug() << item->getName();
-        */
 }
 
 void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {

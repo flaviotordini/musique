@@ -21,7 +21,7 @@ $END_LICENSE */
 #ifndef BASEFINDERVIEW_H
 #define BASEFINDERVIEW_H
 
-#include <QListView>
+#include <QtWidgets>
 
 class FinderItemDelegate;
 
@@ -31,9 +31,22 @@ class BaseFinderView : public QListView {
 public:
     BaseFinderView(QWidget *parent);
 
+    int isHovered(const QModelIndex &index) const { return hoveredRow == index.row(); }
+    bool isPlayIconHovered() const { return playIconHovered; }
+    double animationFrame() const { return timeLine->currentFrame() / 1000.; }
+
 public slots:
     void appear();
     void disappear();
+
+    void setHoveredIndex(const QModelIndex &index);
+    void setHoveredRow(int row);
+    void clearHover();
+    void enterPlayIconHover();
+    void exitPlayIconHover();
+    void refreshIndex(const QModelIndex &index);
+    void refreshRow(int row);
+    void updatePlayIcon();
 
 signals:
     void play(const QModelIndex &index);
@@ -48,6 +61,10 @@ protected:
 
 private:
     bool isHoveringPlayIcon(QMouseEvent *event);
+
+    int hoveredRow;
+    QTimeLine *timeLine;
+    bool playIconHovered;
 };
 
 #endif // BASEFINDERVIEW_H

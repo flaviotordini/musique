@@ -20,22 +20,14 @@ $END_LICENSE */
 
 #include "filteringfilesystemmodel.h"
 #include "finderwidget.h"
-#include "model/track.h"
 #include "model/folder.h"
+#include "model/track.h"
 
-FilteringFileSystemModel::FilteringFileSystemModel(QObject *parent) :
-        QSortFilterProxyModel(parent) {
-    hoveredRow = -1;
-    playIconHovered = false;
-    timeLine = new QTimeLine(250, this);
-    timeLine->setFrameRange(1000, 0);
-    connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
-}
+FilteringFileSystemModel::FilteringFileSystemModel(QObject *parent)
+    : QSortFilterProxyModel(parent) {}
 
-bool FilteringFileSystemModel::filterAcceptsRow(
-        int sourceRow,
-        const QModelIndex &sourceParent) const {
-
+bool FilteringFileSystemModel::filterAcceptsRow(int sourceRow,
+                                                const QModelIndex &sourceParent) const {
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
     int itemType = sourceModel()->data(index, Finder::ItemTypeRole).toInt();
     if (itemType == Finder::ItemTypeFolder) {
@@ -57,54 +49,7 @@ bool FilteringFileSystemModel::filterAcceptsRow(
 
 QVariant FilteringFileSystemModel::data(const QModelIndex &index, int role) const {
     switch (role) {
-
-    case Finder::HoveredItemRole:
-        return hoveredRow == index.row();
-
-    case Finder::PlayIconAnimationItemRole:
-        return timeLine->currentFrame() / 1000.;
-
-    case Finder::PlayIconHoveredRole:
-        return playIconHovered;
-
     default:
         return QSortFilterProxyModel::data(index, role);
-
     }
-}
-
-void FilteringFileSystemModel::setHoveredRow(int row) {
-    int oldRow = hoveredRow;
-    hoveredRow = row;
-    emit dataChanged(index(oldRow, 0 ), index(oldRow, 0));
-    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
-}
-
-void FilteringFileSystemModel::clearHover() {
-    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
-    hoveredRow = -1;
-}
-
-void FilteringFileSystemModel::enterPlayIconHover() {
-    if (playIconHovered) return;
-    playIconHovered = true;
-    if (timeLine->state() != QTimeLine::Running) {
-        timeLine->setDirection(QTimeLine::Forward);
-        timeLine->start();
-    }
-}
-
-void FilteringFileSystemModel::exitPlayIconHover() {
-    if (!playIconHovered) return;
-    playIconHovered = false;
-    if (timeLine->state() == QTimeLine::Running) {
-        timeLine->stop();
-        timeLine->setDirection(QTimeLine::Backward);
-        timeLine->start();
-    }
-    setHoveredRow(hoveredRow);
-}
-
-void FilteringFileSystemModel::updatePlayIcon() {
-    emit dataChanged(index(hoveredRow, 0), index(hoveredRow, 0));
 }

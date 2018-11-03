@@ -19,6 +19,7 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "finderitemdelegate.h"
+#include "basefinderview.h"
 #include "basesqlmodel.h"
 #include "finderwidget.h"
 #include "fontutils.h"
@@ -31,7 +32,8 @@ const int FinderItemDelegate::ITEM_WIDTH = 180;
 const int FinderItemDelegate::ITEM_HEIGHT = 180;
 const int FinderItemDelegate::PADDING = 10;
 
-FinderItemDelegate::FinderItemDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
+FinderItemDelegate::FinderItemDelegate(BaseFinderView *parent)
+    : QStyledItemDelegate(parent), view(parent) {}
 
 QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
     const int iconHeight = 24;
@@ -159,6 +161,8 @@ void FinderItemDelegate::paint(QPainter *painter,
         paintFolder(painter, option, index);
     } else if (itemType == Finder::ItemTypeTrack) {
         paintTrack(painter, option, index);
+    } else if (itemType == Finder::ItemTypeGenre) {
+        // TODO paintGenre(painter, option, index);
     } else {
         QStyledItemDelegate::paint(painter, option, index);
     }
@@ -177,7 +181,7 @@ void FinderItemDelegate::paintArtist(QPainter *painter,
     painter->translate(option.rect.topLeft());
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
-    const bool isHovered = index.data(Finder::HoveredItemRole).toBool();
+    const bool isHovered = view->isHovered(index);
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
@@ -188,8 +192,8 @@ void FinderItemDelegate::paintArtist(QPainter *painter,
 
     // play icon overlayed on the thumb
     if (isHovered) {
-        double animation = index.data(Finder::PlayIconAnimationItemRole).toDouble();
-        bool playIconHovered = index.data(Finder::PlayIconHoveredRole).toBool();
+        double animation = view->animationFrame();
+        bool playIconHovered = view->isPlayIconHovered();
         paintPlayIcon(painter, line, animation, playIconHovered);
     }
 
@@ -217,7 +221,7 @@ void FinderItemDelegate::paintAlbum(QPainter *painter,
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
     // const bool isActive = index.data( ActiveItemRole ).toBool();
-    const bool isHovered = index.data(Finder::HoveredItemRole).toBool();
+    const bool isHovered = view->isHovered(index);
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
@@ -228,8 +232,8 @@ void FinderItemDelegate::paintAlbum(QPainter *painter,
 
     // play icon overlayed on the thumb
     if (isHovered) {
-        double animation = index.data(Finder::PlayIconAnimationItemRole).toDouble();
-        bool playIconHovered = index.data(Finder::PlayIconHoveredRole).toBool();
+        double animation = view->animationFrame();
+        bool playIconHovered = view->isPlayIconHovered();
         paintPlayIcon(painter, line, animation, playIconHovered);
     }
 
@@ -252,7 +256,7 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
     if (!folder) return;
 
     // const bool isActive = index.data( ActiveItemRole ).toBool();
-    const bool isHovered = index.data(Finder::HoveredItemRole).toBool();
+    const bool isHovered = view->isHovered(index);
     const bool isSelected = option.state & QStyle::State_Selected;
 
     painter->save();
@@ -274,8 +278,8 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
 
     // play icon overlayed on the thumb
     if (isHovered) {
-        double animation = index.data(Finder::PlayIconAnimationItemRole).toDouble();
-        bool playIconHovered = index.data(Finder::PlayIconHoveredRole).toBool();
+        double animation = view->animationFrame();
+        bool playIconHovered = view->isPlayIconHovered();
         paintPlayIcon(painter, line, animation, playIconHovered);
     }
 
@@ -306,7 +310,7 @@ void FinderItemDelegate::paintTrack(QPainter *painter,
     }
 
     // const bool isActive = index.data( ActiveItemRole ).toBool();
-    const bool isHovered = index.data(Finder::HoveredItemRole).toBool();
+    const bool isHovered = view->isHovered(index);
     const bool isSelected = option.state & QStyle::State_Selected;
 
     painter->save();
@@ -318,8 +322,8 @@ void FinderItemDelegate::paintTrack(QPainter *painter,
 
     // play icon overlayed on the thumb
     if (isHovered) {
-        double animation = index.data(Finder::PlayIconAnimationItemRole).toDouble();
-        bool playIconHovered = index.data(Finder::PlayIconHoveredRole).toBool();
+        double animation = view->animationFrame();
+        bool playIconHovered = view->isPlayIconHovered();
         paintPlayIcon(painter, line, animation, playIconHovered);
     }
 

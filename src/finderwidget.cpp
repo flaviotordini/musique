@@ -183,9 +183,6 @@ void FinderWidget::setupArtists() {
             SLOT(artistActivated(const QModelIndex &)));
     connect(artistListView, SIGNAL(play(const QModelIndex &)),
             SLOT(artistPlayed(const QModelIndex &)));
-    connect(artistListView, SIGNAL(entered(const QModelIndex &)),
-            SLOT(artistEntered(const QModelIndex &)));
-    connect(artistListView, SIGNAL(viewportEntered()), artistListModel, SLOT(clearHover()));
     artistListView->setModel(artistListModel);
     stackedWidget->addWidget(artistListView);
 }
@@ -198,9 +195,6 @@ void FinderWidget::setupAlbums() {
             SLOT(albumActivated(const QModelIndex &)));
     connect(albumListView, SIGNAL(play(const QModelIndex &)),
             SLOT(albumPlayed(const QModelIndex &)));
-    connect(albumListView, SIGNAL(entered(const QModelIndex &)),
-            SLOT(albumEntered(const QModelIndex &)));
-    connect(albumListView, SIGNAL(viewportEntered()), albumListModel, SLOT(clearHover()));
     albumListView->setModel(albumListModel);
     stackedWidget->addWidget(albumListView);
 }
@@ -210,9 +204,6 @@ void FinderWidget::setupTracks() {
     trackListView = new TrackListView(this);
     connect(trackListView, SIGNAL(activated(const QModelIndex &)),
             SLOT(trackActivated(const QModelIndex &)));
-    connect(trackListView, SIGNAL(entered(const QModelIndex &)),
-            SLOT(trackEntered(const QModelIndex &)));
-    connect(trackListView, SIGNAL(viewportEntered()), trackListModel, SLOT(clearHover()));
     trackListView->setModel(trackListModel);
     stackedWidget->addWidget(trackListView);
 }
@@ -380,10 +371,6 @@ void FinderWidget::disappear() {
     }
 }
 
-void FinderWidget::artistEntered(const QModelIndex &index) {
-    artistListModel->setHoveredRow(index.row());
-}
-
 void FinderWidget::artistActivated(const QModelIndex &index) {
     // get the data object
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
@@ -414,10 +401,6 @@ void FinderWidget::artistPlayed(const QModelIndex &index) {
     addTracksAndPlay(tracks);
 }
 
-void FinderWidget::albumEntered(const QModelIndex &index) {
-    albumListModel->setHoveredRow(index.row());
-}
-
 void FinderWidget::albumActivated(Album *album) {
     if (!trackListView) setupTracks();
 
@@ -445,10 +428,6 @@ void FinderWidget::albumPlayed(const QModelIndex &index) {
     addTracksAndPlay(tracks);
 }
 
-void FinderWidget::trackEntered(const QModelIndex &index) {
-    trackListModel->setHoveredRow(index.row());
-}
-
 void FinderWidget::trackActivated(Track *track) {
     playlistModel->addTrack(track);
     playlistModel->setActiveRow(playlistModel->rowForTrack(track));
@@ -458,10 +437,6 @@ void FinderWidget::trackActivated(const QModelIndex &index) {
     const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
     Track *track = trackPointer.data();
     trackActivated(track);
-}
-
-void FinderWidget::folderEntered(const QModelIndex &index) {
-    filteringFileSystemModel->setHoveredRow(index.row());
 }
 
 void FinderWidget::folderActivated(const QModelIndex &index) {

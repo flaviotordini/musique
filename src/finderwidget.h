@@ -43,14 +43,7 @@ class Album;
 
 namespace Finder {
 
-enum FinderDataRoles {
-    ItemTypeRole = Qt::UserRole,
-    DataObjectRole,
-    ActiveItemRole,
-    HoveredItemRole,
-    PlayIconAnimationItemRole,
-    PlayIconHoveredRole
-};
+enum FinderDataRoles { ItemTypeRole = Qt::UserRole, DataObjectRole, ActiveItemRole };
 
 enum FinderItemTypes {
     ItemTypeGenre = 1,
@@ -87,18 +80,14 @@ private slots:
     void showAlbums();
     void showFolders();
 
-    void artistEntered(const QModelIndex &index);
     void artistActivated(const QModelIndex &index);
     void artistPlayed(const QModelIndex &index);
 
-    void albumEntered(const QModelIndex &index);
     void albumActivated(const QModelIndex &index);
     void albumPlayed(const QModelIndex &index);
 
-    void trackEntered(const QModelIndex &index);
     void trackActivated(const QModelIndex &index);
 
-    void folderEntered(const QModelIndex &index);
     void folderActivated(const QModelIndex &index);
     void folderPlayed(const QModelIndex &index);
 
