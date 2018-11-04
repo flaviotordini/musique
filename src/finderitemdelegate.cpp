@@ -96,7 +96,7 @@ QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) const 
 const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) const {
     static QHash<QString, QPixmap> cache;
     const qreal pixelRatio = IconUtils::pixelRatio();
-    const QString key = type + QString::number(pixelRatio);
+    const QString key = type + QString::number(itemWidth) + '|' + QString::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
 
