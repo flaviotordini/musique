@@ -61,7 +61,8 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     hoveredRow = -1;
     playIconHovered = false;
     timeLine = new QTimeLine(250, this);
-    timeLine->setFrameRange(1000, 0);
+    timeLine->setFrameRange(0, 100);
+    timeLine->setCurveShape(QTimeLine::LinearCurve);
     connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
     connect(this, SIGNAL(entered(const QModelIndex &)), SLOT(setHoveredIndex(const QModelIndex &)));
     connect(this, SIGNAL(viewportEntered()), SLOT(clearHover()));

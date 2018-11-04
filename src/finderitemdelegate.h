@@ -48,7 +48,7 @@ public:
 
 private:
     static QPixmap createPlayIcon(bool hovered, qreal pixelRatio);
-    static const QPixmap &getPlayIcon(bool hovered);
+    static const QPixmap &getPlayIcon(bool hovered, qreal pixelRatio);
 
     QPixmap createMissingItemBackground(qreal pixelRatio) const;
     const QPixmap &getMissingItemPixmap(const QString &type) const;

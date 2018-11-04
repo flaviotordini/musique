@@ -112,9 +112,8 @@ const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) con
     return cache.insert(key, pixmap).value();
 }
 
-const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered) {
-    static QHash<QString, QPixmap> cache;
-    const qreal pixelRatio = IconUtils::pixelRatio();
+const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered, qreal pixelRatio) {
+    static QMap<QString, QPixmap> cache;
     const QString key = (hovered ? "1|" : "0|") + QString::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
@@ -344,25 +343,17 @@ void FinderItemDelegate::paintPlayIcon(QPainter *painter,
                                        const QRect &rect,
                                        double opacity,
                                        bool isHovered) const {
-    const QPixmap &playIcon = getPlayIcon(isHovered);
+    const qreal pixelRatio = IconUtils::pixelRatio();
+    const QPixmap &playIcon = getPlayIcon(isHovered, pixelRatio);
 
     painter->save();
-    const qreal pixelRatio = IconUtils::pixelRatio();
     painter->translate((rect.width() - playIcon.width() - PADDING) * pixelRatio,
                        PADDING * pixelRatio);
-
     if (isHovered)
-        painter->setOpacity(opacity * .75);
+        painter->setOpacity(opacity);
     else
-        painter->setOpacity(.75);
-
+        painter->setOpacity(.8);
     painter->drawPixmap(0, 0, playIcon);
-
-    if (isHovered) {
-        painter->setOpacity(.9 - opacity * .9);
-        painter->drawPixmap(0, 0, playIcon);
-    }
-
     painter->restore();
 }
 

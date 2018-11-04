@@ -33,7 +33,7 @@ public:
 
     int isHovered(const QModelIndex &index) const { return hoveredRow == index.row(); }
     bool isPlayIconHovered() const { return playIconHovered; }
-    double animationFrame() const { return timeLine->currentFrame() / 1000.; }
+    double animationFrame() const { return timeLine->currentFrame() / 100.; }
 
 public slots:
     void appear();
