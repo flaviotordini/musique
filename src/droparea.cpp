@@ -49,7 +49,7 @@ void DropArea::dropEvent(QDropEvent *event) {
     const QMimeData *mimeData = event->mimeData();
     const TrackMimeData* trackMimeData = qobject_cast<const TrackMimeData*>(mimeData);
     if (trackMimeData) {
-        QVector<Track*> tracks = trackMimeData->tracks();
+        QVector<Track*> tracks = trackMimeData->getTracks();
         playlistModel->addTracks(tracks);
         event->acceptProposedAction();
     }

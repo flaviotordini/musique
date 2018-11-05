@@ -162,9 +162,7 @@ Qt::ItemFlags SearchModel::flags(const QModelIndex &index) const {
 }
 
 QStringList SearchModel::mimeTypes() const {
-    QStringList types;
-    types << TRACK_MIME;
-    return types;
+    return TrackMimeData::types();
 }
 
 QMimeData *SearchModel::mimeData(const QModelIndexList &indexes) const {
@@ -174,7 +172,7 @@ QMimeData *SearchModel::mimeData(const QModelIndexList &indexes) const {
         Item *item = itemAt(index);
         if (item) {
             // qDebug() << item->getTracks();
-            mime->addTracks(item->getTracks());
+            mime->setTracks(item->getTracks());
         }
     }
 

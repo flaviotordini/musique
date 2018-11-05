@@ -21,35 +21,28 @@ $END_LICENSE */
 #ifndef TRACKMIMEDATA_H
 #define TRACKMIMEDATA_H
 
-#include <QMimeData>
-#include "model/track.h"
 #include "constants.h"
-
-static const QString TRACK_MIME = "application/x-" + QLatin1String(Constants::UNIX_NAME) + "-tracks";
+#include "model/track.h"
+#include <QMimeData>
 
 class TrackMimeData : public QMimeData {
-
     Q_OBJECT
 
 public:
     TrackMimeData();
 
+    static const QString mime;
+    static const QStringList &types();
+
     virtual QStringList formats() const;
-    virtual bool hasFormat( const QString &mimeType ) const;
+    virtual bool hasFormat(const QString &mimeType) const;
 
-    QVector<Track*> tracks() const { return m_tracks; }
-
-    void addTrack(Track *track) {
-        m_tracks << track;
-    }
-
-    void addTracks(QVector<Track*> tracks) {
-        m_tracks.append(tracks);
-    }
+    const QVector<Track *> &getTracks() const { return tracks; }
+    void addTrack(Track *track) { tracks << track; }
+    void setTracks(const QVector<Track *> &value) { tracks = value; }
 
 private:
-    QVector<Track*> m_tracks;
-
+    QVector<Track *> tracks;
 };
 
 #endif // TRACKMIMEDATA_H

@@ -54,9 +54,7 @@ Qt::ItemFlags BaseSqlModel::flags(const QModelIndex &index) const {
 }
 
 QStringList BaseSqlModel::mimeTypes() const {
-    QStringList types;
-    types << TRACK_MIME;
-    return types;
+    return TrackMimeData::types();
 }
 
 QMimeData *BaseSqlModel::mimeData(const QModelIndexList &indexes) const {
@@ -66,7 +64,7 @@ QMimeData *BaseSqlModel::mimeData(const QModelIndexList &indexes) const {
         Item *item = itemAt(index);
         if (item) {
             // qDebug() << item->getTracks();
-            mime->addTracks(item->getTracks());
+            mime->setTracks(item->getTracks());
         }
     }
 

@@ -20,15 +20,20 @@ $END_LICENSE */
 
 #include "trackmimedata.h"
 
-TrackMimeData::TrackMimeData() { }
+const QString TrackMimeData::mime =
+        "application/x-" + QLatin1String(Constants::UNIX_NAME) + "-tracks";
 
-QStringList TrackMimeData::formats() const {
-    QStringList formats( QMimeData::formats() );
-    formats.append(TRACK_MIME);
+TrackMimeData::TrackMimeData() {}
+
+const QStringList &TrackMimeData::types() {
+    static const QStringList formats = {mime};
     return formats;
 }
 
-bool TrackMimeData::hasFormat( const QString &mimeType ) const {
-    return mimeType == TRACK_MIME;
+QStringList TrackMimeData::formats() const {
+    return types();
 }
 
+bool TrackMimeData::hasFormat(const QString &mimeType) const {
+    return mimeType == mime;
+}

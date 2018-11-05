@@ -305,9 +305,7 @@ Qt::ItemFlags PlaylistModel::flags(const QModelIndex &index) const {
 }
 
 QStringList PlaylistModel::mimeTypes() const {
-    QStringList types;
-    types << TRACK_MIME;
-    return types;
+    return TrackMimeData::types();
 }
 
 QMimeData *PlaylistModel::mimeData(const QModelIndexList &indexes) const {
@@ -327,7 +325,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
                                  int column,
                                  const QModelIndex &parent) {
     if (action == Qt::IgnoreAction) return true;
-    if (!data->hasFormat(TRACK_MIME)) return false;
+    if (!data->hasFormat(TrackMimeData::mime)) return false;
     if (column > 0) return false;
 
     int beginRow;
@@ -341,7 +339,7 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
     const TrackMimeData *trackMimeData = qobject_cast<const TrackMimeData *>(data);
     if (!trackMimeData) return false;
 
-    const QVector<Track *> droppedTracks = trackMimeData->tracks();
+    const QVector<Track *> &droppedTracks = trackMimeData->getTracks();
 
     layoutAboutToBeChanged();
 
