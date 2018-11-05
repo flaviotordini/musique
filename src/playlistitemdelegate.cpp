@@ -300,7 +300,8 @@ void PlaylistItemDelegate::paintTrackTitle(QPainter *painter,
         Album *album = track->getAlbum();
         if (album && album->getArtist()) {
             Artist *albumArtist = album->getArtist();
-            if (albumArtist && albumArtist->getId() != track->getArtist()->getId()) {
+            Artist *trackArtist = track->getArtist();
+            if (albumArtist && trackArtist && albumArtist->getId() != trackArtist->getId()) {
                 static const QString by = "—";
                 const int x = trackTextBox.right();
                 QRect textBox(x, line.height(), 0, 0);
