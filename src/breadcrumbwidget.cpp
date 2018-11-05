@@ -31,7 +31,6 @@ BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
     addAction(backAction);
 
     setIconSize(QSize(16, 16));
-    setStyleSheet("QToolButton { color:white } QToolBar { background: black; border:0 }");
 }
 
 void BreadcrumbWidget::addItem(const QString &title) {

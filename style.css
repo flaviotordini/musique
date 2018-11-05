@@ -17,3 +17,14 @@ AppsWidget {
     background-color: palette(window);
     border-top: 1px solid #808080;
 }
+
+BreadcrumbWidget {
+    border: 0;
+    background: black;
+    padding: 8px;
+}
+
+BreadcrumbWidget QToolButton:hover {
+    border: 0;
+    color: white;
+}
