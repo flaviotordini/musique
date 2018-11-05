@@ -96,6 +96,7 @@ void Artist::insert() {
     // qDebug() << query.lastQuery();
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
+    id = query.lastInsertId().toInt();
 }
 
 void Artist::update() {

@@ -92,6 +92,7 @@ void Album::insert() {
     query.bindValue(4, listeners);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
+    id = query.lastInsertId().toInt();
 
     // increment artist's album count
     if (artist && artist->getId()) {

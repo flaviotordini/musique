@@ -501,13 +501,11 @@ void CollectionScanner::gotArtistInfo() {
     if (artistId < 0) {
         // qDebug() << "We have a new promising artist:" << artist->getName();
         artist->insert();
-        // TODO last insert id
-        artistId = Artist::idForName(artist->getName());
+        artistId = artist->getId();
     } else {
         qDebug() << "Updating artist" << artist->getName();
         artist->update();
     }
-    artist->setId(artistId);
 
     // now that we have an id, let's enqueue the cover image download
     QString imageUrl = artist->property("imageUrl").toString();
@@ -712,13 +710,11 @@ void CollectionScanner::gotAlbumInfo() {
     if (albumId < 0) {
         // qDebug() << "We have a new cool album:" << album->getTitle();
         album->insert();
-        // TODO last insert id
-        albumId = Album::idForHash(album->getHash());
+        albumId = album->getId();
     } else {
         qDebug() << "Updating album" << album->getTitle();
         album->update();
     }
-    album->setId(albumId);
 
     // now that we have an id, let's enqueue the cover image download
     QString imageUrl = album->property("imageUrl").toString();
