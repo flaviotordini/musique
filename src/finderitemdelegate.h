@@ -26,6 +26,7 @@ $END_LICENSE */
 class Artist;
 class Album;
 class Folder;
+class Item;
 class BaseFinderView;
 
 class FinderItemDelegate : public QStyledItemDelegate {
@@ -57,10 +58,12 @@ private:
     const QPixmap &getMissingAlbumPixmap() const;
     const QPixmap &getMissingTrackPixmap() const;
 
-    void paintArtist(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
-    void paintAlbum(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
     void paintFolder(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
     void paintTrack(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
+    void paintItem(QPainter *painter,
+                   const QStyleOptionViewItem &option,
+                   const QModelIndex &index) const;
+
     void paintPlayIcon(QPainter *painter,
                        const QRect &rect,
                        double animation = 0.,

@@ -24,9 +24,8 @@ $END_LICENSE */
 #include "finderwidget.h"
 #include "fontutils.h"
 #include "iconutils.h"
-#include "model/album.h"
-#include "model/artist.h"
 #include "model/folder.h"
+#include "model/item.h"
 
 const int FinderItemDelegate::ITEM_WIDTH = 180;
 const int FinderItemDelegate::ITEM_HEIGHT = 180;
@@ -96,7 +95,7 @@ QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) const 
 const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) const {
     static QHash<QString, QPixmap> cache;
     const qreal pixelRatio = IconUtils::pixelRatio();
-    const QString key = type + QString::number(itemWidth) + '|' + QString::number(pixelRatio);
+    const QString key = QString::number(itemWidth) + type + QString::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
 
@@ -123,7 +122,7 @@ const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered, qreal pixelRatio) {
 
 const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) const {
     static QHash<QString, QPixmap> cache;
-    const QString key = QString::number(pixelRatio);
+    const QString key = QString::number(itemWidth) + '|' + QString::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
     QPixmap pixmap = createMissingItemBackground(pixelRatio);
@@ -151,98 +150,12 @@ void FinderItemDelegate::paint(QPainter *painter,
                                const QStyleOptionViewItem &option,
                                const QModelIndex &index) const {
     const int itemType = index.data(Finder::ItemTypeRole).toInt();
-
-    if (itemType == Finder::ItemTypeArtist) {
-        paintArtist(painter, option, index);
-    } else if (itemType == Finder::ItemTypeAlbum) {
-        paintAlbum(painter, option, index);
-    } else if (itemType == Finder::ItemTypeFolder) {
+    if (itemType == Finder::ItemTypeFolder) {
         paintFolder(painter, option, index);
     } else if (itemType == Finder::ItemTypeTrack) {
         paintTrack(painter, option, index);
-    } else if (itemType == Finder::ItemTypeGenre) {
-        // TODO paintGenre(painter, option, index);
-    } else {
-        QStyledItemDelegate::paint(painter, option, index);
-    }
-}
-
-void FinderItemDelegate::paintArtist(QPainter *painter,
-                                     const QStyleOptionViewItem &option,
-                                     const QModelIndex &index) const {
-    // get the data object
-    const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
-    Artist *artist = artistPointer.data();
-    if (!artist) return;
-
-    painter->save();
-
-    painter->translate(option.rect.topLeft());
-    const QRect line(0, 0, option.rect.width(), option.rect.height());
-
-    const bool isHovered = view->isHovered(index);
-    const bool isSelected = option.state & QStyle::State_Selected;
-
-    // thumb
-    QPixmap pixmap =
-            artist->getPhotoForSize(itemWidth, itemHeight, painter->device()->devicePixelRatioF());
-    if (pixmap.isNull()) pixmap = getMissingArtistPixmap();
-    painter->drawPixmap(0, 0, pixmap);
-
-    // play icon overlayed on the thumb
-    if (isHovered) {
-        double animation = view->animationFrame();
-        bool playIconHovered = view->isPlayIconHovered();
-        paintPlayIcon(painter, line, animation, playIconHovered);
-    }
-
-    // name
-    drawName(painter, option, artist->getName(), line, isSelected);
-
-    // if (artist->getTrackCount() > 0) {
-    // drawBadge(painter, QString::number(artist->getTrackCount()), line);
-    // }
-
-    painter->restore();
-}
-
-void FinderItemDelegate::paintAlbum(QPainter *painter,
-                                    const QStyleOptionViewItem &option,
-                                    const QModelIndex &index) const {
-    // get the data object
-    const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
-    Album *album = albumPointer.data();
-    if (!album) return;
-
-    painter->save();
-
-    painter->translate(option.rect.topLeft());
-    const QRect line(0, 0, option.rect.width(), option.rect.height());
-
-    // const bool isActive = index.data( ActiveItemRole ).toBool();
-    const bool isHovered = view->isHovered(index);
-    const bool isSelected = option.state & QStyle::State_Selected;
-
-    // thumb
-    QPixmap pixmap =
-            album->getPhotoForSize(itemWidth, itemHeight, painter->device()->devicePixelRatioF());
-    if (pixmap.isNull()) pixmap = getMissingAlbumPixmap();
-    painter->drawPixmap(0, 0, pixmap);
-
-    // play icon overlayed on the thumb
-    if (isHovered) {
-        double animation = view->animationFrame();
-        bool playIconHovered = view->isPlayIconHovered();
-        paintPlayIcon(painter, line, animation, playIconHovered);
-    }
-
-    // name
-    drawName(painter, option, album->getTitle(), line, isSelected);
-    if (album->getYear() > 0) {
-        drawBadge(painter, QString::number(album->getYear()), line);
-    }
-
-    painter->restore();
+    } else
+        paintItem(painter, option, index);
 }
 
 void FinderItemDelegate::paintFolder(QPainter *painter,
@@ -264,16 +177,25 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
 
     // thumb
     painter->drawPixmap(0, 0, getMissingItemBackground(IconUtils::pixelRatio()));
+
+    /*
 #ifdef APP_LINUX
     static const QIcon fileIcon = IconUtils::icon("folder");
 #else
     QIcon fileIcon = index.data(QFileSystemModel::FileIconRole).value<QIcon>();
-
 #endif
-
     if (!fileIcon.isNull())
         painter->drawPixmap(itemWidth / 2 - 32, itemHeight / 3 - 32,
                             fileIcon.pixmap(QSize(64, 64)));
+    */
+
+    qreal pixelRatio = painter->device()->devicePixelRatioF();
+    QPixmap symbol = IconUtils::pixmap(":/images/item/folder.png");
+    painter->save();
+    painter->setOpacity(.1);
+    painter->drawPixmap(((itemWidth - symbol.width()) / 2) * pixelRatio,
+                        ((itemHeight - symbol.height()) / 3 - 8) * pixelRatio, symbol);
+    painter->restore();
 
     // play icon overlayed on the thumb
     if (isHovered) {
@@ -335,6 +257,39 @@ void FinderItemDelegate::paintTrack(QPainter *painter,
     int trackNumber = track->getNumber();
     if (trackNumber > 0) drawCentralLabel(painter, QString::number(trackNumber), line);
     drawName(painter, option, track->getTitle(), line, isSelected);
+
+    painter->restore();
+}
+
+void FinderItemDelegate::paintItem(QPainter *painter,
+                                   const QStyleOptionViewItem &option,
+                                   const QModelIndex &index) const {
+    Item *item = index.data(Finder::ItemObjectRole).value<ItemPointer>().data();
+    if (!item) {
+        qDebug() << "item is null";
+        return;
+    }
+
+    const bool isHovered = view->isHovered(index);
+    const bool isSelected = option.state & QStyle::State_Selected;
+
+    painter->save();
+    painter->translate(option.rect.topLeft());
+    const QRect line(0, 0, option.rect.width(), option.rect.height());
+
+    qreal pixelRatio = painter->device()->devicePixelRatioF();
+    QPixmap pixmap = item->getThumb(itemWidth, itemHeight, pixelRatio);
+    if (pixmap.isNull())
+        pixmap = getMissingItemPixmap(QString(item->metaObject()->className()).toLower());
+    painter->drawPixmap(0, 0, pixmap);
+
+    if (isHovered) {
+        double animation = view->animationFrame();
+        bool playIconHovered = view->isPlayIconHovered();
+        paintPlayIcon(painter, line, animation, playIconHovered);
+    }
+
+    drawName(painter, option, item->getName(), line, isSelected);
 
     painter->restore();
 }
@@ -424,23 +379,13 @@ void FinderItemDelegate::drawBadge(QPainter *painter,
 void FinderItemDelegate::drawCentralLabel(QPainter *painter,
                                           const QString &text,
                                           const QRect &rect) const {
-    static const int PADDING = 10;
-
     painter->save();
     painter->setFont(FontUtils::small());
     QSizeF textSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, text));
     QRect textBox((rect.width() - textSize.width()) / 2,
                   (rect.height() - textSize.height()) / 3 + 4, textSize.width(), textSize.height());
-
     QRect roundedRect = textBox;
     roundedRect.adjust(-PADDING / 2, -PADDING / 3, PADDING / 2, PADDING / 3);
-
-    /*
-    painter->setRenderHints(QPainter::Antialiasing, true);
-    painter->setBrush(QColor(0, 0, 0, 96));
-    painter->setPen(Qt::NoPen);
-    painter->drawRoundedRect(roundedRect, PADDING / 2, PADDING / 2, Qt::AbsoluteSize);
-    */
     painter->setPen(QColor(255, 255, 255, 200));
     painter->drawText(textBox, Qt::AlignCenter, text);
     painter->restore();

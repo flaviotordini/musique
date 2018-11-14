@@ -35,6 +35,9 @@ public:
         const ArtistPointer itemPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
         return qobject_cast<Item *>(itemPointer.data());
     }
+
+private:
+    Artist *artistForIndex(const QModelIndex &index) const;
 };
 
 #endif

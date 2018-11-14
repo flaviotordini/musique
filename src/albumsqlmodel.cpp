@@ -25,22 +25,24 @@ $END_LICENSE */
 AlbumSqlModel::AlbumSqlModel(QObject *parent) : BaseSqlModel(parent) {}
 
 QVariant AlbumSqlModel::data(const QModelIndex &index, int role) const {
-    Album *album = nullptr;
-
     switch (role) {
     case Finder::ItemTypeRole:
         return Finder::ItemTypeAlbum;
 
+    case Finder::ItemObjectRole:
+        return QVariant::fromValue(QPointer<Item>(albumForIndex(index)));
+
     case Finder::DataObjectRole:
-        album = Album::forId(QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt());
-        connect(album, SIGNAL(gotPhoto()), MainWindow::instance(), SLOT(update()),
-                Qt::UniqueConnection);
-        return QVariant::fromValue(QPointer<Album>(album));
+        return QVariant::fromValue(QPointer<Album>(albumForIndex(index)));
 
     case Qt::StatusTipRole:
-        album = Album::forId(QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt());
-        return album->getStatusTip();
+        return albumForIndex(index)->getStatusTip();
     }
 
     return QVariant();
+}
+
+Album *AlbumSqlModel::albumForIndex(const QModelIndex &index) const {
+    int id = QSqlQueryModel::data(index).toInt();
+    return Album::forId(id);
 }

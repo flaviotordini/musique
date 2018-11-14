@@ -24,25 +24,24 @@ $END_LICENSE */
 ArtistSqlModel::ArtistSqlModel(QObject *parent) : BaseSqlModel(parent) {}
 
 QVariant ArtistSqlModel::data(const QModelIndex &index, int role) const {
-    Artist *artist = nullptr;
-    int artistId = 0;
-
     switch (role) {
     case Finder::ItemTypeRole:
         return Finder::ItemTypeArtist;
 
+    case Finder::ItemObjectRole:
+        return QVariant::fromValue(QPointer<Item>(artistForIndex(index)));
+
     case Finder::DataObjectRole:
-        artistId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
-        artist = Artist::forId(artistId);
-        connect(artist, SIGNAL(gotPhoto()), MainWindow::instance(), SLOT(update()),
-                Qt::UniqueConnection);
-        return QVariant::fromValue(QPointer<Artist>(artist));
+        return QVariant::fromValue(QPointer<Artist>(artistForIndex(index)));
 
     case Qt::StatusTipRole:
-        artistId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
-        artist = Artist::forId(artistId);
-        return artist->getStatusTip();
+        return artistForIndex(index)->getStatusTip();
     }
 
     return QVariant();
+}
+
+Artist *ArtistSqlModel::artistForIndex(const QModelIndex &index) const {
+    int id = QSqlQueryModel::data(index).toInt();
+    return Artist::forId(id);
 }

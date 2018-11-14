@@ -54,5 +54,7 @@
         <file>images/view-fullscreen@2x.png</file>
         <file>images/view-restore.png</file>
         <file>images/view-restore@2x.png</file>
+        <file>images/item/folder.png</file>
+        <file>images/item/folder@2x.png</file>
     </qresource>
 </RCC>
