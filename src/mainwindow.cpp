@@ -719,10 +719,10 @@ void MainWindow::showWidget(QWidget *widget, bool transition) {
     aboutAct->setEnabled(widget != aboutView);
     chooseFolderAct->setEnabled(widget == mediaView || widget == contextualView);
     toolbarSearch->setEnabled(widget == mediaView || widget == contextualView);
+    mainToolBar->setVisible(widget == mediaView || widget == contextualView);
+    statusBar()->setVisible(widget == mediaView);
 
     views->setCurrentWidget(widget);
-
-    statusBar()->setVisible(widget == mediaView);
 
     setUpdatesEnabled(true);
 
