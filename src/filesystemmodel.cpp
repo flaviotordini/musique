@@ -100,7 +100,7 @@ QMimeData *FileSystemModel::mimeData(const QModelIndexList &indexes) const {
         Item *item = itemAt(index);
         if (item) {
             // qDebug() << item->getTracks();
-            mime->setTracks(item->getTracks());
+            mime->addTracks(item->getTracks());
         }
     }
 

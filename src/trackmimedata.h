@@ -39,7 +39,7 @@ public:
 
     const QVector<Track *> &getTracks() const { return tracks; }
     void addTrack(Track *track) { tracks << track; }
-    void setTracks(const QVector<Track *> &value) { tracks = value; }
+    void addTracks(const QVector<Track *> &value) { tracks.append(value); }
 
 private:
     QVector<Track *> tracks;
