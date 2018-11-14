@@ -20,7 +20,7 @@ $END_LICENSE */
 
 #include "datautils.h"
 
-DataUtils::DataUtils() { }
+DataUtils::DataUtils() {}
 
 QString DataUtils::cleanTag(QString s) {
     s.replace('_', ' ');
@@ -28,15 +28,20 @@ QString DataUtils::cleanTag(QString s) {
 }
 
 QString DataUtils::normalizeTag(const QString &tag) {
-    QString s = tag.simplified().toLower();
+    QString s = tag.trimmed().toLower();
 
     // The Beatles => Beatles
     if (s.length() > 4 && s.startsWith(QLatin1String("the "))) s = s.remove(0, 4);
 
-    // Wendy & Lisa => Wendy and Lisa
-    s.replace(QLatin1String(" & "), QLatin1String("and"));
+    static const QLatin1String et("and");
 
-    // remove anything that is not a "letter"
+    // Wendy & Lisa => Wendy and Lisa
+    s.replace(QLatin1String("&"), et);
+
+    // Rock'n'roll => Rock and Roll
+    s.replace(QLatin1String("'n'"), et);
+
+    // remove anything that is not a letter or number
     const int l = s.length();
     QString n;
     n.reserve(l);
@@ -51,6 +56,7 @@ QString DataUtils::normalizeTag(const QString &tag) {
 
 QString DataUtils::simplify(const QString &s) {
     QString s2 = s;
+    s2.replace(QString::fromUtf8("´"), QLatin1String("'"));
     s2.replace(QString::fromUtf8("’"), QLatin1String("'"));
     s2.replace(QString::fromUtf8("…"), QLatin1String("..."));
     // Praise/Love => Praise / Love
@@ -58,16 +64,16 @@ QString DataUtils::simplify(const QString &s) {
     return s2;
 }
 
-QString DataUtils::md5(const QString& name) {
-    return QString::fromLatin1(QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
+QString DataUtils::md5(const QString &name) {
+    return QString::fromLatin1(
+            QCryptographicHash::hash(name.toUtf8(), QCryptographicHash::Md5).toHex());
 }
 
-QString DataUtils::getXMLElementText(const QByteArray& bytes, const QString& elementName) {
+QString DataUtils::getXMLElementText(const QByteArray &bytes, const QString &elementName) {
     QXmlStreamReader xml(bytes);
 
     /* We'll parse the XML until we reach end of it.*/
-    while(!xml.atEnd() && !xml.hasError()) {
-
+    while (!xml.atEnd() && !xml.hasError()) {
         /* Read next element.*/
         QXmlStreamReader::TokenType token = xml.readNext();
 
@@ -78,33 +84,32 @@ QString DataUtils::getXMLElementText(const QByteArray& bytes, const QString& ele
             */
 
         /* If token is StartElement, we'll see if we can read it.*/
-        if(token == QXmlStreamReader::StartElement
-           && xml.name() == elementName) {
+        if (token == QXmlStreamReader::StartElement && xml.name() == elementName) {
             QString text = xml.readElementText();
             // qDebug() << element << ":" << text;
             return text;
         }
-
     }
 
     /* Error handling. */
-    if(xml.hasError()) {
+    if (xml.hasError()) {
         qDebug() << xml.errorString();
     }
 
     return QString();
-
 }
 
-QString DataUtils::getXMLAttributeText(const QByteArray& bytes, const QString& element, const QString& attribute) {
+QString DataUtils::getXMLAttributeText(const QByteArray &bytes,
+                                       const QString &element,
+                                       const QString &attribute) {
     QXmlStreamReader xml(bytes);
-    while(!xml.atEnd() && !xml.hasError()) {
+    while (!xml.atEnd() && !xml.hasError()) {
         QXmlStreamReader::TokenType token = xml.readNext();
-        if(token == QXmlStreamReader::StartElement && xml.name() == element) {
-            return  xml.attributes().value(attribute).toString();
+        if (token == QXmlStreamReader::StartElement && xml.name() == element) {
+            return xml.attributes().value(attribute).toString();
         }
     }
-    if(xml.hasError()) {
+    if (xml.hasError()) {
         qDebug() << xml.errorString();
     }
     return QString();
@@ -135,7 +140,6 @@ QString DataUtils::formatDuration(uint secs) {
     uint minutes = d % 60;
     d /= 60;
     uint hours = d % 24;
-    if (hours == 0)
-        return res.sprintf("%d:%02d", minutes, seconds);
+    if (hours == 0) return res.sprintf("%d:%02d", minutes, seconds);
     return res.sprintf("%d:%02d:%02d", hours, minutes, seconds);
 }

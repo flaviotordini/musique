@@ -24,20 +24,19 @@ $END_LICENSE */
 #include <QtCore>
 
 class DataUtils {
-
 public:
     static QString cleanTag(QString tag);
     static QString normalizeTag(const QString &tag);
     static QString simplify(const QString &s);
-    static QString md5(const QString&);
-    static QString getXMLElementText(const QByteArray& bytes, const QString& element);
-    static QString getXMLAttributeText(const QByteArray& bytes, const QString& element, const QString& attribute);
+    static QString md5(const QString &);
+    static QString getXMLElementText(const QByteArray &bytes, const QString &element);
+    static QString
+    getXMLAttributeText(const QByteArray &bytes, const QString &element, const QString &attribute);
     static QString getSystemLanguageCode();
     static QString formatDuration(uint secs);
 
 private:
     DataUtils();
-
 };
 
 #endif // DATAUTILS_H
