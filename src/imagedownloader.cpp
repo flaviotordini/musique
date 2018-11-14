@@ -20,15 +20,14 @@ $END_LICENSE */
 
 #include "imagedownloader.h"
 
-#include <QtSql>
 #include "database.h"
+#include <QtSql>
 
-#include "model/artist.h"
-#include "model/album.h"
 #include "http.h"
+#include "model/album.h"
+#include "model/artist.h"
 
 class ImageDownload {
-
 public:
     int id;
     int objectId;
@@ -46,6 +45,8 @@ void ImageDownloaderThread::run() {
     qDebug() << "Starting image downloads";
 
     imageDownloader = new ImageDownloader();
+    connect(imageDownloader, &ImageDownloader::imageDownloaded, this,
+            &ImageDownloaderThread::imageDownloaded);
     imageDownloader->run();
 
     // Start thread event loop
@@ -58,11 +59,9 @@ void ImageDownloaderThread::run() {
     qDebug() << "ImageDownloaderThread::run() exited";
 }
 
-ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent), imageDownload(nullptr) {
+ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent), imageDownload(nullptr) {}
 
-}
-
-void ImageDownloader::enqueue(int objectId, int objectType, const QString& url) {
+void ImageDownloader::enqueue(int objectId, int objectType, const QString &url) {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("insert into downloads (objectid, type, errors, url) values (?,?,0,?)");
@@ -70,8 +69,7 @@ void ImageDownloader::enqueue(int objectId, int objectType, const QString& url) 
     query.bindValue(1, objectType);
     query.bindValue(2, url);
 
-    if (!query.exec())
-        qWarning() << query.lastQuery() << query.lastError().text();
+    if (!query.exec()) qWarning() << query.lastQuery() << query.lastError().text();
 }
 
 void ImageDownloader::run() {
@@ -79,14 +77,12 @@ void ImageDownloader::run() {
 }
 
 void ImageDownloader::popFromQueue() {
-
     // get the next download
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select id, objectid, type, errors, url from downloads "
                   "where errors<10 order by errors, type, id limit 1");
-    if (!query.exec())
-        qWarning() << query.lastQuery() << query.lastError().text();
+    if (!query.exec()) qWarning() << query.lastQuery() << query.lastError().text();
     if (!query.next()) {
         qDebug() << "Downloads finished";
         thread()->exit();
@@ -103,20 +99,24 @@ void ImageDownloader::popFromQueue() {
     // start download
     QUrl url(imageDownload->url);
     QObject *reply = Http::instance().get(url);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(imageDownloaded(QByteArray)));
+    connect(reply, SIGNAL(data(QByteArray)), SLOT(onImageDownloaded(QByteArray)));
     connect(reply, SIGNAL(error(QString)), SLOT(imageDownloadError()));
 }
 
-void ImageDownloader::imageDownloaded(const QByteArray& bytes) {
+void ImageDownloader::onImageDownloaded(const QByteArray &bytes) {
     // save image and notify
     if (imageDownload->type == ImageDownloader::ArtistType) {
-        Artist* artist = Artist::forId(imageDownload->objectId);
-        if (artist) artist->setPhoto(bytes);
-        else qDebug() << imageDownload->url << "has no matching artist";
+        Artist *artist = Artist::forId(imageDownload->objectId);
+        if (artist)
+            artist->setPhoto(bytes);
+        else
+            qDebug() << imageDownload->url << "has no matching artist";
     } else if (imageDownload->type == ImageDownloader::AlbumType) {
-        Album* album = Album::forId(imageDownload->objectId);
-        if (album) album->setPhoto(bytes);
-        else qDebug() << imageDownload->url << "has no matching album";
+        Album *album = Album::forId(imageDownload->objectId);
+        if (album)
+            album->setPhoto(bytes);
+        else
+            qDebug() << imageDownload->url << "has no matching album";
     } else {
         qDebug() << "Unknown object type" << imageDownload->type;
     }
@@ -126,11 +126,12 @@ void ImageDownloader::imageDownloaded(const QByteArray& bytes) {
     QSqlQuery query(db);
     query.prepare("delete from downloads where id=?");
     query.bindValue(0, imageDownload->id);
-    if (!query.exec())
-        qWarning() << query.lastQuery() << query.lastError().text();
+    if (!query.exec()) qWarning() << query.lastQuery() << query.lastError().text();
 
     delete imageDownload;
     imageDownload = nullptr;
+
+    emit imageDownloaded();
 
     popFromQueue();
 }
@@ -141,8 +142,7 @@ void ImageDownloader::imageDownloadError() {
     QSqlQuery query = QSqlQuery(db);
     query.prepare("update downloads set errors=errors+1 where id=?");
     query.bindValue(0, imageDownload->id);
-    if (!query.exec())
-        qWarning() << query.lastQuery() << query.lastError().text();
+    if (!query.exec()) qWarning() << query.lastQuery() << query.lastError().text();
 
     delete imageDownload;
     imageDownload = nullptr;

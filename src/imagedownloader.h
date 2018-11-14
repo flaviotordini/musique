@@ -27,32 +27,29 @@ $END_LICENSE */
 class ImageDownload;
 
 class ImageDownloader : public QObject {
-
     Q_OBJECT
 
 public:
     ImageDownloader(QObject *parent = 0);
     void run();
 
-    enum ImageDownloadTypes {
-        ArtistType = 0,
-        AlbumType
-    };
+    enum ImageDownloadTypes { ArtistType = 0, AlbumType };
 
-    static void enqueue(int objectId, int objectType, const QString& url);
+    static void enqueue(int objectId, int objectType, const QString &url);
 
 public slots:
-    void imageDownloaded(const QByteArray& bytes);
+    void onImageDownloaded(const QByteArray &bytes);
     void imageDownloadError();
+
+signals:
+    void imageDownloaded();
 
 private:
     void popFromQueue();
-    ImageDownload* imageDownload;
-
+    ImageDownload *imageDownload;
 };
 
 class ImageDownloaderThread : public QThread {
-
     Q_OBJECT
 
 public:
@@ -62,12 +59,12 @@ public:
 signals:
     void progress(int);
     void error(QString message);
+    void imageDownloaded();
 
 private slots:
 
 private:
-    ImageDownloader* imageDownloader;
-
+    ImageDownloader *imageDownloader;
 };
 
 #endif // IMAGEDOWNLOADER_H

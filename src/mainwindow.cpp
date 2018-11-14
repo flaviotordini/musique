@@ -913,6 +913,7 @@ void MainWindow::incrementalScanFinished(const QVariantMap &stats) {
 void MainWindow::startImageDownload() {
     chooseFolderAct->setEnabled(false);
     ImageDownloaderThread *downloaderThread = new ImageDownloaderThread();
+    connect(downloaderThread, SIGNAL(imageDownloaded()), SLOT(update()));
     connect(downloaderThread, SIGNAL(finished()), SLOT(imageDownloadFinished()));
     downloaderThread->start();
 }
