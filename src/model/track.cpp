@@ -56,9 +56,6 @@ Track *Track::forId(int trackId) {
         track->setId(trackId);
         track->setPath(query.value(0).toString());
         track->setTitle(query.value(1).toString());
-
-        // TODO start & end
-
         track->setLength(query.value(2).toInt());
         track->setNumber(query.value(3).toInt());
         track->setDiskNumber(query.value(4).toInt());
@@ -79,7 +76,7 @@ Track *Track::forId(int trackId) {
     }
 
     // id not found
-    cache.insert(trackId, 0);
+    cache.insert(trackId, nullptr);
     return nullptr;
 }
 
@@ -157,6 +154,7 @@ void Track::insert() {
     query.bindValue(10, length);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
+    id = query.lastInsertId().toInt();
 
     // increment artist's track count
     if (artist && artist->getId()) {

@@ -38,10 +38,11 @@ public:
         QVector<Track *> tracks = {this};
         return tracks;
     }
+    QString getName() { return title; }
+
     QString getStatusTip();
 
     // properties
-    QString getName() { return title; }
     const QString &getTitle() { return title; }
     void setTitle(const QString &title) { this->title = title; }
     const QString &getPath() { return path; }
@@ -60,13 +61,13 @@ public:
     QString getAbsolutePath();
     bool isPlayed() { return played; }
     void setPlayed(bool played) { this->played = played; }
-    int getStartTime() { return startTime; }
-    void setStartTime(int startTime) { this->startTime = startTime; }
+    uint getStartTime() { return startTime; }
+    void setStartTime(uint startTime) { this->startTime = startTime; }
 
     // relations
-    Album *getAlbum() { return album; }
+    Album *getAlbum() const { return album; }
     void setAlbum(Album *album) { this->album = album; }
-    Artist *getArtist() { return artist; }
+    Artist *getArtist() const { return artist; }
     void setArtist(Artist *artist) { this->artist = artist; }
 
     // cache
