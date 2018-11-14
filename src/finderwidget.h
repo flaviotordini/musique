@@ -40,17 +40,25 @@ class SearchModel;
 class SearchView;
 class Artist;
 class Album;
+class GenresListView;
+class GenresModel;
 
 namespace Finder {
 
-enum FinderDataRoles { ItemTypeRole = Qt::UserRole, DataObjectRole, ActiveItemRole };
+enum FinderDataRoles {
+    ItemTypeRole = Qt::UserRole,
+    DataObjectRole,
+    ItemObjectRole,
+    ActiveItemRole
+};
 
 enum FinderItemTypes {
-    ItemTypeGenre = 1,
-    ItemTypeArtist,
+    ItemTypeArtist = 1,
     ItemTypeAlbum,
     ItemTypeTrack,
-    ItemTypeFolder
+    ItemTypeFolder,
+    ItemTypeGenre,
+    ItemTypeDecade
 };
 
 } // namespace Finder
@@ -65,7 +73,7 @@ public:
     void appear();
     void disappear();
     void showSearch(const QString &query);
-    void addTracksAndPlay(QVector<Track *> tracks);
+    void addTracksAndPlay(const QVector<Track *> &tracks);
     void artistActivated(Artist *artist);
     void albumActivated(Album *album);
     void trackActivated(Track *track);
@@ -78,6 +86,7 @@ private slots:
     void folderGoBack();
     void showArtists();
     void showAlbums();
+    void showGenres();
     void showFolders();
 
     void artistActivated(const QModelIndex &index);
@@ -91,11 +100,15 @@ private slots:
     void folderActivated(const QModelIndex &index);
     void folderPlayed(const QModelIndex &index);
 
+    void genreActivated(const QModelIndex &index);
+    void genrePlayed(const QModelIndex &index);
+
 private:
     void restoreSavedView();
     void setupBar();
     void setupArtists();
     void setupAlbums();
+    void setupGenres();
     void setupFolders();
     void setupTracks();
     void setupSearch();
@@ -104,6 +117,7 @@ private:
     SegmentedControl *finderBar;
     QAction *artistsAction;
     QAction *albumsAction;
+    QAction *genresAction;
     QAction *foldersAction;
 
     QStack<QWidget *> history;
@@ -123,6 +137,9 @@ private:
 
     AlbumListView *albumListView;
     AlbumSqlModel *albumListModel;
+
+    GenresListView *genresListView;
+    GenresModel *genresModel;
 
     QListView *trackListView;
     TrackSqlModel *trackListModel;

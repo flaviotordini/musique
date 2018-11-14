@@ -88,7 +88,12 @@ HEADERS += src/mainwindow.h \
     src/appwidget.h \
     src/httputils.h \
     src/tagchecker.h \
-    src/toolbarmenu.h
+    src/toolbarmenu.h \
+    src/model/genre.h \
+    src/genresmodel.h \
+    src/genres.h \
+    src/genreslistview.h \
+    src/model/decade.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -151,7 +156,12 @@ SOURCES += src/main.cpp \
     src/appwidget.cpp \
     src/httputils.cpp \
     src/tagchecker.cpp \
-    src/toolbarmenu.cpp
+    src/toolbarmenu.cpp \
+    src/model/genre.cpp \
+    src/genresmodel.cpp \
+    src/genres.cpp \
+    src/genreslistview.cpp \
+    src/model/decade.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

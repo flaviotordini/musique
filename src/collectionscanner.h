@@ -33,7 +33,7 @@ $END_LICENSE */
 
 class FileInfo {
 public:
-    FileInfo() : artist(0), albumArtist(0), album(0), tags(0) {}
+    FileInfo() : artist(nullptr), albumArtist(nullptr), album(nullptr), tags(nullptr) {}
     ~FileInfo() {
         if (artist) delete artist;
         if (album) delete album;

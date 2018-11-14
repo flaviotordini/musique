@@ -54,6 +54,12 @@
         <file>images/view-fullscreen@2x.png</file>
         <file>images/view-restore.png</file>
         <file>images/view-restore@2x.png</file>
+        <file>res/genre-replacements.csv</file>
+        <file>res/genre-tree.csv</file>
+        <file>images/item/decade.png</file>
+        <file>images/item/decade@2x.png</file>
+        <file>images/item/genre.png</file>
+        <file>images/item/genre@2x.png</file>
         <file>images/item/folder.png</file>
         <file>images/item/folder@2x.png</file>
     </qresource>

@@ -30,12 +30,16 @@ $END_LICENSE */
 
 #include "model/album.h"
 #include "model/artist.h"
+#include "model/genre.h"
 
 #include "artistlistview.h"
 #include "artistsqlmodel.h"
 
 #include "albumlistview.h"
 #include "albumsqlmodel.h"
+
+#include "genreslistview.h"
+#include "genresmodel.h"
 
 #include "tracklistview.h"
 #include "tracksqlmodel.h"
@@ -59,11 +63,13 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     artistListView = nullptr;
     albumListView = nullptr;
     trackListView = nullptr;
+    genresListView = nullptr;
 
     fileSystemModel = nullptr;
     artistListModel = nullptr;
     albumListModel = nullptr;
     trackListModel = nullptr;
+    genresModel = nullptr;
 
     searchView = nullptr;
 
@@ -136,6 +142,8 @@ void FinderWidget::restoreSavedView() {
         QTimer::singleShot(0, this, SLOT(showFolders()));
     else if (currentViewName == "albums")
         QTimer::singleShot(0, this, SLOT(showAlbums()));
+    else if (currentViewName == "genres")
+        QTimer::singleShot(0, this, SLOT(showGenres()));
     else
         QTimer::singleShot(0, this, SLOT(showArtists()));
 
@@ -159,8 +167,13 @@ void FinderWidget::setupBar() {
     connect(albumsAction, SIGNAL(triggered()), SLOT(showAlbums()));
     finderBar->addAction(albumsAction);
 
+    genresAction = new QAction(tr("Genres"), this);
+    genresAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
+    connect(genresAction, SIGNAL(triggered()), SLOT(showGenres()));
+    finderBar->addAction(genresAction);
+
     foldersAction = new QAction(tr("Folders"), this);
-    foldersAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
+    foldersAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_4));
     connect(foldersAction, SIGNAL(triggered()), SLOT(showFolders()));
     finderBar->addAction(foldersAction);
 
@@ -197,6 +210,18 @@ void FinderWidget::setupAlbums() {
             SLOT(albumPlayed(const QModelIndex &)));
     albumListView->setModel(albumListModel);
     stackedWidget->addWidget(albumListView);
+}
+
+void FinderWidget::setupGenres() {
+    genresModel = new GenresModel(this);
+    genresListView = new GenresListView(this);
+    genresListView->setEnabled(false);
+    connect(genresListView, SIGNAL(activated(const QModelIndex &)),
+            SLOT(genreActivated(const QModelIndex &)));
+    connect(genresListView, SIGNAL(play(const QModelIndex &)),
+            SLOT(genrePlayed(const QModelIndex &)));
+    genresListView->setModel(genresModel);
+    stackedWidget->addWidget(genresListView);
 }
 
 void FinderWidget::setupTracks() {
@@ -258,6 +283,15 @@ void FinderWidget::showAlbums() {
     settings.setValue(finderViewKey, "albums");
 }
 
+void FinderWidget::showGenres() {
+    if (!genresListView) setupGenres();
+    if (genresListView->rootIndex().isValid()) genresListView->setRootIndex(QModelIndex());
+    showWidget(genresListView, true);
+    finderBar->setCheckedAction(genresAction);
+    QSettings settings;
+    settings.setValue(finderViewKey, "genres");
+}
+
 void FinderWidget::showFolders() {
     if (!fileSystemView) setupFolders();
 
@@ -311,6 +345,8 @@ void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
 
     stackedWidget->setCurrentWidget(widget);
     history.push(widget);
+
+    widget->setFocus();
 }
 
 void FinderWidget::goBack() {
@@ -321,6 +357,9 @@ void FinderWidget::goBack() {
         QWidget *widget = history.pop();
         bool isRoot = history.isEmpty();
         showWidget(widget, isRoot);
+        if (genresListView && widget == genresListView) {
+            genresListView->setRootIndex(genresListView->rootIndex().parent());
+        }
     }
 }
 
@@ -464,7 +503,22 @@ void FinderWidget::folderPlayed(const QModelIndex &index) {
     }
 }
 
-void FinderWidget::addTracksAndPlay(QVector<Track *> tracks) {
+void FinderWidget::genreActivated(const QModelIndex &index) {
+    qDebug() << "Activating index" << index;
+    Genre *genre = index.data(Finder::DataObjectRole).value<GenrePointer>().data();
+    if (genre && !genre->getChildren().isEmpty()) {
+        genresListView->setWindowTitle(genre->getName());
+        genresListView->setRootIndex(index);
+        showWidget(genresListView, false);
+    }
+}
+
+void FinderWidget::genrePlayed(const QModelIndex &index) {
+    Item *item = index.data(Finder::ItemObjectRole).value<ItemPointer>().data();
+    if (item) addTracksAndPlay(item->getTracks());
+}
+
+void FinderWidget::addTracksAndPlay(const QVector<Track *> &tracks) {
     if (tracks.isEmpty()) return;
     playlistModel->addTracks(tracks);
 

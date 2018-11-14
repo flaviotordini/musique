@@ -26,6 +26,7 @@ $END_LICENSE */
 
 class Album;
 class Artist;
+class Genre;
 
 class Track : public Item {
     Q_OBJECT
@@ -69,6 +70,8 @@ public:
     void setAlbum(Album *album) { this->album = album; }
     Artist *getArtist() const { return artist; }
     void setArtist(Artist *artist) { this->artist = artist; }
+    const QVector<Genre *> &getGenres() const { return genres; }
+    void addGenre(Genre *genre) { genres << genre; }
 
     // cache
     static void clearCache() {
@@ -138,6 +141,7 @@ private:
     // relations
     Album *album;
     Artist *artist;
+    QVector<Genre *> genres;
 
     // playlist
     bool played;

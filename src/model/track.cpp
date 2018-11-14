@@ -21,6 +21,7 @@ $END_LICENSE */
 #include "track.h"
 #include "album.h"
 #include "artist.h"
+#include "genre.h"
 
 #include "../database.h"
 #include "../datautils.h"
@@ -173,6 +174,26 @@ void Track::insert() {
         bool success = query.exec();
         if (!success) qDebug() << query.lastError().text();
     }
+
+    // increment genres' track count
+    for (Genre *genre : qAsConst(genres)) {
+        {
+            QSqlQuery query(db);
+            query.prepare("insert into genreTracks (genre,track) values(?,?)");
+            query.bindValue(0, genre->getId());
+            query.bindValue(1, id);
+            bool success = query.exec();
+            if (!success)
+                qDebug() << query.lastError().text() << query.executedQuery() << genre->getId()
+                         << id;
+        }
+
+        QSqlQuery query(db);
+        query.prepare("update genres set trackCount=trackCount+1 where id=?");
+        query.bindValue(0, genre->getId());
+        bool success = query.exec();
+        if (!success) qDebug() << query.lastError().text();
+    }
 }
 
 void Track::update() {
@@ -246,13 +267,14 @@ void Track::remove(const QString &path) {
 
     // first update trackCount on artist and album
 
-    query.prepare("select album, artist from tracks where path=?");
+    query.prepare("select album, artist, genre from tracks where path=?");
     query.bindValue(0, path);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     if (query.next()) {
         int albumId = query.value(0).toInt();
         int artistId = query.value(1).toInt();
+        int genreId = query.value(2).toInt();
 
         query.prepare("update albums set trackCount=trackCount-1 where id=?");
         query.bindValue(0, albumId);
@@ -263,13 +285,12 @@ void Track::remove(const QString &path) {
         query.bindValue(0, artistId);
         success = query.exec();
         if (!success) qDebug() << query.lastError().text();
-    }
 
-    // and then actually delete the track
-    query.prepare("delete from tracks where path=?");
-    query.bindValue(0, path);
-    success = query.exec();
-    if (!success) qDebug() << query.lastError().text();
+        query.prepare("update genres set trackCount=trackCount-1 where id=?");
+        query.bindValue(0, genreId);
+        success = query.exec();
+        if (!success) qDebug() << query.lastError().text();
+    }
 
     // update cache and notify everybody using this track
     // that it is gone forever
@@ -282,6 +303,12 @@ void Track::remove(const QString &path) {
             track->deleteLater();
         }
     }
+
+    // and then actually delete the track
+    query.prepare("delete from tracks where path=?");
+    query.bindValue(0, path);
+    success = query.exec();
+    if (!success) qDebug() << query.lastError().text();
 }
 
 void Track::emitRemovedSignal() {

@@ -27,6 +27,8 @@ $END_LICENSE */
 #include "tagchecker.h"
 #include "tagutils.h"
 
+#include "model/genre.h"
+
 CollectionScanner::CollectionScanner(QObject *parent)
     : QObject(parent), working(false), stopped(false), incremental(false), lastUpdate(0),
       maxQueueSize(0) {
@@ -152,6 +154,7 @@ void CollectionScanner::run() {
         Artist::clearCache();
         Album::clearCache();
         Track::clearCache();
+        Genre::clearCache();
     }
 
     // now scan the files
@@ -779,7 +782,20 @@ void CollectionScanner::processTrack(FileInfo *file) {
     track->setArtist(artist);
     // }
 
-    if (album) album->fixTrackTitle(track);
+    QString genreTag = file->getTags()->getGenre();
+    if (!genreTag.isEmpty()) {
+        auto genreNames =
+                genreTag.splitRef(QRegularExpression("([,/-]| & )"), QString::SkipEmptyParts);
+        for (QStringRef &genreNameRef : genreNames) {
+            QString genreName = Genre::cleanGenreName(genreNameRef);
+            if (!genreName.isEmpty()) {
+                Genre *genre = Genre::maybeCreateByName(genreName);
+                if (genre) track->addGenre(genre);
+            }
+        }
+    }
+
+    // if (album) album->fixTrackTitle(track);
 
     // qDebug() << "Removing" << file->getFileInfo().baseName() << "from queue";
     if (!fileQueue.removeAll(file->getFileInfo())) {

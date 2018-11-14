@@ -95,9 +95,8 @@ void Database::create() {
 
     QSqlQuery("create table tracks ("
               "id integer primary key autoincrement,"
-              "path varchar(255)," // path is NOT unique: .cue files
+              "path varchar(255),"
               "title varchar(255),"
-              // TODO "start integer, end integer," // cue files
               "duration integer,"
               "track integer,"
               "disk integer,"
@@ -108,6 +107,7 @@ void Database::create() {
               "album integer,"
               "tstamp integer)",
               db);
+    QSqlQuery("create unique index unique_tracks_path on tracks(path)", db);
 
     QSqlQuery("create table nontracks ("
               "path varchar(255),"
@@ -122,6 +122,21 @@ void Database::create() {
               "errors integer,"
               "url varchar(255))",
               db);
+
+    QSqlQuery("create table genres ("
+              "id integer primary key autoincrement,"
+              "hash varchar(32),"
+              "name varchar(255),"
+              "trackCount integer default 0)",
+              db);
+    QSqlQuery("create unique index unique_genre_name on genres(name)", db);
+    QSqlQuery("create unique index unique_genre_hash on genres(hash)", db);
+
+    QSqlQuery("create table genreTracks ("
+              "genre integer,"
+              "track integer)",
+              db);
+    QSqlQuery("create unique index unique_genre_mapping on genreTracks(genre, track)", db);
 
     /* TODO tags
     QSqlQuery("create table tags ("

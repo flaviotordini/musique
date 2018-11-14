@@ -25,7 +25,7 @@ $END_LICENSE */
 #define STRINGIFY(x) STR(x)
 
 const char *Constants::VERSION = STRINGIFY(APP_VERSION);
-const int Constants::DATABASE_VERSION = 3;
+const int Constants::DATABASE_VERSION = 4;
 const char *Constants::NAME = STRINGIFY(APP_NAME);
 const char *Constants::UNIX_NAME = STRINGIFY(APP_UNIX_NAME);
 const char *Constants::ORG_NAME = "Flavio Tordini";
