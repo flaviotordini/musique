@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
 #ifdef APP_EXTRA
     Extra::appSetup(&app);
 #else
-    QFile cssFile(":/style.css");
+    QFile cssFile(":/res/style.css");
     cssFile.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(cssFile.readAll());
     app.setStyleSheet(styleSheet);
