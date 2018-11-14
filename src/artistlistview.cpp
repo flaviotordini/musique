@@ -183,7 +183,7 @@ void ArtistListView::preloadThumbs() {
     while (query.next()) {
         int artistId = query.value(0).toInt();
         Artist *artist = Artist::forId(artistId);
-        artist->getPhotoForSize(delegate->getItemWidth(), delegate->getItemHeight(), pixelRatio);
+        artist->getThumb(delegate->getItemWidth(), delegate->getItemHeight(), pixelRatio);
         qApp->processEvents();
     }
 }

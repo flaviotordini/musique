@@ -71,8 +71,9 @@ public:
     void fetchInfo();
 
     QString getImageLocation();
+    bool hasPhoto();
     QPixmap getPhoto();
-    QPixmap getPhotoForSize(int width, int height, qreal pixelRatio);
+    QPixmap getThumb(int width, int height, qreal pixelRatio);
     void clearPixmapCache() { pixmap = QPixmap(); }
 
     // qhash

@@ -22,6 +22,7 @@ $END_LICENSE */
 #define ITEM_H
 
 #include <QtCore>
+#include <QtGui>
 
 class Track;
 
@@ -34,6 +35,7 @@ public:
     void setId(int id) { this->id = id; }
     virtual QString getName() = 0;
     virtual QVector<Track *> getTracks() = 0;
+    virtual QPixmap getThumb(int width, int height, qreal pixelRatio) { return QPixmap(); }
 
 protected:
     int id;

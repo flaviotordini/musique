@@ -176,7 +176,7 @@ void AlbumListView::preloadThumbs() {
     while (query.next()) {
         int albumId = query.value(0).toInt();
         Album *album = Album::forId(albumId);
-        album->getPhotoForSize(delegate->getItemWidth(), delegate->getItemHeight(), pixelRatio);
+        album->getThumb(delegate->getItemWidth(), delegate->getItemHeight(), pixelRatio);
         qApp->processEvents();
     }
 }

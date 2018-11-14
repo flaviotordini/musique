@@ -411,6 +411,10 @@ QString Artist::getBioLocation() {
     return getBaseLocation() + QLatin1String("/_bio");
 }
 
+bool Artist::hasPhoto() {
+    return QFile::exists(getImageLocation());
+}
+
 QPixmap Artist::getPhoto() {
     QPixmap p;
     QFile file(getImageLocation());
@@ -421,7 +425,7 @@ QPixmap Artist::getPhoto() {
     return p;
 }
 
-QPixmap Artist::getPhotoForSize(int width, int height, qreal pixelRatio) {
+QPixmap Artist::getThumb(int width, int height, qreal pixelRatio) {
     if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
         pixmap.width() != width * pixelRatio) {
         pixmap = getPhoto();

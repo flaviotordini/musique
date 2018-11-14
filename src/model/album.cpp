@@ -230,6 +230,10 @@ void Album::parseMusicBrainzReleaseDetails(const QByteArray &bytes) {
 
 // *** Last.fm Photo ***
 
+bool Album::hasPhoto() {
+    return QFile::exists(getImageLocation());
+}
+
 QPixmap Album::getPhoto() {
     QPixmap p;
     QFile file(getImageLocation());
@@ -250,7 +254,7 @@ QPixmap Album::getThumb() {
     return p;
 }
 
-QPixmap Album::getPhotoForSize(int width, int height, qreal pixelRatio) {
+QPixmap Album::getThumb(int width, int height, qreal pixelRatio) {
     if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
         pixmap.width() != width * pixelRatio) {
         if (pixelRatio == 1.0 && width <= 150) {
