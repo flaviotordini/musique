@@ -78,6 +78,7 @@ public slots:
 
 signals:
     void currentTimeChanged(const QString &s);
+    void collectionCreated();
 
 protected:
     void closeEvent(QCloseEvent *e);

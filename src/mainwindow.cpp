@@ -870,6 +870,8 @@ void MainWindow::startFullScan(QString directory) {
 }
 
 void MainWindow::fullScanFinished(const QVariantMap &stats) {
+    emit collectionCreated();
+
     showMediaView();
     activateWindow();
 #ifdef APP_EXTRA
