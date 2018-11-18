@@ -69,6 +69,9 @@ $END_LICENSE */
 #include "httputils.h"
 #include "toolbarmenu.h"
 
+#include "mediaqtav.h"
+#include "seekslider.h"
+
 namespace {
 MainWindow *singleton = nullptr;
 }
@@ -542,8 +545,8 @@ void MainWindow::createMenus() {
 void MainWindow::createToolBars() {
     // Create widgets
     currentTime = new QLabel("00:00", this);
-    seekSlider = new Phonon::SeekSlider(this);
-    volumeSlider = new Phonon::VolumeSlider(this);
+    seekSlider = new SeekSlider(this);
+    volumeSlider = new SeekSlider(this);
 
 #if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
     SearchWrapper *searchWrapper = new SearchWrapper(this);
@@ -591,7 +594,10 @@ void MainWindow::createToolBars() {
 
     mainToolBar->addWidget(new Spacer());
 
-    seekSlider->setIconVisible(false);
+    seekSlider->setEnabled(false);
+    seekSlider->setTracking(true);
+    seekSlider->setMaximum(1000);
+    seekSlider->setOrientation(Qt::Horizontal);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     seekSlider->setFocusPolicy(Qt::NoFocus);
     mainToolBar->addWidget(seekSlider);
@@ -605,18 +611,16 @@ void MainWindow::createToolBars() {
     volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
 #endif
 
-    volumeSlider->setMuteVisible(false);
-    // qDebug() << volumeSlider->children();
-    // status tip for the volume slider
-    QSlider *volumeQSlider = volumeSlider->findChild<QSlider *>();
-    if (volumeQSlider)
-        volumeQSlider->setStatusTip(
-                tr("Press %1 to raise the volume, %2 to lower it")
-                        .arg(volumeUpAct->shortcut().toString(QKeySequence::NativeText),
-                             volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
+    volumeSlider->setStatusTip(
+            tr("Press %1 to raise the volume, %2 to lower it")
+                    .arg(volumeUpAct->shortcut().toString(QKeySequence::NativeText),
+                         volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
+
+    volumeSlider->setOrientation(Qt::Horizontal);
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     volumeSlider->setFocusPolicy(Qt::NoFocus);
+    volumeSlider->setValue(volumeSlider->maximum());
     mainToolBar->addWidget(volumeSlider);
 
     mainToolBar->addWidget(new Spacer());
@@ -684,7 +688,7 @@ void MainWindow::writeSettings() {
     if (!fullScreenActive) settings.setValue("geometry", saveGeometry());
 
     if (mediaView) {
-        if (audioOutput->volume() > 0.1) settings.setValue("volume", audioOutput->volume());
+        if (media->volume() > 0.1) settings.setValue("volume", media->volume());
         // settings.setValue("volumeMute", audioOutput->isMuted());
         mediaView->saveSplitterState();
     }
@@ -786,10 +790,10 @@ void MainWindow::showChooseFolderView(bool transition) {
 
 void MainWindow::showMediaView(bool transition) {
     if (!mediaView) {
-        initPhonon();
+        initMedia();
         mediaView = new MediaView(this);
         mediaView->hide();
-        mediaView->setMediaObject(mediaObject);
+        mediaView->setMedia(media);
         connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
         views->addWidget(mediaView);
     }
@@ -925,39 +929,37 @@ void MainWindow::imageDownloadFinished() {
         chooseFolderAct->setEnabled(true);
 }
 
-void MainWindow::stateChanged(Phonon::State newState, Phonon::State /* oldState */) {
+void MainWindow::stateChanged(Media::State state) {
     // qDebug() << "Phonon state: " << newState;
 
     // play action
-    if (newState == Phonon::PlayingState) {
+    if (state == Media::PlayingState) {
         playAct->setChecked(true);
-    } else if (newState == Phonon::StoppedState || newState == Phonon::PausedState) {
+    } else if (state == Media::StoppedState || state == Media::PausedState) {
         playAct->setChecked(false);
     }
 
-    switch (newState) {
-    case Phonon::ErrorState:
-        if (mediaObject->errorType() == Phonon::FatalError) {
-            showMessage(tr("Fatal error: %1").arg(mediaObject->errorString()));
-        } else {
-            showMessage(tr("Error: %1").arg(mediaObject->errorString()));
-        }
+    seekSlider->setEnabled(state == Media::PlayingState || state == Media::PausedState);
+
+    switch (state) {
+    case Media::ErrorState:
+        showMessage(tr("Error: %1").arg(media->errorString()));
         break;
 
-    case Phonon::PlayingState:
-    case Phonon::StoppedState:
-    case Phonon::PausedState:
+    case Media::PlayingState:
+    case Media::StoppedState:
+    case Media::PausedState:
         break;
 
-    case Phonon::BufferingState:
-    case Phonon::LoadingState:
+    case Media::BufferingState:
+    case Media::LoadingState:
         currentTime->clear();
         break;
     }
 }
 
 void MainWindow::stop() {
-    mediaObject->stop();
+    media->stop();
     currentTime->clear();
 }
 
@@ -1065,35 +1067,63 @@ void MainWindow::searchFocus() {
     toolbarSearch->setFocus();
 }
 
-void MainWindow::initPhonon() {
-    mediaObject = new Phonon::MediaObject(this);
-    mediaObject->setTickInterval(100);
-    connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)), this,
-            SLOT(stateChanged(Phonon::State, Phonon::State)));
-    connect(mediaObject, SIGNAL(tick(qint64)), this, SLOT(tick(qint64)));
+void MainWindow::initMedia() {
+    media = new MediaQtAV(this);
+    media->setAudioOnly(true);
+    media->init();
 
-    audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-    connect(audioOutput, SIGNAL(volumeChanged(qreal)), this, SLOT(volumeChanged(qreal)));
-    connect(audioOutput, SIGNAL(mutedChanged(bool)), this, SLOT(volumeMutedChanged(bool)));
-    Phonon::createPath(mediaObject, audioOutput);
+    connect(media, &Media::stateChanged, this, &MainWindow::stateChanged);
+    connect(media, &Media::positionChanged, this, &MainWindow::tick);
 
-    seekSlider->setMediaObject(mediaObject);
-    volumeSlider->setAudioOutput(audioOutput);
+    connect(seekSlider, &QSlider::sliderMoved, this, [this](int value) {
+        if (media->state() != Media::PlayingState) return;
+        // value : maxValue = position : duration
+        qint64 ms = (value * media->duration()) / seekSlider->maximum();
+        media->seek(ms);
+    });
+    connect(seekSlider, &QSlider::sliderPressed, this, [this]() {
+        if (media->state() != Media::PlayingState) return;
+        // value : maxValue = position : duration
+        qint64 ms = (seekSlider->value() * media->duration()) / seekSlider->maximum();
+        if (media->state() == Media::PausedState) media->pause();
+        media->seek(ms);
+    });
+    connect(media, &Media::started, this, [this]() { seekSlider->setValue(0); });
+
+    connect(media, &Media::volumeChanged, this, &MainWindow::volumeChanged);
+    connect(media, &Media::volumeMutedChanged, this, &MainWindow::volumeMutedChanged);
+    connect(volumeSlider, &QSlider::sliderMoved, this, [this](int value) {
+        qreal volume = (qreal)value / volumeSlider->maximum();
+        media->setVolume(volume);
+    });
+    connect(volumeSlider, &QSlider::sliderPressed, this, [this]() {
+        qreal volume = (qreal)volumeSlider->value() / volumeSlider->maximum();
+        media->setVolume(volume);
+    });
 
     QSettings settings;
     volume = settings.value("volume", 1.).toReal();
-    audioOutput->setVolume(volume);
-    // audioOutput->setMuted(settings.value("volumeMute").toBool());
+    media->setVolume(volume);
 }
 
 void MainWindow::tick(qint64 time) {
+    // value : maxValue = position : duration
+    int duration = media->duration();
+    if (duration <= 0) return;
+
+    int value = (seekSlider->maximum() * media->position()) / duration;
+    qDebug() << value;
+    seekSlider->blockSignals(true);
+    seekSlider->setValue(value);
+    seekSlider->blockSignals(false);
+
     const QString s = formatTime(time);
     if (s != currentTime->text()) {
         currentTime->setText(s);
         emit currentTimeChanged(s);
 
         // remaining time
-        const qint64 remainingTime = mediaObject->remainingTime();
+        const qint64 remainingTime = media->remainingTime();
         currentTime->setStatusTip(tr("Remaining time: %1").arg(formatTime(remainingTime)));
     }
 }
@@ -1111,52 +1141,41 @@ QString MainWindow::formatTime(qint64 duration) {
 }
 
 void MainWindow::volumeUp() {
-    qreal newVolume = volumeSlider->audioOutput()->volume() + .1;
-    if (newVolume > volumeSlider->maximumVolume()) newVolume = volumeSlider->maximumVolume();
-    volumeSlider->audioOutput()->setVolume(newVolume);
+    qreal newVolume = media->volume() + .1;
+    if (newVolume > 1.) newVolume = 1.;
+    media->setVolume(newVolume);
 }
 
 void MainWindow::volumeDown() {
-    qreal newVolume = volumeSlider->audioOutput()->volume() - .1;
+    qreal newVolume = media->volume() - .1;
     if (newVolume < 0) newVolume = 0;
-    volumeSlider->audioOutput()->setVolume(newVolume);
+    media->setVolume(newVolume);
 }
 
 void MainWindow::volumeMute() {
-    bool isMuted = volumeSlider->audioOutput()->isMuted();
+    bool isMuted = media->volumeMuted();
     if (isMuted) {
         // unmuting
-        volumeSlider->audioOutput()->setMuted(!isMuted);
-        volumeSlider->audioOutput()->setVolume(volume);
+        media->setVolumeMuted(!isMuted);
+        media->setVolume(volume);
     } else {
         // muting
-        volume = volumeSlider->audioOutput()->volume();
-        volumeSlider->audioOutput()->setMuted(!isMuted);
+        volume = media->volume();
+        media->setVolumeMuted(!isMuted);
     }
 }
 
 void MainWindow::volumeChanged(qreal newVolume) {
+    qDebug() << newVolume;
     // automatically unmute when volume changes
-    if (volumeSlider->audioOutput()->isMuted()) volumeSlider->audioOutput()->setMuted(false);
-
-    bool isZero = volumeSlider->property("zero").toBool();
-    bool styleChanged = false;
-    if (newVolume == 0. && !isZero) {
-        volumeSlider->setProperty("zero", true);
-        styleChanged = true;
-    } else if (newVolume > 0. && isZero) {
-        volumeSlider->setProperty("zero", false);
-        styleChanged = true;
-    }
-    if (styleChanged) {
-        QSlider *volumeQSlider = volumeSlider->findChild<QSlider *>();
-        style()->unpolish(volumeQSlider);
-        style()->polish(volumeQSlider);
-    }
-
-    volume = volumeSlider->audioOutput()->volume();
-
+    if (media->volumeMuted()) media->setVolumeMuted(false);
+    volume = media->volume();
     showMessage(tr("Volume at %1%").arg((int)(newVolume * 100)));
+    // newVolume : 1.0 = x : 1000
+    int value = newVolume * volumeSlider->maximum();
+    volumeSlider->blockSignals(true);
+    volumeSlider->setValue(value);
+    volumeSlider->blockSignals(false);
 }
 
 void MainWindow::volumeMutedChanged(bool muted) {

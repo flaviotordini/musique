@@ -22,10 +22,8 @@ $END_LICENSE */
 #define MAINWINDOW_H
 
 #include <QtWidgets>
-#include <phonon/audiooutput.h>
-#include <phonon/mediaobject.h>
-#include <phonon/seekslider.h>
-#include <phonon/volumeslider.h>
+
+#include "media.h"
 
 class MediaView;
 class CollectionScannerView;
@@ -42,10 +40,8 @@ class MainWindow : public QMainWindow {
 public:
     static MainWindow *instance();
     ~MainWindow();
-    Phonon::SeekSlider *getSeekSlider() { return seekSlider; }
-    Phonon::AudioOutput *getAudioOutput() { return audioOutput; }
-    Phonon::VolumeSlider *getVolumeSlider() { return volumeSlider; }
-    Phonon::MediaObject *getMediaObject() { return mediaObject; }
+    QSlider *getSeekSlider() { return seekSlider; }
+    QSlider *getVolumeSlider() { return volumeSlider; }
     void readSettings();
     SearchLineEdit *getToolbarSearch() { return toolbarSearch; }
     QToolBar *getStatusToolbar() { return statusToolBar; }
@@ -98,9 +94,9 @@ private slots:
     void checkForUpdate();
     void gotNewVersion(const QString &version);
 
-    // Phonon related logic
+    // media
     void stop();
-    void stateChanged(Phonon::State newState, Phonon::State oldState);
+    void stateChanged(Media::State state);
     void searchFocus();
     void tick(qint64 time);
 
@@ -154,7 +150,7 @@ private:
     void createToolBars();
     void createStatusBar();
     void writeSettings();
-    void initPhonon();
+    void initMedia();
     static QString formatTime(qint64 duration);
     QString playlistPath();
     void simpleUpdateDialog(const QString &version);
@@ -211,12 +207,8 @@ private:
     QToolBar *mainToolBar;
     SearchLineEdit *toolbarSearch;
     QToolBar *statusToolBar;
-
-    // phonon
-    Phonon::SeekSlider *seekSlider;
-    Phonon::VolumeSlider *volumeSlider;
-    Phonon::MediaObject *mediaObject;
-    Phonon::AudioOutput *audioOutput;
+    QSlider *seekSlider;
+    QSlider *volumeSlider;
     QLabel *currentTime;
     qreal volume;
 
@@ -227,6 +219,8 @@ private:
 
     // update checker
     UpdateChecker *updateChecker;
+
+    Media *media;
 };
 
 #endif

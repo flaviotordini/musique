@@ -101,17 +101,12 @@ MediaView::MediaView(QWidget *parent) : View(parent) {
     connect(errorTimer, SIGNAL(timeout()), playlistModel, SLOT(skipForward()));
 }
 
-void MediaView::setMediaObject(Phonon::MediaObject *mediaObject) {
-    this->mediaObject = mediaObject;
-#ifdef APP_MAC
-    mediaObject->setTransitionTime(-300);
-#endif
-    connect(mediaObject, SIGNAL(finished()), SLOT(playbackFinished()));
-    connect(mediaObject, SIGNAL(stateChanged(Phonon::State, Phonon::State)),
-            SLOT(stateChanged(Phonon::State, Phonon::State)));
-    connect(mediaObject, SIGNAL(aboutToFinish()), SLOT(aboutToFinish()));
-    connect(mediaObject, SIGNAL(currentSourceChanged(Phonon::MediaSource)),
-            SLOT(currentSourceChanged(Phonon::MediaSource)));
+void MediaView::setMedia(Media *media) {
+    this->media = media;
+    connect(media, &Media::finished, this, &MediaView::playbackFinished);
+    connect(media, &Media::stateChanged, this, &MediaView::stateChanged);
+    connect(media, &Media::aboutToFinish, this, &MediaView::aboutToFinish);
+    connect(media, &Media::sourceChanged, this, &MediaView::currentSourceChanged);
 }
 
 void MediaView::saveSplitterState() {
@@ -119,41 +114,42 @@ void MediaView::saveSplitterState() {
     settings.setValue("splitter", splitter->saveState());
 }
 
-void MediaView::stateChanged(Phonon::State newState, Phonon::State oldState) {
+void MediaView::stateChanged(Media::State newState) {
     // qDebug() << "Phonon state: " << newState << oldState;
 
     switch (newState) {
-    case Phonon::ErrorState:
+    /*
+    case MM::ErrorState:
         qDebug() << "Phonon error:" << mediaObject->errorString() << mediaObject->errorType();
         handleError(mediaObject->errorString());
         break;
-
-    case Phonon::PlayingState:
+    */
+    case Media::PlayingState:
         // qDebug("playing");
         break;
 
-    case Phonon::StoppedState:
+    case Media::StoppedState:
         // reset window title
         window()->setWindowTitle(Constants::NAME);
         break;
 
-    case Phonon::PausedState:
+    case Media::PausedState:
         // qDebug("paused");
         break;
 
-    case Phonon::BufferingState:
+    case Media::BufferingState:
         // qDebug("buffering");
         break;
 
-    case Phonon::LoadingState:
+    case Media::LoadingState:
         // qDebug("loading");
         break;
     }
 
-    if (newState == Phonon::PlayingState) {
+    if (newState == Media::PlayingState) {
         bool res = Idle::preventDisplaySleep(QString("%1 is playing").arg(Constants::NAME));
         if (!res) qWarning() << "Error disabling idle display sleep" << Idle::displayErrorMessage();
-    } else if (oldState == Phonon::PlayingState) {
+    } else {
         bool res = Idle::allowDisplaySleep();
         if (!res) qWarning() << "Error enabling idle display sleep" << Idle::displayErrorMessage();
     }
@@ -175,11 +171,10 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
 
     // go!
     if (startPlayback) {
-        if (manual) mediaObject->clearQueue();
+        if (manual) media->clearQueue();
         QString path = track->getAbsolutePath();
         qDebug() << "Playing" << path;
-        mediaObject->setCurrentSource(QUrl::fromLocalFile(path));
-        mediaObject->play();
+        media->play(path);
     }
 
     track->setStartTime(QDateTime::currentDateTimeUtc().toTime_t());
@@ -235,16 +230,16 @@ void MediaView::disappear() {
 void MediaView::playPause() {
     // qDebug() << "playPause() state" << mediaObject->state();
 
-    int state = mediaObject->state();
-    if (state == Phonon::PlayingState) {
-        // qDebug() << "Playing, let's pause";
-        mediaObject->pause();
-    } else if (state == Phonon::PausedState) {
-        // qDebug() << "Paused, let's play";
-        mediaObject->play();
+    auto state = media->state();
+    if (state == Media::PlayingState) {
+        qDebug() << "Playing, let's pause";
+        media->pause();
+    } else if (state == Media::PausedState) {
+        qDebug() << "Paused, let's play";
+        media->play();
     } else {
         // we're currently not playing, let's rock
-        // qDebug() << "Not playing";
+        qDebug() << "Not playing";
         playlistModel->skipForward();
     }
 }
@@ -273,7 +268,7 @@ void MediaView::playbackFinished() {
     QAction *stopAfterThisAction = MainWindow::instance()->getAction("stopafterthis");
     if (stopAfterThisAction->isChecked()) {
         stopAfterThisAction->setChecked(false);
-    } else if (mediaObject->queue().isEmpty()) {
+    } else if (!media->hasQueue()) {
         qDebug() << "Empty queue. Manually skipping forward";
         playlistModel->skipForward();
     }
@@ -308,13 +303,14 @@ void MediaView::aboutToFinish() {
         if (nextTrack) {
             QString absolutePath = nextTrack->getAbsolutePath();
             qDebug() << "Enqueuing" << absolutePath;
-            mediaObject->enqueue(QUrl::fromLocalFile(absolutePath));
+            media->enqueue(absolutePath);
         }
     }
 }
 
-void MediaView::currentSourceChanged(const Phonon::MediaSource &mediaSource) {
-    QString path = mediaSource.fileName();
+void MediaView::currentSourceChanged() {
+    QString path = media->file();
+    qDebug() << path;
     QString collectionRoot = Database::instance().collectionRoot();
     path = path.mid(collectionRoot.length() + 1);
     Track *track = Track::forPath(path);

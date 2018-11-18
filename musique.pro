@@ -21,6 +21,8 @@ QT += network sql widgets
 include(lib/http/http.pri)
 include(lib/idle/idle.pri)
 
+include(lib/media/media.pri)
+
 include(src/qtsingleapplication/qtsingleapplication.pri)
 include(src/tags/tags.pri)
 
@@ -93,7 +95,8 @@ HEADERS += src/mainwindow.h \
     src/genresmodel.h \
     src/genres.h \
     src/genreslistview.h \
-    src/model/decade.h
+    src/model/decade.h \
+    src/seekslider.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -161,7 +164,8 @@ SOURCES += src/main.cpp \
     src/genresmodel.cpp \
     src/genres.cpp \
     src/genreslistview.cpp \
-    src/model/decade.cpp
+    src/model/decade.cpp \
+    src/seekslider.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
@@ -177,13 +181,6 @@ include(locale/locale.pri)
 DISTFILES += CHANGES LICENSE
 unix:!mac {
     DEFINES += APP_LINUX
-    qt:greaterThan(QT_MAJOR_VERSION, 4) {
-        LIBS += -lphonon4qt5
-        INCLUDEPATH += /usr/include/phonon4qt5
-    } else {
-        QT += phonon
-        INCLUDEPATH += /usr/include/phonon
-    }
     LIBS += -ltag
     INCLUDEPATH += /usr/include/taglib
     QT += dbus

@@ -4,3 +4,6 @@
 [submodule "lib/idle"]
 	path = lib/idle
 	url = https://github.com/flaviotordini/idle
+[submodule "lib/media"]
+	path = lib/media
+	url = https://github.com/flaviotordini/media

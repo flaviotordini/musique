@@ -21,27 +21,28 @@ $END_LICENSE */
 #ifndef MEDIAVIEW_H
 #define MEDIAVIEW_H
 
+#include <QtAV>
 #include <QtWidgets>
-#include <phonon/mediaobject.h>
 
-#include "view.h"
 #include "finderwidget.h"
-#include "playlistview.h"
 #include "playlistmodel.h"
+#include "playlistview.h"
 #include "playlistwidget.h"
+#include "view.h"
+
+#include "media.h"
 
 class DropArea;
 
 class MediaView : public View {
-
     Q_OBJECT
 
 public:
     MediaView(QWidget *parent);
     void saveSplitterState();
-    void setMediaObject(Phonon::MediaObject *mediaObject);
-    Track* getActiveTrack() { return activeTrack; }
-    PlaylistModel* getPlaylistModel() { return playlistModel; }
+    void setMedia(Media *media);
+    Track *getActiveTrack() { return activeTrack; }
+    PlaylistModel *getPlaylistModel() { return playlistModel; }
 
 public slots:
     void appear();
@@ -52,20 +53,20 @@ public slots:
 
 private slots:
     void activeRowChanged(int row, bool manual, bool startPlayback);
-    void stateChanged(Phonon::State newState, Phonon::State oldState);
+    void stateChanged(Media::State newState);
     void handleError(QString message);
     void playlistFinished();
     void playbackFinished();
     void trackFinished();
     void aboutToFinish();
-    void currentSourceChanged(const Phonon::MediaSource& mediaSource);
+    void currentSourceChanged();
 #ifdef APP_ACTIVATION
     void updateContinueButton(int);
 #endif
 
 private:
     QSplitter *splitter;
-    Phonon::MediaObject *mediaObject;
+    Media *media;
     FinderWidget *finderWidget;
     PlaylistView *playlistView;
     PlaylistModel *playlistModel;
@@ -78,7 +79,6 @@ private:
     void demoMessage();
     int tracksPlayed;
 #endif
-
 };
 
 #endif // MEDIAVIEW_H
