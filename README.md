@@ -18,8 +18,7 @@ To be able to build on a Debian (or derivative) system:
 
 Clone from Github:
 
-    git clone https://github.com/flaviotordini/musique.git
-    cd musique && git submodule update --init
+    git clone --recursive https://github.com/flaviotordini/musique.git
 
 Compiling:
 
