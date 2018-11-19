@@ -1108,11 +1108,10 @@ void MainWindow::initMedia() {
 
 void MainWindow::tick(qint64 time) {
     // value : maxValue = position : duration
-    int duration = media->duration();
+    qint64 duration = media->duration();
     if (duration <= 0) return;
 
     int value = (seekSlider->maximum() * media->position()) / duration;
-    qDebug() << value;
     seekSlider->blockSignals(true);
     seekSlider->setValue(value);
     seekSlider->blockSignals(false);
