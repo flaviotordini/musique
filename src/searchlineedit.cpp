@@ -35,7 +35,7 @@ void SearchButton::paintEvent(QPaintEvent *e) {
     QPainter painter(this);
     const int h = height();
     int iconSize = 16;
-    if (h > 30) iconSize = 22;
+    if (h > 32) iconSize = 22;
     QPixmap p = IconUtils::icon("edit-find").pixmap(iconSize, iconSize);
     int x = (width() - p.width() / p.devicePixelRatio()) / 2;
     int y = (h - p.height() / p.devicePixelRatio()) / 2;

@@ -1,7 +1,8 @@
 #include "exlineedit.h"
 #include "iconutils.h"
 
-ClearButton::ClearButton(QWidget *parent) : QAbstractButton(parent), hovered(false), mousePressed(false) {
+ClearButton::ClearButton(QWidget *parent)
+    : QAbstractButton(parent), hovered(false), mousePressed(false) {
     setCursor(Qt::ArrowCursor);
     setToolTip(tr("Clear"));
     setVisible(false);
@@ -13,7 +14,7 @@ void ClearButton::paintEvent(QPaintEvent *e) {
     QPainter painter(this);
     const int h = height();
     int iconSize = 16;
-    if (h > 30) iconSize = 22;
+    if (h > 32) iconSize = 22;
     QIcon::Mode iconMode = QIcon::Normal;
     if (mousePressed) iconMode = QIcon::Active;
     QPixmap p = IconUtils::icon("edit-clear").pixmap(iconSize, iconSize, iconMode);
@@ -47,10 +48,8 @@ void ClearButton::mouseReleaseEvent(QMouseEvent *e) {
 }
 
 ExLineEdit::ExLineEdit(QWidget *parent)
-    : QWidget(parent)
-    , m_leftWidget(nullptr)
-    , m_lineEdit(new QLineEdit(this))
-    , m_clearButton(new ClearButton(this)) {
+    : QWidget(parent), m_leftWidget(nullptr), m_lineEdit(new QLineEdit(this)),
+      m_clearButton(new ClearButton(this)) {
     setFocusPolicy(m_lineEdit->focusPolicy());
     setAttribute(Qt::WA_InputMethodEnabled);
     setSizePolicy(m_lineEdit->sizePolicy());
@@ -72,7 +71,8 @@ ExLineEdit::ExLineEdit(QWidget *parent)
 
     // clearButton
     connect(m_clearButton, SIGNAL(clicked()), m_lineEdit, SLOT(clear()));
-    connect(m_lineEdit, SIGNAL(textChanged(const QString&)), m_clearButton, SLOT(textChanged(const QString&)));
+    connect(m_lineEdit, SIGNAL(textChanged(const QString &)), m_clearButton,
+            SLOT(textChanged(const QString &)));
 }
 
 void ExLineEdit::setFont(const QFont &font) {
@@ -112,15 +112,15 @@ void ExLineEdit::updateGeometries() {
     int width = rect.width();
 
     // int m_leftWidgetHeight = m_leftWidget->height();
-    m_leftWidget->setGeometry(rect.x() + 2,          0,
-                              m_leftWidget->width(), m_leftWidget->height());
+    m_leftWidget->setGeometry(rect.x() + 2, 0, m_leftWidget->width(), m_leftWidget->height());
 
     int clearButtonWidth = this->height();
-    m_lineEdit->setGeometry(m_leftWidget->x() + m_leftWidget->width(),        padding,
-                            width - clearButtonWidth - m_leftWidget->width(), this->height() - padding*2);
+    m_lineEdit->setGeometry(m_leftWidget->x() + m_leftWidget->width(), padding,
+                            width - clearButtonWidth - m_leftWidget->width(),
+                            this->height() - padding * 2);
 
-    m_clearButton->setGeometry(this->width() - clearButtonWidth, 0,
-                               clearButtonWidth, this->height());
+    m_clearButton->setGeometry(this->width() - clearButtonWidth, 0, clearButtonWidth,
+                               this->height());
 }
 
 void ExLineEdit::initStyleOption(QStyleOptionFrame *option) const {
@@ -129,11 +129,9 @@ void ExLineEdit::initStyleOption(QStyleOptionFrame *option) const {
     option->lineWidth = style()->pixelMetric(QStyle::PM_DefaultFrameWidth, option, this);
     option->midLineWidth = 0;
     option->state |= QStyle::State_Sunken;
-    if (m_lineEdit->isReadOnly())
-        option->state |= QStyle::State_ReadOnly;
+    if (m_lineEdit->isReadOnly()) option->state |= QStyle::State_ReadOnly;
 #ifdef QT_KEYPAD_NAVIGATION
-    if (hasEditFocus())
-        option->state |= QStyle::State_HasEditFocus;
+    if (hasEditFocus()) option->state |= QStyle::State_HasEditFocus;
 #endif
     option->features = QStyleOptionFrame::None;
 }
@@ -155,10 +153,10 @@ void ExLineEdit::focusOutEvent(QFocusEvent *e) {
     m_lineEdit->event(e);
 
     if (m_lineEdit->completer()) {
-        connect(m_lineEdit->completer(), SIGNAL(activated(QString)),
-                         m_lineEdit, SLOT(setText(QString)));
-        connect(m_lineEdit->completer(), SIGNAL(highlighted(QString)),
-                         m_lineEdit, SLOT(_q_completionHighlighted(QString)));
+        connect(m_lineEdit->completer(), SIGNAL(activated(QString)), m_lineEdit,
+                SLOT(setText(QString)));
+        connect(m_lineEdit->completer(), SIGNAL(highlighted(QString)), m_lineEdit,
+                SLOT(_q_completionHighlighted(QString)));
     }
     QWidget::focusOutEvent(e);
 }
@@ -179,8 +177,10 @@ bool ExLineEdit::event(QEvent *e) {
 
 void ExLineEdit::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
-    QPainter p(this);
-    QStyleOptionFrame panel;
-    initStyleOption(&panel);
-    style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
+    if (hasFocus()) {
+        QPainter p(this);
+        QStyleOptionFrame panel;
+        initStyleOption(&panel);
+        style()->drawPrimitive(QStyle::PE_PanelLineEdit, &panel, &p, this);
+    }
 }
