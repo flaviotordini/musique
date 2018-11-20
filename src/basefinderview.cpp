@@ -36,7 +36,7 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     setWrapping(true);
     setResizeMode(QListView::Adjust);
     setMovement(QListView::Static);
-    // setUniformItemSizes(true);
+    setUniformItemSizes(true);
 
     // colors
     QPalette p = palette();
@@ -51,6 +51,7 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
     // cosmetics
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
 
@@ -164,8 +165,10 @@ void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void BaseFinderView::resizeEvent(QResizeEvent *event) {
-    int width = contentsRect().width() - style()->pixelMetric(QStyle::PM_ScrollBarExtent) - 1;
-    int size = qFloor(width / qFloor(width / FinderItemDelegate::ITEM_WIDTH));
+    int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+    int width = contentsRect().width() - scrollbarWidth - 1;
+    int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
+    int size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
     delegate->setItemSize(size - 1, size - 1);
     setGridSize(QSize(size, size));
 }

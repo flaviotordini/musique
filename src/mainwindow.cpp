@@ -81,7 +81,7 @@ MainWindow *MainWindow::instance() {
     return singleton;
 }
 
-MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr) {
+MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr), mainToolBar(nullptr) {
     fullScreenActive = false;
 
     singleton = this;
@@ -546,7 +546,9 @@ void MainWindow::createToolBars() {
     // Create widgets
     currentTime = new QLabel("00:00", this);
     seekSlider = new SeekSlider(this);
+    seekSlider->setMaximum(1000);
     volumeSlider = new SeekSlider(this);
+    volumeSlider->setValue(volumeSlider->maximum());
 
 #if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
     SearchWrapper *searchWrapper = new SearchWrapper(this);
@@ -595,8 +597,7 @@ void MainWindow::createToolBars() {
     mainToolBar->addWidget(new Spacer());
 
     seekSlider->setEnabled(false);
-    seekSlider->setTracking(true);
-    seekSlider->setMaximum(1000);
+    seekSlider->setTracking(false);
     seekSlider->setOrientation(Qt::Horizontal);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     seekSlider->setFocusPolicy(Qt::NoFocus);
@@ -620,7 +621,6 @@ void MainWindow::createToolBars() {
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     volumeSlider->setFocusPolicy(Qt::NoFocus);
-    volumeSlider->setValue(volumeSlider->maximum());
     mainToolBar->addWidget(volumeSlider);
 
     mainToolBar->addWidget(new Spacer());
@@ -677,6 +677,10 @@ QAction *MainWindow::getAction(const char *name) {
     return actionMap.value(QByteArray::fromRawData(name, strlen(name)));
 }
 
+void MainWindow::addNamedAction(const QByteArray &name, QAction *action) {
+    actionMap.insert(name, action);
+}
+
 QMenu *MainWindow::getMenu(const char *name) {
     return menuMap.value(QByteArray::fromRawData(name, strlen(name)));
 }
@@ -723,7 +727,7 @@ void MainWindow::showWidget(QWidget *widget, bool transition) {
     aboutAct->setEnabled(widget != aboutView);
     chooseFolderAct->setEnabled(widget == mediaView || widget == contextualView);
     toolbarSearch->setEnabled(widget == mediaView || widget == contextualView);
-    mainToolBar->setVisible(widget == mediaView || widget == contextualView);
+    if (mainToolBar) mainToolBar->setVisible(widget == mediaView || widget == contextualView);
     statusBar()->setVisible(widget == mediaView);
 
     views->setCurrentWidget(widget);
@@ -772,7 +776,7 @@ void MainWindow::quit() {
 void MainWindow::closeEvent(QCloseEvent *e) {
 #ifdef APP_MAC
     mac::closeWindow(winId());
-    event->ignore();
+    e->ignore();
 #else
     quit();
     QMainWindow::closeEvent(e);
@@ -964,11 +968,11 @@ void MainWindow::stop() {
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e) {
-#if APP_MAC
+#ifdef APP_MAC
     if (mac::CanGoFullScreen(winId())) {
         bool isFullscreen = mac::IsFullScreen(winId());
-        if (isFullscreen != m_fullscreen) {
-            m_fullscreen = isFullscreen;
+        if (isFullscreen != fullScreenActive) {
+            fullScreenActive = isFullscreen;
             updateUIForFullscreen();
         }
     }
@@ -1079,6 +1083,7 @@ void MainWindow::initMedia() {
         if (media->state() != Media::PlayingState) return;
         // value : maxValue = position : duration
         qint64 ms = (value * media->duration()) / seekSlider->maximum();
+        qDebug() << "Seeking to" << ms;
         media->seek(ms);
     });
     connect(seekSlider, &QSlider::sliderPressed, this, [this]() {
@@ -1112,9 +1117,7 @@ void MainWindow::tick(qint64 time) {
     if (duration <= 0) return;
 
     int value = (seekSlider->maximum() * media->position()) / duration;
-    seekSlider->blockSignals(true);
-    seekSlider->setValue(value);
-    seekSlider->blockSignals(false);
+    if (!seekSlider->isSliderDown()) seekSlider->setValue(value);
 
     const QString s = formatTime(time);
     if (s != currentTime->text()) {

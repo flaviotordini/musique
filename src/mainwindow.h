@@ -47,6 +47,8 @@ public:
     QToolBar *getStatusToolbar() { return statusToolBar; }
 
     QAction *getAction(const char *name);
+    void addNamedAction(const QByteArray &name, QAction *action);
+
     QMenu *getMenu(const char *name);
 
     static void printHelp();
