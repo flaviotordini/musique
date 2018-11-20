@@ -1072,7 +1072,11 @@ void MainWindow::searchFocus() {
 }
 
 void MainWindow::initMedia() {
+#ifdef MEDIA_QTAV
     media = new MediaQtAV(this);
+#else
+    qFatal("No media backend defined");
+#endif
     media->setAudioOnly(true);
     media->init();
 
