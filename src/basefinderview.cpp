@@ -170,7 +170,7 @@ void BaseFinderView::resizeEvent(QResizeEvent *event) {
     int width = contentsRect().width() - scrollbarWidth - 1;
     int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
     int size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
-    delegate->setItemSize(size - 1, size - 1);
+    delegate->setItemSize(size, size);
     setGridSize(QSize(size, size));
 }
 
