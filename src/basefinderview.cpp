@@ -165,6 +165,7 @@ void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {
 }
 
 void BaseFinderView::resizeEvent(QResizeEvent *event) {
+    Q_UNUSED(event);
     int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
     int width = contentsRect().width() - scrollbarWidth - 1;
     int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
