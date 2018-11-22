@@ -794,12 +794,10 @@ void MainWindow::showChooseFolderView(bool transition) {
 
 void MainWindow::showMediaView(bool transition) {
     if (!mediaView) {
-        initMedia();
         mediaView = new MediaView(this);
-        mediaView->hide();
-        mediaView->setMedia(media);
         connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
         views->addWidget(mediaView);
+        QTimer::singleShot(0, this, &MainWindow::initMedia);
     }
 
     if (views->currentWidget() == contextualView) {
@@ -1113,6 +1111,8 @@ void MainWindow::initMedia() {
     QSettings settings;
     volume = settings.value("volume", 1.).toReal();
     media->setVolume(volume);
+
+    mediaView->setMedia(media);
 }
 
 void MainWindow::tick(qint64 time) {
