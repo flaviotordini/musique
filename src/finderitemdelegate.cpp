@@ -80,13 +80,7 @@ QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) const 
     QPixmap pixmap = QPixmap(w, h);
 
     QPainter painter(&pixmap);
-
-    QRadialGradient radialGrad(QPoint(w / 2, h / 3), w);
-    radialGrad.setColorAt(0, QColor(48, 48, 48));
-    radialGrad.setColorAt(1, Qt::black);
-    painter.setBrush(radialGrad);
-    painter.setPen(Qt::NoPen);
-    painter.drawRect(QRect(0, 0, w, h));
+    painter.fillRect(QRect(0, 0, w, h), QBrush(QColor(0x30, 0x30, 0x30)));
 
     pixmap.setDevicePixelRatio(pixelRatio);
     return pixmap;
@@ -176,8 +170,15 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
     painter->translate(option.rect.topLeft());
     const QRect line(0, 0, option.rect.width(), option.rect.height());
 
+    qreal pixelRatio = painter->device()->devicePixelRatioF();
+
     // thumb
-    painter->drawPixmap(0, 0, getMissingItemBackground(IconUtils::pixelRatio()));
+    painter->drawPixmap(0, 0, getMissingItemBackground(pixelRatio));
+
+    painter->save();
+    painter->setPen(QColor(0x20, 0x20, 0x20));
+    painter->drawLine(option.rect.width() - 1, 0, option.rect.width() - 1, option.rect.height());
+    painter->restore();
 
     /*
 #ifdef APP_LINUX
@@ -190,7 +191,6 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
                             fileIcon.pixmap(QSize(64, 64)));
     */
 
-    qreal pixelRatio = painter->device()->devicePixelRatioF();
     QPixmap symbol = IconUtils::pixmap(":/images/item/folder.png");
     painter->save();
     painter->setOpacity(.1);
