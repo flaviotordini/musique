@@ -146,10 +146,6 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     paintTrackTitle(painter, option, line, track, isActive);
     paintTrackLength(painter, option, line, track);
 
-    // separator
-    painter->setOpacity(.1);
-    painter->drawLine(0, line.height() - 1, line.width(), line.height() - 1);
-
     painter->restore();
 }
 
