@@ -41,9 +41,6 @@ void AlbumListView::appear() {
     BaseFinderView::appear();
     if (showToolBar) {
         QStatusBar *statusBar = MainWindow::instance()->statusBar();
-#ifdef APP_EXTRA
-        Extra::fadeInWidget(statusBar, statusBar);
-#endif
         statusBar->insertPermanentWidget(0, toolBar);
         toolBar->show();
     }
@@ -53,9 +50,6 @@ void AlbumListView::disappear() {
     BaseFinderView::disappear();
     if (showToolBar) {
         QStatusBar *statusBar = MainWindow::instance()->statusBar();
-#ifdef APP_EXTRA
-        Extra::fadeInWidget(statusBar, statusBar);
-#endif
         statusBar->removeWidget(toolBar);
     }
 }

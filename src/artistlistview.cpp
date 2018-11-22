@@ -39,9 +39,6 @@ ArtistListView::ArtistListView(QWidget *parent) : BaseFinderView(parent) {
 
 void ArtistListView::appear() {
     QStatusBar *statusBar = MainWindow::instance()->statusBar();
-#ifdef APP_EXTRA
-    Extra::fadeInWidget(statusBar, statusBar);
-#endif
     BaseFinderView::appear();
     statusBar->insertPermanentWidget(0, toolBar);
     toolBar->show();
@@ -51,9 +48,6 @@ void ArtistListView::appear() {
 
 void ArtistListView::disappear() {
     QStatusBar *statusBar = MainWindow::instance()->statusBar();
-#ifdef APP_EXTRA
-    Extra::fadeInWidget(statusBar, statusBar);
-#endif
     // clearThumbs();
     BaseFinderView::disappear();
     statusBar->removeWidget(toolBar);
