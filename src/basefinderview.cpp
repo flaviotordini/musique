@@ -40,7 +40,7 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
 
     // colors
     QPalette p = palette();
-    p.setBrush(QPalette::Base, Qt::black);
+    p.setBrush(QPalette::Base, QColor(0x10, 0x10, 0x10));
     p.setBrush(QPalette::Text, Qt::white);
     p.setColor(QPalette::Background, Qt::transparent);
     setPalette(p);
