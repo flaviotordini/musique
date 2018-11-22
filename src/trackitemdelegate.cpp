@@ -76,23 +76,15 @@ void TrackItemDelegate::paintTrack(QPainter *painter,
         QString trackString = QString("%1").arg(track->getNumber(), 2, 10, QChar('0'));
         QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackString));
         QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
-        QRect trackRoundedRect = trackTextBox;
-
-        trackRoundedRect.setY((line.height() - trackStringSize.height()) / 2);
-        trackRoundedRect.setHeight(trackStringSize.height());
-        trackRoundedRect.adjust(-padding / 2, -padding / 3, padding / 2, padding / 3);
 
         painter->setOpacity(.75);
-        painter->setRenderHints(QPainter::Antialiasing, true);
-        painter->setBrush(Qt::white);
-        painter->setPen(Qt::black);
-        painter->drawRoundedRect(trackRoundedRect, padding / 2, padding / 2, Qt::AbsoluteSize);
+        painter->setPen(Qt::white);
         painter->drawText(trackTextBox, Qt::AlignCenter, trackString);
         painter->restore();
     }
 
     // title
-    QString titleString = track->getTitle();
+    const QString &titleString = track->getTitle();
     QSize titleStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, titleString));
     QSize trackStringSize(
             QFontMetrics(painter->font()).size(Qt::TextSingleLine, QStringLiteral("00")));
