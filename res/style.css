@@ -1,3 +1,7 @@
+QStatusBar {
+    border: 0;
+}
+
 QStatusBar QToolBar {
     padding:0;
     spacing:0;
