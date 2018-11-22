@@ -45,15 +45,15 @@ QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
     QPainter painter(&playIcon);
     painter.setRenderHints(QPainter::Antialiasing, true);
 
-    QColor black = Qt::black;
-    QColor white = Qt::white;
-
+    QColor fillColor = Qt::black;
+    QColor borderColor = Qt::white;
     if (hovered) {
-        black = Qt::white;
-        white = Qt::black;
+        fillColor = Qt::white;
+        borderColor = Qt::black;
     }
-    painter.setBrush(black);
-    QPen pen(white);
+
+    painter.setBrush(fillColor);
+    QPen pen(borderColor);
     pen.setWidth(2);
     painter.setPen(pen);
     painter.drawEllipse(QPoint(iconWidth, iconHeight), iconWidth - 2, iconHeight - 2);
@@ -62,8 +62,8 @@ QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
     QPolygon polygon;
     polygon << QPoint(padding * 2, padding) << QPoint(iconWidth - padding, iconHeight / 2)
             << QPoint(padding * 2, iconHeight - padding);
-    painter.setBrush(white);
-    pen.setColor(white);
+    painter.setBrush(borderColor);
+    pen.setColor(borderColor);
     pen.setWidth(3);
     pen.setJoinStyle(Qt::RoundJoin);
     pen.setCapStyle(Qt::RoundCap);
@@ -113,7 +113,8 @@ const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type) con
 
 const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered, qreal pixelRatio) {
     static QMap<QString, QPixmap> cache;
-    const QString key = (hovered ? "1|" : "0|") + QString::number(pixelRatio);
+    const QString key =
+            (hovered ? QLatin1String("1|") : QLatin1String("0|")) + QString::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
     QPixmap pixmap = createPlayIcon(hovered, pixelRatio);
