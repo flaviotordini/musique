@@ -467,8 +467,9 @@ void MainWindow::createActions() {
 
         // show keyboard shortcuts in the status bar
         if (!action->shortcut().isEmpty())
-            action->setStatusTip(action->statusTip() + " (" +
-                                 action->shortcut().toString(QKeySequence::NativeText) + ")");
+            action->setStatusTip(action->statusTip() + QLatin1String(" (") +
+                                 action->shortcut().toString(QKeySequence::NativeText) +
+                                 QLatin1String(")"));
     }
 }
 
