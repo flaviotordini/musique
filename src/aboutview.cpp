@@ -119,7 +119,7 @@ void AboutView::paintEvent(QPaintEvent *e) {
 void AboutView::appear() {
 #ifdef APP_MAC
     mac::uncloseWindow(window()->winId());
-#ifdef APP_ACTIVATION
+#ifndef APP_MAC_STORE
     mac::CheckForUpdates();
 #endif
 #endif
