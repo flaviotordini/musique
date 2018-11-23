@@ -254,9 +254,7 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter *painter,
         trackString = QString::number(track->getDiskNumber()) + "-" + trackString;
     }
 
-    QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackString));
-    QPoint textLoc(PADDING, 0);
-    QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
+    QRect trackTextBox(0, 0, line.height(), line.height());
 
     painter->setOpacity(.5);
     painter->drawText(trackTextBox, Qt::AlignCenter, trackString);
