@@ -22,17 +22,17 @@ $END_LICENSE */
 #define ARTISTLISTVIEW_H
 
 #include "artistsqlmodel.h"
-#include "basefinderview.h"
+#include "finderlistview.h"
 #include <QtSql>
 #include <QtWidgets>
 
-class ArtistListView : public BaseFinderView {
+class ArtistListView : public FinderListView {
     Q_OBJECT
 
 public:
     ArtistListView(QWidget *parent);
     void setModel(ArtistSqlModel *model) {
-        BaseFinderView::setModel(model);
+        FinderListView::setModel(model);
         sqlModel = model;
     }
     void updateQuery(bool transition = false);

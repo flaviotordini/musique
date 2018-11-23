@@ -33,13 +33,13 @@ const char *sortByKey = "artistSortBy";
 const char *reverseOrderKey = "artistReverseOrder";
 } // namespace
 
-ArtistListView::ArtistListView(QWidget *parent) : BaseFinderView(parent) {
+ArtistListView::ArtistListView(QWidget *parent) : FinderListView(parent) {
     setupToolbar();
 }
 
 void ArtistListView::appear() {
     QStatusBar *statusBar = MainWindow::instance()->statusBar();
-    BaseFinderView::appear();
+    FinderListView::appear();
     statusBar->insertPermanentWidget(0, toolBar);
     toolBar->show();
 
@@ -49,7 +49,7 @@ void ArtistListView::appear() {
 void ArtistListView::disappear() {
     QStatusBar *statusBar = MainWindow::instance()->statusBar();
     // clearThumbs();
-    BaseFinderView::disappear();
+    FinderListView::disappear();
     statusBar->removeWidget(toolBar);
 }
 

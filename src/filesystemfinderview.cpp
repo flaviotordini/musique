@@ -23,10 +23,10 @@ $END_LICENSE */
 #include "filesystemmodel.h"
 
 FileSystemFinderView::FileSystemFinderView(QWidget *parent) :
-        BaseFinderView(parent) { }
+        FinderListView(parent) { }
 
 void FileSystemFinderView::appear() {
-    BaseFinderView::appear();
+    FinderListView::appear();
     if (fileSystemModel) {
         fileSystemModel->setRootPath(fileSystemModel->rootPath());
     }

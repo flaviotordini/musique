@@ -1,10 +1,10 @@
 #ifndef METAGENRESLISTVIEW_H
 #define METAGENRESLISTVIEW_H
 
-#include "basefinderview.h"
+#include "finderlistview.h"
 #include <QtWidgets>
 
-class GenresListView : public BaseFinderView {
+class GenresListView : public FinderListView {
     Q_OBJECT
 
 public:

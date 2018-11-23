@@ -1,3 +1,3 @@
 #include "genreslistview.h"
 
-GenresListView::GenresListView(QWidget *parent) : BaseFinderView(parent) {}
+GenresListView::GenresListView(QWidget *parent) : FinderListView(parent) {}

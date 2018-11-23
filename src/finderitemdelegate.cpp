@@ -19,7 +19,7 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "finderitemdelegate.h"
-#include "basefinderview.h"
+#include "finderlistview.h"
 #include "basesqlmodel.h"
 #include "finderwidget.h"
 #include "fontutils.h"
@@ -31,7 +31,7 @@ const int FinderItemDelegate::ITEM_WIDTH = 180;
 const int FinderItemDelegate::ITEM_HEIGHT = 180;
 const int FinderItemDelegate::PADDING = 10;
 
-FinderItemDelegate::FinderItemDelegate(BaseFinderView *parent)
+FinderItemDelegate::FinderItemDelegate(FinderListView *parent)
     : QStyledItemDelegate(parent), view(parent) {}
 
 QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {

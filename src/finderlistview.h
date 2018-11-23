@@ -25,11 +25,11 @@ $END_LICENSE */
 
 class FinderItemDelegate;
 
-class BaseFinderView : public QListView {
+class FinderListView : public QListView {
     Q_OBJECT
 
 public:
-    BaseFinderView(QWidget *parent);
+    FinderListView(QWidget *parent);
 
     int isHovered(const QModelIndex &index) const { return hoveredRow == index.row(); }
     bool isPlayIconHovered() const { return playIconHovered; }

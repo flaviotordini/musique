@@ -23,16 +23,16 @@ $END_LICENSE */
 
 #include <QtWidgets>
 #include <QtSql>
-#include "basefinderview.h"
+#include "finderlistview.h"
 #include "albumsqlmodel.h"
 
-class AlbumListView : public BaseFinderView {
+class AlbumListView : public FinderListView {
 
     Q_OBJECT
 
 public:
     AlbumListView(QWidget *parent);
-    void setModel(AlbumSqlModel *model) { BaseFinderView::setModel(model); sqlModel = model; }
+    void setModel(AlbumSqlModel *model) { FinderListView::setModel(model); sqlModel = model; }
     void updateQuery(bool transition = false);
     void setShowToolBar(bool show) { showToolBar = show; }
 

@@ -22,9 +22,9 @@ $END_LICENSE */
 #define SEARCHVIEW_H
 
 #include <QtWidgets>
-#include "basefinderview.h"
+#include "finderlistview.h"
 
-class SearchView : public BaseFinderView {
+class SearchView : public FinderListView {
 
     Q_OBJECT
 

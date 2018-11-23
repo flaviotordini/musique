@@ -18,14 +18,14 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
-#include "basefinderview.h"
+#include "finderlistview.h"
 #include "basesqlmodel.h"
 #include "database.h"
 #include "finderitemdelegate.h"
 #include "finderwidget.h"
 #include "model/item.h"
 
-BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
+FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     delegate = new FinderItemDelegate(this);
     setItemDelegate(delegate);
     setSelectionMode(QAbstractItemView::ExtendedSelection);
@@ -69,7 +69,7 @@ BaseFinderView::BaseFinderView(QWidget *parent) : QListView(parent) {
     connect(this, SIGNAL(viewportEntered()), SLOT(clearHover()));
 }
 
-void BaseFinderView::appear() {
+void FinderListView::appear() {
     setEnabled(true);
     setMouseTracking(true);
     BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel *>(model());
@@ -80,30 +80,30 @@ void BaseFinderView::appear() {
     }
 }
 
-void BaseFinderView::disappear() {
+void FinderListView::disappear() {
     setEnabled(false);
     setMouseTracking(false);
     BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel *>(model());
     if (baseSqlModel) baseSqlModel->clear();
 }
 
-void BaseFinderView::setHoveredIndex(const QModelIndex &index) {
+void FinderListView::setHoveredIndex(const QModelIndex &index) {
     setHoveredRow(index.row());
 }
 
-void BaseFinderView::setHoveredRow(int row) {
+void FinderListView::setHoveredRow(int row) {
     int oldRow = hoveredRow;
     hoveredRow = row;
     refreshRow(oldRow);
     refreshRow(hoveredRow);
 }
 
-void BaseFinderView::clearHover() {
+void FinderListView::clearHover() {
     refreshRow(hoveredRow);
     hoveredRow = -1;
 }
 
-void BaseFinderView::enterPlayIconHover() {
+void FinderListView::enterPlayIconHover() {
     if (playIconHovered) return;
     playIconHovered = true;
     if (timeLine->state() != QTimeLine::Running) {
@@ -112,7 +112,7 @@ void BaseFinderView::enterPlayIconHover() {
     }
 }
 
-void BaseFinderView::exitPlayIconHover() {
+void FinderListView::exitPlayIconHover() {
     if (!playIconHovered) return;
     playIconHovered = false;
     if (timeLine->state() == QTimeLine::Running) {
@@ -123,7 +123,7 @@ void BaseFinderView::exitPlayIconHover() {
     setHoveredRow(hoveredRow);
 }
 
-void BaseFinderView::refreshIndex(const QModelIndex &index) {
+void FinderListView::refreshIndex(const QModelIndex &index) {
     bool res = QMetaObject::invokeMethod(model(), "refreshIndex", Qt::DirectConnection,
                                          Q_ARG(QModelIndex, index));
     if (!res) {
@@ -131,20 +131,20 @@ void BaseFinderView::refreshIndex(const QModelIndex &index) {
     }
 }
 
-void BaseFinderView::refreshRow(int row) {
+void FinderListView::refreshRow(int row) {
     QModelIndex index = model()->index(row, 0);
     refreshIndex(index);
 }
 
-void BaseFinderView::updatePlayIcon() {
+void FinderListView::updatePlayIcon() {
     refreshRow(hoveredRow);
 }
 
-void BaseFinderView::leaveEvent(QEvent * /* event */) {
+void FinderListView::leaveEvent(QEvent * /* event */) {
     clearHover();
 }
 
-void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
+void FinderListView::mouseMoveEvent(QMouseEvent *event) {
     QListView::mouseMoveEvent(event);
 
     if (isHoveringPlayIcon(event)) {
@@ -156,7 +156,7 @@ void BaseFinderView::mouseMoveEvent(QMouseEvent *event) {
     }
 }
 
-void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {
+void FinderListView::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && isHoveringPlayIcon(event)) {
         emit play(indexAt(event->pos()));
     } else {
@@ -164,7 +164,7 @@ void BaseFinderView::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
-void BaseFinderView::resizeEvent(QResizeEvent *event) {
+void FinderListView::resizeEvent(QResizeEvent *event) {
     Q_UNUSED(event);
     int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
     int width = contentsRect().width() - scrollbarWidth - 1;
@@ -174,7 +174,7 @@ void BaseFinderView::resizeEvent(QResizeEvent *event) {
     setGridSize(QSize(size, size));
 }
 
-bool BaseFinderView::isHoveringPlayIcon(QMouseEvent *event) {
+bool FinderListView::isHoveringPlayIcon(QMouseEvent *event) {
     const QModelIndex itemIndex = indexAt(event->pos());
     const QRect itemRect = visualRect(itemIndex);
 

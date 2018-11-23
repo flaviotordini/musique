@@ -54,7 +54,6 @@ HEADERS += src/mainwindow.h \
     src/trackmimedata.h \
     src/playlistview.h \
     src/collectionscannerthread.h \
-    src/basefinderview.h \
     src/playlistwidget.h \
     src/breadcrumbwidget.h \
     src/fontutils.h \
@@ -97,7 +96,8 @@ HEADERS += src/mainwindow.h \
     src/genres.h \
     src/genreslistview.h \
     src/model/decade.h \
-    src/seekslider.h
+    src/seekslider.h \
+    src/finderlistview.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -123,7 +123,6 @@ SOURCES += src/main.cpp \
     src/trackmimedata.cpp \
     src/playlistview.cpp \
     src/collectionscannerthread.cpp \
-    src/basefinderview.cpp \
     src/playlistwidget.cpp \
     src/breadcrumbwidget.cpp \
     src/fontutils.cpp \
@@ -166,7 +165,8 @@ SOURCES += src/main.cpp \
     src/genres.cpp \
     src/genreslistview.cpp \
     src/model/decade.cpp \
-    src/seekslider.cpp
+    src/seekslider.cpp \
+    src/finderlistview.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/

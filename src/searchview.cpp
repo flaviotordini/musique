@@ -21,7 +21,7 @@ $END_LICENSE */
 #include "searchview.h"
 #include "fontutils.h"
 
-SearchView::SearchView(QWidget *parent) : BaseFinderView(parent) {
+SearchView::SearchView(QWidget *parent) : FinderListView(parent) {
 
     /*
     QBoxLayout *layout = new QVBoxLayout(this);

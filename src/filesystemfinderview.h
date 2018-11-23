@@ -22,11 +22,11 @@ $END_LICENSE */
 #define FILESYSTEMFINDERVIEW_H
 
 #include <QtWidgets>
-#include "basefinderview.h"
+#include "finderlistview.h"
 
 class FileSystemModel;
 
-class FileSystemFinderView : public BaseFinderView {
+class FileSystemFinderView : public FinderListView {
 
     Q_OBJECT
 

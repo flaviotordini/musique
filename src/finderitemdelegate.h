@@ -27,13 +27,13 @@ class Artist;
 class Album;
 class Folder;
 class Item;
-class BaseFinderView;
+class FinderListView;
 
 class FinderItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
 
 public:
-    FinderItemDelegate(BaseFinderView *parent);
+    FinderItemDelegate(FinderListView *parent);
     QSize sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const;
     void paint(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
 
@@ -78,7 +78,7 @@ private:
 
     static const int PADDING;
 
-    BaseFinderView *view;
+    FinderListView *view;
     int itemWidth = ITEM_WIDTH;
     int itemHeight = ITEM_HEIGHT;
 };

@@ -33,12 +33,12 @@ const char *sortByKey = "albumSortBy";
 const char *reverseOrderKey = "albumReverseOrder";
 } // namespace
 
-AlbumListView::AlbumListView(QWidget *parent) : BaseFinderView(parent), showToolBar(false) {
+AlbumListView::AlbumListView(QWidget *parent) : FinderListView(parent), showToolBar(false) {
     setupToolbar();
 }
 
 void AlbumListView::appear() {
-    BaseFinderView::appear();
+    FinderListView::appear();
     if (showToolBar) {
         QStatusBar *statusBar = MainWindow::instance()->statusBar();
         statusBar->insertPermanentWidget(0, toolBar);
@@ -47,7 +47,7 @@ void AlbumListView::appear() {
 }
 
 void AlbumListView::disappear() {
-    BaseFinderView::disappear();
+    FinderListView::disappear();
     if (showToolBar) {
         QStatusBar *statusBar = MainWindow::instance()->statusBar();
         statusBar->removeWidget(toolBar);

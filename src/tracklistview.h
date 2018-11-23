@@ -22,7 +22,7 @@ $END_LICENSE */
 #define TRACKLISTVIEW_H
 
 #include <QListView>
-#include "basefinderview.h"
+#include "finderlistview.h"
 
 class TrackListView : public QListView {
 
