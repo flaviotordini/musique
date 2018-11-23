@@ -413,7 +413,7 @@ void FinderWidget::artistPlayed(const QModelIndex &index) {
 void FinderWidget::albumActivated(Album *album) {
     if (!trackListView) setupTracks();
 
-    QString qry("select id from tracks where album=%1 order by track, path");
+    QString qry("select id from tracks where album=%1 order by disk, track, path");
     qry = qry.arg(album->getId());
     qDebug() << qry;
     trackListModel->setQuery(qry, Database::instance().getConnection());

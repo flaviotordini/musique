@@ -74,6 +74,9 @@ void TrackItemDelegate::paintTrack(QPainter *painter,
         painter->setFont(font);
 
         QString trackString = QString("%1").arg(track->getNumber(), 2, 10, QChar('0'));
+        if (track->getDiskCount() > 1) {
+            trackString = QString::number(track->getDiskNumber()) + '.' + trackString;
+        }
         QSize trackStringSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, trackString));
         QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
 

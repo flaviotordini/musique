@@ -251,7 +251,7 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter *painter,
     QString trackString = QString("%1").arg(trackNumber, 2, 10, QChar('0'));
 
     if (track->getDiskCount() > 1) {
-        trackString = QString::number(track->getDiskNumber()) + "-" + trackString;
+        trackString = QString::number(track->getDiskNumber()) + '.' + trackString;
     }
 
     QRect trackTextBox(0, 0, line.height(), line.height());

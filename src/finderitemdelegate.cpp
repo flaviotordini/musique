@@ -19,8 +19,8 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "finderitemdelegate.h"
-#include "finderlistview.h"
 #include "basesqlmodel.h"
+#include "finderlistview.h"
 #include "finderwidget.h"
 #include "fontutils.h"
 #include "iconutils.h"
@@ -255,8 +255,16 @@ void FinderItemDelegate::paintTrack(QPainter *painter,
     else if (track->getLength() > 0)
         trackLength = QTime().addSecs(track->getLength()).toString("m:ss");
     drawBadge(painter, trackLength, line);
+
     int trackNumber = track->getNumber();
-    if (trackNumber > 0) drawCentralLabel(painter, QString::number(trackNumber), line);
+    if (trackNumber > 0) {
+        QString trackString = QString("%1").arg(trackNumber, 2, 10, QChar('0'));
+        if (track->getDiskCount() > 1) {
+            trackString = QString::number(track->getDiskNumber()) + '.' + trackString;
+        }
+        drawCentralLabel(painter, trackString, line);
+    }
+
     drawName(painter, option, track->getTitle(), line, isSelected);
 
     painter->restore();
