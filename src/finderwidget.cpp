@@ -38,7 +38,6 @@ $END_LICENSE */
 #include "albumlistview.h"
 #include "albumsqlmodel.h"
 
-#include "genreslistview.h"
 #include "genresmodel.h"
 
 #include "tracklistview.h"
@@ -214,7 +213,7 @@ void FinderWidget::setupAlbums() {
 
 void FinderWidget::setupGenres() {
     genresModel = new GenresModel(this);
-    genresListView = new GenresListView(this);
+    genresListView = new FinderListView(this);
     genresListView->setEnabled(false);
     connect(genresListView, SIGNAL(activated(const QModelIndex &)),
             SLOT(genreActivated(const QModelIndex &)));

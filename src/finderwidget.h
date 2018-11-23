@@ -40,7 +40,7 @@ class SearchModel;
 class SearchView;
 class Artist;
 class Album;
-class GenresListView;
+class FinderListView;
 class GenresModel;
 
 namespace Finder {
@@ -138,7 +138,7 @@ private:
     AlbumListView *albumListView;
     AlbumSqlModel *albumListModel;
 
-    GenresListView *genresListView;
+    FinderListView *genresListView;
     GenresModel *genresModel;
 
     QListView *trackListView;

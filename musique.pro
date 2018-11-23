@@ -94,7 +94,6 @@ HEADERS += src/mainwindow.h \
     src/model/genre.h \
     src/genresmodel.h \
     src/genres.h \
-    src/genreslistview.h \
     src/model/decade.h \
     src/seekslider.h \
     src/finderlistview.h
@@ -163,7 +162,6 @@ SOURCES += src/main.cpp \
     src/model/genre.cpp \
     src/genresmodel.cpp \
     src/genres.cpp \
-    src/genreslistview.cpp \
     src/model/decade.cpp \
     src/seekslider.cpp \
     src/finderlistview.cpp
