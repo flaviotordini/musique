@@ -21,19 +21,18 @@ $END_LICENSE */
 #ifndef TRACKLISTVIEW_H
 #define TRACKLISTVIEW_H
 
-#include <QListView>
 #include "finderlistview.h"
+#include <QListView>
 
 class TrackListView : public QListView {
-
     Q_OBJECT
 
 public:
-    TrackListView(QWidget *parent);
-public slots:
-    void appear();
-    void disappear() { }
+    TrackListView(QWidget *parent = nullptr);
 
+public slots:
+    void appear() {}
+    void disappear() {}
 };
 
 #endif // TRACKLISTVIEW_H

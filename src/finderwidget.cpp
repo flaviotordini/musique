@@ -72,15 +72,13 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
     searchView = nullptr;
 
-    setAttribute(Qt::WA_OpaquePaintEvent);
-
     // colors
     QPalette p = palette();
+    QColor backgroundColor(0x20, 0x20, 0x20);
+    p.setBrush(QPalette::Window, backgroundColor);
+    p.setBrush(QPalette::Base, backgroundColor);
     p.setBrush(QPalette::Text, Qt::white);
-    p.setBrush(QPalette::Foreground, QColor(0xdc, 0xdc, 0xdc));
     p.setBrush(QPalette::WindowText, Qt::white);
-    p.setBrush(QPalette::ButtonText, Qt::white);
-    setPalette(p);
 
     QBoxLayout *layout = new QVBoxLayout();
     layout->setMargin(0);
@@ -100,6 +98,7 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->addWidget(folderBreadcrumb);
 
     stackedWidget = new QStackedWidget(this);
+    stackedWidget->setPalette(p);
 
     layout->addWidget(stackedWidget);
     setLayout(layout);
@@ -109,28 +108,6 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     setMinimumHeight(FinderItemDelegate::ITEM_HEIGHT + finderBar->minimumHeight());
 
     restoreSavedView();
-}
-
-void FinderWidget::paintEvent(QPaintEvent *e) {
-    Q_UNUSED(e);
-
-    QPainter painter(this);
-    painter.translate(0, stackedWidget->y());
-    QRect rect = visibleRegion().boundingRect();
-
-    QLinearGradient shadow;
-    shadow.setColorAt(0, QColor(0x00, 0x00, 0x00, 64));
-    shadow.setColorAt(1, QColor(0x00, 0x00, 0x00, 0));
-
-    QRect shadowRect(rect.x(), rect.y(), rect.width(), 20);
-    shadow.setStart(shadowRect.topLeft());
-    shadow.setFinalStop(shadowRect.bottomLeft());
-    painter.fillRect(shadowRect, QBrush(shadow));
-
-    shadowRect = QRect(rect.width() - 20, rect.y(), 20, rect.height());
-    shadow.setStart(shadowRect.topRight());
-    shadow.setFinalStop(shadowRect.topLeft());
-    painter.fillRect(shadowRect, QBrush(shadow));
 }
 
 void FinderWidget::restoreSavedView() {
@@ -189,7 +166,7 @@ void FinderWidget::setupBar() {
 
 void FinderWidget::setupArtists() {
     artistListModel = new ArtistSqlModel(this);
-    artistListView = new ArtistListView(this);
+    artistListView = new ArtistListView(stackedWidget);
     artistListView->setEnabled(false);
     connect(artistListView, SIGNAL(activated(const QModelIndex &)),
             SLOT(artistActivated(const QModelIndex &)));
@@ -201,7 +178,7 @@ void FinderWidget::setupArtists() {
 
 void FinderWidget::setupAlbums() {
     albumListModel = new AlbumSqlModel(this);
-    albumListView = new AlbumListView(this);
+    albumListView = new AlbumListView(stackedWidget);
     albumListView->setEnabled(false);
     connect(albumListView, SIGNAL(activated(const QModelIndex &)),
             SLOT(albumActivated(const QModelIndex &)));
@@ -213,7 +190,7 @@ void FinderWidget::setupAlbums() {
 
 void FinderWidget::setupGenres() {
     genresModel = new GenresModel(this);
-    genresListView = new FinderListView(this);
+    genresListView = new FinderListView(stackedWidget);
     genresListView->setEnabled(false);
     connect(genresListView, SIGNAL(activated(const QModelIndex &)),
             SLOT(genreActivated(const QModelIndex &)));
@@ -225,11 +202,12 @@ void FinderWidget::setupGenres() {
 
 void FinderWidget::setupTracks() {
     trackListModel = new TrackSqlModel(this);
-    trackListView = new TrackListView(this);
+    trackListView = new TrackListView(stackedWidget);
     connect(trackListView, SIGNAL(activated(const QModelIndex &)),
             SLOT(trackActivated(const QModelIndex &)));
     trackListView->setModel(trackListModel);
     stackedWidget->addWidget(trackListView);
+    trackListView->setPalette(stackedWidget->palette());
 }
 
 void FinderWidget::setupFolders() {
@@ -239,7 +217,7 @@ void FinderWidget::setupFolders() {
     filteringFileSystemModel = new FilteringFileSystemModel(this);
     filteringFileSystemModel->setSourceModel(fileSystemModel);
 
-    fileSystemView = new FileSystemFinderView(this);
+    fileSystemView = new FileSystemFinderView(stackedWidget);
     connect(fileSystemView, SIGNAL(activated(const QModelIndex &)),
             SLOT(folderActivated(const QModelIndex &)));
     connect(fileSystemView, SIGNAL(play(const QModelIndex &)),
@@ -251,7 +229,7 @@ void FinderWidget::setupFolders() {
 
 void FinderWidget::setupSearch() {
     searchModel = new SearchModel(this);
-    searchView = new SearchView(this);
+    searchView = new SearchView(stackedWidget);
 
     connect(searchView, SIGNAL(activated(const QModelIndex &)), searchModel,
             SLOT(itemActivated(const QModelIndex &)));

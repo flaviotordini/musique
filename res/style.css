@@ -24,7 +24,7 @@ AppsWidget {
 
 BreadcrumbWidget {
     border: 0;
-    background: black;
+    background: #202020;
     padding: 8px;
 }
 

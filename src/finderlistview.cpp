@@ -38,12 +38,8 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     setMovement(QListView::Static);
     setUniformItemSizes(true);
 
-    // colors
-    QPalette p = palette();
-    p.setBrush(QPalette::Base, QColor(0x10, 0x10, 0x10));
-    p.setBrush(QPalette::Text, Qt::white);
-    p.setColor(QPalette::Background, Qt::transparent);
-    setPalette(p);
+    // fix palette propagation
+    setPalette(parent->palette());
 
     // dragndrop
     setDragEnabled(true);

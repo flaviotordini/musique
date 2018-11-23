@@ -78,9 +78,6 @@ public:
     void albumActivated(Album *album);
     void trackActivated(Track *track);
 
-protected:
-    void paintEvent(QPaintEvent *e);
-
 private slots:
     void goBack();
     void folderGoBack();

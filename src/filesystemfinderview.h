@@ -21,17 +21,16 @@ $END_LICENSE */
 #ifndef FILESYSTEMFINDERVIEW_H
 #define FILESYSTEMFINDERVIEW_H
 
-#include <QtWidgets>
 #include "finderlistview.h"
+#include <QtWidgets>
 
 class FileSystemModel;
 
 class FileSystemFinderView : public FinderListView {
-
     Q_OBJECT
 
 public:
-    FileSystemFinderView(QWidget *parent = 0);
+    FileSystemFinderView(QWidget *parent);
     void setFileSystemModel(FileSystemModel *fileSystemModel) {
         this->fileSystemModel = fileSystemModel;
     }
@@ -41,7 +40,6 @@ public slots:
 
 private:
     FileSystemModel *fileSystemModel;
-
 };
 
 #endif // FILESYSTEMFINDERVIEW_H

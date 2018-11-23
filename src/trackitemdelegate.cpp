@@ -78,7 +78,6 @@ void TrackItemDelegate::paintTrack(QPainter *painter,
         QRect trackTextBox(textLoc.x(), textLoc.y(), trackStringSize.width(), line.height());
 
         painter->setOpacity(.75);
-        painter->setPen(Qt::white);
         painter->drawText(trackTextBox, Qt::AlignCenter, trackString);
         painter->restore();
     }

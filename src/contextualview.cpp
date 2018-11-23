@@ -19,8 +19,8 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "contextualview.h"
-#include "context/artistinfo.h"
 #include "context/albuminfo.h"
+#include "context/artistinfo.h"
 #include "context/trackinfo.h"
 #include "model/track.h"
 
@@ -47,17 +47,13 @@ void ContextualView::setTrack(Track *track) {
     setUpdatesEnabled(true);
 }
 
-void ContextualView::disappear() {
+void ContextualView::disappear() {}
 
-}
-
-ScrollingContextualView::ScrollingContextualView(QWidget *parent) :
-        QWidget(parent) {
-
+ScrollingContextualView::ScrollingContextualView(QWidget *parent) : QWidget(parent) {
     // colors
     QPalette p = palette();
-    p.setBrush(QPalette::Window, QColor(0x30, 0x30, 0x30));
-    p.setBrush(QPalette::Foreground, QColor(0xdc, 0xdc, 0xdc));
+    p.setBrush(QPalette::Window, QColor(0x20, 0x20, 0x20));
+    p.setBrush(QPalette::WindowText, QColor(0xdc, 0xdc, 0xdc));
     p.setBrush(QPalette::Base, Qt::red);
     p.setBrush(QPalette::Text, Qt::white);
     p.setColor(QPalette::Link, Qt::white);
@@ -81,7 +77,6 @@ ScrollingContextualView::ScrollingContextualView(QWidget *parent) :
     layout->addWidget(trackInfo);
 
     setLayout(layout);
-
 }
 
 void ScrollingContextualView::paintEvent(QPaintEvent *e) {

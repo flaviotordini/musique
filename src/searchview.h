@@ -21,23 +21,20 @@ $END_LICENSE */
 #ifndef SEARCHVIEW_H
 #define SEARCHVIEW_H
 
-#include <QtWidgets>
 #include "finderlistview.h"
+#include <QtWidgets>
 
 class SearchView : public FinderListView {
-
     Q_OBJECT
 
 public:
     SearchView(QWidget *parent);
-    void search(const QString& query);
 
 protected:
     void paintEvent(QPaintEvent *event);
 
 private:
     QLabel *label;
-
 };
 
 #endif // SEARCHVIEW_H
