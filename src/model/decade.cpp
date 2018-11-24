@@ -7,7 +7,7 @@
 #include "album.h"
 #include "track.h"
 
-Decade::Decade() : pixmapAlbum(nullptr) {}
+Decade::Decade() : startYear(0), pixmapAlbum(nullptr) {}
 
 QVector<Track *> Decade::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
