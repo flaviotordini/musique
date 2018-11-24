@@ -19,6 +19,9 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "albumlistview.h"
+
+#include <QtSql>
+
 #include "artistsqlmodel.h"
 #include "database.h"
 #include "finderitemdelegate.h"
@@ -34,27 +37,6 @@ const char *reverseOrderKey = "albumReverseOrder";
 } // namespace
 
 AlbumListView::AlbumListView(QWidget *parent) : FinderListView(parent), showToolBar(false) {
-    setupToolbar();
-}
-
-void AlbumListView::appear() {
-    FinderListView::appear();
-    if (showToolBar) {
-        QStatusBar *statusBar = MainWindow::instance()->statusBar();
-        statusBar->insertPermanentWidget(0, toolBar);
-        toolBar->show();
-    }
-}
-
-void AlbumListView::disappear() {
-    FinderListView::disappear();
-    if (showToolBar) {
-        QStatusBar *statusBar = MainWindow::instance()->statusBar();
-        statusBar->removeWidget(toolBar);
-    }
-}
-
-void AlbumListView::setupToolbar() {
     toolBar = new QToolBar();
     toolBar->hide();
     toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -115,6 +97,23 @@ void AlbumListView::setupToolbar() {
     widgetAction->setDefaultWidget(sortButton);
     widgetAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_O));
     toolBar->addAction(widgetAction);
+}
+
+void AlbumListView::appear() {
+    FinderListView::appear();
+    if (showToolBar) {
+        QStatusBar *statusBar = MainWindow::instance()->statusBar();
+        statusBar->insertPermanentWidget(0, toolBar);
+        toolBar->show();
+    }
+}
+
+void AlbumListView::disappear() {
+    FinderListView::disappear();
+    if (showToolBar) {
+        QStatusBar *statusBar = MainWindow::instance()->statusBar();
+        statusBar->removeWidget(toolBar);
+    }
 }
 
 void AlbumListView::updateQuery(bool transition) {

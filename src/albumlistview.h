@@ -21,27 +21,23 @@ $END_LICENSE */
 #ifndef ALBUMLISTVIEW_H
 #define ALBUMLISTVIEW_H
 
-#include <QtWidgets>
-#include <QtSql>
-#include "finderlistview.h"
 #include "albumsqlmodel.h"
+#include "finderlistview.h"
+#include <QtWidgets>
 
 class AlbumListView : public FinderListView {
-
     Q_OBJECT
 
 public:
     AlbumListView(QWidget *parent);
-    void setModel(AlbumSqlModel *model) { FinderListView::setModel(model); sqlModel = model; }
+    void setModel(AlbumSqlModel *model) {
+        FinderListView::setModel(model);
+        sqlModel = model;
+    }
     void updateQuery(bool transition = false);
     void setShowToolBar(bool show) { showToolBar = show; }
 
-    enum SortBy {
-        SortByTitle = 0,
-        SortByArtist,
-        SortByYear,
-        SortByPopularity
-    };
+    enum SortBy { SortByTitle = 0, SortByArtist, SortByYear, SortByPopularity };
 
 public slots:
     void appear();
@@ -57,7 +53,6 @@ private slots:
     void preloadThumbs();
 
 private:
-    void setupToolbar();
     QToolBar *toolBar;
     AlbumSqlModel *sqlModel;
     SortBy sortBy;
