@@ -1078,6 +1078,7 @@ void MainWindow::initMedia() {
     media->setAudioOnly(true);
     media->init();
 
+    connect(media, &Media::error, this, &MainWindow::handleError);
     connect(media, &Media::stateChanged, this, &MainWindow::stateChanged);
     connect(media, &Media::positionChanged, this, &MainWindow::tick);
 
