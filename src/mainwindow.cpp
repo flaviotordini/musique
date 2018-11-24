@@ -24,7 +24,6 @@ $END_LICENSE */
 #include "database.h"
 #include "iconutils.h"
 #include "spacer.h"
-#include <QtSql>
 #if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
 #include "searchlineedit_mac.h"
 #else
