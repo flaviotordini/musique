@@ -43,6 +43,14 @@ int main(int argc, char **argv) {
     mac::MacMain();
 #endif
 
+    QCoreApplication::setApplicationName(Constants::NAME);
+    QCoreApplication::setOrganizationName(Constants::ORG_NAME);
+    QCoreApplication::setOrganizationDomain(Constants::ORG_DOMAIN);
+    QCoreApplication::setApplicationVersion(Constants::VERSION);
+    QCoreApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
+    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+    QApplication::setWheelScrollLines(1);
+
     QtSingleApplication app(argc, argv);
     QString message = app.arguments().size() > 1 ? app.arguments().at(1) : "";
     if (message == "--help") {
@@ -50,14 +58,6 @@ int main(int argc, char **argv) {
         return 0;
     }
     if (app.sendMessage(message)) return 0;
-
-    app.setApplicationName(Constants::NAME);
-    app.setOrganizationName(Constants::ORG_NAME);
-    app.setOrganizationDomain(Constants::ORG_DOMAIN);
-    app.setApplicationVersion(Constants::VERSION);
-    app.setAttribute(Qt::AA_DontShowIconsInMenus);
-    app.setWheelScrollLines(1);
-    app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 
 #ifdef APP_EXTRA
     Extra::appSetup(&app);
@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 
     // qt translations
     QTranslator qtTranslator;
-    qtTranslator.load("qt_" + QLocale::system().name(),
+    qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(),
                       QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     app.installTranslator(&qtTranslator);
 
@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
 #ifdef PKGDATADIR
     QString dataDir = QLatin1String(PKGDATADIR);
 #else
-    QString dataDir = "";
+    QString dataDir;
 #endif
 #ifdef APP_MAC
     QString localeDir = qApp->applicationDirPath() + "/../Resources/locale";
@@ -93,8 +93,8 @@ int main(int argc, char **argv) {
     translator.load(QLocale::system(), QString(), QString(), localeDir);
     app.installTranslator(&translator);
 
-    MainWindow *mainWin = MainWindow::instance();
-    mainWin->show();
+    MainWindow *mainWindow = MainWindow::instance();
+    mainWindow->show();
 
 #ifndef APP_MAC
     QIcon appIcon;
@@ -105,19 +105,20 @@ int main(int argc, char **argv) {
         const int iconSizes[] = {16, 22, 32, 48, 64, 128, 256, 512};
         for (int iconSize : iconSizes) {
             QString size = QString::number(iconSize);
-            QString png = dataDir + "/" + size + "x" + size + "/" + Constants::UNIX_NAME + ".png";
+            QString png = dataDir + '/' + size + 'x' + size + '/' + Constants::UNIX_NAME +
+                          QLatin1String(".png");
             appIcon.addFile(png, QSize(iconSize, iconSize));
         }
     }
     if (appIcon.isNull()) {
         appIcon.addFile(":/images/app.png");
     }
-    mainWin->setWindowIcon(appIcon);
+    mainWindow->setWindowIcon(appIcon);
 #endif
 
-    mainWin->connect(&app, SIGNAL(messageReceived(const QString &)), mainWin,
-                     SLOT(messageReceived(const QString &)));
-    app.setActivationWindow(mainWin, true);
+    mainWindow->connect(&app, SIGNAL(messageReceived(const QString &)), mainWindow,
+                        SLOT(messageReceived(const QString &)));
+    app.setActivationWindow(mainWindow, true);
 
     // This is required in order to use QNetworkReply::NetworkError in QueuedConnetions
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
