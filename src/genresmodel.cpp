@@ -18,11 +18,9 @@ Finder::FinderItemTypes itemType(Item *item) {
 } // namespace
 
 GenresModel::GenresModel(QObject *parent) : QAbstractItemModel(parent) {
+    connect(&genres, &Genres::initializing, this, [this] { beginResetModel(); });
+    connect(&genres, &Genres::initialized, this, [this] { endResetModel(); });
     genres.init();
-    connect(&genres, &Genres::initialized, this, [this] {
-        beginResetModel();
-        endResetModel();
-    });
 }
 
 int GenresModel::rowCount(const QModelIndex &parent) const {

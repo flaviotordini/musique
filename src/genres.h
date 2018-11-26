@@ -17,6 +17,7 @@ public slots:
     void init();
 
 signals:
+    void initializing();
     void initialized();
 
 private:

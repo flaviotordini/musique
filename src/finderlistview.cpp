@@ -48,6 +48,7 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     // cosmetics
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
+
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
 
@@ -63,6 +64,15 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
     connect(this, SIGNAL(entered(const QModelIndex &)), SLOT(setHoveredIndex(const QModelIndex &)));
     connect(this, SIGNAL(viewportEntered()), SLOT(clearHover()));
+
+    modelIsResetting = false;
+}
+
+void FinderListView::setModel(QAbstractItemModel *model) {
+    connect(model, &QAbstractItemModel::modelAboutToBeReset, this,
+            [this] { modelIsResetting = true; });
+    connect(model, &QAbstractItemModel::modelReset, this, [this] { modelIsResetting = false; });
+    QListView::setModel(model);
 }
 
 void FinderListView::appear() {
@@ -142,6 +152,7 @@ void FinderListView::leaveEvent(QEvent * /* event */) {
 
 void FinderListView::mouseMoveEvent(QMouseEvent *event) {
     QListView::mouseMoveEvent(event);
+    if (modelIsResetting) return;
 
     if (isHoveringPlayIcon(event)) {
         enterPlayIconHover();

@@ -31,6 +31,8 @@ class FinderListView : public QListView {
 public:
     FinderListView(QWidget *parent);
 
+    void setModel(QAbstractItemModel *model);
+
     int isHovered(const QModelIndex &index) const { return hoveredRow == index.row(); }
     bool isPlayIconHovered() const { return playIconHovered; }
     double animationFrame() const { return timeLine->currentFrame() / 100.; }
@@ -65,6 +67,7 @@ private:
     int hoveredRow;
     QTimeLine *timeLine;
     bool playIconHovered;
+    bool modelIsResetting;
 };
 
 #endif // BASEFINDERVIEW_H

@@ -15,6 +15,7 @@ Genres::Genres() : QObject() {
 }
 
 void Genres::init() {
+    emit initializing();
     items.clear();
     loadGenres();
     loadDecades();
