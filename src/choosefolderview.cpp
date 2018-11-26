@@ -20,11 +20,11 @@ $END_LICENSE */
 
 #include "choosefolderview.h"
 #include "constants.h"
+#include "database.h"
 #include "fontutils.h"
 #include "iconutils.h"
-#include "database.h"
 
-ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
+ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
     const int padding = 30;
 
     QBoxLayout *layout = new QHBoxLayout(this);
@@ -44,21 +44,21 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
 
     // hLayout->addSpacing(PADDING);
 
-    welcomeLabel =
-            new QLabel("<h1 style='font-weight:100'>" +
-                       tr("Welcome to <a href='%1'>%2</a>,")
-                       .replace("<a href", "<a style='text-decoration:none; color:palette(text); font-weight:normal' href")
-                       .arg(Constants::WEBSITE, Constants::NAME)
-                       + "</h1>", this);
+    welcomeLabel = new QLabel(
+            "<h1 style='font-weight:100'>" +
+                    tr("Welcome to <a href='%1'>%2</a>,")
+                            .replace("<a href", "<a style='text-decoration:none; "
+                                                "color:palette(text); font-weight:normal' href")
+                            .arg(Constants::WEBSITE, Constants::NAME) +
+                    "</h1>",
+            this);
     welcomeLabel->setOpenExternalLinks(true);
+    welcomeLabel->setFont(FontUtils::light(welcomeLabel->font().pointSize() * 1.25));
     vLayout->addWidget(welcomeLabel);
 
     // layout->addSpacing(PADDING);
 
-    tipLabel = new QLabel(
-            tr("%1 needs to scan your music collection.").arg(Constants::NAME)
-            , this);
-    tipLabel->setFont(FontUtils::big());
+    tipLabel = new QLabel(tr("%1 needs to scan your music collection.").arg(Constants::NAME), this);
     vLayout->addWidget(tipLabel);
 
     QBoxLayout *buttonLayout = new QHBoxLayout();
@@ -89,32 +89,30 @@ ChooseFolderView::ChooseFolderView( QWidget *parent ) : View(parent) {
     connect(chooseDirButton, SIGNAL(clicked()), SLOT(chooseFolder()));
     buttonLayout->addWidget(chooseDirButton);
 
-#ifndef APP_EXTRA
-    QLabel *privacyLabel =
-            new QLabel(
-                    tr("%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.")
-                    .arg(Constants::NAME) + " " +
-                    tr("If you have privacy concerns about this you can quit now.")
-                    , this);
+    QLabel *privacyLabel = new QLabel(
+            tr("%1 will connect to the Last.fm web services and pass artist names and album titles "
+               "in order to fetch covert art, biographies and much more.")
+                    .arg(Constants::NAME),
+            this);
     privacyLabel->setFont(FontUtils::small());
     privacyLabel->setOpenExternalLinks(true);
     privacyLabel->setWordWrap(true);
     vLayout->addWidget(privacyLabel);
-#endif
-
 }
 
 void ChooseFolderView::chooseFolder() {
 #ifdef APP_MAC
-    QFileDialog* dialog = new QFileDialog(this);
+    QFileDialog *dialog = new QFileDialog(this);
     dialog->setFileMode(QFileDialog::Directory);
-    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
+    dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks |
+                       QFileDialog::ReadOnly);
     dialog->setDirectory(QStandardPaths::writableLocation(QStandardPaths::HomeLocation));
     dialog->open(this, SLOT(folderChosen(const QString &)));
 #else
-    QString folder = QFileDialog::getExistingDirectory(window(), tr("Where's your music collection?"),
-                                                    QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
-                                                    QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
+    QString folder = QFileDialog::getExistingDirectory(
+            window(), tr("Where's your music collection?"),
+            QStandardPaths::writableLocation(QStandardPaths::HomeLocation),
+            QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks | QFileDialog::ReadOnly);
     if (!folder.isEmpty()) emit locationChanged(folder);
 #endif
 }
@@ -129,7 +127,8 @@ void ChooseFolderView::systemDirChosen() {
 }
 
 void ChooseFolderView::iTunesDirChosen() {
-    QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/";
+    QString musicLocation =
+            QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/";
     emit locationChanged(musicLocation);
 }
 
@@ -138,17 +137,15 @@ void ChooseFolderView::appear() {
     if (db.status() == ScanComplete) {
         tipLabel->setText(tr("Select the location of your music collection."));
         cancelButton->show();
-        welcomeLabel->hide();
     } else {
         tipLabel->setText(tr("%1 needs to scan your music collection.").arg(Constants::NAME));
         cancelButton->hide();
-        welcomeLabel->show();
     }
 }
 
 void ChooseFolderView::paintEvent(QPaintEvent *e) {
     Q_UNUSED(e);
     QPainter painter(this);
-    QBrush brush = window()->isActiveWindow() ? palette().base() : palette().window();
+    const QBrush &brush = window()->isActiveWindow() ? palette().base() : palette().window();
     painter.fillRect(rect(), brush);
 }
