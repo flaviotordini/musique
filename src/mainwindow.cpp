@@ -546,6 +546,8 @@ void MainWindow::createToolBars() {
     // Create widgets
     currentTime = new QLabel("00:00", this);
     seekSlider = new SeekSlider(this);
+    seekSlider->setEnabled(false);
+    seekSlider->setTracking(false);
     seekSlider->setMaximum(1000);
     volumeSlider = new SeekSlider(this);
     volumeSlider->setValue(volumeSlider->maximum());
@@ -596,8 +598,6 @@ void MainWindow::createToolBars() {
 
     mainToolBar->addWidget(new Spacer());
 
-    seekSlider->setEnabled(false);
-    seekSlider->setTracking(false);
     seekSlider->setOrientation(Qt::Horizontal);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
     seekSlider->setFocusPolicy(Qt::NoFocus);
