@@ -658,8 +658,15 @@ void MainWindow::createStatusBar() {
 
 void MainWindow::readSettings() {
     QSettings settings;
-    restoreGeometry(settings.value("geometry").toByteArray());
-
+    if (settings.contains("geometry")) {
+        restoreGeometry(settings.value("geometry").toByteArray());
+    } else {
+        const QRect desktopSize = qApp->desktop()->availableGeometry();
+        int w = desktopSize.width() * .75;
+        int h = desktopSize.height();
+        setGeometry(
+                QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(w, h), desktopSize));
+    }
     maximizedBeforeFullScreen = isMaximized();
     actionMap.value("shufflePlaylist")->setChecked(settings.value("shuffle").toBool());
     actionMap.value("repeatPlaylist")->setChecked(settings.value("repeat").toBool());
