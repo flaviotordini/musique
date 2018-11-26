@@ -19,63 +19,69 @@ along with Minitube.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "fontutils.h"
-#include <QtCore>
+#ifdef APP_MAC
+#include "macutils.h"
+#endif
 
 namespace {
 
-QFont createFont(QFont::Weight weight, double sizeScale) {
+QFont createFont(bool isBold, double sizeScale) {
     QFont font;
     font.setPointSize(font.pointSize() * sizeScale);
-#ifdef APP_MAC
-    if (weight == QFont::Light) {
-        font.setFamily("Helvetica Neue");
-    }
-#endif
-    font.setWeight(weight);
+    font.setBold(isBold);
     return font;
 }
 
-QFont createFontWithMinSize(QFont::Weight weight, double sizeScale) {
-    const int MIN_PIXEL_SIZE = 12;
-    QFont font = createFont(weight, sizeScale);
-    if (font.pixelSize() < MIN_PIXEL_SIZE)
-        font.setPixelSize(MIN_PIXEL_SIZE);
+QFont createFontWithMinSize(bool isBold, double sizeScale) {
+    const int minPixels = 11;
+    QFont font = createFont(isBold, sizeScale);
+    if (font.pixelSize() < minPixels) font.setPixelSize(minPixels);
     return font;
 }
 
-}
+} // namespace
 
 const QFont &FontUtils::small() {
-    static const QFont font = createFontWithMinSize(QFont::Normal, .9);
+    static const QFont font = createFontWithMinSize(false, .9);
     return font;
 }
 
 const QFont &FontUtils::smallBold() {
-    static const QFont font = createFontWithMinSize(QFont::Bold, .9);
+    static const QFont font = createFontWithMinSize(true, .9);
     return font;
 }
 
 const QFont &FontUtils::medium() {
-    static const QFont font = createFont(QFont::Normal, 1.1);
+    static const QFont font = createFont(false, 1.1);
     return font;
 }
 
 const QFont &FontUtils::mediumBold() {
-    static const QFont font = createFont(QFont::Bold, 1.1);
+    static const QFont font = createFont(true, 1.1);
     return font;
 }
 
 const QFont &FontUtils::big() {
-    static const QFont font = createFont(QFont::Normal, 1.5);
+    static const QFont font = createFont(false, 1.5);
     return font;
 }
 
 const QFont &FontUtils::bigBold() {
-    static const QFont font = createFont(QFont::Bold, 1.5);
+    static const QFont font = createFont(true, 1.5);
     return font;
 }
 
-const QFont &FontUtils::bigger() {
-    static const QFont font = createFont(QFont::Light, 2.5);
-    return font;
+QFont FontUtils::light(int pointSize) {
+#ifdef APP_MAC
+    QVariant v = mac::lightFont(pointSize);
+    if (!v.isNull()) return qvariant_cast<QFont>(v);
+#endif
+    QFont f;
+#ifdef APP_WIN
+    f.setFamily(QStringLiteral("Segoe UI Light"));
+#endif
+    f.setPointSize(pointSize);
+    f.setStyleName(QStringLiteral("Light"));
+    f.setWeight(QFont::Light);
+    return f;
 }
