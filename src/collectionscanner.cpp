@@ -264,13 +264,11 @@ void CollectionScanner::complete() {
         }
     }
 
-    if (incremental) {
-        QString hash = directoryHash(rootDirectory);
-        QSettings settings;
-        settings.setValue("collectionHash", hash);
-        qDebug() << "Setting collection hash to" << hash;
-        trackPaths.clear();
-    }
+    QString hash = directoryHash(rootDirectory);
+    QSettings settings;
+    settings.setValue("collectionHash", hash);
+    qDebug() << "Setting collection hash to" << hash;
+    trackPaths.clear();
 
     QSqlQuery("vacuum", Database::instance().getConnection());
 
