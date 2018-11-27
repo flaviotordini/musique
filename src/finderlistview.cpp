@@ -31,7 +31,6 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     setSelectionMode(QAbstractItemView::ExtendedSelection);
 
     // layout
-    // setGridSize(QSize(FinderItemDelegate::ITEM_WIDTH + 1, FinderItemDelegate::ITEM_HEIGHT + 1));
     setFlow(QListView::LeftToRight);
     setWrapping(true);
     setResizeMode(QListView::Adjust);
@@ -177,6 +176,12 @@ void FinderListView::resizeEvent(QResizeEvent *event) {
     int width = contentsRect().width() - scrollbarWidth - 1;
     int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
     int size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
+
+    // limit item size to available image resolution
+    qreal pixelRatio = viewport()->devicePixelRatioF();
+    const int maxPhotoWidth = 300;
+    if (pixelRatio > 1.0 && size * pixelRatio > maxPhotoWidth) size = maxPhotoWidth / pixelRatio;
+
     delegate->setItemSize(size, size);
     setGridSize(QSize(size, size));
 }
