@@ -25,29 +25,29 @@ $END_LICENSE */
 
 namespace {
 
-QFont createFont(bool isBold, double sizeScale) {
-    QFont font;
-    font.setPointSize(font.pointSize() * sizeScale);
+QFont createFont(bool isBold, double ratio) {
+    QFont font = qApp->font();
+    font.setPointSize(font.pointSize() * ratio);
     font.setBold(isBold);
-    return font;
-}
-
-QFont createFontWithMinSize(bool isBold, double sizeScale) {
-    const int minPixels = 11;
-    QFont font = createFont(isBold, sizeScale);
-    if (font.pixelSize() < minPixels) font.setPixelSize(minPixels);
+    if (ratio < 1.0) {
+        const int minPointSize = 8;
+        if (font.pointSize() < minPointSize) {
+            qDebug() << "Fixing font size to" << minPointSize;
+            font.setPointSize(minPointSize);
+        }
+    }
     return font;
 }
 
 } // namespace
 
 const QFont &FontUtils::small() {
-    static const QFont font = createFontWithMinSize(false, .9);
+    static const QFont font = createFont(false, .9);
     return font;
 }
 
 const QFont &FontUtils::smallBold() {
-    static const QFont font = createFontWithMinSize(true, .9);
+    static const QFont font = createFont(true, .9);
     return font;
 }
 
@@ -76,7 +76,7 @@ QFont FontUtils::light(int pointSize) {
     QVariant v = mac::lightFont(pointSize);
     if (!v.isNull()) return qvariant_cast<QFont>(v);
 #endif
-    QFont f;
+    QFont f = qApp->font();
 #ifdef APP_WIN
     f.setFamily(QStringLiteral("Segoe UI Light"));
 #endif
