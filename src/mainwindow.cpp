@@ -1351,7 +1351,7 @@ void MainWindow::runFinetune(const QString &filename) {
 #endif
     url += ext;
 
-    QPixmap pixmap = IconUtils::pixmap(":/images/64x64/finetune.png");
+    QPixmap pixmap = IconUtils::pixmap(":/images/64x64/finetune.png", devicePixelRatioF());
     UpdateDialog *dialog = new UpdateDialog(&pixmap, "Finetune", QString(), url, this);
     dialog->downloadUpdate();
     dialog->show();
