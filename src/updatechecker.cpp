@@ -1,9 +1,6 @@
 #include "updatechecker.h"
 #include "constants.h"
 #include "http.h"
-#ifdef APP_ACTIVATION
-#include "activation.h"
-#endif
 
 UpdateChecker::UpdateChecker() {
     m_needUpdate = false;
@@ -21,16 +18,8 @@ void UpdateChecker::checkForUpdate() {
 #ifdef APP_WIN
     q.addQueryItem("os", "win");
 #endif
-#ifdef APP_ACTIVATION
-    QString t = "demo";
-    if (Activation::instance().isActivated()) t = "active";
-    q.addQueryItem("t", t);
-#endif
 #ifdef APP_MAC_STORE
     q.addQueryItem("store", "mac");
-#endif
-#ifdef APP_SIMPLE_ACTIVATION
-    q.addQueryItem("store", "simple");
 #endif
     url.setQuery(q);
 

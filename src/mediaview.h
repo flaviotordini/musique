@@ -60,9 +60,6 @@ private slots:
     void trackFinished();
     void aboutToFinish();
     void currentSourceChanged();
-#ifdef APP_ACTIVATION
-    void updateContinueButton(int);
-#endif
 
 private:
     QSplitter *splitter;
@@ -74,11 +71,6 @@ private:
     QTimer *errorTimer;
     DropArea *dropArea;
     Track *activeTrack;
-
-#ifdef APP_ACTIVATION
-    void demoMessage();
-    int tracksPlayed;
-#endif
 };
 
 #endif // MEDIAVIEW_H

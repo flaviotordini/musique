@@ -21,9 +21,6 @@ $END_LICENSE */
 #include "aboutview.h"
 #include "constants.h"
 #include "iconutils.h"
-#ifdef APP_ACTIVATION
-#include "activation.h"
-#endif
 #ifdef APP_MAC
 #include "mac_startup.h"
 #include "macutils.h"
@@ -62,14 +59,6 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     info += "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>";
 
     info += QString("<p><a href='%1/'>%1</a></p>").arg(Constants::WEBSITE);
-
-#ifdef APP_ACTIVATION
-    if (Activation::instance().isActivated()) {
-        info += "<p>" +
-                tr("Licensed to: %1").arg("<b>" + Activation::instance().getEmail() + "</b>") +
-                "</p>";
-    }
-#endif
 
     info += "<p>" +
             tr("Translate %1 to your native language using %2")

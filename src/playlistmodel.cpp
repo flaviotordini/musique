@@ -24,13 +24,6 @@ $END_LICENSE */
 #include "model/artist.h"
 #include "trackmimedata.h"
 #include <algorithm>
-#ifdef APP_ACTIVATION_NO
-#include "activation.h"
-static const int demoMaxTracks = 15;
-static const QString demoMessage =
-        PlaylistModel::tr("This demo is limited to only %1 tracks in the playlist.")
-                .arg(QString::number(demoMaxTracks));
-#endif
 
 PlaylistModel::PlaylistModel(QWidget *parent) : QAbstractListModel(parent) {
     activeTrack = nullptr;
@@ -201,25 +194,9 @@ void PlaylistModel::addTracks(QVector<Track *> newTracks) {
         newTracks.removeAll(track);
 
     if (!newTracks.empty()) {
-#ifdef APP_ACTIVATION_NO
-        bool activated = Activation::instance().isActivated();
-        if (!activated && this->tracks.size() >= demoMaxTracks) {
-            MainWindow::instance()->showDemoDialog(demoMessage);
-            return;
-        }
-#endif
-
         beginInsertRows(QModelIndex(), this->tracks.size(),
                         this->tracks.size() + newTracks.size() - 1);
         for (Track *track : qAsConst(newTracks)) {
-#ifdef APP_ACTIVATION_NO
-            if (!activated && this->tracks.size() >= demoMaxTracks) {
-                endInsertRows();
-                MainWindow::instance()->showDemoDialog(demoMessage);
-                return;
-            }
-#endif
-
             this->tracks.append(track);
             track->setPlayed(false);
             connect(track, SIGNAL(removed()), SLOT(trackRemoved()));
@@ -357,13 +334,6 @@ bool PlaylistModel::dropMimeData(const QMimeData *data,
             insert = true;
         const int targetRow = beginRow + counter;
         tracks.insert(targetRow, track);
-#ifdef APP_ACTIVATION_NO
-        if (!Activation::instance().isActivated() && tracks.size() >= demoMaxTracks) {
-            MainWindow::instance()->showDemoDialog(demoMessage);
-            layoutChanged();
-            return true;
-        }
-#endif
         counter++;
     }
 

@@ -20,6 +20,7 @@ $END_LICENSE */
 
 #include "mediaview.h"
 #include "constants.h"
+#include "database.h"
 #include "droparea.h"
 #include "iconutils.h"
 #include "lastfm.h"
@@ -28,10 +29,6 @@ $END_LICENSE */
 #include "model/album.h"
 #include "model/artist.h"
 #include "model/track.h"
-#ifdef APP_ACTIVATION
-#include "activation.h"
-#endif
-#include "database.h"
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -40,10 +37,6 @@ $END_LICENSE */
 
 MediaView::MediaView(QWidget *parent) : View(parent) {
     activeTrack = nullptr;
-
-#ifdef APP_ACTIVATION
-    tracksPlayed = 0;
-#endif
 
     QBoxLayout *layout = new QHBoxLayout(this);
     layout->setMargin(0);
@@ -275,15 +268,6 @@ void MediaView::playbackFinished() {
 }
 
 void MediaView::trackFinished() {
-#ifdef APP_ACTIVATION
-    if (!Activation::instance().isActivated()) {
-        if (tracksPlayed > 1)
-            demoMessage();
-        else
-            tracksPlayed++;
-    }
-#endif
-
     // scrobbling
     bool needScrobble = false;
     Track *track = nullptr;
@@ -319,56 +303,6 @@ void MediaView::currentSourceChanged() {
         if (row >= 0) playlistModel->setActiveRow(row, false, false);
     }
 }
-
-#ifdef APP_ACTIVATION
-
-static QPushButton *continueButton;
-
-void MediaView::demoMessage() {
-    mediaObject->pause();
-
-    QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/data/app.png")
-                                 .scaled(64, 64, Qt::KeepAspectRatio, Qt::SmoothTransformation));
-    msgBox.setText(tr("This is just the demo version of %1.").arg(Constants::NAME));
-    msgBox.setInformativeText(tr("It allows you to play a few tracks so you can test the "
-                                 "application and see if it works for you."));
-    msgBox.setModal(true);
-    // make it a "sheet" on the Mac
-    msgBox.setWindowModality(Qt::WindowModal);
-
-    continueButton = msgBox.addButton("5", QMessageBox::RejectRole);
-    continueButton->setEnabled(false);
-    QPushButton *buyButton = msgBox.addButton(tr("Get the full version"), QMessageBox::ActionRole);
-
-    QTimeLine *timeLine = new QTimeLine(6000, this);
-    timeLine->setCurveShape(QTimeLine::LinearCurve);
-    timeLine->setFrameRange(5, 0);
-    connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updateContinueButton(int)));
-    timeLine->start();
-
-    msgBox.exec();
-
-    if (msgBox.clickedButton() == buyButton) {
-        QDesktopServices::openUrl(QUrl(QString(Constants::WEBSITE) + "#download"));
-    } else
-        mediaObject->play();
-
-    tracksPlayed = 0;
-
-    delete timeLine;
-}
-
-void MediaView::updateContinueButton(int value) {
-    if (value == 0) {
-        continueButton->setText(tr("Continue"));
-        continueButton->setEnabled(true);
-    } else {
-        continueButton->setText(QString::number(value));
-    }
-}
-
-#endif
 
 void MediaView::search(QString query) {
     finderWidget->showSearch(query);

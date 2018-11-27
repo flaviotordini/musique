@@ -1,8 +1,8 @@
 #ifndef UPDATECHECKER_H
 #define UPDATECHECKER_H
 
-#include <QXmlStreamReader>
 #include <QNetworkReply>
+#include <QXmlStreamReader>
 
 class UpdateChecker : public QObject {
     Q_OBJECT
@@ -16,27 +16,23 @@ signals:
     void newVersion(QString);
 
 private slots:
-    void requestFinished(const QByteArray&);
+    void requestFinished(const QByteArray &);
 
 private:
-
     bool m_needUpdate;
     QString m_remoteVersion;
     QNetworkReply *networkReply;
-
 };
 
 class UpdateCheckerStreamReader : public QXmlStreamReader {
-
 public:
-    bool read(const QByteArray& data);
+    bool read(const QByteArray &data);
     QString remoteVersion();
     bool needUpdate() { return m_needUpdate; }
 
 private:
     QString m_remoteVersion;
     bool m_needUpdate;
-
 };
 
 #endif // UPDATECHECKER_H

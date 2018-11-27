@@ -66,13 +66,6 @@ public slots:
     void restore();
     void messageReceived(const QString &message);
     void goBack();
-#ifdef APP_ACTIVATION
-    void showActivationView(bool transition = true);
-    void showActivationDialog();
-    void buy();
-    void hideBuyAction();
-    void showDemoDialog(QString message);
-#endif
 
 signals:
     void currentTimeChanged(const QString &s);

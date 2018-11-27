@@ -59,11 +59,6 @@ $END_LICENSE */
 #include "extra.h"
 #include "updatedialog.h"
 #endif
-#ifdef APP_ACTIVATION
-#include "activation.h"
-#include "activationdialog.h"
-#include "activationview.h"
-#endif
 #include "http.h"
 #include "httputils.h"
 #include "toolbarmenu.h"
@@ -116,10 +111,6 @@ MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr), mainToo
     readSettings();
 
     showInitialView();
-
-#ifdef APP_ACTIVATION
-    if (!Activation::instance().isActivated()) showActivationView(false);
-#endif
 
     // event filter to block ugly toolbar tooltips
     qApp->installEventFilter(this);
@@ -444,10 +435,6 @@ void MainWindow::createActions() {
     connect(volumeMuteAct, SIGNAL(triggered()), SLOT(volumeMute()));
     addAction(volumeMuteAct);
 
-#ifdef APP_ACTIVATION
-    Extra::createActivationAction(tr("Buy %1...").arg(Constants::NAME));
-#endif
-
     // common action properties
     for (QAction *action : qAsConst(actionMap)) {
         // add actions to the MainWindow so that they work
@@ -474,15 +461,6 @@ void MainWindow::createActions() {
 
 void MainWindow::createMenus() {
     fileMenu = menuBar()->addMenu(tr("&Application"));
-#ifdef APP_ACTIVATION
-    QAction *buyAction = actionMap.value("buy");
-    if (buyAction) fileMenu->addAction(buyAction);
-#ifndef APP_MAC
-    fileMenu->addSeparator();
-#else
-        // fileMenu->addSeparator()->setMenuRole(QAction::ApplicationSpecificRole);
-#endif
-#endif
     fileMenu->addAction(actionMap.value("finetune"));
     fileMenu->addAction(chooseFolderAct);
     fileMenu->addAction(actionMap.value("lastFmLogout"));
@@ -1557,50 +1535,6 @@ void MainWindow::printHelp() {
     msg += "Display information about the current track.\n";
     std::cout << msg.toLocal8Bit().data();
 }
-
-#ifdef APP_ACTIVATION
-void MainWindow::showActivationView(bool transition) {
-    QWidget *activationView = ActivationView::instance();
-    if (views->currentWidget() == activationView) {
-        buy();
-        return;
-    }
-    views->addWidget(activationView);
-    showWidget(activationView, transition);
-}
-
-void MainWindow::showActivationDialog() {
-    QTimer::singleShot(0, new ActivationDialog(this), SLOT(show()));
-}
-
-void MainWindow::buy() {
-    Extra::buy();
-}
-
-void MainWindow::hideBuyAction() {
-    QAction *action = actionMap.value("buy");
-    action->setVisible(false);
-    action->setEnabled(false);
-}
-
-void MainWindow::showDemoDialog(QString message) {
-    QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png"));
-    msgBox.setText(message);
-    msgBox.setModal(true);
-    // make it a "sheet" on the Mac
-    msgBox.setWindowModality(Qt::WindowModal);
-
-    msgBox.addButton(QMessageBox::Ok);
-    QPushButton *buyButton = msgBox.addButton(tr("Get the full version"), QMessageBox::ActionRole);
-
-    msgBox.exec();
-
-    if (msgBox.clickedButton() == buyButton) {
-        showActivationView();
-    }
-}
-#endif
 
 void MainWindow::reportIssue() {
     QUrl url("https://flavio.tordini.org/forums/forum/musique-forums/musique-troubleshooting");
