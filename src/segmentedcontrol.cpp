@@ -85,8 +85,7 @@ void SegmentedControl::paintEvent(QPaintEvent * /*event*/) {
     // Calculate Buttons Size & Location
     const int buttonWidth = width / actionList.size();
 
-    const qreal pixelRatio = IconUtils::pixelRatio();
-
+    const qreal pixelRatio = devicePixelRatioF();
     QPen pen(borderColor);
     const qreal penWidth = 1. / pixelRatio;
     pen.setWidthF(penWidth);

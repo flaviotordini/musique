@@ -176,7 +176,7 @@ void PlaylistItemDelegate::paintAlbumHeader(QPainter *painter,
     linearGradient.setColorAt(1.0, bottomColor);
     painter->fillRect(line, linearGradient);
 
-    const qreal pixelRatio = IconUtils::pixelRatio();
+    const qreal pixelRatio = painter->device()->devicePixelRatioF();
 
     if (album) {
         QPixmap p = album->getThumb();
@@ -242,7 +242,7 @@ void PlaylistItemDelegate::paintTrackNumber(QPainter *painter,
 
     painter->save();
 
-    const qreal pixelRatio = IconUtils::pixelRatio();
+    const qreal pixelRatio = painter->device()->devicePixelRatioF();
 
     // track number
     QFont font = painter->font();
@@ -335,7 +335,7 @@ void PlaylistItemDelegate::paintTrackLength(QPainter *painter,
 
     const bool isSelected = option.state & QStyle::State_Selected;
     painter->save();
-    const qreal pixelRatio = IconUtils::pixelRatio();
+    const qreal pixelRatio = painter->device()->devicePixelRatioF();
     QFont font = painter->font();
     font.setPointSize(font.pointSize() - pixelRatio);
     painter->setFont(font);

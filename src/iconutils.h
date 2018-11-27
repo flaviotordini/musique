@@ -34,9 +34,7 @@ public:
     static void setupAction(QAction *action);
 
     // HiDPI stuff
-    static QPixmap pixmap(const QString &name);
-    static qreal maxSupportedPixelRatio() { return 2.0; }
-    static qreal pixelRatio();
+    static QPixmap pixmap(const QString &name, const qreal pixelRatio);
 
     static void tint(QPixmap &pixmap,
                      const QColor &color,

@@ -172,8 +172,7 @@ void ArtistListView::preloadThumbs() {
     if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
 
-    const qreal pixelRatio = IconUtils::pixelRatio();
-
+    const qreal pixelRatio = devicePixelRatioF();
     while (query.next()) {
         int artistId = query.value(0).toInt();
         Artist *artist = Artist::forId(artistId);

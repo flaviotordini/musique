@@ -131,9 +131,8 @@ void IconUtils::setupAction(QAction *action) {
                              QLatin1String(")"));
 }
 
-QPixmap IconUtils::pixmap(const QString &name) {
+QPixmap IconUtils::pixmap(const QString &name, const qreal pixelRatio) {
     // Check if a "@2x" file exists
-    const qreal pixelRatio = IconUtils::pixelRatio();
     if (pixelRatio > 1.0) {
         int dotIndex = name.lastIndexOf(QLatin1Char('.'));
         if (dotIndex != -1) {
@@ -147,12 +146,4 @@ QPixmap IconUtils::pixmap(const QString &name) {
         }
     }
     return QPixmap(name);
-}
-
-qreal IconUtils::pixelRatio() {
-#if QT_VERSION >= 0x050600
-    return MainWindow::instance()->devicePixelRatioF();
-#else
-    return MainWindow::instance()->devicePixelRatio();
-#endif
 }

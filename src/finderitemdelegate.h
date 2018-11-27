@@ -52,11 +52,8 @@ private:
     static const QPixmap &getPlayIcon(bool hovered, qreal pixelRatio);
 
     QPixmap createMissingItemBackground(qreal pixelRatio) const;
-    const QPixmap &getMissingItemPixmap(const QString &type) const;
+    const QPixmap &getMissingItemPixmap(const QString &type, qreal pixelRatio) const;
     const QPixmap &getMissingItemBackground(qreal pixelRatio) const;
-    const QPixmap &getMissingArtistPixmap() const;
-    const QPixmap &getMissingAlbumPixmap() const;
-    const QPixmap &getMissingTrackPixmap() const;
 
     void paintFolder(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
     void paintTrack(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;

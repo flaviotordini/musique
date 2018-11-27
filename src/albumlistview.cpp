@@ -164,7 +164,7 @@ void AlbumListView::preloadThumbs() {
     if (!success)
         qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
 
-    const qreal pixelRatio = IconUtils::pixelRatio();
+    const qreal pixelRatio = devicePixelRatioF();
 
     while (query.next()) {
         int albumId = query.value(0).toInt();

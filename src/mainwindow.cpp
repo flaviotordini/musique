@@ -1256,7 +1256,7 @@ void MainWindow::gotNewVersion(const QString &version) {
 
 void MainWindow::simpleUpdateDialog(const QString &version) {
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png"));
+    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
     msgBox.setText(tr("%1 version %2 is now available.").arg(Constants::NAME, version));
     msgBox.setModal(true);
     msgBox.setWindowModality(Qt::WindowModal);
@@ -1289,7 +1289,7 @@ void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
     QString infoText = tr("Do you want to fix them now with %1?").arg("Finetune");
 
     QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/finetune.png"));
+    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/finetune.png", devicePixelRatioF()));
     msgBox.setText(message);
     msgBox.setInformativeText(infoText);
     msgBox.setModal(true);
