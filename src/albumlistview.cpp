@@ -43,7 +43,7 @@ AlbumListView::AlbumListView(QWidget *parent) : FinderListView(parent), showTool
     toolBar->setIconSize(QSize(16, 16));
 
     QSettings settings;
-    sortBy = static_cast<SortBy>(settings.value(sortByKey, SortByArtist).toInt());
+    sortBy = static_cast<SortBy>(settings.value(sortByKey, SortByYear).toInt());
 
     QMenu *sortMenu = new QMenu(this);
     QActionGroup *sortGroup = new QActionGroup(this);
