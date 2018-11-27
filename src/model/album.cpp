@@ -257,20 +257,15 @@ QPixmap Album::getThumb() {
 QPixmap Album::getThumb(int width, int height, qreal pixelRatio) {
     if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
         pixmap.width() != width * pixelRatio) {
-        if (pixelRatio == 1.0 && width <= 150) {
-            pixmap = getThumb();
-        } else {
-            pixmap = getPhoto();
-            if (pixmap.isNull()) return pixmap;
-
-            const int pixelWidth = width * pixelRatio;
-            const int pixelHeight = height * pixelRatio;
-            const int wDiff = pixmap.width() - pixelWidth;
-            const int hDiff = pixmap.height() - pixelHeight;
-            if (wDiff || hDiff) {
-                pixmap = pixmap.scaled(pixelWidth, pixelHeight, Qt::KeepAspectRatio,
-                                       Qt::SmoothTransformation);
-            }
+        pixmap = getPhoto();
+        if (pixmap.isNull()) return pixmap;
+        const int pixelWidth = width * pixelRatio;
+        const int pixelHeight = height * pixelRatio;
+        const int wDiff = pixmap.width() - pixelWidth;
+        const int hDiff = pixmap.height() - pixelHeight;
+        if (wDiff || hDiff) {
+            pixmap = pixmap.scaled(pixelWidth, pixelHeight, Qt::KeepAspectRatio,
+                                   Qt::SmoothTransformation);
         }
         pixmap.setDevicePixelRatio(pixelRatio);
     }
@@ -504,14 +499,6 @@ void Album::setPhoto(const QByteArray &bytes) {
     }
     QDataStream stream(&file);
     stream.writeRawData(bytes.constData(), bytes.size());
-
-    // prescale thumb
-    const int maximumSize = FinderItemDelegate::ITEM_WIDTH;
-    QImage img = QImage::fromData(bytes);
-    img = img.scaled(maximumSize, maximumSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    if (!img.save(getThumbLocation(), "JPG")) {
-        qWarning() << "Error saving thumbnail" << file.fileName();
-    }
 
     emit gotPhoto();
 }
