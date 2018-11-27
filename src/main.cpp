@@ -54,10 +54,13 @@ int main(int argc, char **argv) {
     QApplication::setWheelScrollLines(1);
 
     QtSingleApplication app(argc, argv);
-    QString message = app.arguments().size() > 1 ? app.arguments().at(1) : "";
-    if (message == "--help") {
-        MainWindow::printHelp();
-        return 0;
+    QString message;
+    if (app.arguments().size() > 1) {
+        message = app.arguments().at(1);
+        if (message == QLatin1String("--help")) {
+            MainWindow::printHelp();
+            return 0;
+        }
     }
     if (app.sendMessage(message)) return 0;
 
