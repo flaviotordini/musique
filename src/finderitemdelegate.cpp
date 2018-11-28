@@ -29,7 +29,10 @@ $END_LICENSE */
 
 const int FinderItemDelegate::ITEM_WIDTH = 180;
 const int FinderItemDelegate::ITEM_HEIGHT = 180;
-const int FinderItemDelegate::PADDING = 10;
+
+namespace {
+const int PADDING = 10;
+}
 
 FinderItemDelegate::FinderItemDelegate(FinderListView *parent)
     : QStyledItemDelegate(parent), view(parent) {}
@@ -124,8 +127,10 @@ const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) co
     return cache.insert(key, pixmap).value();
 }
 
-QSize FinderItemDelegate::sizeHint(const QStyleOptionViewItem & /*option*/,
-                                   const QModelIndex & /*index*/) const {
+QSize FinderItemDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                   const QModelIndex &index) const {
+    Q_UNUSED(option);
+    Q_UNUSED(index);
     return QSize(itemWidth, itemHeight);
 }
 
@@ -295,14 +300,14 @@ void FinderItemDelegate::paintItem(QPainter *painter,
 void FinderItemDelegate::paintPlayIcon(QPainter *painter,
                                        const QRect &rect,
                                        double opacity,
-                                       bool isHovered) const {
+                                       bool hovered) const {
     const qreal pixelRatio = painter->device()->devicePixelRatioF();
-    const QPixmap &playIcon = getPlayIcon(isHovered, pixelRatio);
+    const QPixmap &playIcon = getPlayIcon(hovered, pixelRatio);
 
     painter->save();
     painter->translate((rect.width() - playIcon.width() - PADDING) * pixelRatio,
                        PADDING * pixelRatio);
-    if (isHovered)
+    if (hovered)
         painter->setOpacity(opacity);
     else
         painter->setOpacity(.8);
