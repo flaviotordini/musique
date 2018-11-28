@@ -102,8 +102,9 @@ const QPixmap &FinderItemDelegate::getMissingItemPixmap(const char *type, qreal 
                                                QLatin1String(".png"),
                                        pixelRatio);
     painter.setOpacity(.1);
-    painter.drawPixmap(((itemWidth - symbol.width()) / 2) * pixelRatio,
-                       ((itemHeight - symbol.height()) / 3) * pixelRatio, symbol);
+    int x = (itemWidth - symbol.width() / pixelRatio) / 2;
+    int y = (itemHeight - symbol.height() / pixelRatio) / 3;
+    painter.drawPixmap(x, y, symbol);
 
     return cache.insert(key, pixmap).value();
 }
@@ -149,13 +150,11 @@ void FinderItemDelegate::paint(QPainter *painter,
 void FinderItemDelegate::paintFolder(QPainter *painter,
                                      const QStyleOptionViewItem &option,
                                      const QModelIndex &index) const {
-    // get the data object
     const QVariant dataObject = index.data(Finder::DataObjectRole);
     const FolderPointer folderPointer = dataObject.value<FolderPointer>();
     Folder *folder = folderPointer.data();
     if (!folder) return;
 
-    // const bool isActive = index.data( ActiveItemRole ).toBool();
     const bool isHovered = view->isHovered(index);
     const bool isSelected = option.state & QStyle::State_Selected;
 
@@ -165,9 +164,7 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
 
     qreal pixelRatio = painter->device()->devicePixelRatioF();
 
-    // thumb
     painter->drawPixmap(0, 0, getMissingItemBackground(pixelRatio));
-
     painter->save();
     painter->setPen(QColor(0x20, 0x20, 0x20));
     painter->drawLine(option.rect.width() - 1, 0, option.rect.width() - 1, option.rect.height());
@@ -187,8 +184,10 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
     QPixmap symbol = IconUtils::pixmap(":/images/item/folder.png", pixelRatio);
     painter->save();
     painter->setOpacity(.1);
-    painter->drawPixmap(((itemWidth - symbol.width()) / 2) * pixelRatio,
-                        ((itemHeight - symbol.height()) / 3 - 8) * pixelRatio, symbol);
+    int x = (itemWidth - symbol.width() / pixelRatio) / 2;
+    int y = (itemHeight - symbol.height() / pixelRatio) / 3 - 8;
+    qDebug() << itemWidth << pixelRatio << symbol.width() << x << y;
+    painter->drawPixmap(x, y, symbol);
     painter->restore();
 
     // play icon overlayed on the thumb
