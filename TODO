@@ -1,13 +1,10 @@
 # Musique TODO list
 
-## 1.6
-- tracks with # in filename don't play
-- prevent sleep
-- Support external files "Open…" and drag and drop
+## 1.7
+- Fix album with Finetune context menu
 - multiple track and album artists
 - embedded lyrics
 - composer?
-- genre?
 
 ## On the Radar
 - Embedded lyrics:	
@@ -32,15 +29,12 @@
 - Ubuntu Sound Menu integration
     https://wiki.ubuntu.com/SoundMenu#Music%20player%20integration
     http://askubuntu.com/questions/7859/which-music-players-use-the-soundmenu/7883#7883
-- Browse by Last.fm album tags (new Genres finder tab)
 - Queue tracks
 - Playlist: Restore selection after dragndrop
 - Next/Previous album playback actions
-- Finder: Highlight currently playing items (Artists, Albums, Folders)
 - Artist hover: show number of album, songs & total duration on the status bar
 - Playlist editing undo
 - Finder: Option to hide items with missing image
-- Finder: A bit of sorting & filtering on Albums and Artist views
 
 ## Funny stuff geeks may ask for
 - Load/Save playlists as /Playlists/[playlistname].pls. Show "Playlists" tab if there's at least one.
