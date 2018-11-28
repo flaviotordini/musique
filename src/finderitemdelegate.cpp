@@ -89,18 +89,18 @@ QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) const 
     return pixmap;
 }
 
-const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type,
-                                                        qreal pixelRatio) const {
-    static QHash<QString, QPixmap> cache;
-    const QString key = QString::number(itemWidth) + type + QString::number(pixelRatio);
+const QPixmap &FinderItemDelegate::getMissingItemPixmap(const char *type, qreal pixelRatio) const {
+    static QMap<QByteArray, QPixmap> cache;
+    const QByteArray key = QByteArray::number(itemWidth) + type + QByteArray::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
 
     QPixmap pixmap = getMissingItemBackground(pixelRatio);
-    pixmap.setDevicePixelRatio(pixelRatio);
     QPainter painter(&pixmap);
 
-    QPixmap symbol = IconUtils::pixmap(":/images/item/" + type + ".png", pixelRatio);
+    QPixmap symbol = IconUtils::pixmap(QLatin1String(":/images/item/") + QString(type).toLower() +
+                                               QLatin1String(".png"),
+                                       pixelRatio);
     painter.setOpacity(.1);
     painter.drawPixmap(((itemWidth - symbol.width()) / 2) * pixelRatio,
                        ((itemHeight - symbol.height()) / 3) * pixelRatio, symbol);
@@ -109,9 +109,9 @@ const QPixmap &FinderItemDelegate::getMissingItemPixmap(const QString &type,
 }
 
 const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered, qreal pixelRatio) {
-    static QMap<QString, QPixmap> cache;
-    const QString key =
-            (hovered ? QLatin1String("1|") : QLatin1String("0|")) + QString::number(pixelRatio);
+    static QMap<QByteArray, QPixmap> cache;
+    const QByteArray key = (hovered ? QByteArrayLiteral("1|") : QByteArrayLiteral("0|")) +
+                           QByteArray::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
     QPixmap pixmap = createPlayIcon(hovered, pixelRatio);
@@ -119,8 +119,8 @@ const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered, qreal pixelRatio) {
 }
 
 const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) const {
-    static QHash<QString, QPixmap> cache;
-    const QString key = QString::number(itemWidth) + '|' + QString::number(pixelRatio);
+    static QMap<QByteArray, QPixmap> cache;
+    const QByteArray key = QByteArray::number(itemWidth) + '|' + QByteArray::number(pixelRatio);
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
     QPixmap pixmap = createMissingItemBackground(pixelRatio);
@@ -201,9 +201,9 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
     QString trackLength;
     int totalLength = folder->getTotalLength();
     if (totalLength > 3600)
-        trackLength = QTime().addSecs(totalLength).toString("h:mm:ss");
+        trackLength = QTime().addSecs(totalLength).toString(QStringLiteral("h:mm:ss"));
     else if (totalLength > 0)
-        trackLength = QTime().addSecs(totalLength).toString("m:ss");
+        trackLength = QTime().addSecs(totalLength).toString(QStringLiteral("m:ss"));
     drawBadge(painter, trackLength, line);
     drawCentralLabel(painter, QString::number(folder->getTrackCount()), line);
 
@@ -244,9 +244,9 @@ void FinderItemDelegate::paintTrack(QPainter *painter,
 
     QString trackLength;
     if (track->getLength() > 3600)
-        trackLength = QTime().addSecs(track->getLength()).toString("h:mm:ss");
+        trackLength = QTime().addSecs(track->getLength()).toString(QStringLiteral("h:mm:ss"));
     else if (track->getLength() > 0)
-        trackLength = QTime().addSecs(track->getLength()).toString("m:ss");
+        trackLength = QTime().addSecs(track->getLength()).toString(QStringLiteral("m:ss"));
     drawBadge(painter, trackLength, line);
 
     int trackNumber = track->getNumber();
@@ -281,9 +281,7 @@ void FinderItemDelegate::paintItem(QPainter *painter,
 
     qreal pixelRatio = painter->device()->devicePixelRatioF();
     QPixmap pixmap = item->getThumb(itemWidth, itemHeight, pixelRatio);
-    if (pixmap.isNull())
-        pixmap = getMissingItemPixmap(QString(item->metaObject()->className()).toLower(),
-                                      pixelRatio);
+    if (pixmap.isNull()) pixmap = getMissingItemPixmap(item->metaObject()->className(), pixelRatio);
     painter->drawPixmap(0, 0, pixmap);
 
     if (isHovered) {
