@@ -4,6 +4,7 @@
 #include <fileref.h>
 #include <tag.h>
 #include <tpropertymap.h>
+#include <tfilestream.h>
 
 #include <flacfile.h>
 #include <mp4file.h>
@@ -23,14 +24,15 @@
 Tags *TagUtils::load(const QString &filename) {
 #ifdef Q_OS_WIN
     const wchar_t * encodedName = reinterpret_cast<const wchar_t*>(filename.utf16());
-    TagLib::FileRef fileref(encodedName);
+    TagLib::FileStream readOnlyStream(encodedName, true);
 #else
-    TagLib::FileRef fileref((TagLib::FileName)filename.toUtf8());
+    TagLib::FileStream readOnlyStream((TagLib::FileName)filename.toUtf8(), true);
 #endif
 
+    TagLib::FileRef fileref(&readOnlyStream);
     if (fileref.isNull()) {
         qDebug() << "Taglib cannot parse" << filename;
-        return 0;
+        return nullptr;
     }
 
     Tags *tags = new Tags();
