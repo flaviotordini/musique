@@ -22,13 +22,13 @@ AppsWidget {
     border-top: 1px solid #808080;
 }
 
-BreadcrumbWidget {
+Breadcrumb {
     border: 0;
     background: #202020;
     padding: 8px;
 }
 
-BreadcrumbWidget QToolButton:hover {
+Breadcrumb QToolButton:hover {
     border: 0;
     color: white;
 }

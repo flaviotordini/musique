@@ -23,7 +23,7 @@ $END_LICENSE */
 
 #include <QtWidgets>
 
-class BreadcrumbWidget;
+class Breadcrumb;
 class PlaylistModel;
 class PlaylistView;
 class SegmentedControl;
@@ -119,8 +119,8 @@ private:
 
     QStack<QWidget *> history;
     QStackedWidget *stackedWidget;
-    BreadcrumbWidget *breadcrumb;
-    BreadcrumbWidget *folderBreadcrumb;
+    Breadcrumb *breadcrumb;
+    Breadcrumb *folderBreadcrumb;
 
     PlaylistModel *playlistModel;
     PlaylistView *playlistView;

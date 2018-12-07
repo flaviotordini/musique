@@ -23,7 +23,7 @@ $END_LICENSE */
 
 #include "segmentedcontrol.h"
 
-#include "breadcrumbwidget.h"
+#include "breadcrumb.h"
 
 #include "playlistmodel.h"
 #include "playlistview.h"
@@ -87,12 +87,12 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     setupBar();
     layout->addWidget(finderBar);
 
-    breadcrumb = new BreadcrumbWidget(this);
+    breadcrumb = new Breadcrumb(this);
     breadcrumb->hide();
     connect(breadcrumb, SIGNAL(goneBack()), SLOT(goBack()));
     layout->addWidget(breadcrumb);
 
-    folderBreadcrumb = new BreadcrumbWidget(this);
+    folderBreadcrumb = new Breadcrumb(this);
     folderBreadcrumb->hide();
     connect(folderBreadcrumb, SIGNAL(goneBack()), SLOT(folderGoBack()));
     layout->addWidget(folderBreadcrumb);

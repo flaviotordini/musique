@@ -23,12 +23,12 @@ $END_LICENSE */
 
 #include <QtWidgets>
 
-class BreadcrumbWidget : public QToolBar {
+class Breadcrumb : public QToolBar {
 
     Q_OBJECT
 
 public:
-    BreadcrumbWidget(QWidget *parent);
+    Breadcrumb(QWidget *parent);
     void addItem(const QString& title);
     void clear();
     void goBack();

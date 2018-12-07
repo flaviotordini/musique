@@ -18,10 +18,10 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
-#include "breadcrumbwidget.h"
+#include "breadcrumb.h"
 #include "iconutils.h"
 
-BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
+Breadcrumb::Breadcrumb(QWidget *parent) : QToolBar(parent) {
     backAction = new QAction(IconUtils::icon("go-previous"), tr("&Back"), this);
     QKeySequence keySequence(Qt::ALT + Qt::Key_Left);
     backAction->setShortcut(keySequence);
@@ -33,7 +33,7 @@ BreadcrumbWidget::BreadcrumbWidget(QWidget *parent) : QToolBar(parent) {
     setIconSize(QSize(16, 16));
 }
 
-void BreadcrumbWidget::addItem(const QString &title) {
+void Breadcrumb::addItem(const QString &title) {
     QAction *action = addAction(title);
     action->setEnabled(false);
 
@@ -44,7 +44,7 @@ void BreadcrumbWidget::addItem(const QString &title) {
         */
 }
 
-void BreadcrumbWidget::goBack() {
+void Breadcrumb::goBack() {
     if (actions().size() > 1) {
         QAction *action = actions().last();
         if (action) {
@@ -61,7 +61,7 @@ void BreadcrumbWidget::goBack() {
         */
 }
 
-void BreadcrumbWidget::clear() {
+void Breadcrumb::clear() {
     // remove all but the backAction
     for (QAction *action : actions()) {
         if (action != backAction) {

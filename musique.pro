@@ -55,7 +55,6 @@ HEADERS += src/mainwindow.h \
     src/playlistview.h \
     src/collectionscannerthread.h \
     src/playlistwidget.h \
-    src/breadcrumbwidget.h \
     src/fontutils.h \
     src/choosefolderview.h \
     src/filesystemfinderview.h \
@@ -96,7 +95,8 @@ HEADERS += src/mainwindow.h \
     src/genres.h \
     src/model/decade.h \
     src/seekslider.h \
-    src/finderlistview.h
+    src/finderlistview.h \
+    src/breadcrumb.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -123,7 +123,6 @@ SOURCES += src/main.cpp \
     src/playlistview.cpp \
     src/collectionscannerthread.cpp \
     src/playlistwidget.cpp \
-    src/breadcrumbwidget.cpp \
     src/fontutils.cpp \
     src/choosefolderview.cpp \
     src/filesystemfinderview.cpp \
@@ -164,7 +163,8 @@ SOURCES += src/main.cpp \
     src/genres.cpp \
     src/model/decade.cpp \
     src/seekslider.cpp \
-    src/finderlistview.cpp
+    src/finderlistview.cpp \
+    src/breadcrumb.cpp
 RESOURCES += resources.qrc
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
