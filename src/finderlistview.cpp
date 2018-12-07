@@ -83,6 +83,7 @@ void FinderListView::appear() {
         while (baseSqlModel->canFetchMore())
             baseSqlModel->fetchMore();
     }
+    updateItemSize();
 }
 
 void FinderListView::disappear() {
@@ -172,18 +173,7 @@ void FinderListView::mouseReleaseEvent(QMouseEvent *event) {
 
 void FinderListView::resizeEvent(QResizeEvent *event) {
     Q_UNUSED(event);
-    int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
-    int width = contentsRect().width() - scrollbarWidth - 1;
-    int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
-    int size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
-
-    // limit item size to available image resolution
-    qreal pixelRatio = viewport()->devicePixelRatioF();
-    const int maxPhotoWidth = 300;
-    if (pixelRatio > 1.0 && size * pixelRatio > maxPhotoWidth) size = maxPhotoWidth / pixelRatio;
-
-    delegate->setItemSize(size, size);
-    setGridSize(QSize(size, size));
+    updateItemSize();
 }
 
 bool FinderListView::isHoveringPlayIcon(QMouseEvent *event) {
@@ -196,4 +186,27 @@ bool FinderListView::isHoveringPlayIcon(QMouseEvent *event) {
     const int y = event->y() - itemRect.y();
     const int itemWidth = delegate->getItemWidth();
     return x > itemWidth - 60 && y < 60;
+}
+
+void FinderListView::updateItemSize() {
+    const qreal pixelRatio = viewport()->devicePixelRatioF();
+    const int maxPhotoWidth = 300;
+    int size = 0;
+
+    const int itemCount = model()->rowCount(rootIndex());
+    if (itemCount > 0 && itemCount < 7) {
+        size = maxPhotoWidth / pixelRatio;
+    } else {
+        int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+        int width = contentsRect().width() - scrollbarWidth - 1;
+        int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
+        size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
+
+        // limit item size to available image resolution
+        if (pixelRatio > 1.0 && size * pixelRatio > maxPhotoWidth)
+            size = maxPhotoWidth / pixelRatio;
+    }
+
+    delegate->setItemSize(size, size);
+    setGridSize(QSize(size, size));
 }

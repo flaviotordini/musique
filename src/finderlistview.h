@@ -63,6 +63,7 @@ protected:
 
 private:
     bool isHoveringPlayIcon(QMouseEvent *event);
+    void updateItemSize();
 
     int hoveredRow;
     QTimeLine *timeLine;
