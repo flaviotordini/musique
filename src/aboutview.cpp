@@ -67,6 +67,9 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
                          QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>") +
             "</p>";
 
+    info += "<p>Powered by <a href='https://" + QLatin1String(Constants::ORG_DOMAIN) +
+            "/opensource'>Open-source software</a>" + "</p>";
+
 #ifndef APP_EXTRA
     "<p>" +
             tr("Released under the <a href='%1'>GNU General Public License</a>")
