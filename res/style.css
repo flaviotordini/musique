@@ -3,14 +3,14 @@ QStatusBar {
 }
 
 QStatusBar QToolBar {
-    padding:0;
-    spacing:0;
-    margin:0;
-    border:0;
+    padding: 0;
+    spacing: 0;
+    margin: 0;
+    border: 0;
 }
 
 QStatusBar::item {
-    border:0;
+    border: 0;
 }
 
 QStatusBar QToolButton::menu-indicator {
@@ -19,12 +19,13 @@ QStatusBar QToolButton::menu-indicator {
 
 AppsWidget {
     background-color: palette(window);
-    border-top: 1px solid #808080;
+    border-top: 1px solid palette(mid);
 }
 
 Breadcrumb {
     border: 0;
     background: #202020;
+    color: white;
     padding: 8px;
 }
 
