@@ -10,7 +10,7 @@ AppsWidget::AppsWidget(QWidget *parent) : QWidget(parent) {
 
     QBoxLayout *layout = new QHBoxLayout(this);
     layout->setMargin(padding);
-    layout->setSpacing(padding*2);
+    layout->setSpacing(padding * 2);
     layout->setAlignment(Qt::AlignCenter);
 
 #ifdef APP_MAC
@@ -39,12 +39,13 @@ void AppsWidget::paintEvent(QPaintEvent *e) {
     style()->drawPrimitive(QStyle::PE_Widget, &o, &p, this);
 }
 
-AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent) : QWidget(parent), icon(nullptr), name(name), downloadButton(nullptr) {
+AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent)
+    : QWidget(parent), icon(nullptr), name(name), downloadButton(nullptr) {
     const QString unixName = code.left(code.lastIndexOf('.'));
     const QString baseUrl = QLatin1String("http://") + Constants::ORG_DOMAIN;
     const QString filesUrl = baseUrl + QLatin1String("/files/");
     url = filesUrl + unixName + QLatin1String("/") + code;
-    webPage = baseUrl + QLatin1String("/") +  unixName;
+    webPage = baseUrl + QLatin1String("/") + unixName;
 
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
@@ -53,7 +54,11 @@ AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent) 
     icon = new QLabel();
     icon->setMinimumHeight(128);
     layout->addWidget(icon);
-    const QString iconUrl = filesUrl + QLatin1String("products/") + unixName + QLatin1String(".png");
+    QString pixelRatioString;
+    if (devicePixelRatioF() > 1.0)
+        pixelRatioString = '@' + QString::number(devicePixelRatio()) + 'x';
+    const QString iconUrl = filesUrl + QLatin1String("products/") + unixName + pixelRatioString +
+                            QLatin1String(".png");
     QObject *reply = Http::instance().get(iconUrl);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(iconDownloaded(QByteArray)));
 
@@ -99,6 +104,7 @@ void AppWidget::mouseReleaseEvent(QMouseEvent *e) {
 void AppWidget::iconDownloaded(const QByteArray &bytes) {
     QPixmap pixmap;
     pixmap.loadFromData(bytes, "PNG");
+    pixmap.setDevicePixelRatio(devicePixelRatioF());
     icon->setPixmap(pixmap);
 }
 
