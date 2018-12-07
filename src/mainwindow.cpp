@@ -1062,6 +1062,7 @@ void MainWindow::initMedia() {
 #endif
     media->setAudioOnly(true);
     media->init();
+    media->setBufferMilliseconds(10000);
 
     connect(media, &Media::error, this, &MainWindow::handleError);
     connect(media, &Media::stateChanged, this, &MainWindow::stateChanged);
