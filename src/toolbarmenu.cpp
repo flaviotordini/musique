@@ -5,9 +5,10 @@ ToolbarMenu::ToolbarMenu(QWidget *parent) : QMenu(parent) {
     MainWindow *w = MainWindow::instance();
     addAction(w->getAction("stopafterthis"));
     addSeparator();
-    addAction(w->getAction("lastFmLogout"));
     addAction(w->getAction("finetune"));
     addAction(w->getAction("chooseFolder"));
+    addSeparator();
+    addAction(w->getAction("lastFmLogout"));
 #ifndef APP_MAC
     addSeparator();
     addAction(w->getAction("toggleMenu"));
