@@ -62,5 +62,7 @@
         <file>images/item/genre@2x.png</file>
         <file>images/item/folder.png</file>
         <file>images/item/folder@2x.png</file>
+        <file>images/open-menu.png</file>
+        <file>images/open-menu@2x.png</file>
     </qresource>
 </RCC>
