@@ -626,6 +626,7 @@ void MainWindow::createStatusBar() {
     spring->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     statusToolBar->addWidget(spring);
 
+    statusToolBar->addAction(actionMap.value("scrobbling"));
     statusToolBar->addAction(actionMap.value("shufflePlaylist"));
     statusToolBar->addAction(actionMap.value("repeatPlaylist"));
     statusToolBar->addAction(actionMap.value("clearPlaylist"));
@@ -1458,10 +1459,7 @@ void MainWindow::toggleScrobbling(bool enable) {
     QSettings settings;
     settings.setValue("scrobbling", enable);
 
-    // show in status bar
     const bool isAuthorized = LastFm::instance().isAuthorized();
-    const bool showInStatusBar = enable || isAuthorized;
-    showActionInStatusBar(actionMap.value("scrobbling"), showInStatusBar);
 
     // need login?
     if (enable && !isAuthorized) {
