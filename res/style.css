@@ -25,11 +25,13 @@ AppsWidget {
 Breadcrumb {
     border: 0;
     background: #202020;
-    color: white;
     padding: 8px;
+}
+
+Breadcrumb QToolButton {
+    color: white;
 }
 
 Breadcrumb QToolButton:hover {
     border: 0;
-    color: white;
 }
