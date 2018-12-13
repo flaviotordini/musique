@@ -182,7 +182,7 @@ void PlaylistItemDelegate::paintAlbumHeader(QPainter *painter,
     const qreal pixelRatio = painter->device()->devicePixelRatioF();
 
     if (album) {
-        QPixmap p = album->getThumb();
+        QPixmap p = album->getPhoto();
         if (!p.isNull()) {
             const int ph = h * pixelRatio;
             p = p.scaled(ph, ph, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);

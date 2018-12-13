@@ -244,16 +244,6 @@ QPixmap Album::getPhoto() {
     return p;
 }
 
-QPixmap Album::getThumb() {
-    QPixmap p;
-    QFile file(getThumbLocation());
-    if (file.open(QFile::ReadOnly)) {
-        p.loadFromData(file.readAll());
-        file.close();
-    }
-    return p;
-}
-
 QPixmap Album::getThumb(int width, int height, qreal pixelRatio) {
     if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
         pixmap.width() != width * pixelRatio) {
@@ -474,10 +464,6 @@ QString Album::getBaseLocation() {
 
 QString Album::getImageLocation() {
     return getBaseLocation() + QLatin1String("/_cover");
-}
-
-QString Album::getThumbLocation() {
-    return getBaseLocation() + QLatin1String("/_thumb");
 }
 
 QString Album::getWikiLocation() {

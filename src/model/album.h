@@ -74,12 +74,10 @@ public:
 
     bool hasPhoto();
     QPixmap getPhoto();
-    QPixmap getThumb();
     QPixmap getThumb(int width, int height, qreal pixelRatio);
     void clearPixmapCache() { pixmap = QPixmap(); }
 
     QString getImageLocation();
-    QString getThumbLocation();
 
     void fixTrackTitle(Track *track);
 
