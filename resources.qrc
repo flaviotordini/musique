@@ -1,14 +1,10 @@
 <RCC>
     <qresource prefix="/">
         <file>images/app.png</file>
-        <file>images/audioscrobbler.png</file>
         <file>images/item/album.png</file>
         <file>images/item/artist.png</file>
         <file>res/style.css</file>
-        <file>images/sort.png</file>
-        <file>images/audioscrobbler@2x.png</file>
         <file>images/app@2x.png</file>
-        <file>images/sort@2x.png</file>
         <file>images/item/album@2x.png</file>
         <file>images/item/artist@2x.png</file>
         <file>images/item/track.png</file>
@@ -17,42 +13,6 @@
         <file>images/64x64/app@2x.png</file>
         <file>images/64x64/finetune.png</file>
         <file>images/64x64/finetune@2x.png</file>
-        <file>images/audio-volume-high.png</file>
-        <file>images/audio-volume-high@2x.png</file>
-        <file>images/audio-volume-muted.png</file>
-        <file>images/audio-volume-muted@2x.png</file>
-        <file>images/edit-clear.png</file>
-        <file>images/edit-clear@2x.png</file>
-        <file>images/edit-find.png</file>
-        <file>images/edit-find@2x.png</file>
-        <file>images/go-previous.png</file>
-        <file>images/go-previous@2x.png</file>
-        <file>images/go-previous_active.png</file>
-        <file>images/go-previous_active@2x.png</file>
-        <file>images/gtk-info.png</file>
-        <file>images/gtk-info@2x.png</file>
-        <file>images/gtk-info_checked.png</file>
-        <file>images/gtk-info_checked@2x.png</file>
-        <file>images/media-playback-pause.png</file>
-        <file>images/media-playback-pause@2x.png</file>
-        <file>images/media-playback-start.png</file>
-        <file>images/media-playback-start@2x.png</file>
-        <file>images/media-playback-start_checked.png</file>
-        <file>images/media-playback-start_checked@2x.png</file>
-        <file>images/media-playback-stop.png</file>
-        <file>images/media-playback-stop@2x.png</file>
-        <file>images/media-playlist-repeat.png</file>
-        <file>images/media-playlist-repeat@2x.png</file>
-        <file>images/media-playlist-shuffle.png</file>
-        <file>images/media-playlist-shuffle@2x.png</file>
-        <file>images/media-skip-backward.png</file>
-        <file>images/media-skip-backward@2x.png</file>
-        <file>images/media-skip-forward.png</file>
-        <file>images/media-skip-forward@2x.png</file>
-        <file>images/view-fullscreen.png</file>
-        <file>images/view-fullscreen@2x.png</file>
-        <file>images/view-restore.png</file>
-        <file>images/view-restore@2x.png</file>
         <file>res/genre-replacements.csv</file>
         <file>res/genre-tree.csv</file>
         <file>images/item/decade.png</file>
@@ -61,7 +21,5 @@
         <file>images/item/genre@2x.png</file>
         <file>images/item/folder.png</file>
         <file>images/item/folder@2x.png</file>
-        <file>images/open-menu.png</file>
-        <file>images/open-menu@2x.png</file>
     </qresource>
 </RCC>

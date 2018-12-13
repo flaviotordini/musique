@@ -165,7 +165,10 @@ SOURCES += src/main.cpp \
     src/seekslider.cpp \
     src/finderlistview.cpp \
     src/breadcrumb.cpp
+
 RESOURCES += resources.qrc
+RESOURCES += $$files(icons/*.png, true)
+
 DESTDIR = build/target/
 OBJECTS_DIR = build/obj/
 MOC_DIR = build/moc/
