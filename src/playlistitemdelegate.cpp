@@ -158,7 +158,7 @@ void PlaylistItemDelegate::paintAlbumHeader(QPainter *painter,
     if (album) headerTitle = album->getTitle();
     Artist *artist = track->getArtist();
     if (artist) {
-        if (!headerTitle.isEmpty()) headerTitle += " - ";
+        if (!headerTitle.isEmpty()) headerTitle += QLatin1String(" - ");
         headerTitle += artist->getName();
     }
 
