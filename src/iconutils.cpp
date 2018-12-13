@@ -22,6 +22,19 @@ $END_LICENSE */
 #include "mainwindow.h"
 #include <QAction>
 
+namespace {
+void addIconFile(QIcon &icon,
+                 const QString &filename,
+                 int size,
+                 QIcon::Mode mode = QIcon::Normal,
+                 QIcon::State state = QIcon::Off) {
+    if (QFile::exists(filename)) {
+        qDebug() << filename;
+        icon.addFile(filename, QSize(size, size), mode, state);
+    }
+}
+} // namespace
+
 QIcon IconUtils::fromTheme(const QString &name) {
     const QLatin1String symbolic("-symbolic");
     if (name.endsWith(symbolic)) return QIcon::fromTheme(name);
@@ -31,27 +44,34 @@ QIcon IconUtils::fromTheme(const QString &name) {
 }
 
 QIcon IconUtils::fromResources(const QString &name) {
-    QLatin1String path(":/images/");
+    QLatin1String active("_active");
+    QLatin1String selected("_selected");
+    QLatin1String disabled("_disabled");
+    QLatin1String checked("_checked");
+
+    // QLatin1String path(":/images/");
+    QString path(":/icons/");
+
+    if (MainWindow::instance()->palette().window().color().value() > 128)
+        path += "light/";
+    else
+        path += "dark/";
+
     QLatin1String ext(".png");
-    const QString pathAndName = path + name;
-    QIcon icon = QIcon(pathAndName + ext);
-    if (!icon.isNull()) {
-        QLatin1String active("_active");
-        QLatin1String selected("_selected");
-        QLatin1String disabled("_disabled");
-        QLatin1String checked("_checked");
-        QLatin1String twoX("@2x");
 
-        icon.addPixmap(QPixmap(pathAndName + active + ext), QIcon::Active);
-        icon.addPixmap(QPixmap(pathAndName + selected + ext), QIcon::Selected);
-        icon.addPixmap(QPixmap(pathAndName + disabled + ext), QIcon::Disabled);
-        icon.addPixmap(QPixmap(pathAndName + checked + ext), QIcon::Normal, QIcon::On);
+    QIcon icon;
 
-        const QString twoXAndExt = twoX + ext;
-        icon.addPixmap(QPixmap(pathAndName + active + twoXAndExt), QIcon::Active);
-        icon.addPixmap(QPixmap(pathAndName + selected + twoXAndExt), QIcon::Selected);
-        icon.addPixmap(QPixmap(pathAndName + disabled + twoXAndExt), QIcon::Disabled);
-        icon.addPixmap(QPixmap(pathAndName + checked + twoXAndExt), QIcon::Normal, QIcon::On);
+    for (int size : {16, 32}) {
+        const QString pathAndName = path + QString::number(size) + '/' + name;
+        // const QString pathAndName = path + name;
+        QString iconFilename = pathAndName + ext;
+        if (QFile::exists(iconFilename)) {
+            addIconFile(icon, iconFilename, size);
+            addIconFile(icon, pathAndName + active + ext, size, QIcon::Active);
+            addIconFile(icon, pathAndName + selected + ext, size, QIcon::Selected);
+            addIconFile(icon, pathAndName + disabled + ext, size, QIcon::Disabled);
+            addIconFile(icon, pathAndName + checked + ext, size, QIcon::Normal, QIcon::On);
+        }
     }
     return icon;
 }
