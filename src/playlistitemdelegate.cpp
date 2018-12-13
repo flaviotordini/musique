@@ -166,11 +166,14 @@ void PlaylistItemDelegate::paintAlbumHeader(QPainter *painter,
 
     const int h = line.height();
 
-    static const int saturation = 24;
-    static const int value = 192;
-    QColor highlightColor = option.palette.color(QPalette::Highlight);
-    QColor topColor = QColor::fromHsv(highlightColor.hue(), saturation, value);
-    QColor bottomColor = QColor::fromHsv(topColor.hue(), saturation, value - 16);
+    const QColor &highlightColor = option.palette.highlight().color();
+    const int hue = highlightColor.hue();
+    const int saturation = highlightColor.saturation() * .2;
+    int value = option.palette.window().color().value();
+    value = value > 128 ? value * .75 : value * 2;
+    const int value2 = value - 16;
+    const QColor topColor = QColor::fromHsv(hue, saturation, value);
+    const QColor bottomColor = QColor::fromHsv(hue, saturation, value2);
     QLinearGradient linearGradient(0, 0, 0, h);
     linearGradient.setColorAt(0.0, topColor);
     linearGradient.setColorAt(1.0, bottomColor);
@@ -227,7 +230,7 @@ void PlaylistItemDelegate::paintAlbumHeader(QPainter *painter,
     headerTitle = fontMetrics.elidedText(headerTitle, Qt::ElideRight, trackTextBox.width());
 
     // text
-    painter->setPen(Qt::white);
+    painter->setPen(bottomColor.value() < 200 ? Qt::white : Qt::black);
     painter->drawText(trackTextBox, Qt::AlignLeft | Qt::AlignVCenter, headerTitle);
 
     painter->restore();
