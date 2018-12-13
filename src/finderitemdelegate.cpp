@@ -335,6 +335,7 @@ void FinderItemDelegate::drawName(QPainter *painter,
     painter->save();
 
     bool tooBig = false;
+    nameBox.adjust(PADDING, 0, -PADDING * 2, 0);
     QRect textBox = painter->boundingRect(nameBox, Qt::AlignCenter | Qt::TextWordWrap, name);
     if (textBox.height() >= nameBox.height()) {
         painter->setFont(FontUtils::small());
@@ -349,7 +350,7 @@ void FinderItemDelegate::drawName(QPainter *painter,
     if (isSelected) painter->setPen(QPen(option.palette.highlightedText(), 0));
 
     if (tooBig)
-        painter->drawText(nameBox, Qt::AlignHCenter | Qt::AlignTop | Qt::TextWordWrap, name);
+        painter->drawText(textBox, Qt::AlignHCenter | Qt::AlignTop | Qt::TextWordWrap, name);
     else
         painter->drawText(textBox, Qt::AlignCenter | Qt::TextWordWrap, name);
 
