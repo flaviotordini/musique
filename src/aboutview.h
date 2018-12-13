@@ -21,12 +21,11 @@ $END_LICENSE */
 #ifndef ABOUTVIEW_H
 #define ABOUTVIEW_H
 
-#include <QtWidgets>
-#include "view.h"
 #include "constants.h"
+#include "view.h"
+#include <QtWidgets>
 
 class AboutView : public View {
-
     Q_OBJECT
 
 public:
@@ -37,18 +36,11 @@ public:
         metadata.insert("title", tr("About"));
         metadata.insert("description",
                         tr("What you always wanted to know about %1 and never dared to ask")
-                        .arg(Constants::NAME));
+                                .arg(Constants::NAME));
         return metadata;
     }
 
 protected:
     void paintEvent(QPaintEvent *);
-
-private slots:
-    void screenChanged();
-
-private:
-    QLabel *logo;
-
 };
 #endif

@@ -28,9 +28,9 @@ $END_LICENSE */
 #include "appwidget.h"
 
 AboutView::AboutView(QWidget *parent) : View(parent) {
-    const int padding = 30;
+    setAttribute(Qt::WA_OpaquePaintEvent);
 
-    connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen *)), SLOT(screenChanged()));
+    const int padding = 30;
 
     QBoxLayout *verticalLayout = new QVBoxLayout(this);
     verticalLayout->setMargin(0);
@@ -42,8 +42,11 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     aboutlayout->setMargin(padding);
     aboutlayout->setSpacing(padding);
 
-    logo = new QLabel();
+    QLabel *logo = new QLabel();
     logo->setPixmap(IconUtils::pixmap(":/images/app.png", devicePixelRatioF()));
+    connect(window()->windowHandle(), &QWindow::screenChanged, this, [logo] {
+        logo->setPixmap(IconUtils::pixmap(":/images/app.png", logo->devicePixelRatioF()));
+    });
     aboutlayout->addWidget(logo, 0, Qt::AlignTop);
 
     QBoxLayout *layout = new QVBoxLayout();
@@ -51,10 +54,20 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     layout->setSpacing(padding);
     aboutlayout->addLayout(layout);
 
-    QString info = "<html><style>a { color: palette(text); text-decoration: none; font-weight: "
-                   "bold }</style><body>";
+    QColor lightTextColor = palette().text().color();
+#ifdef APP_MAC
+    lightTextColor.setAlphaF(.75);
+#endif
 
-    info += "<h1 style='font-weight:100'>" + QString(Constants::NAME) + "</h1>";
+    QString info = "<html><style>"
+                   "body { color: " +
+                   lightTextColor.name(QColor::HexArgb) +
+                   "; } "
+                   "h1 { color: palette(text); font-weight: 100; } "
+                   "a { color: palette(highlight); text-decoration: none; font-weight: normal; }"
+                   "</style><body>";
+
+    info += "<h1>" + QString(Constants::NAME) + "</h1>";
 
     info += "<p>" + tr("Version %1").arg(Constants::VERSION) + "</p>";
 
@@ -115,8 +128,4 @@ void AboutView::appear() {
     mac::CheckForUpdates();
 #endif
 #endif
-}
-
-void AboutView::screenChanged() {
-    logo->setPixmap(IconUtils::pixmap(":/images/app.png", devicePixelRatioF()));
 }
