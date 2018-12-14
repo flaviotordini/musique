@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="vi" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="vi" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Phiên bản %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 là phần mềm miễn phí nhưng quá trình phát triển phần mềm này mất rất nhiều thời gian cũng như tâm sức.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Xin vui lòng &lt;a href=&apos;%1&apos;&gt;đóng góp về tài chính cho chúng tôi&lt;/a&gt; để hỗ trợ việc phát triển của %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Những gì bạn luôn luôn muốn biết về %1 và ngại nêu ra thắc mắc</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Bạn có thể muốn thử các ứng dụng khác của tôi :</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, một </translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, là một trình nghe nhạc trên YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Chuyển ngữ %1 sang ngôn ngữ của bạn bằng cách sử dụng %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Giấy phép: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Quay lại</translation>
@@ -207,20 +189,12 @@
         <translation>Sử dụng bộ sưu tập iTunes</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Sử dụng %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Chọn một thư mục...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 sẽ kết nối đến dịch vụ web từ Last.fm và truy vấn các thông tin về tên nghệ sĩ hay tự đề album cũng như phần họa bìa của album đó và nhiều thông tin khác.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Nếu bạn lo ngại về những thông tin cá nhân của mình, bạn có thể thoát ngay bây giờ.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Xác định vị trí bộ sưu tập của bạn</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 hiện đang quét bộ sưu tập của bạn.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 hiện đang sử dụng &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; để phân loại âm nhạc của bạn.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Phần này sẽ tốn đôi chút thời gian tùy thuộc vào kích thước bộ sưu tập của bạn cũng như tốc độ của mạng internet.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Đang tải về phần cập nhật...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Bỏ tại đây và nối kết vào danh sách phát</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Thư mục</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Đã cập nhật xong bộ sưu tập</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Xảy ra lỗi: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Lỗi: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Đã mở lại âm lượng</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Nhận phiên bản đầy đủ</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Đóng lại</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Mua %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Dừng lại sau track này</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Lấy về</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -654,6 +628,38 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Yêu thích %1? Hãy đánh giá!</translation>
+    </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Đã phát xong toàn bộ danh sách</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Đây chỉ là phần dùng thử của phiên bản %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Phần này cho phép bạn phát một vài track để bạn có thể kiểm thử ứng dụng và tìm hiểu cách hoạt động phù hợp với bạn.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Tiếp tục</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Nhận phiên bản đầy đủ</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Phần dùng thử chỉ phát được khoảng %1 track trong danh sách phát.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Track</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Đang tải về phần cập nhật...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ms_MY" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ms_MY" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Versi %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 merupakan Perisian Bebas tetapi pembangunannya mengambil masa yang berharga.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Sila &lt;a href=&apos;%1&apos;&gt;beri sumbangan&lt;/a&gt; untuk menyokong pembangunan berterusan %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Apakah yang anda mahu tahu mengenai %1 tetapi segan untuk menanya</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Anda mahu cuba aplikasi saya yang lain:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, merupakan apl YouTube</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, merupakan pemain muzik YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Terjemah %1 kepada bahasa ibunda anda menggunakan %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Dilesenkan kepada: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>Muat Turun</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Undur</translation>
@@ -207,20 +189,12 @@
         <translation>Guna koleksi iTunes</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Guna %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Pilih satu folder...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 akan menyambung ke perkhidmatan sesawang Last.fm dan lepasi nama artis dan tajuk album untuk mendapatkan seni kulit album, biografi dan banyak lagi.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Jika anda mementingkan privasi mengenai ini anda boleh keluar sekarang.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Cari koleksi anda</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 sedang mengimbas koleksi muzik anda.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 menggunakan &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; untuk katalogkan muzik anda.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Ia mengambil masa dan bergantung pada saiz koleksi dan kelajuan rangkaian anda.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Memuat turun kemaskini...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Lepaskan disini untuk tambah ke senarai main</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Fail bolehlaku telah diusik, mungkin berpunca dari virus.</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 tidak akan dijalankan. Cuba memasang sekali lagi.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Keluar</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Pasang semula</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Folder</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Koleksi dikemaskini</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Ralat mati: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Ralat: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Volum disuarakan</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Dapatkan versi penuh</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>%Tutup</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Beli %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Henti Selepas Trek Ini</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Scrobbling</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>&amp;Suka %1? Beri penarafan!</translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Senarai main selesai</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Ini hanyalah versi demo %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Ia membolehkan anda main beberapa trek supaya anda dapat uji aplikasi dan lihat jika ia berfungsi untuk anda.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Teruskan</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Dapatkan versi penuh</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Ini adalah demo yang mana hanya terhad pada %1 trek dalam senarai main.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Trek</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Memuat turun kemaskini...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>Memuat turun %1...</translation>
     </message>
 </context>
 </TS>

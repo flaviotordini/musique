@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Версія %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 - вільне програмне забезпечення, проте його розвиток займає дорогоцінний час.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Будь-ласка, &lt;a href=&apos;%1&apos;&gt;пожертвуйте&lt;/a&gt; для підтримки подальшого розвитку %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Те, що ви завжди хотіли знати про %1 і ніколи не наважувались запитати</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Спробуйте також:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, застосунок YouTube</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, музичний програвач для YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Перекласти %1 на вашу рідну мову використовуючи %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Ліцензія належить: %1</translation>
     </message>
 </context>
 <context>
@@ -70,7 +45,7 @@
     <name>ActivationView</name>
     <message>
         <source>Please license %1</source>
-        <translation>Ліцензуйте %1</translation>
+        <translation>Будь ласка, ліцензуйте %1</translation>
     </message>
     <message>
         <source>This demo has expired.</source>
@@ -116,27 +91,34 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>Виконавець</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>Назва</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Рік</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Популярність</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Зворотній порядок</translation>
     </message>
     <message>
         <source>Sort by</source>
         <translation>Сортувати по</translation>
+    </message>
+</context>
+<context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>Завантажити</translation>
     </message>
 </context>
 <context>
@@ -150,11 +132,11 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>Номер треку</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>Номер альбому</translation>
     </message>
     <message>
         <source>Name</source>
@@ -162,15 +144,15 @@
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>Рік</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>Популярність</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>Зворотній порядок</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -178,14 +160,14 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Назад</translation>
+        <translation>Н&amp;азад</translation>
     </message>
     <message>
         <source>Go back</source>
-        <translation>Повернутись</translation>
+        <translation>Повернутися</translation>
     </message>
 </context>
 <context>
@@ -204,11 +186,7 @@
     </message>
     <message>
         <source>Use iTunes collection</source>
-        <translation>Використовувати колекцію ITunes</translation>
-    </message>
-    <message>
-        <source>Use %1</source>
-        <translation>Використати %1</translation>
+        <translation>Використати колекцію ITunes</translation>
     </message>
     <message>
         <source>Choose a folder...</source>
@@ -217,10 +195,6 @@
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 під’єднається до Last.fm і передасть інформацію про імена виконавців та назви альбомів, щоб отримати обкладинки дисків, біографію та інше.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Якщо вас турбує питання приватності щодо цього ви можете вийти зараз.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -232,7 +206,11 @@
     </message>
     <message>
         <source>Locate your collection</source>
-        <translation>Розмістіть вашу колекцію</translation>
+        <translation>Вкажіть на вашу колекцію</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 сканує вашу музичну колекцію.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 використовує &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; для впорядкування вашої музики.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Це займе деякий час, залежно від розміру вашої колекції та швидкості мережі.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Завантажую оновлення ...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Перетягніть сюди, щоб додати до списку відтворення</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Виконуваний файл було пошкоджено, може бути, вірус.</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 не запущено. Спробуйте встановити ще раз.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Вийти</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Перевстановити</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Теки</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Колекцію оновлено</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Критична помилка: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Помилка: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Звук увімкнено</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Отримати повнофункціональну версію</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Закрити</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Придбати %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Зупинити після цього треку</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Скроблінг</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -650,38 +624,54 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation type="unfinished"/>
+        <translation>%1 закінчив сканувати вашу музичну колекцію</translation>
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
         <translation>&amp;Подобається %1? Оцініть !</translation>
+    </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
     <name>MediaView</name>
     <message>
         <source>Drop items here</source>
-        <translation>Перетягнути пункти сюди</translation>
+        <translation>Перетягніть пункти сюди</translation>
     </message>
     <message>
         <source>Playlist finished</source>
         <translation>Плейлист завершено</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Це всього лише демо-версія %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Це дозволяє відтворювати кілька треків, отже ви можете протестувати програму і побачити, чи вона вам підходить.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Продовжити</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Отримати повну версію</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Демо обмежене до %1 треків в плейлісті.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Треки</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Завантаження оновлення...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>Завантаження %1...</translation>
     </message>
 </context>
 </TS>

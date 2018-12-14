@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt_LT" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt_LT" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Versija %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 yra laisva programinė įranga, bet jos kurimas užima daug laiko.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Prašome &lt;a href=&apos;%1&apos;&gt;paaukoti&lt;/a&gt;, kad palaikytumėte tęstinį %2 kūrimą.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Tai, ką jūs visuomet žinojote apie %1, bet niekada nedrįsote paklausti</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Galbūt, norėtumėte išbandyti ir kitas mano programas:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, YouTube programa</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, YouTube muzikos grotuvas</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Išverskite %1 į savo gimtąją kalbą, naudodami %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Licencijuota: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>Atsisiųsti</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Atgal</translation>
@@ -207,20 +189,12 @@
         <translation>Naudoti iTunes kolekciją</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Naudoti %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Pasirinkti aplanką...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 prisijungs prie Last.fm saityno paslaugos ir perduos atlikėjų vardus bei albumų pavadinimus tam, kad gautų albumų viršelius, biografijas ir daug daugiau.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Jeigu jums tai kelia nerimą dėl privatumo, galite išeiti dabar.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Raskite savo kolekcijos vietą</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation>Naudoti %1 aplanką</translation>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 peržiūri jūsų muzikinę kolekciją.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 naudoja &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt;, kad sudarytų jūsų muzikos katalogą.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Tai užims kažkiek laiko, priklausomai nuo jūsų kolekcijos dydžio ir tinklo spartos.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Atsiunčiamas atnaujinimas...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Tempkite čia, kad pridėtumėte į grojaraštį</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Vykdomasis failas buvo klastojamas, galbūt, tai padarė virusas.</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 nepasileis. Pabandykite įdiegti dar kartą.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Išeiti</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Įdiegti iš naujo</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Aplankai</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation>Žanrai</translation>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Kolekcija atnaujinta</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Lemtinga klaida: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Klaida: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Garsis įjungtas</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Gauti pilną versiją</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Užverti</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Pirkti %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Stabdyti po šio takelio</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Naudoti Scrobble paslaugą</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>&amp;Patiko %1? Įvertinkite!</translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation>&amp;Pataisyti biblioteką naudojant %1...</translation>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation>Perjungti &amp;meniu juostą</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Meniu</translation>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation>%1 pridėjo %2 takelių(-ius) į jūsų muzikinę biblioteką. %3 takeliai(-ių) (%4%) turi nepilnas žymes.</translation>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation>Ar norite dabar juos pataisyti naudojant %1?</translation>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation>Pataisyti mano muziką</translation>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation>Vis dar galite gauti prieigą prie meniu juostos, naudodami ALT klavišą</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation>&amp;Scrobble paslauga</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Grojaraštis užbaigtas</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Tai yra tik demonstracinė %1 versija.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Ji leidžia groti tik kelis takelius ir taip suteikia galimybę išbandyti ar ši programa jums tinka.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Tęsti</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Gauti pilną versiją</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Ši demonstracinė versija yra apribota iki %1 takelių grojaraštyje.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Takeliai</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Atsiunčiamas atnaujinimas...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>Atsisiunčiama %1...</translation>
     </message>
 </context>
 </TS>

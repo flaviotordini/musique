@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nb" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nb" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Versjon %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 er gratis programvare men utviklingen tar dyrebar tid.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Vennligst &lt;a href=&apos;%1&apos;&gt;doner&lt;/a&gt; for å støtte videre utvikling av %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Hva du alltid ville vite om %1 men ikke turde å spørre om</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Du vil kanskje prøve mine andre programmer også:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, et YouTube program</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, en musikkspiller for YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Lisensiert til: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>Last ned</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -158,7 +140,7 @@
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"/>
+        <translation>Navn</translation>
     </message>
     <message>
         <source>Year</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Tilbake</translation>
@@ -207,20 +189,12 @@
         <translation>Bruk iTunes samling</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Bruk %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Velg en mappe...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 vil koble til Last.fm web-tjenester og sende artister og album titler for å hente cover kunst, biografier og mye mer.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Hvis du har bekymringer for personvernet angående dette kan du avslutte nå.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Lokaliser samlingen din</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 skanner din musikksamling. </translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 bruker &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; til å katalogisere musikken.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Dette vil ta tid avhengig av størrelsen på samlingen din og hastigheten for nettverket.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Laster ned oppdatering...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Slipp her for å legge til i spillelisten.</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Den kjørbare filen er infisert, muligens med et virus.</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 vil ikke kjøre. Prøv å installere igjen.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Avslutt</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Installer på nytt</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Mapper</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Samlingen er oppdatert</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Fatal feil: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Feil: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Demping av lyd fjernet</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Kjøp fullversjonen</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Steng</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Stopp etter dette sporet</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation type="unfinished"/>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>&amp;Liker %1? Ranger den!</translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Spillelisten ferdig</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Dette er bare demoversjonen av %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Den lar deg spille et par låter, slik at du kan teste programmet og se om det fungerer for deg.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Fortsett</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Få den fulle versjonen</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Denne demoversjonen er begrenset til kun %1 spor i spillelisten.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Spor</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Laster ned oppdatering...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>Laster ned %1...</translation>
     </message>
 </context>
 </TS>

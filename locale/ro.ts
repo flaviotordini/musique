@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ro" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ro" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Versiunea %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 este un program gratuit, dar dezvoltarea acestuia necesită timp preţios.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Te rog &lt;a href=&apos;%1&apos;&gt;donează&lt;/a&gt; pentru a sprijini dezvoltarea în continuare a %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Tot ce ai vrut să știi despre %1 dar nu ai îndrăznit să întrebi</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Puteți încerca și celelalte aplicații ale mele:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, o aplicație YouTube</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, o aplicație muzicală YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Tradu %1 în limba proprie folosind %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Licență pentru %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>Descarcă</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,10 +160,10 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
-        <translation>Î&amp;napoi</translation>
+        <translation>&amp;Înapoi</translation>
     </message>
     <message>
         <source>Go back</source>
@@ -207,20 +189,12 @@
         <translation>Folosește colecția iTunes</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Folosește %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Alege un director...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 se va conecta la serviciul web Last.fm și va folosi numele artistului și titlul albumului pentru a obține coperta albumului, biografia artistului și multe altele.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Dacă creazi că intimitatea ta are de suferit renunța acum.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Localizează colecția ta</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 scanează colecția ta muzicală.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 folosește &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; pentru catalogarea colecției tale muzicale.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Această acțiune va dura o perioadă în funție de mărimea colecției tale și a vitezei conexiunii la Internet.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Descărcare actualizări...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Trage aici pentru a adăuga în lista de redare</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Fișierul executabil a fost infestat cu un virus.</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 nu va rula. Încercați să-l instalați din nou.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Termină</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Reinstalare</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Directoare</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Colecție actualizată</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Eroare fatală: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Eroare: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Sunetul este pornit</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Obține versiunea integrală</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>În&amp;chide</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Cumpără %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Oprește După Această Piesă</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Scrobbling</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>&amp;Vă place %1? Evaluați-l!</translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Lista de redare terminată</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Aceasta este doar o versiune demo a %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Vă permite să ascultați câteva piese pentru a testa aplicația și să vedeți dacă funcționează.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Continuă</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Obține versiunea integrală</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Acest demo permite adăugarea a doar %1 piese în lista de redare.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Piese</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Descărcare actualizări...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>Se descarcă %1</translation>
     </message>
 </context>
 </TS>

@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fa_IR" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fa_IR" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>نسخه %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 یک نرم‌افزار آزاد است اما توسعه آن زمان بسیار زیادی می‌گیرد.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>لطفا برای پشتیبانی از ادامه‌ی توسعه %2 &lt;a href=&apos;%1&apos;&gt;کمک&lt;/a&gt; کنید.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>همان چیزی که همیشه سعی داشتید درباره %1 بدانید اما جرات پرسیدنش را نداشتید</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>ممکن است بخواهید برنامه‌های دیگر من را نیز امتحان کنید:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1، یک برنامه برای یوتیوب</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1، یک پخش‌کننده‌ی موسیقی برای یوتیوب</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>%1 را به زبان مادری خود با استفاده از %2 ترجمه کنید</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>گواهی شده: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,10 +160,10 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;برگشت</translation>
+        <translation>&amp;عقب</translation>
     </message>
     <message>
         <source>Go back</source>
@@ -207,20 +189,12 @@
         <translation>استفاده از مجموعه‌ی iTunes</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>استفاده از %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>انتخاب یک پوشه...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 به سرویس وب Last.fm متصل خواهد شد و اطلاعات نام هنرمند و عنوان آلبوم‌ها را جهت دریافت عکس پوششی آلبوم، زندگی‌نامه و چیزهای دیگر، ارسال خواهد کرد.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>اگر نگرانی‌هایی در خصوص حریم‌خصوصی خود دارید می‌توانید همین الان خارج شوید.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>مکان مجموعه‌ی خود را مشخص کنید</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 در حال پایش مجموعه موسیقی شماست.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 در حال استفاده از &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; برای کاتلوگ کردن موسیقی شماست.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>این عمل با توجه به اندازه مجموعه‌ی موسیقی شما و سرعت اینترنتتان ممکن است طول بکشد.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>درحال بارگیری بروزرسانی...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>اینجا بندازید تا به فهرست پخش شما اضافه شود</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>پوشه‌ها</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>مجموعه بروزرسانی شد</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>خطا حیاتی: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>خطا: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>صدا وصل شده است</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>دریافت نسخه کامل</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;خروج</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>خرید %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;توقف بعد از این موسیقی</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;درحال اسکروبل</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>فهرست‌پخش تمام شد</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>این تنها نسخه آزمایشی %1 است.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>این نسخه تنها به شما اجازه می‌دهد تا تعدادی از آهنگ‌ها را برای آزمایش اینکه برنامه برای شما کار میکند پخش کنید.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>ادامه</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>دریافت نسخه کامل</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>این دمو فقط محدود به %1 موسیقی در فهرست پخش است.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>موسیقی‌ها</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>درحال بارگیری بروزرسانی...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

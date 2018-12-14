@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Версия %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 свободное программное обеспечение, но ее развитие занимает драгоценное время.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Пожалуйста, &lt;a href=&apos;%1&apos;&gt;пожертвуйте&lt;/a&gt; для поддержки дальнейшего развития %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>То, что вы всегда хотели знать о %1 и никогда не осмелились спросить</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Вы также можете попробовать другие мои приложения:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, приложение YouTube</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, музыкальный плеер для YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Перевести %1 на ваш родной язык с помощью %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Зарегистрирована на: %1</translation>
     </message>
 </context>
 <context>
@@ -141,6 +116,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>Загрузить</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -179,10 +161,10 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
-        <translation>&amp;Назад</translation>
+        <translation>Н&amp;азад</translation>
     </message>
     <message>
         <source>Go back</source>
@@ -208,20 +190,12 @@
         <translation>Использовать коллекцию ITunes</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Использовать %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Выберите папку...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 будет подключаться к службам Last.fm и на основании названий композиций получать обложки альбомов, биографии исполнителей и многое другое.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Если у вас есть проблемы с конфиденциальностью, то можете выйти из программы прямо сейчас.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -234,6 +208,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Найдите вашу коллекцию</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -257,10 +235,6 @@
         <translation>%1 сканирует вашу музыкальную коллекцию.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 использует &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; для каталогизации вашей музыки.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Это займет некоторое время, в зависимости от размера вашей коллекции и скорости соединения.</translation>
     </message>
@@ -270,17 +244,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Загрузка обновления....</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Перетащите сюда, чтобы добавить в список воспроизведения</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Исполняемый файл был изменен, возможно вирусом.</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 не запущено. Попробуйте установить ещё раз.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Выйти</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Переустановить</translation>
     </message>
 </context>
 <context>
@@ -296,6 +282,10 @@
     <message>
         <source>Folders</source>
         <translation>Папки</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -566,10 +556,6 @@
         <translation>Коллекция обновлена</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Фатальная ошибка: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Ошибка: %1</translation>
     </message>
@@ -592,10 +578,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Звук включен</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Получить полную версию</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -622,16 +604,8 @@
         <translation>&amp;Закрыть</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Купить %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>Ост&amp;ановить после текущего трека</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Скробблинг</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -655,6 +629,38 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
+        <translation>&amp;Нравится %1? Оцени!</translation>
+    </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -667,22 +673,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Плейлист завершен</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Это всего лишь демо-версия %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Это позволяет вам прослушать несколько треков для того, чтобы вы могли проверить приложение на работоспособность.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Продолжить</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Получить полную версию</translation>
     </message>
 </context>
 <context>
@@ -720,13 +710,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Демонстрационный режим ограничивается только %1 треками в плейлисте.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -756,6 +739,17 @@
     <message>
         <source>Tracks</source>
         <translation>Треки</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Загрузка обновления....</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>Загрузка %1...</translation>
     </message>
 </context>
 </TS>

@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="sr" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sr" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Издање: %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 је бесплатан софтвер, али његов развој одузима драгоцено време.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Молимо да &lt;a href=&apos;%1&apos;&gt;донирајте&lt;/a&gt; да подржите даљи развој овог програма %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Све што сте желели да знате о програму %1, а нисте се усудили да питате</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Такође можете да пробате и моје остале програме:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, програм за Јутјуб</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, музички плејер за Јутјуб</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Преведите %1 на ваш језик користећи %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Лиценцирано на: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Назад</translation>
@@ -207,20 +189,12 @@
         <translation>Користи iTunes колекцију</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Користи %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Изаберите фасциклу... </translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 ће да се повеже на Last.fm и да нађе имена аутора, имена албума да бих наша слике омота, биографије и много више. </translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Ако сте забринути због приватности можете затборите %1 одмах</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Нађите вашу колекцију музике</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 скенира вашу колекцију музике. </translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 користи &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; да бих направио каталог ваше музике. </translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Ово ће потрајати неко време, зависно од величине колекције и брзине интернета. </translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Преузимам надоградњу... </translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Испустите овде да додате на листу</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Извршни фајл је уништен</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 неће да се покрене. Пробај ре-инсталирати</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Одустани</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Ре-инсталирај</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Фасцикле</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Колекција ажурирана</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Фатална грешка: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Грешка: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Звук је укључен</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Преузмите пуно издање</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Затвори</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Купи %1... </translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Заустави након ове нумере</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Скробловање</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>&amp;Обожавате %1? Оцените га! </translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Плејлиста завршена</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Ово је само пробно издање програма %1. </translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Дозвољава вам да пустите пар нумера како бисте испробали програм и оценили да ли вам одговара. </translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Настави</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Преузми пуно издање</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Пробно издање је ограничено само на %1 нумера у листи.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Нумере</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Преузимам надоградњу... </translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

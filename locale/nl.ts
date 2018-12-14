@@ -1,20 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="nl" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Versie %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>
-%1 is Vrije Software maar software ontwikkeling kost tijd en geld.
-</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>&lt;a href=&apos;%1&apos;&gt;Doneer&lt;/a&gt; om de ontwikkeling van %2 te ondersteunen.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -33,24 +22,8 @@
         <translation>Wat u altijd al had willen weten over %1 maar nooit heeft durven vragen</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Je wilt misschien mijn andere applicaties ook proberen:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, een YouTube applicatie</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, een YouTube muziek speler</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Vertaal %1 in uw eigen taal door middel van %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Gelicenseerd aan: %1</translation>
     </message>
 </context>
 <context>
@@ -142,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -180,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Terug</translation>
@@ -209,20 +189,12 @@
         <translation>Gebruik iTunes collectie</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Gebruik %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Kies een map...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 zal nu verbinden met de Last.fm web service en de artiesten namen en album namen sturen om zo de album hoezen, biografieen en andere informatie te kunnen ophalen.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Wanneer u hier uit privacy overwegingen moeite mee heeft kunt u nu annuleren.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -235,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Localiseer uw collectie</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -258,10 +234,6 @@
         <translation>%1 is uw muziek collectie aan het indexeren.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 gebruikt &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; om uw muziek te catalogiseren.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Dit zal tijd kosten, afhankelijk van de grootte van uw muziek collectie en de netwerk snelheid.</translation>
     </message>
@@ -271,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Bezig met downloaden van update...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Laat vallen om toe te voegen aan het einde van de afspeellijst.</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Stoppen</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Herinstalleren</translation>
     </message>
 </context>
 <context>
@@ -297,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Mappen</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -567,10 +555,6 @@
         <translation>Collectie geindexeerd</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Fatale fout: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Fout: %1</translation>
     </message>
@@ -593,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Volume is aan</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Haal de volledige versie</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -623,16 +603,8 @@
         <translation>&amp;Sluiten</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Koop %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>St&amp;op na dit liedje</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>Scrobb&amp;ling</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -658,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>Vindt u %1 te &amp;gek? Waardeer het!</translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -668,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Afspeellijst klaar</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>This is allen maar de demo versie van %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Het laat je een aantal liedjes afspelen zodat je de applicatie kunt uitproberen en zien of je het handig vindt.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Doorgaan</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Haal de volledige versie</translation>
     </message>
 </context>
 <context>
@@ -721,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>De demo is beperkt tot %1 liedjes in de afspeellijst.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -757,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Liedjes</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Bezig met downloaden van update...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

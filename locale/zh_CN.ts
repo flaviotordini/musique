@@ -1,5 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
@@ -7,20 +6,12 @@
         <translation>版本 %1</translation>
     </message>
     <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 是自由软件，但它的开发需要宝贵的时间。</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>请 &lt;a href=&apos;%1&apos;&gt;捐助&lt;/a&gt; 来支持 %2 的开发。</translation>
-    </message>
-    <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
         <translation>依据 &lt;a href=&apos;%1&apos;&gt;GNU 通用公共许可证&lt;/a&gt; 分发</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation>关闭(_B)</translation>
+        <translation>关闭(&amp;C)</translation>
     </message>
     <message>
         <source>About</source>
@@ -31,24 +22,8 @@
         <translation>那些关于 %1 您总想知道却又不敢问的事情</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>您或许也想尝试我的其他程序：</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1，一个 YouTube 程序</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1，一个 YouTube 音乐播放器</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>使用 %2 将 %1 翻译为您的母语</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>遵循协议：%1</translation>
     </message>
 </context>
 <context>
@@ -59,11 +34,11 @@
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation>邮件(_E)：</translation>
+        <translation>邮件(&amp;E)：</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
-        <translation>激活码(_C)：</translation>
+        <translation>激活码(&amp;C)：</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>下载</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,10 +160,10 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
-        <translation>后退(_B)</translation>
+        <translation>后退(&amp;B)</translation>
     </message>
     <message>
         <source>Go back</source>
@@ -207,20 +189,12 @@
         <translation>使用 iTunes 收藏</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>使用 %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>选择一个文件夹……</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 将连结至 Last.fm 网络服务器并提交艺术家名称和唱片标题来获取封面、艺人介绍及更多内容。</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>如果您对此有隐私上的顾虑您可以现在退出。</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>定位您的收藏</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 正在扫描您的音乐收藏。</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 正在用 &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; 归类您的音乐。</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>这会占用一定时间，时间长短取决于您的音乐库大小和网络速度。</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>正在下载更新...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>拖放到这里来添加到播放列表</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>可执行文件已经被篡改，或许是病毒感染了</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 将不会被执行，请尝试重装。</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>退出</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>重新安装</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>文件夹</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -363,11 +353,11 @@
     </message>
     <message>
         <source>&amp;Username:</source>
-        <translation>用户名(_U)：</translation>
+        <translation>用户名(&amp;U)：</translation>
     </message>
     <message>
         <source>&amp;Password:</source>
-        <translation>密码(_P)：</translation>
+        <translation>密码(&amp;P)：</translation>
     </message>
     <message>
         <source>Signup for a %1 account</source>
@@ -386,7 +376,7 @@
     <name>MainWindow</name>
     <message>
         <source>&amp;Back</source>
-        <translation>后退(_B)</translation>
+        <translation>后退(&amp;B)</translation>
     </message>
     <message>
         <source>Go to the previous view</source>
@@ -394,7 +384,7 @@
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation>信息(_I)</translation>
+        <translation>信息(&amp;I)</translation>
     </message>
     <message>
         <source>Show information about the current track</source>
@@ -402,7 +392,7 @@
     </message>
     <message>
         <source>P&amp;revious</source>
-        <translation>上一首(_R)</translation>
+        <translation>上一首(&amp;R)</translation>
     </message>
     <message>
         <source>Go back to the previous track</source>
@@ -410,7 +400,7 @@
     </message>
     <message>
         <source>&amp;Next</source>
-        <translation>下一首(_N)</translation>
+        <translation>下一首(&amp;N)</translation>
     </message>
     <message>
         <source>Skip to the next track</source>
@@ -418,15 +408,15 @@
     </message>
     <message>
         <source>&amp;Play</source>
-        <translation>播放(_P)</translation>
+        <translation>播放(&amp;P)</translation>
     </message>
     <message>
         <source>Start playback</source>
-        <translation>开始回放</translation>
+        <translation>开始播放</translation>
     </message>
     <message>
         <source>&amp;Full Screen</source>
-        <translation>全屏(_F)</translation>
+        <translation>全屏(&amp;F)</translation>
     </message>
     <message>
         <source>Go full screen</source>
@@ -434,7 +424,7 @@
     </message>
     <message>
         <source>&amp;Remove</source>
-        <translation>删除(_R)</translation>
+        <translation>移除(&amp;R)</translation>
     </message>
     <message>
         <source>Remove the selected tracks from the playlist</source>
@@ -442,7 +432,7 @@
     </message>
     <message>
         <source>Move &amp;Up</source>
-        <translation>向上移动(_U)</translation>
+        <translation>向上移动(&amp;U)</translation>
     </message>
     <message>
         <source>Move up the selected tracks in the playlist</source>
@@ -450,7 +440,7 @@
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation>向下移动(_D)</translation>
+        <translation>向下移动(&amp;D)</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
@@ -458,7 +448,7 @@
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation>退出(_Q)</translation>
+        <translation>退出(&amp;Q)</translation>
     </message>
     <message>
         <source>Bye</source>
@@ -466,7 +456,7 @@
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation>更改收藏文件夹…(_C)</translation>
+        <translation>更改收藏文件夹…(&amp;C)</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
@@ -474,7 +464,7 @@
     </message>
     <message>
         <source>&amp;Website</source>
-        <translation>网站(_W)</translation>
+        <translation>网站(&amp;W)</translation>
     </message>
     <message>
         <source>%1 on the Web</source>
@@ -482,7 +472,7 @@
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>发起捐助(_D)</translation>
+        <translation>发起捐助(&amp;D)</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
@@ -490,7 +480,7 @@
     </message>
     <message>
         <source>&amp;About</source>
-        <translation>关于(_A)</translation>
+        <translation>关于(&amp;A)</translation>
     </message>
     <message>
         <source>Info about %1</source>
@@ -498,7 +488,7 @@
     </message>
     <message>
         <source>&amp;Clear</source>
-        <translation>清空(_C)</translation>
+        <translation>清空(&amp;C)</translation>
     </message>
     <message>
         <source>Remove all tracks from the playlist</source>
@@ -506,7 +496,7 @@
     </message>
     <message>
         <source>&amp;Shuffle</source>
-        <translation>随机(_S)</translation>
+        <translation>随机(&amp;S)</translation>
     </message>
     <message>
         <source>Random playlist mode</source>
@@ -514,7 +504,7 @@
     </message>
     <message>
         <source>&amp;Repeat</source>
-        <translation>重复(_R)</translation>
+        <translation>重复(&amp;R)</translation>
     </message>
     <message>
         <source>Play first song again after all songs are played</source>
@@ -526,23 +516,23 @@
     </message>
     <message>
         <source>&amp;Application</source>
-        <translation>应用程序(_A)</translation>
+        <translation>应用程序(&amp;A)</translation>
     </message>
     <message>
         <source>&amp;Playback</source>
-        <translation>回放(_P)</translation>
+        <translation>回放(&amp;P)</translation>
     </message>
     <message>
         <source>Play&amp;list</source>
-        <translation>播放列表(_L)</translation>
+        <translation>播放列表(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;View</source>
-        <translation>查看(_V)</translation>
+        <translation>查看(&amp;V)</translation>
     </message>
     <message>
         <source>&amp;Help</source>
-        <translation>帮助(_H)</translation>
+        <translation>帮助(&amp;H)</translation>
     </message>
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
@@ -565,16 +555,12 @@
         <translation>收藏更新完毕</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>严重错误：%1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>错误：%1</translation>
     </message>
     <message>
         <source>Leave &amp;Full Screen</source>
-        <translation>离开全屏模式(_F)</translation>
+        <translation>离开全屏模式(&amp;F)</translation>
     </message>
     <message>
         <source>Remaining time: %1</source>
@@ -593,10 +579,6 @@
         <translation>已取消静音</translation>
     </message>
     <message>
-        <source>Get the full version</source>
-        <translation>获得完整版本</translation>
-    </message>
-    <message>
         <source>%1 version %2 is now available.</source>
         <translation>%1 版本 %2 现在可用。</translation>
     </message>
@@ -610,27 +592,19 @@
     </message>
     <message>
         <source>&amp;Window</source>
-        <translation>窗口(_W)</translation>
+        <translation>窗口(&amp;W)</translation>
     </message>
     <message>
         <source>&amp;Minimize</source>
-        <translation>最小化(_M)</translation>
+        <translation>最小化(&amp;M)</translation>
     </message>
     <message>
         <source>&amp;Close</source>
         <translation>关闭(&amp;C)</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>购买 %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
-        <translation>播放此音轨后停止(_S)</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>同步(_S)</translation>
+        <translation>播放此音轨后停止(&amp;S)</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -638,11 +612,11 @@
     </message>
     <message>
         <source>&amp;Log Out from %1</source>
-        <translation>从 %1 登出(_L)</translation>
+        <translation>从 %1 登出(&amp;L)</translation>
     </message>
     <message>
         <source>&amp;Report an Issue...</source>
-        <translation>报告问题…(_R)</translation>
+        <translation>报告问题…(&amp;R)</translation>
     </message>
     <message>
         <source>Search</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>喜欢 %1? 为其评分！</translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>播放列表完成</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>这只是 %1 的试用版本。</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>它允许您播放一些音轨，以便您测试并了解该程序是否适合您。</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>继续</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>获得完整版本</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>该试用版只能在播放列表中添加 %1 首音轨。</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>音轨</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>正在下载更新...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>正在下载 %1...</translation>
     </message>
 </context>
 </TS>

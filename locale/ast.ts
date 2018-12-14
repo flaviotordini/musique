@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ast" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ast" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Versión %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 ye Software Llibre pero lleva un tiempu valoratible desendolcalu.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Por favor &lt;a href=&apos;%1&apos;&gt;fai una donación&lt;/a&gt; pa sofitar el desendolcu continuu de %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Lo que siempres quixisti saber sobro %1 y nun t&apos;atrevíes a entrugar</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Seique quieras probar tamién les mios otres aplicaciones:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, una aplicación pa YouTube</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, un reproductor de musica de YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Traduz %1 a la to llingua llariega usando %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Con llicencia pa: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Atrás</translation>
@@ -207,20 +189,12 @@
         <translation>Usar la coleición d&apos;iTunes</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Usar %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Escueyi una carpeta...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 coneutará colos servicios web de Last.fm y pasará-y los nomes d&apos;artistes y títulos d&apos;álbumes pa baxar imaxes de portaes, biografíes y muncho más.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Si t&apos;esmolez la to intimidá darréu d&apos;esto, pues colar agora.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Llocaliza la to coleición</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 ta analizando la coleición de música.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 ta usando &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; pa catalogar la to música.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Esto llevará un tiempu dependiendo del tamañu de la coleición y de la velocidá de la rede.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Descargando l&apos;anovamientu…</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Suelta equí p&apos;amestar a la llista de reproducción</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Carpetes</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Coleición anovada</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Error fatal: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Error: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Volume activu</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Consigui la versión completa</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Zarrar</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Mercar %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>Parar dempué&amp;s d&apos;esta pista</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Scrobbling</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -654,6 +628,38 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
+        <translation>¿&amp;Préstate %1? ¡Puntúalo!</translation>
+    </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Finó la llista</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Esto ye namái la versión demo de %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Te permite reproducir delles pistes pa que puedas probar el programa y ver si te val.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Siguir</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Consiguir la versión completa</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>La versión de prueba ta llendada a sólo %1 pistes na llista de reproducción.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Pistes</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Descargando anovamientu...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

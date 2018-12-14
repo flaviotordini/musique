@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="cs_CZ" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Verze %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 je distribuován jako svobodný program, avšak vývoj zabírá značné množství času.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Prosím &lt;a href=&apos;%1&apos;&gt;přispějte&lt;/a&gt; kvůli podpoře pokračování ve vývoji %2.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Vše jste kdy chtěli vědět o %1 a nikdy jste se neodvážili se zeptat</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Je možné, že vás zaujmou i moje ostatní programy:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, aplikace pro YouTube</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, přehrávač hudby z YouTube</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Přeložte %1 do vašeho mateřského jazyka pomocí %2</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Licence k: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>Stáhnout</translation>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Zpět</translation>
@@ -207,20 +189,12 @@
         <translation>Použít sbírku iTunes</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>Použít %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Vyberte složku...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 se připojí k internetové službě Last.fm a projde jména autorů a názvy alb, aby natáhl obaly, biografie a mnohem víc.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Pokud máte obavy týkající se soukromí, můžete to okamžitě vypnout.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Najděte svoji sbírku</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 prohledává vaši hudební sbírku.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>%1 používá &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; na roztřídění vaší hudby.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Potrvá to jistou dobu v závislosti na velikosti sbírky a rychlosti připojení.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Stahování aktualizace...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Upusťte zde pro přidání do seznamu skladeb</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>Soubor pro spuštění byl poškozen, toto mohl zapříčinit virus.</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 nepoběží. Zkuste instalovat znovu.</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>&amp;Ukončit</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>Přeinstalovat</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Složky</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Sbírka obnovena</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Kritická chyba: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Chyba: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Hlasitost není ztlumená</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Dostat plnou verzi</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Zavřít</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>Koupit %1...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Zastavit po této skladbě</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Odesílání informací</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation>&amp;Líbí se %1? Ohodnotit!</translation>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Seznam skladeb dokončen</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Toto je pouze demoverze %1.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Umožňuje vám prehrát několik skladeb, takže můžete program vyzkoušet a vidět, jestli pracuje tak, jak má.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Pokračovat</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Získejte plnou verzi</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Demoverze je omezena pouze na %1 skladeb v seznamu skladeb.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Skladby</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Stahování aktualizace...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>Stahování %1...</translation>
     </message>
 </context>
 </TS>

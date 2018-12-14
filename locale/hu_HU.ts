@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu_HU" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu_HU" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Verzió %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 egy szabad szoftver, de a fejlesztése értékes időbe kerül.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>Kérlek &lt;a href=&apos;%1&apos;&gt;adományozz&lt;/a&gt;, hogy folytatódhasson a %2 fejlesztése</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>Amit mindig tudni akart %1-ról de sosem merte megkérdezni</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Érdemes kipróbálni más alkalmazásaimat is:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, egy YouTube alkalmazás</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, egy Youtube zenelejátszó</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>Fordítsa le a(z) %1 programot az anyanyelvére a(z) %2 segítségével.</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Licencelve: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Vissza</translation>
@@ -207,20 +189,12 @@
         <translation>iTunes gyűjtemény használata</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>%1 használata</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Könyvtár kiválasztása...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1-nak kapcsolódnia kell a Last.fm web szolgáltatásához, és át kell adnia az előadó neveket és album címeket, hogy letöltse a lemezborítókat, életrajzokat és sok mást.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Ha adatvédelmi aggályai lennének most kiléphet.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Keresse meg a gyűjteményét</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>A %1 átvizsgálja a zene gyűjteményét.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>A %1 &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt;-t használja a zenéd katalógizálására</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Ez időt vesz igénybe attól függően mekkora a gyűjteménye mérete és milyen gyors a hálózata sebessége.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Frissítés letöltése...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Dobja ide, a lejátszólistához hozzáadáshoz</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Mappák</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Gyűjtemény frissítve</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Végzetes hiba: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Hiba: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Hangerő visszahangosítva</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Teljes verzió beszerzése</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Bezárás</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>%1 megvásárlása...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>&amp;Megállítás a szám után</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Továbbítás</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Lejátszólista vége</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Ez csak egy demóverziója a %1-nak.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Ez lehetőséget ad, hogy pár számot lejátsszon, kipróbálhatja az alkalmazást és megnézheti, hogy működik önnek.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Tovább</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Teljes verzió beszerzése</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Ez a demo korlátozva van %1 számra a lejátszólistában.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Számok</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Frissítés letöltése...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

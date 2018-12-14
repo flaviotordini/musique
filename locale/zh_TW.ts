@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_TW" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_TW" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>版本 %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 是自由軟體，但是其開發花了寶貴的時間。</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>請 &lt;a href=&apos;%1&apos;&gt;贊助&lt;/a&gt; 以支持持續發展 %2。</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>什麼是您一直想知道 %1 卻不敢問的？</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>您也許也想要試試我其他的軟體：</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1 ，一個Youtube應用程式</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1 ，一個Youtube音樂應用程式</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>使用 %2 將 %1 翻譯成您的本地語言</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>授權使用：%1</translation>
     </message>
 </context>
 <context>
@@ -98,7 +73,7 @@
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation type="unfinished"/>
+        <translation>完整版本允許您加入超過 %1 首曲目到播放清單，並可不中斷的聆聽您的音樂。</translation>
     </message>
 </context>
 <context>
@@ -116,27 +91,34 @@
     <name>AlbumListView</name>
     <message>
         <source>Artist</source>
-        <translation type="unfinished"/>
+        <translation>藝人</translation>
     </message>
     <message>
         <source>Title</source>
-        <translation type="unfinished"/>
+        <translation>標題</translation>
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>年</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>人氣</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>反向排序</translation>
     </message>
     <message>
         <source>Sort by</source>
         <translation>排序根據</translation>
+    </message>
+</context>
+<context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation>下載</translation>
     </message>
 </context>
 <context>
@@ -150,11 +132,11 @@
     <name>ArtistListView</name>
     <message>
         <source>Track Count</source>
-        <translation type="unfinished"/>
+        <translation>曲目數</translation>
     </message>
     <message>
         <source>Album Count</source>
-        <translation type="unfinished"/>
+        <translation>專輯數</translation>
     </message>
     <message>
         <source>Name</source>
@@ -162,15 +144,15 @@
     </message>
     <message>
         <source>Year</source>
-        <translation type="unfinished"/>
+        <translation>年</translation>
     </message>
     <message>
         <source>Popularity</source>
-        <translation type="unfinished"/>
+        <translation>人氣</translation>
     </message>
     <message>
         <source>Reversed Order</source>
-        <translation type="unfinished"/>
+        <translation>反向排序</translation>
     </message>
     <message>
         <source>Sort by</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>後退(&amp;B)</translation>
@@ -196,7 +178,7 @@
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation type="unfinished"/>
+        <translation>%1 需要掃描您的音樂收藏。</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -207,10 +189,6 @@
         <translation>使用 iTunes 收藏</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>使用 %1</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>選擇資料夾:</translation>
     </message>
@@ -219,20 +197,20 @@
         <translation>%1 將會連接 Last.fm 的網路服務並傳送演唱者的名稱與專輯名稱，以獲取專輯封面、個人傳記以及更多。</translation>
     </message>
     <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>若您有隱私上的顧慮，那您可以現在就離開。</translation>
-    </message>
-    <message>
         <source>Where&apos;s your music collection?</source>
         <translation>您的音樂收藏在哪裡呢？</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation type="unfinished"/>
+        <translation>選取您音樂收藏的位置。</translation>
     </message>
     <message>
         <source>Locate your collection</source>
         <translation>定位您的收藏</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 正在檢視您的音樂收藏</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>這會依據您收藏的大小與網路速度的不同，來佔用一點時間。</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>下載更新中...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>拖曳至此以增加至播放清單</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation>可執行檔可能已被病毒竄改。</translation>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation>%1 將不會執行。嘗試再次安裝。</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>離開</translation>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation>重新安裝</translation>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>資料夾</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -390,15 +380,15 @@
     </message>
     <message>
         <source>Go to the previous view</source>
-        <translation type="unfinished"/>
+        <translation>回到上一個檢視</translation>
     </message>
     <message>
         <source>&amp;Info</source>
-        <translation type="unfinished"/>
+        <translation>資訊 (&amp;I)</translation>
     </message>
     <message>
         <source>Show information about the current track</source>
-        <translation type="unfinished"/>
+        <translation>顯示關於目前曲目的資訊</translation>
     </message>
     <message>
         <source>P&amp;revious</source>
@@ -466,11 +456,11 @@
     </message>
     <message>
         <source>&amp;Change collection folder...</source>
-        <translation type="unfinished"/>
+        <translation>變更收藏資料夾... (&amp;C)</translation>
     </message>
     <message>
         <source>Choose a different music collection folder</source>
-        <translation type="unfinished"/>
+        <translation>選擇一個不同的音樂收藏資料夾</translation>
     </message>
     <message>
         <source>&amp;Website</source>
@@ -482,7 +472,7 @@
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation type="unfinished"/>
+        <translation>贊助 (&amp;D)</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
@@ -554,19 +544,15 @@
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation type="unfinished"/>
+        <translation>正在更新收藏...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
-        <translation type="unfinished"/>
+        <translation>正在更新收藏 - %1%</translation>
     </message>
     <message>
         <source>Collection updated</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Fatal error: %1</source>
-        <translation type="unfinished"/>
+        <translation>收藏已更新</translation>
     </message>
     <message>
         <source>Error: %1</source>
@@ -593,10 +579,6 @@
         <translation>音量處於非靜音狀態</translation>
     </message>
     <message>
-        <source>Get the full version</source>
-        <translation>取得完整版</translation>
-    </message>
-    <message>
         <source>%1 version %2 is now available.</source>
         <translation>現在有 %1 版本 %2 可用。</translation>
     </message>
@@ -621,16 +603,8 @@
         <translation>&amp;關閉</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>購買 %1</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>在這首曲目後停止(&amp;S)</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Scrobbling</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -650,11 +624,43 @@
     </message>
     <message>
         <source>%1 finished scanning your music collection</source>
-        <translation type="unfinished"/>
+        <translation>%1 已完成掃描您的音樂收藏</translation>
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
         <translation>喜歡 %1 ？為它評分！(&amp;L)</translation>
+    </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation>切換選單列(&amp;M)</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation>您還是可以透過按下 ALT 鍵存取選單列</translation>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>清單播放完成</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>這僅僅是演示版的  %1。</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>繼續</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>取得完整版</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>這個展示版是被限制只能有 %1 首曲目在播放清單中。</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -754,7 +737,18 @@
     <name>TrackListView</name>
     <message>
         <source>Tracks</source>
-        <translation type="unfinished"/>
+        <translation>曲目</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>正在下載更新...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation>正在下載 %1...</translation>
     </message>
 </context>
 </TS>

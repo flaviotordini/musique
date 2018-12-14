@@ -1,18 +1,9 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ky" version="2.0">
-<defaultcodec>UTF-8</defaultcodec>
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ky" version="2.1">
 <context>
     <name>AboutView</name>
     <message>
         <source>Version %1</source>
         <translation>Версия %1</translation>
-    </message>
-    <message>
-        <source>%1 is Free Software but its development takes precious time.</source>
-        <translation>%1 — бекер программалык жабдык, бирок анын иштетүүсү көп убагымды алат.</translation>
-    </message>
-    <message>
-        <source>Please &lt;a href=&apos;%1&apos;&gt;donate&lt;/a&gt; to support the continued development of %2.</source>
-        <translation>%2&apos;ке &lt;a href=&apos;%1&apos;&gt;тартуу кылып&lt;/a&gt; мындан аркы иштетүүсүн колдоп бериңиз.</translation>
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
@@ -31,24 +22,8 @@
         <translation>%1 жөнүндө дайыма билгиңиз келген нерселер бирок сураганга мүмкүнчүлүгүңүз жок болгон</translation>
     </message>
     <message>
-        <source>You may want to try my other apps as well:</source>
-        <translation>Башка тиркемелеримди да карап көрсөңүз болот:</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube app</source>
-        <translation>%1, YouTube тиркемеси</translation>
-    </message>
-    <message>
-        <source>%1, a YouTube music player</source>
-        <translation>%1, YouTube музыка ойноткучу</translation>
-    </message>
-    <message>
         <source>Translate %1 to your native language using %2</source>
         <translation>%1&apos;ти %2 аркылуу өз эне тилиңизге которуңуз</translation>
-    </message>
-    <message>
-        <source>Licensed to: %1</source>
-        <translation>Лицензияланган: %1</translation>
     </message>
 </context>
 <context>
@@ -140,6 +115,13 @@
     </message>
 </context>
 <context>
+    <name>AppWidget</name>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
@@ -178,7 +160,7 @@
     </message>
 </context>
 <context>
-    <name>BreadcrumbWidget</name>
+    <name>Breadcrumb</name>
     <message>
         <source>&amp;Back</source>
         <translation>&amp;Артка</translation>
@@ -207,20 +189,12 @@
         <translation>iTunes коллекциясын колдонуу</translation>
     </message>
     <message>
-        <source>Use %1</source>
-        <translation>%1 папкасын колдонуу</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Папканы тандоо...</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
         <translation>%1 аткаруучунун жана альбомдун аттары боюнча Last.fm&apos;дин кызматтарына туташып альбом тышын, өмүр баянын ж.б. нерселерин алат.</translation>
-    </message>
-    <message>
-        <source>If you have privacy concerns about this you can quit now.</source>
-        <translation>Эгер сизде жашырындуулук жөнүндө убайымдарыңыз бар болсо, азыр чыгып кетсеңиз болот.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -233,6 +207,10 @@
     <message>
         <source>Locate your collection</source>
         <translation>Коллекцияңызды табыңыз</translation>
+    </message>
+    <message>
+        <source>Use %1 folder</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -256,10 +234,6 @@
         <translation>%1 сиздин коллекцияңызды скандап жатууда.</translation>
     </message>
     <message>
-        <source>%1 is using &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt; to catalog your music.</source>
-        <translation>Сиздин музыкаңызды каталогдоштуруу үчүн %1 &lt;a href=&apos;%2&apos;&gt;%3&lt;/a&gt;&apos;ди колдонот.</translation>
-    </message>
-    <message>
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Бул коллекция өлчөмүңүздүн жана туташуу ылдамдыгыңыздын шартына жараша бир аз убакытты ээлейт.</translation>
     </message>
@@ -269,17 +243,29 @@
     </message>
 </context>
 <context>
-    <name>DownloadWidget</name>
-    <message>
-        <source>Downloading update...</source>
-        <translation>Жаңылоолор жүктөп алынууда...</translation>
-    </message>
-</context>
-<context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Ойнотуу тизмесине кошуу үчүн бул жерге ташыңыз</translation>
+    </message>
+</context>
+<context>
+    <name>Extra</name>
+    <message>
+        <source>The executable file has been tempered with, maybe by a virus.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 will not run. Try installing again.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reinstall</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -295,6 +281,10 @@
     <message>
         <source>Folders</source>
         <translation>Папкалар</translation>
+    </message>
+    <message>
+        <source>Genres</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -565,10 +555,6 @@
         <translation>Коллекция жаңыланды</translation>
     </message>
     <message>
-        <source>Fatal error: %1</source>
-        <translation>Фаталдуу ката: %1</translation>
-    </message>
-    <message>
         <source>Error: %1</source>
         <translation>Катасы: %1</translation>
     </message>
@@ -591,10 +577,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Үнү күйгүзүлдү</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Толук версиясын алуу</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -621,16 +603,8 @@
         <translation>&amp;Жабуу</translation>
     </message>
     <message>
-        <source>Buy %1...</source>
-        <translation>%1&apos;ти сатып алуу...</translation>
-    </message>
-    <message>
         <source>&amp;Stop After This Track</source>
         <translation>Бул жолчодон кийин &amp;токтотуу</translation>
-    </message>
-    <message>
-        <source>&amp;Scrobbling</source>
-        <translation>&amp;Скробблинг</translation>
     </message>
     <message>
         <source>Send played tracks titles to %1</source>
@@ -656,6 +630,38 @@
         <source>&amp;Love %1? Rate it!</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>&amp;Fix Library with %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Toggle &amp;Menu Bar</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Do you want to fix them now with %1?</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fix my music</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You can still access the menu bar by pressing the ALT key</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -666,22 +672,6 @@
     <message>
         <source>Playlist finished</source>
         <translation>Ойнотуу тизмеси бүтүрүлдү</translation>
-    </message>
-    <message>
-        <source>This is just the demo version of %1.</source>
-        <translation>Бул жөн эле %1&apos;тин демо-версиясы.</translation>
-    </message>
-    <message>
-        <source>It allows you to play a few tracks so you can test the application and see if it works for you.</source>
-        <translation>Тиркеменин ишке жөндөмдүүлүгүн текшерип көрүү үчүн бул бир нече жолчону ойнотконго мүмкүндүк берет.</translation>
-    </message>
-    <message>
-        <source>Continue</source>
-        <translation>Улантуу</translation>
-    </message>
-    <message>
-        <source>Get the full version</source>
-        <translation>Толук версиясын алуу</translation>
     </message>
 </context>
 <context>
@@ -719,13 +709,6 @@
     </message>
 </context>
 <context>
-    <name>PlaylistModel</name>
-    <message>
-        <source>This demo is limited to only %1 tracks in the playlist.</source>
-        <translation>Бул демо ойнотуу тизмесинде %1 жолчо менен гана чектелген.</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -755,6 +738,17 @@
     <message>
         <source>Tracks</source>
         <translation>Тректер</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateDialog</name>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Жаңылоолор жүктөп алынууда...</translation>
+    </message>
+    <message>
+        <source>Downloading %1...</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>
