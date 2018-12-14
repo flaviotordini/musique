@@ -98,7 +98,6 @@ MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr), mainToo
     createStatusBar();
 
     // views mechanism
-    history = new QStack<QWidget *>();
     views = new QStackedWidget(this);
     setCentralWidget(views);
 
@@ -118,10 +117,6 @@ MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr), mainToo
     qApp->installEventFilter(this);
 
     QTimer::singleShot(50, this, SLOT(lazyInit()));
-}
-
-MainWindow::~MainWindow() {
-    delete history;
 }
 
 void MainWindow::lazyInit() {
@@ -690,9 +685,9 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::goBack() {
-    if (history->size() > 1) {
-        history->pop();
-        QWidget *widget = history->pop();
+    if (history.size() > 1) {
+        history.pop();
+        QWidget *widget = history.pop();
         showWidget(widget);
     }
 }
@@ -727,7 +722,7 @@ void MainWindow::showWidget(QWidget *widget, bool transition) {
 
     if (oldView) oldView->disappear();
 
-    history->push(widget);
+    history.push(widget);
 
 #ifdef APP_MAC
     mac::uncloseWindow(window()->winId());

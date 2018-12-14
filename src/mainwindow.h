@@ -39,7 +39,7 @@ class MainWindow : public QMainWindow {
 
 public:
     static MainWindow *instance();
-    ~MainWindow();
+
     QSlider *getSeekSlider() { return seekSlider; }
     QSlider *getVolumeSlider() { return volumeSlider; }
     void readSettings();
@@ -153,7 +153,7 @@ private:
 
     // view mechanism
     QStackedWidget *views;
-    QStack<QWidget *> *history;
+    QStack<QWidget *> history;
 
     // view widgets
     QWidget *chooseFolderView;
