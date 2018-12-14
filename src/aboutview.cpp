@@ -42,11 +42,12 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     aboutlayout->setMargin(padding);
     aboutlayout->setSpacing(padding);
 
-    QLabel *logo = new QLabel();
-    logo->setPixmap(IconUtils::pixmap(":/images/app.png", devicePixelRatioF()));
-    connect(window()->windowHandle(), &QWindow::screenChanged, this, [logo] {
+    QLabel *logo = new QLabel(this);
+    auto setLogoPixmap = [logo] {
         logo->setPixmap(IconUtils::pixmap(":/images/app.png", logo->devicePixelRatioF()));
-    });
+    };
+    setLogoPixmap();
+    connect(window()->windowHandle(), &QWindow::screenChanged, this, setLogoPixmap);
     aboutlayout->addWidget(logo, 0, Qt::AlignTop);
 
     QBoxLayout *layout = new QVBoxLayout();

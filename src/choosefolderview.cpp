@@ -33,10 +33,11 @@ ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
     layout->setMargin(padding);
 
     QLabel *logo = new QLabel(this);
-    logo->setPixmap(IconUtils::pixmap(":/images/app.png", devicePixelRatioF()));
-    connect(window()->windowHandle(), &QWindow::screenChanged, this, [logo] {
+    auto setLogoPixmap = [logo] {
         logo->setPixmap(IconUtils::pixmap(":/images/app.png", logo->devicePixelRatioF()));
-    });
+    };
+    setLogoPixmap();
+    connect(window()->windowHandle(), &QWindow::screenChanged, this, setLogoPixmap);
     layout->addWidget(logo, 0, Qt::AlignTop);
 
     QBoxLayout *vLayout = new QVBoxLayout();
