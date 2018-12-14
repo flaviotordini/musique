@@ -57,12 +57,18 @@ ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
                     "</h1>",
             this);
     welcomeLabel->setOpenExternalLinks(true);
-    welcomeLabel->setFont(FontUtils::light(welcomeLabel->font().pointSize() * 1.25));
+    welcomeLabel->setFont(FontUtils::light(welcomeLabel->font().pointSize() * 1.5));
     vLayout->addWidget(welcomeLabel);
 
     // layout->addSpacing(PADDING);
 
     tipLabel = new QLabel(tr("%1 needs to scan your music collection.").arg(Constants::NAME), this);
+    tipLabel->setFont(FontUtils::medium());
+    QColor lightTextColor = palette().text().color();
+#ifdef APP_MAC
+    lightTextColor.setAlphaF(.75);
+#endif
+    tipLabel->setStyleSheet(QLatin1String("color:") + lightTextColor.name(QColor::HexArgb));
     vLayout->addWidget(tipLabel);
 
     QBoxLayout *buttonLayout = new QHBoxLayout();
