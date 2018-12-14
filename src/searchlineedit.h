@@ -11,11 +11,10 @@ class Suggester;
 class AutoComplete;
 
 class SearchLineEdit : public ExLineEdit, public SearchWidget {
-
     Q_OBJECT
 
 public:
-    SearchLineEdit(QWidget *parent = 0);
+    SearchLineEdit(QWidget *parent = nullptr);
     QMenu *menu() const;
     void setMenu(QMenu *menu);
     void enableSuggest();
@@ -28,7 +27,7 @@ public:
     void emitTextChanged(const QString &text);
     QString text();
     QLineEdit *getLineEdit();
-    QWidget *toWidget() { return qobject_cast<QWidget*>(this); }
+    QWidget *toWidget() { return qobject_cast<QWidget *>(this); }
 
     void setEnabled(bool enabled);
 
@@ -56,4 +55,3 @@ private:
 };
 
 #endif // SEARCHLINEEDIT_H
-
