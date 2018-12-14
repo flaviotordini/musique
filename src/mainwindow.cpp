@@ -56,7 +56,9 @@ $END_LICENSE */
 #include <iostream>
 #include <utility>
 #ifdef APP_EXTRA
+#include "compositefader.h"
 #include "extra.h"
+#include "fader.h"
 #include "updatedialog.h"
 #endif
 #include "http.h"
@@ -378,7 +380,7 @@ void MainWindow::createActions() {
     actionMap.insert("stopafterthis", action);
     connect(action, SIGNAL(toggled(bool)), SLOT(showStopAfterThisInStatusBar(bool)));
 
-    action = new QAction(QIcon(":/images/audioscrobbler.png"), tr("&Scrobbling"), this);
+    action = new QAction(IconUtils::icon("audioscrobbler"), tr("&Scrobble"), this);
     action->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
     action->setCheckable(true);
@@ -697,6 +699,10 @@ void MainWindow::goBack() {
 }
 
 void MainWindow::showWidget(QWidget *widget, bool transition) {
+#ifdef APP_MAC
+    if (transition) CompositeFader::go(this, this->grab());
+#endif
+
     setUpdatesEnabled(false);
 
     QWidget *oldWidget = views->currentWidget();
@@ -719,10 +725,6 @@ void MainWindow::showWidget(QWidget *widget, bool transition) {
     views->setCurrentWidget(widget);
 
     setUpdatesEnabled(true);
-
-#ifdef APP_EXTRA
-    if (transition) Extra::fadeInWidget(oldWidget, widget);
-#endif
 
     if (oldView) oldView->disappear();
 

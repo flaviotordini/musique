@@ -139,7 +139,7 @@ private slots:
 
 private:
     MainWindow();
-    void showWidget(QWidget *, bool transition = false);
+    void showWidget(QWidget *, bool transition = true);
     void createActions();
     void createMenus();
     void createToolBars();
