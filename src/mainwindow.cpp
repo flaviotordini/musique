@@ -372,8 +372,7 @@ void MainWindow::createActions() {
     actionMap.insert("restore", action);
     connect(action, SIGNAL(triggered()), SLOT(restore()));
 
-    action =
-            new QAction(IconUtils::icon("media-playback-stop"), tr("&Stop After This Track"), this);
+    action = new QAction(tr("&Stop After This Track"), this);
     action->setShortcut(QKeySequence(Qt::SHIFT + Qt::Key_Escape));
     action->setCheckable(true);
     action->setEnabled(false);
