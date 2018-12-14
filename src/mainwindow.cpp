@@ -990,7 +990,7 @@ void MainWindow::toggleFullscreen() {
 
 #ifdef APP_MAC
         hide();
-        views->setParent(0);
+        views->setParent(nullptr);
         QTimer::singleShot(0, views, SLOT(showFullScreen()));
 #else
         showFullScreen();
