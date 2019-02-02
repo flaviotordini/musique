@@ -128,27 +128,6 @@ void Artist::fetchInfo() {
     fetchLastFmInfo();
 }
 
-// *** MusicBrainz ***
-
-void Artist::fetchMusicBrainzArtist() {
-    QUrl url = QString("http://musicbrainz.org/ws/1/artist/?type=xml&name=%1&limit=1").arg(name);
-
-    QObject *reply = HttpUtils::musicBrainz().get(url);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzArtist(QByteArray)));
-}
-
-void Artist::parseMusicBrainzArtist(const QByteArray &bytes) {
-    QString correctName = DataUtils::getXMLElementText(bytes, "name");
-    qDebug() << name << "-> MusicBrainz ->" << correctName;
-    if (!correctName.isEmpty()) {
-        this->name = correctName;
-        hash.clear();
-    }
-
-    // And now gently ask the Last.fm guys for some more info
-    fetchLastFmInfo();
-}
-
 // *** Last.fm ***
 
 void Artist::fetchLastFmSearch() {

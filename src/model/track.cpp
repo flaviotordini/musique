@@ -338,32 +338,6 @@ QString Track::getStatusTip() {
 
 void Track::fetchInfo() {
     emit gotInfo();
-    // fetchMusicBrainzTrack();
-}
-
-// *** MusicBrainz ***
-
-void Track::fetchMusicBrainzTrack() {
-    QString s = "http://musicbrainz.org/ws/1/track/?type=xml&title=%1&limit=1";
-    s = s.arg(title);
-    if (artist) {
-        s = s.append("&artist=%2").arg(artist->getName());
-    };
-
-    QUrl url(s);
-    QObject *reply = HttpUtils::musicBrainz().get(url);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzTrack(QByteArray)));
-    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
-}
-
-void Track::parseMusicBrainzTrack(const QByteArray &bytes) {
-    QString correctTitle = DataUtils::getXMLElementText(bytes, "title");
-    qDebug() << title << "-> MusicBrainz ->" << correctTitle;
-    if (!correctTitle.isEmpty()) {
-        this->title = correctTitle;
-    }
-
-    emit gotInfo();
 }
 
 QString Track::getAbsolutePath() {

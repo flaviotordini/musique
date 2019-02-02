@@ -6,16 +6,13 @@
 class Http;
 
 class HttpUtils {
-
 public:
-    static Http &musicBrainz();
     static Http &lastFm();
     static Http &cached();
     static const QByteArray &userAgent();
 
 private:
-    HttpUtils() { }
-
+    HttpUtils() {}
 };
 
 #endif // HTTPUTILS_H

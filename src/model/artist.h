@@ -64,7 +64,7 @@ public:
     // internet
 
     /**
-     * Fix artist data using Last.fm and MusicBrainz web services.
+     * Fix artist data using Last.fm web services.
      * Will emit gotInfo() when done.
      * This will also emit gotPhoto() when the photo is ready.
      */
@@ -94,8 +94,6 @@ signals:
     void gotCorrectName(QString correctName);
 
 private slots:
-    void fetchMusicBrainzArtist();
-    void parseMusicBrainzArtist(const QByteArray &bytes);
     void fetchLastFmSearch();
     void parseLastFmSearch(const QByteArray &bytes);
     void fetchLastFmInfo();

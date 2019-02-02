@@ -66,7 +66,7 @@ public:
 
     // internet
     /**
-     * Fix album data using Last.fm and MusicBrainz web services.
+     * Fix album data using Last.fm web services.
      * Will emit gotInfo() when done.
      * This will also emit gotPhoto() when the photo is ready.
      */
@@ -89,11 +89,6 @@ signals:
     void gotPhoto();
 
 private slots:
-    void fetchMusicBrainzRelease();
-    void parseMusicBrainzRelease(const QByteArray &bytes);
-    void fetchMusicBrainzReleaseDetails();
-    void parseMusicBrainzReleaseDetails(const QByteArray &bytes);
-
     void fetchLastFmSearch();
     void parseLastFmSearch(const QByteArray &bytes);
     void fetchLastFmInfo();

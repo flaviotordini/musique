@@ -175,59 +175,6 @@ void Album::fetchInfo() {
     fetchLastFmInfo();
 }
 
-// *** MusicBrainz ***
-
-void Album::fetchMusicBrainzRelease() {
-    QString s = "http://musicbrainz.org/ws/1/release/?type=xml&title=%1&limit=1";
-    s = s.arg(name);
-    if (artist) {
-        s = s.append("&artist=%2").arg(artist->getName());
-    };
-
-    QUrl url(s);
-    QObject *reply = HttpUtils::musicBrainz().get(url);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzRelease(QByteArray)));
-    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
-}
-
-void Album::parseMusicBrainzRelease(const QByteArray &bytes) {
-    QString correctTitle = DataUtils::getXMLElementText(bytes, "title");
-    mbid = DataUtils::getXMLAttributeText(bytes, "release", "id");
-    qDebug() << "Album:" << name << "-> MusicBrainz ->" << correctTitle << mbid;
-    if (!correctTitle.isEmpty()) {
-        this->name = correctTitle;
-    }
-
-    // get a list of tracks for this album
-    // fetchMusicBrainzReleaseDetails();
-
-    // And now gently ask the Last.fm guys for some more info
-    emit gotInfo();
-    // fetchLastFmInfo();
-}
-
-void Album::fetchMusicBrainzReleaseDetails() {
-    QString s = "http://musicbrainz.org/ws/1/release/%1?type=xml&inc=tracks";
-    s = s.arg(mbid);
-    if (artist) {
-        s = s.append("&artist=%2").arg(artist->getName());
-    };
-
-    QUrl url(s);
-    QObject *reply = HttpUtils::musicBrainz().get(url);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(parseMusicBrainzReleaseDetails(QByteArray)));
-    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
-}
-
-void Album::parseMusicBrainzReleaseDetails(const QByteArray &bytes) {
-    QString correctTitle = DataUtils::getXMLElementText(bytes, "title");
-    qDebug() << name << "-> MusicBrainz ->" << correctTitle;
-    if (!correctTitle.isEmpty()) {
-        this->name = std::move(correctTitle);
-        hash.clear();
-    }
-}
-
 // *** Last.fm Photo ***
 
 bool Album::hasPhoto() {
