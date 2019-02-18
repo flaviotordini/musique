@@ -65,8 +65,13 @@ $END_LICENSE */
 #include "httputils.h"
 #include "toolbarmenu.h"
 
+#ifdef MEDIA_QTAV
 #include "mediaqtav.h"
 #include "seekslider.h"
+#endif
+#ifdef MEDIA_MPV
+#include "mediampv.h"
+#endif
 
 namespace {
 MainWindow *singleton = nullptr;
@@ -1054,6 +1059,8 @@ void MainWindow::searchFocus() {
 void MainWindow::initMedia() {
 #ifdef MEDIA_QTAV
     media = new MediaQtAV(this);
+#elif defined MEDIA_MPV
+    media = new MediaMPV();
 #else
     qFatal("No media backend defined");
 #endif

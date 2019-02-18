@@ -10,10 +10,9 @@ DEFINES += APP_NAME="$$APP_NAME"
 APP_UNIX_NAME = musique
 DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 
-DEFINES *= QT_NO_DEBUG_OUTPUT
+#DEFINES *= QT_NO_DEBUG_OUTPUT
 DEFINES *= QT_USE_QSTRINGBUILDER
 DEFINES *= QT_STRICT_ITERATORS
-DEFINES += MEDIA_QTAV MEDIA_AUDIOONLY
 
 TARGET = $${APP_UNIX_NAME}
 
@@ -22,6 +21,7 @@ QT += network sql widgets
 include(lib/http/http.pri)
 include(lib/idle/idle.pri)
 
+DEFINES += MEDIA_MPV MEDIA_AUDIOONLY
 include(lib/media/media.pri)
 
 include(src/qtsingleapplication/qtsingleapplication.pri)
