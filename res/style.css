@@ -18,7 +18,7 @@ QStatusBar QToolButton::menu-indicator {
 }
 
 AppsWidget {
-    background-color: palette(window);
+    background: palette(window);
     color: palette(window-text);
     border-top: 1px solid palette(mid);
 }
@@ -26,13 +26,19 @@ AppsWidget {
 Breadcrumb {
     border: 0;
     background: #202020;
-    padding: 8px;
+    padding: .25em;
 }
 
 Breadcrumb QToolButton {
+    padding: .25em;
     color: white;
 }
 
 Breadcrumb QToolButton:hover {
     border: 0;
+    border-radius: .25em;
+}
+
+Breadcrumb QToolButton:pressed {
+    background: rgba(255,255,255,.1);
 }
