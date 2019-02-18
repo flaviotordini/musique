@@ -81,8 +81,11 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
                          QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>") +
             "</p>";
 
-    info += "<p>Powered by <a href='https://" + QLatin1String(Constants::ORG_DOMAIN) +
-            "/opensource'>Open-source software</a>" + "</p>";
+    info += "<p>" +
+            tr("Powered by %1")
+                    .arg("<a href='https://" + QLatin1String(Constants::ORG_DOMAIN) +
+                         "/opensource'>" + tr("Open-source software") + "</a>") +
+            "</p>";
 
 #ifndef APP_EXTRA
     "<p>" +
