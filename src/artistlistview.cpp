@@ -112,7 +112,7 @@ void ArtistListView::setupToolbar() {
 
     QToolButton *sortButton = new QToolButton(this);
     sortButton->setText(tr("Sort by"));
-    sortButton->setIcon(IconUtils::icon("sort"));
+    IconUtils::setIcon(sortButton, "sort");
     sortButton->setIconSize(QSize(16, 16));
     sortButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     sortButton->setPopupMode(QToolButton::InstantPopup);

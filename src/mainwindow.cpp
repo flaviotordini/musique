@@ -204,6 +204,13 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *e) {
             return false;
         }
     }
+
+    if (t == QEvent::StyleChange) {
+        qDebug() << "Style change detected";
+        qApp->paletteChanged(qApp->palette());
+        return false;
+    }
+
     // standard event processing
     return QObject::eventFilter(obj, e);
 }
@@ -237,7 +244,8 @@ void MainWindow::createActions() {
     connect(stopAct, SIGNAL(triggered()), SLOT(stop()));
     */
 
-    skipBackwardAct = new QAction(IconUtils::icon("media-skip-backward"), tr("P&revious"), this);
+    skipBackwardAct = new QAction(tr("P&revious"), this);
+    IconUtils::setIcon(skipBackwardAct, "media-skip-backward");
     skipBackwardAct->setStatusTip(tr("Go back to the previous track"));
     skipBackwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Left));
 #if QT_VERSION >= 0x040600
@@ -246,7 +254,8 @@ void MainWindow::createActions() {
     skipBackwardAct->setEnabled(false);
     actionMap.insert("previous", skipBackwardAct);
 
-    skipForwardAct = new QAction(IconUtils::icon("media-skip-forward"), tr("&Next"), this);
+    skipForwardAct = new QAction(tr("&Next"), this);
+    IconUtils::setIcon(skipForwardAct, "media-skip-forward");
     skipForwardAct->setStatusTip(tr("Skip to the next track"));
     skipForwardAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Right));
 #if QT_VERSION >= 0x040600
@@ -255,7 +264,8 @@ void MainWindow::createActions() {
     skipForwardAct->setEnabled(false);
     actionMap.insert("skip", skipForwardAct);
 
-    playAct = new QAction(IconUtils::icon("media-playback-start"), tr("&Play"), this);
+    playAct = new QAction(tr("&Play"), this);
+    IconUtils::setIcon(playAct, "media-playback-start");
     playAct->setStatusTip(tr("Start playback"));
     playAct->setShortcuts(QList<QKeySequence>()
                           << QKeySequence(Qt::Key_Space) << QKeySequence(Qt::Key_MediaPlay));
@@ -266,7 +276,8 @@ void MainWindow::createActions() {
 #endif
     actionMap.insert("play", playAct);
 
-    fullscreenAct = new QAction(IconUtils::icon("view-fullscreen"), tr("&Full Screen"), this);
+    fullscreenAct = new QAction(tr("&Full Screen"), this);
+    IconUtils::setIcon(fullscreenAct, "view-fullscreen");
     fullscreenAct->setStatusTip(tr("Go full screen"));
     QList<QKeySequence> fsShortcuts;
 #ifdef APP_MAC
@@ -342,20 +353,23 @@ void MainWindow::createActions() {
     actionMap.insert("report-issue", action);
     connect(action, SIGNAL(triggered()), SLOT(reportIssue()));
 
-    action = new QAction(IconUtils::icon("edit-clear"), tr("&Clear"), this);
+    action = new QAction(tr("&Clear"), this);
+    IconUtils::setIcon(action, "edit-clear");
     action->setShortcut(QKeySequence::New);
     action->setStatusTip(tr("Remove all tracks from the playlist"));
     action->setEnabled(false);
     actionMap.insert("clearPlaylist", action);
 
-    action = new QAction(IconUtils::icon("media-playlist-shuffle"), tr("&Shuffle"), this);
+    action = new QAction(tr("&Shuffle"), this);
+    IconUtils::setIcon(action, "media-playlist-shuffle");
     action->setStatusTip(tr("Random playlist mode"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)), SLOT(setShuffle(bool)));
     actionMap.insert("shufflePlaylist", action);
 
-    action = new QAction(IconUtils::icon("media-playlist-repeat"), tr("&Repeat"), this);
+    action = new QAction(tr("&Repeat"), this);
+    IconUtils::setIcon(action, "media-playlist-repeat");
     action->setStatusTip(tr("Play first song again after all songs are played"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
     action->setCheckable(true);
@@ -379,7 +393,8 @@ void MainWindow::createActions() {
     actionMap.insert("stopafterthis", action);
     connect(action, SIGNAL(toggled(bool)), SLOT(showStopAfterThisInStatusBar(bool)));
 
-    action = new QAction(IconUtils::icon("audioscrobbler"), tr("&Scrobble"), this);
+    action = new QAction(tr("&Scrobble"), this);
+    IconUtils::setIcon(action, "audioscrobbler");
     action->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
     action->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_L));
     action->setCheckable(true);
@@ -397,7 +412,8 @@ void MainWindow::createActions() {
     connect(action, SIGNAL(triggered()), SLOT(toggleMenuVisibilityWithMessage()));
     actionMap.insert("toggleMenu", action);
 
-    action = new QAction(IconUtils::icon("open-menu"), tr("Menu"), this);
+    action = new QAction(tr("Menu"), this);
+    IconUtils::setIcon(action, "open-menu");
     connect(action, SIGNAL(triggered()), SLOT(toggleToolbarMenu()));
     actionMap.insert("toolbarMenu", action);
 
@@ -429,7 +445,7 @@ void MainWindow::createActions() {
     addAction(volumeDownAct);
 
     volumeMuteAct = new QAction(this);
-    volumeMuteAct->setIcon(IconUtils::icon("audio-volume-high"));
+    IconUtils::setIcon(volumeMuteAct, "audio-volume-high");
     volumeMuteAct->setStatusTip(tr("Mute volume"));
     volumeMuteAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     actionMap.insert("volume-mute", volumeMuteAct);

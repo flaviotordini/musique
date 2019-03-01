@@ -49,7 +49,6 @@ QIcon IconUtils::fromResources(const QString &name) {
     QLatin1String disabled("_disabled");
     QLatin1String checked("_checked");
 
-    // QLatin1String path(":/images/");
     QString path(":/icons/");
 
     if (MainWindow::instance()->palette().window().color().value() > 128)
@@ -61,6 +60,7 @@ QIcon IconUtils::fromResources(const QString &name) {
 
     QIcon icon;
 
+    // WARN keep these sizes updated with what we really use
     for (int size : {16, 32}) {
         const QString pathAndName = path + QString::number(size) + '/' + name;
         // const QString pathAndName = path + name;
@@ -137,18 +137,6 @@ void IconUtils::tint(QPixmap &pixmap, const QColor &color, QPainter::Composition
     QPainter painter(&pixmap);
     painter.setCompositionMode(mode);
     painter.fillRect(pixmap.rect(), color);
-}
-
-void IconUtils::setupAction(QAction *action) {
-    // never autorepeat.
-    // unexperienced users tend to keep keys pressed for a "long" time
-    action->setAutoRepeat(false);
-
-    // show keyboard shortcuts in the status bar
-    if (!action->shortcut().isEmpty())
-        action->setStatusTip(action->statusTip() + QLatin1String(" (") +
-                             action->shortcut().toString(QKeySequence::NativeText) +
-                             QLatin1String(")"));
 }
 
 QPixmap IconUtils::pixmap(const QString &name, const qreal pixelRatio) {

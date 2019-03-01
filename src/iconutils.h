@@ -27,11 +27,19 @@ class IconUtils {
 public:
     static QIcon fromTheme(const QString &name);
     static QIcon fromResources(const QString &name);
+
+    template <class T> static void setIcon(T *obj, const QString &name) {
+        QIcon i = icon(name);
+        obj->setIcon(i);
+        obj->connect(qApp, &QGuiApplication::paletteChanged, obj, [obj, name] {
+            QIcon i = icon(name);
+            obj->setIcon(i);
+        });
+    }
     static QIcon icon(const QString &name);
     static QIcon icon(const QStringList &names);
     static QIcon tintedIcon(const QString &name, const QColor &color, const QVector<QSize> &sizes);
     static QIcon tintedIcon(const QString &name, const QColor &color, const QSize &size);
-    static void setupAction(QAction *action);
 
     // HiDPI stuff
     static QPixmap pixmap(const QString &name, const qreal pixelRatio);
