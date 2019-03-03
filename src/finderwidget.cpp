@@ -88,11 +88,13 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->addWidget(finderBar);
 
     breadcrumb = new Breadcrumb(this);
+    breadcrumb->setPalette(p);
     breadcrumb->hide();
     connect(breadcrumb, SIGNAL(goneBack()), SLOT(goBack()));
     layout->addWidget(breadcrumb);
 
     folderBreadcrumb = new Breadcrumb(this);
+    folderBreadcrumb->setPalette(p);
     folderBreadcrumb->hide();
     connect(folderBreadcrumb, SIGNAL(goneBack()), SLOT(folderGoBack()));
     layout->addWidget(folderBreadcrumb);

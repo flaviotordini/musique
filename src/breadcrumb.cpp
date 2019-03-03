@@ -32,6 +32,7 @@ Breadcrumb::Breadcrumb(QWidget *parent) : QToolBar(parent) {
     addAction(backAction);
 
     setIconSize(QSize(16, 16));
+    setAutoFillBackground(true);
 }
 
 void Breadcrumb::addItem(const QString &title) {
