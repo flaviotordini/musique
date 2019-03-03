@@ -21,16 +21,15 @@ $END_LICENSE */
 #ifndef MEDIAVIEW_H
 #define MEDIAVIEW_H
 
-#include <QtAV>
 #include <QtWidgets>
+
+#include "media.h"
 
 #include "finderwidget.h"
 #include "playlistmodel.h"
 #include "playlistview.h"
 #include "playlistwidget.h"
 #include "view.h"
-
-#include "media.h"
 
 class DropArea;
 
