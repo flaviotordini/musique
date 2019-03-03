@@ -32,16 +32,11 @@ SegmentedControl::SegmentedControl(QWidget *parent) : QWidget(parent) {
     checkedAction = nullptr;
     pressedAction = nullptr;
 
-#ifdef APP_WIN
-    selectedColor = palette().color(QPalette::Base);
-#else
-    selectedColor = palette().color(QPalette::Window);
-#endif
-    int darkerFactor = 105;
-    backgroundColor = selectedColor.darker(darkerFactor);
-    borderColor = backgroundColor;
-    hoveredColor = backgroundColor.darker(darkerFactor);
-    pressedColor = hoveredColor.darker(darkerFactor);
+    setupColors();
+    connect(qApp, &QGuiApplication::paletteChanged, this, [this] {
+        setupColors();
+        update();
+    });
 }
 
 QAction *SegmentedControl::addAction(QAction *action) {
@@ -149,6 +144,19 @@ void SegmentedControl::leaveEvent(QEvent *event) {
     hoveredAction = nullptr;
     pressedAction = nullptr;
     update();
+}
+
+void SegmentedControl::setupColors() {
+#ifdef APP_WIN
+    selectedColor = palette().color(QPalette::Base);
+#else
+    selectedColor = palette().color(QPalette::Window);
+#endif
+    int darkerFactor = 105;
+    backgroundColor = selectedColor.darker(darkerFactor);
+    borderColor = backgroundColor;
+    hoveredColor = backgroundColor.darker(darkerFactor);
+    pressedColor = hoveredColor.darker(darkerFactor);
 }
 
 QAction *SegmentedControl::findHoveredAction(const QPoint &pos) const {

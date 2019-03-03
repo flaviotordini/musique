@@ -43,6 +43,9 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     void leaveEvent(QEvent *event);
 
+private slots:
+    void setupColors();
+
 private:
     void paintButton(QPainter *painter, const QRect &rect, const QAction *action);
     QAction *findHoveredAction(const QPoint &pos) const;
