@@ -183,7 +183,8 @@ void PlaylistView::paintEvent(QPaintEvent *event) {
 
         QPainter painter(this->viewport());
         QPen textPen;
-        textPen.setBrush(palette().mid());
+        textPen.setBrush(palette().windowText());
+        painter.setOpacity(.5);
         painter.setPen(textPen);
         painter.setFont(FontUtils::big());
 
