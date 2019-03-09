@@ -99,7 +99,8 @@ HEADERS += src/mainwindow.h \
     src/model/decade.h \
     src/seekslider.h \
     src/finderlistview.h \
-    src/breadcrumb.h
+    src/breadcrumb.h \
+    src/clickablelabel.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -167,7 +168,8 @@ SOURCES += src/main.cpp \
     src/model/decade.cpp \
     src/seekslider.cpp \
     src/finderlistview.cpp \
-    src/breadcrumb.cpp
+    src/breadcrumb.cpp \
+    src/clickablelabel.cpp
 
 RESOURCES += resources.qrc
 RESOURCES += $$files(icons/*.png, true)

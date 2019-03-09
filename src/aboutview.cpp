@@ -26,6 +26,8 @@ $END_LICENSE */
 #include "macutils.h"
 #endif
 #include "appwidget.h"
+#include "clickablelabel.h"
+#include "mainwindow.h"
 
 AboutView::AboutView(QWidget *parent) : View(parent) {
     setAttribute(Qt::WA_OpaquePaintEvent);
@@ -42,12 +44,13 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     aboutlayout->setMargin(padding);
     aboutlayout->setSpacing(padding);
 
-    QLabel *logo = new QLabel(this);
+    ClickableLabel *logo = new ClickableLabel(this);
     auto setLogoPixmap = [logo] {
         logo->setPixmap(IconUtils::pixmap(":/images/app.png", logo->devicePixelRatioF()));
     };
     setLogoPixmap();
     connect(window()->windowHandle(), &QWindow::screenChanged, this, setLogoPixmap);
+    connect(logo, &ClickableLabel::clicked, MainWindow::instance(), &MainWindow::visitSite);
     aboutlayout->addWidget(logo, 0, Qt::AlignTop);
 
     QBoxLayout *layout = new QVBoxLayout();

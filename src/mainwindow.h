@@ -67,6 +67,7 @@ public slots:
     void restore();
     void messageReceived(const QString &message);
     void goBack();
+    void visitSite();
 
 signals:
     void currentTimeChanged(const QString &s);
@@ -79,7 +80,6 @@ protected:
 
 private slots:
     void lazyInit();
-    void visitSite();
     void donate();
     void reportIssue();
     void about();
