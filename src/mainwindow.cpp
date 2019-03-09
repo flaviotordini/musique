@@ -952,15 +952,12 @@ void MainWindow::stateChanged(Media::State state) {
         showMessage(tr("Error: %1").arg(media->errorString()));
         break;
 
-    case Media::PlayingState:
-    case Media::StoppedState:
-    case Media::PausedState:
-        break;
-
     case Media::BufferingState:
     case Media::LoadingState:
         currentTime->clear();
         break;
+
+    default:;
     }
 }
 
