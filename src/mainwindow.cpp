@@ -63,11 +63,11 @@ $END_LICENSE */
 #endif
 #include "http.h"
 #include "httputils.h"
+#include "seekslider.h"
 #include "toolbarmenu.h"
 
 #ifdef MEDIA_QTAV
 #include "mediaqtav.h"
-#include "seekslider.h"
 #endif
 #ifdef MEDIA_MPV
 #include "mediampv.h"
