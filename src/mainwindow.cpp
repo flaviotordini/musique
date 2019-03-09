@@ -223,9 +223,7 @@ void MainWindow::createActions() {
     actionMap.insert("back", backAct);
     connect(backAct, SIGNAL(triggered()), SLOT(goBack()));
 
-    QIcon icon = IconUtils::icon(QStringList() << "audio-headphones"
-                                               << "gtk-info"
-                                               << "help-about");
+    QIcon icon = IconUtils::icon({"audio-headphones", "gtk-info", "help-about"});
     contextualAct = new QAction(icon, tr("&Info"), this);
     contextualAct->setStatusTip(tr("Show information about the current track"));
     contextualAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_I));
