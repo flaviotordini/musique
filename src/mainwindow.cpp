@@ -967,6 +967,7 @@ void MainWindow::stop() {
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e) {
+    Q_UNUSED(e);
 #ifdef APP_MAC
     if (mac::CanGoFullScreen(winId())) {
         bool isFullscreen = mac::IsFullScreen(winId());
