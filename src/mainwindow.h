@@ -98,7 +98,7 @@ private slots:
     // volume shortcuts
     void volumeUp();
     void volumeDown();
-    void volumeMute();
+    void toggleVolumeMute();
     void volumeChanged(qreal newVolume);
     void volumeMutedChanged(bool muted);
 
@@ -205,7 +205,6 @@ private:
     QSlider *seekSlider;
     QSlider *volumeSlider;
     QLabel *currentTimeLabel;
-    qreal volume;
 
     // fullscreen
     bool fullScreenActive;

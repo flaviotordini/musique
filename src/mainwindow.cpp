@@ -449,7 +449,7 @@ void MainWindow::createActions() {
     volumeMuteAct->setStatusTip(tr("Mute volume"));
     volumeMuteAct->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_E));
     actionMap.insert("volume-mute", volumeMuteAct);
-    connect(volumeMuteAct, SIGNAL(triggered()), SLOT(volumeMute()));
+    connect(volumeMuteAct, SIGNAL(triggered()), SLOT(toggleVolumeMute()));
     addAction(volumeMuteAct);
 
     // common action properties
@@ -1086,7 +1086,7 @@ void MainWindow::initMedia() {
     media->setBufferMilliseconds(10000);
 
     QSettings settings;
-    volume = settings.value("volume", 1.).toReal();
+    qreal volume = settings.value("volume", 1.).toReal();
     media->setVolume(volume);
 
     connect(media, &Media::error, this, &MainWindow::handleError);
@@ -1165,24 +1165,15 @@ void MainWindow::volumeDown() {
     media->setVolume(newVolume);
 }
 
-void MainWindow::volumeMute() {
-    bool isMuted = media->volumeMuted();
-    if (isMuted) {
-        // unmuting
-        media->setVolumeMuted(!isMuted);
-        media->setVolume(volume);
-    } else {
-        // muting
-        volume = media->volume();
-        media->setVolumeMuted(!isMuted);
-    }
+void MainWindow::toggleVolumeMute() {
+    bool muted = media->volumeMuted();
+    media->setVolumeMuted(!muted);
 }
 
 void MainWindow::volumeChanged(qreal newVolume) {
     qDebug() << newVolume;
     // automatically unmute when volume changes
     if (media->volumeMuted()) media->setVolumeMuted(false);
-    volume = media->volume();
     showMessage(tr("Volume at %1%").arg((int)(newVolume * 100)));
     // newVolume : 1.0 = x : 1000
     int value = newVolume * volumeSlider->maximum();
