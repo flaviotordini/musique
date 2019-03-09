@@ -945,7 +945,7 @@ void MainWindow::stateChanged(Media::State state) {
         playAct->setChecked(false);
     }
 
-    seekSlider->setEnabled(state == Media::PlayingState || state == Media::PausedState);
+    seekSlider->setEnabled(state != Media::StoppedState);
 
     switch (state) {
     case Media::ErrorState:
