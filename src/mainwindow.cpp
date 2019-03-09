@@ -99,7 +99,7 @@ MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr), mainToo
     // build ui
     createActions();
     createMenus();
-    createToolBars();
+    createToolBar();
     createStatusBar();
 
     // views mechanism
@@ -537,7 +537,7 @@ void MainWindow::createMenus() {
 #endif
 }
 
-void MainWindow::createToolBars() {
+void MainWindow::createToolBar() {
     // Create widgets
     currentTime = new QLabel("00:00", this);
     seekSlider = new SeekSlider(this);

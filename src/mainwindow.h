@@ -142,7 +142,7 @@ private:
     void showWidget(QWidget *, bool transition = true);
     void createActions();
     void createMenus();
-    void createToolBars();
+    void createToolBar();
     void createStatusBar();
     void writeSettings();
     void initMedia();
