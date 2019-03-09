@@ -42,7 +42,7 @@ QIcon IconUtils::fromTheme(const QString &name) {
     return icon;
 }
 
-QIcon IconUtils::fromResources(const char *name) {
+QIcon IconUtils::fromResources(const char *name, const QColor &background) {
     static const QLatin1String active("_active");
     static const QLatin1String selected("_selected");
     static const QLatin1String disabled("_disabled");
@@ -51,7 +51,7 @@ QIcon IconUtils::fromResources(const char *name) {
 
     QString path(":/icons/");
 
-    if (MainWindow::instance()->palette().window().color().value() > 128)
+    if (background.value() > 128)
         path += QLatin1String("light/");
     else
         path += QLatin1String("dark/");
@@ -76,10 +76,11 @@ QIcon IconUtils::fromResources(const char *name) {
 QIcon IconUtils::icon(const char *name) {
 #ifdef APP_LINUX
     QIcon icon = fromTheme(name);
-    if (icon.isNull()) icon = fromResources(name);
+    if (icon.isNull())
+        icon = fromResources(name, MainWindow::instance()->palette().window().color());
     return icon;
 #else
-    return fromResources(name);
+    return fromResources(name, MainWindow::instance()->palette().window().color());
 #endif
 }
 

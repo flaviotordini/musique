@@ -26,7 +26,7 @@ $END_LICENSE */
 class IconUtils {
 public:
     static QIcon fromTheme(const QString &name);
-    static QIcon fromResources(const char *name);
+    static QIcon fromResources(const char *name, const QColor &background);
 
     template <class T> static void setIcon(T *obj, const char *name) {
         QIcon i = icon(name);
