@@ -87,7 +87,6 @@ private slots:
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
     void checkForUpdate();
-    void gotNewVersion(const QString &version);
 
     // media
     void stop();
@@ -210,9 +209,6 @@ private:
     bool fullScreenActive;
     bool maximizedBeforeFullScreen;
     bool menuVisibleBeforeFullScreen;
-
-    // update checker
-    UpdateChecker *updateChecker;
 
     Media *media;
 };

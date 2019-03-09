@@ -82,7 +82,7 @@ MainWindow *MainWindow::instance() {
     return singleton;
 }
 
-MainWindow::MainWindow() : updateChecker(nullptr), toolbarMenu(nullptr), mainToolBar(nullptr) {
+MainWindow::MainWindow() : toolbarMenu(nullptr), mainToolBar(nullptr) {
     fullScreenActive = false;
 
     singleton = this;
@@ -1214,29 +1214,24 @@ void MainWindow::checkForUpdate() {
     if (secondsSinceLastCheck < 86400) return;
 
     // check it out
-    if (updateChecker) delete updateChecker;
-    updateChecker = new UpdateChecker();
-    connect(updateChecker, SIGNAL(newVersion(QString)), SLOT(gotNewVersion(QString)));
+    UpdateChecker *updateChecker = new UpdateChecker();
+    connect(updateChecker, &UpdateChecker::newVersion, this,
+            [this, updateChecker](const QString &version) {
+                updateChecker->deleteLater();
+                QSettings settings;
+                QString checkedVersion = settings.value("checkedVersion").toString();
+                if (checkedVersion == version) return;
+#ifdef APP_EXTRA
+#ifndef APP_MAC
+                UpdateDialog *dialog = new UpdateDialog(version, this);
+                dialog->show();
+#endif
+#else
+                simpleUpdateDialog(version);
+#endif
+            });
     updateChecker->checkForUpdate();
     settings.setValue(updateCheckKey, unixTime);
-}
-
-void MainWindow::gotNewVersion(const QString &version) {
-    if (updateChecker) {
-        delete updateChecker;
-        updateChecker = nullptr;
-    }
-
-    QSettings settings;
-    QString checkedVersion = settings.value("checkedVersion").toString();
-    if (checkedVersion == version) return;
-
-#ifdef APP_SIMPLEUPDATE
-    simpleUpdateDialog(version);
-#elif defined(APP_EXTRA) && !defined(APP_MAC)
-    UpdateDialog *dialog = new UpdateDialog(version, this);
-    dialog->show();
-#endif
 }
 
 void MainWindow::simpleUpdateDialog(const QString &version) {
