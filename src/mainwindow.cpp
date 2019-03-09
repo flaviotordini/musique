@@ -711,42 +711,39 @@ void MainWindow::writeSettings() {
 void MainWindow::goBack() {
     if (history.size() > 1) {
         history.pop();
-        QWidget *widget = history.pop();
-        showWidget(widget);
+        View *view = history.pop();
+        showView(view);
     }
 }
 
-void MainWindow::showWidget(QWidget *widget, bool transition) {
+void MainWindow::showView(View *view, bool transition) {
+    if (!history.isEmpty() && view == history.top()) {
+        qDebug() << "Attempting to show same view" << view;
+        return;
+    }
+
 #ifdef APP_MAC
     if (transition) CompositeFader::go(this, this->grab());
 #endif
 
-    setUpdatesEnabled(false);
+    View *oldView = qobject_cast<View *>(views->currentWidget());
 
-    QWidget *oldWidget = views->currentWidget();
-    View *oldView = qobject_cast<View *>(oldWidget);
+    view->appear();
+    QHash<QString, QVariant> metadata = view->metadata();
+    QString desc = metadata.value("description").toString();
+    if (!desc.isEmpty()) showMessage(desc);
 
-    View *newView = qobject_cast<View *>(widget);
-    if (newView) {
-        newView->appear();
-        QHash<QString, QVariant> metadata = newView->metadata();
-        QString desc = metadata.value("description").toString();
-        if (!desc.isEmpty()) showMessage(desc);
-    }
+    aboutAct->setEnabled(view != aboutView);
+    chooseFolderAct->setEnabled(view == mediaView || view == contextualView);
+    toolbarSearch->setEnabled(view == mediaView || view == contextualView);
+    if (mainToolBar) mainToolBar->setVisible(view == mediaView || view == contextualView);
+    statusBar()->setVisible(view == mediaView);
 
-    aboutAct->setEnabled(widget != aboutView);
-    chooseFolderAct->setEnabled(widget == mediaView || widget == contextualView);
-    toolbarSearch->setEnabled(widget == mediaView || widget == contextualView);
-    if (mainToolBar) mainToolBar->setVisible(widget == mediaView || widget == contextualView);
-    statusBar()->setVisible(widget == mediaView);
-
-    views->setCurrentWidget(widget);
-
-    setUpdatesEnabled(true);
+    views->setCurrentWidget(view);
 
     if (oldView) oldView->disappear();
 
-    history.push(widget);
+    history.push(view);
 
 #ifdef APP_MAC
     mac::uncloseWindow(window()->winId());
@@ -758,7 +755,7 @@ void MainWindow::about() {
         aboutView = new AboutView(this);
         views->addWidget(aboutView);
     }
-    showWidget(aboutView);
+    showView(aboutView);
 }
 
 void MainWindow::visitSite() {
@@ -795,7 +792,7 @@ void MainWindow::showChooseFolderView(bool transition) {
         connect(chooseFolderView, SIGNAL(locationChanged(QString)), SLOT(startFullScan(QString)));
         views->addWidget(chooseFolderView);
     }
-    showWidget(chooseFolderView, transition);
+    showView(chooseFolderView, transition);
 }
 
 void MainWindow::showMediaView(bool transition) {
@@ -811,7 +808,7 @@ void MainWindow::showMediaView(bool transition) {
     }
 
     mediaView->setFocus();
-    showWidget(mediaView, transition);
+    showView(mediaView, transition);
 }
 
 void MainWindow::toggleContextualView() {
@@ -827,7 +824,7 @@ void MainWindow::toggleContextualView() {
         Track *track = mediaView->getActiveTrack();
         if (track) {
             contextualView->setTrack(track);
-            showWidget(contextualView);
+            showView(contextualView);
             contextualAct->setChecked(true);
 
             QList<QKeySequence> shortcuts;
@@ -863,7 +860,7 @@ void MainWindow::startFullScan(QString directory) {
         collectionScannerView = new CollectionScannerView(this);
         views->addWidget(collectionScannerView);
     }
-    showWidget(collectionScannerView);
+    showView(collectionScannerView);
 
     CollectionScannerThread *scannerThread = new CollectionScannerThread();
     collectionScannerView->setCollectionScannerThread(scannerThread);

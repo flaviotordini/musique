@@ -25,6 +25,7 @@ $END_LICENSE */
 
 #include "media.h"
 
+class View;
 class MediaView;
 class CollectionScannerView;
 class ContextualView;
@@ -138,7 +139,7 @@ private slots:
 
 private:
     MainWindow();
-    void showWidget(QWidget *, bool transition = true);
+    void showView(View *view, bool transition = true);
     void createActions();
     void createMenus();
     void createToolBar();
@@ -152,14 +153,14 @@ private:
 
     // view mechanism
     QStackedWidget *views;
-    QStack<QWidget *> history;
+    QStack<View *> history;
 
     // view widgets
-    QWidget *chooseFolderView;
+    View *chooseFolderView;
     CollectionScannerView *collectionScannerView;
     MediaView *mediaView;
     ContextualView *contextualView;
-    QWidget *aboutView;
+    View *aboutView;
 
     QHash<QByteArray, QAction *> actionMap;
     QHash<QByteArray, QMenu *> menuMap;

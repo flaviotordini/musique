@@ -24,15 +24,13 @@ $END_LICENSE */
 #include <QtWidgets>
 
 class View : public QWidget {
-
     Q_OBJECT
 
 public:
-    View(QWidget *parent = 0) : QWidget(parent) { }
+    View(QWidget *parent = nullptr) : QWidget(parent) {}
     virtual QHash<QString, QVariant> metadata() { return QHash<QString, QVariant>(); }
     virtual void appear() {}
     virtual void disappear() {}
-
 };
 
 #endif // VIEW_H
