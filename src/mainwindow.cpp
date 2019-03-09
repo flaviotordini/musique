@@ -1199,11 +1199,6 @@ void MainWindow::volumeMutedChanged(bool muted) {
         volumeMuteAct->setIcon(IconUtils::icon("audio-volume-high"));
         statusBar()->showMessage(tr("Volume is unmuted"));
     }
-#ifdef APP_LINUX
-    QToolButton *volumeMuteButton =
-            qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
-    volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
-#endif
 }
 
 void MainWindow::setShuffle(bool enabled) {
