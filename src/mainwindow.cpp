@@ -1073,6 +1073,8 @@ void MainWindow::searchFocus() {
 
 void MainWindow::initMedia() {
 #ifdef MEDIA_QTAV
+    qFatal("QtAV has a showstopper bug. Audio stops randomly. See bug "
+           "https://github.com/wang-bin/QtAV/issues/1184");
     media = new MediaQtAV(this);
 #elif defined MEDIA_MPV
     media = new MediaMPV();
@@ -1083,23 +1085,26 @@ void MainWindow::initMedia() {
     media->init();
     media->setBufferMilliseconds(10000);
 
+    QSettings settings;
+    volume = settings.value("volume", 1.).toReal();
+    media->setVolume(volume);
+
     connect(media, &Media::error, this, &MainWindow::handleError);
     connect(media, &Media::stateChanged, this, &MainWindow::stateChanged);
     connect(media, &Media::positionChanged, this, &MainWindow::tick);
 
     connect(seekSlider, &QSlider::sliderMoved, this, [this](int value) {
-        if (media->state() != Media::PlayingState) return;
-        // value : maxValue = position : duration
+        // value : maxValue = posit ion : duration
         qint64 ms = (value * media->duration()) / seekSlider->maximum();
         qDebug() << "Seeking to" << ms;
         media->seek(ms);
+        if (media->state() == Media::PausedState) media->play();
     });
     connect(seekSlider, &QSlider::sliderPressed, this, [this]() {
-        if (media->state() != Media::PlayingState) return;
         // value : maxValue = position : duration
         qint64 ms = (seekSlider->value() * media->duration()) / seekSlider->maximum();
-        if (media->state() == Media::PausedState) media->pause();
         media->seek(ms);
+        if (media->state() == Media::PausedState) media->play();
     });
     connect(media, &Media::started, this, [this]() { seekSlider->setValue(0); });
 
@@ -1113,10 +1118,6 @@ void MainWindow::initMedia() {
         qreal volume = (qreal)volumeSlider->value() / volumeSlider->maximum();
         media->setVolume(volume);
     });
-
-    QSettings settings;
-    volume = settings.value("volume", 1.).toReal();
-    media->setVolume(volume);
 
     mediaView->setMedia(media);
 }
