@@ -540,10 +540,12 @@ void MainWindow::createMenus() {
 void MainWindow::createToolBar() {
     // Create widgets
     currentTime = new QLabel("00:00", this);
+
     seekSlider = new SeekSlider(this);
     seekSlider->setEnabled(false);
     seekSlider->setTracking(false);
     seekSlider->setMaximum(1000);
+
     volumeSlider = new SeekSlider(this);
     volumeSlider->setValue(volumeSlider->maximum());
 
