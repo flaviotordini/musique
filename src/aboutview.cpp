@@ -59,13 +59,20 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
 #ifdef APP_MAC
     lightTextColor.setAlphaF(.75);
 #endif
+#ifdef APP_MAC
+    QColor linkColor = mac::accentColor();
+#else
+    QColor linkColor = palette().highlight().color();
+#endif
 
     QString info = "<html><style>"
                    "body { color: " +
                    lightTextColor.name(QColor::HexArgb) +
                    "; } "
                    "h1 { color: palette(text); font-weight: 100; } "
-                   "a { color: palette(highlight); text-decoration: none; font-weight: normal; }"
+                   "a { color: " +
+                   linkColor.name(QColor::HexArgb) +
+                   "; text-decoration: none; font-weight: normal; }"
                    "</style><body>";
 
     info += "<h1>" + QString(Constants::NAME) + "</h1>";
