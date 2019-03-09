@@ -539,7 +539,7 @@ void MainWindow::createMenus() {
 
 void MainWindow::createToolBar() {
     // Create widgets
-    currentTime = new QLabel("00:00", this);
+    currentTimeLabel = new QLabel("00:00", this);
 
     seekSlider = new SeekSlider(this);
     seekSlider->setEnabled(false);
@@ -565,7 +565,7 @@ void MainWindow::createToolBar() {
     // Add widgets to toolbar
 
 #ifdef APP_MAC_QMACTOOLBAR
-    currentTime->hide();
+    currentTimeLabel->hide();
     toolbarSearch->hide();
     volumeSlider->hide();
     seekSlider->hide();
@@ -590,8 +590,8 @@ void MainWindow::createToolBar() {
 
     mainToolBar->addWidget(new Spacer());
 
-    currentTime->setFont(FontUtils::small());
-    mainToolBar->addWidget(currentTime);
+    currentTimeLabel->setFont(FontUtils::small());
+    mainToolBar->addWidget(currentTimeLabel);
 
     mainToolBar->addWidget(new Spacer());
 
@@ -954,7 +954,7 @@ void MainWindow::stateChanged(Media::State state) {
 
     case Media::BufferingState:
     case Media::LoadingState:
-        currentTime->clear();
+        currentTimeLabel->clear();
         break;
 
     default:;
@@ -963,7 +963,7 @@ void MainWindow::stateChanged(Media::State state) {
 
 void MainWindow::stop() {
     media->stop();
-    currentTime->clear();
+    currentTimeLabel->clear();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *e) {
@@ -1131,13 +1131,13 @@ void MainWindow::tick(qint64 time) {
     if (!seekSlider->isSliderDown()) seekSlider->setValue(value);
 
     const QString s = formatTime(time);
-    if (s != currentTime->text()) {
-        currentTime->setText(s);
+    if (s != currentTimeLabel->text()) {
+        currentTimeLabel->setText(s);
         emit currentTimeChanged(s);
 
         // remaining time
         const qint64 remainingTime = media->remainingTime();
-        currentTime->setStatusTip(tr("Remaining time: %1").arg(formatTime(remainingTime)));
+        currentTimeLabel->setStatusTip(tr("Remaining time: %1").arg(formatTime(remainingTime)));
     }
 }
 

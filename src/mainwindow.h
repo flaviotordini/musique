@@ -204,7 +204,7 @@ private:
     QToolBar *statusToolBar;
     QSlider *seekSlider;
     QSlider *volumeSlider;
-    QLabel *currentTime;
+    QLabel *currentTimeLabel;
     qreal volume;
 
     // fullscreen
