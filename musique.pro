@@ -1,5 +1,5 @@
 CONFIG += c++14 exceptions_off rtti_off optimize_full
-QMAKE_CXXFLAGS *= -fno-exceptions -fno-rtti
+
 TEMPLATE = app
 VERSION = 1.6
 DEFINES += APP_VERSION="$$VERSION"
