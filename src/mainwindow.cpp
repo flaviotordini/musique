@@ -601,11 +601,12 @@ void MainWindow::createToolBar() {
     mainToolBar->addWidget(new Spacer());
 
     mainToolBar->addAction(volumeMuteAct);
-#ifdef APP_LINUX
     QToolButton *volumeMuteButton =
             qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
-    volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
-#endif
+    volumeMuteButton->setIconSize(QSize(16, 16));
+    volumeMuteButton->connect(
+            volumeMuteAct, &QAction::changed, volumeMuteButton,
+            [volumeMuteButton] { volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16)); });
 
     volumeSlider->setStatusTip(
             tr("Press %1 to raise the volume, %2 to lower it")
