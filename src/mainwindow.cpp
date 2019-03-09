@@ -938,8 +938,6 @@ void MainWindow::imageDownloadFinished() {
 }
 
 void MainWindow::stateChanged(Media::State state) {
-    // qDebug() << "Phonon state: " << newState;
-
     // play action
     if (state == Media::PlayingState) {
         playAct->setChecked(true);
