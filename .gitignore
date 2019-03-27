@@ -10,3 +10,4 @@ stuff
 local/
 .tx/
 debian/
+*.stash
