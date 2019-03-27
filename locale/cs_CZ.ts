@@ -7,7 +7,7 @@
     </message>
     <message>
         <source>Released under the &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</source>
-        <translation>Vydáno pod licencií &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
+        <translation>Vydáno pod licencí &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -15,11 +15,11 @@
     </message>
     <message>
         <source>About</source>
-        <translation>O aplikaci</translation>
+        <translation>O programu</translation>
     </message>
     <message>
         <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Vše jste kdy chtěli vědět o %1 a nikdy jste se neodvážili se zeptat</translation>
+        <translation>Vše, co jste kdy chtěli vědět o %1, a nikdy jste se na to nezeptali</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -30,11 +30,11 @@
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation>Vložte detaily vaší licence</translation>
+        <translation>Vložte podrobnosti vaší licence</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
-        <translation>&amp;Email:</translation>
+        <translation>&amp;E-mail:</translation>
     </message>
     <message>
         <source>&amp;Code:</source>
@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>This demo has expired.</source>
-        <translation>Platnost demoverze vypršela.</translation>
+        <translation>Platnost  zkušební verze vypršela.</translation>
     </message>
     <message>
         <source>Without a license, the application will expire in %1 days.</source>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Use Demo</source>
-        <translation>Použít demoverzi</translation>
+        <translation>Použít zkušební verzi</translation>
     </message>
     <message>
         <source>Enter License</source>
@@ -84,7 +84,7 @@
     </message>
     <message>
         <source>Read more</source>
-        <translation>Čtěte více</translation>
+        <translation>Přečtěte si více</translation>
     </message>
 </context>
 <context>
@@ -111,7 +111,7 @@
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Třídit podle</translation>
+        <translation>Řadit podle</translation>
     </message>
 </context>
 <context>
@@ -125,7 +125,7 @@
     <name>ArtistInfo</name>
     <message>
         <source>Read more</source>
-        <translation>Čtěte více</translation>
+        <translation>Přečtěte si více</translation>
     </message>
 </context>
 <context>
@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>Name</source>
-        <translation>Jméno</translation>
+        <translation>Název</translation>
     </message>
     <message>
         <source>Year</source>
@@ -156,7 +156,7 @@
     </message>
     <message>
         <source>Sort by</source>
-        <translation>Třídit podle</translation>
+        <translation>Řadit podle</translation>
     </message>
 </context>
 <context>
@@ -194,7 +194,7 @@
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
-        <translation>%1 se připojí k internetové službě Last.fm a projde jména autorů a názvy alb, aby natáhl obaly, biografie a mnohem víc.</translation>
+        <translation>%1 se připojí k internetové službě Last.fm a projde jména autorů a názvy alb, aby natáhl obaly, životopisy a mnohem víc.</translation>
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
@@ -202,7 +202,7 @@
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation>Vyberte umístění vaší hudební sbírky.</translation>
+        <translation>Vyberte umístění hudební sbírky.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Use %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Použít složku %1</translation>
     </message>
 </context>
 <context>
@@ -231,7 +231,7 @@
     <name>CollectionScannerView</name>
     <message>
         <source>%1 is scanning your music collection.</source>
-        <translation>%1 prohledává vaši hudební sbírku.</translation>
+        <translation>%1 prohledává hudební sbírku.</translation>
     </message>
     <message>
         <source>This will take time depending on your collection size and network speed.</source>
@@ -257,7 +257,7 @@
     </message>
     <message>
         <source>%1 will not run. Try installing again.</source>
-        <translation>%1 nepoběží. Zkuste instalovat znovu.</translation>
+        <translation>%1 nepoběží. Zkuste nainstalovat znovu.</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>Genres</source>
-        <translation type="unfinished"/>
+        <translation>Žánry</translation>
     </message>
 </context>
 <context>
@@ -432,7 +432,7 @@
     </message>
     <message>
         <source>Move &amp;Up</source>
-        <translation>Přesunout &amp;nahoru</translation>
+        <translation>Posunout &amp;nahoru</translation>
     </message>
     <message>
         <source>Move up the selected tracks in the playlist</source>
@@ -440,7 +440,7 @@
     </message>
     <message>
         <source>Move &amp;Down</source>
-        <translation>Přesunout &amp;dolů</translation>
+        <translation>Posunout &amp;dolů</translation>
     </message>
     <message>
         <source>Move down the selected tracks in the playlist</source>
@@ -472,7 +472,7 @@
     </message>
     <message>
         <source>Make a &amp;donation</source>
-        <translation>Dát autorovi &amp;příspěvek</translation>
+        <translation>&amp;Přispět autorovi</translation>
     </message>
     <message>
         <source>Please support the continued development of %1</source>
@@ -540,11 +540,11 @@
     </message>
     <message>
         <source>Opening %1</source>
-        <translation>Otevírám %1</translation>
+        <translation>Otevírá se %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
-        <translation>Obnovuji sbírku...</translation>
+        <translation>Obnovuje se sbírka...</translation>
     </message>
     <message>
         <source>Updating collection - %1%</source>
@@ -576,7 +576,7 @@
     </message>
     <message>
         <source>Volume is unmuted</source>
-        <translation>Hlasitost není ztlumená</translation>
+        <translation>Hlasitost není ztlumena</translation>
     </message>
     <message>
         <source>%1 version %2 is now available.</source>
@@ -632,35 +632,35 @@
     </message>
     <message>
         <source>&amp;Fix Library with %1...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Opravit knihovnu pomocí %1...</translation>
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Přepnout pruh s &amp;nabídkou</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Nabídka</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
-        <translation type="unfinished"/>
+        <translation>%1 přidal %2 skladeb do hudební knihovny. %3 skladeb (%4%) obsahuje neúplné značky.</translation>
     </message>
     <message>
         <source>Do you want to fix them now with %1?</source>
-        <translation type="unfinished"/>
+        <translation>Chcete je opravit nyní pomocí %1?</translation>
     </message>
     <message>
         <source>Fix my music</source>
-        <translation type="unfinished"/>
+        <translation>Opravit moji hudbu</translation>
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
-        <translation type="unfinished"/>
+        <translation>Stále ještě můžete přistupovat k pruhu s nabídkou stisknutím klávesy Alt</translation>
     </message>
     <message>
         <source>&amp;Scrobble</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Odesílat informace o přehrávání</translation>
     </message>
 </context>
 <context>
@@ -744,11 +744,11 @@
     <name>UpdateDialog</name>
     <message>
         <source>Downloading update...</source>
-        <translation>Stahování aktualizace...</translation>
+        <translation>Stahuje se aktualizace...</translation>
     </message>
     <message>
         <source>Downloading %1...</source>
-        <translation>Stahování %1...</translation>
+        <translation>Stahuje se %1...</translation>
     </message>
 </context>
 </TS>

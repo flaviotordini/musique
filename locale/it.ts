@@ -660,7 +660,7 @@
     </message>
     <message>
         <source>&amp;Scrobble</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Scrobble</translation>
     </message>
 </context>
 <context>

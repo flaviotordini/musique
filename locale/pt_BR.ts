@@ -57,7 +57,7 @@
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Ao comprar a versão completa, você também vai apoiar o trabalho duro eu dediquei em criar %1.</translation>
+        <translation>Ao comprar a versão completa, você também vai apoiar o trabalho duro que eu dediquei em criar %1.</translation>
     </message>
     <message>
         <source>Use Demo</source>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Use %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Usar a pasta %1</translation>
     </message>
 </context>
 <context>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>Genres</source>
-        <translation type="unfinished"/>
+        <translation>Gêneros</translation>
     </message>
 </context>
 <context>
@@ -632,7 +632,7 @@
     </message>
     <message>
         <source>&amp;Fix Library with %1...</source>
-        <translation type="unfinished"/>
+        <translation>%Conserte a Biblioteca com %1...</translation>
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
@@ -640,19 +640,19 @@
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Menu</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
-        <translation type="unfinished"/>
+        <translation>%1 adicionou %2 faixas na sua bilioteca de música. %3 faixas (%4%) contém tags incompletas</translation>
     </message>
     <message>
         <source>Do you want to fix them now with %1?</source>
-        <translation type="unfinished"/>
+        <translation>Você deseja corrigi-los agora com %1?</translation>
     </message>
     <message>
         <source>Fix my music</source>
-        <translation type="unfinished"/>
+        <translation>Conserte minha música</translation>
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
@@ -660,7 +660,7 @@
     </message>
     <message>
         <source>&amp;Scrobble</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Scrobble</translation>
     </message>
 </context>
 <context>

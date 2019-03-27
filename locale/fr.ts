@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Use %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Utiliser le dossier %1</translation>
     </message>
 </context>
 <context>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>Genres</source>
-        <translation type="unfinished"/>
+        <translation>Genres</translation>
     </message>
 </context>
 <context>
@@ -641,7 +641,7 @@
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Menu</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
@@ -649,7 +649,7 @@
     </message>
     <message>
         <source>Do you want to fix them now with %1?</source>
-        <translation type="unfinished"/>
+        <translation>Voulez-vous les fixer maintenant avec %1 ?</translation>
     </message>
     <message>
         <source>Fix my music</source>
@@ -657,7 +657,7 @@
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
-        <translation type="unfinished"/>
+        <translation>Vous pouvez continuer d&apos;accéder à la barre de menu en appuyant sur la touche ALT</translation>
     </message>
     <message>
         <source>&amp;Scrobble</source>
