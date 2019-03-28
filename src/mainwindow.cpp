@@ -1245,8 +1245,8 @@ void MainWindow::simpleUpdateDialog(const QString &version) {
     if (msgBox.clickedButton() != laterButton) {
         QSettings settings;
         settings.setValue("checkedVersion", version);
-    }
-    if (msgBox.clickedButton() == updateButton) visitSite();
+    } else if (msgBox.clickedButton() == updateButton)
+        visitSite();
 }
 
 void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
