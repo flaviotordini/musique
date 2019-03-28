@@ -150,6 +150,8 @@ void MainWindow::showInitialView() {
 
         QTimer::singleShot(1000, this, SLOT(checkForUpdate()));
 
+        QTimer::singleShot(1500, this, SLOT(maybeShowUpdateNag()));
+
     } else {
         // no db, do the first scan dance
         QString root = db.needsUpdate();
@@ -1230,6 +1232,29 @@ void MainWindow::checkForUpdate() {
             });
     updateChecker->checkForUpdate();
     settings.setValue(updateCheckKey, unixTime);
+}
+
+void MainWindow::maybeShowUpdateNag() {
+    QSettings settings;
+    const QString versionKey = "lastVersion";
+    QString lastRunVersion = settings.value(versionKey).toString();
+    if (lastRunVersion != QLatin1String(Constants::VERSION)) {
+        settings.setValue(versionKey, Constants::VERSION);
+        QMessageBox msgBox(this);
+        msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
+        msgBox.setText(tr("Thanks for updating %1 to version %2!")
+                               .arg(Constants::NAME, Constants::VERSION));
+        msgBox.setInformativeText(
+                tr("If you enjoy %1, perhaps having installed it months or even years ago, please "
+                   "consider becoming one of the people willing to support something you enjoy.")
+                        .arg(Constants::NAME));
+        msgBox.setModal(true);
+        msgBox.setWindowModality(Qt::WindowModal);
+        msgBox.addButton(QMessageBox::Close);
+        QPushButton *donateButton = msgBox.addButton(tr("Donate"), QMessageBox::AcceptRole);
+        msgBox.exec();
+        if (msgBox.clickedButton() == donateButton) donate();
+    }
 }
 
 void MainWindow::simpleUpdateDialog(const QString &version) {

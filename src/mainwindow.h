@@ -88,6 +88,7 @@ private slots:
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
     void checkForUpdate();
+    void maybeShowUpdateNag();
 
     // media
     void stop();
