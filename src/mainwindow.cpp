@@ -665,9 +665,9 @@ void MainWindow::readSettings() {
     if (settings.contains("geometry")) {
         restoreGeometry(settings.value("geometry").toByteArray());
     } else {
-        const QRect desktopSize = qApp->desktop()->availableGeometry();
+        const QRect desktopSize = QGuiApplication::primaryScreen()->availableGeometry();
         int w = desktopSize.width() * .75;
-        int h = desktopSize.height();
+        int h = desktopSize.height() * .75;
         setGeometry(
                 QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, QSize(w, h), desktopSize));
     }
