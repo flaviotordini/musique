@@ -596,7 +596,7 @@ void MainWindow::createToolBar() {
     mainToolBar->addWidget(new Spacer());
 
     seekSlider->setOrientation(Qt::Horizontal);
-    seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
     seekSlider->setFocusPolicy(Qt::NoFocus);
     mainToolBar->addWidget(seekSlider);
 
