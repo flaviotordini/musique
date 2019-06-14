@@ -313,7 +313,10 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
                 else if (n == QLatin1String("image") &&
                          xml.attributes().value("size") == QLatin1String("extralarge")) {
                     if (!QFile::exists(getImageLocation())) {
-                        QString imageUrl = xml.readElementText();
+                        xml.readElementText();
+                        QString imageUrl("http://tse2.mm.bing.net/th?q=");
+                        imageUrl += name;
+                        imageUrl += "+band&w=300&h=300&c=9&rs=1";
                         if (!imageUrl.isEmpty()) setProperty("imageUrl", imageUrl);
                     } else
                         xml.skipCurrentElement();
