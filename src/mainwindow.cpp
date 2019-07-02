@@ -207,7 +207,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *e) {
         }
     }
 
-    if (t == QEvent::StyleChange) {
+    if (t == QEvent::StyleChange && obj == this) {
         qDebug() << "Style change detected";
         qApp->paletteChanged(qApp->palette());
         return false;
@@ -867,12 +867,12 @@ void MainWindow::startFullScan(QString directory) {
     }
     showView(collectionScannerView);
 
-    CollectionScannerThread *scannerThread = new CollectionScannerThread();
-    collectionScannerView->setCollectionScannerThread(scannerThread);
-    scannerThread->setDirectory(std::move(directory));
-    connect(scannerThread, SIGNAL(finished(QVariantMap)), SLOT(fullScanFinished(QVariantMap)),
+    CollectionScannerThread &scannerThread = CollectionScannerThread::instance();
+    collectionScannerView->setCollectionScannerThread(&scannerThread);
+    scannerThread.setDirectory(std::move(directory));
+    connect(&scannerThread, SIGNAL(finished(QVariantMap)), SLOT(fullScanFinished(QVariantMap)),
             Qt::UniqueConnection);
-    scannerThread->start();
+    scannerThread.start();
 
     if (mediaView) {
         stop();
@@ -896,22 +896,27 @@ void MainWindow::fullScanFinished(const QVariantMap &stats) {
 #ifdef APP_WIN
     QApplication::alert(this, 0);
 #endif
-    startImageDownload();
     showFinetuneDialog(stats);
     actionMap["finetune"]->setVisible(true);
+
+    if (views->currentWidget() == mediaView || views->currentWidget() == contextualView)
+        chooseFolderAct->setEnabled(true);
+
+    ImageDownloader::instance().start();
+    CollectionScannerThread::instance().disconnect(this);
 }
 
 void MainWindow::startIncrementalScan() {
     showMessage(tr("Updating collection..."));
     chooseFolderAct->setEnabled(false);
-    CollectionScannerThread *scannerThread = new CollectionScannerThread();
+    CollectionScannerThread &scannerThread = CollectionScannerThread::instance();
     // incremental!
-    scannerThread->setDirectory(QString());
-    connect(scannerThread, SIGNAL(progress(int)), SLOT(incrementalScanProgress(int)),
+    scannerThread.setDirectory(QString());
+    connect(&scannerThread, SIGNAL(progress(int)), SLOT(incrementalScanProgress(int)),
             Qt::UniqueConnection);
-    connect(scannerThread, SIGNAL(finished(QVariantMap)),
+    connect(&scannerThread, SIGNAL(finished(QVariantMap)),
             SLOT(incrementalScanFinished(QVariantMap)), Qt::UniqueConnection);
-    scannerThread->start();
+    scannerThread.start();
 }
 
 void MainWindow::incrementalScanProgress(int percent) {
@@ -922,21 +927,9 @@ void MainWindow::incrementalScanFinished(const QVariantMap &stats) {
     if (views->currentWidget() == mediaView || views->currentWidget() == contextualView)
         chooseFolderAct->setEnabled(true);
     showMessage(tr("Collection updated"));
-    startImageDownload();
     showFinetuneDialog(stats);
-}
-
-void MainWindow::startImageDownload() {
-    chooseFolderAct->setEnabled(false);
-    ImageDownloaderThread *downloaderThread = new ImageDownloaderThread();
-    connect(downloaderThread, SIGNAL(imageDownloaded()), SLOT(update()));
-    connect(downloaderThread, SIGNAL(finished()), SLOT(imageDownloadFinished()));
-    downloaderThread->start();
-}
-
-void MainWindow::imageDownloadFinished() {
-    if (views->currentWidget() == mediaView || views->currentWidget() == contextualView)
-        chooseFolderAct->setEnabled(true);
+    ImageDownloader::instance().start();
+    CollectionScannerThread::instance().disconnect(this);
 }
 
 void MainWindow::stateChanged(Media::State state) {

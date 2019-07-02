@@ -511,7 +511,7 @@ void CollectionScanner::gotArtistInfo() {
     // now that we have an id, let's enqueue the cover image download
     QString imageUrl = artist->property("imageUrl").toString();
     if (!imageUrl.isEmpty())
-        ImageDownloader::enqueue(artistId, ImageDownloader::ArtistType, imageUrl);
+        ImageDownloader::instance().enqueue(artistId, ImageDownloader::ArtistType, imageUrl);
 
     const QString hash = artist->property("originalHash").toString();
     loadedArtists.insert(hash, artist);
@@ -720,7 +720,7 @@ void CollectionScanner::gotAlbumInfo() {
     // now that we have an id, let's enqueue the cover image download
     QString imageUrl = album->property("imageUrl").toString();
     if (!imageUrl.isEmpty())
-        ImageDownloader::enqueue(albumId, ImageDownloader::AlbumType, imageUrl);
+        ImageDownloader::instance().enqueue(albumId, ImageDownloader::AlbumType, imageUrl);
 
     // continue the processing of blocked files
     // qDebug() << files.size() << "files were waiting for album" << album->getTitle();

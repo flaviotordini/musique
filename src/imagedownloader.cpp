@@ -24,6 +24,7 @@ $END_LICENSE */
 #include <QtSql>
 
 #include "http.h"
+#include "httputils.h"
 #include "model/album.h"
 #include "model/artist.h"
 
@@ -36,30 +37,19 @@ public:
     QString url;
 };
 
-ImageDownloaderThread::ImageDownloaderThread(QObject *parent) : QThread(parent) {
-    // This will be used by Database to cache connections for this thread
-    setObjectName("imageDownloader" + QString::number(qrand()));
+ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent) {}
+
+ImageDownloader &ImageDownloader::instance() {
+    static QMap<QThread *, ImageDownloader *> instances;
+    QThread *currentThread = QThread::currentThread();
+    auto i = instances.constFind(currentThread);
+    if (i != instances.constEnd()) return *i.value();
+    ImageDownloader *instance = new ImageDownloader();
+    instances.insert(currentThread, instance);
+    connect(currentThread, &QThread::destroyed, instance,
+            [currentThread] { instances.remove(currentThread); });
+    return *instance;
 }
-
-void ImageDownloaderThread::run() {
-    qDebug() << "Starting image downloads";
-
-    imageDownloader = new ImageDownloader();
-    connect(imageDownloader, &ImageDownloader::imageDownloaded, this,
-            &ImageDownloaderThread::imageDownloaded);
-    imageDownloader->run();
-
-    // Start thread event loop
-    // This makes signals and slots work
-    exec();
-
-    Database::instance().closeConnection();
-    delete imageDownloader;
-
-    qDebug() << "ImageDownloaderThread::run() exited";
-}
-
-ImageDownloader::ImageDownloader(QObject *parent) : QObject(parent), imageDownload(nullptr) {}
 
 void ImageDownloader::enqueue(int objectId, int objectType, const QString &url) {
     QSqlDatabase db = Database::instance().getConnection();
@@ -68,15 +58,18 @@ void ImageDownloader::enqueue(int objectId, int objectType, const QString &url) 
     query.bindValue(0, objectId);
     query.bindValue(1, objectType);
     query.bindValue(2, url);
-
     if (!query.exec()) qWarning() << query.lastQuery() << query.lastError().text();
+
+    if (!running) QTimer::singleShot(0, this, SLOT(popFromQueue()));
 }
 
-void ImageDownloader::run() {
-    popFromQueue();
+void ImageDownloader::start() {
+    if (!running) QTimer::singleShot(0, this, SLOT(popFromQueue()));
 }
 
 void ImageDownloader::popFromQueue() {
+    running = true;
+
     // get the next download
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
@@ -85,7 +78,8 @@ void ImageDownloader::popFromQueue() {
     if (!query.exec()) qWarning() << query.lastQuery() << query.lastError().text();
     if (!query.next()) {
         qDebug() << "Downloads finished";
-        thread()->exit();
+        running = false;
+        emit finished();
         return;
     }
     if (imageDownload) delete imageDownload;
@@ -98,24 +92,35 @@ void ImageDownloader::popFromQueue() {
 
     // start download
     QUrl url(imageDownload->url);
-    QObject *reply = Http::instance().get(url);
+    QObject *reply = HttpUtils::notCached().get(url);
     connect(reply, SIGNAL(data(QByteArray)), SLOT(onImageDownloaded(QByteArray)));
     connect(reply, SIGNAL(error(QString)), SLOT(imageDownloadError()));
 }
 
 void ImageDownloader::onImageDownloaded(const QByteArray &bytes) {
+    if (!imageDownload) {
+        qWarning() << "imageDownload is null";
+        return;
+    }
+
     // save image and notify
     if (imageDownload->type == ImageDownloader::ArtistType) {
         Artist *artist = Artist::forId(imageDownload->objectId);
-        if (artist)
-            artist->setPhoto(bytes);
-        else
+        if (artist) {
+            if (artist->thread() == thread())
+                artist->setPhoto(bytes);
+            else
+                QMetaObject::invokeMethod(artist, "setPhoto", Q_ARG(QByteArray, bytes));
+        } else
             qDebug() << imageDownload->url << "has no matching artist";
     } else if (imageDownload->type == ImageDownloader::AlbumType) {
         Album *album = Album::forId(imageDownload->objectId);
-        if (album)
-            album->setPhoto(bytes);
-        else
+        if (album) {
+            if (album->thread() == thread())
+                album->setPhoto(bytes);
+            else
+                QMetaObject::invokeMethod(album, "setPhoto", Q_ARG(QByteArray, bytes));
+        } else
             qDebug() << imageDownload->url << "has no matching album";
     } else {
         qDebug() << "Unknown object type" << imageDownload->type;
@@ -131,12 +136,12 @@ void ImageDownloader::onImageDownloaded(const QByteArray &bytes) {
     delete imageDownload;
     imageDownload = nullptr;
 
-    emit imageDownloaded();
-
-    popFromQueue();
+    QTimer::singleShot(0, this, SLOT(popFromQueue()));
 }
 
 void ImageDownloader::imageDownloadError() {
+    qWarning() << imageDownload->url;
+
     // Increase errorcount
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query = QSqlQuery(db);

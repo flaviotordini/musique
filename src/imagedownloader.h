@@ -22,7 +22,6 @@ $END_LICENSE */
 #define IMAGEDOWNLOADER_H
 
 #include <QtCore>
-#include <QtNetwork>
 
 class ImageDownload;
 
@@ -30,41 +29,31 @@ class ImageDownloader : public QObject {
     Q_OBJECT
 
 public:
-    ImageDownloader(QObject *parent = 0);
-    void run();
+    static ImageDownloader &instance();
 
     enum ImageDownloadTypes { ArtistType = 0, AlbumType };
 
-    static void enqueue(int objectId, int objectType, const QString &url);
+    void enqueue(int objectId, int objectType, const QString &url);
+    void start();
 
 public slots:
     void onImageDownloaded(const QByteArray &bytes);
     void imageDownloadError();
 
 signals:
-    void imageDownloaded();
-
-private:
-    void popFromQueue();
-    ImageDownload *imageDownload;
-};
-
-class ImageDownloaderThread : public QThread {
-    Q_OBJECT
-
-public:
-    ImageDownloaderThread(QObject *parent = 0);
-    void run();
-
-signals:
     void progress(int);
     void error(QString message);
-    void imageDownloaded();
+    void finished();
 
 private slots:
+    void popFromQueue();
 
 private:
-    ImageDownloader *imageDownloader;
+    ImageDownloader(QObject *parent = nullptr);
+
+    ImageDownload *imageDownload = nullptr;
+
+    bool running = false;
 };
 
 #endif // IMAGEDOWNLOADER_H

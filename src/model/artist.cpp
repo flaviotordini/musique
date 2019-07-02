@@ -29,6 +29,8 @@ $END_LICENSE */
 #include "../httputils.h"
 #include "http.h"
 
+#include "imagedownloader.h"
+
 Artist::Artist(QObject *parent)
     : Item(parent), trackCount(0), yearFrom(0), yearTo(0), listeners(0) {}
 
@@ -126,36 +128,10 @@ QString Artist::getStatusTip() {
 void Artist::fetchInfo() {
     // fetchLastFmSearch();
     fetchLastFmInfo();
+    fetchDiscogsInfo();
 }
 
 // *** Last.fm ***
-
-void Artist::fetchLastFmSearch() {
-    if (name.isEmpty()) {
-        emit gotInfo();
-        return;
-    }
-
-    // Avoid rare infinite loops with redirected artists
-    if (lastFmSearches.contains(name)) {
-        emit gotInfo();
-        return;
-    }
-
-    QUrl url("http://ws.audioscrobbler.com/2.0/");
-    QUrlQuery q;
-    q.addQueryItem("method", "artist.search");
-    q.addQueryItem("api_key", Constants::LASTFM_API_KEY);
-    q.addQueryItem("artist", name);
-    q.addQueryItem("limit", "5");
-    url.setQuery(q);
-
-    lastFmSearches << name;
-
-    QObject *reply = HttpUtils::lastFm().get(url);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLastFmSearch(QByteArray)));
-    connect(reply, SIGNAL(error(QString)), SIGNAL(gotInfo()));
-}
 
 void Artist::parseNameAndMbid(const QByteArray &bytes, const QString &preferredValue) {
     QXmlStreamReader xml(bytes);
@@ -268,6 +244,63 @@ void Artist::parseLastFmRedirectedName(QNetworkReply *reply) {
     emit gotInfo();
 }
 
+void Artist::checkInfoLoaded() {
+    if (lastmLoaded && discogsLoaded) emit gotInfo();
+}
+
+void Artist::fetchDiscogsInfo() {
+    if (name.isEmpty()) {
+        qWarning() << "Name is empty";
+    }
+
+    QUrl url("https://api.discogs.com/database/search");
+    QUrlQuery q;
+    q.addQueryItem("type", "artist");
+    q.addQueryItem("query", name);
+    q.addQueryItem("per_page", "1");
+    url.setQuery(q);
+
+    HttpReply *reply = HttpUtils::discogs().get(url);
+    connect(reply, &HttpReply::data, this, [this](const QByteArray &bytes) {
+        qDebug() << "Discogs api success" << id << name << bytes;
+        if (bytes.isEmpty()) {
+            qWarning() << "Discogs empty reply" << id << name;
+            discogsLoaded = true;
+            checkInfoLoaded();
+            return;
+        }
+        QJsonDocument doc = QJsonDocument::fromJson(bytes);
+        QJsonObject obj = doc.object();
+        foreach (const QJsonValue &v, obj["results"].toArray()) {
+            QJsonObject result = v.toObject();
+            QString imageUrl = result["cover_image"].toString();
+            if (imageUrl.isEmpty() || imageUrl.endsWith(QLatin1String("spacer.gif"))) {
+                qWarning() << "Empty image" << name;
+            } else {
+                qDebug() << "Got imageUrl" << name << id << imageUrl;
+                if (id > 0)
+                    ImageDownloader::instance().enqueue(id, ImageDownloader::ArtistType, imageUrl);
+                else
+                    setProperty("imageUrl", imageUrl);
+            }
+        }
+        discogsLoaded = true;
+        checkInfoLoaded();
+    });
+
+    int errorCount = 0;
+    connect(reply, &HttpReply::error, this, [this, &errorCount](const QString &msg) {
+        qWarning() << "Discogs error, retrying..." << name << msg;
+        if (errorCount > 3) {
+            discogsLoaded = true;
+            checkInfoLoaded();
+        } else {
+            QTimer::singleShot(2000, this, SLOT(fetchDiscogsInfo()));
+            errorCount++;
+        }
+    });
+}
+
 void Artist::fetchLastFmInfo() {
     QUrl url("http://ws.audioscrobbler.com/2.0/");
     QUrlQuery q;
@@ -297,6 +330,7 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
             while (xml.readNextStartElement()) {
                 const QStringRef n = xml.name();
 
+                /*
                 if (n == QLatin1String("name")) {
                     QString artistName = xml.readElementText();
                     if (name != artistName) {
@@ -306,10 +340,15 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
                                      << newHash;
                             name = artistName;
                             hash.clear();
+
+                            // fetch image again
+                            fetchDiscogsInfo();
                         }
                     }
                 }
+                */
 
+                /*
                 else if (n == QLatin1String("image") &&
                          xml.attributes().value("size") == QLatin1String("extralarge")) {
                     if (!QFile::exists(getImageLocation())) {
@@ -318,8 +357,9 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
                     } else
                         xml.skipCurrentElement();
                 }
+                */
 
-                else if (n == QLatin1String("stats")) {
+                if (n == QLatin1String("stats")) {
                     while (xml.readNextStartElement()) {
                         if (xml.name() == "listeners") {
                             listeners = xml.readElementText().toUInt();
@@ -375,7 +415,9 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
 
     if (xml.hasError()) qWarning() << xml.errorString();
 
-    emit gotInfo();
+    // emit gotInfo();
+    lastmLoaded = true;
+    checkInfoLoaded();
 }
 
 QString Artist::getBaseLocation() {
@@ -412,9 +454,17 @@ QPixmap Artist::getThumb(int width, int height, qreal pixelRatio) {
 
         const int pixelWidth = width * pixelRatio;
         const int pixelHeight = height * pixelRatio;
-        const int wDiff = pixmap.width() - pixelWidth;
-        const int hDiff = pixmap.height() - pixelHeight;
+
+        int wDiff = pixmap.width() - pixelWidth;
+        int hDiff = pixmap.height() - pixelHeight;
         if (wDiff > 0 || hDiff > 0) {
+            if (wDiff > hDiff) {
+                pixmap = pixmap.scaledToHeight(pixelHeight, Qt::SmoothTransformation);
+            } else {
+                pixmap = pixmap.scaledToWidth(pixelWidth, Qt::SmoothTransformation);
+            }
+            wDiff = pixmap.width() - pixelWidth;
+            hDiff = pixmap.height() - pixelHeight;
             int xOffset = 0;
             int yOffset = 0;
             if (hDiff > 0) yOffset = hDiff / 4;
@@ -441,6 +491,8 @@ void Artist::setPhoto(const QByteArray &bytes) {
 
     emit gotPhoto();
 }
+
+void Artist::fetchLastFmSearch() {}
 
 QVector<Track *> Artist::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();

@@ -109,8 +109,6 @@ private slots:
     void startIncrementalScan();
     void incrementalScanProgress(int percent);
     void incrementalScanFinished(const QVariantMap &stats);
-    void startImageDownload();
-    void imageDownloadFinished();
     void search(QString query);
     void suggestionAccepted(Suggestion *suggestion);
     void searchCleared();

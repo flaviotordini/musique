@@ -8,7 +8,9 @@ class Http;
 class HttpUtils {
 public:
     static Http &lastFm();
+    static Http &discogs();
     static Http &cached();
+    static Http &notCached();
     static const QByteArray &userAgent();
 
 private:

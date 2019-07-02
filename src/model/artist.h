@@ -63,13 +63,6 @@ public:
 
     // internet
 
-    /**
-     * Fix artist data using Last.fm web services.
-     * Will emit gotInfo() when done.
-     * This will also emit gotPhoto() when the photo is ready.
-     */
-    void fetchInfo();
-
     QString getImageLocation();
     bool hasPhoto();
     QPixmap getPhoto();
@@ -86,6 +79,12 @@ public:
     }*/
 
 public slots:
+    /**
+     * Fix artist data using Last.fm web services.
+     * Will emit gotInfo() when done.
+     * This will also emit gotPhoto() when the photo is ready.
+     */
+    void fetchInfo();
     void setPhoto(const QByteArray &bytes);
 
 signals:
@@ -96,11 +95,13 @@ signals:
 private slots:
     void fetchLastFmSearch();
     void parseLastFmSearch(const QByteArray &bytes);
+    void fetchDiscogsInfo();
     void fetchLastFmInfo();
     void parseLastFmInfo(const QByteArray &bytes);
     void parseLastFmRedirectedName(QNetworkReply *reply);
 
 private:
+    void checkInfoLoaded();
     void parseNameAndMbid(const QByteArray &bytes, const QString &preferredName);
     static QString getHash(const QString &name);
 
@@ -110,17 +111,17 @@ private:
 
     QString name;
     QString mbid;
-
     int yearFrom;
     int yearTo;
     uint listeners;
     // QStringList tags;
 
-    QStringList lastFmSearches;
-
     QString hash;
 
     QPixmap pixmap;
+
+    bool lastmLoaded = false;
+    bool discogsLoaded = false;
 };
 
 // This is required in order to use QPointer<Artist> as a QVariant

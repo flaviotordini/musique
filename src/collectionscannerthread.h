@@ -29,7 +29,8 @@ class CollectionScannerThread : public QThread {
     Q_OBJECT
 
 public:
-    CollectionScannerThread(QObject *parent = 0);
+    ~CollectionScannerThread();
+    static CollectionScannerThread &instance();
     void setDirectory(QString directory);
     void run();
 
@@ -43,6 +44,8 @@ private slots:
     void cleanup();
 
 private:
+    CollectionScannerThread(QObject *parent = nullptr);
+
     QString rootDirectory;
     CollectionScanner* scanner;
 

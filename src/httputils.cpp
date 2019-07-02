@@ -21,6 +21,26 @@ Http &HttpUtils::lastFm() {
     return *h;
 }
 
+Http &HttpUtils::discogs() {
+    static Http *http = [] {
+        Http *rootHttp = new Http;
+        rootHttp->addRequestHeader("User-Agent", HttpUtils::userAgent());
+        rootHttp->addRequestHeader("Authorization", QString("Discogs key=%1, secret=%2")
+                                                            .arg("sqwQavzZEPedIHVqeRPA",
+                                                                 "otSFhGxxcdqwVfSOwitgviMOuwZsfRBH")
+                                                            .toUtf8());
+        ThrottledHttp *throttledHttp = new ThrottledHttp(*rootHttp);
+        throttledHttp->setMilliseconds(900);
+
+        CachedHttp *cachedHttp = new CachedHttp(*throttledHttp, "d");
+        cachedHttp->setMaxSeconds(86400 * 30);
+        cachedHttp->setMaxSize(0);
+
+        return cachedHttp;
+    }();
+    return *http;
+}
+
 Http &HttpUtils::cached() {
     static Http *h = [] {
         Http *http = new Http;
@@ -29,6 +49,16 @@ Http &HttpUtils::cached() {
         CachedHttp *cachedHttp = new CachedHttp(*http, "http");
 
         return cachedHttp;
+    }();
+    return *h;
+}
+
+Http &HttpUtils::notCached() {
+    static Http *h = [] {
+        Http *http = new Http;
+        http->addRequestHeader("User-Agent", userAgent());
+
+        return http;
     }();
     return *h;
 }

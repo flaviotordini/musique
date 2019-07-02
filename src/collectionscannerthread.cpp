@@ -21,21 +21,24 @@ $END_LICENSE */
 #include "collectionscannerthread.h"
 #include "collectionscanner.h"
 
-CollectionScannerThread::CollectionScannerThread(QObject *parent) : QThread(parent) {
+CollectionScannerThread::CollectionScannerThread(QObject *parent)
+    : QThread(parent), scanner(nullptr) {
     // This will be used by Database to cache connections for this thread
     setObjectName("scanner" + QString::number(qrand()));
 }
 
 void CollectionScannerThread::run() {
-
     // qDebug() << "CollectionScannerThread::run()";
 
-    scanner = new CollectionScanner(nullptr);
-    scanner->setDirectory(rootDirectory);
-    connect(scanner, SIGNAL(progress(int)), SIGNAL(progress(int)), Qt::QueuedConnection);
-    connect(scanner, SIGNAL(error(QString)), SIGNAL(error(QString)), Qt::QueuedConnection);
-    connect(scanner, SIGNAL(finished(QVariantMap)), SLOT(finish(QVariantMap)), Qt::QueuedConnection);
-    // connect(scanner, SIGNAL(finished()), SIGNAL(finished()), Qt::QueuedConnection);
+    if (!scanner) {
+        scanner = new CollectionScanner(nullptr);
+        scanner->setDirectory(rootDirectory);
+        connect(scanner, SIGNAL(progress(int)), SIGNAL(progress(int)), Qt::QueuedConnection);
+        connect(scanner, SIGNAL(error(QString)), SIGNAL(error(QString)), Qt::QueuedConnection);
+        connect(scanner, SIGNAL(finished(QVariantMap)), SLOT(finish(QVariantMap)),
+                Qt::QueuedConnection);
+        // connect(scanner, SIGNAL(finished()), SIGNAL(finished()), Qt::QueuedConnection);
+    }
     scanner->run();
 
     // Start thread event loop
@@ -43,7 +46,19 @@ void CollectionScannerThread::run() {
     exec();
 
     // qDebug() << "CollectionScannerThread::run() exited";
+}
 
+CollectionScannerThread::~CollectionScannerThread() {
+    quit();
+    if (!wait(3000)) {
+        terminate();
+        wait();
+    }
+}
+
+CollectionScannerThread &CollectionScannerThread::instance() {
+    static CollectionScannerThread i;
+    return i;
 }
 
 void CollectionScannerThread::setDirectory(QString directory) {
@@ -53,11 +68,12 @@ void CollectionScannerThread::setDirectory(QString directory) {
 void CollectionScannerThread::cleanup() {
     qDebug() << "Cleanup";
     delete scanner;
+    scanner = nullptr;
     exit();
 }
 
 void CollectionScannerThread::finish(const QVariantMap &stats) {
-    // qDebug() << "Finish";
+    qDebug() << "Finish" << stats;
     emit finished(stats);
     QTimer::singleShot(0, this, SLOT(cleanup()));
 }
