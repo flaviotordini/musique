@@ -118,7 +118,7 @@
     <name>AppWidget</name>
     <message>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Downloaden</translation>
     </message>
 </context>
 <context>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Use %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Gebruik map %1</translation>
     </message>
 </context>
 <context>
@@ -253,11 +253,11 @@
     <name>Extra</name>
     <message>
         <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation type="unfinished"/>
+        <translation>Het uitvoerbare bestand is aangepast, misschien door een virus.</translation>
     </message>
     <message>
         <source>%1 will not run. Try installing again.</source>
-        <translation type="unfinished"/>
+        <translation>%1 kan niet starten. Probeer opnieuw te installeren.</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>Genres</source>
-        <translation type="unfinished"/>
+        <translation>Genres</translation>
     </message>
 </context>
 <context>
@@ -632,35 +632,35 @@
     </message>
     <message>
         <source>&amp;Fix Library with %1...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Fix collectie met %1...</translation>
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Menubalk weergeven/verbergen</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Menu</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
-        <translation type="unfinished"/>
+        <translation>%1 heeft %2 nummers aan uw collectie toegevoegd. %3 nummers (%4%) hebben onvolledige tags.</translation>
     </message>
     <message>
         <source>Do you want to fix them now with %1?</source>
-        <translation type="unfinished"/>
+        <translation>Wilt u dit nu oplossen met %1?</translation>
     </message>
     <message>
         <source>Fix my music</source>
-        <translation type="unfinished"/>
+        <translation>Fix mijn muziek</translation>
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
-        <translation type="unfinished"/>
+        <translation>U kunt de menubalk nog steeds benaderen door op ALT te drukken</translation>
     </message>
     <message>
         <source>&amp;Scrobble</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Scrobblen</translation>
     </message>
 </context>
 <context>
@@ -748,7 +748,7 @@
     </message>
     <message>
         <source>Downloading %1...</source>
-        <translation type="unfinished"/>
+        <translation>Downloaden van %1...</translation>
     </message>
 </context>
 </TS>
