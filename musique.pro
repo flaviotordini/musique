@@ -1,7 +1,7 @@
 CONFIG += c++14 exceptions_off rtti_off optimize_full
 
 TEMPLATE = app
-VERSION = 1.6
+VERSION = 1.7
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
