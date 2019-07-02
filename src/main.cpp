@@ -35,9 +35,7 @@ $END_LICENSE */
 #endif
 
 int main(int argc, char **argv) {
-#ifndef Q_NO_DEBUG_OUTPUT
     qSetMessagePattern("[%{function}] %{message}");
-#endif
 
 #ifdef Q_OS_MAC
     mac::MacMain();
