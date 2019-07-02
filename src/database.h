@@ -64,7 +64,6 @@ private:
     QMutex lock;
     QHash<QThread*, QSqlDatabase> connections;
     QString updateRoot;
-
 };
 
 #endif // DATABASE_H

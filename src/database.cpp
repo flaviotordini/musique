@@ -188,19 +188,22 @@ QSqlDatabase Database::getConnection() {
 
     const QString threadName = currentThread->objectName();
     // qDebug() << "threadName" << threadName << currentThread;
-    if (connections.contains(currentThread)) {
-        return connections.value(currentThread);
-    } else {
-        qDebug() << "Creating db connection for" << threadName;
-        QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", threadName);
-        connection.setDatabaseName(getDbLocation());
-        if (!connection.open()) {
-            qWarning() << QString("Cannot connect to database %1 in thread %2")
-                                  .arg(connection.databaseName(), threadName);
-        }
-        connections.insert(currentThread, connection);
-        return connection;
+
+    static QMutex mutex;
+    QMutexLocker locker(&mutex);
+
+    auto i = connections.constFind(currentThread);
+    if (i != connections.constEnd()) return i.value();
+
+    qDebug() << "Creating db connection for" << threadName;
+    QSqlDatabase connection = QSqlDatabase::addDatabase("QSQLITE", threadName);
+    connection.setDatabaseName(getDbLocation());
+    if (!connection.open()) {
+        qWarning() << QString("Cannot connect to database %1 in thread %2")
+                              .arg(connection.databaseName(), threadName);
     }
+    connections.insert(currentThread, connection);
+    return connection;
 }
 
 int Database::status() {
