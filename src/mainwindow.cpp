@@ -143,14 +143,22 @@ void MainWindow::showInitialView() {
         showMediaView(false);
         QTimer::singleShot(0, this, SLOT(loadPlaylist()));
 
-        actionMap["finetune"]->setVisible(true);
+#ifdef APP_MAC_STORE
+        QSettings settings;
+        bool finetuneMenuVisible = settings.value("needFix").toBool();
+#else
+        bool finetuneMenuVisible = true;
+#endif
+        actionMap["finetune"]->setVisible(finetuneMenuVisible);
 
         // update the collection when idle
         QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
 
         QTimer::singleShot(1000, this, SLOT(checkForUpdate()));
 
+#ifndef APP_MAC_STORE
         QTimer::singleShot(1500, this, SLOT(maybeShowUpdateNag()));
+#endif
 
     } else {
         // no db, do the first scan dance
@@ -527,7 +535,9 @@ void MainWindow::createMenus() {
     helpMenu = menuBar()->addMenu(tr("&Help"));
     menuMap.insert("help", helpMenu);
     helpMenu->addAction(siteAct);
+#ifndef APP_MAC_STORE
     helpMenu->addAction(donateAct);
+#endif
     helpMenu->addAction(actionMap.value("report-issue"));
     helpMenu->addAction(aboutAct);
 
@@ -897,7 +907,6 @@ void MainWindow::fullScanFinished(const QVariantMap &stats) {
     QApplication::alert(this, 0);
 #endif
     showFinetuneDialog(stats);
-    actionMap["finetune"]->setVisible(true);
 
     if (views->currentWidget() == mediaView || views->currentWidget() == contextualView)
         chooseFolderAct->setEnabled(true);
@@ -1233,20 +1242,23 @@ void MainWindow::maybeShowUpdateNag() {
     QString lastRunVersion = settings.value(versionKey).toString();
     if (lastRunVersion != QLatin1String(Constants::VERSION)) {
         settings.setValue(versionKey, Constants::VERSION);
-        QMessageBox msgBox(this);
-        msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
-        msgBox.setText(tr("Thanks for updating %1 to version %2!")
-                               .arg(Constants::NAME, Constants::VERSION));
-        msgBox.setInformativeText(
-                tr("If you enjoy %1, perhaps having installed it months or even years ago, please "
-                   "consider becoming one of the people willing to support something you enjoy.")
-                        .arg(Constants::NAME));
-        msgBox.setModal(true);
-        msgBox.setWindowModality(Qt::WindowModal);
-        msgBox.addButton(QMessageBox::Close);
-        QPushButton *donateButton = msgBox.addButton(tr("Donate"), QMessageBox::AcceptRole);
-        msgBox.exec();
-        if (msgBox.clickedButton() == donateButton) donate();
+        if (!lastRunVersion.isEmpty()) {
+            QMessageBox msgBox(this);
+            msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
+            msgBox.setText(tr("Thanks for updating %1 to version %2!")
+                                   .arg(Constants::NAME, Constants::VERSION));
+            msgBox.setInformativeText(tr("If you enjoy %1, perhaps having installed it months or "
+                                         "even years ago, please "
+                                         "consider becoming one of the people willing to support "
+                                         "something you enjoy.")
+                                              .arg(Constants::NAME));
+            msgBox.setModal(true);
+            msgBox.setWindowModality(Qt::WindowModal);
+            msgBox.addButton(QMessageBox::Close);
+            QPushButton *donateButton = msgBox.addButton(tr("Donate"), QMessageBox::AcceptRole);
+            msgBox.exec();
+            if (msgBox.clickedButton() == donateButton) donate();
+        }
     }
 }
 
@@ -1274,6 +1286,16 @@ void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
     if (trackCount <= 0 && tracksNeedingFixCount <= 0) return;
 
     int percent = (tracksNeedingFixCount * 100) / trackCount;
+
+#ifdef APP_MAC_STORE
+    bool finetuneMenuVisible = percent > 40;
+    QSettings settings;
+    settings.setValue("needFix", finetuneMenuVisible);
+#else
+    bool finetuneMenuVisible = true;
+#endif
+    actionMap["finetune"]->setVisible(finetuneMenuVisible);
+
     if (percent <= 5) return;
 
     QString message =
