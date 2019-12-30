@@ -143,12 +143,7 @@ void MainWindow::showInitialView() {
         showMediaView(false);
         QTimer::singleShot(0, this, SLOT(loadPlaylist()));
 
-#ifdef APP_MAC_STORE
-        QSettings settings;
-        bool finetuneMenuVisible = settings.value("needFix").toBool();
-#else
         bool finetuneMenuVisible = true;
-#endif
         actionMap["finetune"]->setVisible(finetuneMenuVisible);
 
         // update the collection when idle
@@ -1287,13 +1282,7 @@ void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
 
     int percent = (tracksNeedingFixCount * 100) / trackCount;
 
-#ifdef APP_MAC_STORE
-    bool finetuneMenuVisible = percent > 40;
-    QSettings settings;
-    settings.setValue("needFix", finetuneMenuVisible);
-#else
     bool finetuneMenuVisible = true;
-#endif
     actionMap["finetune"]->setVisible(finetuneMenuVisible);
 
     if (percent <= 5) return;
