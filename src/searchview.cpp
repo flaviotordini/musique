@@ -32,9 +32,7 @@ void SearchView::paintEvent(QPaintEvent *event) {
         QString emptyMessage = tr("Your search had no results.");
 
         QPainter painter(this->viewport());
-        QPen textPen;
-        textPen.setBrush(palette().mid());
-        painter.setPen(textPen);
+        painter.setPen(this->viewport()->palette().text().color());
         painter.setFont(FontUtils::big());
 
         QSize textSize(QFontMetrics(painter.font()).size(Qt::TextSingleLine, emptyMessage));
