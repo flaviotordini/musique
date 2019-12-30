@@ -69,6 +69,7 @@ void Genres::loadGenres() {
         qDebug() << "Processing" << genreHash;
 
         Genre *metaGenre = nullptr;
+        bool addAsChild = false;
 
         for (const auto &pair : genreTree) {
             const QString &metaGenreHash = pair.first;
@@ -82,7 +83,7 @@ void Genres::loadGenres() {
             if (genreHash.contains(metaGenreHash)) {
                 qDebug() << "It's a word child" << metaGenreHash << genreHash;
                 metaGenre = Genre::forHash(metaGenreHash);
-                metaGenre->addChild(genre);
+                addAsChild = true;
                 break;
             }
 
@@ -91,7 +92,20 @@ void Genres::loadGenres() {
                 if (genreHash.contains(subGenreHash)) {
                     qDebug() << "Found subgenre" << subGenreHash << metaGenreHash;
                     metaGenre = Genre::forHash(metaGenreHash);
-                    metaGenre->addChild(genre);
+                    addAsChild = true;
+
+                    const auto &siblings = metaGenre->getChildren();
+                    bool parentFound = false;
+                    for (Genre *sibling : siblings) {
+                        if (genreHash.contains(sibling->getHash())) {
+                            qDebug() << genreHash << sibling->getHash();
+                            sibling->addChild(genre);
+                            parentFound = true;
+                            break;
+                        }
+                    }
+                    if (!parentFound) metaGenre->addChild(genre);
+
                     break;
                 }
             }
@@ -101,6 +115,21 @@ void Genres::loadGenres() {
 
         if (metaGenre) {
             if (!metaGenres.contains(metaGenre)) metaGenres << metaGenre;
+
+            if (addAsChild) {
+                const auto &siblings = metaGenre->getChildren();
+                bool parentFound = false;
+                for (Genre *sibling : siblings) {
+                    if (genreHash.contains(sibling->getHash())) {
+                        qDebug() << genreHash << sibling->getHash();
+                        sibling->addChild(genre);
+                        parentFound = true;
+                        break;
+                    }
+                }
+                if (!parentFound) metaGenre->addChild(genre);
+            }
+
         } else if (genre->getTrackCount() > 20) {
             otherGenres << genre;
         }
