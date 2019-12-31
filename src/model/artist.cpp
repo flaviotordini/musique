@@ -29,7 +29,7 @@ $END_LICENSE */
 #include "../httputils.h"
 #include "http.h"
 
-#include "imagedownloader.h"
+#include "../imagedownloader.h"
 
 Artist::Artist(QObject *parent)
     : Item(parent), trackCount(0), yearFrom(0), yearTo(0), listeners(0) {}
