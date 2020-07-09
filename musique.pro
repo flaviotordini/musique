@@ -1,4 +1,4 @@
-CONFIG += c++14 exceptions_off rtti_off optimize_full
+CONFIG += c++17 exceptions_off rtti_off optimize_full object_parallel_to_source
 
 TEMPLATE = app
 VERSION = 1.8
