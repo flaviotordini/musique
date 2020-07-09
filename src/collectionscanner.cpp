@@ -783,7 +783,7 @@ void CollectionScanner::processTrack(FileInfo *file) {
     QString genreTag = file->getTags()->getGenre();
     if (!genreTag.isEmpty()) {
         auto genreNames =
-                genreTag.splitRef(QRegularExpression("([,/-]| & )"), QString::SkipEmptyParts);
+                genreTag.splitRef(QRegularExpression("([,/-;]| & )"), QString::SkipEmptyParts);
         for (QStringRef &genreNameRef : genreNames) {
             QString genreName = Genre::cleanGenreName(genreNameRef);
             if (!genreName.isEmpty()) {
