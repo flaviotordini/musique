@@ -42,7 +42,7 @@ void AppsWidget::paintEvent(QPaintEvent *e) {
 AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent)
     : QWidget(parent), icon(nullptr), name(name), downloadButton(nullptr) {
     const QString unixName = code.left(code.lastIndexOf('.'));
-    const QString baseUrl = QLatin1String("http://") + Constants::ORG_DOMAIN;
+    const QString baseUrl = QLatin1String("https://") + Constants::ORG_DOMAIN;
     const QString filesUrl = baseUrl + QLatin1String("/files/");
     url = filesUrl + unixName + QLatin1String("/") + code;
     webPage = baseUrl + QLatin1String("/") + unixName;
