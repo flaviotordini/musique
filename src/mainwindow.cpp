@@ -1336,8 +1336,6 @@ void MainWindow::runFinetune(const QString &filename) {
     if (QProcess::startDetached("finetune", QStringList(filename))) return;
 #endif
 
-    const QString baseUrl = QLatin1String("http://") + Constants::ORG_DOMAIN;
-
 #ifdef APP_MAC_STORE
     // QString pageUrl = baseUrl + QLatin1String("/finetune");
     QString pageUrl = "macappstore://userpub.itunes.apple.com"
@@ -1348,7 +1346,7 @@ void MainWindow::runFinetune(const QString &filename) {
 #endif
 
 #ifdef APP_EXTRA
-
+    const QString baseUrl = QLatin1String("https://") + Constants::ORG_DOMAIN;
     const QString filesUrl = baseUrl + QLatin1String("/files/");
     QString url = filesUrl + "finetune/finetune.";
 
