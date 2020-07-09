@@ -13,9 +13,7 @@ DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 message(Building $${APP_NAME} $${VERSION})
 message(Qt $$[QT_VERSION] in $$[QT_INSTALL_PREFIX])
 
-DEFINES *= QT_NO_DEBUG_OUTPUT
-DEFINES *= QT_USE_QSTRINGBUILDER
-DEFINES *= QT_STRICT_ITERATORS
+DEFINES *= QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_DEPRECATED_WARNINGS
 
 TARGET = $${APP_UNIX_NAME}
 
@@ -236,3 +234,12 @@ unix:!mac {
     icon512.files += data/512x512/$${APP_UNIX_NAME}.png
 }
 mac|win32|contains(DEFINES, APP_UBUNTU):include(local/local.pri)
+
+!contains(DEFINES, APP_MAC_STORE) {
+    include(lib/updater/updater.pri)
+}
+
+message(CONFIG: $$CONFIG)
+message(DEFINES: $$DEFINES)
+message(QMAKE_CXXFLAGS: $$QMAKE_CXXFLAGS)
+message(QMAKE_LFLAGS: $$QMAKE_LFLAGS)
