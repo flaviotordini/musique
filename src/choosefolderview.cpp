@@ -79,7 +79,7 @@ ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
     buttonLayout->addWidget(cancelButton);
 
 #if defined APP_MAC && !defined APP_MAC_STORE
-    QPushButton *useiTunesDirButton = new QPushButton(tr("Use iTunes collection"));
+    QPushButton *useiTunesDirButton = new QPushButton(tr("Use %1 library").arg("Apple Music"));
     connect(useiTunesDirButton, SIGNAL(clicked()), SLOT(iTunesDirChosen()));
     buttonLayout->addWidget(useiTunesDirButton);
 #endif
@@ -138,7 +138,7 @@ void ChooseFolderView::systemDirChosen() {
 
 void ChooseFolderView::iTunesDirChosen() {
     QString musicLocation =
-            QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/iTunes/";
+            QStandardPaths::writableLocation(QStandardPaths::MusicLocation) + "/Music/";
     emit locationChanged(musicLocation);
 }
 
