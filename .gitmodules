@@ -11,3 +11,7 @@
 	url = https://github.com/flaviotordini/media
         branch = master
 
+[submodule "lib/updater"]
+	path = lib/updater
+	url = https://github.com/flaviotordini/updater
+	branch = master

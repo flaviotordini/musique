@@ -42,3 +42,16 @@ Breadcrumb QToolButton:hover {
 Breadcrumb QToolButton:pressed {
     background: rgba(255,255,255,.1);
 }
+
+MessageBar {
+    background: #f9f7c8;
+}
+
+MessageBar QLabel {
+    color: rgba(0,0,0,192);
+}
+
+MessageBar QToolButton {
+    background: transparent;
+    border: 0;
+}

@@ -34,6 +34,7 @@ class Track;
 class UpdateChecker;
 class Suggestion;
 class ToolbarMenu;
+class MessageBar;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -87,7 +88,6 @@ private slots:
     void updateUIForFullscreen();
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
-    void checkForUpdate();
     void maybeShowUpdateNag();
 
     // media
@@ -147,8 +147,8 @@ private:
     void initMedia();
     static QString formatTime(qint64 duration);
     QString playlistPath();
-    void simpleUpdateDialog(const QString &version);
     void showFinetuneDialog(const QVariantMap &stats);
+    void maybeShowMessageBar();
 
     // view mechanism
     QStackedWidget *views;
@@ -209,6 +209,8 @@ private:
     bool fullScreenActive;
     bool maximizedBeforeFullScreen;
     bool menuVisibleBeforeFullScreen;
+
+    MessageBar *messageBar;
 
     Media *media;
 };

@@ -30,12 +30,13 @@ include(src/tags/tags.pri)
 
 HEADERS += src/mainwindow.h \
     src/aboutview.h \
+    src/messagebar.h \
+    src/updateutils.h \
     src/view.h \
     src/searchlineedit.h \
     src/exlineedit.h \
     src/spacer.h \
     src/constants.h \
-    src/updatechecker.h \
     src/finderwidget.h \
     src/collectionscannerview.h \
     src/collectionscanner.h \
@@ -98,14 +99,15 @@ HEADERS += src/mainwindow.h \
     src/seekslider.h \
     src/finderlistview.h \
     src/breadcrumb.h \
-    src/clickablelabel.h
+    src/clickablelabel.h \
+    src/waitingspinnerwidget.h
 SOURCES += src/main.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
+    src/messagebar.cpp \
     src/searchlineedit.cpp \
     src/exlineedit.cpp \
     src/spacer.cpp \
-    src/updatechecker.cpp \
     src/finderwidget.cpp \
     src/collectionscannerview.cpp \
     src/collectionscanner.cpp \
@@ -167,7 +169,9 @@ SOURCES += src/main.cpp \
     src/seekslider.cpp \
     src/finderlistview.cpp \
     src/breadcrumb.cpp \
-    src/clickablelabel.cpp
+    src/clickablelabel.cpp \
+    src/updateutils.cpp \
+    src/waitingspinnerwidget.cpp
 
 RESOURCES += resources.qrc
 RESOURCES += $$files(icons/*.png, true)

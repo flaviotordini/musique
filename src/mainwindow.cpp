@@ -39,7 +39,7 @@ $END_LICENSE */
 #include "fontutils.h"
 #include "globalshortcuts.h"
 #include "mediaview.h"
-#include "updatechecker.h"
+#include "messagebar.h"
 #include "view.h"
 #ifdef Q_OS_MAC
 #include "mac_startup.h"
@@ -71,6 +71,10 @@ $END_LICENSE */
 #endif
 #ifdef MEDIA_MPV
 #include "mediampv.h"
+#endif
+
+#ifdef UPDATER
+#include "updater.h"
 #endif
 
 namespace {
@@ -149,10 +153,13 @@ void MainWindow::showInitialView() {
         // update the collection when idle
         QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
 
-        QTimer::singleShot(1000, this, SLOT(checkForUpdate()));
-
 #ifndef APP_MAC_STORE
         QTimer::singleShot(1500, this, SLOT(maybeShowUpdateNag()));
+#endif
+        maybeShowMessageBar();
+
+#ifdef UPDATER
+        Updater::instance().checkWithoutUI();
 #endif
 
     } else {
@@ -535,6 +542,9 @@ void MainWindow::createMenus() {
 #endif
     helpMenu->addAction(actionMap.value("report-issue"));
     helpMenu->addAction(aboutAct);
+#ifdef UPDATER
+    helpMenu->addAction(Updater::instance().getAction());
+#endif
 
 #ifdef APP_MAC_STORE
     helpMenu->addSeparator();
@@ -1201,36 +1211,6 @@ void MainWindow::setRepeat(bool enabled) {
     settings.setValue("repeat", QVariant::fromValue(enabled));
 }
 
-void MainWindow::checkForUpdate() {
-    const QString updateCheckKey = "updateCheck";
-
-    // check every 24h
-    QSettings settings;
-    uint unixTime = QDateTime::currentDateTimeUtc().toTime_t();
-    int lastCheck = settings.value(updateCheckKey).toInt();
-    int secondsSinceLastCheck = unixTime - lastCheck;
-    // qDebug() << "secondsSinceLastCheck" << unixTime << lastCheck << secondsSinceLastCheck;
-    if (secondsSinceLastCheck < 86400) return;
-
-    // check it out
-    UpdateChecker *updateChecker = new UpdateChecker();
-    connect(updateChecker, &UpdateChecker::newVersion, this,
-            [this, updateChecker](const QString &version) {
-                updateChecker->deleteLater();
-                QSettings settings;
-                QString checkedVersion = settings.value("checkedVersion").toString();
-                if (checkedVersion == version) return;
-#ifdef APP_SIMPLEUPDATE
-                simpleUpdateDialog(version);
-#elif defined(APP_EXTRA) && !defined(APP_MAC)
-                UpdateDialog *dialog = new UpdateDialog(version, this);
-                dialog->show();
-#endif
-            });
-    updateChecker->checkForUpdate();
-    settings.setValue(updateCheckKey, unixTime);
-}
-
 void MainWindow::maybeShowUpdateNag() {
     QSettings settings;
     const QString versionKey = "lastVersion";
@@ -1255,23 +1235,6 @@ void MainWindow::maybeShowUpdateNag() {
             if (msgBox.clickedButton() == donateButton) donate();
         }
     }
-}
-
-void MainWindow::simpleUpdateDialog(const QString &version) {
-    QMessageBox msgBox(this);
-    msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
-    msgBox.setText(tr("%1 version %2 is now available.").arg(Constants::NAME, version));
-    msgBox.setModal(true);
-    msgBox.setWindowModality(Qt::WindowModal);
-    msgBox.addButton(QMessageBox::Close);
-    QPushButton *laterButton = msgBox.addButton(tr("Remind me later"), QMessageBox::RejectRole);
-    QPushButton *updateButton = msgBox.addButton(tr("Update"), QMessageBox::AcceptRole);
-    msgBox.exec();
-    if (msgBox.clickedButton() != laterButton) {
-        QSettings settings;
-        settings.setValue("checkedVersion", version);
-    } else if (msgBox.clickedButton() == updateButton)
-        visitSite();
 }
 
 void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
@@ -1566,4 +1529,82 @@ void MainWindow::printHelp() {
 void MainWindow::reportIssue() {
     QUrl url("https://flavio.tordini.org/forums/forum/musique-forums/musique-troubleshooting");
     QDesktopServices::openUrl(url);
+}
+
+void MainWindow::maybeShowMessageBar() {
+    messageBar = new MessageBar();
+    auto dockWidget = new QDockWidget();
+    dockWidget->setTitleBarWidget(new QWidget());
+    dockWidget->setWidget(messageBar);
+    dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
+    dockWidget->setVisible(false);
+    // connect(dockWidget, &QDockWidget::visibilityChanged, messageBar, &QWidget::setVisible);
+    addDockWidget(Qt::TopDockWidgetArea, dockWidget);
+
+    QSettings settings;
+    QString key;
+
+    bool showMessages = settings.contains("geometry");
+#ifdef APP_ACTIVATION
+    showMessages = Activation::instance().isActivated();
+#endif
+
+#if defined APP_MAC && !defined APP_MAC_STORE
+    if (showMessages && !settings.contains(key = "sofa")) {
+        QString msg = tr("Need a remote control for %1? Try %2!").arg(Constants::NAME).arg("Sofa");
+        msg = "<a href='https://" + QLatin1String(Constants::ORG_DOMAIN) + '/' + key +
+              "' style = 'text-decoration:none;color:palette(windowText)'>" + msg + "</a>";
+        messageBar->setMessage(msg);
+        messageBar->setOpenExternalLinks(true);
+        disconnect(messageBar);
+        connect(messageBar, &MessageBar::closed, this, [key, dockWidget] {
+            QSettings settings;
+            settings.setValue(key, true);
+        });
+        dockWidget->show();
+        showMessages = false;
+    }
+#endif
+
+    if (showMessages) {
+        key = "donate" + QLatin1String(Constants::VERSION);
+        if (!settings.contains(key)) {
+            bool oneYearUsage = true;
+#ifdef APP_ACTIVATION
+            oneYearUsage = (QDateTime::currentSecsSinceEpoch() -
+                            Activation::instance().getLicenseTimestamp()) > 86400 * 365;
+#endif
+            if (oneYearUsage) {
+                QString msg =
+                        tr("I keep improving %1 to make it the best I can. Support this work!")
+                                .arg(Constants::NAME);
+                msg = "<a href='https://" + QLatin1String(Constants::ORG_DOMAIN) + "/donate" +
+                      "' style = 'text-decoration:none;color:palette(windowText)'>" + msg + "</a>";
+                messageBar->setMessage(msg);
+                messageBar->setOpenExternalLinks(true);
+                disconnect(messageBar);
+                connect(messageBar, &MessageBar::closed, this, [key, dockWidget] {
+                    QSettings settings;
+                    settings.setValue(key, true);
+                });
+                dockWidget->show();
+            }
+        }
+    }
+
+#ifdef UPDATER
+    connect(&Updater::instance(), &Updater::statusChanged, this, [this, dockWidget](auto status) {
+        if (status == Updater::Status::UpdateDownloaded) {
+            QString msg = tr("An update is ready to be installed. Quit and install update.");
+            msg = "<a href='http://quit' style = "
+                  "'text-decoration:none;color:palette(windowText)'>" +
+                  msg + "</a>";
+            messageBar->setMessage(msg);
+            messageBar->setOpenExternalLinks(false);
+            disconnect(messageBar);
+            connect(messageBar, &MessageBar::linkActivated, this, [] { qApp->quit(); });
+            dockWidget->show();
+        }
+    });
+#endif
 }

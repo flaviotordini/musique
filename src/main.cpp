@@ -26,6 +26,7 @@ $END_LICENSE */
 #include "httputils.h"
 #include "iconutils.h"
 #include "mainwindow.h"
+#include "updateutils.h"
 #include <qtsingleapplication.h>
 #ifdef APP_EXTRA
 #include "extra.h"
@@ -95,6 +96,8 @@ int main(int argc, char **argv) {
     QTranslator translator;
     translator.load(QLocale::system(), QString(), QString(), localeDir);
     app.installTranslator(&translator);
+
+    UpdateUtils::init();
 
     MainWindow *mainWindow = MainWindow::instance();
     mainWindow->show();
