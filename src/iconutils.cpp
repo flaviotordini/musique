@@ -23,6 +23,7 @@ $END_LICENSE */
 #include <QAction>
 
 namespace {
+
 void addIconFile(QIcon &icon,
                  const QString &filename,
                  int size,
@@ -32,7 +33,14 @@ void addIconFile(QIcon &icon,
         icon.addFile(filename, QSize(size, size), mode, state);
     }
 }
+
+QVector<int> sizes;
+
 } // namespace
+
+void IconUtils::setSizes(const QVector<int> &value) {
+    sizes = value;
+}
 
 QIcon IconUtils::fromTheme(const QString &name) {
     static const QLatin1String symbolic("-symbolic");
@@ -43,24 +51,25 @@ QIcon IconUtils::fromTheme(const QString &name) {
 }
 
 QIcon IconUtils::fromResources(const char *name, const QColor &background) {
+    qDebug() << "Creating icon" << name;
     static const QLatin1String active("_active");
     static const QLatin1String selected("_selected");
     static const QLatin1String disabled("_disabled");
     static const QLatin1String checked("_checked");
     static const QLatin1String ext(".png");
 
-    QString path(":/icons/");
+    QString path = QStringLiteral(":/icons/");
 
     if (background.value() > 128)
         path += QLatin1String("light/");
     else
         path += QLatin1String("dark/");
-
     QIcon icon;
 
     // WARN keep these sizes updated with what we really use
-    for (int size : {16, 32}) {
-        const QString pathAndName = path + QString::number(size) + '/' + name;
+    for (int size : qAsConst(sizes)) {
+        const QString pathAndName =
+                path + QString::number(size) + QLatin1Char('/') + QLatin1String(name);
         QString iconFilename = pathAndName + ext;
         if (QFile::exists(iconFilename)) {
             addIconFile(icon, iconFilename, size);
@@ -74,14 +83,30 @@ QIcon IconUtils::fromResources(const char *name, const QColor &background) {
 }
 
 QIcon IconUtils::icon(const char *name) {
-#ifdef APP_LINUX
-    QIcon icon = fromTheme(name);
+    static QMap<QByteArray, QIcon> cache = [] {
+        qDebug() << "Init icon cache";
+        QMap<QByteArray, QIcon> c;
+        QObject::connect(qApp, &QApplication::paletteChanged, qApp, [&c]() {
+            qDebug() << "Clearing icon cache";
+            c.clear();
+        });
+        return c;
+    }();
+
+    auto i = cache.constFind(QByteArray::fromRawData(name, strlen(name)));
+    if (i != cache.constEnd()) return i.value();
+
+    QIcon icon;
+#ifdef APP_UBUNTU_NO
+    icon = fromTheme(name);
     if (icon.isNull())
         icon = fromResources(name, MainWindow::instance()->palette().window().color());
-    return icon;
 #else
-    return fromResources(name, MainWindow::instance()->palette().window().color());
+    icon = fromResources(name, MainWindow::instance()->palette().window().color());
 #endif
+
+    cache.insert(QByteArray(name), icon);
+    return icon;
 }
 
 QIcon IconUtils::icon(const QVector<const char *> &names) {
@@ -97,12 +122,12 @@ QPixmap IconUtils::iconPixmap(const char *name,
                               int size,
                               const QColor &background,
                               const qreal pixelRatio) {
-    QString path(":/icons/");
+    QString path = QStringLiteral(":/icons/");
     if (background.value() > 128)
-        path += "light/";
+        path += QLatin1String("light/");
     else
-        path += "dark/";
-    path += QString::number(size) + '/' + name + QLatin1String(".png");
+        path += QLatin1String("dark/");
+    path += QString::number(size) + QLatin1Char('/') + QLatin1String(name);
     return IconUtils::pixmap(path, pixelRatio);
 }
 
@@ -148,6 +173,10 @@ void IconUtils::tint(QPixmap &pixmap, const QColor &color, QPainter::Composition
     QPainter painter(&pixmap);
     painter.setCompositionMode(mode);
     painter.fillRect(pixmap.rect(), color);
+}
+
+QPixmap IconUtils::pixmap(const char *name, const qreal pixelRatio) {
+    return pixmap(QString::fromLatin1(name), pixelRatio);
 }
 
 QPixmap IconUtils::pixmap(const QString &filename, const qreal pixelRatio) {

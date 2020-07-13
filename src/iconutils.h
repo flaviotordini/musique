@@ -25,6 +25,8 @@ $END_LICENSE */
 
 class IconUtils {
 public:
+    static void setSizes(const QVector<int> &value);
+
     static QIcon fromTheme(const QString &name);
     static QIcon fromResources(const char *name, const QColor &background);
 
@@ -32,6 +34,7 @@ public:
         QIcon i = icon(name);
         obj->setIcon(i);
         obj->connect(qApp, &QGuiApplication::paletteChanged, obj, [obj, name] {
+            qDebug() << "Updating icon" << name;
             QIcon i = icon(name);
             obj->setIcon(i);
         });
@@ -46,6 +49,7 @@ public:
     static QIcon tintedIcon(const char *name, const QColor &color, const QSize &size);
 
     // HiDPI stuff
+    static QPixmap pixmap(const char *name, const qreal pixelRatio);
     static QPixmap pixmap(const QString &filename, const qreal pixelRatio);
 
     static void tint(QPixmap &pixmap,

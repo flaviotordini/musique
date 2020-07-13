@@ -97,6 +97,8 @@ int main(int argc, char **argv) {
     translator.load(QLocale::system(), QString(), QString(), localeDir);
     app.installTranslator(&translator);
 
+    IconUtils::setSizes({16, 24, 32});
+
     UpdateUtils::init();
 
     MainWindow *mainWindow = MainWindow::instance();
