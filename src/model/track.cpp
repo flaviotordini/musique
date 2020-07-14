@@ -376,7 +376,7 @@ void Track::getLyrics() {
     if (artist) artistName = artist->getName();
 
     // http://lyrics.wikia.com/LyricWiki:REST
-    QUrl url = QString("http://lyrics.wikia.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
+    QUrl url = QString("https://lyrics.fandom.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
                        .arg(QString::fromUtf8(
                                QUrl::toPercentEncoding(DataUtils::simplify(artistName))))
                        .arg(QString::fromUtf8(QUrl::toPercentEncoding(DataUtils::simplify(title))));
