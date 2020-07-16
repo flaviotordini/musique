@@ -88,7 +88,7 @@ private slots:
     void updateUIForFullscreen();
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
-    void maybeShowUpdateNag();
+    bool maybeShowUpdateNag();
 
     // media
     void stop();

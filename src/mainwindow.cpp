@@ -154,9 +154,10 @@ void MainWindow::showInitialView() {
         QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
 
 #ifndef APP_MAC_STORE
-        QTimer::singleShot(1500, this, SLOT(maybeShowUpdateNag()));
+        QTimer::singleShot(1500, this, [this] {
+            if (!maybeShowUpdateNag()) maybeShowMessageBar();
+        });
 #endif
-        maybeShowMessageBar();
 
 #ifdef UPDATER
         Updater::instance().checkWithoutUI();
@@ -537,10 +538,10 @@ void MainWindow::createMenus() {
     helpMenu = menuBar()->addMenu(tr("&Help"));
     menuMap.insert("help", helpMenu);
     helpMenu->addAction(siteAct);
+    helpMenu->addAction(actionMap.value("report-issue"));
 #ifndef APP_MAC_STORE
     helpMenu->addAction(donateAct);
 #endif
-    helpMenu->addAction(actionMap.value("report-issue"));
     helpMenu->addAction(aboutAct);
 #ifdef UPDATER
     helpMenu->addAction(Updater::instance().getAction());
@@ -1211,30 +1212,33 @@ void MainWindow::setRepeat(bool enabled) {
     settings.setValue("repeat", QVariant::fromValue(enabled));
 }
 
-void MainWindow::maybeShowUpdateNag() {
+bool MainWindow::maybeShowUpdateNag() {
     QSettings settings;
-    const QString versionKey = "lastVersion";
+    const QString versionKey = "v";
     QString lastRunVersion = settings.value(versionKey).toString();
     if (lastRunVersion != QLatin1String(Constants::VERSION)) {
         settings.setValue(versionKey, Constants::VERSION);
         if (!lastRunVersion.isEmpty()) {
-            QMessageBox msgBox(this);
-            msgBox.setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
-            msgBox.setText(tr("Thanks for updating %1 to version %2!")
-                                   .arg(Constants::NAME, Constants::VERSION));
-            msgBox.setInformativeText(tr("If you enjoy %1, perhaps having installed it months or "
-                                         "even years ago, please "
-                                         "consider becoming one of the people willing to support "
-                                         "something you enjoy.")
-                                              .arg(Constants::NAME));
-            msgBox.setModal(true);
-            msgBox.setWindowModality(Qt::WindowModal);
-            msgBox.addButton(QMessageBox::Close);
-            QPushButton *donateButton = msgBox.addButton(tr("Donate"), QMessageBox::AcceptRole);
-            msgBox.exec();
-            if (msgBox.clickedButton() == donateButton) donate();
+            QMessageBox *msgBox = new QMessageBox(this);
+            msgBox->setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
+            msgBox->setText(tr("Thanks for updating %1 to version %2!")
+                                    .arg(Constants::NAME, Constants::VERSION));
+            msgBox->setInformativeText(tr("If you enjoy %1, perhaps having installed it months or "
+                                          "even years ago, please "
+                                          "consider becoming one of the people willing to support "
+                                          "something you enjoy.")
+                                               .arg(Constants::NAME));
+            msgBox->addButton(QMessageBox::Close);
+            QPushButton *donateButton = msgBox->addButton(tr("Donate"), QMessageBox::AcceptRole);
+            msgBox->setDefaultButton(donateButton);
+            donateButton->setDefault(true);
+            donateButton->setFocus();
+            connect(msgBox, &QDialog::accepted, this, [this] { donate(); });
+            msgBox->open();
+            return true;
         }
     }
+    return false;
 }
 
 void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
@@ -1557,7 +1561,7 @@ void MainWindow::maybeShowMessageBar() {
         messageBar->setMessage(msg);
         messageBar->setOpenExternalLinks(true);
         disconnect(messageBar);
-        connect(messageBar, &MessageBar::closed, this, [key, dockWidget] {
+        connect(messageBar, &MessageBar::closed, this, [key] {
             QSettings settings;
             settings.setValue(key, true);
         });
@@ -1565,32 +1569,6 @@ void MainWindow::maybeShowMessageBar() {
         showMessages = false;
     }
 #endif
-
-    if (showMessages) {
-        key = "donate" + QLatin1String(Constants::VERSION);
-        if (!settings.contains(key)) {
-            bool oneYearUsage = true;
-#ifdef APP_ACTIVATION
-            oneYearUsage = (QDateTime::currentSecsSinceEpoch() -
-                            Activation::instance().getLicenseTimestamp()) > 86400 * 365;
-#endif
-            if (oneYearUsage) {
-                QString msg =
-                        tr("I keep improving %1 to make it the best I can. Support this work!")
-                                .arg(Constants::NAME);
-                msg = "<a href='https://" + QLatin1String(Constants::ORG_DOMAIN) + "/donate" +
-                      "' style = 'text-decoration:none;color:palette(windowText)'>" + msg + "</a>";
-                messageBar->setMessage(msg);
-                messageBar->setOpenExternalLinks(true);
-                disconnect(messageBar);
-                connect(messageBar, &MessageBar::closed, this, [key, dockWidget] {
-                    QSettings settings;
-                    settings.setValue(key, true);
-                });
-                dockWidget->show();
-            }
-        }
-    }
 
 #ifdef UPDATER
     connect(&Updater::instance(), &Updater::statusChanged, this, [this, dockWidget](auto status) {
