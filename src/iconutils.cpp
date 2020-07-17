@@ -115,19 +115,6 @@ QIcon IconUtils::icon(const QVector<const char *> &names, const QColor &backgrou
     return icon;
 }
 
-QPixmap IconUtils::iconPixmap(const char *name,
-                              int size,
-                              const QColor &background,
-                              const qreal pixelRatio) {
-    QString path = QStringLiteral(":/icons/");
-    if (background.value() > 128)
-        path += QLatin1String("light/");
-    else
-        path += QLatin1String("dark/");
-    path += QString::number(size) + QLatin1Char('/') + QLatin1String(name);
-    return IconUtils::pixmap(path, pixelRatio);
-}
-
 QIcon IconUtils::tintedIcon(const char *name, const QColor &color, const QVector<QSize> &sizes) {
     QIcon i = IconUtils::icon(name);
     QIcon t;
@@ -191,4 +178,17 @@ QPixmap IconUtils::pixmap(const QString &filename, const qreal pixelRatio) {
         }
     }
     return QPixmap(filename);
+}
+
+QPixmap IconUtils::iconPixmap(const char *name,
+                              int size,
+                              const QColor &background,
+                              const qreal pixelRatio) {
+    QString path = QStringLiteral(":/icons/");
+    if (background.value() > 128)
+        path += QLatin1String("light/");
+    else
+        path += QLatin1String("dark/");
+    path += QString::number(size) + QLatin1Char('/') + QLatin1String(name);
+    return IconUtils::pixmap(path, pixelRatio);
 }

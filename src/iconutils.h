@@ -47,19 +47,17 @@ public:
     static QIcon icon(const QVector<const char *> &names,
                       const QColor &background = qApp->palette().window().color());
 
-    static QPixmap
-    iconPixmap(const char *name, int size, const QColor &background, const qreal pixelRatio);
-
     static QIcon tintedIcon(const char *name, const QColor &color, const QVector<QSize> &sizes);
     static QIcon tintedIcon(const char *name, const QColor &color, const QSize &size);
+    static void tint(QPixmap &pixmap,
+                     const QColor &color,
+                     QPainter::CompositionMode mode = QPainter::CompositionMode_SourceIn);
 
     // HiDPI stuff
     static QPixmap pixmap(const char *name, const qreal pixelRatio);
     static QPixmap pixmap(const QString &filename, const qreal pixelRatio);
-
-    static void tint(QPixmap &pixmap,
-                     const QColor &color,
-                     QPainter::CompositionMode mode = QPainter::CompositionMode_SourceIn);
+    static QPixmap
+    iconPixmap(const char *name, int size, const QColor &background, const qreal pixelRatio);
 
 private:
     IconUtils() {}
