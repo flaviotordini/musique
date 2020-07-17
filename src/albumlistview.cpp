@@ -88,7 +88,7 @@ AlbumListView::AlbumListView(QWidget *parent) : FinderListView(parent), showTool
 
     QToolButton *sortButton = new QToolButton(this);
     sortButton->setText(tr("Sort by"));
-    IconUtils::setIcon(sortButton, "sort");
+    IconUtils::setWidgetIcon(sortButton, "sort");
     sortButton->setIconSize(QSize(16, 16));
     sortButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     sortButton->setPopupMode(QToolButton::InstantPopup);
