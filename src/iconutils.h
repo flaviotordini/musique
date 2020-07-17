@@ -21,7 +21,7 @@ $END_LICENSE */
 #ifndef ICONUTILS_H
 #define ICONUTILS_H
 
-#include <QtGui>
+#include <QtWidgets>
 
 class IconUtils {
 public:
@@ -30,6 +30,13 @@ public:
     static QIcon fromTheme(const QString &name);
     static QIcon fromResources(const char *name, const QColor &background);
 
+    template <class T> static void setWidgetIcon(T *obj, const char *name) {
+        auto setObjIcon = [obj, name] {
+            obj->setIcon(icon(name, obj->palette().color(obj->backgroundRole())));
+        };
+        obj->connect(qApp, &QGuiApplication::paletteChanged, obj, setObjIcon);
+        setObjIcon();
+    }
     template <class T> static void setIcon(T *obj, const char *name) {
         auto setObjIcon = [obj, name] { obj->setIcon(icon(name)); };
         setObjIcon();
