@@ -31,13 +31,9 @@ public:
     static QIcon fromResources(const char *name, const QColor &background);
 
     template <class T> static void setIcon(T *obj, const char *name) {
-        QIcon i = icon(name);
-        obj->setIcon(i);
-        obj->connect(qApp, &QGuiApplication::paletteChanged, obj, [obj, name] {
-            qDebug() << "Updating icon" << name;
-            QIcon i = icon(name);
-            obj->setIcon(i);
-        });
+        auto setObjIcon = [obj, name] { obj->setIcon(icon(name)); };
+        setObjIcon();
+        obj->connect(qApp, &QGuiApplication::paletteChanged, obj, setObjIcon);
     }
     static QIcon icon(const char *name,
                       const QColor &background = qApp->palette().window().color());
