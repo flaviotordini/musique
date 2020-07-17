@@ -39,8 +39,10 @@ public:
             obj->setIcon(i);
         });
     }
-    static QIcon icon(const char *name);
-    static QIcon icon(const QVector<const char *> &names);
+    static QIcon icon(const char *name,
+                      const QColor &background = qApp->palette().window().color());
+    static QIcon icon(const QVector<const char *> &names,
+                      const QColor &background = qApp->palette().window().color());
 
     static QPixmap
     iconPixmap(const char *name, int size, const QColor &background, const qreal pixelRatio);

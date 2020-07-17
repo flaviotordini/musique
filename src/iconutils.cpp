@@ -19,8 +19,6 @@ along with Minitube.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "iconutils.h"
-#include "mainwindow.h"
-#include <QAction>
 
 namespace {
 
@@ -82,7 +80,7 @@ QIcon IconUtils::fromResources(const char *name, const QColor &background) {
     return icon;
 }
 
-QIcon IconUtils::icon(const char *name) {
+QIcon IconUtils::icon(const char *name, const QColor &background) {
     static QMap<QByteArray, QIcon> cache = [] {
         qDebug() << "Init icon cache";
         QMap<QByteArray, QIcon> c;
@@ -99,20 +97,19 @@ QIcon IconUtils::icon(const char *name) {
     QIcon icon;
 #ifdef APP_UBUNTU_NO
     icon = fromTheme(name);
-    if (icon.isNull())
-        icon = fromResources(name, MainWindow::instance()->palette().window().color());
+    if (icon.isNull()) icon = fromResources(name, background);
 #else
-    icon = fromResources(name, MainWindow::instance()->palette().window().color());
+    icon = fromResources(name, background);
 #endif
 
     cache.insert(QByteArray(name), icon);
     return icon;
 }
 
-QIcon IconUtils::icon(const QVector<const char *> &names) {
+QIcon IconUtils::icon(const QVector<const char *> &names, const QColor &background) {
     QIcon icon;
     for (auto name : names) {
-        icon = IconUtils::icon(name);
+        icon = IconUtils::icon(name, background);
         if (!icon.availableSizes().isEmpty()) break;
     }
     return icon;
