@@ -12,7 +12,7 @@ MessageBar::MessageBar(QWidget *parent) : QWidget(parent) {
     layout->addWidget(msgLabel);
 
     QToolButton *closeToolButton = new QToolButton();
-    closeToolButton->setIcon(IconUtils::icon("close"));
+    closeToolButton->setIcon(IconUtils::icon("close", palette().background().color()));
     connect(closeToolButton, &QToolButton::clicked, this, [this] {
         emit closed();
         hide();
