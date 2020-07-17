@@ -153,11 +153,9 @@ void MainWindow::showInitialView() {
         // update the collection when idle
         QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
 
-#ifndef APP_MAC_STORE
         QTimer::singleShot(1500, this, [this] {
             if (!maybeShowUpdateNag()) maybeShowMessageBar();
         });
-#endif
 
 #ifdef UPDATER
         Updater::instance().checkWithoutUI();
