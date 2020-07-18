@@ -25,6 +25,14 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>使用 %2 将 %1 翻译为您的母语</translation>
     </message>
+    <message>
+        <source>Powered by %1</source>
+        <translation>由 %1 强力驱动</translation>
+    </message>
+    <message>
+        <source>Open-source software</source>
+        <translation>开源软件</translation>
+    </message>
 </context>
 <context>
     <name>ActivationDialog</name>
@@ -46,14 +54,6 @@
     <message>
         <source>Please license %1</source>
         <translation>请购买 %1 授权</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>该试用版已经过期。</translation>
-    </message>
-    <message>
-        <source>Without a license, the application will expire in %1 days.</source>
-        <translation>若无许可证，该软件将会在 %1 天后过期。</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -185,10 +185,6 @@
         <translation>取消</translation>
     </message>
     <message>
-        <source>Use iTunes collection</source>
-        <translation>使用 iTunes 收藏</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>选择一个文件夹……</translation>
     </message>
@@ -210,6 +206,10 @@
     </message>
     <message>
         <source>Use %1 folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use %1 library</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -636,11 +636,11 @@
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>切换菜单栏（&amp;M）</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>菜单</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
@@ -656,10 +656,22 @@
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
-        <translation type="unfinished"/>
+        <translation>按住 ALT 键以访问菜单栏</translation>
     </message>
     <message>
         <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Thanks for updating %1 to version %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Donate</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -749,6 +761,95 @@
     <message>
         <source>Downloading %1...</source>
         <translation>正在下载 %1...</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Check for Updates...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading version %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart to Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 download failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation>正在下载更新...</translation>
+    </message>
+    <message>
+        <source>Retry Update Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have the latest version.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update has been downloaded and is ready to be installed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::DefaultUpdater</name>
+    <message>
+        <source>There are currently no updates available.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::Dialog</name>
+    <message>
+        <source>You already have the latest version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>发现新版本的 %1 ！</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 已经可用。您现拥有 %3。</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>您想现在下载吗？</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>稍后提醒我</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

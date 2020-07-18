@@ -25,6 +25,14 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>%2를 사용하여 %1를 당신의 모국어로 번역하십시오</translation>
     </message>
+    <message>
+        <source>Powered by %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open-source software</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ActivationDialog</name>
@@ -46,14 +54,6 @@
     <message>
         <source>Please license %1</source>
         <translation>%1의 사용 허가를 얻기 바랍니다.</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>이 시험판은 사용이 만료되었습니다.</translation>
-    </message>
-    <message>
-        <source>Without a license, the application will expire in %1 days.</source>
-        <translation>라이선스가 없으면 응용 프로그램이 %1 일 후에 만료됩니다.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -185,10 +185,6 @@
         <translation>취소</translation>
     </message>
     <message>
-        <source>Use iTunes collection</source>
-        <translation>iTunes 컬렉션 사용</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>폴더 선택...</translation>
     </message>
@@ -210,6 +206,10 @@
     </message>
     <message>
         <source>Use %1 folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use %1 library</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -662,6 +662,18 @@
         <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Thanks for updating %1 to version %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Donate</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -748,6 +760,95 @@
     </message>
     <message>
         <source>Downloading %1...</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Check for Updates...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading version %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart to Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 download failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation>업데이트를 다운로드하는 중...</translation>
+    </message>
+    <message>
+        <source>Retry Update Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have the latest version.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update has been downloaded and is ready to be installed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::DefaultUpdater</name>
+    <message>
+        <source>There are currently no updates available.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::Dialog</name>
+    <message>
+        <source>You already have the latest version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>%1의 새 버전을 사용할 수 있습니다!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2를 지금 사용할 수 있습니다. 당신은 3%를 가지고 있군요.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>지금 다운로드 하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>나중에 알리기.</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
         <translation type="unfinished"/>
     </message>
 </context>

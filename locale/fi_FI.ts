@@ -25,6 +25,14 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Käännä %1 omalle kielellesi %2-palvelussa</translation>
     </message>
+    <message>
+        <source>Powered by %1</source>
+        <translation>%1 :n voimistama</translation>
+    </message>
+    <message>
+        <source>Open-source software</source>
+        <translation>Avoimen lähdekoodin ohjelma</translation>
+    </message>
 </context>
 <context>
     <name>ActivationDialog</name>
@@ -46,14 +54,6 @@
     <message>
         <source>Please license %1</source>
         <translation>Lisensioi %1.</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Tämä demon kokeiluaika on päättynyt.</translation>
-    </message>
-    <message>
-        <source>Without a license, the application will expire in %1 days.</source>
-        <translation>Ilman lisenssiä tämä sovellus vanhenee %1 päivässä.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -185,10 +185,6 @@
         <translation>Peruuta</translation>
     </message>
     <message>
-        <source>Use iTunes collection</source>
-        <translation>Käytä iTunes-kokoelmaa</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Valitse kansio...</translation>
     </message>
@@ -211,6 +207,10 @@
     <message>
         <source>Use %1 folder</source>
         <translation>Käytä %1-kansiota</translation>
+    </message>
+    <message>
+        <source>Use %1 library</source>
+        <translation>Käytä %1-kirjastoa</translation>
     </message>
 </context>
 <context>
@@ -662,6 +662,18 @@
         <source>&amp;Scrobble</source>
         <translation>&amp;Scrobblaus</translation>
     </message>
+    <message>
+        <source>Thanks for updating %1 to version %2!</source>
+        <translation>Kiitos kun päivitit %1:n versioon %2!</translation>
+    </message>
+    <message>
+        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
+        <translation>Mikäli nautit %1 :sta, ehkäpä asennettuasi sen kuukausua tai jopa vuosia sitten, harkitse tulla yhdeksi heistä jotka tukevat nauttimastaan tuotoksesta.</translation>
+    </message>
+    <message>
+        <source>Donate</source>
+        <translation>Lahjoita</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -749,6 +761,95 @@
     <message>
         <source>Downloading %1...</source>
         <translation>Ladataan %1...</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Check for Updates...</source>
+        <translation>Tarkista päivitykset...</translation>
+    </message>
+    <message>
+        <source>Version %1 is available...</source>
+        <translation>Versio %1 on saatavilla...</translation>
+    </message>
+    <message>
+        <source>Downloading version %1...</source>
+        <translation>Ladataan versiota %1...</translation>
+    </message>
+    <message>
+        <source>Restart to Update</source>
+        <translation>Uudelleenkäynnistä päivittääksesi</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed</source>
+        <translation>Version %1 lataaminen epäonnistui</translation>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation>Tarkista päivitykset</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation>Lataa päivitys</translation>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Ladataan päivitystä...</translation>
+    </message>
+    <message>
+        <source>Retry Update Download</source>
+        <translation>Yritä päivityksen lataamista uudelleen</translation>
+    </message>
+    <message>
+        <source>You have the latest version.</source>
+        <translation>Käytössäsi on viimeisin versio.</translation>
+    </message>
+    <message>
+        <source>Version %1 is available.</source>
+        <translation>Versio %1 on saatavilla.</translation>
+    </message>
+    <message>
+        <source>An update has been downloaded and is ready to be installed.</source>
+        <translation>Päivitys on ladattu ja valmiina asennettavaksi.</translation>
+    </message>
+</context>
+<context>
+    <name>updater::DefaultUpdater</name>
+    <message>
+        <source>There are currently no updates available.</source>
+        <translation>Päivityksiä ei tällä hetkellä ole saatavilla.</translation>
+    </message>
+</context>
+<context>
+    <name>updater::Dialog</name>
+    <message>
+        <source>You already have the latest version</source>
+        <translation>Käytössäsi on jo viimeisin versio.</translation>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation>Ladataan %1 %2...</translation>
+    </message>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Uusi versio sovelluksesta %1 on saatavilla!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 on nyt saatavilla. Sinulla on %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Haluatko ladata sen nyt?</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Muistuta minua myöhemmin</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation>Lataa päivitys</translation>
     </message>
 </context>
 </TS>

@@ -25,6 +25,14 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Übersetze %1 mit %2 in deine Muttersprache</translation>
     </message>
+    <message>
+        <source>Powered by %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open-source software</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ActivationDialog</name>
@@ -46,14 +54,6 @@
     <message>
         <source>Please license %1</source>
         <translation>Bitte lizensiere %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Diese Testversion ist abgelaufen.</translation>
-    </message>
-    <message>
-        <source>Without a license, the application will expire in %1 days.</source>
-        <translation>Ohne Lizenz wird die Testversion der Anwendung in %1 Tagen ablaufen.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -185,10 +185,6 @@
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <source>Use iTunes collection</source>
-        <translation>Verwende die Musiksammlung von iTunes</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Wähle einen Ordner...</translation>
     </message>
@@ -211,6 +207,10 @@
     <message>
         <source>Use %1 folder</source>
         <translation>Verwende Ordner %1</translation>
+    </message>
+    <message>
+        <source>Use %1 library</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -662,6 +662,18 @@
         <source>&amp;Scrobble</source>
         <translation>&amp;Scrobble</translation>
     </message>
+    <message>
+        <source>Thanks for updating %1 to version %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Donate</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -749,6 +761,95 @@
     <message>
         <source>Downloading %1...</source>
         <translation>Lade %1 herunter...</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Check for Updates...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading version %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart to Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 download failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Lade Update herunter...</translation>
+    </message>
+    <message>
+        <source>Retry Update Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have the latest version.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update has been downloaded and is ready to be installed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::DefaultUpdater</name>
+    <message>
+        <source>There are currently no updates available.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::Dialog</name>
+    <message>
+        <source>You already have the latest version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Es ist eine neue Version von %1 verfügbar!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 ist jetzt verfügbar. Du hast aktuell %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Würdest Du diese jetzt gerne runterladen?</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Mich später erinnern</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

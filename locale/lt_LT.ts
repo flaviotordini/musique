@@ -25,6 +25,14 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Išverskite %1 į savo gimtąją kalbą, naudodami %2</translation>
     </message>
+    <message>
+        <source>Powered by %1</source>
+        <translation>Veikia su %1</translation>
+    </message>
+    <message>
+        <source>Open-source software</source>
+        <translation>Atviroji programinė įranga</translation>
+    </message>
 </context>
 <context>
     <name>ActivationDialog</name>
@@ -46,14 +54,6 @@
     <message>
         <source>Please license %1</source>
         <translation>Prašome licencijuoti %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Šios demonstracinės versijos galiojimo laikas baigėsi.</translation>
-    </message>
-    <message>
-        <source>Without a license, the application will expire in %1 days.</source>
-        <translation>Be licencijos, programa baigs galioti po %1 dienų.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -185,10 +185,6 @@
         <translation>Atsisakyti</translation>
     </message>
     <message>
-        <source>Use iTunes collection</source>
-        <translation>Naudoti iTunes kolekciją</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Pasirinkti aplanką...</translation>
     </message>
@@ -211,6 +207,10 @@
     <message>
         <source>Use %1 folder</source>
         <translation>Naudoti %1 aplanką</translation>
+    </message>
+    <message>
+        <source>Use %1 library</source>
+        <translation>Naudoti %1 biblioteką</translation>
     </message>
 </context>
 <context>
@@ -662,6 +662,18 @@
         <source>&amp;Scrobble</source>
         <translation>&amp;Scrobble paslauga</translation>
     </message>
+    <message>
+        <source>Thanks for updating %1 to version %2!</source>
+        <translation>Dėkojame, kad atnaujinote %1 į versiją %2!</translation>
+    </message>
+    <message>
+        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
+        <translation>Jei mėgaujatės %1, galbūt, esate ją įdiegę jau prieš mėnesius ar net metus, tuomet apsvarstykite galimybę tapti vienu iš tų žmonių, kurie palaiko tai, kas jiems patinka.</translation>
+    </message>
+    <message>
+        <source>Donate</source>
+        <translation>Paaukoti</translation>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -749,6 +761,95 @@
     <message>
         <source>Downloading %1...</source>
         <translation>Atsisiunčiama %1...</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Check for Updates...</source>
+        <translation>Tikrinti, ar yra atnaujinimų...</translation>
+    </message>
+    <message>
+        <source>Version %1 is available...</source>
+        <translation>Yar prieinama versija %1...</translation>
+    </message>
+    <message>
+        <source>Downloading version %1...</source>
+        <translation>Atsisiunčiama versija %1...</translation>
+    </message>
+    <message>
+        <source>Restart to Update</source>
+        <translation>Norėdami atnaujinti, paleiskite programą iš naujo</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed</source>
+        <translation>Nepavyko atsisiųsti versiją %1</translation>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation>Tikrinti, ar yra atnaujinimų</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation>Atsisiųsti atnaujinimą</translation>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Atsiunčiamas atnaujinimas...</translation>
+    </message>
+    <message>
+        <source>Retry Update Download</source>
+        <translation>Bandyti atsisiųsti atnaujinimą iš naujo</translation>
+    </message>
+    <message>
+        <source>You have the latest version.</source>
+        <translation>Jūs turite naujausią versiją.</translation>
+    </message>
+    <message>
+        <source>Version %1 is available.</source>
+        <translation>Yra prieinama versija %1.</translation>
+    </message>
+    <message>
+        <source>An update has been downloaded and is ready to be installed.</source>
+        <translation>Atnaujinimas atsisiųstas ir paruoštas įdiegti.</translation>
+    </message>
+</context>
+<context>
+    <name>updater::DefaultUpdater</name>
+    <message>
+        <source>There are currently no updates available.</source>
+        <translation>Šiuo metu nėra prieinamų atnaujinimų.</translation>
+    </message>
+</context>
+<context>
+    <name>updater::Dialog</name>
+    <message>
+        <source>You already have the latest version</source>
+        <translation>Jūs turite naujausią versiją</translation>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation>Atsisiunčiama %1 %2...</translation>
+    </message>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Yra prieinama nauja %1 versija!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>Dabar yra prieinama %1 %2. Jūs turite %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Ar norėtumėte ją atsisiųsti dabar?</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Priminti vėliau</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation>Atsisiųsti atnaujinimą</translation>
     </message>
 </context>
 </TS>

@@ -25,6 +25,14 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>Перевести %1 на ваш родной язык с помощью %2</translation>
     </message>
+    <message>
+        <source>Powered by %1</source>
+        <translation>При помощи %1</translation>
+    </message>
+    <message>
+        <source>Open-source software</source>
+        <translation>ПО с открытым исходным кодом</translation>
+    </message>
 </context>
 <context>
     <name>ActivationDialog</name>
@@ -47,14 +55,6 @@
         <source>Please license %1</source>
         <translation>	
 Лицензия %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>Демонстрационный период истек.</translation>
-    </message>
-    <message>
-        <source>Without a license, the application will expire in %1 days.</source>
-        <translation>Срок работы, этого приложения, без лицензии истекает через %1 дн.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -186,10 +186,6 @@
         <translation>Отмена</translation>
     </message>
     <message>
-        <source>Use iTunes collection</source>
-        <translation>Использовать коллекцию ITunes</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>Выберите папку...</translation>
     </message>
@@ -211,6 +207,10 @@
     </message>
     <message>
         <source>Use %1 folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use %1 library</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -637,11 +637,11 @@
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Скрыть &amp;Menu Bar</translation>
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Меню</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
@@ -657,10 +657,22 @@
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
-        <translation type="unfinished"/>
+        <translation>Открыть меню можно нажатием ALT</translation>
     </message>
     <message>
         <source>&amp;Scrobble</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Thanks for updating %1 to version %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Donate</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -750,6 +762,95 @@
     <message>
         <source>Downloading %1...</source>
         <translation>Загрузка %1...</translation>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Check for Updates...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading version %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart to Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 download failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation>Загрузка обновления....</translation>
+    </message>
+    <message>
+        <source>Retry Update Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have the latest version.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update has been downloaded and is ready to be installed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::DefaultUpdater</name>
+    <message>
+        <source>There are currently no updates available.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::Dialog</name>
+    <message>
+        <source>You already have the latest version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>Новая версия приложения %1 уже доступна!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 уже доступна. У вас %3.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>Хотите загрузить сейчас?</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>Напомнить позже</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 </TS>

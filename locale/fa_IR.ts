@@ -25,6 +25,14 @@
         <source>Translate %1 to your native language using %2</source>
         <translation>%1 را به زبان مادری خود با استفاده از %2 ترجمه کنید</translation>
     </message>
+    <message>
+        <source>Powered by %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Open-source software</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>ActivationDialog</name>
@@ -46,14 +54,6 @@
     <message>
         <source>Please license %1</source>
         <translation>لطفا گواهینامه %1</translation>
-    </message>
-    <message>
-        <source>This demo has expired.</source>
-        <translation>این نسخه آزمایشی منقضی شده است.</translation>
-    </message>
-    <message>
-        <source>Without a license, the application will expire in %1 days.</source>
-        <translation>بدون گواهینامه این برنامه تا %1 روز دیگر منقضی می‌شود.</translation>
     </message>
     <message>
         <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
@@ -185,10 +185,6 @@
         <translation>لغو</translation>
     </message>
     <message>
-        <source>Use iTunes collection</source>
-        <translation>استفاده از مجموعه‌ی iTunes</translation>
-    </message>
-    <message>
         <source>Choose a folder...</source>
         <translation>انتخاب یک پوشه...</translation>
     </message>
@@ -210,6 +206,10 @@
     </message>
     <message>
         <source>Use %1 folder</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Use %1 library</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -662,6 +662,18 @@
         <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>Thanks for updating %1 to version %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Donate</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -748,6 +760,95 @@
     </message>
     <message>
         <source>Downloading %1...</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>Updater</name>
+    <message>
+        <source>Check for Updates...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading version %1...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restart to Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 download failed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Check for Updates</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Download Update</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading update...</source>
+        <translation>درحال بارگیری بروزرسانی...</translation>
+    </message>
+    <message>
+        <source>Retry Update Download</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>You have the latest version.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 is available.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update has been downloaded and is ready to be installed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::DefaultUpdater</name>
+    <message>
+        <source>There are currently no updates available.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>updater::Dialog</name>
+    <message>
+        <source>You already have the latest version</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Downloading %1 %2...</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>A new version of %1 is available!</source>
+        <translation>یک نسخه جدید از %1 موجود است!</translation>
+    </message>
+    <message>
+        <source>%1 %2 is now available. You have %3.</source>
+        <translation>%1 %2 موجود است. شما %3 را دارید.</translation>
+    </message>
+    <message>
+        <source>Would you like to download it now?</source>
+        <translation>آیا مایلید که هم‌اکنون آن را دانلود کنید؟</translation>
+    </message>
+    <message>
+        <source>Remind Me Later</source>
+        <translation>بعدا یادآوری کن</translation>
+    </message>
+    <message>
+        <source>Download Update</source>
         <translation type="unfinished"/>
     </message>
 </context>
