@@ -12,7 +12,7 @@ MessageBar::MessageBar(QWidget *parent) : QWidget(parent) {
     layout->addWidget(msgLabel);
 
     QToolButton *closeToolButton = new QToolButton();
-    closeToolButton->setIcon(IconUtils::icon("close", palette().background().color()));
+    closeToolButton->setIcon(IconUtils::icon("close", Qt::white));
     connect(closeToolButton, &QToolButton::clicked, this, [this] {
         emit closed();
         hide();
@@ -26,6 +26,10 @@ void MessageBar::setMessage(const QString &message) {
 
 void MessageBar::setOpenExternalLinks(bool value) {
     msgLabel->setOpenExternalLinks(value);
+}
+
+void MessageBar::setAlignment(Qt::Alignment value) {
+    msgLabel->setAlignment(value);
 }
 
 void MessageBar::paintEvent(QPaintEvent *e) {

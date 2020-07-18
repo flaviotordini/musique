@@ -1535,6 +1535,7 @@ void MainWindow::reportIssue() {
 
 void MainWindow::maybeShowMessageBar() {
     messageBar = new MessageBar();
+    messageBar->setAlignment(Qt::AlignHCenter);
     auto dockWidget = new QDockWidget();
     dockWidget->setTitleBarWidget(new QWidget());
     dockWidget->setWidget(messageBar);
