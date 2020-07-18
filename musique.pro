@@ -13,6 +13,15 @@ DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 message(Building $${APP_NAME} $${VERSION})
 message(Qt $$[QT_VERSION] in $$[QT_INSTALL_PREFIX])
 
+CONFIG -= debug_and_release
+CONFIG(debug, debug|release): {
+    message(Building for debug)
+}
+CONFIG(release, debug|release): {
+    message(Building for release)
+    DEFINES *= QT_NO_DEBUG_OUTPUT
+}
+
 DEFINES *= QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_DEPRECATED_WARNINGS
 
 TARGET = $${APP_UNIX_NAME}
