@@ -64,6 +64,7 @@ public:
     void setPlayed(bool played) { this->played = played; }
     uint getStartTime() { return startTime; }
     void setStartTime(uint startTime) { this->startTime = startTime; }
+    void setLyrics(const QString &value);
 
     // relations
     Album *getAlbum() const { return album; }
@@ -106,9 +107,6 @@ signals:
     void gotInfo();
     void gotLyrics(QString lyrics);
     void removed();
-
-private slots:
-    void readLyricsFromTags();
 
 private:
     QString getLyricsLocation();

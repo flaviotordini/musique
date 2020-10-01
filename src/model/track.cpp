@@ -355,11 +355,22 @@ QString Track::getLyricsLocation() {
     return l;
 }
 
+void Track::setLyrics(const QString &value) {
+    QString filePath = getLyricsLocation();
+    QDir().mkpath(QFileInfo(filePath).absolutePath());
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly)) {
+        qDebug() << "Error opening file for writing" << file.fileName();
+    } else {
+        QTextStream stream(&file);
+        stream << value;
+    }
+}
+
 void Track::getLyrics() {
     QString artistName;
     if (artist) artistName = artist->getName();
 
-    // read from old cache
     QFile file(getLyricsLocation());
     if (file.exists()) {
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -374,29 +385,6 @@ void Track::getLyrics() {
     Lyrics::get(artistName, title)
             .onData([this](auto lyrics) { emit gotLyrics(lyrics); })
             .onError([this, artistName](auto msg) { qDebug() << msg << artistName << title; });
-}
-
-void Track::readLyricsFromTags() {
-    const QString absolutePath = getAbsolutePath();
-
-    const QString suffix = QFileInfo(absolutePath).suffix().toLower();
-    if (suffix != "mp3") return;
-
-    TagLib::MPEG::File f((TagLib::FileName)absolutePath.toUtf8());
-    if (!f.isValid()) return;
-
-    TagLib::ID3v2::Tag *tag = f.ID3v2Tag();
-    if (!tag) return;
-
-    TagLib::ID3v2::FrameList list = tag->frameList("USLT");
-    if (list.isEmpty()) return;
-
-    TagLib::ID3v2::UnsynchronizedLyricsFrame *frame =
-            static_cast<TagLib::ID3v2::UnsynchronizedLyricsFrame *>(list.front());
-    if (!frame) return;
-
-    QString lyrics = QString::fromUtf8(frame->text().toCString(true));
-    emit gotLyrics(lyrics);
 }
 
 int Track::getTotalLength(const QVector<Track *> &tracks) {

@@ -793,6 +793,9 @@ void CollectionScanner::processTrack(FileInfo *file) {
         }
     }
 
+    QString lyricsTag = file->getTags()->getLyrics();
+    if (!lyricsTag.isEmpty()) track->setLyrics(lyricsTag);
+
     // if (album) album->fixTrackTitle(track);
 
     // qDebug() << "Removing" << file->getFileInfo().baseName() << "from queue";
