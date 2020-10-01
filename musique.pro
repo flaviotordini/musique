@@ -37,6 +37,8 @@ include(lib/media/media.pri)
 include(src/qtsingleapplication/qtsingleapplication.pri)
 include(src/tags/tags.pri)
 
+INCLUDEPATH += $$PWD/src
+
 HEADERS += src/mainwindow.h \
     src/aboutview.h \
     src/messagebar.h \
