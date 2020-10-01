@@ -34,6 +34,8 @@ $END_LICENSE */
 #include <mpegfile.h>
 #include <unsynchronizedlyricsframe.h>
 
+#include "lyrics.h"
+
 Track::Track()
     : number(0), diskNumber(1), diskCount(1), year(0), length(0), album(nullptr), artist(nullptr),
       played(false), startTime(0) {}
@@ -354,13 +356,10 @@ QString Track::getLyricsLocation() {
 }
 
 void Track::getLyrics() {
-#ifdef APP_MAC_STORE_NO
-    bool haveStyle = (QFile::exists(qApp->applicationDirPath() + "/../Resources/style.css"));
-    if (!haveStyle) {
-        return;
-    }
-#endif
+    QString artistName;
+    if (artist) artistName = artist->getName();
 
+    // read from old cache
     QFile file(getLyricsLocation());
     if (file.exists()) {
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -372,97 +371,9 @@ void Track::getLyrics() {
         }
     }
 
-    QString artistName;
-    if (artist) artistName = artist->getName();
-
-    // http://lyrics.wikia.com/LyricWiki:REST
-    QUrl url = QString("https://lyrics.fandom.com/api.php?func=getSong&artist=%1&song=%2&fmt=xml")
-                       .arg(QString::fromUtf8(
-                               QUrl::toPercentEncoding(DataUtils::simplify(artistName))))
-                       .arg(QString::fromUtf8(QUrl::toPercentEncoding(DataUtils::simplify(title))));
-
-    QObject *reply = Http::instance().get(url);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(parseLyricsSearchResults(QByteArray)));
-    // connect(reply, SIGNAL(error(QString)), SIGNAL(gotLyrics()));
-}
-
-void Track::parseLyricsSearchResults(const QByteArray &bytes) {
-    QString lyricsText = DataUtils::getXMLElementText(bytes, "lyrics");
-    if (lyricsText == "Instrumental") {
-        emit gotLyrics(lyricsText);
-        return;
-    }
-
-    QString lyricsUrl = DataUtils::getXMLElementText(bytes, "url");
-    if (lyricsUrl.contains("action=edit")) {
-        // Lyrics not found
-        // qDebug() << "Lyrics not available for" << title;
-        readLyricsFromTags();
-
-    } else {
-        // Lyrics found, get them
-        QUrl url = QUrl::fromEncoded(lyricsUrl.toUtf8());
-        QObject *reply = Http::instance().get(url);
-        connect(reply, SIGNAL(data(QByteArray)), SLOT(scrapeLyrics(QByteArray)));
-        // connect(reply, SIGNAL(error(QString)), SIGNAL(gotLyrics()));
-    }
-}
-
-void Track::scrapeLyrics(const QByteArray &bytes) {
-    QString lyrics = QString::fromUtf8(bytes);
-
-    int pos = lyrics.indexOf("'lyricbox'");
-    if (pos == -1) return;
-    int startPos = lyrics.indexOf(">", pos) + 1;
-    int endPos = lyrics.indexOf("</div>", startPos);
-    int otherDivPos = lyrics.indexOf("<div", startPos);
-    while (otherDivPos != -1 && otherDivPos < endPos) {
-        endPos = lyrics.indexOf("</div>", endPos + 1);
-        otherDivPos = lyrics.indexOf("<div", otherDivPos + 1);
-    }
-    lyrics = lyrics.mid(startPos, endPos - startPos);
-
-    // strip adverts
-    pos = lyrics.indexOf("<div");
-    while (pos != -1) {
-        startPos = lyrics.lastIndexOf("<div", pos);
-        endPos = lyrics.indexOf("</div>", pos);
-        // qDebug() << "<div" << startPos << endPos << lyrics;
-        lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 6);
-        pos = lyrics.indexOf("<div");
-    }
-
-    // strip comments
-    pos = lyrics.indexOf("<!--");
-    while (pos != -1) {
-        startPos = lyrics.lastIndexOf("<!--", pos);
-        endPos = lyrics.indexOf("-->", pos);
-        // qDebug() << "<!--:" << startPos << endPos << lyrics;
-        lyrics = lyrics.left(startPos) + lyrics.mid(endPos + 3);
-        pos = lyrics.indexOf("<!--");
-    }
-
-    // drop partial lyrics
-    if (lyrics.indexOf("Special:Random") != -1) {
-        qDebug() << "Discarding incomplete lyrics for" << title;
-        readLyricsFromTags();
-        return;
-    }
-
-    lyrics = lyrics.simplified();
-
-    // cache lyrics
-    QString filePath = getLyricsLocation();
-    QDir().mkpath(QFileInfo(filePath).absolutePath());
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly)) {
-        qDebug() << "Error opening file for writing" << file.fileName();
-    } else {
-        QTextStream stream(&file);
-        stream << lyrics;
-    }
-
-    emit gotLyrics(lyrics);
+    Lyrics::get(artistName, title)
+            .onData([this](auto lyrics) { emit gotLyrics(lyrics); })
+            .onError([this, artistName](auto msg) { qDebug() << msg << artistName << title; });
 }
 
 void Track::readLyricsFromTags() {

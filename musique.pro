@@ -30,6 +30,8 @@ QT += network sql widgets
 
 include(lib/http/http.pri)
 include(lib/idle/idle.pri)
+include(lib/js/js.pri)
+include(lib/sharedcache/sharedcache.pri)
 
 DEFINES += MEDIA_MPV MEDIA_AUDIOONLY
 include(lib/media/media.pri)
@@ -41,6 +43,7 @@ INCLUDEPATH += $$PWD/src
 
 HEADERS += src/mainwindow.h \
     src/aboutview.h \
+    src/lyrics.h \
     src/messagebar.h \
     src/updateutils.h \
     src/view.h \
@@ -113,6 +116,7 @@ HEADERS += src/mainwindow.h \
     src/clickablelabel.h \
     src/waitingspinnerwidget.h
 SOURCES += src/main.cpp \
+    src/lyrics.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
     src/messagebar.cpp \

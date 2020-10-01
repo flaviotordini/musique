@@ -77,6 +77,8 @@ $END_LICENSE */
 #include "updater.h"
 #endif
 
+#include "js.h"
+
 namespace {
 MainWindow *singleton = nullptr;
 }
@@ -129,6 +131,8 @@ MainWindow::MainWindow() : toolbarMenu(nullptr), mainToolBar(nullptr) {
 }
 
 void MainWindow::lazyInit() {
+    JS::instance().initialize(QUrl(QLatin1String(Constants::WEBSITE) + "-ws/bundle.js"));
+
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
 #ifdef APP_MAC
     mac::MacSetup();

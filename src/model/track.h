@@ -108,8 +108,6 @@ signals:
     void removed();
 
 private slots:
-    void parseLyricsSearchResults(const QByteArray &bytes);
-    void scrapeLyrics(const QByteArray &bytes);
     void readLyricsFromTags();
 
 private:
