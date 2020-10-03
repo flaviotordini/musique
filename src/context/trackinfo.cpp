@@ -46,7 +46,6 @@ TrackInfo::TrackInfo(QWidget *parent) :
 
     lyricsLabel = new QLabel(this);
     lyricsLabel->setPalette(parent->palette());
-    lyricsLabel->setTextFormat(Qt::RichText);
     lyricsLabel->setAlignment(Qt::AlignTop);
     lyricsLabel->setWordWrap(true);
     lyricsLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
