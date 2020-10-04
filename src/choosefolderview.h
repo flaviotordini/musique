@@ -51,6 +51,8 @@ private slots:
     void folderChosen(const QString &folder);
 
 private:
+    QString getMusicLocation();
+
     QLabel *welcomeLabel;
     QLabel *tipLabel;
     QPushButton *cancelButton;

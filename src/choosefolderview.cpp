@@ -84,9 +84,8 @@ ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
     buttonLayout->addWidget(useiTunesDirButton);
 #endif
 
-    QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
-    QString homeLocation = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-    if (QFile::exists(musicLocation) && musicLocation != homeLocation + "/") {
+    QString musicLocation = getMusicLocation();
+    if (!musicLocation.isEmpty()) {
         QString musicFolderName = QStandardPaths::displayName(QStandardPaths::MusicLocation);
         QPushButton *useSystemDirButton = new QPushButton(tr("Use %1 folder").arg(musicFolderName));
         connect(useSystemDirButton, SIGNAL(clicked()), SLOT(systemDirChosen()));
@@ -131,8 +130,25 @@ void ChooseFolderView::folderChosen(const QString &folder) {
     if (!folder.isEmpty()) emit locationChanged(folder);
 }
 
-void ChooseFolderView::systemDirChosen() {
+QString ChooseFolderView::getMusicLocation() {
     QString musicLocation = QStandardPaths::writableLocation(QStandardPaths::MusicLocation);
+    QString homeLocation = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+    qDebug() << musicLocation << homeLocation;
+
+    bool validMusicLocation = QFile::exists(musicLocation) && musicLocation != homeLocation &&
+                              musicLocation != homeLocation + "/";
+    if (!validMusicLocation) {
+        QString guessedMusicLocation = homeLocation + "/Music";
+        validMusicLocation = QFile::exists(guessedMusicLocation);
+        if (validMusicLocation) musicLocation = guessedMusicLocation;
+    }
+
+    if (!validMusicLocation) return QString();
+    return musicLocation;
+}
+
+void ChooseFolderView::systemDirChosen() {
+    QString musicLocation = getMusicLocation();
     emit locationChanged(musicLocation);
 }
 
@@ -145,9 +161,11 @@ void ChooseFolderView::iTunesDirChosen() {
 void ChooseFolderView::appear() {
     Database &db = Database::instance();
     if (db.status() == ScanComplete) {
+        welcomeLabel->hide();
         tipLabel->setText(tr("Select the location of your music collection."));
         cancelButton->show();
     } else {
+        welcomeLabel->show();
         tipLabel->setText(tr("%1 needs to scan your music collection.").arg(Constants::NAME));
         cancelButton->hide();
     }
