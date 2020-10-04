@@ -729,6 +729,8 @@ void MainWindow::writeSettings() {
 #ifndef APP_MAC
     settings.setValue("menuBar", menuBar()->isVisible());
 #endif
+
+    settings.setValue("v", Constants::VERSION);
 }
 
 void MainWindow::goBack() {
@@ -1216,29 +1218,25 @@ void MainWindow::setRepeat(bool enabled) {
 
 bool MainWindow::maybeShowUpdateNag() {
     QSettings settings;
-    const QString versionKey = "v";
-    QString lastRunVersion = settings.value(versionKey).toString();
+    QString lastRunVersion = settings.value("v").toString();
     if (lastRunVersion != QLatin1String(Constants::VERSION)) {
-        settings.setValue(versionKey, Constants::VERSION);
-        if (!lastRunVersion.isEmpty()) {
-            QMessageBox *msgBox = new QMessageBox(this);
-            msgBox->setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
-            msgBox->setText(tr("Thanks for updating %1 to version %2!")
-                                    .arg(Constants::NAME, Constants::VERSION));
-            msgBox->setInformativeText(tr("If you enjoy %1, perhaps having installed it months or "
-                                          "even years ago, please "
-                                          "consider becoming one of the people willing to support "
-                                          "something you enjoy.")
-                                               .arg(Constants::NAME));
-            msgBox->addButton(QMessageBox::Close);
-            QPushButton *donateButton = msgBox->addButton(tr("Donate"), QMessageBox::AcceptRole);
-            msgBox->setDefaultButton(donateButton);
-            donateButton->setDefault(true);
-            donateButton->setFocus();
-            connect(msgBox, &QDialog::accepted, this, [this] { donate(); });
-            msgBox->open();
-            return true;
-        }
+        QMessageBox *msgBox = new QMessageBox(this);
+        msgBox->setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
+        msgBox->setText(tr("Thanks for updating %1 to version %2!")
+                                .arg(Constants::NAME, Constants::VERSION));
+        msgBox->setInformativeText(tr("If you enjoy %1, perhaps having installed it months or "
+                                      "even years ago, please "
+                                      "consider becoming one of the people willing to support "
+                                      "something you enjoy.")
+                                           .arg(Constants::NAME));
+        msgBox->addButton(QMessageBox::Close);
+        QPushButton *donateButton = msgBox->addButton(tr("Donate"), QMessageBox::AcceptRole);
+        msgBox->setDefaultButton(donateButton);
+        donateButton->setDefault(true);
+        donateButton->setFocus();
+        connect(msgBox, &QDialog::accepted, this, [this] { donate(); });
+        msgBox->open();
+        return true;
     }
     return false;
 }
