@@ -386,7 +386,7 @@ void FinderWidget::artistActivated(const QModelIndex &index) {
     // get the data object
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
     Artist *artist = artistPointer.data();
-    artistActivated(artist);
+    if (artist) artistActivated(artist);
 }
 
 void FinderWidget::artistActivated(Artist *artist) {
@@ -408,8 +408,10 @@ void FinderWidget::artistActivated(Artist *artist) {
 void FinderWidget::artistPlayed(const QModelIndex &index) {
     const ArtistPointer artistPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
     Artist *artist = artistPointer.data();
-    QVector<Track *> tracks = artist->getTracks();
-    addTracksAndPlay(tracks);
+    if (artist) {
+        QVector<Track *> tracks = artist->getTracks();
+        addTracksAndPlay(tracks);
+    }
 }
 
 void FinderWidget::albumActivated(Album *album) {
@@ -429,14 +431,16 @@ void FinderWidget::albumActivated(Album *album) {
 void FinderWidget::albumActivated(const QModelIndex &index) {
     const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
     Album *album = albumPointer.data();
-    albumActivated(album);
+    if (album) albumActivated(album);
 }
 
 void FinderWidget::albumPlayed(const QModelIndex &index) {
     const AlbumPointer albumPointer = index.data(Finder::DataObjectRole).value<AlbumPointer>();
     Album *album = albumPointer.data();
-    QVector<Track *> tracks = album->getTracks();
-    addTracksAndPlay(tracks);
+    if (album) {
+        QVector<Track *> tracks = album->getTracks();
+        addTracksAndPlay(tracks);
+    }
 }
 
 void FinderWidget::trackActivated(Track *track) {
@@ -447,7 +451,7 @@ void FinderWidget::trackActivated(Track *track) {
 void FinderWidget::trackActivated(const QModelIndex &index) {
     const TrackPointer trackPointer = index.data(Finder::DataObjectRole).value<TrackPointer>();
     Track *track = trackPointer.data();
-    trackActivated(track);
+    if (track) trackActivated(track);
 }
 
 void FinderWidget::folderActivated(const QModelIndex &index) {
