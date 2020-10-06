@@ -27,11 +27,11 @@
     </message>
     <message>
         <source>Powered by %1</source>
-        <translation type="unfinished"/>
+        <translation>Powered by %1</translation>
     </message>
     <message>
         <source>Open-source software</source>
-        <translation type="unfinished"/>
+        <translation>Open-source software</translation>
     </message>
 </context>
 <context>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Use %1 library</source>
-        <translation type="unfinished"/>
+        <translation>Verwende Bibliothek %1</translation>
     </message>
 </context>
 <context>
@@ -664,15 +664,15 @@
     </message>
     <message>
         <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
+        <translation>Danke für das Aktualisieren von Version %1 zu %2!</translation>
     </message>
     <message>
         <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
+        <translation>Wenn Ihnen %1 gefällt und Sie es vielleicht schon vor Monaten oder sogar Jahren installiert haben, ziehen Sie bitte in Betracht, zu den Menschen zu gehören, die bereit sind, etwas zu unterstützen, das Ihnen gefällt.</translation>
     </message>
     <message>
         <source>Donate</source>
-        <translation type="unfinished"/>
+        <translation>Spenden</translation>
     </message>
 </context>
 <context>
@@ -767,31 +767,31 @@
     <name>Updater</name>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Auf Updates prüfen...</translation>
     </message>
     <message>
         <source>Version %1 is available...</source>
-        <translation type="unfinished"/>
+        <translation>Version %1 ist verfügbar...</translation>
     </message>
     <message>
         <source>Downloading version %1...</source>
-        <translation type="unfinished"/>
+        <translation>Lade Version %1 herunter...</translation>
     </message>
     <message>
         <source>Restart to Update</source>
-        <translation type="unfinished"/>
+        <translation>Neustarten um Update zu installieren</translation>
     </message>
     <message>
         <source>Version %1 download failed</source>
-        <translation type="unfinished"/>
+        <translation>Download von Version %1 ist fehlgeschlagen</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Auf Updates prüfen</translation>
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Update herunterladen</translation>
     </message>
     <message>
         <source>Downloading update...</source>
@@ -799,37 +799,37 @@
     </message>
     <message>
         <source>Retry Update Download</source>
-        <translation type="unfinished"/>
+        <translation>Versuchen das Update erneut herunterzuladen</translation>
     </message>
     <message>
         <source>You have the latest version.</source>
-        <translation type="unfinished"/>
+        <translation>Sie haben die aktuellste Version.</translation>
     </message>
     <message>
         <source>Version %1 is available.</source>
-        <translation type="unfinished"/>
+        <translation>Version %1 ist verfügbar.</translation>
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>Ein Update wurde heruntergeladen und steht zur Installation bereit.</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>Derzeit sind keine Aktualisierungen verfügbar.</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>Sie haben schon die aktuellste Version.</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>
-        <translation type="unfinished"/>
+        <translation>Lade %1 %2 herunter...</translation>
     </message>
     <message>
         <source>A new version of %1 is available!</source>
@@ -849,7 +849,7 @@
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Update herunterladen</translation>
     </message>
 </context>
 </TS>
