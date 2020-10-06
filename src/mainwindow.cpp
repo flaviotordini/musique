@@ -1312,8 +1312,6 @@ void MainWindow::runFinetune(const QString &filename) {
     return;
 #endif
 
-    const QString baseUrl = QLatin1String("https://") + Constants::ORG_DOMAIN;
-
 #ifdef APP_EXTRA
     const QString filesUrl = baseUrl + QLatin1String("/files/");
     QString url = filesUrl + "finetune/finetune.";
