@@ -1333,7 +1333,6 @@ void MainWindow::runFinetune(const QString &filename) {
     dialog->show();
 
 #else
-    const QString baseUrl = QLatin1String("https://") + Constants::ORG_DOMAIN;
     QString url = baseUrl + QLatin1String("/finetune");
     QDesktopServices::openUrl(url);
 #endif
