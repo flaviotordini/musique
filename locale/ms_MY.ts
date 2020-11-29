@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Use %1 library</source>
-        <translation type="unfinished"/>
+        <translation>Guna pustaka %1</translation>
     </message>
 </context>
 <context>
@@ -664,15 +664,15 @@
     </message>
     <message>
         <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
+        <translation>Terima kasih kerana mengemas kini %1 ke versi %2!</translation>
     </message>
     <message>
         <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
+        <translation>Jika anda menyukai %1, mungkin telah memasangnya beberapa bulan atau tahun yang lalu, dialu-alukan menyokong hasil kerja yang anda nikmati ini.</translation>
     </message>
     <message>
         <source>Donate</source>
-        <translation type="unfinished"/>
+        <translation>Beri Sumbangan</translation>
     </message>
 </context>
 <context>
@@ -767,31 +767,31 @@
     <name>Updater</name>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Periksa Kemas Kini...</translation>
     </message>
     <message>
         <source>Version %1 is available...</source>
-        <translation type="unfinished"/>
+        <translation>Versi %1 sudah tersedia...</translation>
     </message>
     <message>
         <source>Downloading version %1...</source>
-        <translation type="unfinished"/>
+        <translation>Memuat turun versi %1...</translation>
     </message>
     <message>
         <source>Restart to Update</source>
-        <translation type="unfinished"/>
+        <translation>Mula Semula untuk Kemas Kini</translation>
     </message>
     <message>
         <source>Version %1 download failed</source>
-        <translation type="unfinished"/>
+        <translation>Gagal memuat turun versi %1</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Periksa Kemas Kini</translation>
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Muat Turun Kemas Kini</translation>
     </message>
     <message>
         <source>Downloading update...</source>
@@ -799,37 +799,37 @@
     </message>
     <message>
         <source>Retry Update Download</source>
-        <translation type="unfinished"/>
+        <translation>Cuba Lagi Muat Turun Kemas Kini</translation>
     </message>
     <message>
         <source>You have the latest version.</source>
-        <translation type="unfinished"/>
+        <translation>Anda sudah memiliki versi terkini.</translation>
     </message>
     <message>
         <source>Version %1 is available.</source>
-        <translation type="unfinished"/>
+        <translation>Versi %1 sudah tersedia.</translation>
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>Satu kemas kini telah dimuat turun dan sedia dipasang.</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>Tiada kemas kini buat masa ini.</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>Anda sudah memiliki versi terkini</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>
-        <translation type="unfinished"/>
+        <translation>Memuat turun %1 %2...</translation>
     </message>
     <message>
         <source>A new version of %1 is available!</source>
@@ -849,7 +849,7 @@
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Muat Turun Kemas Kini</translation>
     </message>
 </context>
 </TS>
