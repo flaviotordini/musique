@@ -12,6 +12,7 @@ public:
     static Http &cached();
     static Http &notCached();
     static const QByteArray &userAgent();
+    static const QByteArray &stealthUserAgent();
 
 private:
     HttpUtils() {}
