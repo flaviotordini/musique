@@ -254,10 +254,6 @@ unix:!mac {
 }
 mac|win32|contains(DEFINES, APP_UBUNTU):include(local/local.pri)
 
-!contains(DEFINES, APP_MAC_STORE) {
-    include(lib/updater/updater.pri)
-}
-
 message(QT: $$QT)
 message(CONFIG: $$CONFIG)
 message(DEFINES: $$DEFINES)
