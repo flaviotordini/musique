@@ -288,7 +288,9 @@ void FinderItemDelegate::paintItem(QPainter *painter,
         paintPlayIcon(painter, line, animation, playIconHovered);
     }
 
-    drawName(painter, option, item->getName(), line, isSelected);
+    const int itemType = index.data(Finder::ItemTypeRole).toInt();
+    if (itemType != Finder::ItemTypeAlbum || isHovered)
+        drawName(painter, option, item->getName(), line, isSelected);
 
     painter->restore();
 }
