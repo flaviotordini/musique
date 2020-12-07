@@ -193,19 +193,13 @@ void FinderListView::updateItemSize() {
     const int maxPhotoWidth = 300;
     int size = 0;
 
-    const int itemCount = model()->rowCount(rootIndex());
-    if (itemCount > 0 && itemCount < 7) {
-        size = maxPhotoWidth / pixelRatio;
-    } else {
-        int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
-        int width = contentsRect().width() - scrollbarWidth - 1;
-        int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
-        size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
+    int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+    int width = contentsRect().width() - scrollbarWidth - 1;
+    int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
+    size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
 
-        // limit item size to available image resolution
-        if (pixelRatio > 1.0 && size * pixelRatio > maxPhotoWidth)
-            size = maxPhotoWidth / pixelRatio;
-    }
+    // limit item size to available image resolution
+    if (pixelRatio > 1.0 && size * pixelRatio > maxPhotoWidth) size = maxPhotoWidth / pixelRatio;
 
     delegate->setItemSize(size, size);
     setGridSize(QSize(size, size));
