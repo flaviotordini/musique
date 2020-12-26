@@ -1,7 +1,7 @@
 CONFIG += c++17 exceptions_off rtti_off object_parallel_to_source
 
 TEMPLATE = app
-VERSION = 1.10.1
+VERSION = 1.10.2
 DEFINES += APP_VERSION="$$VERSION"
 
 APP_NAME = Musique
