@@ -102,7 +102,7 @@ void PlaylistItemDelegate::paintTrack(QPainter *painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     if (isSelected)
-        QApplication::style()->drawPrimitive(QStyle::PE_PanelItemViewItem, &option, painter);
+        QApplication::style()->drawPrimitive(QStyle::PE_PanelItemViewRow, &option, painter);
 
     painter->save();
 
