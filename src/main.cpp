@@ -21,13 +21,18 @@ $END_LICENSE */
 #include <QtNetwork>
 #include <QtWidgets>
 
+#ifdef APP_MAC_STORE
+typedef QApplication SingleApplication;
+#else
+#include <singleapplication.h>
+#endif
+
 #include "constants.h"
 #include "http.h"
 #include "httputils.h"
 #include "iconutils.h"
 #include "mainwindow.h"
 #include "updateutils.h"
-#include <qtsingleapplication.h>
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
@@ -52,7 +57,7 @@ int main(int argc, char **argv) {
 
     QApplication::setWheelScrollLines(1);
 
-    QtSingleApplication app(argc, argv);
+    SingleApplication app(argc, argv);
     QString message;
     if (app.arguments().size() > 1) {
         message = app.arguments().at(1);
@@ -61,7 +66,7 @@ int main(int argc, char **argv) {
             return 0;
         }
     }
-    if (app.sendMessage(message)) return 0;
+    if (app.sendMessage(message.toUtf8())) return 0;
 
 #ifdef APP_EXTRA
     Extra::appSetup(&app);
@@ -123,10 +128,13 @@ int main(int argc, char **argv) {
     }
     mainWindow->setWindowIcon(appIcon);
 #endif
-
-    mainWindow->connect(&app, SIGNAL(messageReceived(const QString &)), mainWindow,
-                        SLOT(messageReceived(const QString &)));
-    app.setActivationWindow(mainWindow, true);
+#ifndef APP_MAC_STORE
+    mainWindow->connect(&app, &SingleApplication::receivedMessage, mainWindow,
+                        [mainWindow](auto instanceId, auto message) {
+                            Q_UNUSED(instanceId);
+                            mainWindow->messageReceived(message);
+                        });
+#endif
 
     // This is required in order to use QNetworkReply::NetworkError in QueuedConnetions
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
