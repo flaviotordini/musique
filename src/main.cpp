@@ -52,8 +52,6 @@ int main(int argc, char **argv) {
     QCoreApplication::setOrganizationDomain(Constants::ORG_DOMAIN);
     QCoreApplication::setApplicationVersion(Constants::VERSION);
     QGuiApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
-    QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QApplication::setWheelScrollLines(1);
 
