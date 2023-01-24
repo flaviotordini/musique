@@ -1290,7 +1290,7 @@ void MainWindow::runFinetune(const QVariantMap &stats) {
         qWarning() << "Error opening file for writing" << file.fileName();
     QTextStream stream(&file);
     for (const QString &s : files) {
-        stream << s << endl;
+        stream << s << Qt::endl;
     }
     stream.flush();
     file.close();
@@ -1341,7 +1341,8 @@ void MainWindow::runFinetune(const QString &filename) {
 }
 
 QString MainWindow::playlistPath() {
-    const QString storageLocation = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    const QString storageLocation =
+            QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     // We need to use a default name, so why not the application one?
     return QString("%1/%2.pls").arg(storageLocation).arg(Constants::UNIX_NAME);
 }

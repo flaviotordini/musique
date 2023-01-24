@@ -81,7 +81,7 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     p.setBrush(QPalette::WindowText, Qt::white);
 
     QBoxLayout *layout = new QVBoxLayout();
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     setupBar();

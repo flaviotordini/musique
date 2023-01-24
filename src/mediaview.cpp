@@ -39,7 +39,7 @@ MediaView::MediaView(QWidget *parent) : View(parent) {
     activeTrack = nullptr;
 
     QBoxLayout *layout = new QHBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     splitter = new MiniSplitter(this);

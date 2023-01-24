@@ -32,12 +32,12 @@ CollectionScannerView::CollectionScannerView(QWidget *parent) : View(parent) {
     QBoxLayout *vLayout = new QVBoxLayout(this);
     vLayout->setAlignment(Qt::AlignCenter);
     vLayout->setSpacing(padding);
-    vLayout->setMargin(padding);
+    vLayout->setContentsMargins(padding, padding, padding, padding);
 
     QBoxLayout *hLayout = new QHBoxLayout();
     vLayout->addLayout(hLayout);
     hLayout->setAlignment(Qt::AlignCenter);
-    hLayout->setMargin(padding);
+    hLayout->setContentsMargins(padding, padding, padding, padding);
     hLayout->setSpacing(padding);
 
     logo = new QLabel();

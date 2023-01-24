@@ -51,7 +51,7 @@ AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent)
     webPage = baseUrl + QLatin1String("/") + unixName;
 
     QBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setAlignment(Qt::AlignHCenter);
 
     icon = new QLabel();

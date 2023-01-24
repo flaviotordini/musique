@@ -122,7 +122,7 @@ int Genre::idForHash(const QString &hash) {
     return id;
 }
 
-QString Genre::cleanGenreName(QStringRef &genreName) {
+QString Genre::cleanGenreName(QString &genreName) {
     static const auto replacements = [] {
         QVector<QPair<QString, QString>> map;
         QFile f(":/res/genre-replacements.csv");

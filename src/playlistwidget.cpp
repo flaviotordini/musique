@@ -26,7 +26,7 @@ $END_LICENSE */
 PlaylistArea::PlaylistArea(PlaylistView *playlistView, DropArea *dropArea, QWidget *parent)
     : QWidget(parent) {
     QBoxLayout *layout = new QVBoxLayout();
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
     layout->addWidget(playlistView);

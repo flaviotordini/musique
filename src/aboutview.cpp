@@ -40,13 +40,13 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     const int padding = 30;
 
     QBoxLayout *verticalLayout = new QVBoxLayout(this);
-    verticalLayout->setMargin(0);
+    verticalLayout->setContentsMargins(0, 0, 0, 0);
     verticalLayout->setSpacing(0);
 
     QBoxLayout *aboutlayout = new QHBoxLayout();
     verticalLayout->addLayout(aboutlayout, 1);
     aboutlayout->setAlignment(Qt::AlignCenter);
-    aboutlayout->setMargin(padding);
+    aboutlayout->setContentsMargins(padding, padding, padding, padding);
     aboutlayout->setSpacing(padding);
 
     ClickableLabel *logo = new ClickableLabel(this);
@@ -122,12 +122,12 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     int capHeight = fontMetrics().capHeight();
 
     QBoxLayout *updateLayout = new QHBoxLayout();
-    updateLayout->setMargin(0);
+    updateLayout->setContentsMargins(0, 0, 0, 0);
     updateLayout->setSpacing(capHeight);
     updateLayout->setAlignment(Qt::AlignLeft);
 
     auto spinner = new WaitingSpinnerWidget(this, false, false);
-    spinner->setColor(palette().foreground().color());
+    spinner->setColor(palette().windowText().color());
     spinner->setLineLength(capHeight / 2);
     spinner->setNumberOfLines(spinner->lineLength() * 2);
     spinner->setInnerRadius(spinner->lineLength());
@@ -147,7 +147,7 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
 #endif
 
     QLayout *buttonLayout = new QHBoxLayout();
-    buttonLayout->setMargin(0);
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
     buttonLayout->setAlignment(Qt::AlignLeft);
 
 #ifdef UPDATER

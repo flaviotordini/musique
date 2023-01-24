@@ -26,7 +26,7 @@ $END_LICENSE */
 
 ContextualView::ContextualView(QWidget *parent) : View(parent) {
     QBoxLayout *layout = new QVBoxLayout(this);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     scrollArea = new QScrollArea();
     scrollArea->setPalette(parent->palette());
@@ -62,7 +62,7 @@ ScrollingContextualView::ScrollingContextualView(QWidget *parent) : QWidget(pare
 
     QBoxLayout *layout = new QHBoxLayout(this);
     layout->setSpacing(0);
-    layout->setMargin(0);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     artistInfo = new ArtistInfo(this);
     artistInfo->setPalette(p);

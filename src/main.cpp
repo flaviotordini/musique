@@ -140,7 +140,7 @@ int main(int argc, char **argv) {
     Http::instance().addRequestHeader("User-Agent", HttpUtils::userAgent());
 
     // Seed random number generator
-    qsrand(QDateTime::currentDateTimeUtc().toTime_t());
+    srand(QDateTime::currentSecsSinceEpoch());
 
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 

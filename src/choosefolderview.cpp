@@ -43,7 +43,7 @@ ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
     QBoxLayout *vLayout = new QVBoxLayout();
     vLayout->setAlignment(Qt::AlignCenter);
     vLayout->setSpacing(padding);
-    vLayout->setMargin(0);
+    vLayout->setContentsMargins(0, 0, 0, 0);
     layout->addLayout(vLayout);
 
     // hLayout->addSpacing(PADDING);

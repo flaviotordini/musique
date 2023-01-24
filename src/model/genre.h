@@ -18,7 +18,7 @@ public:
     static Genre *maybeCreateByName(const QString &name);
     static Genre *forHash(const QString &hash);
     static int idForHash(const QString &hash);
-    static QString cleanGenreName(QStringRef &genreName);
+    static QString cleanGenreName(QString &genreName);
 
     Genre(QObject *parent = nullptr);
 

@@ -200,7 +200,7 @@ void CollectionScanner::popFromQueue() {
         // add to nontracks table
         QString path = fileInfo.absoluteFilePath();
         path.remove(this->rootDirectory.absolutePath() + "/");
-        insertOrUpdateNonTrack(path, QDateTime::currentDateTimeUtc().toTime_t());
+        insertOrUpdateNonTrack(path, QDateTime::currentSecsSinceEpoch());
 
         QTimer::singleShot(0, this, SLOT(popFromQueue()));
         return;
@@ -256,7 +256,7 @@ void CollectionScanner::complete() {
 
     Database::instance().setCollectionRoot(rootDirectory.absolutePath());
     Database::instance().setStatus(ScanComplete);
-    Database::instance().setLastUpdate(QDateTime::currentDateTimeUtc().toTime_t());
+    Database::instance().setLastUpdate(QDateTime::currentSecsSinceEpoch());
 
     if (!incremental) {
         if (!Database::instance().getConnection().commit()) {
@@ -388,7 +388,7 @@ void CollectionScanner::processFile(const QFileInfo &fileInfo) {
     if (incremental) {
         if (stopped) return;
 
-        const uint lastModified = fileInfo.lastModified().toTime_t();
+        const uint lastModified = fileInfo.lastModified().toSecsSinceEpoch();
         if (lastModified > lastUpdate) {
             // qDebug() << "lastModified > lastUpdate" << path;
             qDebug() << "Modified file" << fileInfo.absoluteFilePath();
@@ -782,9 +782,8 @@ void CollectionScanner::processTrack(FileInfo *file) {
 
     QString genreTag = file->getTags()->getGenre();
     if (!genreTag.isEmpty()) {
-        auto genreNames =
-                genreTag.splitRef(QRegularExpression("([,/-;]| & )"), QString::SkipEmptyParts);
-        for (QStringRef &genreNameRef : genreNames) {
+        auto genreNames = genreTag.split(QRegularExpression("([,/-;]| & )"), Qt::SkipEmptyParts);
+        for (QString &genreNameRef : genreNames) {
             QString genreName = Genre::cleanGenreName(genreNameRef);
             if (!genreName.isEmpty()) {
                 Genre *genre = Genre::maybeCreateByName(genreName);
