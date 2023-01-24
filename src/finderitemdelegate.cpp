@@ -279,8 +279,12 @@ void FinderItemDelegate::paintItem(QPainter *painter,
 
     qreal pixelRatio = painter->device()->devicePixelRatioF();
     QPixmap pixmap = item->getThumb(itemWidth, itemHeight, pixelRatio);
-    if (pixmap.isNull()) pixmap = getMissingItemPixmap(item->metaObject()->className(), pixelRatio);
-    painter->drawPixmap(0, 0, pixmap);
+    if (pixmap.isNull()) {
+        painter->drawPixmap(0, 0,
+                            getMissingItemPixmap(item->metaObject()->className(), pixelRatio));
+    } else {
+        painter->drawPixmap(0, 0, pixmap);
+    }
 
     if (isHovered) {
         double animation = view->animationFrame();
@@ -289,7 +293,7 @@ void FinderItemDelegate::paintItem(QPainter *painter,
     }
 
     const int itemType = index.data(Finder::ItemTypeRole).toInt();
-    if (itemType != Finder::ItemTypeAlbum || isHovered)
+    if (itemType != Finder::ItemTypeAlbum || isHovered || pixmap.isNull())
         drawName(painter, option, item->getName(), line, isSelected);
 
     painter->restore();

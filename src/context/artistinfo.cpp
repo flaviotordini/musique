@@ -29,8 +29,9 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
 
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    layout->setSpacing(20);
-    layout->setMargin(20);
+    const int padding = 20;
+    layout->setSpacing(padding);
+    layout->setContentsMargins(padding, padding, padding, padding);
 
     titleLabel = new QLabel(this);
     titleLabel->setPalette(parent->palette());

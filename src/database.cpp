@@ -48,7 +48,8 @@ Database::~Database() {
 }
 
 const QString &Database::getDataLocation() {
-    static const QString location = QStandardPaths::writableLocation(QStandardPaths::DataLocation);
+    static const QString location =
+            QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     return location;
 }
 
@@ -239,8 +240,7 @@ QVariant Database::getAttribute(const QString &name) {
     query.bindValue(0, name);
 
     bool success = query.exec();
-    if (!success)
-        qDebug() << query.lastQuery() << query.boundValues().values() << query.lastError().text();
+    if (!success) qDebug() << query.lastQuery() << query.boundValues() << query.lastError().text();
     if (query.next()) return query.value(0);
     return QVariant();
 }

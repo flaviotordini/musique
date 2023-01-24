@@ -61,8 +61,7 @@ QVector<Track *> Folder::getTracks() {
             "select id from tracks where path like ? order by artist, album, disk, track, path");
     query.bindValue(0, QString(relativePath + "/%"));
     bool success = query.exec();
-    if (!success)
-        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    if (!success) qDebug() << query.lastQuery() << query.lastError();
 
     tracks.reserve(query.size());
     while (query.next()) {

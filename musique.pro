@@ -51,7 +51,6 @@ HEADERS += src/mainwindow.h \
     src/updateutils.h \
     src/view.h \
     src/searchlineedit.h \
-    src/exlineedit.h \
     src/spacer.h \
     src/constants.h \
     src/finderwidget.h \
@@ -124,7 +123,6 @@ SOURCES += src/main.cpp \
     src/aboutview.cpp \
     src/messagebar.cpp \
     src/searchlineedit.cpp \
-    src/exlineedit.cpp \
     src/spacer.cpp \
     src/finderwidget.cpp \
     src/collectionscannerview.cpp \

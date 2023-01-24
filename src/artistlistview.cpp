@@ -169,8 +169,7 @@ void ArtistListView::preloadThumbs() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(sqlModel->query().lastQuery(), db);
     bool success = query.exec();
-    if (!success)
-        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    if (!success) qDebug() << query.lastQuery() << query.lastError();
 
     const qreal pixelRatio = devicePixelRatioF();
     while (query.next()) {
@@ -185,8 +184,7 @@ void ArtistListView::clearThumbs() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(sqlModel->query().lastQuery(), db);
     bool success = query.exec();
-    if (!success)
-        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    if (!success) qDebug() << query.lastQuery() << query.lastError();
 
     while (query.next()) {
         int artistId = query.value(0).toInt();

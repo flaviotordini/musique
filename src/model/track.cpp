@@ -153,7 +153,7 @@ void Track::insert() {
     query.bindValue(7, artistId);
     artistId = album && album->getArtist() ? album->getArtist()->getId() : 0;
     query.bindValue(8, artistId);
-    query.bindValue(9, QDateTime::currentDateTimeUtc().toTime_t());
+    query.bindValue(9, QDateTime::currentSecsSinceEpoch());
     query.bindValue(10, length);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
@@ -254,7 +254,7 @@ void Track::update() {
     query.bindValue(5, artistId);
     artistId = album && album->getArtist() ? album->getArtist()->getId() : 0;
     query.bindValue(6, artistId);
-    query.bindValue(7, QDateTime().toTime_t());
+    query.bindValue(7, QDateTime().toSecsSinceEpoch());
     query.bindValue(8, length);
     query.bindValue(9, path);
     success = query.exec();

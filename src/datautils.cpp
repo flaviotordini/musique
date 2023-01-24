@@ -60,7 +60,7 @@ QString DataUtils::simplify(const QString &s) {
     s2.replace(QString::fromUtf8("’"), QLatin1String("'"));
     s2.replace(QString::fromUtf8("…"), QLatin1String("..."));
     // Praise/Love => Praise / Love
-    s2.replace(QRegExp("(\\S)/(\\S)"), QLatin1String("\\1 / \\2"));
+    s2.replace(QRegularExpression("(\\S)/(\\S)"), QLatin1String("\\1 / \\2"));
     return s2;
 }
 
@@ -140,6 +140,6 @@ QString DataUtils::formatDuration(uint secs) {
     uint minutes = d % 60;
     d /= 60;
     uint hours = d % 24;
-    if (hours == 0) return res.sprintf("%d:%02d", minutes, seconds);
-    return res.sprintf("%d:%02d:%02d", hours, minutes, seconds);
+    if (hours == 0) return res.asprintf("%d:%02d", minutes, seconds);
+    return res.asprintf("%d:%02d:%02d", hours, minutes, seconds);
 }

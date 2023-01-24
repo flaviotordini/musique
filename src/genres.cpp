@@ -34,14 +34,14 @@ void Genres::loadGenres() {
                 if (line.isEmpty()) continue;
                 QString badWord;
                 QString goodWord;
-                const auto fields = line.splitRef(',');
+                const auto fields = line.split(',');
                 QString metaGenre;
                 QStringList genres;
-                for (const QStringRef &field : fields) {
+                for (const auto &field : fields) {
                     if (metaGenre.isNull())
-                        metaGenre = field.toString();
+                        metaGenre = field;
                     else
-                        genres << field.toString();
+                        genres << field;
                 }
                 map.append(qMakePair(metaGenre, genres));
             }

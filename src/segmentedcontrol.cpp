@@ -175,7 +175,7 @@ int SegmentedControl::calculateButtonWidth() const {
     QFontMetrics fontMetrics(font());
     int tmpItemWidth, itemWidth = 0;
     for (QAction *action : actionList) {
-        tmpItemWidth = fontMetrics.width(action->text());
+        tmpItemWidth = fontMetrics.boundingRect(action->text()).width();
         if (itemWidth < tmpItemWidth) itemWidth = tmpItemWidth;
     }
     return itemWidth;

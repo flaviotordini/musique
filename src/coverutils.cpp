@@ -62,12 +62,12 @@ bool CoverUtils::saveImage(const QImage &image, Album *album) {
 }
 
 bool CoverUtils::coverFromFile(const QString &dir, Album *album) {
-    static const QVector<QRegExp> coverREs = [] {
+    static const QVector<QRegularExpression> coverREs = [] {
         QLatin1String ext(".(jpe?g|gif|png|bmp)");
-        QVector<QRegExp> res;
-        res << QRegExp(".*cover.*" + ext, Qt::CaseInsensitive)
-            << QRegExp(".*front.*" + ext, Qt::CaseInsensitive)
-            << QRegExp(".*folder.*" + ext, Qt::CaseInsensitive);
+        QVector<QRegularExpression> res;
+        res << QRegularExpression(".*cover.*" + ext, QRegularExpression::CaseInsensitiveOption)
+            << QRegularExpression(".*front.*" + ext, QRegularExpression::CaseInsensitiveOption)
+            << QRegularExpression(".*folder.*" + ext, QRegularExpression::CaseInsensitiveOption);
         return res;
     }();
 
@@ -76,7 +76,7 @@ bool CoverUtils::coverFromFile(const QString &dir, Album *album) {
 
     for (const QFileInfo &fileInfo : flist) {
         const QString filename = fileInfo.fileName();
-        for (const QRegExp &re : coverREs) {
+        for (const QRegularExpression &re : coverREs) {
             if (filename.contains(re)) {
                 qDebug() << "Found local cover" << filename;
                 QImage image(fileInfo.absoluteFilePath());

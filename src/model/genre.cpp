@@ -133,12 +133,12 @@ QString Genre::cleanGenreName(QString &genreName) {
                 stream.readLineInto(&line);
                 QString badWord;
                 QString goodWord;
-                const auto fields = line.splitRef(',');
-                for (const QStringRef &field : fields) {
+                const auto fields = line.split(',');
+                for (const auto &field : fields) {
                     if (badWord.isNull())
-                        badWord = field.toString();
+                        badWord = field;
                     else
-                        goodWord = field.toString();
+                        goodWord = field;
                 }
                 map.append(qMakePair(badWord, goodWord));
             }
@@ -150,7 +150,7 @@ QString Genre::cleanGenreName(QString &genreName) {
     // if (genreName.startsWith(QLatin1String("& "))) genreName = genreName.mid(2);
     if (genreName.isEmpty()) return QString();
 
-    QString s = genreName.toString();
+    QString s = genreName;
     for (auto &i : replacements) {
         s.replace(i.first, i.second, Qt::CaseInsensitive);
     }
@@ -176,8 +176,7 @@ QVector<Track *> Genre::getTracks() {
                   ") "
                   "order by t.year desc, t.album, t.disk, t.track, t.path");
     bool success = query.exec();
-    if (!success)
-        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    if (!success) qDebug() << query.lastQuery() << query.lastError();
     qDebug() << query.lastQuery();
     QVector<Track *> tracks;
     tracks.reserve(query.size());

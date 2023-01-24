@@ -30,7 +30,7 @@ ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
     QBoxLayout *layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(padding);
-    layout->setMargin(padding);
+    layout->setContentsMargins(padding, padding, padding, padding);
 
     QLabel *logo = new QLabel(this);
     auto setLogoPixmap = [logo] {

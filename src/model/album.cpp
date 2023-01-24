@@ -233,14 +233,14 @@ void Album::parseLastFmSearch(const QByteArray &bytes) {
     while (!xml.atEnd() && !xml.hasError()) {
         xml.readNext();
         if (xml.isStartElement()) {
-            if (xml.name() == "artist") {
+            if (xml.name() == QLatin1String("artist")) {
                 artistName = xml.readElementText();
-            } else if (xml.name() == "name") {
+            } else if (xml.name() == QLatin1String("name")) {
                 albumName = xml.readElementText();
             }
 
         } else if (xml.isEndElement()) {
-            if (xml.name() == "album") {
+            if (xml.name() == QLatin1String("album")) {
                 // qDebug() << "Comparing artist name" << artist->getName() << artistName;
                 if (artist->getName() == artistName) {
                     if (name != albumName) {
@@ -314,7 +314,7 @@ void Album::parseLastFmInfo(const QByteArray &bytes) {
     while (xml.readNextStartElement()) {
         if (xml.name() == QLatin1String("album")) {
             while (xml.readNextStartElement()) {
-                const QStringRef n = xml.name();
+                const auto n = xml.name();
 
                 if (n == QLatin1String("track")) {
                     QString number = xml.attributes().value("rank").toString();
@@ -322,7 +322,7 @@ void Album::parseLastFmInfo(const QByteArray &bytes) {
                         xml.skipCurrentElement();
                     else
                         while (xml.readNextStartElement()) {
-                            if (xml.name() == "name") {
+                            if (xml.name() == QLatin1String("name")) {
                                 QString title = xml.readElementText();
                                 trackNames.insert(number, title);
                             } else
@@ -372,9 +372,9 @@ void Album::parseLastFmInfo(const QByteArray &bytes) {
                 // wiki
                 else if (n == QLatin1String("wiki")) {
                     while (xml.readNextStartElement()) {
-                        if (xml.name() == "content") {
+                        if (xml.name() == QLatin1String("content")) {
                             QString wiki = xml.readElementText();
-                            static const QRegExp re("User-contributed text.*");
+                            static const QRegularExpression re("User-contributed text.*");
                             wiki.remove(re);
                             wiki = wiki.trimmed();
                             if (!wiki.isEmpty()) {
@@ -442,8 +442,7 @@ QVector<Track *> Album::getTracks() {
     query.prepare("select id from tracks where album=? order by disk, track, path");
     query.bindValue(0, id);
     bool success = query.exec();
-    if (!success)
-        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    if (!success) qDebug() << query.lastQuery() << query.lastError();
     QVector<Track *> tracks;
     tracks.reserve(query.size());
     while (query.next()) {
@@ -470,9 +469,9 @@ QString normalizeString(QString s) {
     QString s2;
 
     // remove short words
-    // QRegExp re("\\b(the|a|of|and|n|or|s|is)\\b");
+    // QRegularExpression re("\\b(the|a|of|and|n|or|s|is)\\b");
     s2 = s;
-    static const QRegExp shortWordsRE("\\b([a-z]{1,1}|the|of|and|or|is)\\b");
+    static const QRegularExpression shortWordsRE("\\b([a-z]{1,1}|the|of|and|or|is)\\b");
     s2.remove(shortWordsRE);
     if (s2.simplified().length() > 4) s = s2;
     s2.clear();
@@ -534,7 +533,7 @@ QString Album::fixTrackTitleUsingTitle(Track *track, QString newTitle) {
 
     // handle Last.fm parenthesis stuff like "Song name (Remastered)"
     if (!trackTitle.contains('('))
-        newTitle.remove(QRegExp(" *\\(.*\\)"));
+        newTitle.remove(QRegularExpression(" *\\(.*\\)"));
     else if (newTitle.count('(') > 1) {
         int i = newTitle.indexOf('(');
         if (i != -1) {

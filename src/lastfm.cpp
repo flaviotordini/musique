@@ -84,16 +84,15 @@ void LastFm::authenticationResponse(const QByteArray& bytes) {
     while(!xml.atEnd() && !xml.hasError()) {
         QXmlStreamReader::TokenType token = xml.readNext();
 
-        if(token == QXmlStreamReader::StartElement && xml.name() == "session") {
+        if (token == QXmlStreamReader::StartElement && xml.name() == QLatin1String("session")) {
             while (xml.readNextStartElement()) {
-                if (xml.name() == "name") {
+                if (xml.name() == QLatin1String("name")) {
                     username = xml.readElementText();
-                } else if (xml.name() == "key") {
+                } else if (xml.name() == QLatin1String("key")) {
                     sessionKey = xml.readElementText();
                 }
             }
         }
-
     }
 
     if(xml.hasError()) {

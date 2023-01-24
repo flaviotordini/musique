@@ -24,7 +24,7 @@ $END_LICENSE */
 CollectionScannerThread::CollectionScannerThread(QObject *parent)
     : QThread(parent), scanner(nullptr) {
     // This will be used by Database to cache connections for this thread
-    setObjectName("scanner" + QString::number(qrand()));
+    setObjectName("scanner" + QString::number(rand()));
 }
 
 void CollectionScannerThread::run() {

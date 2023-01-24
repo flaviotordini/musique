@@ -170,7 +170,7 @@ void MediaView::activeRowChanged(int row, bool manual, bool startPlayback) {
         media->play(path);
     }
 
-    track->setStartTime(QDateTime::currentDateTimeUtc().toTime_t());
+    track->setStartTime(QDateTime::currentSecsSinceEpoch());
 
     // ensure active item is visible
     QModelIndex index = playlistModel->indexForTrack(track);

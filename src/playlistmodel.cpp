@@ -128,7 +128,7 @@ Track *PlaylistModel::getNextTrack() {
         // get a random non-played non-active track
         if (playedTracks.size() < tracks.size()) {
             while (nextTrack == nullptr) {
-                int nextRow = (int)((float)qrand() / (float)RAND_MAX * tracks.size());
+                int nextRow = (int)((float)rand() / (float)RAND_MAX * tracks.size());
                 Track *candidateTrack = tracks.at(nextRow);
                 if (!candidateTrack->isPlayed() && candidateTrack != activeTrack) {
                     nextTrack = candidateTrack;
@@ -144,7 +144,7 @@ Track *PlaylistModel::getNextTrack() {
             }
             // get a random non-active track
             while (nextTrack == nullptr) {
-                int nextRow = (int)((float)qrand() / (float)RAND_MAX * (tracks.size() - 1));
+                int nextRow = (int)((float)rand() / (float)RAND_MAX * (tracks.size() - 1));
                 Track *candidateTrack = tracks.at(nextRow);
                 if (candidateTrack != activeTrack) {
                     nextTrack = candidateTrack;
@@ -178,7 +178,7 @@ void PlaylistModel::addShuffledTrack(Track *track) {
     int activeTrackIndex = playedTracks.indexOf(activeTrack);
     if (activeTrackIndex == -1) activeTrackIndex = 0;
     int randomRange = playedTracks.size() - activeTrackIndex;
-    int randomRow = activeTrackIndex + (int)((float)qrand() / (float)RAND_MAX * randomRange);
+    int randomRow = activeTrackIndex + (int)((float)rand() / (float)RAND_MAX * randomRange);
     playedTracks.insert(randomRow, track);
 }
 
@@ -405,16 +405,15 @@ bool PlaylistModel::saveTo(QTextStream &stream) const {
     // stream not opened or not writable
     if (!stream.device()->isOpen() || !stream.device()->isWritable()) return false;
 
-    stream.setCodec("UTF-8");
-    stream << "[playlist]" << endl;
+    stream << "[playlist]" << Qt::endl;
     int idx = 1;
     for (Track *tr : qAsConst(tracks)) {
-        stream << "File" << idx << "=" << tr->getPath() << endl;
-        stream << "Title" << idx << "=" << tr->getTitle() << endl;
-        stream << "Length" << idx++ << "=" << tr->getLength() << endl;
+        stream << "File" << idx << "=" << tr->getPath() << Qt::endl;
+        stream << "Title" << idx << "=" << tr->getTitle() << Qt::endl;
+        stream << "Length" << idx++ << "=" << tr->getLength() << Qt::endl;
     }
-    stream << "NumberOfEntries=" << tracks.count() << endl;
-    stream << "Version=2" << endl;
+    stream << "NumberOfEntries=" << tracks.count() << Qt::endl;
+    stream << "Version=2" << Qt::endl;
 
     return true;
 }
@@ -426,7 +425,6 @@ bool PlaylistModel::loadFrom(QTextStream &stream) {
     QVector<Track *> tracks;
     tracks.reserve(1024);
 
-    stream.setCodec("UTF-8");
     QString tag;
     QString line;
     Track *track = nullptr;

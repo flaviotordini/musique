@@ -29,9 +29,7 @@ $END_LICENSE */
 #else
 #include "searchlineedit.h"
 #endif
-#ifdef APP_MAC_QMACTOOLBAR
-#include "mactoolbar.h"
-#endif
+
 #include "aboutview.h"
 #include "choosefolderview.h"
 #include "collectionscanner.h"
@@ -65,6 +63,14 @@ $END_LICENSE */
 #include "httputils.h"
 #include "seekslider.h"
 #include "toolbarmenu.h"
+
+#ifdef APP_MAC_QMACTOOLBAR
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include "mactoolbarutils.h"
+#else
+#include "mactoolbar_qt5.h"
+#endif
+#endif
 
 #ifdef MEDIA_QTAV
 #include "mediaqtav.h"
@@ -589,7 +595,11 @@ void MainWindow::createToolBar() {
     toolbarSearch->hide();
     volumeSlider->hide();
     seekSlider->hide();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    mac::createToolbar(this);
+#else
     MacToolbar::instance().createToolbar(this);
+#endif
     return;
 #endif
 
@@ -1165,8 +1175,8 @@ QString MainWindow::formatTime(qint64 duration) {
     int minutes = (int)(duration % 60);
     duration /= 60;
     int hours = (int)(duration % 24);
-    if (hours == 0) return res.sprintf("%02d:%02d", minutes, seconds);
-    return res.sprintf("%02d:%02d:%02d", hours, minutes, seconds);
+    if (hours == 0) return res.asprintf("%02d:%02d", minutes, seconds);
+    return res.asprintf("%02d:%02d:%02d", hours, minutes, seconds);
 }
 
 void MainWindow::volumeUp() {
@@ -1330,7 +1340,7 @@ void MainWindow::runFinetune(const QString &filename) {
     url += ext;
 
     QPixmap pixmap = IconUtils::pixmap(":/images/64x64/finetune.png", devicePixelRatioF());
-    UpdateDialog *dialog = new UpdateDialog(&pixmap, "Finetune", QString(), url, this);
+    UpdateDialog *dialog = new UpdateDialog(pixmap, "Finetune", QString(), url, this);
     dialog->downloadUpdate();
     dialog->show();
 

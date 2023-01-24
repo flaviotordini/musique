@@ -510,7 +510,7 @@ void FinderWidget::addTracksAndPlay(const QVector<Track *> &tracks) {
     QSettings settings;
     const bool shuffle = settings.value("shuffle").toBool();
     if (shuffle) {
-        int nextRow = (int)((float)qrand() / (float)RAND_MAX * tracks.size());
+        int nextRow = (int)((float)rand() / (float)RAND_MAX * tracks.size());
         trackToPlay = tracks.at(nextRow);
     } else {
         trackToPlay = tracks.first();

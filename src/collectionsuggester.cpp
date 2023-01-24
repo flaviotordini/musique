@@ -44,7 +44,7 @@ void CollectionSuggester::suggest(const QString &query) {
     sqlQuery.prepare("select name from artists where name like ? and trackCount>1 order by trackCount desc limit 5");
     sqlQuery.bindValue(0, likeQuery);
     bool success = sqlQuery.exec();
-    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
+    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError();
     while (sqlQuery.next()) {
         QString value = sqlQuery.value(0).toString();
         suggestions << new Suggestion(value, "artist");
@@ -58,7 +58,7 @@ void CollectionSuggester::suggest(const QString &query) {
     sqlQuery.bindValue(0, likeQuery);
     sqlQuery.bindValue(1, likeDate);
     success = sqlQuery.exec();
-    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
+    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError();
     while (sqlQuery.next()) {
         QString value = sqlQuery.value(0).toString();
         suggestions << new Suggestion(value, "album");
@@ -68,7 +68,7 @@ void CollectionSuggester::suggest(const QString &query) {
     sqlQuery.prepare("select title from tracks where title like ? order by track, path limit 10");
     sqlQuery.bindValue(0, likeQuery);
     success = sqlQuery.exec();
-    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError().text() << sqlQuery.lastError().number();
+    if (!success) qDebug() << sqlQuery.lastQuery() << sqlQuery.lastError();
     while (sqlQuery.next()) {
         QString value = sqlQuery.value(0).toString();
         if (strings.contains(value)) continue;

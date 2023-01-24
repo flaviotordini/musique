@@ -152,7 +152,7 @@ void Artist::parseNameAndMbid(const QByteArray &bytes, const QString &preferredV
             */
 
         /* If token is StartElement, we'll see if we can read it.*/
-        if (token == QXmlStreamReader::StartElement && xml.name() == "name") {
+        if (token == QXmlStreamReader::StartElement && xml.name() == QLatin1String("name")) {
             QString text = xml.readElementText();
             // qDebug() << xml.name() << ":" << text;
 
@@ -163,9 +163,11 @@ void Artist::parseNameAndMbid(const QByteArray &bytes, const QString &preferredV
                 QXmlStreamReader::TokenType token = xml.readNext();
 
                 // stop at current artist to avoid getting the mbid of another one
-                if (token == QXmlStreamReader::EndElement && xml.name() == "artist") break;
+                if (token == QXmlStreamReader::EndElement && xml.name() == QLatin1String("artist"))
+                    break;
 
-                if (token == QXmlStreamReader::StartElement && xml.name() == "mbid") {
+                if (token == QXmlStreamReader::StartElement &&
+                    xml.name() == QLatin1String("mbid")) {
                     artistMbid = xml.readElementText();
                     break;
                 }
@@ -326,9 +328,9 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
     QXmlStreamReader xml(bytes);
 
     while (xml.readNextStartElement()) {
-        if (xml.name() == "artist") {
+        if (xml.name() == QLatin1String("artist")) {
             while (xml.readNextStartElement()) {
-                const QStringRef n = xml.name();
+                const auto n = xml.name();
 
                 /*
                 if (n == QLatin1String("name")) {
@@ -361,7 +363,7 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
 
                 if (n == QLatin1String("stats")) {
                     while (xml.readNextStartElement()) {
-                        if (xml.name() == "listeners") {
+                        if (xml.name() == QLatin1String("listeners")) {
                             listeners = xml.readElementText().toUInt();
                         } else
                             xml.skipCurrentElement();
@@ -370,9 +372,10 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
 
                 else if (n == QLatin1String("bio")) {
                     while (xml.readNextStartElement()) {
-                        if (xml.name() == "content") {
+                        if (xml.name() == QLatin1String("content")) {
                             QString bio = xml.readElementText();
-                            static const QRegExp licenseRE("User-contributed text is available.*");
+                            static const QRegularExpression licenseRE(
+                                    "User-contributed text is available.*");
                             bio.remove(licenseRE);
                             bio = bio.trimmed();
                             if (!bio.isEmpty()) {
@@ -386,13 +389,14 @@ void Artist::parseLastFmInfo(const QByteArray &bytes) {
                                 stream << bio;
                             }
 
-                        } else if (xml.name() == "formationlist") {
+                        } else if (xml.name() == QLatin1String("formationlist")) {
                             while (xml.readNextStartElement()) {
-                                if (xml.name() == "formation") {
+                                if (xml.name() == QLatin1String("formation")) {
                                     while (xml.readNextStartElement()) {
-                                        if (yearFrom == 0 && xml.name() == "yearfrom") {
+                                        if (yearFrom == 0 &&
+                                            xml.name() == QLatin1String("yearfrom")) {
                                             yearFrom = xml.readElementText().toInt();
-                                        } else if (xml.name() == "yearto") {
+                                        } else if (xml.name() == QLatin1String("yearto")) {
                                             yearTo = xml.readElementText().toInt();
                                         } else
                                             xml.skipCurrentElement();
@@ -502,8 +506,7 @@ QVector<Track *> Artist::getTracks() {
                   " order by a.year desc, a.title collate nocase, t.disk, t.track, t.path");
     query.bindValue(0, id);
     bool success = query.exec();
-    if (!success)
-        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    if (!success) qDebug() << query.lastQuery() << query.lastError();
     QVector<Track *> tracks;
     tracks.reserve(query.size());
     while (query.next()) {

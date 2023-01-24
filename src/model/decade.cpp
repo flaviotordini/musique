@@ -15,8 +15,7 @@ QVector<Track *> Decade::getTracks() {
     QString sql = QString("select id from tracks where year>=%1 and year<=%2")
                           .arg(QString::number(startYear), QString::number(startYear + 9));
     bool success = query.exec(sql);
-    if (!success)
-        qDebug() << query.lastQuery() << query.lastError().text() << query.lastError().number();
+    if (!success) qDebug() << query.lastQuery() << query.lastError();
     QVector<Track *> tracks;
     tracks.reserve(query.size());
     while (query.next()) {
