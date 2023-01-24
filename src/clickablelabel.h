@@ -3,6 +3,10 @@
 
 #include <QtWidgets>
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+typedef QEnterEvent QEvent;
+#endif
+
 class ClickableLabel : public QLabel {
     Q_OBJECT
 
@@ -16,7 +20,7 @@ signals:
 
 protected:
     void mouseReleaseEvent(QMouseEvent *e);
-    void enterEvent(QEvent *e);
+    void enterEvent(QEnterEvent *e);
     void leaveEvent(QEvent *e);
 };
 

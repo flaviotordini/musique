@@ -27,7 +27,7 @@ void ClearButton::textChanged(const QString &text) {
     setVisible(!text.isEmpty());
 }
 
-void ClearButton::enterEvent(QEvent *e) {
+void ClearButton::enterEvent(QEnterEvent *e) {
     hovered = true;
     QAbstractButton::enterEvent(e);
 }

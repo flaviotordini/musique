@@ -3,6 +3,10 @@
 
 #include <QtWidgets>
 
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+typedef QEnterEvent QEvent;
+#endif
+
 class ClearButton : public QAbstractButton {
 
     Q_OBJECT
@@ -15,7 +19,7 @@ public slots:
 
 protected:
     void paintEvent(QPaintEvent *e);
-    void enterEvent(QEvent *e);
+    void enterEvent(QEnterEvent *e);
     void leaveEvent(QEvent *e);
     void mousePressEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
