@@ -136,22 +136,22 @@ void FinderWidget::setupBar() {
     finderBar = new SegmentedControl(this);
 
     artistsAction = new QAction(tr("Artists"), this);
-    artistsAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_1));
+    artistsAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_1));
     connect(artistsAction, SIGNAL(triggered()), SLOT(showArtists()));
     finderBar->addAction(artistsAction);
 
     albumsAction = new QAction(tr("Albums"), this);
-    albumsAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_2));
+    albumsAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_2));
     connect(albumsAction, SIGNAL(triggered()), SLOT(showAlbums()));
     finderBar->addAction(albumsAction);
 
     genresAction = new QAction(tr("Genres"), this);
-    genresAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_3));
+    genresAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_3));
     connect(genresAction, SIGNAL(triggered()), SLOT(showGenres()));
     finderBar->addAction(genresAction);
 
     foldersAction = new QAction(tr("Folders"), this);
-    foldersAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_4));
+    foldersAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_4));
     connect(foldersAction, SIGNAL(triggered()), SLOT(showFolders()));
     finderBar->addAction(foldersAction);
 

@@ -119,7 +119,7 @@ void ArtistListView::setupToolbar() {
     sortButton->setMenu(sortMenu);
     QWidgetAction *widgetAction = new QWidgetAction(this);
     widgetAction->setDefaultWidget(sortButton);
-    widgetAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_O));
+    widgetAction->setShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_O));
     toolBar->addAction(widgetAction);
 }
 

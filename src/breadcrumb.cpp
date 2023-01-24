@@ -24,7 +24,7 @@ $END_LICENSE */
 Breadcrumb::Breadcrumb(QWidget *parent) : QToolBar(parent) {
     backAction = new QAction(tr("&Back"), this);
     backAction->setIcon(IconUtils::fromResources("go-previous", Qt::black));
-    QKeySequence keySequence(Qt::ALT + Qt::Key_Left);
+    QKeySequence keySequence(Qt::ALT | Qt::Key_Left);
     backAction->setShortcut(keySequence);
     backAction->setStatusTip(tr("Go back") + " (" + keySequence.toString(QKeySequence::NativeText) +
                              ")");
