@@ -23,8 +23,9 @@ $END_LICENSE */
 
 #include <QtWidgets>
 
+#include "model/track.h"
+
 class PlaylistModel;
-class Track;
 class DropArea;
 
 class PlaylistView : public QListView {

@@ -18,7 +18,6 @@ along with Minitube.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 #include "autocomplete.h"
-#include "suggester.h"
 #ifdef APP_MAC_SEARCHFIELD
 #include "searchlineedit_mac.h"
 #else
