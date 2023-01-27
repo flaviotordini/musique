@@ -623,7 +623,7 @@ void MainWindow::createToolBar() {
     currentTimeLabel->setFont(FontUtils::small());
     mainToolBar->addWidget(currentTimeLabel);
 
-    mainToolBar->addWidget(new Spacer());
+    mainToolBar->addWidget(new Spacer(nullptr, 10));
 
     seekSlider->setOrientation(Qt::Horizontal);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -659,9 +659,7 @@ void MainWindow::createToolBar() {
     mainToolBar->addWidget(new Spacer());
 
     mainToolBar->addWidget(toolbarSearch);
-    Spacer *spacer = new Spacer();
-    spacer->setWidth(4);
-    mainToolBar->addWidget(spacer);
+    mainToolBar->addWidget(new Spacer(this, toolbarSearch->height() / 2));
 
 #ifndef APP_MAC
     QAction *toolbarMenuAction = getAction("toolbarMenu");
