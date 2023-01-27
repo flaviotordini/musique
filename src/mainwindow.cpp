@@ -582,8 +582,10 @@ void MainWindow::createToolBar() {
     toolbarSearch = new SearchLineEdit(this);
 #endif
     toolbarSearch->setMinimumWidth(toolbarSearch->fontInfo().pixelSize() * 15);
+    toolbarSearch->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     toolbarSearch->setSuggester(new CollectionSuggester(this));
     connect(toolbarSearch, SIGNAL(search(const QString &)), SLOT(search(const QString &)));
+    connect(toolbarSearch, SIGNAL(searchCleared()), SLOT(searchCleared()));
     connect(toolbarSearch, SIGNAL(suggestionAccepted(Suggestion *)),
             SLOT(suggestionAccepted(Suggestion *)));
     toolbarSearch->setStatusTip(searchFocusAct->statusTip());

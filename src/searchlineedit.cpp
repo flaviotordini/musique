@@ -62,3 +62,12 @@ QLineEdit *SearchLineEdit::getLineEdit() {
 QWidget *SearchLineEdit::toWidget() {
     return this;
 }
+
+void SearchLineEdit::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Escape) {
+        clear();
+        clearFocus();
+        emit searchCleared();
+    } else
+        QLineEdit::keyPressEvent(event);
+}

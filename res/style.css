@@ -1,3 +1,14 @@
+QToolBar QLineEdit {
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+}
+
+QToolBar QLineEdit:focus {
+    border: 1px solid palette(highlight);
+    background: normal;
+}
+
 QStatusBar {
     border: 0;
 }
