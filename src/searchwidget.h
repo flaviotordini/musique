@@ -1,9 +1,8 @@
-#ifndef SEARCHWIDGET
-#define SEARCHWIDGET
+#ifndef SEARCHWIDGET_H
+#define SEARCHWIDGET_H
 
 #include <QtWidgets>
 
-class SearchButton;
 class Suggester;
 class Suggestion;
 class AutoComplete;
@@ -32,4 +31,4 @@ signals:
     void suggestionAccepted(Suggestion *suggestion);
 };
 
-#endif // SEARCHWIDGET
+#endif // SEARCHWIDGET_H
