@@ -48,6 +48,7 @@ TrackInfo::TrackInfo(QWidget *parent) : QWidget(parent) {
     lyricsLabel->setAlignment(Qt::AlignTop);
     lyricsLabel->setWordWrap(true);
     lyricsLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    lyricsLabel->setFont(FontUtils::medium());
     layout->addWidget(lyricsLabel);
 }
 
