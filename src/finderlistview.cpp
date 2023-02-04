@@ -185,7 +185,7 @@ bool FinderListView::isHoveringPlayIcon(QMouseEvent *event) {
     const int x = event->x() - itemRect.x();
     const int y = event->y() - itemRect.y();
     const int itemWidth = delegate->getItemWidth();
-    return x > itemWidth - 60 && y < 60;
+    return x > itemWidth - 60 && x < itemWidth && y < 60;
 }
 
 void FinderListView::updateItemSize() {
