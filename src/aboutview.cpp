@@ -92,7 +92,7 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     info += "<p>" +
             tr("Translate %1 to your native language using %2")
                     .arg(Constants::NAME)
-                    .arg("<a href='http://www.transifex.net/projects/p/" +
+                    .arg("<a href='http://www.transifex.com/flaviotordini/" +
                          QLatin1String(Constants::UNIX_NAME) + "/'>Transifex</a>") +
             "</p>";
 
