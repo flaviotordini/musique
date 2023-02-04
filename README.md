@@ -6,7 +6,7 @@
 Musique is a music player built for speed, simplicity and style. It is written in C++ using the Qt framework. Contributing is welcome, especially in the Linux desktop integration area.
 
 ## Translating Musique to your language
-Translations are done at https://www.transifex.com/projects/p/musique/
+Translations are done at https://www.transifex.com/flaviotordini/musique/
 Just register and apply for a language team. Please don't request translation merges on GitHub.
 
 ## Build instructions
@@ -32,7 +32,7 @@ Running:
 	build/target/musique
 
 Installing on Linux:
-    
+
     sudo make install
 qtdeclarative5-dev
 This is for packagers. End users should not install applications in this way.
