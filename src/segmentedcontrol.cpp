@@ -19,8 +19,6 @@ along with Minitube.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "segmentedcontrol.h"
-#include "fontutils.h"
-#include "iconutils.h"
 #include "mainwindow.h"
 
 SegmentedControl::SegmentedControl(QWidget *parent) : QWidget(parent) {
@@ -80,12 +78,6 @@ void SegmentedControl::paintEvent(QPaintEvent * /*event*/) {
     // Calculate Buttons Size & Location
     const int buttonWidth = width / actionList.size();
 
-    const qreal pixelRatio = devicePixelRatioF();
-    QPen pen(borderColor);
-    const qreal penWidth = 1. / pixelRatio;
-    pen.setWidthF(penWidth);
-    p.setPen(pen);
-
     // Draw Buttons
     QRect rect(0, 0, buttonWidth, height);
     const int actionCount = actionList.size();
@@ -100,8 +92,6 @@ void SegmentedControl::paintEvent(QPaintEvent * /*event*/) {
             rect.moveLeft(rect.x() + rect.width());
         }
     }
-    const qreal y = height - penWidth;
-    p.drawLine(QPointF(0, y), QPointF(width, y));
 }
 
 void SegmentedControl::mouseMoveEvent(QMouseEvent *event) {
@@ -148,15 +138,14 @@ void SegmentedControl::leaveEvent(QEvent *event) {
 
 void SegmentedControl::setupColors() {
 #ifdef APP_WIN
-    selectedColor = palette().color(QPalette::Base);
+    backgroundColor = palette().color(QPalette::Base);
 #else
-    selectedColor = palette().color(QPalette::Window);
+    backgroundColor = palette().color(QPalette::Window);
 #endif
-    int darkerFactor = 105;
-    backgroundColor = selectedColor.darker(darkerFactor);
-    borderColor = backgroundColor;
-    hoveredColor = backgroundColor.darker(darkerFactor);
-    pressedColor = hoveredColor.darker(darkerFactor);
+    int factor = backgroundColor.lightness() > 128 ? 105 : 80;
+    selectedColor = backgroundColor.darker(factor);
+    hoveredColor = selectedColor.darker(factor);
+    pressedColor = hoveredColor.darker(factor);
 }
 
 QAction *SegmentedControl::findHoveredAction(const QPoint &pos) const {

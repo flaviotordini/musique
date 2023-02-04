@@ -56,7 +56,6 @@ private:
     QAction *hoveredAction;
     QAction *pressedAction;
 
-    QColor borderColor;
     QColor backgroundColor;
     QColor selectedColor;
     QColor hoveredColor;
