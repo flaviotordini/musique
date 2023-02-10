@@ -174,7 +174,7 @@ void MainWindow::showInitialView() {
             if (!maybeShowUpdateNag()) maybeShowMessageBar();
         });
 
-#ifdef UPDATER
+#if defined(UPDATER) && defined(QT_NO_DEBUG_OUTPUT)
         Updater::instance().checkWithoutUI();
 #endif
 
