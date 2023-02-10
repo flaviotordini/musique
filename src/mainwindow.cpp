@@ -75,8 +75,13 @@ $END_LICENSE */
 #ifdef MEDIA_QTAV
 #include "mediaqtav.h"
 #endif
+
 #ifdef MEDIA_MPV
 #include "mediampv.h"
+#endif
+
+#ifdef MEDIA_QT
+#include "mediaqt.h"
 #endif
 
 #ifdef UPDATER
@@ -1099,6 +1104,8 @@ void MainWindow::initMedia() {
     media = new MediaQtAV(this);
 #elif defined MEDIA_MPV
     media = new MediaMPV();
+#elif defined MEDIA_QT
+    media = new MediaQt();
 #else
     qFatal("No media backend defined");
 #endif
