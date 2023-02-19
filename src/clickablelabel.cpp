@@ -17,7 +17,7 @@ void ClickableLabel::leaveEvent(QEvent *e) {
     QLabel::leaveEvent(e);
 }
 
-void ClickableLabel::enterEvent(QEnterEvent *e) {
+void ClickableLabel::enterEvent(CompatibleEnterEvent *e) {
     emit hovered(true);
     QLabel::enterEvent(e);
 }
