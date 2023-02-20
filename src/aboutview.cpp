@@ -109,8 +109,7 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
             "</p>";
 #endif
 
-    const char *buildYear = __DATE__ + 7;
-    info += "<p>&copy; " + QLatin1String(buildYear) + " " + QLatin1String(Constants::ORG_NAME) +
+    info += "<p>&copy; " + QString::number(BUILD_YEAR) + " " + QLatin1String(Constants::ORG_NAME) +
             "</p></body></html>";
 
     QLabel *infoLabel = new QLabel(info, this);

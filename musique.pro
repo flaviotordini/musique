@@ -10,6 +10,9 @@ DEFINES += APP_NAME="$$APP_NAME"
 APP_UNIX_NAME = musique
 DEFINES += APP_UNIX_NAME="$$APP_UNIX_NAME"
 
+BUILD_YEAR = $$str_member($${_DATE_}, -4, -1)
+DEFINES += BUILD_YEAR="$$BUILD_YEAR"
+
 message(Building $${APP_NAME} $${VERSION})
 message(Qt $$[QT_VERSION] in $$[QT_INSTALL_PREFIX])
 
