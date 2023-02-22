@@ -66,7 +66,7 @@ bool SegmentedControl::setCheckedAction(QAction *action) {
 
 QSize SegmentedControl::minimumSizeHint() const {
     int itemsWidth = calculateButtonWidth() * actionList.size() * 1.2;
-    return (QSize(itemsWidth, QFontMetrics(font()).xHeight() * 4));
+    return (QSize(itemsWidth, QFontMetrics(font()).height() * 2));
 }
 
 void SegmentedControl::paintEvent(QPaintEvent * /*event*/) {
