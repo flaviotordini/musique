@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="zh_CN">
 <context>
     <name>AboutView</name>
     <message>
@@ -767,31 +767,31 @@
     <name>Updater</name>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>查检更新</translation>
     </message>
     <message>
         <source>Version %1 is available...</source>
-        <translation type="unfinished"/>
+        <translation>版本 %1 可用</translation>
     </message>
     <message>
         <source>Downloading version %1...</source>
-        <translation type="unfinished"/>
+        <translation>下载版本 %1...</translation>
     </message>
     <message>
         <source>Restart to Update</source>
-        <translation type="unfinished"/>
+        <translation>重启开始更新</translation>
     </message>
     <message>
         <source>Version %1 download failed</source>
-        <translation type="unfinished"/>
+        <translation>版本 %1 下载失败</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>查检更新</translation>
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>下载更新</translation>
     </message>
     <message>
         <source>Downloading update...</source>
@@ -799,37 +799,37 @@
     </message>
     <message>
         <source>Retry Update Download</source>
-        <translation type="unfinished"/>
+        <translation>重试下载更新</translation>
     </message>
     <message>
         <source>You have the latest version.</source>
-        <translation type="unfinished"/>
+        <translation>已是最新版本</translation>
     </message>
     <message>
         <source>Version %1 is available.</source>
-        <translation type="unfinished"/>
+        <translation>版本 %1 可用</translation>
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>更新下载，准备更新</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>当前没有更新可用</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>已是最新版本</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>
-        <translation type="unfinished"/>
+        <translation>已下载 %1 %2...</translation>
     </message>
     <message>
         <source>A new version of %1 is available!</source>
@@ -849,7 +849,7 @@
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>下载更新</translation>
     </message>
 </context>
 </TS>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ru">
 <context>
     <name>AboutView</name>
     <message>
@@ -175,11 +175,11 @@
     <name>ChooseFolderView</name>
     <message>
         <source>Welcome to &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</source>
-        <translation>Добро пожаловать в &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;,</translation>
+        <translation>Добро пожаловать в &lt;a href=&apos;%1&apos;&gt;%2&lt;/a&gt;!</translation>
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 должен просмотреть вашу музыкальную коллекцию.</translation>
+        <translation>%1 должен просканировать вашу музыкальную коллекцию.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <source>Choose a folder...</source>
-        <translation>Выберите папку...</translation>
+        <translation>Выбрать папку…</translation>
     </message>
     <message>
         <source>%1 will connect to the Last.fm web services and pass artist names and album titles in order to fetch covert art, biographies and much more.</source>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Где ваша музыкальная коллекция?</translation>
+        <translation>Где расположена ваша музыкальная коллекция?</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
@@ -207,11 +207,11 @@
     </message>
     <message>
         <source>Use %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Использовать папку %1</translation>
     </message>
     <message>
         <source>Use %1 library</source>
-        <translation type="unfinished"/>
+        <translation>Использовать библиотеку %1</translation>
     </message>
 </context>
 <context>
@@ -254,15 +254,15 @@
     <name>Extra</name>
     <message>
         <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation>Исполняемый файл был изменен, возможно вирусом.</translation>
+        <translation>Исполняемый файл был изменён, возможно вирусом.</translation>
     </message>
     <message>
         <source>%1 will not run. Try installing again.</source>
-        <translation>%1 не запущено. Попробуйте установить ещё раз.</translation>
+        <translation>%1 не запустится. Попробуйте переустановить.</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation>Выйти</translation>
+        <translation>Выход</translation>
     </message>
     <message>
         <source>Reinstall</source>
@@ -285,7 +285,7 @@
     </message>
     <message>
         <source>Genres</source>
-        <translation type="unfinished"/>
+        <translation>Жанры</translation>
     </message>
 </context>
 <context>
@@ -633,11 +633,11 @@
     </message>
     <message>
         <source>&amp;Fix Library with %1...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Починить библиотеку с помощью %1...</translation>
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
-        <translation>Скрыть &amp;Menu Bar</translation>
+        <translation>Показать/скрыть панел&amp;ь меню</translation>
     </message>
     <message>
         <source>Menu</source>
@@ -645,15 +645,15 @@
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
-        <translation type="unfinished"/>
+        <translation>%1 добавлено %2 треков в вашу музыкальную библиотеку. %3 треков (%4%) с неполными тегами.</translation>
     </message>
     <message>
         <source>Do you want to fix them now with %1?</source>
-        <translation type="unfinished"/>
+        <translation>Хотите ли вы починить их с помощью %1?</translation>
     </message>
     <message>
         <source>Fix my music</source>
-        <translation type="unfinished"/>
+        <translation>Починить мою музыку</translation>
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
@@ -661,19 +661,19 @@
     </message>
     <message>
         <source>&amp;Scrobble</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Скроббл</translation>
     </message>
     <message>
         <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
+        <translation>Спасибо за обновление %1 до версии %2!</translation>
     </message>
     <message>
         <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
+        <translation>Если вам нравится %1, возможно, вы установили его несколько месяцев или даже лет назад, подумайте о том, чтобы стать одним из тех, кто готов поддерживать то, что вам нравится.</translation>
     </message>
     <message>
         <source>Donate</source>
-        <translation type="unfinished"/>
+        <translation>Пожертвовать</translation>
     </message>
 </context>
 <context>
@@ -768,31 +768,31 @@
     <name>Updater</name>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Проверить обновления...</translation>
     </message>
     <message>
         <source>Version %1 is available...</source>
-        <translation type="unfinished"/>
+        <translation>Доступна версия %1 </translation>
     </message>
     <message>
         <source>Downloading version %1...</source>
-        <translation type="unfinished"/>
+        <translation>Загружается версия %1…</translation>
     </message>
     <message>
         <source>Restart to Update</source>
-        <translation type="unfinished"/>
+        <translation>Перезапуск для обновления</translation>
     </message>
     <message>
         <source>Version %1 download failed</source>
-        <translation type="unfinished"/>
+        <translation>Загрузка версии %1 не удалась</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Проверить обновления</translation>
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Скачать обновление</translation>
     </message>
     <message>
         <source>Downloading update...</source>
@@ -800,37 +800,37 @@
     </message>
     <message>
         <source>Retry Update Download</source>
-        <translation type="unfinished"/>
+        <translation>Попытаться скачать обновление заново</translation>
     </message>
     <message>
         <source>You have the latest version.</source>
-        <translation type="unfinished"/>
+        <translation>У вас последняя версия.</translation>
     </message>
     <message>
         <source>Version %1 is available.</source>
-        <translation type="unfinished"/>
+        <translation>Доступна версия %1 </translation>
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>Обновление было загружено и готово к установке.</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>Нет новых обновлений.</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>У вас уже последняя версия</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>
-        <translation type="unfinished"/>
+        <translation>Загружается %1 %2...</translation>
     </message>
     <message>
         <source>A new version of %1 is available!</source>
@@ -850,7 +850,7 @@
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Скачать обновление</translation>
     </message>
 </context>
 </TS>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pt_BR">
 <context>
     <name>AboutView</name>
     <message>
@@ -779,15 +779,15 @@
     </message>
     <message>
         <source>Restart to Update</source>
-        <translation type="unfinished"/>
+        <translation>Reiniciar para atualizar</translation>
     </message>
     <message>
         <source>Version %1 download failed</source>
-        <translation type="unfinished"/>
+        <translation>O download da versão %1 falhou</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Verificar se há atualizações</translation>
     </message>
     <message>
         <source>Download Update</source>
@@ -799,11 +799,11 @@
     </message>
     <message>
         <source>Retry Update Download</source>
-        <translation type="unfinished"/>
+        <translation>Retentar o download da atualização</translation>
     </message>
     <message>
         <source>You have the latest version.</source>
-        <translation type="unfinished"/>
+        <translation>Você possui a última versão.</translation>
     </message>
     <message>
         <source>Version %1 is available.</source>
@@ -811,21 +811,21 @@
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>Uma atualização foi baixada e está pronta para ser instalada.</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>Não há atualizações disponíveis no momento.</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>Você já possui a última versão</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>

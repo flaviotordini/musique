@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="gl" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="gl">
 <context>
     <name>AboutView</name>
     <message>
@@ -767,31 +767,31 @@
     <name>Updater</name>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Buscando actualizacións...</translation>
     </message>
     <message>
         <source>Version %1 is available...</source>
-        <translation type="unfinished"/>
+        <translation>Está dispoñible a versión %1...</translation>
     </message>
     <message>
         <source>Downloading version %1...</source>
-        <translation type="unfinished"/>
+        <translation>Baixando a versión %1...</translation>
     </message>
     <message>
         <source>Restart to Update</source>
-        <translation type="unfinished"/>
+        <translation>Reiniciar para actualizar</translation>
     </message>
     <message>
         <source>Version %1 download failed</source>
-        <translation type="unfinished"/>
+        <translation>Erro ao baixar a versión %1</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Buscar actualizacións</translation>
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Baixar actualización</translation>
     </message>
     <message>
         <source>Downloading update...</source>
@@ -799,37 +799,37 @@
     </message>
     <message>
         <source>Retry Update Download</source>
-        <translation type="unfinished"/>
+        <translation>Volver a intentar baixar a actualización</translation>
     </message>
     <message>
         <source>You have the latest version.</source>
-        <translation type="unfinished"/>
+        <translation>Xa tes a última versión.</translation>
     </message>
     <message>
         <source>Version %1 is available.</source>
-        <translation type="unfinished"/>
+        <translation>Está dispoñible a versión %1.</translation>
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>Baixouse unha actualización e está listo para que se instale.</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>Non hai actualmente actualizacións dispoñibles.</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>Xa tes a última versión</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>
-        <translation type="unfinished"/>
+        <translation>Baixando %1 %2...</translation>
     </message>
     <message>
         <source>A new version of %1 is available!</source>
@@ -849,7 +849,7 @@
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Baixar actualización</translation>
     </message>
 </context>
 </TS>

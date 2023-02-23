@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="pl" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="pl">
 <context>
     <name>AboutView</name>
     <message>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>Open-source software</source>
-        <translation type="unfinished"/>
+        <translation>Oprogramowanie otwartoźródłowe</translation>
     </message>
 </context>
 <context>
@@ -640,7 +640,7 @@
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>Menu</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
@@ -767,31 +767,31 @@
     <name>Updater</name>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>Sprawdź, czy są aktualizacje</translation>
     </message>
     <message>
         <source>Version %1 is available...</source>
-        <translation type="unfinished"/>
+        <translation>Wersja %1 jest dostępna...</translation>
     </message>
     <message>
         <source>Downloading version %1...</source>
-        <translation type="unfinished"/>
+        <translation>Pobieranie wersji %1...</translation>
     </message>
     <message>
         <source>Restart to Update</source>
-        <translation type="unfinished"/>
+        <translation>Uruchom ponownie, aby zaktualizować</translation>
     </message>
     <message>
         <source>Version %1 download failed</source>
-        <translation type="unfinished"/>
+        <translation>Pobranie wersji %1 zakończyło się niepowodzeniem</translation>
     </message>
     <message>
         <source>Check for Updates</source>
-        <translation type="unfinished"/>
+        <translation>Sprawdź, czy są aktualizacje</translation>
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Pobierz aktualizację</translation>
     </message>
     <message>
         <source>Downloading update...</source>
@@ -803,33 +803,33 @@
     </message>
     <message>
         <source>You have the latest version.</source>
-        <translation type="unfinished"/>
+        <translation>Masz najnowszą wersję.</translation>
     </message>
     <message>
         <source>Version %1 is available.</source>
-        <translation type="unfinished"/>
+        <translation>Wersja %1 jest dostępna.</translation>
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>Aktualizacja została pobrana i jest gotowa do zainstalowania.</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>Obecnie nie ma dostępnych aktualizacji.</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>Masz już najnowszą wersję</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>
-        <translation type="unfinished"/>
+        <translation>Pobieranie %1 %2...</translation>
     </message>
     <message>
         <source>A new version of %1 is available!</source>
@@ -849,7 +849,7 @@
     </message>
     <message>
         <source>Download Update</source>
-        <translation type="unfinished"/>
+        <translation>Pobierz aktualizację</translation>
     </message>
 </context>
 </TS>

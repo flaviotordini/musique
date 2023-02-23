@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="fa_IR" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="fa_IR">
 <context>
     <name>AboutView</name>
     <message>
@@ -27,11 +27,11 @@
     </message>
     <message>
         <source>Powered by %1</source>
-        <translation type="unfinished"/>
+        <translation>ایجاد شده توسط %1</translation>
     </message>
     <message>
         <source>Open-source software</source>
-        <translation type="unfinished"/>
+        <translation>نرم افزار منبع باز</translation>
     </message>
 </context>
 <context>
@@ -118,7 +118,7 @@
     <name>AppWidget</name>
     <message>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>دانلود</translation>
     </message>
 </context>
 <context>
@@ -261,11 +261,11 @@
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>خروج</translation>
     </message>
     <message>
         <source>Reinstall</source>
-        <translation type="unfinished"/>
+        <translation>نصب مجدد</translation>
     </message>
 </context>
 <context>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>Genres</source>
-        <translation type="unfinished"/>
+        <translation>ژانر</translation>
     </message>
 </context>
 <context>
@@ -628,11 +628,11 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
-        <translation type="unfinished"/>
+        <translation>&amp;%1 را دوست داشته اید ؟ به آن امتیاز دهید!</translation>
     </message>
     <message>
         <source>&amp;Fix Library with %1...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;مجموعه را با %1 درست کن</translation>
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
@@ -640,7 +640,7 @@
     </message>
     <message>
         <source>Menu</source>
-        <translation type="unfinished"/>
+        <translation>منو</translation>
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
@@ -652,7 +652,7 @@
     </message>
     <message>
         <source>Fix my music</source>
-        <translation type="unfinished"/>
+        <translation>درست کردن آهنگ ها</translation>
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
@@ -672,7 +672,7 @@
     </message>
     <message>
         <source>Donate</source>
-        <translation type="unfinished"/>
+        <translation>حمایت مالی</translation>
     </message>
 </context>
 <context>
@@ -767,15 +767,15 @@
     <name>Updater</name>
     <message>
         <source>Check for Updates...</source>
-        <translation type="unfinished"/>
+        <translation>بررسی نسخه ی جدید...</translation>
     </message>
     <message>
         <source>Version %1 is available...</source>
-        <translation type="unfinished"/>
+        <translation>نسخه ی %1 موجود است...</translation>
     </message>
     <message>
         <source>Downloading version %1...</source>
-        <translation type="unfinished"/>
+        <translation>دریافت نسخه ی %1...</translation>
     </message>
     <message>
         <source>Restart to Update</source>
@@ -807,25 +807,25 @@
     </message>
     <message>
         <source>Version %1 is available.</source>
-        <translation type="unfinished"/>
+        <translation>نسخه ی %1 موجود است.</translation>
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
-        <translation type="unfinished"/>
+        <translation>نسخه ی جدید دریافت شد و آماده ی نصب میباشد.</translation>
     </message>
 </context>
 <context>
     <name>updater::DefaultUpdater</name>
     <message>
         <source>There are currently no updates available.</source>
-        <translation type="unfinished"/>
+        <translation>نسخه ی جدیدی موجود نیست.</translation>
     </message>
 </context>
 <context>
     <name>updater::Dialog</name>
     <message>
         <source>You already have the latest version</source>
-        <translation type="unfinished"/>
+        <translation>شما درحال حاضر دارای آخرین نسخه هستید.</translation>
     </message>
     <message>
         <source>Downloading %1 %2...</source>

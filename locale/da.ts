@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="da">
 <context>
     <name>AboutView</name>
     <message>
@@ -27,11 +27,11 @@
     </message>
     <message>
         <source>Powered by %1</source>
-        <translation type="unfinished"/>
+        <translation>Styrket af 1%</translation>
     </message>
     <message>
         <source>Open-source software</source>
-        <translation type="unfinished"/>
+        <translation>Åben-Kildekode software</translation>
     </message>
 </context>
 <context>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="uk">
 <context>
     <name>AboutView</name>
     <message>
@@ -636,7 +636,7 @@
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Приховати &amp;Menu Bar</translation>
     </message>
     <message>
         <source>Menu</source>
@@ -656,7 +656,7 @@
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
-        <translation type="unfinished"/>
+        <translation>Відкрити меню можна натисканням ALT</translation>
     </message>
     <message>
         <source>&amp;Scrobble</source>

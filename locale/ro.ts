@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ro" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ro">
 <context>
     <name>AboutView</name>
     <message>
@@ -27,11 +27,11 @@
     </message>
     <message>
         <source>Powered by %1</source>
-        <translation type="unfinished"/>
+        <translation>Alimentat de %1</translation>
     </message>
     <message>
         <source>Open-source software</source>
-        <translation type="unfinished"/>
+        <translation>Software Sursă-Deschisă</translation>
     </message>
 </context>
 <context>
