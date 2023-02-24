@@ -64,7 +64,9 @@ int main(int argc, char **argv) {
             return 0;
         }
     }
+#ifndef APP_MAC_STORE
     if (app.sendMessage(message.toUtf8())) return 0;
+#endif
 
 #ifdef APP_EXTRA
     Extra::appSetup(&app);
