@@ -19,7 +19,6 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "albumsqlmodel.h"
-#include "mainwindow.h"
 #include "model/album.h"
 
 AlbumSqlModel::AlbumSqlModel(QObject *parent) : BaseSqlModel(parent) {}

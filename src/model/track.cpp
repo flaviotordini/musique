@@ -27,9 +27,6 @@ $END_LICENSE */
 #include "../datautils.h"
 #include <QtSql>
 
-#include "../httputils.h"
-#include "http.h"
-
 #include <id3v2tag.h>
 #include <mpegfile.h>
 #include <unsynchronizedlyricsframe.h>
