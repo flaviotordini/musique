@@ -193,11 +193,10 @@ void FinderListView::updateItemSize() {
     const int maxPhotoWidth = 300;
     int size = 0;
 
-#ifdef APP_MAC
     int scrollbarWidth = 0;
-#else
-    int scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
-#endif
+    bool transient = style()->styleHint(QStyle::SH_ScrollBar_Transient, 0, verticalScrollBar());
+    if (!transient) scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+
     int width = contentsRect().width() - scrollbarWidth - 1;
     int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
     size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
