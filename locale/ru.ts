@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>Open-source software</source>
-        <translation>ПО с открытым исходным кодом</translation>
+        <translation>Открытое программное обеспечение</translation>
     </message>
 </context>
 <context>
@@ -179,7 +179,7 @@
     </message>
     <message>
         <source>%1 needs to scan your music collection.</source>
-        <translation>%1 должен просканировать вашу музыкальную коллекцию.</translation>
+        <translation>%1 должен просканировать вашу фонотеку.</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -195,11 +195,11 @@
     </message>
     <message>
         <source>Where&apos;s your music collection?</source>
-        <translation>Где расположена ваша музыкальная коллекция?</translation>
+        <translation>Где расположена ваша фонотека?</translation>
     </message>
     <message>
         <source>Select the location of your music collection.</source>
-        <translation>Выберите расположение вашей музыкальной коллекции.</translation>
+        <translation>Выберите расположение вашей фонотеки.</translation>
     </message>
     <message>
         <source>Locate your collection</source>
