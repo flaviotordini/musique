@@ -1321,7 +1321,7 @@ void MainWindow::runFinetune(const QString &filename) {
     // QString pageUrl = baseUrl + QLatin1String("/finetune");
     QString pageUrl = "macappstore://userpub.itunes.apple.com"
                       "/WebObjects/MZUserPublishing.woa/wa/addUserReview"
-                      "?id=422006190&type=Purple+Software";
+                      "?id=1089865507&type=Purple+Software";
     QDesktopServices::openUrl(pageUrl);
     return;
 #endif
