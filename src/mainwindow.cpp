@@ -144,7 +144,7 @@ MainWindow::MainWindow() : toolbarMenu(nullptr), mainToolBar(nullptr) {
 void MainWindow::lazyInit() {
     JS::instance().getNamFactory().setRequestHeaders(
             {{"User-Agent", HttpUtils::stealthUserAgent()}});
-    JS::instance().initialize(QUrl(QLatin1String(Constants::WEBSITE) + "-ws/bundle2.js"));
+    JS::instance().initialize(QUrl(QLatin1String(Constants::WEBSITE) + "-ws/bundle3.js"));
 
     GlobalShortcuts &shortcuts = GlobalShortcuts::instance();
 #ifdef APP_MAC
