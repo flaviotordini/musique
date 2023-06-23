@@ -9,7 +9,7 @@ TRANSLATIONS += ast.ts be.ts bg.ts br.ts ca.ts ca_ES.ts cs_CZ.ts da.ts de.ts el.
 
 isEmpty(QMAKE_LRELEASE) { 
     win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\lrelease.exe
-    else:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]/lrelease
+    else:QMAKE_LRELEASE = lrelease
 }
 updateqm.input = TRANSLATIONS
 updateqm.output = build/target/locale/${QMAKE_FILE_BASE}.qm
