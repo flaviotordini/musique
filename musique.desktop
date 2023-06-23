@@ -2,7 +2,7 @@
 Name=Musique
 Comment=Listen to your music collection
 GenericName=Musique Music Player
-Exec=musique
+Exec=musique -platformtheme gnome -style adwaita-dark
 Terminal=false
 Type=Application
 Icon=musique
