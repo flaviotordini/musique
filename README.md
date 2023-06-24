@@ -20,7 +20,7 @@ Qt 5:
 
 Qt 6:
 
-	sudo apt install build-essential qt6-base-dev-tools, qmake6, qt6-declarative-dev, libmpv-dev, libtag1-dev libqt6sql6-sqlite
+	sudo apt install build-essential qt6-base-dev-tools qmake6 qt6-declarative-dev libmpv-dev libtag1-dev libqt6sql6-sqlite
 
 Clone from Github:
 
