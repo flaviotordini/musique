@@ -37,9 +37,6 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     setMovement(QListView::Static);
     setUniformItemSizes(true);
 
-    // fix palette propagation
-    setPalette(parent->palette());
-
     // dragndrop
     setDragEnabled(true);
     setDragDropMode(QAbstractItemView::DragOnly);
