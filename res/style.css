@@ -1,3 +1,7 @@
+QToolBar {
+    border: 0;
+}
+
 QToolBar QLineEdit {
     background: transparent;
     border: 1px solid transparent;
@@ -38,35 +42,19 @@ AppsWidget {
     border-top: 1px solid palette(mid);
 }
 
+QListWidget[suggest="true"]::item {
+    border: 0;
+    padding: .25em;
+    border-radius: 3px;
+}
+
+QListWidget[suggest="true"]::item:hover, QListWidget[suggest="true"]::item:focus {
+    background: palette(highlight);
+    color: palette(highlighted-text);
+}
+
 Breadcrumb {
     border: 0;
-    background: #202020;
-    padding: .25em;
 }
 
-Breadcrumb QToolButton {
-    padding: .25em;
-    color: white;
-}
 
-Breadcrumb QToolButton:hover {
-    border: 0;
-    border-radius: .25em;
-}
-
-Breadcrumb QToolButton:pressed {
-    background: rgba(255,255,255,.1);
-}
-
-MessageBar {
-    background: #f9f7c8;
-}
-
-MessageBar QLabel {
-    color: rgba(0,0,0,192);
-}
-
-MessageBar QToolButton {
-    background: transparent;
-    border: 0;
-}
