@@ -59,6 +59,7 @@ $END_LICENSE */
 #include "fader.h"
 #include "updatedialog.h"
 #endif
+#include "actionbutton.h"
 #include "http.h"
 #include "httputils.h"
 #include "seekslider.h"
@@ -612,16 +613,29 @@ void MainWindow::createToolBar() {
 #endif
 
     toolbar = new QToolBar(this);
-    addToolBar(toolbar);
-
     toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     toolbar->setFloatable(false);
     toolbar->setMovable(false);
     toolbar->setIconSize(QSize(32, 32));
+    addToolBar(toolbar);
 
+    toolbar->addWidget(new Spacer());
+
+    auto addSmallToolbutton = [this](const char *name) {
+        auto button = new ActionButton();
+        button->setAction(getAction(name));
+        button->setIconSize(QSize(16, 16));
+        button->setFlat(true);
+        button->setFocusPolicy(Qt::NoFocus);
+        toolbar->addWidget(button);
+    };
+
+    addSmallToolbutton("shufflePlaylist");
     toolbar->addAction(skipBackwardAct);
     toolbar->addAction(playAct);
     toolbar->addAction(skipForwardAct);
+    addSmallToolbutton("repeatPlaylist");
+
     toolbar->addAction(contextualAct);
 
     toolbar->addWidget(new Spacer());
@@ -631,24 +645,16 @@ void MainWindow::createToolBar() {
     toolbar->addWidget(currentTimeLabel);
 
     seekSlider->setOrientation(Qt::Horizontal);
-    seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+    QSizePolicy sp(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
+    sp.setHorizontalStretch(2);
+    seekSlider->setSizePolicy(sp);
+    seekSlider->setMaximumWidth(500);
     seekSlider->setFocusPolicy(Qt::NoFocus);
     toolbar->addWidget(seekSlider);
 
     toolbar->addWidget(new Spacer());
 
-    toolbar->addAction(volumeMuteAct);
-#ifndef APP_MAC_QMACTOOLBAR
-    QToolButton *volumeMuteButton =
-            qobject_cast<QToolButton *>(toolbar->widgetForAction(volumeMuteAct));
-    volumeMuteButton->setIconSize(QSize(16, 16));
-    auto fixVolumeMuteIconSize = [volumeMuteButton] {
-        volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
-    };
-    fixVolumeMuteIconSize();
-    volumeMuteButton->connect(volumeMuteAct, &QAction::changed, volumeMuteButton,
-                              fixVolumeMuteIconSize);
-#endif
+    addSmallToolbutton("volume-mute");
 
     volumeSlider->setStatusTip(
             tr("Press %1 to raise the volume, %2 to lower it")
@@ -656,7 +662,6 @@ void MainWindow::createToolBar() {
                          volumeDownAct->shortcut().toString(QKeySequence::NativeText)));
 
     volumeSlider->setOrientation(Qt::Horizontal);
-    // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     volumeSlider->setFocusPolicy(Qt::NoFocus);
     toolbar->addWidget(volumeSlider);
@@ -666,9 +671,7 @@ void MainWindow::createToolBar() {
     toolbar->addWidget(toolbarSearch);
 
 #ifndef APP_MAC
-    QAction *toolbarMenuAction = getAction("toolbarMenu");
-    toolbar->addAction(toolbarMenuAction);
-    toolbarMenuButton = qobject_cast<QToolButton *>(toolbar->widgetForAction(toolbarMenuAction));
+    addSmallToolbutton("toolbarMenu");
 #endif
 }
 
@@ -683,8 +686,6 @@ void MainWindow::createStatusBar() {
     statusToolBar->addWidget(spring);
 
     statusToolBar->addAction(actionMap.value("scrobbling"));
-    statusToolBar->addAction(actionMap.value("shufflePlaylist"));
-    statusToolBar->addAction(actionMap.value("repeatPlaylist"));
     statusToolBar->addAction(actionMap.value("clearPlaylist"));
     statusBar()->addPermanentWidget(statusToolBar);
 

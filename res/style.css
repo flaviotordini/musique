@@ -9,6 +9,11 @@ QToolBar QLineEdit:focus {
     background: normal;
 }
 
+QSlider[knobless="true"]::handle {
+    border: 0;
+    height: 0;
+}
+
 QStatusBar {
     border: 0;
 }
