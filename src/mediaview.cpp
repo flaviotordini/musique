@@ -42,7 +42,7 @@ MediaView::MediaView(QWidget *parent) : View(parent) {
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
 
-    splitter = new MiniSplitter(this);
+    splitter = new MiniSplitter(Qt::Horizontal, this);
     splitter->setChildrenCollapsible(false);
 
     // playlist model

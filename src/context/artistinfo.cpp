@@ -20,7 +20,7 @@ $END_LICENSE */
 
 #include "artistinfo.h"
 #include "../model/artist.h"
-#include "../fontutils.h"
+#include "fontutils.h"
 
 ArtistInfo::ArtistInfo(QWidget *parent) :
         QWidget(parent) {

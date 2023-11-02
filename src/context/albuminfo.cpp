@@ -19,11 +19,11 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "albuminfo.h"
+#include "../database.h"
 #include "../model/album.h"
-#include "../fontutils.h"
 #include "../tracklistview.h"
 #include "../tracksqlmodel.h"
-#include "../database.h"
+#include "fontutils.h"
 
 AlbumInfo::AlbumInfo(QWidget *parent) :
         QWidget(parent) {

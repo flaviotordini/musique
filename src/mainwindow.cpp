@@ -568,11 +568,17 @@ void MainWindow::createToolBar() {
     currentTimeLabel = new QLabel("00:00", this);
 
     seekSlider = new SeekSlider(this);
+    seekSlider->setProperty("knobless", true);
     seekSlider->setEnabled(false);
     seekSlider->setTracking(false);
     seekSlider->setMaximum(1000);
 
     volumeSlider = new SeekSlider(this);
+    {
+        auto p = volumeSlider->palette();
+        p.setColor(QPalette::Highlight, p.color(QPalette::Button));
+        volumeSlider->setPalette(p);
+    }
     volumeSlider->setValue(volumeSlider->maximum());
 
 #if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
@@ -623,9 +629,8 @@ void MainWindow::createToolBar() {
     mainToolBar->addWidget(new Spacer());
 
     currentTimeLabel->setFont(FontUtils::small());
+    currentTimeLabel->setContentsMargins(0, 0, 10, 0);
     mainToolBar->addWidget(currentTimeLabel);
-
-    mainToolBar->addWidget(new Spacer(nullptr, 10));
 
     seekSlider->setOrientation(Qt::Horizontal);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
@@ -661,7 +666,6 @@ void MainWindow::createToolBar() {
     mainToolBar->addWidget(new Spacer());
 
     mainToolBar->addWidget(toolbarSearch);
-    mainToolBar->addWidget(new Spacer(this, toolbarSearch->height() / 2));
 
 #ifndef APP_MAC
     QAction *toolbarMenuAction = getAction("toolbarMenu");
@@ -1553,7 +1557,6 @@ void MainWindow::reportIssue() {
 
 void MainWindow::maybeShowMessageBar() {
     messageBar = new MessageBar();
-    messageBar->setAlignment(Qt::AlignHCenter);
     auto dockWidget = new QDockWidget();
     dockWidget->setTitleBarWidget(new QWidget());
     dockWidget->setWidget(messageBar);
@@ -1573,11 +1576,12 @@ void MainWindow::maybeShowMessageBar() {
 #if defined APP_MAC && !defined APP_MAC_STORE
     if (showMessages && !settings.contains(key = "sofa")) {
         QString msg = tr("Need a remote control for %1? Try %2!").arg(Constants::NAME).arg("Sofa");
-        msg = "<a href='https://" + QLatin1String(Constants::ORG_DOMAIN) + '/' + key +
-              "' style = 'text-decoration:none;color:palette(windowText)'>" + msg + "</a>";
         messageBar->setMessage(msg);
-        messageBar->setOpenExternalLinks(true);
         disconnect(messageBar);
+        connect(messageBar, &MessageBar::clicked, this, [key] {
+            QString url = "https://" + QLatin1String(Constants::ORG_DOMAIN) + '/' + key;
+            QDesktopServices::openUrl(url);
+        });
         connect(messageBar, &MessageBar::closed, this, [key] {
             QSettings settings;
             settings.setValue(key, true);
@@ -1591,13 +1595,9 @@ void MainWindow::maybeShowMessageBar() {
     connect(&Updater::instance(), &Updater::statusChanged, this, [this, dockWidget](auto status) {
         if (status == Updater::Status::UpdateDownloaded) {
             QString msg = tr("An update is ready to be installed. Quit and install update.");
-            msg = "<a href='http://quit' style = "
-                  "'text-decoration:none;color:palette(windowText)'>" +
-                  msg + "</a>";
             messageBar->setMessage(msg);
-            messageBar->setOpenExternalLinks(false);
             disconnect(messageBar);
-            connect(messageBar, &MessageBar::linkActivated, this, [] { qApp->quit(); });
+            connect(messageBar, &MessageBar::clicked, this, [] { qApp->quit(); });
             dockWidget->show();
         }
     });

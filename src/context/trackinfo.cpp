@@ -19,8 +19,8 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "trackinfo.h"
-#include "../fontutils.h"
 #include "../model/track.h"
+#include "fontutils.h"
 
 TrackInfo::TrackInfo(QWidget *parent) : QWidget(parent) {
     setPalette(parent->palette());

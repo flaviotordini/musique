@@ -26,12 +26,13 @@ CONFIG(release, debug|release): {
     CONFIG += optimize_full
 }
 
-DEFINES *= QT_USE_QSTRINGBUILDER QT_STRICT_ITERATORS QT_DEPRECATED_WARNINGS
+DEFINES *= QT_USE_QSTRINGBUILDER
 
 TARGET = $${APP_UNIX_NAME}
 
 QT += network sql widgets
 
+include(lib/qt-reusable-widgets/qt-reusable-widgets.pri)
 include(lib/http/http.pri)
 include(lib/idle/idle.pri)
 include(lib/js/js.pri)
@@ -50,11 +51,9 @@ INCLUDEPATH += $$PWD/src
 HEADERS += src/mainwindow.h \
     src/aboutview.h \
     src/lyrics.h \
-    src/messagebar.h \
     src/updateutils.h \
     src/view.h \
     src/searchlineedit.h \
-    src/spacer.h \
     src/constants.h \
     src/finderwidget.h \
     src/collectionscannerview.h \
@@ -76,7 +75,6 @@ HEADERS += src/mainwindow.h \
     src/playlistview.h \
     src/collectionscannerthread.h \
     src/playlistwidget.h \
-    src/fontutils.h \
     src/choosefolderview.h \
     src/filesystemfinderview.h \
     src/model/folder.h \
@@ -91,7 +89,6 @@ HEADERS += src/mainwindow.h \
     src/trackitemdelegate.h \
     src/playlistitemdelegate.h \
     src/droparea.h \
-    src/minisplitter.h \
     src/filteringfilesystemmodel.h \
     src/globalshortcuts.h \
     src/globalshortcutbackend.h \
@@ -101,12 +98,10 @@ HEADERS += src/mainwindow.h \
     src/searchmodel.h \
     src/collectionsuggester.h \
     src/diskcache.h \
-    src/segmentedcontrol.h \
     src/coverutils.h \
     src/lastfmlogindialog.h \
     src/lastfm.h \
     src/imagedownloader.h \
-    src/iconutils.h \
     src/appwidget.h \
     src/httputils.h \
     src/tagchecker.h \
@@ -115,18 +110,13 @@ HEADERS += src/mainwindow.h \
     src/genresmodel.h \
     src/genres.h \
     src/model/decade.h \
-    src/seekslider.h \
     src/finderlistview.h \
-    src/breadcrumb.h \
-    src/clickablelabel.h \
     src/waitingspinnerwidget.h
 SOURCES += src/main.cpp \
     src/lyrics.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
-    src/messagebar.cpp \
     src/searchlineedit.cpp \
-    src/spacer.cpp \
     src/finderwidget.cpp \
     src/collectionscannerview.cpp \
     src/collectionscanner.cpp \
@@ -146,7 +136,6 @@ SOURCES += src/main.cpp \
     src/playlistview.cpp \
     src/collectionscannerthread.cpp \
     src/playlistwidget.cpp \
-    src/fontutils.cpp \
     src/choosefolderview.cpp \
     src/filesystemfinderview.cpp \
     src/model/folder.cpp \
@@ -161,7 +150,6 @@ SOURCES += src/main.cpp \
     src/trackitemdelegate.cpp \
     src/playlistitemdelegate.cpp \
     src/droparea.cpp \
-    src/minisplitter.cpp \
     src/filteringfilesystemmodel.cpp \
     src/constants.cpp \
     src/globalshortcuts.cpp \
@@ -171,12 +159,10 @@ SOURCES += src/main.cpp \
     src/searchmodel.cpp \
     src/collectionsuggester.cpp \
     src/diskcache.cpp \
-    src/segmentedcontrol.cpp \
     src/coverutils.cpp \
     src/lastfmlogindialog.cpp \
     src/lastfm.cpp \
     src/imagedownloader.cpp \
-    src/iconutils.cpp \
     src/appwidget.cpp \
     src/httputils.cpp \
     src/tagchecker.cpp \
@@ -185,10 +171,7 @@ SOURCES += src/main.cpp \
     src/genresmodel.cpp \
     src/genres.cpp \
     src/model/decade.cpp \
-    src/seekslider.cpp \
     src/finderlistview.cpp \
-    src/breadcrumb.cpp \
-    src/clickablelabel.cpp \
     src/updateutils.cpp \
     src/waitingspinnerwidget.cpp
 

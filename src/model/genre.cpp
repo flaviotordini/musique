@@ -4,7 +4,7 @@
 
 #include "../database.h"
 #include "../datautils.h"
-#include "../iconutils.h"
+#include "iconutils.h"
 
 #include "artist.h"
 #include "track.h"
