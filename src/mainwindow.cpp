@@ -99,7 +99,7 @@ MainWindow *MainWindow::instance() {
     return singleton;
 }
 
-MainWindow::MainWindow() : toolbarMenu(nullptr), mainToolBar(nullptr) {
+MainWindow::MainWindow() : toolbarMenu(nullptr), toolbar(nullptr) {
     fullScreenActive = false;
 
     singleton = this;
@@ -611,38 +611,36 @@ void MainWindow::createToolBar() {
     return;
 #endif
 
-    mainToolBar = new QToolBar(this);
-    addToolBar(mainToolBar);
+    toolbar = new QToolBar(this);
+    addToolBar(toolbar);
 
-    mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
-    mainToolBar->setFloatable(false);
-    mainToolBar->setMovable(false);
-#ifndef APP_LINUX
-    mainToolBar->setIconSize(QSize(32, 32));
-#endif
+    toolbar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    toolbar->setFloatable(false);
+    toolbar->setMovable(false);
+    toolbar->setIconSize(QSize(32, 32));
 
-    mainToolBar->addAction(skipBackwardAct);
-    mainToolBar->addAction(playAct);
-    mainToolBar->addAction(skipForwardAct);
-    mainToolBar->addAction(contextualAct);
+    toolbar->addAction(skipBackwardAct);
+    toolbar->addAction(playAct);
+    toolbar->addAction(skipForwardAct);
+    toolbar->addAction(contextualAct);
 
-    mainToolBar->addWidget(new Spacer());
+    toolbar->addWidget(new Spacer());
 
     currentTimeLabel->setFont(FontUtils::small());
     currentTimeLabel->setContentsMargins(0, 0, 10, 0);
-    mainToolBar->addWidget(currentTimeLabel);
+    toolbar->addWidget(currentTimeLabel);
 
     seekSlider->setOrientation(Qt::Horizontal);
     seekSlider->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed);
     seekSlider->setFocusPolicy(Qt::NoFocus);
-    mainToolBar->addWidget(seekSlider);
+    toolbar->addWidget(seekSlider);
 
-    mainToolBar->addWidget(new Spacer());
+    toolbar->addWidget(new Spacer());
 
-    mainToolBar->addAction(volumeMuteAct);
+    toolbar->addAction(volumeMuteAct);
 #ifndef APP_MAC_QMACTOOLBAR
     QToolButton *volumeMuteButton =
-            qobject_cast<QToolButton *>(mainToolBar->widgetForAction(volumeMuteAct));
+            qobject_cast<QToolButton *>(toolbar->widgetForAction(volumeMuteAct));
     volumeMuteButton->setIconSize(QSize(16, 16));
     auto fixVolumeMuteIconSize = [volumeMuteButton] {
         volumeMuteButton->setIcon(volumeMuteButton->icon().pixmap(16));
@@ -661,17 +659,16 @@ void MainWindow::createToolBar() {
     // this makes the volume slider smaller
     volumeSlider->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     volumeSlider->setFocusPolicy(Qt::NoFocus);
-    mainToolBar->addWidget(volumeSlider);
+    toolbar->addWidget(volumeSlider);
 
-    mainToolBar->addWidget(new Spacer());
+    toolbar->addWidget(new Spacer());
 
-    mainToolBar->addWidget(toolbarSearch);
+    toolbar->addWidget(toolbarSearch);
 
 #ifndef APP_MAC
     QAction *toolbarMenuAction = getAction("toolbarMenu");
-    mainToolBar->addAction(toolbarMenuAction);
-    toolbarMenuButton =
-            qobject_cast<QToolButton *>(mainToolBar->widgetForAction(toolbarMenuAction));
+    toolbar->addAction(toolbarMenuAction);
+    toolbarMenuButton = qobject_cast<QToolButton *>(toolbar->widgetForAction(toolbarMenuAction));
 #endif
 }
 
@@ -777,7 +774,7 @@ void MainWindow::showView(View *view, bool transition) {
     aboutAct->setEnabled(view != aboutView);
     chooseFolderAct->setEnabled(view == mediaView || view == contextualView);
     toolbarSearch->setEnabled(view == mediaView || view == contextualView);
-    if (mainToolBar) mainToolBar->setVisible(view == mediaView || view == contextualView);
+    if (toolbar) toolbar->setVisible(view == mediaView || view == contextualView);
     statusBar()->setVisible(view == mediaView);
 
     views->setCurrentWidget(view);
@@ -1090,9 +1087,9 @@ void MainWindow::updateUIForFullscreen() {
 
 #ifndef APP_MAC
     if (fullScreenActive)
-        mainToolBar->addAction(fullscreenAct);
+        toolbar->addAction(fullscreenAct);
     else
-        mainToolBar->removeAction(fullscreenAct);
+        toolbar->removeAction(fullscreenAct);
 #endif
 }
 

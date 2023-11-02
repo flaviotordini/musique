@@ -198,7 +198,7 @@ private:
     QToolButton *toolbarMenuButton;
 
     // toolbar
-    QToolBar *mainToolBar;
+    QToolBar *toolbar;
     SearchLineEdit *toolbarSearch;
     QToolBar *statusToolBar;
     QSlider *seekSlider;
