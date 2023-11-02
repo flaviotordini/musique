@@ -692,7 +692,7 @@ void MainWindow::createStatusBar() {
     statusToolBar->addAction(actionMap.value("scrobbling"));
     statusToolBar->addAction(actionMap.value("clearPlaylist"));
     statusBar()->addPermanentWidget(statusToolBar);
-
+    statusBar()->setSizeGripEnabled(false);
     statusBar()->show();
 }
 
