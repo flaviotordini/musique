@@ -39,6 +39,7 @@ $END_LICENSE */
 #include "mediaview.h"
 #include "messagebar.h"
 #include "view.h"
+#include "zoomableui.h"
 #ifdef Q_OS_MAC
 #include "mac_startup.h"
 #include "macfullscreen.h"
@@ -114,15 +115,17 @@ MainWindow::MainWindow() : toolbarMenu(nullptr), toolbar(nullptr) {
     aboutView = nullptr;
     contextualView = nullptr;
 
+    // views mechanism
+    views = new QStackedWidget(this);
+    setCentralWidget(views);
+
+    zoomableUI = new ZoomableUI(*this);
+
     // build ui
     createActions();
     createMenus();
     createToolBar();
     createStatusBar();
-
-    // views mechanism
-    views = new QStackedWidget(this);
-    setCentralWidget(views);
 
     // remove that useless menu/toolbar context menu
     setContextMenuPolicy(Qt::NoContextMenu);
@@ -538,6 +541,7 @@ void MainWindow::createMenus() {
     QMenu *viewMenu = menuBar()->addMenu(tr("&View"));
     viewMenu->addAction(contextualAct);
     viewMenu->addSeparator();
+    viewMenu->addActions(zoomableUI->getActions());
 #ifndef APP_MAC
     viewMenu->addAction(fullscreenAct);
 #endif

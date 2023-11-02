@@ -25,6 +25,7 @@ $END_LICENSE */
 
 #include "media.h"
 
+class ZoomableUI;
 class View;
 class MediaView;
 class CollectionScannerView;
@@ -213,6 +214,8 @@ private:
     MessageBar *messageBar;
 
     Media *media;
+
+    ZoomableUI *zoomableUI;
 };
 
 #endif
