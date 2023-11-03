@@ -335,6 +335,15 @@ QString Track::getStatusTip() {
     return tip;
 }
 
+void Track::setLength(int length) {
+    this->length = length;
+    formattedLength = DataUtils::formatDuration(length);
+}
+
+const QString &Track::getFormattedLength() {
+    return formattedLength;
+}
+
 void Track::fetchInfo() {
     emit gotInfo();
 }

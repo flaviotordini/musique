@@ -24,7 +24,7 @@ $END_LICENSE */
 #include "model/track.h"
 #include <QtWidgets>
 
-namespace Playlist {
+namespace PlaylistRoles {
 
 enum PlaylistDataRoles { DataObjectRole = Qt::UserRole, ActiveItemRole, HoveredItemRole };
 

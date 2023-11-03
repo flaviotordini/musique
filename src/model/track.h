@@ -55,7 +55,8 @@ public:
     int getDiskCount() { return diskCount; }
     void setDiskCount(int value) { diskCount = value; }
     int getLength() { return length; }
-    void setLength(int length) { this->length = length; }
+    void setLength(int length);
+    const QString &getFormattedLength();
     int getYear() { return year; }
     void setYear(int year) { this->year = year; }
     QString getHash();
@@ -125,6 +126,7 @@ private:
     int diskCount;
     int year;
     int length;
+    QString formattedLength;
 
     /*
     // CUE support

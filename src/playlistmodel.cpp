@@ -45,10 +45,10 @@ QVariant PlaylistModel::data(const QModelIndex &index, int role) const {
     if (!track) return QVariant();
 
     switch (role) {
-    case Playlist::DataObjectRole:
+    case PlaylistRoles::DataObjectRole:
         return QVariant::fromValue(QPointer<Track>(track));
 
-    case Playlist::ActiveItemRole:
+    case PlaylistRoles::ActiveItemRole:
         return track == activeTrack;
     }
 
