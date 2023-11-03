@@ -365,81 +365,81 @@ void MainWindow::createActions() {
     connect(aboutAct, SIGNAL(triggered()), SLOT(about()));
 
     // Anon
-    QAction *action;
+    QAction *a;
 
-    action = new QAction(tr("&Fix Library with %1...").arg("Finetune"), this);
-    action->setMenuRole(QAction::ApplicationSpecificRole);
-    action->setVisible(false);
-    actionMap.insert("finetune", action);
-    connect(action, SIGNAL(triggered()), SLOT(runFinetune()));
+    a = new QAction(tr("&Fix Library with %1...").arg("Finetune"), this);
+    a->setMenuRole(QAction::ApplicationSpecificRole);
+    a->setVisible(false);
+    actionMap.insert("finetune", a);
+    connect(a, SIGNAL(triggered()), SLOT(runFinetune()));
 
-    action = new QAction(tr("&Report an Issue..."), this);
-    actionMap.insert("report-issue", action);
-    connect(action, SIGNAL(triggered()), SLOT(reportIssue()));
+    a = new QAction(tr("&Report an Issue..."), this);
+    actionMap.insert("report-issue", a);
+    connect(a, SIGNAL(triggered()), SLOT(reportIssue()));
 
-    action = new QAction(tr("&Clear"), this);
-    IconUtils::setIcon(action, "edit-clear");
-    action->setShortcut(QKeySequence::New);
-    action->setStatusTip(tr("Remove all tracks from the playlist"));
-    action->setEnabled(false);
-    actionMap.insert("clearPlaylist", action);
+    a = new QAction(tr("&Clear"), this);
+    IconUtils::setIcon(a, "edit-clear");
+    a->setShortcuts({Qt::CTRL + Qt::Key_Backspace, QKeySequence::New});
+    a->setStatusTip(tr("Remove all tracks from the playlist"));
+    a->setEnabled(false);
+    actionMap.insert("clearPlaylist", a);
 
-    action = new QAction(tr("&Shuffle"), this);
-    IconUtils::setIcon(action, "media-playlist-shuffle");
-    action->setStatusTip(tr("Random playlist mode"));
-    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
-    action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), SLOT(setShuffle(bool)));
-    actionMap.insert("shufflePlaylist", action);
+    a = new QAction(tr("&Shuffle"), this);
+    IconUtils::setIcon(a, "media-playlist-shuffle");
+    a->setStatusTip(tr("Random playlist mode"));
+    a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
+    a->setCheckable(true);
+    connect(a, SIGNAL(toggled(bool)), SLOT(setShuffle(bool)));
+    actionMap.insert("shufflePlaylist", a);
 
-    action = new QAction(tr("&Repeat"), this);
-    IconUtils::setIcon(action, "media-playlist-repeat");
-    action->setStatusTip(tr("Play first song again after all songs are played"));
-    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_R));
-    action->setCheckable(true);
-    connect(action, SIGNAL(toggled(bool)), SLOT(setRepeat(bool)));
-    actionMap.insert("repeatPlaylist", action);
+    a = new QAction(tr("&Repeat"), this);
+    IconUtils::setIcon(a, "media-playlist-repeat");
+    a->setStatusTip(tr("Play first song again after all songs are played"));
+    a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_R));
+    a->setCheckable(true);
+    connect(a, SIGNAL(toggled(bool)), SLOT(setRepeat(bool)));
+    actionMap.insert("repeatPlaylist", a);
 
-    action = new QAction(tr("&Close"), this);
-    action->setShortcut(QKeySequence(QKeySequence::Close));
-    actionMap.insert("close", action);
-    connect(action, SIGNAL(triggered()), SLOT(close()));
+    a = new QAction(tr("&Close"), this);
+    a->setShortcut(QKeySequence(QKeySequence::Close));
+    actionMap.insert("close", a);
+    connect(a, SIGNAL(triggered()), SLOT(close()));
 
-    action = new QAction(Constants::NAME, this);
-    action->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_1));
-    actionMap.insert("restore", action);
-    connect(action, SIGNAL(triggered()), SLOT(restore()));
+    a = new QAction(Constants::NAME, this);
+    a->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_1));
+    actionMap.insert("restore", a);
+    connect(a, SIGNAL(triggered()), SLOT(restore()));
 
-    action = new QAction(tr("&Stop After This Track"), this);
-    action->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Escape));
-    action->setCheckable(true);
-    action->setEnabled(false);
-    actionMap.insert("stopafterthis", action);
-    connect(action, SIGNAL(toggled(bool)), SLOT(showStopAfterThisInStatusBar(bool)));
+    a = new QAction(tr("&Stop After This Track"), this);
+    a->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Escape));
+    a->setCheckable(true);
+    a->setEnabled(false);
+    actionMap.insert("stopafterthis", a);
+    connect(a, SIGNAL(toggled(bool)), SLOT(showStopAfterThisInStatusBar(bool)));
 
-    action = new QAction(tr("&Scrobble"), this);
-    IconUtils::setIcon(action, "audioscrobbler");
-    action->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
-    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
-    action->setCheckable(true);
-    actionMap.insert("scrobbling", action);
-    connect(action, SIGNAL(toggled(bool)), SLOT(toggleScrobbling(bool)));
+    a = new QAction(tr("&Scrobble"), this);
+    IconUtils::setIcon(a, "audioscrobbler");
+    a->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
+    a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
+    a->setCheckable(true);
+    actionMap.insert("scrobbling", a);
+    connect(a, SIGNAL(toggled(bool)), SLOT(toggleScrobbling(bool)));
 
-    action = new QAction(tr("&Log Out from %1").arg("Last.fm"), this);
-    action->setMenuRole(QAction::ApplicationSpecificRole);
-    action->setEnabled(false);
-    action->setVisible(false);
-    actionMap.insert("lastFmLogout", action);
-    connect(action, SIGNAL(triggered()), SLOT(lastFmLogout()));
+    a = new QAction(tr("&Log Out from %1").arg("Last.fm"), this);
+    a->setMenuRole(QAction::ApplicationSpecificRole);
+    a->setEnabled(false);
+    a->setVisible(false);
+    actionMap.insert("lastFmLogout", a);
+    connect(a, SIGNAL(triggered()), SLOT(lastFmLogout()));
 
-    action = new QAction(tr("Toggle &Menu Bar"), this);
-    connect(action, SIGNAL(triggered()), SLOT(toggleMenuVisibilityWithMessage()));
-    actionMap.insert("toggleMenu", action);
+    a = new QAction(tr("Toggle &Menu Bar"), this);
+    connect(a, SIGNAL(triggered()), SLOT(toggleMenuVisibilityWithMessage()));
+    actionMap.insert("toggleMenu", a);
 
-    action = new QAction(tr("Menu"), this);
-    IconUtils::setIcon(action, "open-menu");
-    connect(action, SIGNAL(triggered()), SLOT(toggleToolbarMenu()));
-    actionMap.insert("toolbarMenu", action);
+    a = new QAction(tr("Menu"), this);
+    IconUtils::setIcon(a, "open-menu");
+    connect(a, SIGNAL(triggered()), SLOT(toggleToolbarMenu()));
+    actionMap.insert("toolbarMenu", a);
 
 #ifdef APP_MAC_STORE
     action = new QAction(tr("&Love %1? Rate it!").arg(Constants::NAME), this);
