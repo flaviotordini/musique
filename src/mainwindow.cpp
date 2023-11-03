@@ -317,8 +317,7 @@ void MainWindow::createActions() {
 
     removeAct = new QAction(tr("&Remove"), this);
     removeAct->setStatusTip(tr("Remove the selected tracks from the playlist"));
-    removeAct->setShortcuts(QList<QKeySequence>()
-                            << QKeySequence("Del") << QKeySequence("Backspace"));
+    removeAct->setShortcuts({Qt::Key_Backspace, Qt::Key_Delete});
     removeAct->setEnabled(false);
     actionMap.insert("remove", removeAct);
 
