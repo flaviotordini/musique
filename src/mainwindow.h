@@ -79,6 +79,7 @@ protected:
     void closeEvent(QCloseEvent *e);
     bool eventFilter(QObject *obj, QEvent *e);
     void resizeEvent(QResizeEvent *e);
+    void keyPressEvent(QKeyEvent *e);
 
 private slots:
     void lazyInit();

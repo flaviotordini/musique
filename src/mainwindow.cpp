@@ -367,6 +367,29 @@ void MainWindow::createActions() {
     // Anon
     QAction *a;
 
+    a = new QAction(tr("Rewind %1 seconds").arg(10));
+    a->setShortcut(Qt::Key_Left);
+    a->setShortcutContext(Qt::WidgetShortcut);
+    connect(a, &QAction::triggered, this, [this] {
+        qint64 position = media->position();
+        position -= 10000;
+        if (position < 0) position = 0;
+        media->seek(position);
+    });
+    addNamedAction("seekBackward", a);
+
+    a = new QAction(tr("Fast forward %1 seconds").arg(10));
+    a->setShortcut(Qt::Key_Right);
+    a->setShortcutContext(Qt::WidgetShortcut);
+    connect(a, &QAction::triggered, this, [this] {
+        qint64 position = media->position();
+        position += 10000;
+        qint64 duration = media->duration();
+        if (position > duration) position = duration;
+        media->seek(position);
+    });
+    addNamedAction("seekForward", a);
+
     a = new QAction(tr("&Fix Library with %1...").arg("Finetune"), this);
     a->setMenuRole(QAction::ApplicationSpecificRole);
     a->setVisible(false);
@@ -1011,6 +1034,14 @@ void MainWindow::resizeEvent(QResizeEvent *e) {
 #ifdef APP_MAC_QMACTOOLBAR
     toolbarSearch->move(width() - toolbarSearch->width() - 7, -38);
 #endif
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e) {
+    if (e->key() == Qt::Key_Left) {
+        getAction("seekBackward")->trigger();
+    } else if (e->key() == Qt::Key_Right) {
+        getAction("seekForward")->trigger();
+    }
 }
 
 void MainWindow::toggleFullscreen() {
