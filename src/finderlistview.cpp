@@ -171,6 +171,15 @@ void FinderListView::mouseReleaseEvent(QMouseEvent *event) {
 void FinderListView::resizeEvent(QResizeEvent *event) {
     Q_UNUSED(event);
     updateItemSize();
+    QListView::resizeEvent(event);
+}
+
+void FinderListView::keyPressEvent(QKeyEvent *event) {
+    const auto key = event->key();
+    if (key == Qt::Key_Return || key == Qt::Key_Enter || key == Qt::Key_P) {
+        emit play(currentIndex());
+    } else
+        QListView::keyPressEvent(event);
 }
 
 bool FinderListView::isHoveringPlayIcon(QMouseEvent *event) {
