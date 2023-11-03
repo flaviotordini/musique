@@ -48,8 +48,8 @@ void init() {
     installer->setArguments({"/S"});
 #endif
 #ifdef APP_LINUX
-    installer->setCommand({"dpkg"});
-    installer->setArguments({"-i", "%filename%"});
+    installer->setCommand({"apt"});
+    installer->setArguments({"install", "%filename%"});
     installer->setRunAsAdmin(true);
     installer->setAutoRestart(true);
 #endif
