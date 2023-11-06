@@ -245,7 +245,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *e) {
 void MainWindow::createActions() {
     backAct = new QAction(tr("&Back"), this);
     backAct->setEnabled(false);
-    backAct->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Left));
+    backAct->setShortcut(Qt::ALT | Qt::Key_Left);
     backAct->setStatusTip(tr("Go to the previous view"));
     actionMap.insert("back", backAct);
     connect(backAct, &QAction::triggered, this, &MainWindow::goBack);
@@ -253,7 +253,7 @@ void MainWindow::createActions() {
     QIcon icon = IconUtils::icon({"audio-headphones", "gtk-info", "help-about"});
     contextualAct = new QAction(icon, tr("&Info"), this);
     contextualAct->setStatusTip(tr("Show information about the current track"));
-    contextualAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_I));
+    contextualAct->setShortcut(Qt::CTRL | Qt::Key_I);
     contextualAct->setEnabled(false);
     contextualAct->setCheckable(true);
     actionMap.insert("contextual", contextualAct);
@@ -262,7 +262,7 @@ void MainWindow::createActions() {
     skipBackwardAct = new QAction(tr("P&revious"), this);
     IconUtils::setIcon(skipBackwardAct, "media-skip-backward");
     skipBackwardAct->setStatusTip(tr("Go back to the previous track"));
-    skipBackwardAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Left));
+    skipBackwardAct->setShortcut(Qt::CTRL | Qt::Key_Left);
     skipBackwardAct->setPriority(QAction::LowPriority);
     skipBackwardAct->setEnabled(false);
     actionMap.insert("previous", skipBackwardAct);
@@ -270,7 +270,7 @@ void MainWindow::createActions() {
     skipForwardAct = new QAction(tr("&Next"), this);
     IconUtils::setIcon(skipForwardAct, "media-skip-forward");
     skipForwardAct->setStatusTip(tr("Skip to the next track"));
-    skipForwardAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Right));
+    skipForwardAct->setShortcut(Qt::CTRL | Qt::Key_Right);
     skipForwardAct->setPriority(QAction::LowPriority);
     skipForwardAct->setEnabled(false);
     actionMap.insert("skip", skipForwardAct);
@@ -278,8 +278,7 @@ void MainWindow::createActions() {
     playAct = new QAction(tr("&Play"), this);
     IconUtils::setIcon(playAct, "media-playback-start");
     playAct->setStatusTip(tr("Start playback"));
-    playAct->setShortcuts(QList<QKeySequence>()
-                          << QKeySequence(Qt::Key_Space) << QKeySequence(Qt::Key_MediaPlay));
+    playAct->setShortcuts({Qt::Key_Space, Qt::Key_MediaPlay});
     playAct->setEnabled(false);
     playAct->setCheckable(true);
 #ifdef APP_MAC
@@ -309,19 +308,19 @@ void MainWindow::createActions() {
 
     moveUpAct = new QAction(tr("Move &Up"), this);
     moveUpAct->setStatusTip(tr("Move up the selected tracks in the playlist"));
-    moveUpAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Up));
+    moveUpAct->setShortcut(Qt::CTRL | Qt::Key_Up);
     moveUpAct->setEnabled(false);
     actionMap.insert("moveUp", moveUpAct);
 
     moveDownAct = new QAction(tr("Move &Down"), this);
     moveDownAct->setStatusTip(tr("Move down the selected tracks in the playlist"));
-    moveDownAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Down));
+    moveDownAct->setShortcut(Qt::CTRL | Qt::Key_Down);
     moveDownAct->setEnabled(false);
     actionMap.insert("moveDown", moveDownAct);
 
     quitAct = new QAction(tr("&Quit"), this);
     quitAct->setMenuRole(QAction::QuitRole);
-    quitAct->setShortcut(QKeySequence(QKeySequence::Quit));
+    quitAct->setShortcut(QKeySequence::Quit);
     quitAct->setStatusTip(tr("Bye"));
     actionMap.insert("quit", quitAct);
     connect(quitAct, SIGNAL(triggered()), SLOT(quit()));
@@ -380,7 +379,7 @@ void MainWindow::createActions() {
     a->setMenuRole(QAction::ApplicationSpecificRole);
     a->setVisible(false);
     actionMap.insert("finetune", a);
-    connect(a, &QAction::triggered, this, &MainWindow::runFinetune);
+    connect(a, &QAction::triggered, this, [this] { runFinetune(); });
 
     a = new QAction(tr("&Report an Issue..."), this);
     actionMap.insert("report-issue", a);
@@ -396,7 +395,7 @@ void MainWindow::createActions() {
     a = new QAction(tr("&Shuffle"), this);
     IconUtils::setIcon(a, "media-playlist-shuffle");
     a->setStatusTip(tr("Random playlist mode"));
-    a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
+    a->setShortcut(Qt::CTRL | Qt::Key_S);
     a->setCheckable(true);
     connect(a, &QAction::toggled, this, &MainWindow::setShuffle);
     actionMap.insert("shufflePlaylist", a);
@@ -404,23 +403,23 @@ void MainWindow::createActions() {
     a = new QAction(tr("&Repeat"), this);
     IconUtils::setIcon(a, "media-playlist-repeat");
     a->setStatusTip(tr("Play first song again after all songs are played"));
-    a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_R));
+    a->setShortcut(Qt::CTRL | Qt::Key_R);
     a->setCheckable(true);
     connect(a, &QAction::toggled, this, &MainWindow::setRepeat);
     actionMap.insert("repeatPlaylist", a);
 
     a = new QAction(tr("&Close"), this);
-    a->setShortcut(QKeySequence(QKeySequence::Close));
+    a->setShortcut(QKeySequence::Close);
     actionMap.insert("close", a);
     connect(a, &QAction::triggered, this, &QWidget::close);
 
     a = new QAction(Constants::NAME, this);
-    a->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_1));
+    a->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_1);
     actionMap.insert("restore", a);
     connect(a, &QAction::triggered, this, &MainWindow::restore);
 
     a = new QAction(tr("&Stop After This Track"), this);
-    a->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Escape));
+    a->setShortcut(Qt::SHIFT | Qt::Key_Escape);
     a->setCheckable(true);
     a->setEnabled(false);
     actionMap.insert("stopafterthis", a);
@@ -429,7 +428,7 @@ void MainWindow::createActions() {
     a = new QAction(tr("&Scrobble"), this);
     IconUtils::setIcon(a, "audioscrobbler");
     a->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
-    a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
+    a->setShortcut(Qt::CTRL | Qt::Key_L);
     a->setCheckable(true);
     actionMap.insert("scrobbling", a);
     connect(a, &QAction::toggled, this, &MainWindow::toggleScrobbling);
@@ -466,13 +465,13 @@ void MainWindow::createActions() {
     addAction(searchFocusAct);
 
     volumeUpAct = new QAction(this);
-    volumeUpAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Up));
+    volumeUpAct->setShortcut(Qt::CTRL | Qt::Key_Up);
     actionMap.insert("volume-up", volumeUpAct);
     connect(volumeUpAct, &QAction::triggered, this, &MainWindow::volumeUp);
     addAction(volumeUpAct);
 
     volumeDownAct = new QAction(this);
-    volumeDownAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Down));
+    volumeDownAct->setShortcut(Qt::CTRL | Qt::Key_Down);
     actionMap.insert("volume-down", volumeDownAct);
     connect(volumeDownAct, &QAction::triggered, this, &MainWindow::volumeDown);
     addAction(volumeDownAct);
@@ -480,7 +479,7 @@ void MainWindow::createActions() {
     volumeMuteAct = new QAction(this);
     IconUtils::setIcon(volumeMuteAct, "audio-volume-high");
     volumeMuteAct->setStatusTip(tr("Mute volume"));
-    volumeMuteAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_E));
+    volumeMuteAct->setShortcut(Qt::CTRL | Qt::Key_E);
     actionMap.insert("volume-mute", volumeMuteAct);
     connect(volumeMuteAct, &QAction::triggered, this, &MainWindow::toggleVolumeMute);
     addAction(volumeMuteAct);
@@ -874,7 +873,7 @@ void MainWindow::toggleContextualView() {
             contextualAct->setChecked(true);
 
             QList<QKeySequence> shortcuts;
-            shortcuts << contextualAct->shortcuts() << QKeySequence(Qt::Key_Escape);
+            shortcuts << contextualAct->shortcuts() << Qt::Key_Escape;
             contextualAct->setShortcuts(shortcuts);
             statusBar()->hide();
         } else
@@ -885,11 +884,7 @@ void MainWindow::toggleContextualView() {
 void MainWindow::hideContextualView() {
     goBack();
     contextualAct->setChecked(false);
-
-    QList<QKeySequence> shortcuts;
-    shortcuts << QKeySequence(Qt::CTRL | Qt::Key_I);
-    contextualAct->setShortcuts(shortcuts);
-
+    contextualAct->setShortcut(Qt::CTRL | Qt::Key_I);
     statusBar()->show();
 }
 
@@ -1079,8 +1074,7 @@ void MainWindow::updateUIForFullscreen() {
     if (fullScreenActive) {
         fsShortcuts = fullscreenAct->shortcuts();
         fsText = fullscreenAct->text();
-        fullscreenAct->setShortcuts(QList<QKeySequence>(fsShortcuts)
-                                    << QKeySequence(Qt::Key_Escape));
+        fullscreenAct->setShortcuts(QList<QKeySequence>(fsShortcuts) << Qt::Key_Escape);
         fullscreenAct->setText(tr("Leave &Full Screen"));
         fullscreenAct->setIcon(IconUtils::icon("view-restore"));
 
