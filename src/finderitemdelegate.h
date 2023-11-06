@@ -25,10 +25,6 @@ private:
     static QPixmap createPlayIcon(bool hovered, qreal pixelRatio);
     static const QPixmap &getPlayIcon(bool hovered, qreal pixelRatio);
 
-    QPixmap createMissingItemBackground(qreal pixelRatio) const;
-    const QPixmap &getMissingItemPixmap(const char *type, qreal pixelRatio) const;
-    const QPixmap &getMissingItemBackground(qreal pixelRatio) const;
-
     QRect paintItem(QPainter *painter,
                     const QStyleOptionViewItem &option,
                     const QModelIndex &index,

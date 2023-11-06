@@ -68,41 +68,6 @@ QPixmap FinderItemDelegate::createPlayIcon(bool hovered, qreal pixelRatio) {
     return playIcon;
 }
 
-QPixmap FinderItemDelegate::createMissingItemBackground(qreal pixelRatio) const {
-    const int w = itemWidth * pixelRatio;
-    const int h = itemHeight * pixelRatio;
-
-    QPixmap pixmap = QPixmap(w, h);
-
-    QPainter painter(&pixmap);
-    painter.fillRect(QRect(0, 0, w, h), qApp->palette().window());
-
-    pixmap.setDevicePixelRatio(pixelRatio);
-    return pixmap;
-}
-
-const QPixmap &FinderItemDelegate::getMissingItemPixmap(const char *type, qreal pixelRatio) const {
-    static QMap<QByteArray, QPixmap> cache;
-    connect(qApp, &QApplication::paletteChanged, this, [] { cache.clear(); });
-    const QByteArray key = QByteArray::number(itemWidth) + type + QByteArray::number(pixelRatio);
-    auto i = cache.constFind(key);
-    if (i != cache.constEnd()) return i.value();
-
-    QPixmap pixmap = getMissingItemBackground(pixelRatio);
-    QPainter painter(&pixmap);
-
-    QPixmap symbol = IconUtils::pixmap(QLatin1String(":/images/item/") + QString(type).toLower() +
-                                               QLatin1String(".png"),
-                                       pixelRatio);
-    IconUtils::tint(symbol, qApp->palette().windowText().color());
-    painter.setOpacity(.1);
-    int x = (itemWidth - symbol.width() / pixelRatio) / 2;
-    int y = (itemHeight - symbol.height() / pixelRatio) / 3;
-    painter.drawPixmap(x, y, symbol);
-
-    return cache.insert(key, pixmap).value();
-}
-
 const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered, qreal pixelRatio) {
     static QMap<QByteArray, QPixmap> cache;
     const QByteArray key = (hovered ? QByteArrayLiteral("1|") : QByteArrayLiteral("0|")) +
@@ -110,16 +75,6 @@ const QPixmap &FinderItemDelegate::getPlayIcon(bool hovered, qreal pixelRatio) {
     auto i = cache.constFind(key);
     if (i != cache.constEnd()) return i.value();
     QPixmap pixmap = createPlayIcon(hovered, pixelRatio);
-    return cache.insert(key, pixmap).value();
-}
-
-const QPixmap &FinderItemDelegate::getMissingItemBackground(qreal pixelRatio) const {
-    static QMap<QString, QPixmap> cache;
-    const QString key = QString("%1|%2").arg(pixelRatio).arg(itemWidth);
-    connect(qApp, &QApplication::paletteChanged, this, [] { cache.clear(); });
-    auto i = cache.constFind(key);
-    if (i != cache.constEnd()) return i.value();
-    QPixmap pixmap = createMissingItemBackground(pixelRatio);
     return cache.insert(key, pixmap).value();
 }
 
@@ -138,35 +93,34 @@ QRect FinderItemDelegate::paintItem(QPainter *painter,
 
     // thumb
     QPixmap pixmap = item->getThumb(itemWidth, itemHeight, painter->device()->devicePixelRatioF());
-    if (pixmap.isNull() && qobject_cast<Track *>(item) == nullptr)
-        pixmap = getMissingItemPixmap(item->metaObject()->className(),
-                                      painter->device()->devicePixelRatioF());
-    if (!pixmap.isNull()) {
-        painter->save();
-        painter->setRenderHint(QPainter::Antialiasing, true);
-        QBrush brush(pixmap);
-        painter->setBrush(brush);
-        if (isSelected) {
-            painter->setPen(QPen(option.palette.highlight(), 2));
-        } else
-            painter->setPen(Qt::NoPen);
 
-        bool loading = item->property("loading").isValid();
-        if (loading) painter->setOpacity(.5);
-        QRect picRect(0, 0, itemWidth, itemWidth);
-        auto artist = qobject_cast<Artist *>(item);
-        if (artist)
-            painter->drawEllipse(picRect.center(), picRect.width() / 2, picRect.width() / 2);
-        else
-            painter->drawRoundedRect(picRect, 3, 3);
+    painter->save();
+    painter->setRenderHint(QPainter::Antialiasing, true);
 
-        if (loading) {
-            painter->setOpacity(1);
-            painter->setPen(Qt::NoPen);
-            drawCentralPixmap(painter, option, IconUtils::iconPixmap("content-loading", 32), line);
-        }
-        painter->restore();
+    if (pixmap.isNull())
+        painter->setBrush(option.palette.midlight());
+    else
+        painter->setBrush(pixmap);
+    if (isSelected) {
+        painter->setPen(QPen(option.palette.highlight(), 2));
+    } else
+        painter->setPen(Qt::NoPen);
+
+    bool loading = item->property("loading").isValid();
+    if (loading) painter->setOpacity(.5);
+    QRect picRect(0, 0, itemWidth, itemWidth);
+    auto artist = qobject_cast<Artist *>(item);
+    if (artist)
+        painter->drawEllipse(picRect.center(), picRect.width() / 2, picRect.width() / 2);
+    else
+        painter->drawRoundedRect(picRect, 3, 3);
+
+    if (loading) {
+        painter->setOpacity(1);
+        painter->setPen(Qt::NoPen);
+        drawCentralPixmap(painter, option, IconUtils::iconPixmap("content-loading", 32), line);
     }
+    painter->restore();
 
     // play icon overlayed on the thumb
     if (isHovered) {
