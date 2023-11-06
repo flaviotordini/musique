@@ -34,7 +34,6 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     setFlow(QListView::LeftToRight);
     setWrapping(true);
     setResizeMode(QListView::Adjust);
-    setMovement(QListView::Static);
     setUniformItemSizes(true);
 
     // dragndrop
@@ -183,33 +182,32 @@ void FinderListView::keyPressEvent(QKeyEvent *event) {
 }
 
 bool FinderListView::isHoveringPlayIcon(QMouseEvent *event) {
-    const QModelIndex itemIndex = indexAt(event->pos());
-    const QRect itemRect = visualRect(itemIndex);
-
-    // qDebug() << " itemRect.x()" <<  itemRect.x();
-
-    const int x = event->x() - itemRect.x();
-    const int y = event->y() - itemRect.y();
-    const int itemWidth = delegate->getItemWidth();
-    return x > itemWidth - 60 && x < itemWidth && y < 60;
+    QModelIndex itemIndex = indexAt(event->pos());
+    QRect itemRect = visualRect(itemIndex);
+    int x = event->pos().x() - itemRect.x();
+    int y = event->pos().y() - itemRect.y();
+    int itemWidth = itemRect.width();
+    int margin = itemWidth / 8;
+    int playIconSize = 60;
+    int areaSize = margin + playIconSize;
+    return x > itemWidth - areaSize && x < itemWidth && y < areaSize;
 }
 
 void FinderListView::updateItemSize() {
-    const qreal pixelRatio = viewport()->devicePixelRatioF();
-    const int maxPhotoWidth = 300;
-    int size = 0;
-
     int scrollbarWidth = 0;
     bool transient = style()->styleHint(QStyle::SH_ScrollBar_Transient, 0, verticalScrollBar());
     if (!transient) scrollbarWidth = style()->pixelMetric(QStyle::PM_ScrollBarExtent);
+    int viewWidth = contentsRect().width() - scrollbarWidth - 1;
 
-    int width = contentsRect().width() - scrollbarWidth - 1;
-    int idealItemWidth = qFloor(width / FinderItemDelegate::ITEM_WIDTH);
-    size = idealItemWidth > 0 ? qFloor(width / idealItemWidth) : FinderItemDelegate::ITEM_WIDTH;
+    int cols = qFloor(viewWidth / defaultItemWidth);
+    int w = cols > 0 ? qFloor(viewWidth / cols) : defaultItemWidth;
+    qDebug() << "viewWidth" << viewWidth << "cols" << cols << "w" << w;
 
     // limit item size to available image resolution
-    if (pixelRatio > 1.0 && size * pixelRatio > maxPhotoWidth) size = maxPhotoWidth / pixelRatio;
+    // const int maxItemWidth = 300;
+    // const qreal pixelRatio = viewport()->devicePixelRatioF();
+    // if (pixelRatio > 1.0 && w * pixelRatio > maxItemWidth) w = maxItemWidth / pixelRatio;
 
-    delegate->setItemSize(size, size);
-    setGridSize(QSize(size, size));
+    int h = w * itemHeightRatio;
+    delegate->setItemSize(w, h);
 }

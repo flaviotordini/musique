@@ -37,6 +37,9 @@ public:
     bool isPlayIconHovered() const { return playIconHovered; }
     double animationFrame() const { return timeLine->currentFrame() / 100.; }
 
+    void setDefaultItemWidth(int value) { defaultItemWidth = value; }
+    void setItemHeightRatio(double value) { itemHeightRatio = value; }
+
 public slots:
     void appear();
     void disappear();
@@ -70,6 +73,9 @@ private:
     QTimeLine *timeLine;
     bool playIconHovered;
     bool modelIsResetting;
+
+    int defaultItemWidth = 180;
+    double itemHeightRatio = 5. / 4.;
 };
 
 #endif // BASEFINDERVIEW_H

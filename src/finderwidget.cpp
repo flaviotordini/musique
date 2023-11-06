@@ -105,10 +105,6 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->addWidget(stackedWidget);
     setLayout(layout);
 
-    setMinimumWidth(FinderItemDelegate::ITEM_WIDTH * 3 + 4 +
-                    style()->pixelMetric(QStyle::PM_ScrollBarExtent));
-    setMinimumHeight(FinderItemDelegate::ITEM_HEIGHT + finderBar->minimumHeight());
-
     restoreSavedView();
 }
 
@@ -199,6 +195,7 @@ void FinderWidget::setupGenres() {
     connect(genresListView, SIGNAL(play(const QModelIndex &)),
             SLOT(genrePlayed(const QModelIndex &)));
     genresListView->setModel(genresModel);
+    genresListView->setDefaultItemWidth(150);
     stackedWidget->addWidget(genresListView);
 }
 
@@ -226,6 +223,8 @@ void FinderWidget::setupFolders() {
             SLOT(folderPlayed(const QModelIndex &)));
     fileSystemView->setModel(filteringFileSystemModel);
     fileSystemView->setFileSystemModel(fileSystemModel);
+    fileSystemView->setDefaultItemWidth(128);
+    // fileSystemView->setItemHeightRatio(7. / 6.);
     stackedWidget->addWidget(fileSystemView);
 }
 
