@@ -462,19 +462,16 @@ void MainWindow::createActions() {
     searchFocusAct->setStatusTip(tr("Search"));
     addNamedAction("search", searchFocusAct);
     connect(searchFocusAct, &QAction::triggered, this, &MainWindow::searchFocus);
-    addAction(searchFocusAct);
 
     volumeUpAct = new QAction(this);
     volumeUpAct->setShortcut(Qt::CTRL | Qt::Key_Up);
     addNamedAction("volume-up", volumeUpAct);
     connect(volumeUpAct, &QAction::triggered, this, &MainWindow::volumeUp);
-    addAction(volumeUpAct);
 
     volumeDownAct = new QAction(this);
     volumeDownAct->setShortcut(Qt::CTRL | Qt::Key_Down);
     addNamedAction("volume-down", volumeDownAct);
     connect(volumeDownAct, &QAction::triggered, this, &MainWindow::volumeDown);
-    addAction(volumeDownAct);
 
     volumeMuteAct = new QAction(this);
     IconUtils::setIcon(volumeMuteAct, "audio-volume-high");
@@ -482,7 +479,6 @@ void MainWindow::createActions() {
     volumeMuteAct->setShortcut(Qt::CTRL | Qt::Key_E);
     addNamedAction("volume-mute", volumeMuteAct);
     connect(volumeMuteAct, &QAction::triggered, this, &MainWindow::toggleVolumeMute);
-    addAction(volumeMuteAct);
 
     // common action properties
     for (QAction *a : qAsConst(actionMap)) {
