@@ -247,7 +247,7 @@ void MainWindow::createActions() {
     backAct->setEnabled(false);
     backAct->setShortcut(Qt::ALT | Qt::Key_Left);
     backAct->setStatusTip(tr("Go to the previous view"));
-    actionMap.insert("back", backAct);
+    addNamedAction("back", backAct);
     connect(backAct, &QAction::triggered, this, &MainWindow::goBack);
 
     QIcon icon = IconUtils::icon({"audio-headphones", "gtk-info", "help-about"});
@@ -256,7 +256,7 @@ void MainWindow::createActions() {
     contextualAct->setShortcut(Qt::CTRL | Qt::Key_I);
     contextualAct->setEnabled(false);
     contextualAct->setCheckable(true);
-    actionMap.insert("contextual", contextualAct);
+    addNamedAction("contextual", contextualAct);
     connect(contextualAct, &QAction::triggered, this, &MainWindow::toggleContextualView);
 
     skipBackwardAct = new QAction(tr("P&revious"), this);
@@ -265,7 +265,7 @@ void MainWindow::createActions() {
     skipBackwardAct->setShortcut(Qt::CTRL | Qt::Key_Left);
     skipBackwardAct->setPriority(QAction::LowPriority);
     skipBackwardAct->setEnabled(false);
-    actionMap.insert("previous", skipBackwardAct);
+    addNamedAction("previous", skipBackwardAct);
 
     skipForwardAct = new QAction(tr("&Next"), this);
     IconUtils::setIcon(skipForwardAct, "media-skip-forward");
@@ -273,7 +273,7 @@ void MainWindow::createActions() {
     skipForwardAct->setShortcut(Qt::CTRL | Qt::Key_Right);
     skipForwardAct->setPriority(QAction::LowPriority);
     skipForwardAct->setEnabled(false);
-    actionMap.insert("skip", skipForwardAct);
+    addNamedAction("skip", skipForwardAct);
 
     playAct = new QAction(tr("&Play"), this);
     IconUtils::setIcon(playAct, "media-playback-start");
@@ -284,7 +284,7 @@ void MainWindow::createActions() {
 #ifdef APP_MAC
     playAct->setPriority(QAction::LowPriority);
 #endif
-    actionMap.insert("play", playAct);
+    addNamedAction("play", playAct);
 
     fullscreenAct = new QAction(tr("&Full Screen"), this);
     IconUtils::setIcon(fullscreenAct, "view-fullscreen");
@@ -297,56 +297,56 @@ void MainWindow::createActions() {
 #endif
     fullscreenAct->setShortcuts(fsShortcuts);
     fullscreenAct->setShortcutContext(Qt::ApplicationShortcut);
-    actionMap.insert("fullscreen", fullscreenAct);
+    addNamedAction("fullscreen", fullscreenAct);
     connect(fullscreenAct, &QAction::triggered, this, &MainWindow::toggleFullscreen);
 
     removeAct = new QAction(tr("&Remove"), this);
     removeAct->setStatusTip(tr("Remove the selected tracks from the playlist"));
     removeAct->setShortcuts({Qt::Key_Backspace, Qt::Key_Delete});
     removeAct->setEnabled(false);
-    actionMap.insert("remove", removeAct);
+    addNamedAction("remove", removeAct);
 
     moveUpAct = new QAction(tr("Move &Up"), this);
     moveUpAct->setStatusTip(tr("Move up the selected tracks in the playlist"));
     moveUpAct->setShortcut(Qt::CTRL | Qt::Key_Up);
     moveUpAct->setEnabled(false);
-    actionMap.insert("moveUp", moveUpAct);
+    addNamedAction("moveUp", moveUpAct);
 
     moveDownAct = new QAction(tr("Move &Down"), this);
     moveDownAct->setStatusTip(tr("Move down the selected tracks in the playlist"));
     moveDownAct->setShortcut(Qt::CTRL | Qt::Key_Down);
     moveDownAct->setEnabled(false);
-    actionMap.insert("moveDown", moveDownAct);
+    addNamedAction("moveDown", moveDownAct);
 
     quitAct = new QAction(tr("&Quit"), this);
     quitAct->setMenuRole(QAction::QuitRole);
     quitAct->setShortcut(QKeySequence::Quit);
     quitAct->setStatusTip(tr("Bye"));
-    actionMap.insert("quit", quitAct);
+    addNamedAction("quit", quitAct);
     connect(quitAct, SIGNAL(triggered()), SLOT(quit()));
 
     chooseFolderAct = new QAction(tr("&Change collection folder..."), this);
     chooseFolderAct->setStatusTip(tr("Choose a different music collection folder"));
     chooseFolderAct->setMenuRole(QAction::ApplicationSpecificRole);
-    actionMap.insert("chooseFolder", chooseFolderAct);
+    addNamedAction("chooseFolder", chooseFolderAct);
     connect(chooseFolderAct, &QAction::triggered, this, &MainWindow::showChooseFolderView);
 
     siteAct = new QAction(tr("&Website"), this);
     siteAct->setShortcut(QKeySequence::HelpContents);
     siteAct->setStatusTip(tr("%1 on the Web").arg(Constants::NAME));
-    actionMap.insert("site", siteAct);
+    addNamedAction("site", siteAct);
     connect(siteAct, &QAction::triggered, this, &MainWindow::visitSite);
 
     donateAct = new QAction(tr("Make a &donation"), this);
     donateAct->setStatusTip(
             tr("Please support the continued development of %1").arg(Constants::NAME));
-    actionMap.insert("donate", donateAct);
+    addNamedAction("donate", donateAct);
     connect(donateAct, &QAction::triggered, this, &MainWindow::donate);
 
     aboutAct = new QAction(tr("&About"), this);
     aboutAct->setMenuRole(QAction::AboutRole);
     aboutAct->setStatusTip(tr("Info about %1").arg(Constants::NAME));
-    actionMap.insert("about", aboutAct);
+    addNamedAction("about", aboutAct);
     connect(aboutAct, &QAction::triggered, this, &MainWindow::about);
 
     // Anon
@@ -378,11 +378,11 @@ void MainWindow::createActions() {
     a = new QAction(tr("&Fix Library with %1...").arg("Finetune"), this);
     a->setMenuRole(QAction::ApplicationSpecificRole);
     a->setVisible(false);
-    actionMap.insert("finetune", a);
+    addNamedAction("finetune", a);
     connect(a, &QAction::triggered, this, [this] { runFinetune(); });
 
     a = new QAction(tr("&Report an Issue..."), this);
-    actionMap.insert("report-issue", a);
+    addNamedAction("report-issue", a);
     connect(a, &QAction::triggered, this, &MainWindow::reportIssue);
 
     a = new QAction(tr("&Clear"), this);
@@ -390,7 +390,7 @@ void MainWindow::createActions() {
     a->setShortcuts({Qt::CTRL + Qt::Key_Backspace, QKeySequence::New});
     a->setStatusTip(tr("Remove all tracks from the playlist"));
     a->setEnabled(false);
-    actionMap.insert("clearPlaylist", a);
+    addNamedAction("clearPlaylist", a);
 
     a = new QAction(tr("&Shuffle"), this);
     IconUtils::setIcon(a, "media-playlist-shuffle");
@@ -398,7 +398,7 @@ void MainWindow::createActions() {
     a->setShortcut(Qt::CTRL | Qt::Key_S);
     a->setCheckable(true);
     connect(a, &QAction::toggled, this, &MainWindow::setShuffle);
-    actionMap.insert("shufflePlaylist", a);
+    addNamedAction("shufflePlaylist", a);
 
     a = new QAction(tr("&Repeat"), this);
     IconUtils::setIcon(a, "media-playlist-repeat");
@@ -406,23 +406,23 @@ void MainWindow::createActions() {
     a->setShortcut(Qt::CTRL | Qt::Key_R);
     a->setCheckable(true);
     connect(a, &QAction::toggled, this, &MainWindow::setRepeat);
-    actionMap.insert("repeatPlaylist", a);
+    addNamedAction("repeatPlaylist", a);
 
     a = new QAction(tr("&Close"), this);
     a->setShortcut(QKeySequence::Close);
-    actionMap.insert("close", a);
+    addNamedAction("close", a);
     connect(a, &QAction::triggered, this, &QWidget::close);
 
     a = new QAction(Constants::NAME, this);
     a->setShortcut(Qt::CTRL | Qt::ALT | Qt::Key_1);
-    actionMap.insert("restore", a);
+    addNamedAction("restore", a);
     connect(a, &QAction::triggered, this, &MainWindow::restore);
 
     a = new QAction(tr("&Stop After This Track"), this);
     a->setShortcut(Qt::SHIFT | Qt::Key_Escape);
     a->setCheckable(true);
     a->setEnabled(false);
-    actionMap.insert("stopafterthis", a);
+    addNamedAction("stopafterthis", a);
     connect(a, &QAction::toggled, this, &MainWindow::showStopAfterThisInStatusBar);
 
     a = new QAction(tr("&Scrobble"), this);
@@ -430,28 +430,28 @@ void MainWindow::createActions() {
     a->setStatusTip(tr("Send played tracks titles to %1").arg("Last.fm"));
     a->setShortcut(Qt::CTRL | Qt::Key_L);
     a->setCheckable(true);
-    actionMap.insert("scrobbling", a);
+    addNamedAction("scrobbling", a);
     connect(a, &QAction::toggled, this, &MainWindow::toggleScrobbling);
 
     a = new QAction(tr("&Log Out from %1").arg("Last.fm"), this);
     a->setMenuRole(QAction::ApplicationSpecificRole);
     a->setEnabled(false);
     a->setVisible(false);
-    actionMap.insert("lastFmLogout", a);
+    addNamedAction("lastFmLogout", a);
     connect(a, &QAction::triggered, this, &MainWindow::lastFmLogout);
 
     a = new QAction(tr("Toggle &Menu Bar"), this);
     connect(a, &QAction::triggered, this, &MainWindow::toggleMenuVisibilityWithMessage);
-    actionMap.insert("toggleMenu", a);
+    addNamedAction("toggleMenu", a);
 
     a = new QAction(tr("Menu"), this);
     IconUtils::setIcon(a, "open-menu");
     connect(a, &QAction::triggered, this, &MainWindow::toggleToolbarMenu);
-    actionMap.insert("toolbarMenu", a);
+    addNamedAction("toolbarMenu", a);
 
 #ifdef APP_MAC_STORE
     a = new QAction(tr("&Love %1? Rate it!").arg(Constants::NAME), this);
-    actionMap.insert("app-store", a);
+    addNamedAction("app-store", a);
     connect(a, SIGNAL(triggered()), SLOT(rateOnAppStore()));
 #endif
 
@@ -460,19 +460,19 @@ void MainWindow::createActions() {
     searchFocusAct = new QAction(this);
     searchFocusAct->setShortcut(QKeySequence::Find);
     searchFocusAct->setStatusTip(tr("Search"));
-    actionMap.insert("search", searchFocusAct);
+    addNamedAction("search", searchFocusAct);
     connect(searchFocusAct, &QAction::triggered, this, &MainWindow::searchFocus);
     addAction(searchFocusAct);
 
     volumeUpAct = new QAction(this);
     volumeUpAct->setShortcut(Qt::CTRL | Qt::Key_Up);
-    actionMap.insert("volume-up", volumeUpAct);
+    addNamedAction("volume-up", volumeUpAct);
     connect(volumeUpAct, &QAction::triggered, this, &MainWindow::volumeUp);
     addAction(volumeUpAct);
 
     volumeDownAct = new QAction(this);
     volumeDownAct->setShortcut(Qt::CTRL | Qt::Key_Down);
-    actionMap.insert("volume-down", volumeDownAct);
+    addNamedAction("volume-down", volumeDownAct);
     connect(volumeDownAct, &QAction::triggered, this, &MainWindow::volumeDown);
     addAction(volumeDownAct);
 
@@ -480,7 +480,7 @@ void MainWindow::createActions() {
     IconUtils::setIcon(volumeMuteAct, "audio-volume-high");
     volumeMuteAct->setStatusTip(tr("Mute volume"));
     volumeMuteAct->setShortcut(Qt::CTRL | Qt::Key_E);
-    actionMap.insert("volume-mute", volumeMuteAct);
+    addNamedAction("volume-mute", volumeMuteAct);
     connect(volumeMuteAct, &QAction::triggered, this, &MainWindow::toggleVolumeMute);
     addAction(volumeMuteAct);
 
