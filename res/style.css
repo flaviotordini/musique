@@ -28,8 +28,9 @@ QStatusBar QToolBar {
     border: 0;
 }
 
-QStatusBar::item {
+QStatusBar QToolButton {
     border: 0;
+    min-width: 32px;
 }
 
 QStatusBar QToolButton::menu-indicator {
