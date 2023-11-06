@@ -711,7 +711,6 @@ void MainWindow::createStatusBar() {
     spring->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     statusToolBar->addWidget(spring);
 
-    statusToolBar->addAction(actionMap.value("scrobbling"));
     statusToolBar->addAction(actionMap.value("clearPlaylist"));
     statusBar()->addPermanentWidget(statusToolBar);
     statusBar()->setSizeGripEnabled(false);
