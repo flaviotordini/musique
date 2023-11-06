@@ -348,21 +348,10 @@ void FinderItemDelegate::drawCentralLabel(QPainter *painter,
                                           const QString &text,
                                           const QRect &rect) const {
     painter->save();
-    // painter->setFont(FontUtils::big());
-    QSizeF textSize(QFontMetrics(painter->font()).size(Qt::TextSingleLine, text));
-    QRect textBox((rect.width() - textSize.width()) / 2,
-                  (rect.height() - textSize.height()) / 3 + 4, textSize.width(), textSize.height());
-
-    QRect picRect = rect;
-    picRect.setHeight(picRect.width());
-    QRect roundedRect = textBox;
-    roundedRect.adjust(-PADDING / 2, -PADDING / 3, PADDING / 2, PADDING / 3);
-    if (roundedRect.height() > roundedRect.width()) roundedRect.setWidth(roundedRect.height());
-    roundedRect.moveCenter(picRect.center());
-    textBox.moveCenter(roundedRect.center());
-
+    auto square = rect;
+    square.setHeight(rect.width());
     painter->setPen(option.palette.text().color());
-    painter->drawText(textBox, Qt::AlignCenter, text);
+    painter->drawText(square, Qt::AlignCenter, text);
     painter->restore();
 }
 
