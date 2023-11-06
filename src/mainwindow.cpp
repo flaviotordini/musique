@@ -1242,7 +1242,7 @@ bool MainWindow::maybeShowUpdateNag() {
     QString lastRunVersion = settings.value("v").toString();
     if (!lastRunVersion.isEmpty() && lastRunVersion != QLatin1String(Constants::VERSION)) {
         QMessageBox *msgBox = new QMessageBox(this);
-        msgBox->setIconPixmap(IconUtils::pixmap(":/images/64x64/app.png", devicePixelRatioF()));
+        msgBox->setIconPixmap(windowIcon().pixmap(64));
         msgBox->setText(tr("Thanks for updating %1 to version %2!")
                                 .arg(Constants::NAME, Constants::VERSION));
         msgBox->setInformativeText(tr("If you enjoy %1, perhaps having installed it months or "
