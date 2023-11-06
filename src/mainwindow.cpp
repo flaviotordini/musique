@@ -703,7 +703,7 @@ void MainWindow::createToolBar() {
 
 void MainWindow::createStatusBar() {
     statusToolBar = new QToolBar(this);
-    statusToolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    statusToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
     statusToolBar->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Preferred);
     statusToolBar->setIconSize(QSize(16, 16));
 
