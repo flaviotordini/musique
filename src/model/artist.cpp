@@ -122,7 +122,7 @@ QString Artist::getHash(const QString &name) {
 }
 
 QString Artist::getStatusTip() {
-    return name + QLatin1String(" - ") + QString("%1 tracks").arg(trackCount);
+    return QString("%1 tracks").arg(trackCount);
 }
 
 void Artist::fetchInfo() {

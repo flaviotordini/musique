@@ -146,12 +146,12 @@ const QString &Album::getHash() {
 }
 
 QString Album::getStatusTip() {
-    QString tip = QString::fromUtf8("◯ ");
+    QString tip;
     Artist *artist = getArtist();
     if (artist) tip += artist->getName() + " - ";
     tip += getTitle();
     if (year) tip += " (" + QString::number(year) + ")";
-    // tip += " - " + formattedDuration();
+    tip += " - " + formattedDuration();
     return tip;
 }
 
