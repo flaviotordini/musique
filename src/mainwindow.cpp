@@ -248,7 +248,7 @@ void MainWindow::createActions() {
     backAct->setShortcut(QKeySequence(Qt::ALT | Qt::Key_Left));
     backAct->setStatusTip(tr("Go to the previous view"));
     actionMap.insert("back", backAct);
-    connect(backAct, SIGNAL(triggered()), SLOT(goBack()));
+    connect(backAct, &QAction::triggered, this, &MainWindow::goBack);
 
     QIcon icon = IconUtils::icon({"audio-headphones", "gtk-info", "help-about"});
     contextualAct = new QAction(icon, tr("&Info"), this);
@@ -257,25 +257,13 @@ void MainWindow::createActions() {
     contextualAct->setEnabled(false);
     contextualAct->setCheckable(true);
     actionMap.insert("contextual", contextualAct);
-    connect(contextualAct, SIGNAL(triggered()), SLOT(toggleContextualView()));
-
-    /*
-    stopAct = new QAction(
-            IconUtils::icon("media-playback-stop"),
-            tr("&Stop"), this);
-    stopAct->setStatusTip(tr("Stop playback and go back to the search view"));
-    stopAct->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::Key_Escape) <<
-    QKeySequence(Qt::Key_MediaStop)); stopAct->setEnabled(false); actions->insert("stop", stopAct);
-    connect(stopAct, SIGNAL(triggered()), SLOT(stop()));
-    */
+    connect(contextualAct, &QAction::triggered, this, &MainWindow::toggleContextualView);
 
     skipBackwardAct = new QAction(tr("P&revious"), this);
     IconUtils::setIcon(skipBackwardAct, "media-skip-backward");
     skipBackwardAct->setStatusTip(tr("Go back to the previous track"));
     skipBackwardAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Left));
-#if QT_VERSION >= 0x040600
     skipBackwardAct->setPriority(QAction::LowPriority);
-#endif
     skipBackwardAct->setEnabled(false);
     actionMap.insert("previous", skipBackwardAct);
 
@@ -283,9 +271,7 @@ void MainWindow::createActions() {
     IconUtils::setIcon(skipForwardAct, "media-skip-forward");
     skipForwardAct->setStatusTip(tr("Skip to the next track"));
     skipForwardAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Right));
-#if QT_VERSION >= 0x040600
     skipForwardAct->setPriority(QAction::LowPriority);
-#endif
     skipForwardAct->setEnabled(false);
     actionMap.insert("skip", skipForwardAct);
 
@@ -313,7 +299,7 @@ void MainWindow::createActions() {
     fullscreenAct->setShortcuts(fsShortcuts);
     fullscreenAct->setShortcutContext(Qt::ApplicationShortcut);
     actionMap.insert("fullscreen", fullscreenAct);
-    connect(fullscreenAct, SIGNAL(triggered()), SLOT(toggleFullscreen()));
+    connect(fullscreenAct, &QAction::triggered, this, &MainWindow::toggleFullscreen);
 
     removeAct = new QAction(tr("&Remove"), this);
     removeAct->setStatusTip(tr("Remove the selected tracks from the playlist"));
@@ -344,25 +330,25 @@ void MainWindow::createActions() {
     chooseFolderAct->setStatusTip(tr("Choose a different music collection folder"));
     chooseFolderAct->setMenuRole(QAction::ApplicationSpecificRole);
     actionMap.insert("chooseFolder", chooseFolderAct);
-    connect(chooseFolderAct, SIGNAL(triggered()), SLOT(showChooseFolderView()));
+    connect(chooseFolderAct, &QAction::triggered, this, &MainWindow::showChooseFolderView);
 
     siteAct = new QAction(tr("&Website"), this);
     siteAct->setShortcut(QKeySequence::HelpContents);
     siteAct->setStatusTip(tr("%1 on the Web").arg(Constants::NAME));
     actionMap.insert("site", siteAct);
-    connect(siteAct, SIGNAL(triggered()), SLOT(visitSite()));
+    connect(siteAct, &QAction::triggered, this, &MainWindow::visitSite);
 
     donateAct = new QAction(tr("Make a &donation"), this);
     donateAct->setStatusTip(
             tr("Please support the continued development of %1").arg(Constants::NAME));
     actionMap.insert("donate", donateAct);
-    connect(donateAct, SIGNAL(triggered()), SLOT(donate()));
+    connect(donateAct, &QAction::triggered, this, &MainWindow::donate);
 
     aboutAct = new QAction(tr("&About"), this);
     aboutAct->setMenuRole(QAction::AboutRole);
     aboutAct->setStatusTip(tr("Info about %1").arg(Constants::NAME));
     actionMap.insert("about", aboutAct);
-    connect(aboutAct, SIGNAL(triggered()), SLOT(about()));
+    connect(aboutAct, &QAction::triggered, this, &MainWindow::about);
 
     // Anon
     QAction *a;
@@ -394,11 +380,11 @@ void MainWindow::createActions() {
     a->setMenuRole(QAction::ApplicationSpecificRole);
     a->setVisible(false);
     actionMap.insert("finetune", a);
-    connect(a, SIGNAL(triggered()), SLOT(runFinetune()));
+    connect(a, &QAction::triggered, this, &MainWindow::runFinetune);
 
     a = new QAction(tr("&Report an Issue..."), this);
     actionMap.insert("report-issue", a);
-    connect(a, SIGNAL(triggered()), SLOT(reportIssue()));
+    connect(a, &QAction::triggered, this, &MainWindow::reportIssue);
 
     a = new QAction(tr("&Clear"), this);
     IconUtils::setIcon(a, "edit-clear");
@@ -412,7 +398,7 @@ void MainWindow::createActions() {
     a->setStatusTip(tr("Random playlist mode"));
     a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_S));
     a->setCheckable(true);
-    connect(a, SIGNAL(toggled(bool)), SLOT(setShuffle(bool)));
+    connect(a, &QAction::toggled, this, &MainWindow::setShuffle);
     actionMap.insert("shufflePlaylist", a);
 
     a = new QAction(tr("&Repeat"), this);
@@ -420,25 +406,25 @@ void MainWindow::createActions() {
     a->setStatusTip(tr("Play first song again after all songs are played"));
     a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_R));
     a->setCheckable(true);
-    connect(a, SIGNAL(toggled(bool)), SLOT(setRepeat(bool)));
+    connect(a, &QAction::toggled, this, &MainWindow::setRepeat);
     actionMap.insert("repeatPlaylist", a);
 
     a = new QAction(tr("&Close"), this);
     a->setShortcut(QKeySequence(QKeySequence::Close));
     actionMap.insert("close", a);
-    connect(a, SIGNAL(triggered()), SLOT(close()));
+    connect(a, &QAction::triggered, this, &QWidget::close);
 
     a = new QAction(Constants::NAME, this);
     a->setShortcut(QKeySequence(Qt::CTRL | Qt::ALT | Qt::Key_1));
     actionMap.insert("restore", a);
-    connect(a, SIGNAL(triggered()), SLOT(restore()));
+    connect(a, &QAction::triggered, this, &MainWindow::restore);
 
     a = new QAction(tr("&Stop After This Track"), this);
     a->setShortcut(QKeySequence(Qt::SHIFT | Qt::Key_Escape));
     a->setCheckable(true);
     a->setEnabled(false);
     actionMap.insert("stopafterthis", a);
-    connect(a, SIGNAL(toggled(bool)), SLOT(showStopAfterThisInStatusBar(bool)));
+    connect(a, &QAction::toggled, this, &MainWindow::showStopAfterThisInStatusBar);
 
     a = new QAction(tr("&Scrobble"), this);
     IconUtils::setIcon(a, "audioscrobbler");
@@ -446,28 +432,28 @@ void MainWindow::createActions() {
     a->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_L));
     a->setCheckable(true);
     actionMap.insert("scrobbling", a);
-    connect(a, SIGNAL(toggled(bool)), SLOT(toggleScrobbling(bool)));
+    connect(a, &QAction::toggled, this, &MainWindow::toggleScrobbling);
 
     a = new QAction(tr("&Log Out from %1").arg("Last.fm"), this);
     a->setMenuRole(QAction::ApplicationSpecificRole);
     a->setEnabled(false);
     a->setVisible(false);
     actionMap.insert("lastFmLogout", a);
-    connect(a, SIGNAL(triggered()), SLOT(lastFmLogout()));
+    connect(a, &QAction::triggered, this, &MainWindow::lastFmLogout);
 
     a = new QAction(tr("Toggle &Menu Bar"), this);
-    connect(a, SIGNAL(triggered()), SLOT(toggleMenuVisibilityWithMessage()));
+    connect(a, &QAction::triggered, this, &MainWindow::toggleMenuVisibilityWithMessage);
     actionMap.insert("toggleMenu", a);
 
     a = new QAction(tr("Menu"), this);
     IconUtils::setIcon(a, "open-menu");
-    connect(a, SIGNAL(triggered()), SLOT(toggleToolbarMenu()));
+    connect(a, &QAction::triggered, this, &MainWindow::toggleToolbarMenu);
     actionMap.insert("toolbarMenu", a);
 
 #ifdef APP_MAC_STORE
-    action = new QAction(tr("&Love %1? Rate it!").arg(Constants::NAME), this);
-    actionMap.insert("app-store", action);
-    connect(action, SIGNAL(triggered()), SLOT(rateOnAppStore()));
+    a = new QAction(tr("&Love %1? Rate it!").arg(Constants::NAME), this);
+    actionMap.insert("app-store", a);
+    connect(a, SIGNAL(triggered()), SLOT(rateOnAppStore()));
 #endif
 
     // Invisible actions
@@ -476,19 +462,19 @@ void MainWindow::createActions() {
     searchFocusAct->setShortcut(QKeySequence::Find);
     searchFocusAct->setStatusTip(tr("Search"));
     actionMap.insert("search", searchFocusAct);
-    connect(searchFocusAct, SIGNAL(triggered()), SLOT(searchFocus()));
+    connect(searchFocusAct, &QAction::triggered, this, &MainWindow::searchFocus);
     addAction(searchFocusAct);
 
     volumeUpAct = new QAction(this);
     volumeUpAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Up));
     actionMap.insert("volume-up", volumeUpAct);
-    connect(volumeUpAct, SIGNAL(triggered()), SLOT(volumeUp()));
+    connect(volumeUpAct, &QAction::triggered, this, &MainWindow::volumeUp);
     addAction(volumeUpAct);
 
     volumeDownAct = new QAction(this);
     volumeDownAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_Down));
     actionMap.insert("volume-down", volumeDownAct);
-    connect(volumeDownAct, SIGNAL(triggered()), SLOT(volumeDown()));
+    connect(volumeDownAct, &QAction::triggered, this, &MainWindow::volumeDown);
     addAction(volumeDownAct);
 
     volumeMuteAct = new QAction(this);
@@ -496,30 +482,26 @@ void MainWindow::createActions() {
     volumeMuteAct->setStatusTip(tr("Mute volume"));
     volumeMuteAct->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_E));
     actionMap.insert("volume-mute", volumeMuteAct);
-    connect(volumeMuteAct, SIGNAL(triggered()), SLOT(toggleVolumeMute()));
+    connect(volumeMuteAct, &QAction::triggered, this, &MainWindow::toggleVolumeMute);
     addAction(volumeMuteAct);
 
     // common action properties
-    for (QAction *action : qAsConst(actionMap)) {
+    for (QAction *a : qAsConst(actionMap)) {
         // add actions to the MainWindow so that they work
         // when the menu is hidden
-        addAction(action);
+        addAction(a);
 
         // never autorepeat.
         // unexperienced users tend to keep keys pressed for a "long" time
-        action->setAutoRepeat(false);
-
-        // not needed since we disabled tooltips altogether
-        // action->setToolTip(action->statusTip());
+        a->setAutoRepeat(false);
 
         // make the actions work when in fullscreen
-        action->setShortcutContext(Qt::ApplicationShortcut);
+        a->setShortcutContext(Qt::ApplicationShortcut);
 
         // show keyboard shortcuts in the status bar
-        if (!action->shortcut().isEmpty())
-            action->setStatusTip(action->statusTip() + QLatin1String(" (") +
-                                 action->shortcut().toString(QKeySequence::NativeText) +
-                                 QLatin1String(")"));
+        if (!a->shortcut().isEmpty())
+            a->setStatusTip(a->statusTip() + QLatin1String(" (") +
+                            a->shortcut().toString(QKeySequence::NativeText) + QLatin1String(")"));
     }
 }
 
