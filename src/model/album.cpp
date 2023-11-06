@@ -159,9 +159,9 @@ QString Album::formattedDuration() {
     int totalLength = Track::getTotalLength(getTracks());
     QString duration;
     if (totalLength > 3600)
-        duration = QTime().addSecs(totalLength).toString("h:mm:ss");
+        duration = QTime(0, 0).addSecs(totalLength).toString("h:mm:ss");
     else
-        duration = QTime().addSecs(totalLength).toString("m:ss");
+        duration = QTime(0, 0).addSecs(totalLength).toString("m:ss");
     return duration;
 }
 
