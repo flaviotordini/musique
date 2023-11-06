@@ -22,9 +22,8 @@ QStatusBar {
     border: 0;
 }
 
+
 QStatusBar QToolBar {
-    padding: 0;
-    margin: 0;
     border: 0;
 }
 
