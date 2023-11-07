@@ -19,6 +19,7 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "tracksqlmodel.h"
+#include "finderwidget.h"
 #include "playlistmodel.h"
 
 TrackSqlModel::TrackSqlModel(QObject *parent) : BaseSqlModel(parent) {}
@@ -33,7 +34,11 @@ QVariant TrackSqlModel::data(const QModelIndex &index, int role) const {
         track = Track::forId(trackId);
         return track->getTitle();
 
+    case Finder::ItemTypeRole:
+        return Finder::ItemTypeTrack;
+
     case PlaylistRoles::DataObjectRole:
+    case Finder::DataObjectRole:
         trackId = QSqlQueryModel::data(QSqlQueryModel::index(index.row(), 0)).toInt();
         track = Track::forId(trackId);
         return QVariant::fromValue(QPointer<Track>(track));

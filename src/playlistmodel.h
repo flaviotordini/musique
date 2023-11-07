@@ -26,9 +26,9 @@ $END_LICENSE */
 
 namespace PlaylistRoles {
 
-enum PlaylistDataRoles { DataObjectRole = Qt::UserRole, ActiveItemRole, HoveredItemRole };
-
-}
+// + 10 is a hack to use this enum is models along with Finder enum
+enum PlaylistDataRoles { DataObjectRole = Qt::UserRole + 10, ActiveItemRole, HoveredItemRole };
+} // namespace PlaylistRoles
 
 class PlaylistModel : public QAbstractListModel {
     Q_OBJECT

@@ -151,7 +151,7 @@ void FinderItemDelegate::paint(QPainter *painter,
         paintFolder(painter, option, index);
     } else {
         auto item = index.data(Finder::ItemObjectRole).value<ItemPointer>();
-        paintItem(painter, option, index, item);
+        if (item) paintItem(painter, option, index, item);
     }
 }
 
