@@ -20,7 +20,6 @@ $END_LICENSE */
 
 #include "tracklistview.h"
 #include "playlistitemdelegate.h"
-#include "trackitemdelegate.h"
 
 TrackListView::TrackListView(QWidget *parent) : QListView(parent) {
     setWindowTitle(tr("Tracks"));
