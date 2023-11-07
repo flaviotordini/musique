@@ -72,14 +72,6 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
     searchView = nullptr;
 
-    // colors
-    QPalette p = palette();
-    QColor backgroundColor(0x20, 0x20, 0x20);
-    p.setBrush(QPalette::Window, backgroundColor);
-    p.setBrush(QPalette::Base, backgroundColor);
-    p.setBrush(QPalette::Text, Qt::white);
-    p.setBrush(QPalette::WindowText, Qt::white);
-
     QBoxLayout *layout = new QVBoxLayout();
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
@@ -94,13 +86,11 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->addWidget(breadcrumb);
 
     folderBreadcrumb = new Breadcrumb(this);
-    folderBreadcrumb->setPalette(p);
     folderBreadcrumb->hide();
     connect(folderBreadcrumb, SIGNAL(goneBack()), SLOT(folderGoBack()));
     layout->addWidget(folderBreadcrumb);
 
     stackedWidget = new QStackedWidget(this);
-    stackedWidget->setPalette(p);
 
     layout->addWidget(stackedWidget);
     setLayout(layout);
