@@ -54,7 +54,7 @@ $END_LICENSE */
 #include <QtSql>
 
 namespace {
-const QString finderViewKey = QStringLiteral("finderView");
+const char *finderViewKey = "finderView";
 }
 
 FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
