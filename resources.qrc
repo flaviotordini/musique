@@ -1,25 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/app.png</file>
-        <file>images/item/album.png</file>
-        <file>images/item/artist.png</file>
         <file>res/style.css</file>
-        <file>images/app@2x.png</file>
-        <file>images/item/album@2x.png</file>
-        <file>images/item/artist@2x.png</file>
-        <file>images/item/track.png</file>
-        <file>images/item/track@2x.png</file>
-        <file>images/64x64/app.png</file>
-        <file>images/64x64/app@2x.png</file>
-        <file>images/64x64/finetune.png</file>
-        <file>images/64x64/finetune@2x.png</file>
         <file>res/genre-replacements.csv</file>
         <file>res/genre-tree.csv</file>
-        <file>images/item/decade.png</file>
-        <file>images/item/decade@2x.png</file>
-        <file>images/item/genre.png</file>
-        <file>images/item/genre@2x.png</file>
-        <file>images/item/folder.png</file>
-        <file>images/item/folder@2x.png</file>
+        <file>images/app.png</file>
+        <file>images/app@2x.png</file>
+        <file>images/64x64/finetune.png</file>
+        <file>images/64x64/finetune@2x.png</file>
     </qresource>
 </RCC>
