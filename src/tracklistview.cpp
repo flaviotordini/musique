@@ -19,12 +19,13 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "tracklistview.h"
+#include "playlistitemdelegate.h"
 #include "trackitemdelegate.h"
 
 TrackListView::TrackListView(QWidget *parent) : QListView(parent) {
     setWindowTitle(tr("Tracks"));
 
-    setItemDelegate(new TrackItemDelegate(this));
+    setItemDelegate(new PlaylistItemDelegate(this));
     setSelectionMode(QAbstractItemView::ExtendedSelection);
     setMouseTracking(true);
 

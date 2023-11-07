@@ -21,7 +21,7 @@ void drawElidedText(QPainter *painter, const QRect &textBox, const int flags, co
 
 } // namespace
 
-PlaylistItemDelegate::PlaylistItemDelegate(PlaylistView *parent)
+PlaylistItemDelegate::PlaylistItemDelegate(QListView *parent)
     : QStyledItemDelegate(parent), view(parent) {}
 
 QSize PlaylistItemDelegate::sizeHint(const QStyleOptionViewItem &option,

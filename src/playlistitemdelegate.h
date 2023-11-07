@@ -10,7 +10,7 @@ class PlaylistItemDelegate : public QStyledItemDelegate {
     Q_OBJECT
 
 public:
-    PlaylistItemDelegate(PlaylistView *parent);
+    PlaylistItemDelegate(QListView *parent);
     QSize sizeHint(const QStyleOptionViewItem &, const QModelIndex &) const;
     void paint(QPainter *, const QStyleOptionViewItem &, const QModelIndex &) const;
 
@@ -35,7 +35,7 @@ private:
                           const QRect &line,
                           Track *track) const;
 
-    PlaylistView *view;
+    QListView *view;
 };
 
 #endif // PLAYLISTITEMDELEGATE_H

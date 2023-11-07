@@ -86,7 +86,6 @@ HEADERS += src/mainwindow.h \
     src/context/trackinfo.h \
     src/tracksqlmodel.h \
     src/tracklistview.h \
-    src/trackitemdelegate.h \
     src/playlistitemdelegate.h \
     src/droparea.h \
     src/filteringfilesystemmodel.h \
@@ -147,7 +146,6 @@ SOURCES += src/main.cpp \
     src/context/trackinfo.cpp \
     src/tracksqlmodel.cpp \
     src/tracklistview.cpp \
-    src/trackitemdelegate.cpp \
     src/playlistitemdelegate.cpp \
     src/droparea.cpp \
     src/filteringfilesystemmodel.cpp \
