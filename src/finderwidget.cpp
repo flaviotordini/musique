@@ -77,17 +77,16 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     layout->setSpacing(0);
 
     setupBar();
-    layout->addWidget(finderBar);
+    layout->addWidget(bar);
 
     breadcrumb = new Breadcrumb(this);
-    breadcrumb->setPalette(p);
     breadcrumb->hide();
-    connect(breadcrumb, SIGNAL(goneBack()), SLOT(goBack()));
+    connect(breadcrumb, &Breadcrumb::goneBack, this, &FinderWidget::goBack);
     layout->addWidget(breadcrumb);
 
     folderBreadcrumb = new Breadcrumb(this);
     folderBreadcrumb->hide();
-    connect(folderBreadcrumb, SIGNAL(goneBack()), SLOT(folderGoBack()));
+    connect(folderBreadcrumb, &Breadcrumb::goneBack, this, &FinderWidget::folderGoBack);
     layout->addWidget(folderBreadcrumb);
 
     stackedWidget = new QStackedWidget(this);
@@ -113,47 +112,46 @@ void FinderWidget::restoreSavedView() {
 }
 
 void FinderWidget::setupBar() {
-    finderBar = new SegmentedControl(this);
+    bar = new SegmentedControl(this);
 
     artistsAction = new QAction(tr("Artists"), this);
-    artistsAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_1));
-    connect(artistsAction, SIGNAL(triggered()), SLOT(showArtists()));
-    finderBar->addAction(artistsAction);
+    artistsAction->setShortcut(Qt::CTRL | Qt::Key_1);
+    connect(artistsAction, &QAction::triggered, this, &FinderWidget::showArtists);
+    bar->addAction(artistsAction);
 
     albumsAction = new QAction(tr("Albums"), this);
-    albumsAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_2));
-    connect(albumsAction, SIGNAL(triggered()), SLOT(showAlbums()));
-    finderBar->addAction(albumsAction);
+    albumsAction->setShortcut(Qt::CTRL | Qt::Key_2);
+    connect(albumsAction, &QAction::triggered, this, &FinderWidget::showAlbums);
+    bar->addAction(albumsAction);
 
     genresAction = new QAction(tr("Genres"), this);
-    genresAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_3));
-    connect(genresAction, SIGNAL(triggered()), SLOT(showGenres()));
-    finderBar->addAction(genresAction);
+    genresAction->setShortcut(Qt::CTRL | Qt::Key_3);
+    connect(genresAction, &QAction::triggered, this, &FinderWidget::showGenres);
+    bar->addAction(genresAction);
 
     foldersAction = new QAction(tr("Folders"), this);
-    foldersAction->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_4));
+    foldersAction->setShortcut(Qt::CTRL | Qt::Key_4);
     connect(foldersAction, SIGNAL(triggered()), SLOT(showFolders()));
-    finderBar->addAction(foldersAction);
+    bar->addAction(foldersAction);
 
-    for (QAction *action : finderBar->actions()) {
-        addAction(action);
-        action->setAutoRepeat(false);
-        if (!action->shortcut().isEmpty())
-            action->setStatusTip(action->text() + " (" +
-                                 action->shortcut().toString(QKeySequence::NativeText) + ")");
+    for (auto a : bar->actions()) {
+        addAction(a);
+        a->setAutoRepeat(false);
+        if (!a->shortcut().isEmpty())
+            a->setStatusTip(a->text() + " (" + a->shortcut().toString(QKeySequence::NativeText) +
+                            ")");
     }
 
-    finderBar->setCheckedAction(0);
+    bar->setCheckedAction(0);
 }
 
 void FinderWidget::setupArtists() {
     artistListModel = new ArtistSqlModel(this);
     artistListView = new ArtistListView(stackedWidget);
     artistListView->setEnabled(false);
-    connect(artistListView, SIGNAL(activated(const QModelIndex &)),
-            SLOT(artistActivated(const QModelIndex &)));
-    connect(artistListView, SIGNAL(play(const QModelIndex &)),
-            SLOT(artistPlayed(const QModelIndex &)));
+    connect(artistListView, &QAbstractItemView::activated, this,
+            [this](auto i) { artistActivated(i); });
+    connect(artistListView, &FinderListView::play, this, &FinderWidget::artistPlayed);
     artistListView->setModel(artistListModel);
     stackedWidget->addWidget(artistListView);
 }
@@ -162,10 +160,9 @@ void FinderWidget::setupAlbums() {
     albumListModel = new AlbumSqlModel(this);
     albumListView = new AlbumListView(stackedWidget);
     albumListView->setEnabled(false);
-    connect(albumListView, SIGNAL(activated(const QModelIndex &)),
-            SLOT(albumActivated(const QModelIndex &)));
-    connect(albumListView, SIGNAL(play(const QModelIndex &)),
-            SLOT(albumPlayed(const QModelIndex &)));
+    connect(albumListView, &QAbstractItemView::activated, this,
+            [this](auto i) { albumActivated(i); });
+    connect(albumListView, &FinderListView::play, this, &FinderWidget::albumPlayed);
     albumListView->setModel(albumListModel);
     stackedWidget->addWidget(albumListView);
 }
@@ -174,10 +171,8 @@ void FinderWidget::setupGenres() {
     genresModel = new GenresModel(this);
     genresListView = new FinderListView(stackedWidget);
     genresListView->setEnabled(false);
-    connect(genresListView, SIGNAL(activated(const QModelIndex &)),
-            SLOT(genreActivated(const QModelIndex &)));
-    connect(genresListView, SIGNAL(play(const QModelIndex &)),
-            SLOT(genrePlayed(const QModelIndex &)));
+    connect(genresListView, &QAbstractItemView::activated, this, &FinderWidget::genreActivated);
+    connect(genresListView, &FinderListView::play, this, &FinderWidget::genrePlayed);
     genresListView->setModel(genresModel);
     genresListView->setDefaultItemWidth(150);
     stackedWidget->addWidget(genresListView);
@@ -186,8 +181,8 @@ void FinderWidget::setupGenres() {
 void FinderWidget::setupTracks() {
     trackListModel = new TrackSqlModel(this);
     trackListView = new TrackListView(stackedWidget);
-    connect(trackListView, SIGNAL(activated(const QModelIndex &)),
-            SLOT(trackActivated(const QModelIndex &)));
+    connect(trackListView, &QAbstractItemView::activated, this,
+            [this](auto i) { trackActivated(i); });
     trackListView->setModel(trackListModel);
     stackedWidget->addWidget(trackListView);
     trackListView->setPalette(stackedWidget->palette());
@@ -201,10 +196,8 @@ void FinderWidget::setupFolders() {
     filteringFileSystemModel->setSourceModel(fileSystemModel);
 
     fileSystemView = new FileSystemFinderView(stackedWidget);
-    connect(fileSystemView, SIGNAL(activated(const QModelIndex &)),
-            SLOT(folderActivated(const QModelIndex &)));
-    connect(fileSystemView, SIGNAL(play(const QModelIndex &)),
-            SLOT(folderPlayed(const QModelIndex &)));
+    connect(fileSystemView, &QAbstractItemView::activated, this, &FinderWidget::folderActivated);
+    connect(fileSystemView, &FinderListView::play, this, &FinderWidget::folderPlayed);
     fileSystemView->setModel(filteringFileSystemModel);
     fileSystemView->setFileSystemModel(fileSystemModel);
     fileSystemView->setDefaultItemWidth(128);
@@ -215,12 +208,8 @@ void FinderWidget::setupFolders() {
 void FinderWidget::setupSearch() {
     searchModel = new SearchModel(this);
     searchView = new SearchView(stackedWidget);
-
-    connect(searchView, SIGNAL(activated(const QModelIndex &)), searchModel,
-            SLOT(itemActivated(const QModelIndex &)));
-    connect(searchView, SIGNAL(play(const QModelIndex &)), searchModel,
-            SLOT(itemPlayed(const QModelIndex &)));
-
+    connect(searchView, &QAbstractItemView::activated, searchModel, &SearchModel::itemActivated);
+    connect(searchView, &FinderListView::play, searchModel, &SearchModel::itemPlayed);
     searchView->setEnabled(false);
     searchView->setModel(searchModel);
     stackedWidget->addWidget(searchView);
@@ -230,7 +219,7 @@ void FinderWidget::showArtists() {
     if (!artistListView) setupArtists();
     artistListView->updateQuery();
     showWidget(artistListView, true);
-    finderBar->setCheckedAction(artistsAction);
+    bar->setCheckedAction(artistsAction);
     QSettings settings;
     settings.setValue(finderViewKey, "artists");
 }
@@ -240,7 +229,7 @@ void FinderWidget::showAlbums() {
     albumListView->updateQuery();
     albumListView->setShowToolBar(true);
     showWidget(albumListView, true);
-    finderBar->setCheckedAction(albumsAction);
+    bar->setCheckedAction(albumsAction);
     QSettings settings;
     settings.setValue(finderViewKey, "albums");
 }
@@ -249,7 +238,7 @@ void FinderWidget::showGenres() {
     if (!genresListView) setupGenres();
     if (genresListView->rootIndex().isValid()) genresListView->setRootIndex(QModelIndex());
     showWidget(genresListView, true);
-    finderBar->setCheckedAction(genresAction);
+    bar->setCheckedAction(genresAction);
     QSettings settings;
     settings.setValue(finderViewKey, "genres");
 }
@@ -264,7 +253,7 @@ void FinderWidget::showFolders() {
     fileSystemView->setRootIndex(proxyModel->mapFromSource(fileSystemModel->index(path)));
 
     showWidget(fileSystemView, true);
-    finderBar->setCheckedAction(foldersAction);
+    bar->setCheckedAction(foldersAction);
     QSettings settings;
     settings.setValue(finderViewKey, "folders");
 }
@@ -278,7 +267,7 @@ void FinderWidget::showSearch(const QString &query) {
     if (!searchView) setupSearch();
 
     showWidget(searchView, true);
-    finderBar->setCheckedAction(-1);
+    bar->setCheckedAction(-1);
     searchModel->search(query);
 }
 

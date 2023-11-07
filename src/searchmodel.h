@@ -39,15 +39,13 @@ public:
 
 public slots:
     void refreshIndex(const QModelIndex &index) { emit dataChanged(index, index); }
+    void itemActivated(const QModelIndex &index);
+    void itemPlayed(const QModelIndex &index);
 
 protected:
     int rowCount(const QModelIndex & /* parent */) const;
     QVariant data(const QModelIndex &item, int role) const;
     int columnCount(const QModelIndex &parent = QModelIndex()) const { return 1; }
-
-private slots:
-    void itemActivated(const QModelIndex &index);
-    void itemPlayed(const QModelIndex &index);
 
 private:
     Item *itemAt(const QModelIndex &index) const;

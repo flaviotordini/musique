@@ -111,7 +111,7 @@ private:
     void setupSearch();
     void showWidget(QWidget *widget, bool isRoot);
 
-    SegmentedControl *finderBar;
+    SegmentedControl *bar;
     QAction *artistsAction;
     QAction *albumsAction;
     QAction *genresAction;
