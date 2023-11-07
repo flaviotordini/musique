@@ -5,8 +5,6 @@ Makefile*
 .DS_Store
 .cproject
 .project
-stuff
-*.sh
 local/
 .tx/
 debian/
