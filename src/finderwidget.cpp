@@ -110,12 +110,6 @@ void FinderWidget::restoreSavedView() {
         QTimer::singleShot(0, this, SLOT(showGenres()));
     else
         QTimer::singleShot(0, this, SLOT(showArtists()));
-
-    /*
-    if (currentViewName == "folders") QTimer::singleShot(0, foldersAction, SLOT(trigger()));
-    else if (currentViewName == "albums") QTimer::singleShot(0, albumsAction, SLOT(trigger()));
-    else QTimer::singleShot(0, artistsAction, SLOT(trigger()));
-    */
 }
 
 void FinderWidget::setupBar() {
