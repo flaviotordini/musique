@@ -218,19 +218,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *e) {
         toolbarMenu->move(mapToGlobal(QPoint(x, y)));
     }
 
-    if (t == QEvent::KeyPress) {
-        QKeyEvent *keyEvent = static_cast<QKeyEvent *>(e);
-        // qDebug() << keyEvent;
-        if (keyEvent->key() == Qt::Key_MediaStop) {
-            qDebug() << "Stop!";
-            return false;
-        }
-    }
-
-    if (t == QEvent::StyleChange && obj == this) {
+    else if (t == QEvent::StyleChange && obj == this) {
         qDebug() << "Style change detected";
         qApp->paletteChanged(qApp->palette());
-        return false;
     }
 
     // standard event processing
