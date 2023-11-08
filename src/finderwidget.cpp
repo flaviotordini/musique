@@ -174,7 +174,6 @@ void FinderWidget::setupGenres() {
     connect(genresListView, &QAbstractItemView::activated, this, &FinderWidget::genreActivated);
     connect(genresListView, &FinderListView::play, this, &FinderWidget::genrePlayed);
     genresListView->setModel(genresModel);
-    genresListView->setDefaultItemWidth(150);
     stackedWidget->addWidget(genresListView);
 }
 
@@ -200,8 +199,6 @@ void FinderWidget::setupFolders() {
     connect(fileSystemView, &FinderListView::play, this, &FinderWidget::folderPlayed);
     fileSystemView->setModel(filteringFileSystemModel);
     fileSystemView->setFileSystemModel(fileSystemModel);
-    fileSystemView->setDefaultItemWidth(128);
-    // fileSystemView->setItemHeightRatio(7. / 6.);
     stackedWidget->addWidget(fileSystemView);
 }
 
