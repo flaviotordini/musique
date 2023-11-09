@@ -19,27 +19,37 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 $END_LICENSE */
 
 #include "mainwindow.h"
+#include "aboutview.h"
+#include "actionbutton.h"
+#include "choosefolderview.h"
+#include "collectionscanner.h"
+#include "collectionscannerview.h"
+#include "collectionsuggester.h"
 #include "constants.h"
 #include "contextualview.h"
 #include "database.h"
+#include "fontutils.h"
+#include "globalshortcuts.h"
+#include "httputils.h"
 #include "iconutils.h"
+#include "imagedownloader.h"
+#include "js.h"
+#include "lastfm.h"
+#include "lastfmlogindialog.h"
+#include "mediaview.h"
+#include "messagebar.h"
+#include "seekslider.h"
 #include "spacer.h"
+#include "toolbarmenu.h"
+#include "view.h"
+#include "zoomableui.h"
+
 #if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
 #include "searchlineedit_mac.h"
 #else
 #include "searchlineedit.h"
 #endif
 
-#include "aboutview.h"
-#include "choosefolderview.h"
-#include "collectionscanner.h"
-#include "collectionscannerview.h"
-#include "fontutils.h"
-#include "globalshortcuts.h"
-#include "mediaview.h"
-#include "messagebar.h"
-#include "view.h"
-#include "zoomableui.h"
 #ifdef Q_OS_MAC
 #include "mac_startup.h"
 #include "macfullscreen.h"
@@ -48,23 +58,13 @@ $END_LICENSE */
 #elif defined Q_OS_UNIX
 #include "gnomeglobalshortcutbackend.h"
 #endif
-#include "collectionsuggester.h"
-#include "imagedownloader.h"
-#include "lastfm.h"
-#include "lastfmlogindialog.h"
-#include <iostream>
-#include <utility>
+
 #ifdef APP_EXTRA
 #include "compositefader.h"
 #include "extra.h"
 #include "fader.h"
 #include "updatedialog.h"
 #endif
-#include "actionbutton.h"
-#include "http.h"
-#include "httputils.h"
-#include "seekslider.h"
-#include "toolbarmenu.h"
 
 #ifdef APP_MAC_QMACTOOLBAR
 #if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
@@ -90,7 +90,6 @@ $END_LICENSE */
 #include "updater.h"
 #endif
 
-#include "js.h"
 
 namespace {
 MainWindow *singleton = nullptr;
