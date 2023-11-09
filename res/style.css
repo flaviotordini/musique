@@ -6,6 +6,7 @@ QToolBar QLineEdit {
     background: transparent;
     border: 2px solid transparent;
     border-radius: 5px;
+    padding: 2px;
 }
 
 QToolBar QLineEdit:focus {
