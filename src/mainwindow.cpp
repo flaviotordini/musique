@@ -96,7 +96,6 @@ MainWindow *singleton = nullptr;
 }
 
 MainWindow *MainWindow::instance() {
-    if (!singleton) singleton = new MainWindow();
     return singleton;
 }
 

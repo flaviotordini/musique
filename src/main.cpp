@@ -106,7 +106,7 @@ int main(int argc, char **argv) {
 
     UpdateUtils::init();
 
-    MainWindow *mainWindow = MainWindow::instance();
+    MainWindow *mainWindow = new MainWindow();
     mainWindow->show();
 
 #ifndef APP_MAC

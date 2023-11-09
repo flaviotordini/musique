@@ -42,6 +42,7 @@ class MainWindow : public QMainWindow {
 
 public:
     static MainWindow *instance();
+    MainWindow();
 
     QSlider *getSeekSlider() { return seekSlider; }
     QSlider *getVolumeSlider() { return volumeSlider; }
@@ -139,7 +140,6 @@ private slots:
     void runFinetune(const QString &filename);
 
 private:
-    MainWindow();
     void showView(View *view, bool transition = true);
     void createActions();
     void createMenus();
