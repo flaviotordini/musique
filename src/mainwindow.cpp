@@ -338,7 +338,7 @@ void MainWindow::createActions() {
     QAction *a;
 
     a = new QAction(tr("Rewind %1 seconds").arg(10));
-    a->setShortcut(Qt::Key_Left);
+    a->setShortcuts({Qt::Key_Left, Qt::SHIFT + Qt::Key_Left});
     a->setShortcutContext(Qt::WidgetShortcut);
     connect(a, &QAction::triggered, this, [this] {
         qint64 position = media->position();
@@ -349,7 +349,7 @@ void MainWindow::createActions() {
     addNamedAction("seekBackward", a);
 
     a = new QAction(tr("Fast forward %1 seconds").arg(10));
-    a->setShortcut(Qt::Key_Right);
+    a->setShortcuts({Qt::Key_Right, Qt::SHIFT + Qt::Key_Right});
     a->setShortcutContext(Qt::WidgetShortcut);
     connect(a, &QAction::triggered, this, [this] {
         qint64 position = media->position();
