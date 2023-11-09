@@ -28,6 +28,7 @@ $END_LICENSE */
 #include "constants.h"
 #include "contextualview.h"
 #include "database.h"
+#include "datautils.h"
 #include "fontutils.h"
 #include "globalshortcuts.h"
 #include "httputils.h"
@@ -1113,19 +1114,17 @@ void MainWindow::initMedia() {
     connect(media, &Media::stateChanged, this, &MainWindow::stateChanged);
     connect(media, &Media::positionChanged, this, &MainWindow::tick);
 
-    connect(seekSlider, &QSlider::sliderMoved, this, [this](int value) {
-        // value : maxValue = posit ion : duration
-        qint64 ms = (value * media->duration()) / seekSlider->maximum();
-        qDebug() << "Seeking to" << ms;
-        media->seek(ms);
-        if (media->state() == Media::PausedState) media->play();
-    });
-    connect(seekSlider, &QSlider::sliderPressed, this, [this]() {
+    auto onSliderPosChange = [this](int position) {
         // value : maxValue = position : duration
-        qint64 ms = (seekSlider->value() * media->duration()) / seekSlider->maximum();
+        qint64 ms = (position * media->duration()) / seekSlider->maximum();
         media->seek(ms);
         if (media->state() == Media::PausedState) media->play();
-    });
+    };
+    connect(seekSlider, &QSlider::sliderMoved, this,
+            [onSliderPosChange](int position) { onSliderPosChange(position); });
+    connect(seekSlider, &QSlider::sliderReleased, this,
+            [this, onSliderPosChange] { onSliderPosChange(seekSlider->sliderPosition()); });
+
     connect(media, &Media::started, this, [this]() { seekSlider->setValue(0); });
 
     connect(media, &Media::volumeChanged, this, &MainWindow::volumeChanged);
@@ -1150,27 +1149,16 @@ void MainWindow::tick(qint64 time) {
     int value = (seekSlider->maximum() * media->position()) / duration;
     if (!seekSlider->isSliderDown()) seekSlider->setValue(value);
 
-    const QString s = formatTime(time);
+    const QString s = DataUtils::formatDuration(time / 1000);
     if (s != currentTimeLabel->text()) {
         currentTimeLabel->setText(s);
         emit currentTimeChanged(s);
 
         // remaining time
         const qint64 remainingTime = media->remainingTime();
-        currentTimeLabel->setStatusTip(tr("Remaining time: %1").arg(formatTime(remainingTime)));
+        currentTimeLabel->setStatusTip(
+                tr("Remaining time: %1").arg(DataUtils::formatDuration(remainingTime / 1000)));
     }
-}
-
-QString MainWindow::formatTime(qint64 duration) {
-    duration /= 1000;
-    QString res;
-    int seconds = (int)(duration % 60);
-    duration /= 60;
-    int minutes = (int)(duration % 60);
-    duration /= 60;
-    int hours = (int)(duration % 24);
-    if (hours == 0) return res.asprintf("%02d:%02d", minutes, seconds);
-    return res.asprintf("%02d:%02d:%02d", hours, minutes, seconds);
 }
 
 void MainWindow::volumeUp() {

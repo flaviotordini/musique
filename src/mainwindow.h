@@ -147,7 +147,6 @@ private:
     void createStatusBar();
     void writeSettings();
     void initMedia();
-    static QString formatTime(qint64 duration);
     QString playlistPath();
     void showFinetuneDialog(const QVariantMap &stats);
     void maybeShowMessageBar();
