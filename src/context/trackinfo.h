@@ -35,7 +35,7 @@ public:
     void clear();
 
 private slots:
-    void showLyrics(const QString& lyrics);
+    void showLyrics(QString lyrics);
 
 private:
     QLabel *titleLabel;

@@ -39,10 +39,6 @@ public:
     ArtistInfo *artistInfo;
     AlbumInfo *albumInfo;
     TrackInfo *trackInfo;
-
-protected:
-    void paintEvent(QPaintEvent *e);
-
 };
 
 

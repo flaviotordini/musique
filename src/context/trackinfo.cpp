@@ -23,19 +23,17 @@ $END_LICENSE */
 #include "fontutils.h"
 
 TrackInfo::TrackInfo(QWidget *parent) : QWidget(parent) {
-    setPalette(parent->palette());
-
     QBoxLayout *layout = new QVBoxLayout(this);
-    layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    layout->setAlignment(Qt::AlignTop | Qt::AlignHCenter);
     const int padding = 20;
     layout->setSpacing(padding);
-    layout->setContentsMargins(padding, padding, padding, padding);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     titleLabel = new QLabel(this);
-    titleLabel->setPalette(palette());
+    titleLabel->setAlignment(Qt::AlignHCenter);
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::big());
-    titleLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
+    titleLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Minimum);
     layout->addWidget(titleLabel);
 
     /*
@@ -44,11 +42,11 @@ TrackInfo::TrackInfo(QWidget *parent) : QWidget(parent) {
     */
 
     lyricsLabel = new QLabel(this);
-    lyricsLabel->setPalette(parent->palette());
-    lyricsLabel->setAlignment(Qt::AlignTop);
+    lyricsLabel->setTextFormat(Qt::RichText);
+    lyricsLabel->setFont(FontUtils::medium());
+    lyricsLabel->setAlignment(Qt::AlignHCenter);
     lyricsLabel->setWordWrap(true);
     lyricsLabel->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
-    lyricsLabel->setFont(FontUtils::medium());
     layout->addWidget(lyricsLabel);
 }
 
@@ -68,8 +66,9 @@ void TrackInfo::setTrack(Track *track) {
 
 }
 
-void TrackInfo::showLyrics(const QString& lyrics) {
-    lyricsLabel->setText(lyrics);
+void TrackInfo::showLyrics(QString lyrics) {
+    lyrics.replace('\n', "<br>");
+    lyricsLabel->setText("<div style='line-height:130%'>" + lyrics + "</div>");
 }
 
 void TrackInfo::clear() {

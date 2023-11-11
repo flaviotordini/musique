@@ -50,44 +50,21 @@ void ContextualView::setTrack(Track *track) {
 void ContextualView::disappear() {}
 
 ScrollingContextualView::ScrollingContextualView(QWidget *parent) : QWidget(parent) {
-    // colors
-    QPalette p = palette();
-    p.setBrush(QPalette::Window, QColor(0x20, 0x20, 0x20));
-    p.setBrush(QPalette::WindowText, QColor(0xdc, 0xdc, 0xdc));
-    p.setBrush(QPalette::Base, Qt::red);
-    p.setBrush(QPalette::Text, Qt::white);
-    p.setColor(QPalette::Link, Qt::white);
-    p.setBrush(QPalette::LinkVisited, Qt::white);
-    this->setPalette(p);
-
     QBoxLayout *layout = new QHBoxLayout(this);
-    layout->setSpacing(0);
-    layout->setContentsMargins(0, 0, 0, 0);
+    const int padding = 20;
+    layout->setSpacing(padding);
+    layout->setContentsMargins(padding, padding, padding, padding);
 
     artistInfo = new ArtistInfo(this);
-    artistInfo->setPalette(p);
+    artistInfo->setMaximumWidth(300);
     layout->addWidget(artistInfo);
 
+    trackInfo = new TrackInfo(this);
+    layout->addWidget(trackInfo, 1, Qt::AlignHCenter);
+
     albumInfo = new AlbumInfo(this);
-    albumInfo->setPalette(p);
+    albumInfo->setMaximumWidth(300);
     layout->addWidget(albumInfo);
 
-    trackInfo = new TrackInfo(this);
-    trackInfo->setPalette(p);
-    layout->addWidget(trackInfo);
-
     setLayout(layout);
-}
-
-void ScrollingContextualView::paintEvent(QPaintEvent *e) {
-    Q_UNUSED(e);
-
-    QPainter painter(this);
-    QRect rect = visibleRegion().boundingRect();
-
-    QLinearGradient shadow;
-    shadow.setFinalStop(0, 20);
-    shadow.setColorAt(0, QColor(0x00, 0x00, 0x00, 48));
-    shadow.setColorAt(1, QColor(0x00, 0x00, 0x00, 0));
-    painter.fillRect(rect.x(), rect.y(), rect.width(), 20, QBrush(shadow));
 }

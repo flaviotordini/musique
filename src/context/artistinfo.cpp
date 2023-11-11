@@ -21,39 +21,25 @@ $END_LICENSE */
 #include "artistinfo.h"
 #include "../model/artist.h"
 #include "fontutils.h"
+#include "painterutils.h"
 
-ArtistInfo::ArtistInfo(QWidget *parent) :
-        QWidget(parent) {
-
-    setPalette(parent->palette());
-
+ArtistInfo::ArtistInfo(QWidget *parent) : QWidget(parent) {
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
-    const int padding = 20;
-    layout->setSpacing(padding);
-    layout->setContentsMargins(padding, padding, padding, padding);
+    layout->setSpacing(20);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     titleLabel = new QLabel(this);
-    titleLabel->setPalette(parent->palette());
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::big());
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(titleLabel);
 
     photoLabel = new QLabel(this);
-    /*
-    QGraphicsDropShadowEffect * effect = new QGraphicsDropShadowEffect();
-    effect->setXOffset(0);
-    effect->setYOffset(0);
-    effect->setColor(QColor(64, 64, 64, 128));
-    effect->setBlurRadius(20.0);
-    photoLabel->setGraphicsEffect(effect);
-    */
     photoLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     layout->addWidget(photoLabel);
 
     bioLabel = new QLabel(this);
-    bioLabel->setPalette(parent->palette());
     bioLabel->setTextFormat(Qt::RichText);
     bioLabel->setAlignment(Qt::AlignTop);
     bioLabel->setOpenExternalLinks(true);
@@ -61,7 +47,6 @@ ArtistInfo::ArtistInfo(QWidget *parent) :
     bioLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
 
     layout->addWidget(bioLabel);
-
 }
 
 void ArtistInfo::setArtist(Artist *artist) {
@@ -78,7 +63,11 @@ void ArtistInfo::setArtist(Artist *artist) {
         split = bio.indexOf(". ", 512);
     }
 
-    QString htmlBio = "<html><style>a { color: white }</style><body>" + bio.left(split);
+    QString htmlBio = "<html><style>"
+                      "body { line-height:130% }"
+                      "a { color:palette(window-text);font-weight:bold;text-decoration:none }"
+                      "</style><body>" +
+                      bio.left(split);
     if (split != -1) {
         QString bioUrl = "http://www.last.fm/music/" + artist->getName() + "/+wiki";
         htmlBio += QString(" <a href='%1'>%2</a>").arg(bioUrl, tr("Read more"));
@@ -86,13 +75,15 @@ void ArtistInfo::setArtist(Artist *artist) {
     htmlBio += "</body></html>";
     bioLabel->setText(htmlBio);
 
-    QPixmap photo = artist->getThumb(window()->width() / 3, window()->height() / 3 * 2,
-                                     devicePixelRatioF());
-    if (photo.isNull()) {
+    int maxWidth = 300;
+    QPixmap p(artist->getImageLocation());
+    p.setDevicePixelRatio(devicePixelRatio());
+    if (p.width() > maxWidth) p = p.scaledToWidth(maxWidth, Qt::SmoothTransformation);
+    if (p.isNull()) {
         photoLabel->clear();
         photoLabel->hide();
     } else {
-        photoLabel->setPixmap(photo);
+        photoLabel->setPixmap(PainterUtils::roundCorners(p));
         photoLabel->show();
     }
 }

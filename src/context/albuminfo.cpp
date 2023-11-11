@@ -24,49 +24,28 @@ $END_LICENSE */
 #include "../tracklistview.h"
 #include "../tracksqlmodel.h"
 #include "fontutils.h"
+#include "painterutils.h"
 
 AlbumInfo::AlbumInfo(QWidget *parent) :
         QWidget(parent) {
-
-    setPalette(parent->palette());
 
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     const int padding = 20;
     layout->setSpacing(padding);
-    layout->setContentsMargins(padding, padding, padding, padding);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     titleLabel = new QLabel(this);
-    titleLabel->setPalette(parent->palette());
     titleLabel->setWordWrap(true);
     titleLabel->setFont(FontUtils::big());
     titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     layout->addWidget(titleLabel);
 
     photoLabel = new QLabel(this);
-    /*
-    QGraphicsDropShadowEffect * effect = new QGraphicsDropShadowEffect();
-    effect->setXOffset(0);
-    effect->setYOffset(0);
-    effect->setColor(QColor(64, 64, 64, 128));
-    effect->setBlurRadius(20.0);
-    photoLabel->setGraphicsEffect(effect);
-    */
     photoLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     layout->addWidget(photoLabel);
 
-#ifdef APP_AFFILIATE_AMAZON
-    buyOnAmazonButton = new QPushButton(this);
-    buyOnAmazonButton->hide();
-    buyOnAmazonButton->setFont(FontUtils::smaller());
-    buyOnAmazonButton->setText(tr("Buy on %1").arg("Amazon"));
-    buyOnAmazonButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
-    connect(buyOnAmazonButton, SIGNAL(clicked()), SLOT(amazonClicked()));
-    layout->addWidget(buyOnAmazonButton);
-#endif
-
     wikiLabel = new QLabel(this);
-    wikiLabel->setPalette(parent->palette());
     wikiLabel->setAlignment(Qt::AlignTop);
     wikiLabel->setOpenExternalLinks(true);
     wikiLabel->setWordWrap(true);
@@ -105,7 +84,11 @@ void AlbumInfo::setAlbum(Album *album) {
             split = wiki.indexOf(". ", 512);
         }
 
-        QString html = "<html><style>a { color: white }</style><body>" + wiki.left(split);
+        QString html = "<html><style>"
+                       "body { line-height:130% }"
+                       "a { color:palette(window-text);font-weight:bold;text-decoration:none }"
+                       "</style><body>" +
+                       wiki.left(split);
         if (split != -1) {
             Artist *artist = album->getArtist();
             QString url = "http://www.last.fm/music/" + (artist ? artist->getName() : "_") + "/" + album->getTitle() + "/+wiki";
@@ -115,13 +98,15 @@ void AlbumInfo::setAlbum(Album *album) {
         wikiLabel->setText(html);
     }
 
-    QPixmap photo = album->getPhoto();
-    if (photo.isNull()) {
+    int maxWidth = 300;
+    QPixmap p(album->getImageLocation());
+    p.setDevicePixelRatio(devicePixelRatio());
+    if (p.width() > maxWidth) p = p.scaledToWidth(maxWidth, Qt::SmoothTransformation);
+    if (p.isNull()) {
         photoLabel->clear();
         photoLabel->hide();
     } else {
-        photo.setDevicePixelRatio(devicePixelRatio());
-        photoLabel->setPixmap(photo);
+        photoLabel->setPixmap(PainterUtils::roundCorners(p));
         photoLabel->show();
     }
 
