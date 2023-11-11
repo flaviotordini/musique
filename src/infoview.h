@@ -18,46 +18,42 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
-#ifndef CONTEXTUALVIEW_H
-#define CONTEXTUALVIEW_H
+#ifndef INFOVIEW_H
+#define INFOVIEW_H
 
-#include <QtWidgets>
 #include "view.h"
+#include <QtWidgets>
 
 class Track;
 class ArtistInfo;
 class AlbumInfo;
 class TrackInfo;
 
-class ScrollingContextualView : public QWidget {
-
+class ScrollingInfoView : public QWidget {
     Q_OBJECT
 
 public:
-    ScrollingContextualView(QWidget *parent);
+    ScrollingInfoView(QWidget *parent);
 
     ArtistInfo *artistInfo;
     AlbumInfo *albumInfo;
     TrackInfo *trackInfo;
 };
 
-
-class ContextualView : public View {
-
+class InfoView : public View {
     Q_OBJECT
 
 public:
-    ContextualView(QWidget *parent);
+    InfoView(QWidget *parent);
 
     void appear() {}
     void disappear();
 
-    void setTrack(Track* track);
+    void setTrack(Track *track);
 
 private:
     QScrollArea *scrollArea;
-    ScrollingContextualView *scrollingContextualView;
-
+    ScrollingInfoView *scrollingInfoView;
 };
 
-#endif // CONTEXTUALVIEW_H
+#endif // INFOVIEW_H

@@ -26,7 +26,7 @@ $END_LICENSE */
 #include "collectionscannerview.h"
 #include "collectionsuggester.h"
 #include "constants.h"
-#include "contextualview.h"
+#include "infoview.h"
 #include "database.h"
 #include "datautils.h"
 #include "fontutils.h"
@@ -112,7 +112,7 @@ MainWindow::MainWindow() : toolbarMenu(nullptr), toolbar(nullptr) {
     collectionScannerView = nullptr;
     chooseFolderView = nullptr;
     aboutView = nullptr;
-    contextualView = nullptr;
+    infoView = nullptr;
 
     // views mechanism
     views = new QStackedWidget(this);
@@ -761,9 +761,9 @@ void MainWindow::showView(View *view, bool transition) {
     if (!desc.isEmpty()) showMessage(desc);
 
     aboutAct->setEnabled(view != aboutView);
-    chooseFolderAct->setEnabled(view == mediaView || view == contextualView);
-    toolbarSearch->setEnabled(view == mediaView || view == contextualView);
-    if (toolbar) toolbar->setVisible(view == mediaView || view == contextualView);
+    chooseFolderAct->setEnabled(view == mediaView || view == infoView);
+    toolbarSearch->setEnabled(view == mediaView || view == infoView);
+    if (toolbar) toolbar->setVisible(view == mediaView || view == infoView);
     statusBar()->setVisible(view == mediaView);
 
     views->setCurrentWidget(view);
@@ -830,7 +830,7 @@ void MainWindow::showMediaView(bool transition) {
         QTimer::singleShot(0, this, &MainWindow::initMedia);
     }
 
-    if (views->currentWidget() == contextualView) {
+    if (views->currentWidget() == infoView) {
         hideContextualView();
     }
 
@@ -839,19 +839,19 @@ void MainWindow::showMediaView(bool transition) {
 }
 
 void MainWindow::toggleContextualView() {
-    if (!contextualView) {
-        contextualView = new ContextualView(this);
-        views->addWidget(contextualView);
+    if (!infoView) {
+        infoView = new InfoView(this);
+        views->addWidget(infoView);
     }
 
-    bool isShown = views->currentWidget() == contextualView;
+    bool isShown = views->currentWidget() == infoView;
     if (isShown) {
         hideContextualView();
     } else {
         Track *track = mediaView->getActiveTrack();
         if (track) {
-            contextualView->setTrack(track);
-            showView(contextualView);
+            infoView->setTrack(track);
+            showView(infoView);
             contextualAct->setChecked(true);
 
             QList<QKeySequence> shortcuts;
@@ -871,8 +871,8 @@ void MainWindow::hideContextualView() {
 }
 
 void MainWindow::updateContextualView(Track *track) {
-    if (views->currentWidget() == contextualView) {
-        contextualView->setTrack(track);
+    if (views->currentWidget() == infoView) {
+        infoView->setTrack(track);
     }
 }
 
@@ -916,7 +916,7 @@ void MainWindow::fullScanFinished(const QVariantMap &stats) {
 #endif
     showFinetuneDialog(stats);
 
-    if (views->currentWidget() == mediaView || views->currentWidget() == contextualView)
+    if (views->currentWidget() == mediaView || views->currentWidget() == infoView)
         chooseFolderAct->setEnabled(true);
 
     ImageDownloader::instance().start();
@@ -941,7 +941,7 @@ void MainWindow::incrementalScanProgress(int percent) {
 }
 
 void MainWindow::incrementalScanFinished(const QVariantMap &stats) {
-    if (views->currentWidget() == mediaView || views->currentWidget() == contextualView)
+    if (views->currentWidget() == mediaView || views->currentWidget() == infoView)
         chooseFolderAct->setEnabled(true);
     showMessage(tr("Collection updated"));
     showFinetuneDialog(stats);

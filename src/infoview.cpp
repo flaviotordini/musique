@@ -18,13 +18,13 @@ along with Musique.  If not, see <http://www.gnu.org/licenses/>.
 
 $END_LICENSE */
 
-#include "contextualview.h"
+#include "infoview.h"
 #include "context/albuminfo.h"
 #include "context/artistinfo.h"
 #include "context/trackinfo.h"
 #include "model/track.h"
 
-ContextualView::ContextualView(QWidget *parent) : View(parent) {
+InfoView::InfoView(QWidget *parent) : View(parent) {
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
 
@@ -32,24 +32,24 @@ ContextualView::ContextualView(QWidget *parent) : View(parent) {
     scrollArea->setPalette(parent->palette());
     scrollArea->setFrameShape(QFrame::NoFrame);
     scrollArea->setWidgetResizable(true);
-    scrollingContextualView = new ScrollingContextualView(this);
-    scrollArea->setWidget(scrollingContextualView);
+    scrollingInfoView = new ScrollingInfoView(this);
+    scrollArea->setWidget(scrollingInfoView);
     layout->addWidget(scrollArea);
 }
 
-void ContextualView::setTrack(Track *track) {
+void InfoView::setTrack(Track *track) {
     setUpdatesEnabled(false);
-    scrollingContextualView->artistInfo->setArtist(track->getArtist());
-    scrollingContextualView->albumInfo->setAlbum(track->getAlbum());
-    scrollingContextualView->trackInfo->setTrack(track);
-    scrollingContextualView->adjustSize();
+    scrollingInfoView->artistInfo->setArtist(track->getArtist());
+    scrollingInfoView->albumInfo->setAlbum(track->getAlbum());
+    scrollingInfoView->trackInfo->setTrack(track);
+    scrollingInfoView->adjustSize();
     scrollArea->ensureVisible(0, 0, 1, 1);
     setUpdatesEnabled(true);
 }
 
-void ContextualView::disappear() {}
+void InfoView::disappear() {}
 
-ScrollingContextualView::ScrollingContextualView(QWidget *parent) : QWidget(parent) {
+ScrollingInfoView::ScrollingInfoView(QWidget *parent) : QWidget(parent) {
     QBoxLayout *layout = new QHBoxLayout(this);
     const int padding = 20;
     layout->setSpacing(padding);

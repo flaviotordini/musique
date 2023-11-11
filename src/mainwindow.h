@@ -29,7 +29,7 @@ class ZoomableUI;
 class View;
 class MediaView;
 class CollectionScannerView;
-class ContextualView;
+class InfoView;
 class SearchLineEdit;
 class Track;
 class UpdateChecker;
@@ -159,7 +159,7 @@ private:
     View *chooseFolderView;
     CollectionScannerView *collectionScannerView;
     MediaView *mediaView;
-    ContextualView *contextualView;
+    InfoView *infoView;
     View *aboutView;
 
     QHash<QByteArray, QAction *> actionMap;

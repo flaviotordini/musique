@@ -50,6 +50,7 @@ INCLUDEPATH += $$PWD/src
 
 HEADERS += src/mainwindow.h \
     src/aboutview.h \
+    src/infoview.h \
     src/lyrics.h \
     src/updateutils.h \
     src/view.h \
@@ -80,7 +81,6 @@ HEADERS += src/mainwindow.h \
     src/model/folder.h \
     src/basesqlmodel.h \
     src/filesystemmodel.h \
-    src/contextualview.h \
     src/context/artistinfo.h \
     src/context/albuminfo.h \
     src/context/trackinfo.h \
@@ -112,6 +112,7 @@ HEADERS += src/mainwindow.h \
     src/finderlistview.h \
     src/waitingspinnerwidget.h
 SOURCES += src/main.cpp \
+    src/infoview.cpp \
     src/lyrics.cpp \
     src/mainwindow.cpp \
     src/aboutview.cpp \
@@ -140,7 +141,6 @@ SOURCES += src/main.cpp \
     src/model/folder.cpp \
     src/basesqlmodel.cpp \
     src/filesystemmodel.cpp \
-    src/contextualview.cpp \
     src/context/artistinfo.cpp \
     src/context/albuminfo.cpp \
     src/context/trackinfo.cpp \
