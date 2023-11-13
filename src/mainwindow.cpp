@@ -787,13 +787,11 @@ void MainWindow::about() {
 
 void MainWindow::visitSite() {
     QUrl url(Constants::WEBSITE);
-    statusBar()->showMessage(QString(tr("Opening %1").arg(url.toString())));
     QDesktopServices::openUrl(url);
 }
 
 void MainWindow::donate() {
     QUrl url("https://flavio.tordini.org/donate/");
-    statusBar()->showMessage(QString(tr("Opening %1").arg(url.toString())));
     QDesktopServices::openUrl(url);
 }
 
