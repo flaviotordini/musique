@@ -32,8 +32,6 @@ void Genres::loadGenres() {
             while (!stream.atEnd()) {
                 stream.readLineInto(&line);
                 if (line.isEmpty()) continue;
-                QString badWord;
-                QString goodWord;
                 const auto fields = line.split(',');
                 QString metaGenre;
                 QStringList genres;
