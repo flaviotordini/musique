@@ -79,8 +79,6 @@ public:
 
     QString getImageLocation();
 
-    void fixTrackTitle(Track *track);
-
 public slots:
     void setPhoto(const QByteArray &bytes);
 
@@ -97,7 +95,6 @@ private slots:
 
 private:
     QString getBaseLocation();
-    QString fixTrackTitleUsingTitle(Track *track, QString newTitle);
 
     static QHash<int, Album *> cache;
 
