@@ -32,8 +32,7 @@ public:
     ArtistSqlModel(QObject *parent = nullptr);
     QVariant data(const QModelIndex &item, int role) const;
     Item *itemAt(const QModelIndex &index) const {
-        const ArtistPointer itemPointer = index.data(Finder::DataObjectRole).value<ArtistPointer>();
-        return qobject_cast<Item *>(itemPointer.data());
+        return index.data(Finder::DataObjectRole).value<ArtistPointer>();
     }
 
 private:
