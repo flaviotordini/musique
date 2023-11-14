@@ -139,7 +139,7 @@ void Genres::loadGenres() {
         qDebug() << g->getName() << g->getTotalTrackCount();
         if (g->getTotalTrackCount() <= 30) {
             qDebug() << "Dropping" << g->getName();
-            metaGenres.removeOne(g);
+            i = metaGenres.erase(i);
         } else
             ++i;
     }
