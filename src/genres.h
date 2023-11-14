@@ -11,7 +11,7 @@ class Genres : public QObject {
 
 public:
     Genres();
-    const QVector<Item *> &getItems() const { return items; }
+    const QList<Item *> &getItems() const { return items; }
 
 public slots:
     void init();
@@ -24,7 +24,7 @@ private:
     void loadGenres();
     void loadDecades();
 
-    QVector<Item *> items;
+    QList<Item *> items;
 };
 
 #endif // METAGENRES_H

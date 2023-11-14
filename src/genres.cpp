@@ -24,7 +24,7 @@ void Genres::init() {
 
 void Genres::loadGenres() {
     static const auto genreTree = [] {
-        QVector<QPair<QString, QStringList>> map;
+        QList<QPair<QString, QStringList>> map;
         QFile f(":/res/genre-tree.csv");
         if (f.open(QFile::ReadOnly)) {
             QTextStream stream(&f);
@@ -57,10 +57,10 @@ void Genres::loadGenres() {
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
 
-    QVector<Genre *> metaGenres;
+    QList<Genre *> metaGenres;
     metaGenres.reserve(genreTree.size());
 
-    QVector<Genre *> otherGenres;
+    QList<Genre *> otherGenres;
     otherGenres.reserve(query.size() / 2);
 
     while (query.next()) {

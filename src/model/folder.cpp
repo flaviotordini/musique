@@ -47,8 +47,8 @@ Folder *Folder::forPath(const QString &path) {
     return folder;
 }
 
-QVector<Track *> Folder::getTracks() {
-    QVector<Track *> tracks;
+QList<Track *> Folder::getTracks() {
+    QList<Track *> tracks;
     QString collectionRoot = Database::instance().collectionRoot() + "/";
     if (path.length() < collectionRoot.length()) path = collectionRoot;
     // qDebug() << path << collectionRoot;
@@ -74,7 +74,7 @@ QVector<Track *> Folder::getTracks() {
 
 int Folder::getTrackCount() {
     if (trackCount == -1) {
-        QVector<Track *> tracks = getTracks();
+        QList<Track *> tracks = getTracks();
         trackCount = tracks.size();
         qDebug() << trackCount;
         if (trackCount > 0)
@@ -87,7 +87,7 @@ int Folder::getTrackCount() {
 
 int Folder::getTotalLength() {
     if (totalLength == -1) {
-        QVector<Track *> tracks = getTracks();
+        QList<Track *> tracks = getTracks();
         trackCount = tracks.size();
         if (trackCount > 0)
             totalLength = Track::getTotalLength(tracks);

@@ -393,7 +393,7 @@ void Track::getLyrics() {
             .onError([this, artistName](auto msg) { qDebug() << msg << artistName << title; });
 }
 
-int Track::getTotalLength(const QVector<Track *> &tracks) {
+int Track::getTotalLength(const QList<Track *> &tracks) {
     int length = 0;
     for (Track *track : tracks) {
         length += track->getLength();

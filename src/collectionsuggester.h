@@ -32,7 +32,7 @@ public:
     void suggest(const QString &query);
 
 signals:
-    void ready(const QVector<Suggestion*> &suggestions);
+    void ready(const QList<Suggestion*> &suggestions);
 
 };
 

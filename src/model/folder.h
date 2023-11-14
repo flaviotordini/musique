@@ -37,7 +37,7 @@ public:
     static Folder *forPath(const QString &path);
 
     // item
-    QVector<Track *> getTracks();
+    QList<Track *> getTracks();
 
     // properties
     QString getName() { return dir.dirName(); }

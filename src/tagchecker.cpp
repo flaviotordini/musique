@@ -7,7 +7,7 @@ QRegularExpression re(const QString &s) {
     return QRegularExpression(QLatin1Char('^') + s + QLatin1Char('$'));
 }
 
-bool isBlacklisted(const QVector<QRegularExpression> &blacklist, const QString &tag) {
+bool isBlacklisted(const QList<QRegularExpression> &blacklist, const QString &tag) {
     for (const QRegularExpression &re : blacklist) {
         if (re.match(tag).hasMatch()) {
             qDebug() << "Blacklisted tag" << tag;
@@ -20,8 +20,8 @@ bool isBlacklisted(const QVector<QRegularExpression> &blacklist, const QString &
 bool isInvalid(const QString &tag) {
     if (tag.isEmpty()) return true;
 
-    static const QVector<QRegularExpression> blacklist =
-            QVector<QRegularExpression>() << re("unknown") << re("no title") << re("missing");
+    static const QList<QRegularExpression> blacklist =
+            QList<QRegularExpression>() << re("unknown") << re("no title") << re("missing");
 
     if (isBlacklisted(blacklist, tag)) return true;
 
@@ -34,7 +34,7 @@ bool isInvalidArtist(const QString &tag) {
     QString t = tag.simplified().toLower();
 
     if (isInvalid(t)) return true;
-    static const QVector<QRegularExpression> blacklist = QVector<QRegularExpression>()
+    static const QList<QRegularExpression> blacklist = QList<QRegularExpression>()
                                                          << re("various artists") << re("various")
                                                          << re("artist") << re("artist name")
                                                          << re("no artist") << re("insert artist");
@@ -45,7 +45,7 @@ bool isInvalidAlbum(const QString &tag) {
     QString t = tag.simplified().toLower();
 
     if (isInvalid(t)) return true;
-    static const QVector<QRegularExpression> blacklist = QVector<QRegularExpression>()
+    static const QList<QRegularExpression> blacklist = QList<QRegularExpression>()
                                                          << re("album title") << re("album")
                                                          << re("no album") << re("insert album");
     return isBlacklisted(blacklist, t);
@@ -55,8 +55,8 @@ bool isInvalidTrack(const QString &tag) {
     QString t = tag.simplified().toLower();
 
     if (isInvalid(t)) return true;
-    static const QVector<QRegularExpression> blacklist =
-            QVector<QRegularExpression>()
+    static const QList<QRegularExpression> blacklist =
+            QList<QRegularExpression>()
             << re("untitled") << re("(audio)?track [0-9]+") << re("track (no?\\.?|#) ?[0-9]+")
             << re("track title") << re("no track") << re("insert track");
     return isBlacklisted(blacklist, t);

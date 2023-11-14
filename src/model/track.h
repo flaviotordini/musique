@@ -35,8 +35,8 @@ public:
     Track();
 
     // item
-    QVector<Track *> getTracks() {
-        QVector<Track *> tracks = {this};
+    QList<Track *> getTracks() {
+        QList<Track *> tracks = {this};
         return tracks;
     }
     QString getName() { return title; }
@@ -72,7 +72,7 @@ public:
     void setAlbum(Album *album) { this->album = album; }
     Artist *getArtist() const { return artist; }
     void setArtist(Artist *artist) { this->artist = artist; }
-    const QVector<Genre *> &getGenres() const { return genres; }
+    const QList<Genre *> &getGenres() const { return genres; }
     void addGenre(Genre *genre) { genres << genre; }
 
     // cache
@@ -102,7 +102,7 @@ public:
     void getLyrics();
 
     // utils
-    static int getTotalLength(const QVector<Track *> &tracks);
+    static int getTotalLength(const QList<Track *> &tracks);
 
 signals:
     void gotInfo();
@@ -137,7 +137,7 @@ private:
     // relations
     Album *album;
     Artist *artist;
-    QVector<Genre *> genres;
+    QList<Genre *> genres;
 
     // playlist
     bool played;

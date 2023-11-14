@@ -47,7 +47,7 @@ public slots:
     void itemActivated(const QModelIndex &index);
     void selectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void updatePlaylistActions();
-    void selectTracks(const QVector<Track *> &tracks);
+    void selectTracks(const QList<Track *> &tracks);
 
 protected:
     void paintEvent(QPaintEvent *event);

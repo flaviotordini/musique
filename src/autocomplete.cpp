@@ -155,7 +155,7 @@ bool AutoComplete::eventFilter(QObject *obj, QEvent *ev) {
     return false;
 }
 
-void AutoComplete::showSuggestions(const QVector<Suggestion *> &suggestions) {
+void AutoComplete::showSuggestions(const QList<Suggestion *> &suggestions) {
     if (suggestions.isEmpty()) {
         hideSuggestions();
         return;
@@ -213,8 +213,8 @@ void AutoComplete::enableSuggest() {
 void AutoComplete::setSuggester(Suggester *suggester) {
     if (this->suggester) this->suggester->disconnect();
     this->suggester = suggester;
-    connect(suggester, SIGNAL(ready(QVector<Suggestion *>)),
-            SLOT(suggestionsReady(QVector<Suggestion *>)));
+    connect(suggester, SIGNAL(ready(QList<Suggestion *>)),
+            SLOT(suggestionsReady(QList<Suggestion *>)));
 }
 
 void AutoComplete::suggest() {
@@ -232,7 +232,7 @@ void AutoComplete::suggest() {
     if (suggester) suggester->suggest(originalText);
 }
 
-void AutoComplete::suggestionsReady(const QVector<Suggestion *> &suggestions) {
+void AutoComplete::suggestionsReady(const QList<Suggestion *> &suggestions) {
     qDeleteAll(this->suggestions);
     this->suggestions = suggestions;
     if (!enabled) return;

@@ -143,7 +143,7 @@ void SearchModel::itemActivated(const QModelIndex &index) {
 void SearchModel::itemPlayed(const QModelIndex &index) {
     Item *item = itemAt(index);
     if (!item) return;
-    QVector<Track *> tracks = item->getTracks();
+    QList<Track *> tracks = item->getTracks();
     finder->addTracksAndPlay(tracks);
 }
 

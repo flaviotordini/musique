@@ -33,7 +33,7 @@ public:
     Album();
 
     // item
-    QVector<Track *> getTracks();
+    QList<Track *> getTracks();
     QString getStatusTip();
 
     // properties

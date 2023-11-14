@@ -22,7 +22,7 @@ public:
 
     Genre(QObject *parent = nullptr);
 
-    QVector<Track *> getTracks();
+    QList<Track *> getTracks();
 
     const QString &getHash() const { return hash; }
     void setHash(const QString &value) { hash = value; }
@@ -37,7 +37,7 @@ public:
     QPixmap getThumb(int width, int height, qreal pixelRatio);
 
     bool hasChildren() const { return !children.isEmpty(); }
-    const QVector<Genre *> &getChildren() const { return children; }
+    const QList<Genre *> &getChildren() const { return children; }
     void addChild(Genre *child) {
         child->setParent(this);
         child->setRow(children.size());
@@ -61,7 +61,7 @@ private:
     QPixmap pixmap;
     Artist *pixmapArtist;
 
-    QVector<Genre *> children;
+    QList<Genre *> children;
     Genre *parent;
     int row;
 };

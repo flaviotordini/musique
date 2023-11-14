@@ -9,14 +9,14 @@
 
 Decade::Decade() : startYear(0), pixmapAlbum(nullptr) {}
 
-QVector<Track *> Decade::getTracks() {
+QList<Track *> Decade::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     QString sql = QString("select id from tracks where year>=%1 and year<=%2")
                           .arg(QString::number(startYear), QString::number(startYear + 9));
     bool success = query.exec(sql);
     if (!success) qDebug() << query.lastQuery() << query.lastError();
-    QVector<Track *> tracks;
+    QList<Track *> tracks;
     tracks.reserve(query.size());
     while (query.next()) {
         int trackId = query.value(0).toInt();

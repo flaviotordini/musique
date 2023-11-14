@@ -15,7 +15,7 @@ public:
     Decade();
 
     QString getName() { return name; }
-    QVector<Track *> getTracks();
+    QList<Track *> getTracks();
     QPixmap getThumb(int width, int height, qreal pixelRatio);
 
     void setName(const QString &value) { name = value; }

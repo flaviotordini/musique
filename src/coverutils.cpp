@@ -61,9 +61,9 @@ bool CoverUtils::saveImage(const QImage &image, Album *album) {
 }
 
 bool CoverUtils::coverFromFile(const QString &dir, Album *album) {
-    static const QVector<QRegularExpression> coverREs = [] {
+    static const QList<QRegularExpression> coverREs = [] {
         QLatin1String ext(".(jpe?g|gif|png|bmp)");
-        QVector<QRegularExpression> res;
+        QList<QRegularExpression> res;
         res << QRegularExpression(".*cover.*" + ext, QRegularExpression::CaseInsensitiveOption)
             << QRegularExpression(".*front.*" + ext, QRegularExpression::CaseInsensitiveOption)
             << QRegularExpression(".*folder.*" + ext, QRegularExpression::CaseInsensitiveOption);

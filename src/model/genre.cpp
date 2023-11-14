@@ -124,7 +124,7 @@ int Genre::idForHash(const QString &hash) {
 
 QString Genre::cleanGenreName(QString &genreName) {
     static const auto replacements = [] {
-        QVector<QPair<QString, QString>> map;
+        QList<QPair<QString, QString>> map;
         QFile f(":/res/genre-replacements.csv");
         if (f.open(QFile::ReadOnly)) {
             QTextStream stream(&f);
@@ -162,7 +162,7 @@ QString Genre::cleanGenreName(QString &genreName) {
 Genre::Genre(QObject *parent)
     : Item(parent), trackCount(0), pixmapArtist(nullptr), parent(nullptr), row(-1) {}
 
-QVector<Track *> Genre::getTracks() {
+QList<Track *> Genre::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
 
@@ -178,7 +178,7 @@ QVector<Track *> Genre::getTracks() {
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError();
     qDebug() << query.lastQuery();
-    QVector<Track *> tracks;
+    QList<Track *> tracks;
     tracks.reserve(query.size());
     while (query.next()) {
         int trackId = query.value(0).toInt();

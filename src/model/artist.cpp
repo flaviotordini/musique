@@ -498,7 +498,7 @@ void Artist::setPhoto(const QByteArray &bytes) {
 
 void Artist::fetchLastFmSearch() {}
 
-QVector<Track *> Artist::getTracks() {
+QList<Track *> Artist::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
     query.prepare("select distinct t.id from tracks t, albums a"
@@ -507,7 +507,7 @@ QVector<Track *> Artist::getTracks() {
     query.bindValue(0, id);
     bool success = query.exec();
     if (!success) qDebug() << query.lastQuery() << query.lastError();
-    QVector<Track *> tracks;
+    QList<Track *> tracks;
     tracks.reserve(query.size());
     while (query.next()) {
         int trackId = query.value(0).toInt();
