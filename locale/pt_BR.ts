@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>Use %1 library</source>
-        <translation type="unfinished"/>
+        <translation>Usar a biblioteca %1 </translation>
     </message>
 </context>
 <context>
@@ -664,15 +664,15 @@
     </message>
     <message>
         <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
+        <translation>Obrigado por atualizar %1 para a versão %2!</translation>
     </message>
     <message>
         <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
+        <translation>Se você gosta de %1, talvez tendo instalado meses ou até anos atrás, por favor, considere se tornar uma das pessoas dispostas a apoiar algo que você gosta. </translation>
     </message>
     <message>
         <source>Donate</source>
-        <translation type="unfinished"/>
+        <translation>Doar</translation>
     </message>
 </context>
 <context>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ia" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ia">
 <context>
     <name>AboutView</name>
     <message>
@@ -38,7 +38,7 @@
     <name>ActivationDialog</name>
     <message>
         <source>Enter your License Details</source>
-        <translation type="unfinished"/>
+        <translation>Insere tu detalios de licentia</translation>
     </message>
     <message>
         <source>&amp;Email:</source>
@@ -65,11 +65,11 @@
     </message>
     <message>
         <source>Enter License</source>
-        <translation type="unfinished"/>
+        <translation>Introduce le licentia</translation>
     </message>
     <message>
         <source>Buy License</source>
-        <translation type="unfinished"/>
+        <translation>Compra Licencia</translation>
     </message>
     <message>
         <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
@@ -118,7 +118,7 @@
     <name>AppWidget</name>
     <message>
         <source>Download</source>
-        <translation type="unfinished"/>
+        <translation>Discarga</translation>
     </message>
 </context>
 <context>
@@ -253,19 +253,19 @@
     <name>Extra</name>
     <message>
         <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation type="unfinished"/>
+        <translation>Le file executabile es temperate, forsan per un virus.</translation>
     </message>
     <message>
         <source>%1 will not run. Try installing again.</source>
-        <translation type="unfinished"/>
+        <translation>%1 non executara. Password hint</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished"/>
+        <translation>Quitar</translation>
     </message>
     <message>
         <source>Reinstall</source>
-        <translation type="unfinished"/>
+        <translation>Reinstallar</translation>
     </message>
 </context>
 <context>
@@ -361,7 +361,7 @@
     </message>
     <message>
         <source>Signup for a %1 account</source>
-        <translation type="unfinished"/>
+        <translation>Abonar se pro un conto %1</translation>
     </message>
     <message>
         <source>Forgot your &lt;a href=&apos;%1&apos;&gt;username&lt;/a&gt; or &lt;a href=&apos;%2&apos;&gt;password&lt;/a&gt;?</source>
@@ -628,7 +628,7 @@
     </message>
     <message>
         <source>&amp;Love %1? Rate it!</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Amar %1? Rata lo!</translation>
     </message>
     <message>
         <source>&amp;Fix Library with %1...</source>
@@ -636,7 +636,7 @@
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
-        <translation type="unfinished"/>
+        <translation>Commutar un barra de &amp;Menu</translation>
     </message>
     <message>
         <source>Menu</source>
@@ -656,7 +656,7 @@
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
-        <translation type="unfinished"/>
+        <translation>Tu ancora pote acceder al barra de menu per cliccar le clave ALT</translation>
     </message>
     <message>
         <source>&amp;Scrobble</source>
@@ -698,11 +698,11 @@
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation type="unfinished"/>
+        <translation>Vole vos discargar lo ora?</translation>
     </message>
     <message>
         <source>Skip This Version</source>
-        <translation type="unfinished"/>
+        <translation>Brillante iste version</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
@@ -717,7 +717,7 @@
     <name>PasteLineEdit</name>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"/>
+        <translation>Collar</translation>
     </message>
 </context>
 <context>
@@ -760,7 +760,7 @@
     </message>
     <message>
         <source>Downloading %1...</source>
-        <translation type="unfinished"/>
+        <translation>Discargante %1...</translation>
     </message>
 </context>
 <context>
@@ -841,7 +841,7 @@
     </message>
     <message>
         <source>Would you like to download it now?</source>
-        <translation type="unfinished"/>
+        <translation>Vole vos discargar lo ora?</translation>
     </message>
     <message>
         <source>Remind Me Later</source>
