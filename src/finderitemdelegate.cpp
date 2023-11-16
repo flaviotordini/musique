@@ -227,7 +227,7 @@ void FinderItemDelegate::paintPlayIcon(QPainter *painter,
     const QPixmap &playIcon = getPlayIcon(isHovered, pixelRatio);
 
     painter->save();
-    painter->translate((rect.width() - playIcon.width()) * pixelRatio, 0);
+    painter->translate(rect.width() - playIcon.width() / pixelRatio, 0);
 
     if (isHovered)
         painter->setOpacity(opacity * .75);
