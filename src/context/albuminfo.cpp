@@ -98,14 +98,14 @@ void AlbumInfo::setAlbum(Album *album) {
         wikiLabel->setText(html);
     }
 
-    int maxWidth = 300;
     QPixmap p(album->getImageLocation());
-    p.setDevicePixelRatio(devicePixelRatio());
-    if (p.width() > maxWidth) p = p.scaledToWidth(maxWidth, Qt::SmoothTransformation);
     if (p.isNull()) {
         photoLabel->clear();
         photoLabel->hide();
     } else {
+        p.setDevicePixelRatio(devicePixelRatio());
+        int maxWidth = 300;
+        if (p.width() > maxWidth) p = p.scaledToWidth(maxWidth, Qt::SmoothTransformation);
         photoLabel->setPixmap(PainterUtils::roundCorners(p));
         photoLabel->show();
     }
