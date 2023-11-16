@@ -104,8 +104,9 @@ void AlbumInfo::setAlbum(Album *album) {
         photoLabel->hide();
     } else {
         p.setDevicePixelRatio(devicePixelRatio());
-        int maxWidth = 300;
-        if (p.width() > maxWidth) p = p.scaledToWidth(maxWidth, Qt::SmoothTransformation);
+        int maxWidth = 300 * devicePixelRatio();
+        qDebug() << p.width();
+        if (p.width() != maxWidth) p = p.scaledToWidth(maxWidth, Qt::SmoothTransformation);
         photoLabel->setPixmap(PainterUtils::roundCorners(p));
         photoLabel->show();
     }
