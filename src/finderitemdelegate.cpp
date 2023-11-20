@@ -92,7 +92,7 @@ QRect FinderItemDelegate::paintItem(QPainter *painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
-    QPixmap pixmap = item->getThumb(itemWidth, itemHeight, painter->device()->devicePixelRatioF());
+    QPixmap pixmap = item->getThumb(itemWidth, itemWidth, painter->device()->devicePixelRatioF());
 
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing, true);
@@ -195,7 +195,10 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
     painter->setOpacity(.5);
     int x = (itemWidth - symbol.width()) / 2;
     int y = (itemWidth - symbol.height()) / 2;
-    painter->drawPixmap(x, y, symbol);
+    auto picRect = symbol.rect();
+    int hCenter = line.center().x();
+    picRect.moveCenter({hCenter, hCenter});
+    painter->drawPixmap(picRect, symbol);
     painter->restore();
 
     // play icon overlayed on the thumb
