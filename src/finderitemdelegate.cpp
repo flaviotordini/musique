@@ -92,7 +92,7 @@ QRect FinderItemDelegate::paintItem(QPainter *painter,
     const bool isSelected = option.state & QStyle::State_Selected;
 
     // thumb
-    QPixmap pixmap = item->getThumb(itemWidth, itemHeight, painter->device()->devicePixelRatioF());
+    QPixmap pixmap = item->getThumb(itemWidth, itemWidth, painter->device()->devicePixelRatioF());
 
     painter->save();
     painter->setRenderHint(QPainter::Antialiasing, true);
