@@ -5,6 +5,7 @@
 #include "../database.h"
 #include "../datautils.h"
 #include "iconutils.h"
+#include "painterutils.h"
 
 #include "artist.h"
 #include "track.h"
@@ -159,8 +160,7 @@ QString Genre::cleanGenreName(QString &genreName) {
     return s.simplified();
 }
 
-Genre::Genre(QObject *parent)
-    : Item(parent), trackCount(0), pixmapArtist(nullptr), parent(nullptr), row(-1) {}
+Genre::Genre(QObject *parent) : Item(parent), trackCount(0), parent(nullptr), row(-1) {}
 
 QList<Track *> Genre::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
@@ -196,47 +196,34 @@ int Genre::getTotalTrackCount() const {
 }
 
 QPixmap Genre::getThumb(int width, int height, qreal pixelRatio) {
-    if (!pixmapArtist) pixmapArtist = randomArtist();
-    if (!pixmapArtist) return pixmap;
-    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
-        pixmap.width() != width * pixelRatio) {
-        pixmap = pixmapArtist->getPhoto();
-        if (pixmap.isNull()) return pixmap;
-
-        const int pixelWidth = width * pixelRatio;
-        const int pixelHeight = height * pixelRatio;
-        const int wDiff = pixmap.width() - pixelWidth;
-        const int hDiff = pixmap.height() - pixelHeight;
-        if (wDiff || hDiff) {
-            pixmap = pixmap.scaled(pixelWidth, pixelHeight, Qt::KeepAspectRatio,
-                                   Qt::SmoothTransformation);
-        }
-        /*
-        QImage img = pixmap.toImage();
-        if (!img.isGrayscale()) img = img.convertToFormat(QImage::Format_Grayscale8);
-        pixmap = QPixmap::fromImage(img);
-        */
-        pixmap.setDevicePixelRatio(pixelRatio);
+    if (pics.isEmpty()) pics = randomPics();
+    if (pics.isEmpty()) return thumb;
+    if (thumb.isNull() || thumb.devicePixelRatio() != pixelRatio ||
+        thumb.width() != width * pixelRatio) {
+        thumb = PainterUtils::collage(pics, width, height, pixelRatio);
     }
-    return pixmap;
+    return thumb;
 }
 
-Artist *Genre::randomArtist() {
-    Artist *artist = nullptr;
+QList<QPixmap> Genre::randomPics() {
+    QList<QPixmap> pics;
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select a.id from genreTracks g, tracks t, artists a "
+    query.prepare("select distinct a.id from genreTracks g, tracks t, artists a "
                   "where g.track=t.id and t.artist=a.id and g.genre=? "
-                  "order by random() limit 10");
+                  "order by random() limit 20");
 
     query.bindValue(0, id);
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     while (query.next()) {
-        artist = Artist::forId(query.value(0).toInt());
-        if (artist->hasPhoto()) break;
+        auto artist = Artist::forId(query.value(0).toInt());
+        if (artist->hasPhoto()) {
+            pics << artist->getPhoto();
+            if (pics.size() == 4) break;
+        }
     }
-    return artist;
+    return pics;
 }
 
 int Genre::getRow() const {

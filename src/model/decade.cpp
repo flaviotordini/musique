@@ -3,11 +3,11 @@
 #include <QtSql>
 
 #include "../database.h"
-
 #include "album.h"
+#include "painterutils.h"
 #include "track.h"
 
-Decade::Decade() : startYear(0), pixmapAlbum(nullptr) {}
+Decade::Decade() : startYear(0) {}
 
 QList<Track *> Decade::getTracks() {
     QSqlDatabase db = Database::instance().getConnection();
@@ -28,31 +28,20 @@ QList<Track *> Decade::getTracks() {
 }
 
 QPixmap Decade::getThumb(int width, int height, qreal pixelRatio) {
-    if (!pixmapAlbum) pixmapAlbum = randomAlbum();
-    if (!pixmapAlbum) return pixmap;
-    if (pixmap.isNull() || pixmap.devicePixelRatio() != pixelRatio ||
-        pixmap.width() != width * pixelRatio) {
-        pixmap = pixmapAlbum->getPhoto();
-        if (pixmap.isNull()) return pixmap;
-
-        const int pixelWidth = width * pixelRatio;
-        const int pixelHeight = height * pixelRatio;
-        const int wDiff = pixmap.width() - pixelWidth;
-        const int hDiff = pixmap.height() - pixelHeight;
-        if (wDiff || hDiff) {
-            pixmap = pixmap.scaled(pixelWidth, pixelHeight, Qt::KeepAspectRatio,
-                                   Qt::SmoothTransformation);
-        }
-        pixmap.setDevicePixelRatio(pixelRatio);
+    if (pics.isEmpty()) pics = randomPics();
+    if (pics.isEmpty()) return thumb;
+    if (thumb.isNull() || thumb.devicePixelRatio() != pixelRatio ||
+        thumb.width() != width * pixelRatio) {
+        thumb = PainterUtils::collage(pics, width, height, pixelRatio);
     }
-    return pixmap;
+    return thumb;
 }
 
-Album *Decade::randomAlbum() {
-    Album *album = nullptr;
+QList<QPixmap> Decade::randomPics() {
+    QList<QPixmap> pics;
     QSqlDatabase db = Database::instance().getConnection();
     QSqlQuery query(db);
-    query.prepare("select a.id from genreTracks g, tracks t, albums a "
+    query.prepare("select distinct a.id from genreTracks g, tracks t, albums a "
                   "where g.track=t.id and t.album=a.id and t.year>=? and t.year<=? "
                   "order by random() limit 10");
     query.bindValue(0, startYear);
@@ -60,8 +49,11 @@ Album *Decade::randomAlbum() {
     bool success = query.exec();
     if (!success) qDebug() << query.lastError().text();
     while (query.next()) {
-        album = Album::forId(query.value(0).toInt());
-        if (album->hasPhoto()) break;
+        auto album = Album::forId(query.value(0).toInt());
+        if (album->hasPhoto()) {
+            pics << album->getPhoto();
+            if (pics.size() == 4) break;
+        }
     }
-    return album;
+    return pics;
 }

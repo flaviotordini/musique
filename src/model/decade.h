@@ -22,12 +22,12 @@ public:
     void setStartYear(int value) { startYear = value; }
 
 private:
-    Album *randomAlbum();
-
     QString name;
     int startYear;
-    Album *pixmapAlbum;
-    QPixmap pixmap;
+
+    QList<QPixmap> randomPics();
+    QList<QPixmap> pics;
+    QPixmap thumb;
 };
 
 typedef QPointer<Decade> DecadePointer;

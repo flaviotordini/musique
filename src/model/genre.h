@@ -52,14 +52,13 @@ public:
     void setRow(int value);
 
 private:
-    Artist *randomArtist();
-
     QString hash;
     QString name;
     int trackCount;
 
-    QPixmap pixmap;
-    Artist *pixmapArtist;
+    QList<QPixmap> randomPics();
+    QList<QPixmap> pics;
+    QPixmap thumb;
 
     QList<Genre *> children;
     Genre *parent;
