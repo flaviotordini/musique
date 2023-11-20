@@ -193,8 +193,8 @@ void FinderItemDelegate::paintFolder(QPainter *painter,
 
     painter->save();
     painter->setOpacity(.5);
-    int x = (itemWidth - symbol.width()) / 2;
-    int y = (itemWidth - symbol.height()) / 2;
+    int x = (itemWidth - symbol.width() / symbol.devicePixelRatio()) / 2;
+    int y = (itemWidth - symbol.height() / symbol.devicePixelRatio()) / 2;
     painter->drawPixmap(x, y, symbol);
     painter->restore();
 
