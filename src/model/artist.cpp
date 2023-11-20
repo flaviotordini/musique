@@ -30,6 +30,7 @@ $END_LICENSE */
 #include "http.h"
 
 #include "../imagedownloader.h"
+#include "painterutils.h"
 
 Artist::Artist(QObject *parent)
     : Item(parent), trackCount(0), yearFrom(0), yearTo(0), listeners(0) {}
@@ -455,27 +456,7 @@ QPixmap Artist::getThumb(int width, int height, qreal pixelRatio) {
         pixmap.width() != width * pixelRatio) {
         pixmap = getPhoto();
         if (pixmap.isNull()) return pixmap;
-
-        const int pixelWidth = width * pixelRatio;
-        const int pixelHeight = height * pixelRatio;
-
-        int wDiff = pixmap.width() - pixelWidth;
-        int hDiff = pixmap.height() - pixelHeight;
-        if (wDiff > 0 || hDiff > 0) {
-            if (wDiff > hDiff) {
-                pixmap = pixmap.scaledToHeight(pixelHeight, Qt::SmoothTransformation);
-            } else {
-                pixmap = pixmap.scaledToWidth(pixelWidth, Qt::SmoothTransformation);
-            }
-            wDiff = pixmap.width() - pixelWidth;
-            hDiff = pixmap.height() - pixelHeight;
-            int xOffset = 0;
-            int yOffset = 0;
-            if (hDiff > 0) yOffset = hDiff / 4;
-            if (wDiff > 0) xOffset = wDiff / 2;
-            pixmap = pixmap.copy(xOffset, yOffset, pixelWidth, pixelHeight);
-        }
-        pixmap.setDevicePixelRatio(pixelRatio);
+        pixmap = PainterUtils::scaleAndCrop(pixmap, {width, height}, pixelRatio);
     }
     return pixmap;
 }
