@@ -118,7 +118,7 @@ QRect FinderItemDelegate::paintItem(QPainter *painter,
     if (loading) {
         painter->setOpacity(1);
         painter->setPen(Qt::NoPen);
-        drawCentralPixmap(painter, option, IconUtils::iconPixmap("content-loading", 32), line);
+        drawCentralPixmap(painter, option, IconUtils::icon("content-loading").pixmap(32), line);
     }
     painter->restore();
 
