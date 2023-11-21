@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
 #ifndef APP_MAC
     QIcon appIcon;
     if (QDir(dataDir).exists()) {
-        appIcon = IconUtils::icon(Constants::UNIX_NAME);
+        appIcon = QIcon::fromTheme(Constants::UNIX_NAME);
     } else {
         dataDir = qApp->applicationDirPath() + "/data";
         const int iconSizes[] = {16, 22, 32, 48, 64, 128, 256, 512};
