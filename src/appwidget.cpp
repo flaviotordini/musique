@@ -72,8 +72,6 @@ AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent)
 #ifdef APP_EXTRA
 #if !defined(APP_UBUNTU) && !defined(APP_MAC_STORE)
     downloadButton = new QPushButton(tr("Download"));
-    downloadButton->setAttribute(Qt::WA_MacSmallSize);
-    downloadButton->setCursor(Qt::ArrowCursor);
     QSizePolicy sp = downloadButton->sizePolicy();
     sp.setHorizontalPolicy(QSizePolicy::Fixed);
     sp.setRetainSizeWhenHidden(true);
