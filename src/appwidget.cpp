@@ -1,7 +1,9 @@
 #include "appwidget.h"
 #include "constants.h"
 #include "http.h"
-#ifdef APP_EXTRA
+#include "httputils.h"
+
+#if defined(APP_EXTRA) && !defined(APP_MAC_STORE)
 #include "updatedialog.h"
 #endif
 
@@ -12,25 +14,10 @@ AppsWidget::AppsWidget(QWidget *parent) : QWidget(parent) {
     layout->setContentsMargins(padding, padding, padding, padding);
     layout->setSpacing(padding * 2);
     layout->setAlignment(Qt::AlignCenter);
-
-#ifdef APP_MAC
-    const QString ext = "dmg";
-#elif defined APP_WIN
-    const QString ext = "exe";
-#else
-    const QString ext = "deb";
-#endif
-
-#ifndef APP_WIN
-    setupApp("Sofa", "sofa." + ext);
-#endif
-    setupApp("Finetune", "finetune." + ext);
-    setupApp("Minitube", "minitube." + ext);
-    setupApp("Musictube", "musictube." + ext);
 }
 
-void AppsWidget::setupApp(const QString &name, const QString &code) {
-    AppWidget *w = new AppWidget(name, code);
+void AppsWidget::add(QString name, QString unixName, QString ext) {
+    auto w = new AppWidget(name, unixName, ext, this);
     layout()->addWidget(w);
 }
 
@@ -42,45 +29,54 @@ void AppsWidget::paintEvent(QPaintEvent *e) {
     style()->drawPrimitive(QStyle::PE_Widget, &o, &p, this);
 }
 
-AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent)
-    : QWidget(parent), name(name), downloadButton(nullptr) {
-    const QString unixName = code.left(code.lastIndexOf('.'));
-    const QString baseUrl = QLatin1String("https://") + Constants::ORG_DOMAIN;
-    const QString filesUrl = baseUrl + QLatin1String("/files/");
-    url = filesUrl + unixName + QLatin1String("/") + code;
-    webPage = baseUrl + QLatin1String("/") + unixName;
-
-    QBoxLayout *layout = new QVBoxLayout(this);
+AppWidget::AppWidget(const QString &name,
+                     const QString &unixName,
+                     const QString &ext,
+                     QWidget *parent)
+    : QWidget(parent), name(name), unixName(unixName), downloadButton(nullptr) {
+    auto layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setAlignment(Qt::AlignHCenter);
 
-    icon = new QLabel();
-    icon->setMinimumHeight(128);
-    layout->addWidget(icon);
-    QString pixelRatioString;
-    if (devicePixelRatioF() > 1.0)
-        pixelRatioString = '@' + QString::number(devicePixelRatio()) + 'x';
-    const QString iconUrl = filesUrl + QLatin1String("products/") + unixName + pixelRatioString +
-                            QLatin1String(".png");
-    auto reply = Http::instance().get(iconUrl);
-    connect(reply, &HttpReply::data, this, &AppWidget::iconDownloaded);
+    iconLabel = new QLabel();
+    iconLabel->setMinimumHeight(128);
+    auto loadIconPixmap = [this, unixName] {
+        QString twoX;
+        if (devicePixelRatio() > 1.0) twoX = '@' + QString::number(devicePixelRatio()) + 'x';
+        QString url = "https://" + QLatin1String(Constants::ORG_DOMAIN) + "/files/products/" +
+                      unixName + twoX + ".png";
+        auto reply = HttpUtils::cached().get(url);
+        connect(reply, &HttpReply::data, this, [this](auto bytes) {
+            QPixmap pixmap;
+            pixmap.loadFromData(bytes, "PNG");
+            pixmap.setDevicePixelRatio(devicePixelRatio());
+            iconLabel->setPixmap(pixmap);
+        });
+    };
+    connect(window()->windowHandle(), &QWindow::screenChanged, this, loadIconPixmap);
+    loadIconPixmap();
+    layout->addWidget(iconLabel);
 
     QLabel *appTitle = new QLabel(name);
     appTitle->setAlignment(Qt::AlignHCenter);
     layout->addWidget(appTitle);
 
-#ifdef APP_EXTRA
-#if !defined(APP_MAC_STORE)
+#if defined(APP_EXTRA) && !defined(APP_MAC_STORE)
     downloadButton = new QPushButton(tr("Download"));
     QSizePolicy sp = downloadButton->sizePolicy();
     sp.setHorizontalPolicy(QSizePolicy::Fixed);
     sp.setRetainSizeWhenHidden(true);
     downloadButton->setSizePolicy(sp);
-    connect(downloadButton, SIGNAL(clicked(bool)), SLOT(downloadApp()));
+    connect(downloadButton, &QAbstractButton::clicked, this, [this, name, unixName, ext] {
+        QString url = QLatin1String("https://") + Constants::ORG_DOMAIN + "/files/" + unixName +
+                      "/" + unixName + "." + ext;
+        auto dialog = new UpdateDialog(iconLabel->pixmap(), name, QString(), url, this);
+        dialog->downloadUpdate();
+        dialog->show();
+    });
     layout->addWidget(downloadButton, Qt::AlignHCenter);
     layout->setAlignment(downloadButton, Qt::AlignHCenter);
     downloadButton->hide();
-#endif
 #endif
 
     setCursor(Qt::PointingHandCursor);
@@ -98,23 +94,7 @@ void AppWidget::leaveEvent(QEvent *e) {
 
 void AppWidget::mouseReleaseEvent(QMouseEvent *e) {
     if (e->button() == Qt::LeftButton) {
+        QString webPage = QLatin1String("https://") + Constants::ORG_DOMAIN + "/" + unixName;
         QDesktopServices::openUrl(webPage);
     }
-}
-
-void AppWidget::iconDownloaded(const QByteArray &bytes) {
-    QPixmap pixmap;
-    pixmap.loadFromData(bytes, "PNG");
-    pixmap.setDevicePixelRatio(devicePixelRatioF());
-    icon->setPixmap(pixmap);
-}
-
-void AppWidget::downloadApp() {
-#ifdef APP_EXTRA
-    if (!icon) return;
-    auto pixmap = icon->pixmap();
-    auto dialog = new UpdateDialog(pixmap, name, QString(), url, this);
-    dialog->downloadUpdate();
-    dialog->show();
-#endif
 }

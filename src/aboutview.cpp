@@ -163,7 +163,21 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
 
     layout->addLayout(buttonLayout);
 
-    verticalLayout->addWidget(new AppsWidget());
+    auto apps = new AppsWidget(this);
+#ifdef APP_MAC
+    QString ext = "dmg";
+#elif defined APP_WIN
+    QString ext = "exe";
+#else
+    QString ext = "deb";
+#endif
+#ifndef APP_WIN
+    apps->add("Sofa", "sofa", ext);
+#endif
+    apps->add("Finetune", "finetune", ext);
+    apps->add("Minitube", "minitube", ext);
+    apps->add("Musictube", "musictube", ext);
+    verticalLayout->addWidget(apps);
 }
 
 void AboutView::paintEvent(QPaintEvent *e) {

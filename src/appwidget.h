@@ -4,42 +4,33 @@
 #include <QtWidgets>
 
 class AppWidget : public QWidget {
-
     Q_OBJECT
 
 public:
-    AppWidget(const QString &name, const QString &code, QWidget *parent = 0);
-    QLabel *icon;
+    AppWidget(const QString &name, const QString &unixName, const QString &ext, QWidget *parent);
+    QLabel *iconLabel;
 
 protected:
     void enterEvent(QEnterEvent *e);
     void leaveEvent(QEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
 
-private slots:
-    void iconDownloaded(const QByteArray &bytes);
-    void downloadApp();
-
 private:
     QPushButton *downloadButton;
     QString name;
-    QString url;
-    QString webPage;
+    QString unixName;
+    QString ext;
 };
 
 class AppsWidget : public QWidget {
-
     Q_OBJECT
 
 public:
-    AppsWidget(QWidget *parent = 0);
+    AppsWidget(QWidget *parent);
+    void add(QString name, QString unixName, QString ext);
 
 protected:
     void paintEvent(QPaintEvent *e);
-
-private:
-    void setupApp(const QString &name, const QString &code);
-
 };
 
 #endif // APPWIDGET_H
