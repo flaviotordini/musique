@@ -33,8 +33,6 @@ QStatusBar QToolButton::menu-indicator {
 }
 
 AppsWidget {
-    background: palette(window);
-    color: palette(window-text);
     border-top: 1px solid palette(mid);
 }
 
