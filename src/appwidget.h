@@ -3,12 +3,6 @@
 
 #include <QtWidgets>
 
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-typedef QEnterEvent CompatibleEnterEvent;
-#else
-typedef QEvent CompatibleEnterEvent;
-#endif
-
 class AppWidget : public QWidget {
 
     Q_OBJECT
@@ -18,7 +12,7 @@ public:
     QLabel *icon;
 
 protected:
-    void enterEvent(CompatibleEnterEvent *e);
+    void enterEvent(QEnterEvent *e);
     void leaveEvent(QEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
 
