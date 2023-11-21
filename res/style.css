@@ -23,11 +23,6 @@ QStatusBar {
     border: 0;
 }
 
-
-QStatusBar QToolBar {
-    border: 0;
-}
-
 QStatusBar QToolButton {
     border: 0;
     min-width: 32px;
