@@ -112,14 +112,8 @@ void AppWidget::iconDownloaded(const QByteArray &bytes) {
 void AppWidget::downloadApp() {
 #ifdef APP_EXTRA
     if (!icon) return;
-
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-    auto pixmap = icon->pixmap(Qt::ReturnByValue);
-#else
     auto pixmap = icon->pixmap();
-#endif
-
-    UpdateDialog *dialog = new UpdateDialog(pixmap, name, QString(), url, this);
+    auto dialog = new UpdateDialog(pixmap, name, QString(), url, this);
     dialog->downloadUpdate();
     dialog->show();
 #endif
