@@ -8,6 +8,7 @@ ToolbarMenu::ToolbarMenu(QWidget *parent) : QMenu(parent) {
     addAction(w->getAction("finetune"));
     addAction(w->getAction("chooseFolder"));
     addSeparator();
+    addAction(w->getAction("scrobbling"));
     addAction(w->getAction("lastFmLogout"));
 #ifndef APP_MAC
     addSeparator();
