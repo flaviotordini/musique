@@ -79,9 +79,9 @@ int main(int argc, char **argv) {
 
     // qt translations
     QTranslator qtTranslator;
-    qtTranslator.load(QLatin1String("qt_") + QLocale::system().name(),
-                      QLibraryInfo::location(QLibraryInfo::TranslationsPath));
-    app.installTranslator(&qtTranslator);
+    if (qtTranslator.load("qt_" + QLocale::system().name(),
+                          QLibraryInfo::path(QLibraryInfo::TranslationsPath)))
+        app.installTranslator(&qtTranslator);
 
     // app translations
 #ifdef PKGDATADIR
@@ -99,8 +99,8 @@ int main(int argc, char **argv) {
     }
     // qDebug() << "Using locale dir" << localeDir << locale;
     QTranslator translator;
-    translator.load(QLocale::system(), QString(), QString(), localeDir);
-    app.installTranslator(&translator);
+    if (translator.load(QLocale::system(), QString(), QString(), localeDir))
+        app.installTranslator(&translator);
 
     IconUtils::setSizes({16, 24, 32, 128});
 
