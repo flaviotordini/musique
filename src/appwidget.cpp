@@ -70,7 +70,7 @@ AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent)
     layout->addWidget(appTitle);
 
 #ifdef APP_EXTRA
-#if !defined(APP_UBUNTU) && !defined(APP_MAC_STORE)
+#if !defined(APP_MAC_STORE)
     downloadButton = new QPushButton(tr("Download"));
     QSizePolicy sp = downloadButton->sizePolicy();
     sp.setHorizontalPolicy(QSizePolicy::Fixed);
