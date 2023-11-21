@@ -96,7 +96,6 @@ HEADERS += src/mainwindow.h \
     src/searchview.h \
     src/searchmodel.h \
     src/collectionsuggester.h \
-    src/diskcache.h \
     src/coverutils.h \
     src/lastfmlogindialog.h \
     src/lastfm.h \
@@ -156,7 +155,6 @@ SOURCES += src/main.cpp \
     src/searchview.cpp \
     src/searchmodel.cpp \
     src/collectionsuggester.cpp \
-    src/diskcache.cpp \
     src/coverutils.cpp \
     src/lastfmlogindialog.cpp \
     src/lastfm.cpp \
