@@ -62,8 +62,8 @@ AppWidget::AppWidget(const QString &name, const QString &code, QWidget *parent)
         pixelRatioString = '@' + QString::number(devicePixelRatio()) + 'x';
     const QString iconUrl = filesUrl + QLatin1String("products/") + unixName + pixelRatioString +
                             QLatin1String(".png");
-    QObject *reply = Http::instance().get(iconUrl);
-    connect(reply, SIGNAL(data(QByteArray)), SLOT(iconDownloaded(QByteArray)));
+    auto reply = Http::instance().get(iconUrl);
+    connect(reply, &HttpReply::data, this, &AppWidget::iconDownloaded);
 
     QLabel *appTitle = new QLabel(name);
     appTitle->setAlignment(Qt::AlignHCenter);
