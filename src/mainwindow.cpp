@@ -1519,7 +1519,7 @@ void MainWindow::printHelp() {
 }
 
 void MainWindow::reportIssue() {
-    QUrl url("https://flavio.tordini.org/forums/forum/musique-forums/musique-troubleshooting");
+    QUrl url("https://github.com/flaviotordini/musique/issues");
     QDesktopServices::openUrl(url);
 }
 
