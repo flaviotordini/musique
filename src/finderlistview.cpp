@@ -56,9 +56,9 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     timeLine = new QTimeLine(250, this);
     timeLine->setFrameRange(0, 100);
     timeLine->setEasingCurve(QEasingCurve::Linear);
-    connect(timeLine, SIGNAL(frameChanged(int)), SLOT(updatePlayIcon()));
-    connect(this, SIGNAL(entered(const QModelIndex &)), SLOT(setHoveredIndex(const QModelIndex &)));
-    connect(this, SIGNAL(viewportEntered()), SLOT(clearHover()));
+    connect(timeLine, &QTimeLine::frameChanged, this, &FinderListView::updatePlayIcon);
+    connect(this, &QAbstractItemView::entered, this, &FinderListView::setHoveredIndex);
+    connect(this, &QAbstractItemView::viewportEntered, this, &FinderListView::clearHover);
 
     modelIsResetting = false;
 }
