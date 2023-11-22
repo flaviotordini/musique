@@ -24,12 +24,10 @@ $END_LICENSE */
 
 #include "artistsqlmodel.h"
 #include "database.h"
+#include "fader.h"
 #include "finderitemdelegate.h"
 #include "iconutils.h"
 #include "mainwindow.h"
-#ifdef APP_EXTRA
-#include "extra.h"
-#endif
 
 namespace {
 const char *sortByKey = "albumSortBy";
@@ -144,9 +142,7 @@ void AlbumListView::updateQuery(bool transition) {
         break;
     }
 
-#ifdef APP_EXTRA
-    if (transition) Extra::fadeInWidget(this, this);
-#endif
+    if (transition) Fader::crossfade(this);
 
     if (!sqlModel->query().isValid()) QTimer::singleShot(500, this, SLOT(preloadThumbs()));
 

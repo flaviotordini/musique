@@ -21,6 +21,7 @@ $END_LICENSE */
 #include "playlistview.h"
 #include "datautils.h"
 #include "droparea.h"
+#include "fader.h"
 #include "fontutils.h"
 #include "globalshortcuts.h"
 #include "mainwindow.h"
@@ -75,8 +76,13 @@ void PlaylistView::setPlaylistModel(PlaylistModel *playlistModel) {
     connect(playlistModel, SIGNAL(rowsRemoved(const QModelIndex &, int, int)), this,
             SLOT(updatePlaylistActions()));
     connect(playlistModel, SIGNAL(modelReset()), SLOT(updatePlaylistActions()));
-    connect(MainWindow::instance()->getAction("clearPlaylist"), SIGNAL(triggered()), playlistModel,
-            SLOT(clear()));
+
+    connect(MainWindow::instance()->getAction("clearPlaylist"), &QAction::triggered, this,
+            [this, playlistModel] {
+                Fader::crossfade(this);
+                playlistModel->clear();
+            });
+
     connect(MainWindow::instance()->getAction("skip"), SIGNAL(triggered()), playlistModel,
             SLOT(skipForward()));
     connect(MainWindow::instance()->getAction("previous"), SIGNAL(triggered()), playlistModel,

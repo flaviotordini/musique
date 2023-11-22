@@ -26,14 +26,15 @@ $END_LICENSE */
 #include "collectionscannerview.h"
 #include "collectionsuggester.h"
 #include "constants.h"
-#include "infoview.h"
 #include "database.h"
 #include "datautils.h"
+#include "fader.h"
 #include "fontutils.h"
 #include "globalshortcuts.h"
 #include "httputils.h"
 #include "iconutils.h"
 #include "imagedownloader.h"
+#include "infoview.h"
 #include "js.h"
 #include "lastfm.h"
 #include "lastfmlogindialog.h"
@@ -61,9 +62,7 @@ $END_LICENSE */
 #endif
 
 #ifdef APP_EXTRA
-#include "compositefader.h"
 #include "extra.h"
-#include "fader.h"
 #include "updatedialog.h"
 #endif
 
@@ -749,9 +748,7 @@ void MainWindow::showView(View *view, bool transition) {
         return;
     }
 
-#ifdef APP_MAC
-    if (transition) CompositeFader::go(this, this->grab());
-#endif
+    if (transition) Fader::crossfade(this);
 
     View *oldView = qobject_cast<View *>(views->currentWidget());
 
@@ -1422,9 +1419,7 @@ void MainWindow::showStopAfterThisInStatusBar(bool show) {
 }
 
 void MainWindow::showActionInStatusBar(QAction *action, bool show) {
-#ifdef APP_EXTRA
-    Extra::fadeInWidget(statusBar(), statusBar());
-#endif
+    Fader::crossfade(statusBar());
     if (show) {
         if (!statusToolBar->actions().contains(action))
             // statusToolBar->insertAction(statusToolBar->actions().first(), action);
