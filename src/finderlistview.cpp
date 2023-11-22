@@ -43,13 +43,10 @@ FinderListView::FinderListView(QWidget *parent) : QListView(parent) {
     // cosmetics
     setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
     setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
-
     setFrameShape(QFrame::NoFrame);
     setAttribute(Qt::WA_MacShowFocusRect, false);
 
     verticalScrollBar()->setPageStep(3);
-
-    setAttribute(Qt::WA_OpaquePaintEvent);
 
     hoveredRow = -1;
     playIconHovered = false;
