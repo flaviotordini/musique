@@ -49,9 +49,9 @@ AboutView::AboutView(QWidget *parent) : View(parent) {
     aboutlayout->setContentsMargins(padding, padding, padding, padding);
     aboutlayout->setSpacing(padding);
 
-    ClickableLabel *logo = new ClickableLabel(this);
+    auto logo = new ClickableLabel(this);
     auto setLogoPixmap = [logo] {
-        logo->setPixmap(IconUtils::pixmap(":/images/app.png", logo->devicePixelRatioF()));
+        logo->setPixmap(IconUtils::pixmap(":/images/app.png", logo->devicePixelRatio()));
     };
     setLogoPixmap();
     connect(window()->windowHandle(), &QWindow::screenChanged, this, setLogoPixmap);
