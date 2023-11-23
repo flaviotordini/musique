@@ -51,8 +51,8 @@ int main(int argc, char **argv) {
     QCoreApplication::setOrganizationName(Constants::ORG_NAME);
     QCoreApplication::setOrganizationDomain(Constants::ORG_DOMAIN);
     QCoreApplication::setApplicationVersion(Constants::VERSION);
-    QGuiApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 
+    QGuiApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
     QApplication::setWheelScrollLines(1);
 
     SingleApplication app(argc, argv);
@@ -73,8 +73,7 @@ int main(int argc, char **argv) {
 #else
     QFile cssFile(":/res/style.css");
     cssFile.open(QFile::ReadOnly);
-    QString styleSheet = QLatin1String(cssFile.readAll());
-    app.setStyleSheet(styleSheet);
+    app.setStyleSheet(cssFile.readAll());
 #endif
 
     // qt translations
