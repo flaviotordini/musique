@@ -68,6 +68,26 @@ int main(int argc, char **argv) {
     if (app.sendMessage(message.toUtf8())) return 0;
 #endif
 
+    {
+        auto fixPalette = [](auto p) {
+            qDebug() << "Fixing palette";
+
+            auto accent = QColor::fromRgb(0xff0096dc);
+            p.setColor(QPalette::Highlight, accent);
+            p.setColor(QPalette::HighlightedText, QColor(Qt::white));
+
+            // flatter uniform look (all white, all dark)
+            p.setColor(QPalette::Window, p.color(QPalette::Base));
+            p.setColor(QPalette::WindowText, p.color(QPalette::Text));
+
+            qApp->setPalette(p);
+            qApp->style()->unpolish(qApp);
+            qApp->style()->polish(qApp);
+        };
+        QObject::connect(qApp, &QApplication::paletteChanged, qApp, fixPalette);
+        fixPalette(qApp->palette());
+    }
+
 #ifdef APP_EXTRA
     Extra::appSetup(&app);
 #else
