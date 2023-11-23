@@ -21,10 +21,10 @@ $END_LICENSE */
 #include <QtNetwork>
 #include <QtWidgets>
 
-#ifdef APP_MAC_STORE
-typedef QApplication SingleApplication;
-#else
+#ifdef QAPPLICATION_CLASS
 #include <singleapplication.h>
+#else
+typedef QApplication SingleApplication;
 #endif
 
 #include "constants.h"
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
             return 0;
         }
     }
-#ifndef APP_MAC_STORE
+#ifdef QAPPLICATION_CLASS
     if (app.sendMessage(message.toUtf8())) return 0;
 #endif
 
@@ -128,7 +128,7 @@ int main(int argc, char **argv) {
     MainWindow *mainWindow = new MainWindow();
     mainWindow->show();
 
-#ifndef APP_MAC_STORE
+#ifdef QAPPLICATION_CLASS
     mainWindow->connect(&app, &SingleApplication::receivedMessage, mainWindow,
                         [mainWindow](auto instanceId, auto message) {
                             Q_UNUSED(instanceId);
