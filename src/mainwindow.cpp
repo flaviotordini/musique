@@ -172,9 +172,7 @@ void MainWindow::showInitialView() {
         // update the collection when idle
         QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
 
-        QTimer::singleShot(1500, this, [this] {
-            if (!maybeShowUpdateNag()) maybeShowMessageBar();
-        });
+        QTimer::singleShot(1500, this, [this] { maybeShowUpdateNag(); });
 
 #if defined(UPDATER) && defined(QT_NO_DEBUG_OUTPUT)
         Updater::instance().checkWithoutUI();
@@ -1521,53 +1519,4 @@ void MainWindow::printHelp() {
 void MainWindow::reportIssue() {
     QUrl url("https://github.com/flaviotordini/musique/issues");
     QDesktopServices::openUrl(url);
-}
-
-void MainWindow::maybeShowMessageBar() {
-    messageBar = new MessageBar();
-    auto dockWidget = new QDockWidget();
-    dockWidget->setTitleBarWidget(new QWidget());
-    dockWidget->setWidget(messageBar);
-    dockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
-    dockWidget->setVisible(false);
-    // connect(dockWidget, &QDockWidget::visibilityChanged, messageBar, &QWidget::setVisible);
-    addDockWidget(Qt::TopDockWidgetArea, dockWidget);
-
-    QSettings settings;
-    QString key;
-
-    bool showMessages = settings.contains("geometry");
-#ifdef APP_ACTIVATION
-    showMessages = Activation::instance().isActivated();
-#endif
-
-#if defined APP_MAC && !defined APP_MAC_STORE
-    if (showMessages && !settings.contains(key = "sofa")) {
-        QString msg = tr("Need a remote control for %1? Try %2!").arg(Constants::NAME).arg("Sofa");
-        messageBar->setMessage(msg);
-        disconnect(messageBar);
-        connect(messageBar, &MessageBar::clicked, this, [key] {
-            QString url = "https://" + QLatin1String(Constants::ORG_DOMAIN) + '/' + key;
-            QDesktopServices::openUrl(url);
-        });
-        connect(messageBar, &MessageBar::closed, this, [key] {
-            QSettings settings;
-            settings.setValue(key, true);
-        });
-        dockWidget->show();
-        showMessages = false;
-    }
-#endif
-
-#ifdef UPDATER
-    connect(&Updater::instance(), &Updater::statusChanged, this, [this, dockWidget](auto status) {
-        if (status == Updater::Status::UpdateDownloaded) {
-            QString msg = tr("An update is ready to be installed. Quit and install update.");
-            messageBar->setMessage(msg);
-            disconnect(messageBar);
-            connect(messageBar, &MessageBar::clicked, this, [] { qApp->quit(); });
-            dockWidget->show();
-        }
-    });
-#endif
 }

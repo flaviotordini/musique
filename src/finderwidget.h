@@ -110,6 +110,7 @@ private:
     void setupTracks();
     void setupSearch();
     void showWidget(QWidget *widget, bool isRoot);
+    void maybeShowMessage();
 
     SegmentedControl *bar;
     QAction *artistsAction;

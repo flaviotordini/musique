@@ -149,7 +149,6 @@ private:
     void initMedia();
     QString playlistPath();
     void showFinetuneDialog(const QVariantMap &stats);
-    void maybeShowMessageBar();
 
     // view mechanism
     QStackedWidget *views;
@@ -210,8 +209,6 @@ private:
     bool fullScreenActive;
     bool maximizedBeforeFullScreen;
     bool menuVisibleBeforeFullScreen;
-
-    MessageBar *messageBar;
 
     Media *media;
 

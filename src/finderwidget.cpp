@@ -53,6 +53,11 @@ $END_LICENSE */
 #include "database.h"
 #include <QtSql>
 
+#include "messagebar.h"
+#ifdef UPDATER
+#include "updater.h"
+#endif
+
 namespace {
 const char *finderViewKey = "finderView";
 }
@@ -72,9 +77,11 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
 
     searchView = nullptr;
 
-    QBoxLayout *layout = new QVBoxLayout();
+    QBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->setSpacing(0);
+
+    maybeShowMessage();
 
     setupBar();
     layout->addWidget(bar);
@@ -92,7 +99,6 @@ FinderWidget::FinderWidget(QWidget *parent) : QWidget(parent) {
     stackedWidget = new QStackedWidget(this);
 
     layout->addWidget(stackedWidget);
-    setLayout(layout);
 
     restoreSavedView();
 }
@@ -487,4 +493,67 @@ void FinderWidget::addTracksAndPlay(const QList<Track *> &tracks) {
     playlistModel->setActiveRow(playlistModel->rowForTrack(trackToPlay));
     playlistView->scrollTo(playlistModel->indexForTrack(trackToPlay),
                            QAbstractItemView::PositionAtCenter);
+}
+
+void FinderWidget::maybeShowMessage() {
+    auto createMessageBar = [this](QString msg) {
+        auto mb = new MessageBar(this);
+        int margin = 8;
+        mb->setContentsMargins(margin, margin, margin, margin);
+        mb->setMessage(msg);
+        layout()->addWidget(mb);
+        connect(mb, &MessageBar::closed, mb, &MessageBar::deleteLater);
+        return mb;
+    };
+
+    QSettings settings;
+    QString key;
+
+    bool showMessages = settings.contains("geometry");
+
+#ifndef APP_WIN
+    if (showMessages && !settings.contains(key = "sofa")) {
+        QString msg = tr("Need a remote control for %1? Try %2!")
+                              .arg(QGuiApplication::applicationDisplayName(), "Sofa");
+        auto messageBar = createMessageBar(msg);
+        connect(messageBar, &MessageBar::clicked, this, [key] {
+            QString url = "https://" + QCoreApplication::organizationDomain() + '/' + key;
+            QDesktopServices::openUrl(url);
+        });
+        connect(messageBar, &MessageBar::closed, this, [key] {
+            QSettings settings;
+            settings.setValue(key, true);
+        });
+        showMessages = false;
+    }
+#endif
+
+    if (showMessages) {
+        key = "donate" + QCoreApplication::applicationVersion();
+        if (!settings.contains(key)) {
+            QString msg = tr("I keep improving %1 to make it the best I can. Support this work!")
+                                  .arg(QGuiApplication::applicationDisplayName());
+            auto messageBar = createMessageBar(msg);
+            connect(messageBar, &MessageBar::clicked, this, [] {
+                QString url = "https://" + QCoreApplication::organizationDomain() + "/donate";
+                QDesktopServices::openUrl(url);
+            });
+            connect(messageBar, &MessageBar::closed, this, [key] {
+                QSettings settings;
+                settings.setValue(key, true);
+            });
+        }
+    }
+
+#ifdef UPDATER
+    connect(&Updater::instance(), &Updater::statusChanged, this,
+            [this, createMessageBar](auto status) {
+                if (status == Updater::Status::UpdateDownloaded) {
+                    QString msg =
+                            tr("An update is ready to be installed. Quit and install update.");
+                    auto messageBar = createMessageBar(msg);
+                    connect(messageBar, &MessageBar::clicked, this, [] { qApp->quit(); });
+                }
+            });
+#endif
 }
