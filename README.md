@@ -14,7 +14,7 @@ To compile Musique you need at least Qt 6.0. The following Qt modules are needed
 
 To be able to build on a Debian (or derivative) system:
 
-	sudo apt install build-essential qt6-base-dev-tools qmake6 qt6-declarative-dev libmpv-dev libtag1-dev libqt6sql6-sqlite qt6-l10n-tools
+	sudo apt install build-essential libgl-dev qt6-base-dev-tools qmake6 qt6-declarative-dev libmpv-dev libtag1-dev libqt6sql6-sqlite qt6-l10n-tools
 
 Clone from Github:
 
