@@ -546,14 +546,15 @@ void FinderWidget::maybeShowMessage() {
     }
 
 #ifdef UPDATER
-    connect(&Updater::instance(), &Updater::statusChanged, this,
-            [this, createMessageBar](auto status) {
-                if (status == Updater::Status::UpdateDownloaded) {
-                    QString msg =
-                            tr("An update is ready to be installed. Quit and install update.");
-                    auto messageBar = createMessageBar(msg);
-                    connect(messageBar, &MessageBar::clicked, this, [] { qApp->quit(); });
-                }
-            });
+    auto onUpdateStatusChange = [this, createMessageBar](auto status) {
+        qDebug() << status;
+        if (status == Updater::Status::UpdateDownloaded) {
+            QString msg = tr("An update is ready to be installed. Quit and install update.");
+            auto messageBar = createMessageBar(msg);
+            connect(messageBar, &MessageBar::clicked, this, [] { qApp->quit(); });
+        }
+    };
+    connect(&Updater::instance(), &Updater::statusChanged, this, onUpdateStatusChange);
+    onUpdateStatusChange(Updater::instance().getStatus());
 #endif
 }
