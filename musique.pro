@@ -41,8 +41,10 @@ include(lib/sharedcache/sharedcache.pri)
 DEFINES += MEDIA_MPV MEDIA_AUDIOONLY
 include(lib/media/media.pri)
 
-DEFINES += QAPPLICATION_CLASS=QApplication
-include(lib/singleapplication/singleapplication.pri)
+!mac {
+    DEFINES += QAPPLICATION_CLASS=QApplication
+    include(lib/singleapplication/singleapplication.pri)
+}
 
 include(src/tags/tags.pri)
 
