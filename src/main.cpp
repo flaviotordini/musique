@@ -128,6 +128,26 @@ int main(int argc, char **argv) {
     MainWindow *mainWindow = new MainWindow();
     mainWindow->show();
 
+#ifndef APP_MAC
+    QIcon appIcon;
+    if (QDir(dataDir).exists()) {
+        appIcon = QIcon::fromTheme(Constants::UNIX_NAME);
+    } else {
+        dataDir = qApp->applicationDirPath() + "/data";
+        const int iconSizes[] = {16, 22, 32, 48, 64, 128, 256, 512};
+        for (int iconSize : iconSizes) {
+            QString size = QString::number(iconSize);
+            QString png = dataDir + '/' + size + 'x' + size + '/' + Constants::UNIX_NAME +
+                          QLatin1String(".png");
+            appIcon.addFile(png, QSize(iconSize, iconSize));
+        }
+    }
+    if (appIcon.isNull()) {
+        appIcon.addFile(":/images/app.png");
+    }
+    mainWindow->setWindowIcon(appIcon);
+#endif
+
 #ifdef QAPPLICATION_CLASS
     mainWindow->connect(&app, &SingleApplication::receivedMessage, mainWindow,
                         [mainWindow](auto instanceId, auto message) {
