@@ -52,7 +52,9 @@ int main(int argc, char **argv) {
     QCoreApplication::setOrganizationDomain(Constants::ORG_DOMAIN);
     QCoreApplication::setApplicationVersion(Constants::VERSION);
 
+    QGuiApplication::setDesktopFileName(Constants::UNIX_NAME);
     QGuiApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
+
     QApplication::setWheelScrollLines(1);
 
     SingleApplication app(argc, argv);
