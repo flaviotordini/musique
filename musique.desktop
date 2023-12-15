@@ -2,11 +2,12 @@
 Name=Musique
 Comment=Listen to your music collection
 GenericName=Musique Music Player
+TryExec=musique
 Exec=musique -platform xcb
 Terminal=false
 Type=Application
 Icon=musique
-Categories=AudioVideo;Player;Qt;
+Categories=AudioVideo;Audio;Music;Player;Qt;
 StartupNotify=false
 Actions=TogglePlaying;Next;Previous;StopAfterThis;Info;
 
