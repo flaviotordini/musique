@@ -28,7 +28,6 @@ typedef QApplication SingleApplication;
 #endif
 
 #include "constants.h"
-#include "http.h"
 #include "httputils.h"
 #include "iconutils.h"
 #include "mainwindow.h"
@@ -160,7 +159,7 @@ int main(int argc, char **argv) {
     // This is required in order to use QNetworkReply::NetworkError in QueuedConnetions
     qRegisterMetaType<QNetworkReply::NetworkError>("QNetworkReply::NetworkError");
 
-    Http::instance().addRequestHeader("User-Agent", HttpUtils::userAgent());
+    HttpUtils::init();
 
     // Seed random number generator
     srand(QDateTime::currentSecsSinceEpoch());

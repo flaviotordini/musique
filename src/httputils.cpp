@@ -4,6 +4,10 @@
 #include "http.h"
 #include "throttledhttp.h"
 
+void HttpUtils::init() {
+    Http::instance().addRequestHeader("User-Agent", HttpUtils::userAgent());
+}
+
 Http &HttpUtils::lastFm() {
     static Http *h = [] {
         Http *http = new Http;

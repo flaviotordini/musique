@@ -7,6 +7,7 @@ class Http;
 
 class HttpUtils {
 public:
+    static void init();
     static Http &lastFm();
     static Http &discogs();
     static Http &cached();
