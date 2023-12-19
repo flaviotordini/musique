@@ -32,10 +32,11 @@ typedef QApplication SingleApplication;
 #include "httputils.h"
 #include "iconutils.h"
 #include "mainwindow.h"
-#include "updateutils.h"
+
 #ifdef APP_EXTRA
 #include "extra.h"
 #endif
+
 #ifdef Q_OS_MAC
 #include "mac_startup.h"
 #endif
@@ -124,8 +125,6 @@ int main(int argc, char **argv) {
         app.installTranslator(&translator);
 
     IconUtils::setSizes({16, 24, 32, 128});
-
-    UpdateUtils::init();
 
     MainWindow *mainWindow = new MainWindow();
     mainWindow->show();

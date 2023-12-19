@@ -54,7 +54,6 @@ HEADERS += src/mainwindow.h \
     src/aboutview.h \
     src/infoview.h \
     src/lyrics.h \
-    src/updateutils.h \
     src/view.h \
     src/searchlineedit.h \
     src/constants.h \
@@ -168,7 +167,6 @@ SOURCES += src/main.cpp \
     src/genres.cpp \
     src/model/decade.cpp \
     src/finderlistview.cpp \
-    src/updateutils.cpp \
     src/waitingspinnerwidget.cpp
 
 RESOURCES += resources.qrc
