@@ -24,15 +24,15 @@ $END_LICENSE */
 #include "fontutils.h"
 #include "iconutils.h"
 
-ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
+ChooseFolderView::ChooseFolderView(QWidget *parent) : QWidget(parent) {
     const int padding = 30;
 
-    QBoxLayout *layout = new QHBoxLayout(this);
+    auto layout = new QHBoxLayout(this);
     layout->setAlignment(Qt::AlignCenter);
     layout->setSpacing(padding);
     layout->setContentsMargins(padding, padding, padding, padding);
 
-    QLabel *logo = new QLabel(this);
+    auto logo = new QLabel(this);
     auto setLogoPixmap = [logo] {
         logo->setPixmap(IconUtils::pixmap(":/images/app.png", logo->devicePixelRatioF()));
     };
@@ -40,68 +40,61 @@ ChooseFolderView::ChooseFolderView(QWidget *parent) : View(parent) {
     connect(window()->windowHandle(), &QWindow::screenChanged, this, setLogoPixmap);
     layout->addWidget(logo, 0, Qt::AlignTop);
 
-    QBoxLayout *vLayout = new QVBoxLayout();
+    auto vLayout = new QVBoxLayout();
     vLayout->setAlignment(Qt::AlignCenter);
     vLayout->setSpacing(padding);
     vLayout->setContentsMargins(0, 0, 0, 0);
     layout->addLayout(vLayout);
-
-    // hLayout->addSpacing(PADDING);
 
     welcomeLabel = new QLabel(
             "<h1 style='font-weight:100'>" +
                     tr("Welcome to <a href='%1'>%2</a>,")
                             .replace("<a href", "<a style='text-decoration:none; "
                                                 "color:palette(text); font-weight:normal' href")
-                            .arg(Constants::WEBSITE, Constants::NAME) +
+                            .arg(Constants::WEBSITE, QGuiApplication::applicationDisplayName()) +
                     "</h1>",
             this);
     welcomeLabel->setOpenExternalLinks(true);
     welcomeLabel->setFont(FontUtils::light(welcomeLabel->font().pointSize() * 1.5));
     vLayout->addWidget(welcomeLabel);
 
-    // layout->addSpacing(PADDING);
-
-    tipLabel = new QLabel(tr("%1 needs to scan your music collection.").arg(Constants::NAME), this);
+    tipLabel = new QLabel(tr("%1 needs to scan your music collection.")
+                                  .arg(QGuiApplication::applicationDisplayName()),
+                          this);
     tipLabel->setFont(FontUtils::medium());
     QColor lightTextColor = palette().text().color();
 #ifdef APP_MAC
     lightTextColor.setAlphaF(.75);
 #endif
-    tipLabel->setStyleSheet(QLatin1String("color:") + lightTextColor.name(QColor::HexArgb));
+    tipLabel->setStyleSheet("color:" + lightTextColor.name(QColor::HexArgb));
     vLayout->addWidget(tipLabel);
 
-    QBoxLayout *buttonLayout = new QHBoxLayout();
+    auto buttonLayout = new QHBoxLayout();
     vLayout->addLayout(buttonLayout);
 
     cancelButton = new QPushButton(tr("Cancel"));
     connect(cancelButton, SIGNAL(clicked()), parent, SLOT(goBack()));
     buttonLayout->addWidget(cancelButton);
 
-#if false && defined APP_MAC && !defined APP_MAC_STORE
-    QPushButton *useiTunesDirButton = new QPushButton(tr("Use %1 library").arg("Apple Music"));
-    connect(useiTunesDirButton, SIGNAL(clicked()), SLOT(iTunesDirChosen()));
-    buttonLayout->addWidget(useiTunesDirButton);
-#endif
-
     QString musicLocation = getMusicLocation();
     if (!musicLocation.isEmpty()) {
         QString musicFolderName = QStandardPaths::displayName(QStandardPaths::MusicLocation);
         QPushButton *useSystemDirButton = new QPushButton(tr("Use %1 folder").arg(musicFolderName));
-        connect(useSystemDirButton, SIGNAL(clicked()), SLOT(systemDirChosen()));
+        connect(useSystemDirButton, &QAbstractButton::clicked, this,
+                &ChooseFolderView::systemDirChosen);
         useSystemDirButton->setDefault(true);
         useSystemDirButton->setFocus(Qt::NoFocusReason);
         buttonLayout->addWidget(useSystemDirButton);
     }
 
-    QPushButton *chooseDirButton = new QPushButton(tr("Choose a folder..."));
-    connect(chooseDirButton, SIGNAL(clicked()), SLOT(chooseFolder()));
+    auto chooseDirButton = new QPushButton(tr("Choose a folder..."));
+    connect(chooseDirButton, &QAbstractButton::clicked, this, &ChooseFolderView::chooseFolder);
     buttonLayout->addWidget(chooseDirButton);
 
-    QLabel *privacyLabel = new QLabel(
+    auto privacyLabel = new QLabel(
             tr("%1 will connect to the Last.fm web services and pass artist names and album titles "
                "in order to fetch covert art, biographies and much more.")
-                    .arg(Constants::NAME),
+                    .arg(QGuiApplication::applicationDisplayName()),
             this);
     privacyLabel->setFont(FontUtils::small());
     privacyLabel->setOpenExternalLinks(true);
@@ -158,7 +151,8 @@ void ChooseFolderView::iTunesDirChosen() {
     emit locationChanged(musicLocation);
 }
 
-void ChooseFolderView::appear() {
+void ChooseFolderView::showEvent(QShowEvent *e) {
+    Q_UNUSED(e);
     Database &db = Database::instance();
     if (db.status() == ScanComplete) {
         welcomeLabel->hide();
@@ -166,7 +160,8 @@ void ChooseFolderView::appear() {
         cancelButton->show();
     } else {
         welcomeLabel->show();
-        tipLabel->setText(tr("%1 needs to scan your music collection.").arg(Constants::NAME));
+        tipLabel->setText(tr("%1 needs to scan your music collection.")
+                                  .arg(QGuiApplication::applicationDisplayName()));
         cancelButton->hide();
     }
 }
