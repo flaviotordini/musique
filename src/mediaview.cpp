@@ -35,7 +35,7 @@ $END_LICENSE */
 
 #include "idle.h"
 
-MediaView::MediaView(QWidget *parent) : View(parent) {
+MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     activeTrack = nullptr;
 
     QBoxLayout *layout = new QHBoxLayout(this);
@@ -123,7 +123,7 @@ void MediaView::stateChanged(Media::State newState) {
 
     case Media::StoppedState:
         // reset window title
-        window()->setWindowTitle(Constants::NAME);
+        window()->setWindowTitle(QGuiApplication::applicationDisplayName());
         break;
 
     case Media::PausedState:
@@ -210,14 +210,6 @@ void MediaView::handleError(QString message) {
     // recover from errors by skipping to the next track
     errorTimer->start();
     MainWindow::instance()->showMessage(message);
-}
-
-void MediaView::appear() {
-    finderWidget->appear();
-}
-
-void MediaView::disappear() {
-    finderWidget->disappear();
 }
 
 void MediaView::playPause() {

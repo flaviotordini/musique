@@ -21,7 +21,6 @@ $END_LICENSE */
 #ifndef INFOVIEW_H
 #define INFOVIEW_H
 
-#include "view.h"
 #include <QtWidgets>
 
 class Track;
@@ -40,15 +39,11 @@ public:
     TrackInfo *trackInfo;
 };
 
-class InfoView : public View {
+class InfoView : public QWidget {
     Q_OBJECT
 
 public:
     InfoView(QWidget *parent);
-
-    void appear() {}
-    void disappear();
-
     void setTrack(Track *track);
 
 private:

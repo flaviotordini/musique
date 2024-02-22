@@ -34,7 +34,7 @@ $END_LICENSE */
 #include "waitingspinnerwidget.h"
 #endif
 
-AboutView::AboutView(QWidget *parent) : View(parent) {
+AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     setAttribute(Qt::WA_OpaquePaintEvent);
 
     const int padding = 30;
@@ -187,7 +187,7 @@ void AboutView::paintEvent(QPaintEvent *e) {
     painter.fillRect(rect(), brush);
 }
 
-void AboutView::appear() {
+void AboutView::showEvent(QShowEvent *event) {
 #ifdef APP_MAC
     mac::uncloseWindow(window()->winId());
 #endif

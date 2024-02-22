@@ -97,8 +97,8 @@ AlbumListView::AlbumListView(QWidget *parent) : FinderListView(parent), showTool
     toolBar->addAction(widgetAction);
 }
 
-void AlbumListView::appear() {
-    FinderListView::appear();
+void AlbumListView::showEvent(QShowEvent *e) {
+    FinderListView::showEvent(e);
     if (showToolBar) {
         QStatusBar *statusBar = MainWindow::instance()->statusBar();
         statusBar->insertPermanentWidget(0, toolBar);
@@ -106,8 +106,8 @@ void AlbumListView::appear() {
     }
 }
 
-void AlbumListView::disappear() {
-    FinderListView::disappear();
+void AlbumListView::hideEvent(QHideEvent *e) {
+    FinderListView::hideEvent(e);
     if (showToolBar) {
         QStatusBar *statusBar = MainWindow::instance()->statusBar();
         statusBar->removeWidget(toolBar);

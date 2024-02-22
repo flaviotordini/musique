@@ -67,7 +67,7 @@ void FinderListView::setModel(QAbstractItemModel *model) {
     QListView::setModel(model);
 }
 
-void FinderListView::appear() {
+void FinderListView::showEvent(QShowEvent *e) {
     setEnabled(true);
     setMouseTracking(true);
     BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel *>(model());
@@ -79,7 +79,7 @@ void FinderListView::appear() {
     updateItemSize();
 }
 
-void FinderListView::disappear() {
+void FinderListView::hideEvent(QHideEvent *e) {
     setEnabled(false);
     setMouseTracking(false);
     BaseSqlModel *baseSqlModel = qobject_cast<BaseSqlModel *>(model());

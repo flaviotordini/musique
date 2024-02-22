@@ -29,11 +29,10 @@ $END_LICENSE */
 #include "playlistmodel.h"
 #include "playlistview.h"
 #include "playlistwidget.h"
-#include "view.h"
 
 class DropArea;
 
-class MediaView : public View {
+class MediaView : public QWidget {
     Q_OBJECT
 
 public:
@@ -43,9 +42,7 @@ public:
     Track *getActiveTrack() { return activeTrack; }
     PlaylistModel *getPlaylistModel() { return playlistModel; }
 
-public slots:
-    void appear();
-    void disappear();
+public slots: 
     void playPause();
     void trackRemoved();
     void search(QString query);

@@ -35,8 +35,8 @@ public:
         this->fileSystemModel = fileSystemModel;
     }
 
-public slots:
-    void appear();
+protected:
+    void showEvent(QShowEvent *e);
 
 private:
     FileSystemModel *fileSystemModel;

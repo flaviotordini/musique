@@ -43,7 +43,7 @@ $END_LICENSE */
 #include "seekslider.h"
 #include "spacer.h"
 #include "toolbarmenu.h"
-#include "view.h"
+#include "views.h"
 #include "zoomableui.h"
 
 #if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
@@ -113,8 +113,10 @@ MainWindow::MainWindow() : toolbarMenu(nullptr), toolbar(nullptr) {
     aboutView = nullptr;
     infoView = nullptr;
 
-    // views mechanism
-    views = new QStackedWidget(this);
+    views = new Views(this);
+#ifdef APP_MAC
+    connect(views, &Views::currentChanged, this, [this] { mac::uncloseWindow(window()->winId()); });
+#endif
     setCentralWidget(views);
 
     zoomableUI = new ZoomableUI(*this);
@@ -163,7 +165,7 @@ void MainWindow::showInitialView() {
     // show the initial view
     Database &db = Database::instance();
     if (db.status() == ScanComplete) {
-        showMediaView(false);
+        showMediaView();
         QTimer::singleShot(0, this, SLOT(loadPlaylist()));
 
         bool finetuneMenuVisible = true;
@@ -184,7 +186,7 @@ void MainWindow::showInitialView() {
         if (!root.isEmpty() && QDir().exists(root))
             startFullScan(root);
         else
-            showChooseFolderView(false);
+            showChooseFolderView();
     }
 }
 
@@ -733,43 +735,11 @@ void MainWindow::writeSettings() {
 }
 
 void MainWindow::goBack() {
-    if (history.size() > 1) {
-        history.pop();
-        View *view = history.pop();
-        showView(view);
-    }
+    views->goBack();
 }
 
-void MainWindow::showView(View *view, bool transition) {
-    if (!history.isEmpty() && view == history.top()) {
-        qDebug() << "Attempting to show same view" << view;
-        return;
-    }
-
-    if (transition) Fader::crossfade(this);
-
-    View *oldView = qobject_cast<View *>(views->currentWidget());
-
-    view->appear();
-    QHash<QString, QVariant> metadata = view->metadata();
-    QString desc = metadata.value("description").toString();
-    if (!desc.isEmpty()) showMessage(desc);
-
-    aboutAct->setEnabled(view != aboutView);
-    chooseFolderAct->setEnabled(view == mediaView || view == infoView);
-    toolbarSearch->setEnabled(view == mediaView || view == infoView);
-    if (toolbar) toolbar->setVisible(view == mediaView || view == infoView);
-    statusBar()->setVisible(view == mediaView);
-
-    views->setCurrentWidget(view);
-
-    if (oldView) oldView->disappear();
-
-    history.push(view);
-
-#ifdef APP_MAC
-    mac::uncloseWindow(window()->winId());
-#endif
+void MainWindow::showWidget(QWidget *widget) {
+    views->setCurrentWidget(widget);
 }
 
 void MainWindow::about() {
@@ -777,7 +747,7 @@ void MainWindow::about() {
         aboutView = new AboutView(this);
         views->addWidget(aboutView);
     }
-    showView(aboutView);
+    showWidget(aboutView);
 }
 
 void MainWindow::visitSite() {
@@ -806,16 +776,16 @@ void MainWindow::closeEvent(QCloseEvent *e) {
 #endif
 }
 
-void MainWindow::showChooseFolderView(bool transition) {
+void MainWindow::showChooseFolderView() {
     if (!chooseFolderView) {
         chooseFolderView = new ChooseFolderView(this);
         connect(chooseFolderView, SIGNAL(locationChanged(QString)), SLOT(startFullScan(QString)));
         views->addWidget(chooseFolderView);
     }
-    showView(chooseFolderView, transition);
+    showWidget(chooseFolderView);
 }
 
-void MainWindow::showMediaView(bool transition) {
+void MainWindow::showMediaView() {
     if (!mediaView) {
         mediaView = new MediaView(this);
         connect(playAct, SIGNAL(triggered()), mediaView, SLOT(playPause()));
@@ -828,7 +798,7 @@ void MainWindow::showMediaView(bool transition) {
     }
 
     mediaView->setFocus();
-    showView(mediaView, transition);
+    showWidget(mediaView);
 }
 
 void MainWindow::toggleContextualView() {
@@ -844,7 +814,7 @@ void MainWindow::toggleContextualView() {
         Track *track = mediaView->getActiveTrack();
         if (track) {
             infoView->setTrack(track);
-            showView(infoView);
+            showWidget(infoView);
             contextualAct->setChecked(true);
 
             QList<QKeySequence> shortcuts;
@@ -876,7 +846,7 @@ void MainWindow::startFullScan(QString directory) {
         collectionScannerView = new CollectionScannerView(this);
         views->addWidget(collectionScannerView);
     }
-    showView(collectionScannerView);
+    showWidget(collectionScannerView);
 
     CollectionScannerThread &scannerThread = CollectionScannerThread::instance();
     collectionScannerView->setCollectionScannerThread(&scannerThread);

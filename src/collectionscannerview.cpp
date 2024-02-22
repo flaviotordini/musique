@@ -24,7 +24,7 @@ $END_LICENSE */
 #include "fontutils.h"
 #include "iconutils.h"
 
-CollectionScannerView::CollectionScannerView(QWidget *parent) : View(parent) {
+CollectionScannerView::CollectionScannerView(QWidget *parent) : QWidget(parent) {
     const int padding = 30;
 
     connect(window()->windowHandle(), SIGNAL(screenChanged(QScreen *)), SLOT(screenChanged()));

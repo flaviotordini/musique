@@ -29,10 +29,6 @@ class TrackListView : public QListView {
 
 public:
     TrackListView(QWidget *parent = nullptr);
-
-public slots:
-    void appear() {}
-    void disappear() {}
 };
 
 #endif // TRACKLISTVIEW_H

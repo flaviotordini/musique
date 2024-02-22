@@ -26,7 +26,7 @@ $END_LICENSE */
 #include "media.h"
 
 class ZoomableUI;
-class View;
+class Views;
 class MediaView;
 class CollectionScannerView;
 class InfoView;
@@ -55,11 +55,13 @@ public:
 
     QMenu *getMenu(const char *name);
 
+    Views *getViews() { return views; }
+
     static void printHelp();
 
 public slots:
-    void showMediaView(bool transition = true);
-    void showChooseFolderView(bool transition = true);
+    void showMediaView();
+    void showChooseFolderView();
     void toggleContextualView();
     void hideContextualView();
     void updateContextualView(Track *track);
@@ -140,7 +142,7 @@ private slots:
     void runFinetune(const QString &filename);
 
 private:
-    void showView(View *view, bool transition = true);
+    void showWidget(QWidget *widget);
     void createActions();
     void createMenus();
     void createToolBar();
@@ -150,16 +152,14 @@ private:
     QString playlistPath();
     void showFinetuneDialog(const QVariantMap &stats);
 
-    // view mechanism
-    QStackedWidget *views;
-    QStack<View *> history;
+    Views *views;
 
     // view widgets
-    View *chooseFolderView;
+    QWidget *chooseFolderView;
     CollectionScannerView *collectionScannerView;
     MediaView *mediaView;
     InfoView *infoView;
-    View *aboutView;
+    QWidget *aboutView;
 
     QHash<QByteArray, QAction *> actionMap;
     QHash<QByteArray, QMenu *> menuMap;

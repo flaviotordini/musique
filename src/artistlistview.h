@@ -45,9 +45,9 @@ public:
         SortByPopularity
     };
 
-public slots:
-    void appear();
-    void disappear();
+protected:
+    void showEvent(QShowEvent *e);
+    void hideEvent(QHideEvent *e);
 
 private slots:
     void setSortBy(SortBy sortBy);

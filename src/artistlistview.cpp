@@ -35,19 +35,19 @@ ArtistListView::ArtistListView(QWidget *parent) : FinderListView(parent) {
     setupToolbar();
 }
 
-void ArtistListView::appear() {
+void ArtistListView::showEvent(QShowEvent *e) {
     QStatusBar *statusBar = MainWindow::instance()->statusBar();
-    FinderListView::appear();
+    FinderListView::showEvent(e);
     statusBar->insertPermanentWidget(0, toolBar);
     toolBar->show();
 
     // QTimer::singleShot(500, this, SLOT(preloadThumbs()));
 }
 
-void ArtistListView::disappear() {
+void ArtistListView::hideEvent(QHideEvent *e) {
     QStatusBar *statusBar = MainWindow::instance()->statusBar();
     // clearThumbs();
-    FinderListView::disappear();
+    FinderListView::hideEvent(e);
     statusBar->removeWidget(toolBar);
 }
 

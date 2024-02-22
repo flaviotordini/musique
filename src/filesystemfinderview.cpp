@@ -25,8 +25,8 @@ $END_LICENSE */
 FileSystemFinderView::FileSystemFinderView(QWidget *parent) :
         FinderListView(parent) { }
 
-void FileSystemFinderView::appear() {
-    FinderListView::appear();
+void FileSystemFinderView::showEvent(QShowEvent *e) {
+    FinderListView::showEvent(e);
     if (fileSystemModel) {
         fileSystemModel->setRootPath(fileSystemModel->rootPath());
     }

@@ -21,29 +21,20 @@ $END_LICENSE */
 #ifndef COLLECTIONSCANNERVIEW_H
 #define COLLECTIONSCANNERVIEW_H
 
-#include <QtWidgets>
-#include "view.h"
 #include "collectionscannerthread.h"
+#include <QtWidgets>
 
-class CollectionScannerView : public View {
-
+class CollectionScannerView : public QWidget {
     Q_OBJECT
 
 public:
     CollectionScannerView(QWidget *parent);
 
-    void appear() { progressBar->setMaximum(0); }
-    void disappear() {}
-    QHash<QString, QVariant> metadata() {
-        QHash<QString, QVariant> metadata;
-        metadata.insert("description", tr("Go grab a coffee"));
-        return metadata;
-    }
-
 public slots:
     void setCollectionScannerThread(CollectionScannerThread *scannerThread);
 
 protected:
+    void showEvent(QShowEvent *e) { progressBar->setMaximum(0); }
     void paintEvent(QPaintEvent *e);
 
 private slots:
@@ -54,7 +45,6 @@ private slots:
 private:
     QLabel *logo;
     QProgressBar *progressBar;
-
 };
 
 #endif // COLLECTIONSCANNERVIEW_H

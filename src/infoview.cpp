@@ -24,7 +24,7 @@ $END_LICENSE */
 #include "context/trackinfo.h"
 #include "model/track.h"
 
-InfoView::InfoView(QWidget *parent) : View(parent) {
+InfoView::InfoView(QWidget *parent) : QWidget(parent) {
     QBoxLayout *layout = new QVBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
 
@@ -46,8 +46,6 @@ void InfoView::setTrack(Track *track) {
     scrollArea->ensureVisible(0, 0, 1, 1);
     setUpdatesEnabled(true);
 }
-
-void InfoView::disappear() {}
 
 ScrollingInfoView::ScrollingInfoView(QWidget *parent) : QWidget(parent) {
     QBoxLayout *layout = new QHBoxLayout(this);

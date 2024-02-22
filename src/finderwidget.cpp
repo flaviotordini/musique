@@ -286,17 +286,6 @@ void FinderWidget::showWidget(QWidget *widget, bool isRoot) {
     }
     breadcrumb->setVisible(!isRoot);
 
-    // call disappear() on previous widget
-    QWidget *currentWidget = stackedWidget->currentWidget();
-    if (currentWidget && currentWidget != widget) {
-        bool ret = QMetaObject::invokeMethod(currentWidget, "disappear", Qt::DirectConnection);
-        if (!ret) qDebug() << "FinderWidget::showWidget invokeMethod failed for" << currentWidget;
-    }
-
-    // call appear() on new widget
-    bool ret = QMetaObject::invokeMethod(widget, "appear", Qt::DirectConnection);
-    if (!ret) qDebug() << "FinderWidget::showWidget invokeMethod failed for" << widget;
-
     stackedWidget->setCurrentWidget(widget);
     history.push(widget);
 
@@ -336,24 +325,6 @@ void FinderWidget::folderGoBack() {
         qDebug() << dir.absolutePath() << index.isValid();
         index = proxyModel->mapFromSource(index);
         fileSystemView->setRootIndex(index);
-    }
-}
-
-void FinderWidget::appear() {
-    QWidget *currentWidget = stackedWidget->currentWidget();
-    if (currentWidget) {
-        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "appear",
-                                                 Qt::DirectConnection);
-        if (!success) qDebug() << "Error invoking appear() on" << stackedWidget->currentWidget();
-    }
-}
-
-void FinderWidget::disappear() {
-    QWidget *currentWidget = stackedWidget->currentWidget();
-    if (currentWidget) {
-        bool success = QMetaObject::invokeMethod(stackedWidget->currentWidget(), "disappear",
-                                                 Qt::DirectConnection);
-        if (!success) qDebug() << "Error invoking disappear() on" << stackedWidget->currentWidget();
     }
 }
 

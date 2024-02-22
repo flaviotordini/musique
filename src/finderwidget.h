@@ -70,8 +70,6 @@ public:
     FinderWidget(QWidget *parent);
     void setPlaylistModel(PlaylistModel *playlistModel) { this->playlistModel = playlistModel; }
     void setPlaylistView(PlaylistView *playlistView) { this->playlistView = playlistView; }
-    void appear();
-    void disappear();
     void showSearch(const QString &query);
     void addTracksAndPlay(const QList<Track *> &tracks);
     void artistActivated(Artist *artist);

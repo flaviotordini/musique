@@ -22,23 +22,16 @@ $END_LICENSE */
 #define ABOUTVIEW_H
 
 #include "constants.h"
-#include "view.h"
 #include <QtWidgets>
 
-class AboutView : public View {
+class AboutView : public QWidget {
     Q_OBJECT
 
 public:
     AboutView(QWidget *parent);
-    void appear();
-    QHash<QString, QVariant> metadata() {
-        QHash<QString, QVariant> metadata;
-        metadata.insert("title", tr("About"));
-        metadata.insert("description",
-                        tr("What you always wanted to know about %1 and never dared to ask")
-                                .arg(Constants::NAME));
-        return metadata;
-    }
+
+protected:
+    void showEvent(QShowEvent *event);
 
 protected:
     void paintEvent(QPaintEvent *);

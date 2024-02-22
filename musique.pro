@@ -54,7 +54,6 @@ HEADERS += src/mainwindow.h \
     src/aboutview.h \
     src/infoview.h \
     src/lyrics.h \
-    src/view.h \
     src/searchlineedit.h \
     src/constants.h \
     src/finderwidget.h \

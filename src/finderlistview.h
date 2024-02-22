@@ -41,9 +41,6 @@ public:
     void setItemHeightRatio(double value) { itemHeightRatio = value; }
 
 public slots:
-    void appear();
-    void disappear();
-
     void setHoveredIndex(const QModelIndex &index);
     void setHoveredRow(int row);
     void clearHover();
@@ -57,6 +54,8 @@ signals:
     void play(const QModelIndex &index);
 
 protected:
+    void showEvent(QShowEvent *e);
+    void hideEvent(QHideEvent *e);
     void leaveEvent(QEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

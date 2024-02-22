@@ -22,26 +22,18 @@ $END_LICENSE */
 #define CHOOSEFOLDERVIEW_H
 
 #include <QtWidgets>
-#include "view.h"
 
-class ChooseFolderView : public View {
-
+class ChooseFolderView : public QWidget {
     Q_OBJECT
 
 public:
     ChooseFolderView(QWidget *parent);
-    void appear();
-    void disappear() {}
-    QHash<QString, QVariant> metadata() {
-        QHash<QString, QVariant> metadata;
-        metadata.insert("title", tr("Locate your collection"));
-        return metadata;
-    }
 
 signals:
     void locationChanged(QString dir);
 
 protected:
+    void showEvent(QShowEvent *e);
     void paintEvent(QPaintEvent *e);
 
 private slots:
@@ -56,6 +48,5 @@ private:
     QLabel *welcomeLabel;
     QLabel *tipLabel;
     QPushButton *cancelButton;
-
 };
 #endif
