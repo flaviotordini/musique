@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>Powered by %1</source>
-        <translation type="unfinished"/>
+        <translation>Dostarczone przez %1</translation>
     </message>
     <message>
         <source>Open-source software</source>
@@ -206,11 +206,11 @@
     </message>
     <message>
         <source>Use %1 folder</source>
-        <translation type="unfinished"/>
+        <translation>Użyj folderu %1</translation>
     </message>
     <message>
         <source>Use %1 library</source>
-        <translation type="unfinished"/>
+        <translation>Użyj biblioteki %1</translation>
     </message>
 </context>
 <context>
@@ -284,7 +284,7 @@
     </message>
     <message>
         <source>Genres</source>
-        <translation type="unfinished"/>
+        <translation>Gatunki</translation>
     </message>
 </context>
 <context>
@@ -632,7 +632,7 @@
     </message>
     <message>
         <source>&amp;Fix Library with %1...</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Napraw bibliotekę z %1...</translation>
     </message>
     <message>
         <source>Toggle &amp;Menu Bar</source>
@@ -644,15 +644,15 @@
     </message>
     <message>
         <source>%1 added %2 tracks to your music library. %3 tracks (%4%) have incomplete tags.</source>
-        <translation type="unfinished"/>
+        <translation>%2 utworów zostało dodanych do twojej biblioteki przez %1. %3 utworów (%4%) ma niepełne tagi.</translation>
     </message>
     <message>
         <source>Do you want to fix them now with %1?</source>
-        <translation type="unfinished"/>
+        <translation>Czy chcesz je naprawić teraz z %1?</translation>
     </message>
     <message>
         <source>Fix my music</source>
-        <translation type="unfinished"/>
+        <translation>Napraw swoją muzykę</translation>
     </message>
     <message>
         <source>You can still access the menu bar by pressing the ALT key</source>
@@ -660,19 +660,19 @@
     </message>
     <message>
         <source>&amp;Scrobble</source>
-        <translation type="unfinished"/>
+        <translation>&amp;Skrobluj</translation>
     </message>
     <message>
         <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
+        <translation>Dziękujemy za aktualizację %1 do wersji %2!</translation>
     </message>
     <message>
         <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
+        <translation>Jeśli podoba Ci się %1, być może używasz go już kilka miesięcy lub nawet lat, rozważ zostanie jedną z osób chcących wspierać coś, co sprawia im przyjemność.</translation>
     </message>
     <message>
         <source>Donate</source>
-        <translation type="unfinished"/>
+        <translation>Przekaż darowiznę</translation>
     </message>
 </context>
 <context>
@@ -799,7 +799,7 @@
     </message>
     <message>
         <source>Retry Update Download</source>
-        <translation type="unfinished"/>
+        <translation>Spróbuj ponownie pobrać aktualizację</translation>
     </message>
     <message>
         <source>You have the latest version.</source>
