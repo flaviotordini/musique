@@ -21,13 +21,19 @@ $END_LICENSE */
 #include "aboutview.h"
 #include "constants.h"
 #include "iconutils.h"
+#include "appwidget.h"
+#include "clickablelabel.h"
+#include "mainwindow.h"
+
 #ifdef APP_MAC
 #include "mac_startup.h"
 #include "macutils.h"
 #endif
-#include "appwidget.h"
-#include "clickablelabel.h"
-#include "mainwindow.h"
+
+#ifdef APP_MAC_STORE
+#include "actionbutton.h"
+#include "purchasing.h"
+#endif
 
 #ifdef UPDATER
 #include "updater.h"
@@ -145,6 +151,16 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     layout->addLayout(updateLayout);
 #endif
 
+#ifdef APP_MAC_STORE
+    if (Purchasing::instance().isPremium()) {
+        auto label = new QLabel(
+                "<p style='line-height:130%'>🥇 " +
+                        tr("Proud %1 supporter").arg(QGuiApplication::applicationDisplayName()),
+                this);
+        layout->addWidget(label);
+    }
+#endif
+
     QLayout *buttonLayout = new QHBoxLayout();
     buttonLayout->setContentsMargins(0, 0, 0, 0);
     buttonLayout->setAlignment(Qt::AlignLeft);
@@ -153,9 +169,15 @@ AboutView::AboutView(QWidget *parent) : QWidget(parent) {
     buttonLayout->addWidget(Updater::instance().getButton());
 #endif
 
+#ifdef APP_MAC_STORE
+    auto supportButton = new ActionButton();
+    supportButton->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    supportButton->setAction(Purchasing::instance().getPremiumAction());
+    buttonLayout->addWidget(supportButton);
+#endif
+
     QPushButton *closeButton = new QPushButton(tr("&Close"), this);
     closeButton->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-
     closeButton->setDefault(true);
     closeButton->setFocus();
     connect(closeButton, SIGNAL(clicked()), parent, SLOT(goBack()));

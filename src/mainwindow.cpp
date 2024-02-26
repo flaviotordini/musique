@@ -90,6 +90,10 @@ $END_LICENSE */
 #include "updater.h"
 #endif
 
+#ifdef APP_MAC_STORE
+#include "purchasing.h"
+#include "purchasingview.h"
+#endif
 
 namespace {
 MainWindow *singleton = nullptr;
@@ -433,9 +437,26 @@ void MainWindow::createActions() {
     addNamedAction("toolbarMenu", a);
 
 #ifdef APP_MAC_STORE
+    Purchasing::instance().setPremiumProductId(Constants::UNIX_NAME);
+    Purchasing::instance().connectMessages(this);
+    auto buyAction = Purchasing::instance().getPremiumAction();
+    buyAction->setText(tr("Support %1").arg(QGuiApplication::applicationDisplayName()));
+    addNamedAction("buy", buyAction);
+    connect(buyAction, &QAction::triggered, this, [this, buyAction] {
+        auto view = Purchasing::instance().getWidget();
+        if (views->indexOf(view) == -1) {
+            view->setTitle(tr("Become a supporter"));
+            view->setInfo(tr("Support the development of %1.")
+                                  .arg(QGuiApplication::applicationDisplayName()));
+            connect(view, &PurchasingView::done, this, [this] { views->goBack(); });
+            views->addWidget(view);
+        }
+        views->setCurrentWidget(view);
+    });
+
     a = new QAction(tr("&Love %1? Rate it!").arg(Constants::NAME), this);
     addNamedAction("app-store", a);
-    connect(a, SIGNAL(triggered()), SLOT(rateOnAppStore()));
+    connect(a, &QAction::triggered, this, &MainWindow::rateOnAppStore);
 #endif
 
     // Invisible actions
@@ -485,6 +506,13 @@ void MainWindow::createActions() {
 
 void MainWindow::createMenus() {
     fileMenu = menuBar()->addMenu(tr("&Application"));
+
+    QAction *buyAction = getAction("buy");
+    if (buyAction) {
+        fileMenu->addAction(buyAction);
+        fileMenu->addSeparator();
+    }
+
     fileMenu->addAction(actionMap.value("finetune"));
     fileMenu->addAction(chooseFolderAct);
     fileMenu->addAction(actionMap.value("lastFmLogout"));

@@ -35,6 +35,10 @@ $END_LICENSE */
 
 #include "idle.h"
 
+#ifdef APP_MAC_STORE
+#include "purchasing.h"
+#endif
+
 MediaView::MediaView(QWidget *parent) : QWidget(parent) {
     activeTrack = nullptr;
 
@@ -246,6 +250,10 @@ void MediaView::playlistFinished() {
     QAction *a = MainWindow::instance()->getAction("contextual");
     if (a->isChecked()) MainWindow::instance()->hideContextualView();
     a->setEnabled(false);
+
+#ifdef APP_MAC_STORE
+    if (!Purchasing::instance().isPremium()) MainWindow::instance()->getAction("buy")->trigger();
+#endif
 }
 
 void MediaView::playbackFinished() {
