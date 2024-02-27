@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ms_MY" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ms_MY">
 <context>
     <name>AboutView</name>
     <message>
@@ -10,16 +10,12 @@
         <translation>Dikeluarkan dibawah &lt;a href=&apos;%1&apos;&gt;Lesen Awam Am GNU&lt;/a&gt;</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>%Tutup</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>Perihal</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Apakah yang anda mahu tahu mengenai %1 tetapi segan untuk menanya</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,53 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>Masukkan Perincian Lesen anda</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>&amp;Emel:</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>&amp;Kod:</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>Sila lesenkan %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Dengan pembelian versi penuh, anda akan menyokong hasil kerja yang saya lakukan ketika menghasilkan %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Guna Demo</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>Masukkan Lesen</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>Beli Lesen</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Versi penuh membolehkan anda tambah lebih dari %1 trek ke senarai main dan dengar muzik anda tanpa gangguan.</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>Beli di %1</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>Baca lagi</translation>
@@ -201,23 +151,8 @@
         <translation>Pilih lokasi bagi koleksi muzik anda.</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>Cari koleksi anda</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation>Guna folder %1</translation>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation>Guna pustaka %1</translation>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>Kosongkan</translation>
     </message>
 </context>
 <context>
@@ -237,35 +172,12 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Ia mengambil masa dan bergantung pada saiz koleksi dan kelajuan rangkaian anda.</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>Rehat dahulu dan dapat secawan kopi</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Lepaskan disini untuk tambah ke senarai main</translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation>Fail bolehlaku telah diusik, mungkin berpunca dari virus.</translation>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation>%1 tidak akan dijalankan. Cuba memasang sekali lagi.</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Keluar</translation>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation>Pasang semula</translation>
     </message>
 </context>
 <context>
@@ -281,6 +193,18 @@
     <message>
         <source>Folders</source>
         <translation>Folder</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation>Perlukan satu kawalan jauh untuk %1? Cubalah %2!</translation>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation>Saya masih kekal menambah baik %1 dengan sedaya upaya saya. Mohon sokong hasil kerja ini!</translation>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation>Satu kemas kini sedia dipasang. Keluar dan pasang kemas kini.</translation>
     </message>
     <message>
         <source>Genres</source>
@@ -487,6 +411,14 @@
         <translation>Maklumat mengenai %1</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation>Mandir %1 saat</translation>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation>Maju %1 saat</translation>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>K&amp;osongkan</translation>
     </message>
@@ -509,6 +441,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>Main lagu pertama sekali lagi selepas semua lagu dimainkan</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -537,10 +481,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>Tekan %1 untuk tingkatkan volum, %2 untuk rendahkannya</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>Membuka %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -577,18 +517,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Volum disuarakan</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>%1 versi %2 kini sudah tersedia.</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>Maklum saya kemudian</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Kemaskini</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -662,18 +590,6 @@
         <source>&amp;Scrobble</source>
         <translation>&amp;Scrobble</translation>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation>Terima kasih kerana mengemas kini %1 ke versi %2!</translation>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation>Jika anda menyukai %1, mungkin telah memasangnya beberapa bulan atau tahun yang lalu, dialu-alukan menyokong hasil kerja yang anda nikmati ini.</translation>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation>Beri Sumbangan</translation>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -714,13 +630,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>Tampal</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -729,6 +638,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 trek - Jumlah adalah %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Teruskan</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -802,6 +765,10 @@
         <translation>Cuba Lagi Muat Turun Kemas Kini</translation>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation>Anda sudah memiliki versi terkini.</translation>
     </message>
@@ -812,6 +779,25 @@
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
         <translation>Satu kemas kini telah dimuat turun dan sedia dipasang.</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

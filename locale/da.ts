@@ -10,16 +10,12 @@
         <translation>Udgivet under &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>&amp;Luk</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>Om</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Hvad du altid har ønsket at vide om %1 og aldrig turde spørge om</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,53 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>Indtast dine licensoplysninger</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>&amp;Email:</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>&amp;Kode:</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>Venligst licensér %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Ved at købe den fulde version, støtter du også støtte det hårde arbejde jeg lagt i at udvikle %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Brug prøveversion</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>Indtast licens</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>Køb licens</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>I den fulde version er det muligt at tilføje mere end %1 numre til afspilningslisten og at lytte til din musik uden afbrydelser.</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>Køb på %1</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>Læs mere</translation>
@@ -201,23 +151,8 @@
         <translation>Vælg din musiksamlings placering.</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>Find din samling</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>Fjern</translation>
     </message>
 </context>
 <context>
@@ -237,10 +172,6 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Det vil tage tid, alt efter din samlings størrelse og dit netværks hastighed.</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>Gå ud og hent kaffe</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
@@ -248,25 +179,6 @@
         <source>Drop here to append to the playlist</source>
         <translation>Slip her for at tilføje til afspilningsliste
 </translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation>Den eksekverbare fil er blevet manipuleret, muligvis af en virus.</translation>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation>%1 kører ikke. Prøv at geninstallere.</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Afslut</translation>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation>Geninstaller</translation>
     </message>
 </context>
 <context>
@@ -282,6 +194,18 @@
     <message>
         <source>Folders</source>
         <translation>Mapper</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Genres</source>
@@ -488,6 +412,14 @@
         <translation>Info om %1</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>&amp;Ryd</translation>
     </message>
@@ -510,6 +442,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>Afspil den første sang efter at alle sange er afspillet</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -538,10 +482,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>Tryk %1 for at skrue op for lyden og %2 for at skrue ned</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>Åbner %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -578,18 +518,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Lyden er slået til</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>%1 version %2 er nu tilgængelig.</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>Påmind mig senere</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Opdatér</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -663,18 +591,6 @@
         <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -715,13 +631,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>Indsæt</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -730,6 +639,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 nummere - Total længde er %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Forsæt</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -803,6 +766,10 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation type="unfinished"/>
     </message>
@@ -812,6 +779,25 @@
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
         <translation type="unfinished"/>
     </message>
 </context>

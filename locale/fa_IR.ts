@@ -10,16 +10,12 @@
         <translation>منتشر شده تحت &lt;a href=&apos;%1&apos;&gt;گواهینامه‌ی عمومی گنو&lt;/a&gt;</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>&amp;خروج</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>درباره</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>همان چیزی که همیشه سعی داشتید درباره %1 بدانید اما جرات پرسیدنش را نداشتید</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,53 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>اطلاعات گواهینامه خود را وارد کنید</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>&amp;پست‌الکترونیکی:</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>&amp;کد:</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>لطفا گواهینامه %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>با خریداری نسخه کامل، شما از تلاش بسیار زیاد من برای ساخت %1 کمک می‌کنید.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>استفاده از نسخه آزمایشی</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>واردکردن گواهینامه</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>خرید گواهینامه</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>نسخه کامل به شما اجازه می‌دهد که بیش از %1 موسیقی را به فهرست‌پخش خود اضافه و گوش کنید.</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>خرید از %1</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>بیشتر بخوانید</translation>
@@ -201,23 +151,8 @@
         <translation>محل مجموعه‌ی موسیقی خود را انتخاب کنید.</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>مکان مجموعه‌ی خود را مشخص کنید</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>پاک کردن</translation>
     </message>
 </context>
 <context>
@@ -237,35 +172,12 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>این عمل با توجه به اندازه مجموعه‌ی موسیقی شما و سرعت اینترنتتان ممکن است طول بکشد.</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>یک فنجون قهوه برای خودت بریز</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>اینجا بندازید تا به فهرست پخش شما اضافه شود</translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>خروج</translation>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation>نصب مجدد</translation>
     </message>
 </context>
 <context>
@@ -281,6 +193,18 @@
     <message>
         <source>Folders</source>
         <translation>پوشه‌ها</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Genres</source>
@@ -487,6 +411,14 @@
         <translation>اطلاعات درباره %1</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>&amp;پاک کردن</translation>
     </message>
@@ -509,6 +441,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>پخش اولین آهنگ پس از پخش تمام آهنگ‌ها</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -537,10 +481,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>برای بلند کردن صدا %1 را فشار دهید و برای کم کردن آن %2</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>درحال باز کردن %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -577,18 +517,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>صدا وصل شده است</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>%1 نسخه %2 موجود است.</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>بعدا یادآوری کن</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>بروزرسانی</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -662,18 +590,6 @@
         <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation>حمایت مالی</translation>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -714,13 +630,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>چسباندن</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -729,6 +638,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 موسیقی - در مجموع به میزان %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>ادامه</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -802,6 +765,10 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation type="unfinished"/>
     </message>
@@ -812,6 +779,25 @@
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
         <translation>نسخه ی جدید دریافت شد و آماده ی نصب میباشد.</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

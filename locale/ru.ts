@@ -10,16 +10,12 @@
         <translation>Выпущено под &lt;a href=&apos;%1&apos;&gt;лицензией GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>&amp;Закрыть</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>О программе</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>То, что вы всегда хотели знать о %1 и никогда не осмелились спросить</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,54 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>Введите ваши детали лицензии</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>&amp;Email:</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>&amp;Код:</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>	
-Лицензия %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>При покупке полной версии, вы также оказываете поддержку тяжелой работы в создании %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Использовать демо версию</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>Ввести лицензию</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>Купить лицензию</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Полная версия позволяет добавлять более %1 треков в плейлист и слушать музыку без перерывов.</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>Купить в %1</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>Читать подробнее</translation>
@@ -202,23 +151,8 @@
         <translation>Выберите расположение вашей фонотеки.</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>Найдите вашу коллекцию</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation>Использовать папку %1</translation>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation>Использовать библиотеку %1</translation>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>Очистить</translation>
     </message>
 </context>
 <context>
@@ -238,35 +172,12 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Это займет некоторое время, в зависимости от размера вашей коллекции и скорости соединения.</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>Можете пока выпить кофе</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Перетащите сюда, чтобы добавить в список воспроизведения</translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation>Исполняемый файл был изменён, возможно вирусом.</translation>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation>%1 не запустится. Попробуйте переустановить.</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Выход</translation>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation>Переустановить</translation>
     </message>
 </context>
 <context>
@@ -282,6 +193,18 @@
     <message>
         <source>Folders</source>
         <translation>Папки</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation>Нужен пульт для %1? Попробуйте %2!</translation>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation>Я буду улучшать %1 , чтобы достичь лучшего результата. Поддержите работу!</translation>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation>Обновление готово для установки. Выйдите и установите обновление.</translation>
     </message>
     <message>
         <source>Genres</source>
@@ -488,6 +411,14 @@
         <translation>Информация о %1</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation>Назад на %1 сек.</translation>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation>Вперёд на %1 сек.</translation>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>О&amp;чистить</translation>
     </message>
@@ -510,6 +441,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>Играть плейлист сначала после последней песни</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -538,10 +481,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>Нажмите %1 чтобы увеличить громкость, %2 чтобы уменьшить</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>Открытие %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -578,18 +517,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Звук включен</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>%1 версия %2 уже доступна.</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>Напомнить позже</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Обновление</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -663,18 +590,6 @@
         <source>&amp;Scrobble</source>
         <translation>&amp;Скроббл</translation>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation>Спасибо за обновление %1 до версии %2!</translation>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation>Если вам нравится %1, возможно, вы установили его несколько месяцев или даже лет назад, подумайте о том, чтобы стать одним из тех, кто готов поддерживать то, что вам нравится.</translation>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation>Пожертвовать</translation>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -715,13 +630,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>Вставить</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -730,6 +638,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 треков - Общая продолжительность %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Продолжить</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -803,6 +765,10 @@
         <translation>Попытаться скачать обновление заново</translation>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation>У вас последняя версия.</translation>
     </message>
@@ -813,6 +779,25 @@
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
         <translation>Обновление было загружено и готово к установке.</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

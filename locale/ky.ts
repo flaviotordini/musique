@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ky" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="ky">
 <context>
     <name>AboutView</name>
     <message>
@@ -10,16 +10,12 @@
         <translation>&lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt; шартында чыгарылган</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>&amp;Жабуу</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>Программа жөнүндө</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>%1 жөнүндө дайыма билгиңиз келген нерселер бирок сураганга мүмкүнчүлүгүңүз жок болгон</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,53 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>Лицензия маалыматтарыңызды киргизиңиз</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>&amp;E-mail&apos;иңиз:</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>&amp;Кодуңуз:</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>Лицензия %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Толук версиясын алсаңыз, %1 үчүн оор жумуш кылып жатканымды да колдоп бере аласыз.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Демону колдонуу</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>Лицензияны киргизүү</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>Лицензияны сатып алуу</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Толук версиясы ойнотуу тизмесине %1 жолчодон көбүрөөк кошууга жана музыканы үзгүлтүксүз угууга мүмкүндүк берет.</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>%1 сайтынан сатып алуу</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>Толугураак окуу</translation>
@@ -201,23 +151,8 @@
         <translation>Музыка коллекцияңыздын жайгашкан жерин тандаңыз.</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>Коллекцияңызды табыңыз</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>Тазалоо</translation>
     </message>
 </context>
 <context>
@@ -237,35 +172,12 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Бул коллекция өлчөмүңүздүн жана туташуу ылдамдыгыңыздын шартына жараша бир аз убакытты ээлейт.</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>Кофе ичип угуңуз</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Ойнотуу тизмесине кошуу үчүн бул жерге ташыңыз</translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -281,6 +193,18 @@
     <message>
         <source>Folders</source>
         <translation>Папкалар</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Genres</source>
@@ -487,6 +411,14 @@
         <translation>%1 жөнүндө маалымат</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>&amp;Тазалоо</translation>
     </message>
@@ -509,6 +441,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>Бардык ырлар ойнотулгандан кийин биринчи ырды кайтадан ойнотуу</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -537,10 +481,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>Көлөмүн чоңойтуу үчүн %1 комбинациясын басыңыз, кичирейтүү үчүн %2</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>%1 ачылууда</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -577,18 +517,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Үнү күйгүзүлдү</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>%2&apos;дун %1 версиясы жеткиликтүү.</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>Кечирээк эске салуу</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Жаңылоо</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -662,18 +590,6 @@
         <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -714,13 +630,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>Коюу</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -729,6 +638,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 жолчо - Жалпы узундугу %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Улантуу</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -802,6 +765,10 @@
         <translation type="unfinished"/>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation type="unfinished"/>
     </message>
@@ -811,6 +778,25 @@
     </message>
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
         <translation type="unfinished"/>
     </message>
 </context>

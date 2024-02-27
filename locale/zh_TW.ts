@@ -10,16 +10,12 @@
         <translation>發布在 &lt;a href=&apos;%1&apos;&gt;GNU 通用公共授權條款&lt;/a&gt;之下</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>關閉(&amp;C)</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>關於</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>什麼是您一直想知道 %1 卻不敢問的？</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,53 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>輸入您的授權資料</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>電子郵件：</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>授權碼：</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>請授權許可給 %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>透過購買完整版，您還可以支持我投入更多心力於打造 %1。</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>使用展示版</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>輸入授權</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>購買授權</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>完整版本允許您加入超過 %1 首曲目到播放清單，並可不中斷的聆聽您的音樂。</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>在 %1 上購買</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>閱讀更多</translation>
@@ -201,23 +151,8 @@
         <translation>選取您音樂收藏的位置。</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>定位您的收藏</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation type="unfinished"/>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>清除</translation>
     </message>
 </context>
 <context>
@@ -237,35 +172,12 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>這會依據您收藏的大小與網路速度的不同，來佔用一點時間。</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>去泡杯咖啡吧！</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>拖曳至此以增加至播放清單</translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation>可執行檔可能已被病毒竄改。</translation>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation>%1 將不會執行。嘗試再次安裝。</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>離開</translation>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation>重新安裝</translation>
     </message>
 </context>
 <context>
@@ -281,6 +193,18 @@
     <message>
         <source>Folders</source>
         <translation>資料夾</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation>需要遙控 %1？試試看 %2！</translation>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation>我會不斷改善 %1，讓它變得更好。請支持我的努力！</translation>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation>準備好安裝更新。結束並安裝更新。</translation>
     </message>
     <message>
         <source>Genres</source>
@@ -487,6 +411,14 @@
         <translation>有關 %1 訊息</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation>倒帶 %1 秒</translation>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation>快轉 %1 秒</translation>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>清除(&amp;C)</translation>
     </message>
@@ -509,6 +441,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>所有歌曲播放後再次播放第一首歌曲</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -537,10 +481,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>按 %1 提高音量，%2 降低音量</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>開啟 %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -577,18 +517,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>音量處於非靜音狀態</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>現在有 %1 版本 %2 可用。</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>稍候提醒我</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>更新</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -662,18 +590,6 @@
         <source>&amp;Scrobble</source>
         <translation type="unfinished"/>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation type="unfinished"/>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -714,13 +630,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>貼上</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -729,6 +638,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 曲目 - 總長度為 %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>繼續</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -802,6 +765,10 @@
         <translation>重試更新下載</translation>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation>您已有最新版本。</translation>
     </message>
@@ -812,6 +779,25 @@
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
         <translation>更新已下載且已準備好安裝。</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

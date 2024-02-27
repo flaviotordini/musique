@@ -10,16 +10,12 @@
         <translation>Uitgebracht onder de &lt;a href=&apos;%1&apos;&gt;GNU General Public License&lt;/a&gt;</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>&amp;Sluiten</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>Over</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Wat je altijd al had willen weten over %1, maar nooit hebt durven vragen</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,53 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>Voer je licentiegegevens in</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>&amp;E-mailadres:</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>&amp;Code:</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>Schaf een licentie aan voor %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Door de volledige versie aan te schaffen, ondersteun je het vele werk dat ik geïnvesteerd heb in het maken van %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Proefversie gebruiken</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>Voer de licentiecode in</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>Licentie aanschaffen</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Met de volledige versie kun je meer dan %1 nummers toevoegen aan de afspeellijst en naar muziek luisteren zonder onderbrekingen.</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>Kopen op %1</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>Meer informatie</translation>
@@ -201,23 +151,8 @@
         <translation>Kies de locatie van je muziekverzameling.</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>Kies de locatie</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation>%1map gebruiken</translation>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation>%1verzameling gebruiken</translation>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>Wissen</translation>
     </message>
 </context>
 <context>
@@ -237,35 +172,12 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Dit kan, afhankelijk van de omvang je verzameling en netwerksnelheid, enige tijd duren.</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>Ga maar een kopje koffie halen!</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Sleep hierheen om toe te voegen aan het einde van de afspeellijst</translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation>Het uitvoerbare bestand is aangepast, mogelijk door een virus.</translation>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation>%1 kan niet worden gestart - installeer %1 opnieuw.</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Afsluiten</translation>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation>Herinstalleren</translation>
     </message>
 </context>
 <context>
@@ -281,6 +193,18 @@
     <message>
         <source>Folders</source>
         <translation>Mappen</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation>Heb je een afstandsbediening nodig voor %1? Probeer dan eens %2!</translation>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation>Ik doe mijn best om %1 zo geweldig mogelijk te maken. Ondersteun mijn werk!</translation>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation>Er staat een update voor je klaar. Sluit af om de update te installeren.</translation>
     </message>
     <message>
         <source>Genres</source>
@@ -487,6 +411,14 @@
         <translation>Informatie over %1</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation>%1 seconden terugspoelen</translation>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation>%1 seconden vooruitspoelen</translation>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>&amp;Wissen</translation>
     </message>
@@ -509,6 +441,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>Speel het eerste nummer nogmaals af nadat alle nummers zijn afgespeeld</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -537,10 +481,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>Druk op %1 om het volume te verhogen of %2 om het te verlagen</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>Bezig met openen van %1…</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -577,18 +517,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Het volume is niet meer gedempt</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>%1-versie %2 is nu beschikbaar.</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>Later herinneren</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Bijwerken</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -662,18 +590,6 @@
         <source>&amp;Scrobble</source>
         <translation>&amp;Scrobbelen</translation>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation>Bedankt voor het bijwerken van %1 naar versie %2!</translation>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation>Als je %1 graag gebruikt - wellicht al vele maanden of jaren - overweeg dan om donateur te worden zodat je de ontwikkeling blijft ondersteunen.</translation>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation>Doneren</translation>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -714,13 +630,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>Plakken</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -729,6 +638,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 nummers - Totaalduur: %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Ga door</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -802,6 +765,10 @@
         <translation>Opnieuw proberen</translation>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation>Je beschikt over de nieuwste versie.</translation>
     </message>
@@ -812,6 +779,25 @@
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
         <translation>Er staat een update klaar om te worden geïnstalleerd.</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

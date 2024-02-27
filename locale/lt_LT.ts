@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt_LT" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="lt_LT">
 <context>
     <name>AboutView</name>
     <message>
@@ -10,16 +10,12 @@
         <translation>Išleista pagal &lt;a href=&apos;%1&apos;&gt;GNU Bendrąją Viešąją Licenciją&lt;/a&gt;</translation>
     </message>
     <message>
+        <source>Proud %1 supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Close</source>
         <translation>&amp;Užverti</translation>
-    </message>
-    <message>
-        <source>About</source>
-        <translation>Apie</translation>
-    </message>
-    <message>
-        <source>What you always wanted to know about %1 and never dared to ask</source>
-        <translation>Tai, ką jūs visuomet žinojote apie %1, bet niekada nedrįsote paklausti</translation>
     </message>
     <message>
         <source>Translate %1 to your native language using %2</source>
@@ -35,53 +31,7 @@
     </message>
 </context>
 <context>
-    <name>ActivationDialog</name>
-    <message>
-        <source>Enter your License Details</source>
-        <translation>Įrašykite išsamesnę savo licencijos informaciją</translation>
-    </message>
-    <message>
-        <source>&amp;Email:</source>
-        <translation>&amp;El. paštas:</translation>
-    </message>
-    <message>
-        <source>&amp;Code:</source>
-        <translation>&amp;Kodas:</translation>
-    </message>
-</context>
-<context>
-    <name>ActivationView</name>
-    <message>
-        <source>Please license %1</source>
-        <translation>Prašome licencijuoti %1</translation>
-    </message>
-    <message>
-        <source>By purchasing the full version, you will also support the hard work I put into creating %1.</source>
-        <translation>Įsigiję pilną versiją, jūs taip pat prisidėsite prie mano sunkaus darbo, kuriant %1.</translation>
-    </message>
-    <message>
-        <source>Use Demo</source>
-        <translation>Naudoti demonstracinę versiją</translation>
-    </message>
-    <message>
-        <source>Enter License</source>
-        <translation>Įrašyti licenciją</translation>
-    </message>
-    <message>
-        <source>Buy License</source>
-        <translation>Pirkti licenciją</translation>
-    </message>
-    <message>
-        <source>The full version allows you to add more than %1 tracks to the playlist and listen to your music without interruptions.</source>
-        <translation>Pilna versija leidžia jums į grojaraštį pridėti daugiau nei %1 takelių ir klausytis savo muzikos be pertraukimų.</translation>
-    </message>
-</context>
-<context>
     <name>AlbumInfo</name>
-    <message>
-        <source>Buy on %1</source>
-        <translation>Pirkti per %1</translation>
-    </message>
     <message>
         <source>Read more</source>
         <translation>Skaityti daugiau</translation>
@@ -201,23 +151,8 @@
         <translation>Pasirinkite savo muzikinės kolekcijos vietą.</translation>
     </message>
     <message>
-        <source>Locate your collection</source>
-        <translation>Raskite savo kolekcijos vietą</translation>
-    </message>
-    <message>
         <source>Use %1 folder</source>
         <translation>Naudoti %1 aplanką</translation>
-    </message>
-    <message>
-        <source>Use %1 library</source>
-        <translation>Naudoti %1 biblioteką</translation>
-    </message>
-</context>
-<context>
-    <name>ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>Išvalyti</translation>
     </message>
 </context>
 <context>
@@ -237,35 +172,12 @@
         <source>This will take time depending on your collection size and network speed.</source>
         <translation>Tai užims kažkiek laiko, priklausomai nuo jūsų kolekcijos dydžio ir tinklo spartos.</translation>
     </message>
-    <message>
-        <source>Go grab a coffee</source>
-        <translation>Eikite užsivirkite kavos</translation>
-    </message>
 </context>
 <context>
     <name>DropArea</name>
     <message>
         <source>Drop here to append to the playlist</source>
         <translation>Tempkite čia, kad pridėtumėte į grojaraštį</translation>
-    </message>
-</context>
-<context>
-    <name>Extra</name>
-    <message>
-        <source>The executable file has been tempered with, maybe by a virus.</source>
-        <translation>Vykdomasis failas buvo klastojamas, galbūt, tai padarė virusas.</translation>
-    </message>
-    <message>
-        <source>%1 will not run. Try installing again.</source>
-        <translation>%1 nepasileis. Pabandykite įdiegti dar kartą.</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Išeiti</translation>
-    </message>
-    <message>
-        <source>Reinstall</source>
-        <translation>Įdiegti iš naujo</translation>
     </message>
 </context>
 <context>
@@ -281,6 +193,18 @@
     <message>
         <source>Folders</source>
         <translation>Aplankai</translation>
+    </message>
+    <message>
+        <source>Need a remote control for %1? Try %2!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>I keep improving %1 to make it the best I can. Support this work!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>An update is ready to be installed. Quit and install update.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Genres</source>
@@ -487,6 +411,14 @@
         <translation>Informacija apie %1</translation>
     </message>
     <message>
+        <source>Rewind %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Fast forward %1 seconds</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>&amp;Clear</source>
         <translation>&amp;Išvalyti</translation>
     </message>
@@ -509,6 +441,18 @@
     <message>
         <source>Play first song again after all songs are played</source>
         <translation>Pragrojus visas dainas, vėl groti pirmą dainą</translation>
+    </message>
+    <message>
+        <source>Support %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Become a supporter</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Support the development of %1.</source>
+        <translation type="unfinished"/>
     </message>
     <message>
         <source>Mute volume</source>
@@ -537,10 +481,6 @@
     <message>
         <source>Press %1 to raise the volume, %2 to lower it</source>
         <translation>Paspauskite %1, kad padidintumėte garsį arba %2, kad jį sumažintumėte</translation>
-    </message>
-    <message>
-        <source>Opening %1</source>
-        <translation>Atveriama %1</translation>
     </message>
     <message>
         <source>Updating collection...</source>
@@ -577,18 +517,6 @@
     <message>
         <source>Volume is unmuted</source>
         <translation>Garsis įjungtas</translation>
-    </message>
-    <message>
-        <source>%1 version %2 is now available.</source>
-        <translation>Dabar yra prieinama %1 versija %2.</translation>
-    </message>
-    <message>
-        <source>Remind me later</source>
-        <translation>Priminti vėliau</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>Atnaujinti</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -662,18 +590,6 @@
         <source>&amp;Scrobble</source>
         <translation>&amp;Scrobble paslauga</translation>
     </message>
-    <message>
-        <source>Thanks for updating %1 to version %2!</source>
-        <translation>Dėkojame, kad atnaujinote %1 į versiją %2!</translation>
-    </message>
-    <message>
-        <source>If you enjoy %1, perhaps having installed it months or even years ago, please consider becoming one of the people willing to support something you enjoy.</source>
-        <translation>Jei mėgaujatės %1, galbūt, esate ją įdiegę jau prieš mėnesius ar net metus, tuomet apsvarstykite galimybę tapti vienu iš tų žmonių, kurie palaiko tai, kas jiems patinka.</translation>
-    </message>
-    <message>
-        <source>Donate</source>
-        <translation>Paaukoti</translation>
-    </message>
 </context>
 <context>
     <name>MediaView</name>
@@ -714,13 +630,6 @@
     </message>
 </context>
 <context>
-    <name>PasteLineEdit</name>
-    <message>
-        <source>Paste</source>
-        <translation>Įdėti</translation>
-    </message>
-</context>
-<context>
     <name>PlaylistView</name>
     <message>
         <source>Playlist is empty</source>
@@ -729,6 +638,60 @@
     <message>
         <source>%1 tracks - Total length is %2</source>
         <translation>%1 takelių - Viso trukmė yra %2</translation>
+    </message>
+</context>
+<context>
+    <name>Purchasing</name>
+    <message>
+        <source>Thanks for buying %1!</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>%1 restored.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Purchase not completed</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Store not available. Try later.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Buy %1</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>PurchasingView</name>
+    <message>
+        <source>%1 / Year</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translation>Tęsti</translation>
+    </message>
+    <message>
+        <source>Buy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Terms of Use</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Privacy Policy</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Restore Purchases</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -802,6 +765,10 @@
         <translation>Bandyti atsisiųsti atnaujinimą iš naujo</translation>
     </message>
     <message>
+        <source>Didn&apos;t check for updates.</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
         <source>You have the latest version.</source>
         <translation>Jūs turite naujausią versiją.</translation>
     </message>
@@ -812,6 +779,25 @@
     <message>
         <source>An update has been downloaded and is ready to be installed.</source>
         <translation>Atnaujinimas atsisiųstas ir paruoštas įdiegti.</translation>
+    </message>
+    <message>
+        <source>Version %1 download failed.</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>ZoomableUI</name>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>Reset Zoom</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
