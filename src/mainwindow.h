@@ -73,6 +73,7 @@ public slots:
     void messageReceived(const QString &message);
     void goBack();
     void visitSite();
+    void donate();
 
 signals:
     void currentTimeChanged(const QString &s);
@@ -86,14 +87,12 @@ protected:
 
 private slots:
     void lazyInit();
-    void donate();
     void reportIssue();
     void about();
     void toggleFullscreen();
     void updateUIForFullscreen();
     void setShuffle(bool enabled);
     void setRepeat(bool enabled);
-    bool maybeShowUpdateNag();
 
     // media
     void stop();

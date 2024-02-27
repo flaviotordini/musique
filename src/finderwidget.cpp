@@ -53,6 +53,7 @@ $END_LICENSE */
 #include "database.h"
 #include <QtSql>
 
+#include "mainwindow.h"
 #include "messagebar.h"
 #ifdef UPDATER
 #include "updater.h"
@@ -505,10 +506,8 @@ void FinderWidget::maybeShowMessage() {
             QString msg = tr("I keep improving %1 to make it the best I can. Support this work!")
                                   .arg(QGuiApplication::applicationDisplayName());
             auto messageBar = createMessageBar(msg);
-            connect(messageBar, &MessageBar::clicked, this, [] {
-                QString url = "https://" + QCoreApplication::organizationDomain() + "/donate";
-                QDesktopServices::openUrl(url);
-            });
+            connect(messageBar, &MessageBar::clicked, this,
+                    [] { MainWindow::instance()->donate(); });
             connect(messageBar, &MessageBar::closed, this, [key] {
                 QSettings settings;
                 settings.setValue(key, true);

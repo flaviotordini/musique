@@ -178,8 +178,6 @@ void MainWindow::showInitialView() {
         // update the collection when idle
         QTimer::singleShot(500, this, SLOT(startIncrementalScan()));
 
-        QTimer::singleShot(1500, this, [this] { maybeShowUpdateNag(); });
-
 #if defined(UPDATER) && defined(QT_NO_DEBUG_OUTPUT)
         Updater::instance().checkWithoutUI();
 #endif
@@ -784,8 +782,12 @@ void MainWindow::visitSite() {
 }
 
 void MainWindow::donate() {
+#ifdef APP_MAC_STORE
+    Purchasing::instance().getPremiumAction()->trigger();
+#else
     QUrl url("https://flavio.tordini.org/donate/");
     QDesktopServices::openUrl(url);
+#endif
 }
 
 void MainWindow::quit() {
@@ -1199,31 +1201,6 @@ void MainWindow::setShuffle(bool enabled) {
 void MainWindow::setRepeat(bool enabled) {
     QSettings settings;
     settings.setValue("repeat", QVariant::fromValue(enabled));
-}
-
-bool MainWindow::maybeShowUpdateNag() {
-    QSettings settings;
-    QString lastRunVersion = settings.value("v").toString();
-    if (!lastRunVersion.isEmpty() && lastRunVersion != QLatin1String(Constants::VERSION)) {
-        QMessageBox *msgBox = new QMessageBox(this);
-        msgBox->setIconPixmap(IconUtils::pixmap(":/images/app.png", devicePixelRatio()));
-        msgBox->setText(tr("Thanks for updating %1 to version %2!")
-                                .arg(Constants::NAME, Constants::VERSION));
-        msgBox->setInformativeText(tr("If you enjoy %1, perhaps having installed it months or "
-                                      "even years ago, please "
-                                      "consider becoming one of the people willing to support "
-                                      "something you enjoy.")
-                                           .arg(Constants::NAME));
-        msgBox->addButton(QMessageBox::Close);
-        QPushButton *donateButton = msgBox->addButton(tr("Donate"), QMessageBox::AcceptRole);
-        msgBox->setDefaultButton(donateButton);
-        donateButton->setDefault(true);
-        donateButton->setFocus();
-        connect(msgBox, &QDialog::accepted, this, [this] { donate(); });
-        msgBox->open();
-        return true;
-    }
-    return false;
 }
 
 void MainWindow::showFinetuneDialog(const QVariantMap &stats) {
