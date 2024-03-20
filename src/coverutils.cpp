@@ -158,7 +158,7 @@ bool CoverUtils::coverFromMP4(const QString &filename, Album *album) {
     TagLib::MP4::Tag *tag = static_cast<TagLib::MP4::Tag *>(f.tag());
     if (!tag) return false;
 
-    TagLib::MP4::ItemListMap itemsListMap = tag->itemListMap();
+    TagLib::MP4::ItemMap itemsListMap = tag->itemMap();
     TagLib::MP4::Item coverItem = itemsListMap["covr"];
     TagLib::MP4::CoverArtList coverArtList = coverItem.toCoverArtList();
     TagLib::MP4::CoverArt coverArt = coverArtList.front();

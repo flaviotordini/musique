@@ -46,6 +46,9 @@ $END_LICENSE */
 #include "views.h"
 #include "zoomableui.h"
 
+#include <iostream>
+
+
 #if defined(APP_MAC_SEARCHFIELD) && !defined(APP_MAC_QMACTOOLBAR)
 #include "searchlineedit_mac.h"
 #else
